@@ -1,0 +1,63 @@
+--- kdebase-3.3.0/kdesktop/minicli.cpp.orig	2004-08-30 23:23:46.000000000 -0300
++++ kdebase-3.3.0/kdesktop/minicli.cpp	2004-08-30 23:28:54.000000000 -0300
+@@ -31,6 +31,7 @@
+ #include <pwd.h>
+ #include <string.h>
+ #include <errno.h>
++#include <sys/types.h>
+ 
+ #include <qvbox.h>
+ #include <qlabel.h>
+@@ -68,6 +69,14 @@
+ #include "minicli_ui.h"
+ 
+ #define KDESU_ERR strerror(errno)
++const char *superuser_name()
++{
++    const char *root_str = "root";
++    struct passwd *entry = getpwuid(0);
++    if (! entry)
++       return root_str;
++    return entry->pw_name;
++}
+ 
+ Minicli::Minicli( QWidget *parent, const char *name)
+         :KDialog( parent, name ),
+@@ -116,7 +125,7 @@
+   m_iPriority = 50;
+   m_iScheduler = StubProcess::SchedNormal;
+ 
+-  m_dlg->leUsername->setText("root");
++  m_dlg->leUsername->setText(superuser_name());
+ 
+   setMaxCommandBoxWidth();
+ 
+@@ -305,7 +314,7 @@
+   m_dlg->cbRunInTerminal->setChecked(false);
+   m_dlg->cbRunAsOther->setChecked(false);
+ 
+-  m_dlg->leUsername->setText("root");
++  m_dlg->leUsername->setText(superuser_name());
+ 
+   m_dlg->cbPriority->setChecked(false);
+ 
+@@ -707,6 +716,7 @@
+ 
+ void Minicli::updateAuthLabel()
+ {
++  const char *sys_user = superuser_name();
+   if (m_dlg->cbPriority->isChecked() && (m_iPriority > 50) ||
+       (m_iScheduler != StubProcess::SchedNormal))
+   {
+@@ -720,9 +730,9 @@
+       m_prevChecked = m_dlg->cbRunAsOther->isChecked();
+       m_prevCached = true;
+     }
+-    if (m_dlg->leUsername->text() != QString::fromLatin1("root"))
++    if (m_dlg->leUsername->text() != QString::fromLatin1(sys_user))
+       m_dlg->lePassword->setText(QString::null);
+-    m_dlg->leUsername->setText(QString::fromLatin1("root"));
++    m_dlg->leUsername->setText(QString::fromLatin1(sys_user));
+     m_dlg->cbRunAsOther->setChecked(true);
+     m_dlg->cbRunAsOther->setEnabled(false);
+     m_dlg->leUsername->setEnabled(false);

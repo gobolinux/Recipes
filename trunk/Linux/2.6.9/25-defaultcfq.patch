@@ -1,0 +1,20 @@
+Index: linux-2.6.9-rc3/drivers/block/ll_rw_blk.c
+===================================================================
+--- linux-2.6.9-rc3.orig/drivers/block/ll_rw_blk.c	2004-10-02 00:42:38.094400767 +1000
++++ linux-2.6.9-rc3/drivers/block/ll_rw_blk.c	2004-10-02 00:42:38.740299456 +1000
+@@ -1431,12 +1431,12 @@ static int blk_init_free_list(request_qu
+ static int __make_request(request_queue_t *, struct bio *);
+ 
+ static elevator_t *chosen_elevator =
+-#if defined(CONFIG_IOSCHED_AS)
++#if defined(CONFIG_IOSCHED_CFQ)
++	&iosched_cfq;
++#elif defined(CONFIG_IOSCHED_AS)
+ 	&iosched_as;
+ #elif defined(CONFIG_IOSCHED_DEADLINE)
+ 	&iosched_deadline;
+-#elif defined(CONFIG_IOSCHED_CFQ)
+-	&iosched_cfq;
+ #elif defined(CONFIG_IOSCHED_NOOP)
+ 	&elevator_noop;
+ #else

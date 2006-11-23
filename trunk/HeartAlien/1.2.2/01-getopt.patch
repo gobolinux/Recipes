@@ -1,0 +1,11 @@
+--- heartalien-1.2.2/src/main.c	2005-07-25 15:18:05.000000000 -0300
++++ heartalien-1.2.2/src/main.c.nova	2005-07-25 15:17:18.000000000 -0300
+@@ -40,6 +40,8 @@
+ 
+ #ifdef WIN32
+ #include "getopt.h"
++#else
++#include <getopt.h>
+ #endif
+ 
+ 

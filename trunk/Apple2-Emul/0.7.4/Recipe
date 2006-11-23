@@ -1,0 +1,11 @@
+url=ftp://sunsite.unc.edu/pub/Linux/system/emulators/apple2-emul-0.7.4.tar.gz
+compile_version=1.7.1
+recipe_type=configure
+
+post_install() {
+   mkdir -p $target/rom
+   cd $target/rom
+   wget http://inconnu.isu.edu/~ink/new/xapple2/apple_II.rom
+   cp apple_II.rom apple_IIe.rom
+   wget http://inconnu.isu.edu/~ink/new/xapple2/slot6.rom
+}

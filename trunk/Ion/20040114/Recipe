@@ -1,0 +1,12 @@
+# by Felix Breuer 
+# 2004.01.16 16:34
+
+url=http://modeemi.cs.tut.fi/~tuomov/dl/ion-2rc-20040114.tar.gz
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+    "--prefix=$target"
+    "--sysconfdir=$target/../Settings"
+    "--datadir=$target/Shared/doc"
+    "--with-lua-prefix=$goboPrograms/Lua/Current"
+)

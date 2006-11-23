@@ -1,0 +1,17 @@
+# Recipe for version 4.0.11.1 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jul 29 01:36:38 CEST 2005
+compile_version=1.7.1
+url=ftp://ftp.pld.org.pl/software/shadow/shadow-4.0.11.1.tar.bz2
+recipe_type=configure
+
+configure_options=(
+	"--enable-shared"
+	"--enable-static"
+	"--without-libpam"
+        "--disable-shadowgrp"
+)
+
+pre_build() {
+	aclocal 2> /dev/null
+	automake
+}
+

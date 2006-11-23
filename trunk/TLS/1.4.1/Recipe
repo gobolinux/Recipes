@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for TLS by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Fri May 20 12:25:22 BRT 2005
+# Recipe for version 1.4.1 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Fri May 20 12:25:22 BRT 2005
+compile_version=1.7.1
+url="$httpSourceforge/amsn/tls1.4.1-src.tar.gz"
+file_size=94074
+file_md5=358bc16e8fd5a335dbf2e855426885d2
+dir='tls1.4'
+recipe_type=configure
+
+configure_options=(
+	"--enable-threads"
+	"--with-ssl-dir=$goboPrograms/OpenSSL/Current"
+)

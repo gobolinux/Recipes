@@ -1,0 +1,22 @@
+--- fluxbox-0.9.11/configure.in.orig	2004-12-25 19:37:46.000000000 -0200
++++ fluxbox-0.9.11/configure.in	2004-12-25 19:38:17.000000000 -0200
+@@ -116,12 +116,18 @@
+ LIBS="$LIBS $X_LIBS"
+ LDFLAGS="$LDFLAGS $LIBS $X_PRE_LIBS"
+ 
++dnl Check for required functions in -lXau
++AC_CHECK_LIB(Xau, XauFileName,
++  LIBS="$LIBS -lXau",
++  AC_MSG_ERROR([Could not find XauFileName in -lXau.])
++)
++LIBS="$LIBS $X_EXTRA_LIBS"
++
+ dnl Check for required functions in -lX11
+ AC_CHECK_LIB(X11, XOpenDisplay,
+   LIBS="$LIBS -lX11",
+   AC_MSG_ERROR([Could not find XOpenDisplay in -lX11.])
+ )
+-
+ LIBS="$LIBS $X_EXTRA_LIBS"
+ 
+ AC_CHECK_LIB(xpg4, setlocale, LIBS="$LIBS -lxpg4")

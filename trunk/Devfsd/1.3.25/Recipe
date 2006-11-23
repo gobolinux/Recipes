@@ -1,0 +1,10 @@
+# Recipe for Devfsd 1.3.25 by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.7.1
+url="ftp://ftp.atnf.csiro.au/pub/people/rgooch/linux/daemons/devfsd/devfsd-v1.3.25.tar.gz"
+file_size=42645
+file_md5=44c6394b8e2e8feaf453aeddc8a3ee69
+dir='devfsd'
+
+recipe_type=makefile
+makefile="GNUmakefile"
+make_variables="PREFIX=$target"

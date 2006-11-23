@@ -1,0 +1,8 @@
+url=ftp://ftp.ncftp.com/ncftp/ncftp-3.1.6-src.tar.bz2
+dir=ncftp-3.1.6
+compile_version=1.7.1
+recipe_type=configure
+make_variables=(
+   "mandir=$target/man"
+)
+

@@ -1,0 +1,6 @@
+url=$httpSourceforge/nfs/nfs-utils-1.0.6.tar.gz
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+    "--with-statedir=$target/../Variable/lib/nfs"
+)

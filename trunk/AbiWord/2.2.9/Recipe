@@ -1,0 +1,8 @@
+# Recipe for version 2.2.9 by Koen Weddepohl, on Thu Sep 15 13:33:49 CEST 2005
+url=http://www.abisource.com/downloads/abiword/2.2.9/source/abiword-2.2.9.tar.gz
+dir=abiword-2.2.9/abi
+compile_version=1.7.1
+recipe_type=configure
+
+makefile="GNUmakefile"
+

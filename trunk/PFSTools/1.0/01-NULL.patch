@@ -1,0 +1,176 @@
+diff -Naur pfstools-1.0/src/pfs/pfs.h pfstools-1.0-fabio.m/src/pfs/pfs.h
+--- pfstools-1.0/src/pfs/pfs.h	2004-12-15 11:15:16.000000000 -0200
++++ pfstools-1.0-fabio.m/src/pfs/pfs.h	2005-01-08 19:04:55.000000000 -0200
+@@ -52,20 +52,20 @@
+        * @param tagName name of the tag to retrieve
+        * @return tag value or NULL if tag was not found
+        */
+-      virtual const char* getString( const char *tagName ) = NULL;
++      virtual const char* getString( const char *tagName ) = 0;
+ 
+       /**
+        * Set or add a string tag of the name tagName. 
+        * @param tagName name of the tag to add or set
+        * @param tagValue value of the tag
+        */      
+-      virtual void setString( const char *tagName, const char *tagValue ) = NULL;
++      virtual void setString( const char *tagName, const char *tagValue ) = 0;
+       
+       /**
+        * Removes (if exists) a tag of the name tagName from the TagContainer.
+        * @param tagName name of the tag to remove
+        */
+-      virtual void removeTag( const char *tagName ) = NULL;
++      virtual void removeTag( const char *tagName ) = 0;
+     };
+ 
+ 
+@@ -95,13 +95,13 @@
+     /**
+      * Gets name of the channel. 
+      */
+-    virtual const char *getName() const = NULL;
++    virtual const char *getName() const = 0;
+         
+     /**
+      * Returns TagContainer that can be used to access or modify
+      * tags associated with this Channel object.
+      */
+-    virtual TagContainer *getTags() = NULL;
++    virtual TagContainer *getTags() = 0;
+ 
+     /**
+      * For performance reasons, the channels can be accessed as a
+@@ -111,7 +111,7 @@
+      *
+      * @return a table of floats of the size width*height
+      */
+-    virtual float *getRawData() = NULL;
++    virtual float *getRawData() = 0;
+   };
+ 
+   /**
+@@ -123,11 +123,11 @@
+       /**
+        * Get next item on the list.
+        */
+-      virtual Channel *getNext() = NULL;
++      virtual Channel *getNext() = 0;
+       /**
+        * Returns true if there is still an item left on the list.
+        */
+-      virtual bool hasNext() const = NULL;
++      virtual bool hasNext() const = 0;
+     };
+ 
+ 
+@@ -142,12 +142,12 @@
+     /**
+      * Gets width of the channels (in pixels).
+      */
+-    virtual int getWidth() const = NULL;
++    virtual int getWidth() const = 0;
+ 
+     /**
+      * Gets height of the channels (in pixels).
+      */
+-    virtual int getHeight() const = NULL;
++    virtual int getHeight() const = 0;
+ 
+     /**
+      * Gets color channels in XYZ color space. May return NULLs
+@@ -159,7 +159,7 @@
+      * @param Y [out] a pointer to store Y channel in
+      * @param Z [out] a pointer to store Z channel in
+      */
+-    virtual void getXYZChannels( Channel* &X, Channel* &Y, Channel* &Z ) = NULL;
++    virtual void getXYZChannels( Channel* &X, Channel* &Y, Channel* &Z ) = 0;
+ 
+     /**
+      * Creates color channels in XYZ color space. If such channels
+@@ -171,7 +171,7 @@
+      * @param Y [out] a pointer to store Y channel in
+      * @param Z [out] a pointer to store Z channel in
+      */
+-    virtual void createXYZChannels( Channel* &X, Channel* &Y, Channel* &Z ) = NULL;
++    virtual void createXYZChannels( Channel* &X, Channel* &Y, Channel* &Z ) = 0;
+ 
+     /**
+      * Gets a named channel. 
+@@ -180,7 +180,7 @@
+      * character long.
+      * @return channel or NULL if the channel does not exist
+      */        
+-    virtual Channel* getChannel( const char *name ) = NULL;
++    virtual Channel* getChannel( const char *name ) = 0;
+ 
+     /**
+      * Creates a named channel. If the channel already exists, returns
+@@ -194,7 +194,7 @@
+      * character long.
+      * @return existing or newly created channel
+      */        
+-    virtual Channel* createChannel( const char *name ) = NULL;
++    virtual Channel* createChannel( const char *name ) = 0;
+ 
+ 
+     /**
+@@ -203,7 +203,7 @@
+      *
+      * @param channel [in] channel that should be removed.
+      */        
+-    virtual void removeChannel( Channel *channel ) = NULL;
++    virtual void removeChannel( Channel *channel ) = 0;
+     
+     /**
+      * Returns iterator for all available channels.
+@@ -216,15 +216,15 @@
+      * Object ChannelIterator MUST NOT be freed. It's responsibility
+      * of a Frame object.
+      */
+-    virtual ChannelIterator *getChannels() = NULL;
++    virtual ChannelIterator *getChannels() = 0;
+         
+     /**
+      * Returns TagContainer that can be used to access or modify
+      * tags associated with this Frame object.
+      */
+-    virtual TagContainer *getTags() = NULL;
++    virtual TagContainer *getTags() = 0;
+ 
+-    virtual ~Frame() = NULL;
++    virtual ~Frame() = 0;
+     
+   };
+ 
+diff -Naur pfstools-1.0/src/filter/pfssize.cpp pfstools-1.0-fabio.m/src/filter/pfssize.cpp
+--- pfstools-1.0/src/filter/pfssize.cpp	2004-12-13 07:30:18.000000000 -0200
++++ pfstools-1.0-fabio.m/src/filter/pfssize.cpp	2005-01-08 19:11:12.000000000 -0200
+@@ -47,11 +47,11 @@
+   /**
+    * Size of the filter in samples.
+    */
+-  virtual float getSize() = NULL;
++  virtual float getSize() = 0;
+   /**
+    * Get value of the filter for x. x is always positive.
+    */
+-  virtual float getValue( const float x ) = NULL;
++  virtual float getValue( const float x ) = 0;
+ 
+   virtual ~ResampleFilter()
+   {
+diff -Naur pfstools-1.0/src/filter/pfspanoramic.cpp pfstools-1.0-fabio.m/src/filter/pfspanoramic.cpp
+--- pfstools-1.0/src/filter/pfspanoramic.cpp	2004-12-15 09:09:54.000000000 -0200
++++ pfstools-1.0-fabio.m/src/filter/pfspanoramic.cpp	2005-01-08 19:22:54.000000000 -0200
+@@ -155,8 +155,8 @@
+     
+     virtual Vector3D *uvToDirection(double u, double v) = NULL;
+     virtual Point2D *directionToUV(Vector3D *direction) = NULL;
+-    virtual bool isValidPixel(double u, double v) = NULL;
+-    virtual double getSizeRatio(void) = NULL;
++    virtual bool isValidPixel(double u, double v) = 0;
++    virtual double getSizeRatio(void) = 0;
+     virtual ~Projection()
+     {
+     }

@@ -1,0 +1,16 @@
+--- sharutils-4.2.1/po/pt.po.orig	2004-07-27 23:32:10.000000000 -0300
++++ sharutils-4.2.1/po/pt.po	2004-07-27 23:32:24.000000000 -0300
+@@ -413,11 +413,11 @@
+ 
+ #: src/shar.c:1819
+ msgid "Hard limit %dk\n"
+-msgstr "Limite tipo `hard' de %dk"
++msgstr "Limite tipo `hard' de %dk\n"
+ 
+ #: src/shar.c:1886
+ msgid "Soft limit %dk\n"
+-msgstr "Limite tipo `soft' de %dk"
++msgstr "Limite tipo `soft' de %dk\n"
+ 
+ #: src/shar.c:1987
+ msgid "WARNING: No user interaction in vanilla mode"

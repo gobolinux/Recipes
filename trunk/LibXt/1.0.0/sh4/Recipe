@@ -1,0 +1,15 @@
+configure_options=(
+        --enable-malloc0returnsnull=no
+)
+
+make_variables=("MAKEFLAGS=")
+
+pre_build() {
+	if [ "$cross_compiling" ]
+	then
+	    GrepReplace "LIBTOOL = @LIBTOOL@" "unexport LIBTOOL\nLIBTOOL = libtool" util/Makefile.in
+	    GrepReplace "CC = @CC@" "unexport CC\nCC = `basename $HOSTCC`" util/Makefile.in
+	    GrepReplace "CFLAGS = @CFLAGS@" "unexport CFLAGS\nCFLAGS =" util/Makefile.in
+	    GrepReplace "LDFLAGS = @LDFLAGS@" "unexport LDFLAGS\nLDFLAGS =" util/Makefile.in
+	fi
+}

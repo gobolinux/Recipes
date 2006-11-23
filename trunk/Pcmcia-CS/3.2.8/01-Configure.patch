@@ -1,0 +1,45 @@
+--- pcmcia-cs-3.2.8/Configure.orig	2005-02-25 12:24:24.000000000 -0300
++++ pcmcia-cs-3.2.8/Configure	2005-02-25 12:33:28.000000000 -0300
+@@ -28,6 +28,8 @@
+ #
+ #=======================================================================
+ 
++source GoboPath
++
+ fail ()
+ {
+     echo ""
+@@ -247,8 +249,8 @@
+ echo ""
+ 
+ if [ ! "$LINUX" ] ; then
+-    if [ -d /lib/modules/`uname -r`/build ] ; then
+-	LINUX=/lib/modules/`uname -r`/build
++    if [ -d $goboModules/`uname -r`/build ] ; then
++	LINUX=$goboModules/`uname -r`/build
+     else
+ 	LINUX=/usr/src/linux
+     fi
+@@ -401,10 +403,10 @@
+ echo "" >> $CONFIG_H
+ 
+ if [ ! "$MODDIR" ] ; then
+-    if [ -d /lib/modules/preferred ] ; then
+-	MODDIR=/lib/modules/preferred
++    if [ -d $goboModules/preferred ] ; then
++	MODDIR=$goboModules/preferred
+     else
+-	MODDIR=/lib/modules/$UTS_RELEASE
++	MODDIR=$goboModules/$UTS_RELEASE
+     fi
+ else
+     MODDIR=`echo $MODDIR | \
+@@ -412,7 +414,7 @@
+ fi
+ 
+ ask_str "Module install directory" MODDIR
+-if ! match "$MODDIR" "/lib/modules/*" ; then
++if ! match "$MODDIR" "$goboModules/*" ; then
+     if match "$MODDIR" "[yY]" ; then
+ 	echo "Selected directory '$MODDIR' is bogus!"
+ 	fail

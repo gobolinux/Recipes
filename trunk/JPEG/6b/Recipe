@@ -1,0 +1,16 @@
+# by Carlo Calica
+# 2004.01.06 16:54
+
+url=http://www.ijg.org/files/jpegsrc.v6b.tar.gz
+dir=jpeg-6b
+compile_version=1.7.1
+recipe_type=configure
+#needs_safe_linking=yes
+
+configure_options=(
+   "--enable-shared"
+)
+
+make_variables=(
+	LIBTOOL="$goboExecutables/libtool"
+)

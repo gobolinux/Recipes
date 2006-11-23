@@ -1,0 +1,9 @@
+# Recipe for version 2.8.16 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Apr 4 12:48:25 CEST 2006
+# Recipe (MakeRecipe) for GTK+ by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 11:55:54 BRT 2005
+compile_version=1.7.1
+url="ftp://ftp.gnome.org/Public/gnome/sources/gtk+/2.8/gtk+-2.8.16.tar.bz2"
+recipe_type=configure
+
+configure_options=(
+    --disable-man
+)

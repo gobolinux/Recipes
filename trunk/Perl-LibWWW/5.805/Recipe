@@ -1,0 +1,10 @@
+# Recipe for version 5.805 by Hisham Muhammad, on Tue Oct 24 16:08:52 BRST 2006
+# Recipe (MakeRecipe) for LibWWW-Perl by Maglan C. Diemer, maglan@univates.br, on Seg Nov 28 11:26:14 BRST 2005
+compile_version=1.7.1
+url="http://www.cpan.org/modules/by-module/LWP/libwww-perl-5.805.tar.gz"
+file_md5=db1eb693eee45d251966ad2bab49dbbf
+file_size=237535
+recipe_type=perl
+perl_options=(
+   -n
+)

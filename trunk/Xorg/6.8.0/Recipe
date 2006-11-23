@@ -1,0 +1,18 @@
+# Recipe for version 6.8.0 by Hisham Muhammad, on Fri Sep 10 15:15:56 BRT 2004
+urls=(
+   "http://freedesktop.org/~xorg/X11R6.8.0/src/X11R6.8.0-src1.tar.gz"
+   "http://freedesktop.org/~xorg/X11R6.8.0/src/X11R6.8.0-src2.tar.gz"
+   "http://freedesktop.org/~xorg/X11R6.8.0/src/X11R6.8.0-src3.tar.gz"
+   "http://freedesktop.org/~xorg/X11R6.8.0/src/X11R6.8.0-src4.tar.gz"
+   "http://freedesktop.org/~xorg/X11R6.8.0/src/X11R6.8.0-src5.tar.gz"
+   "http://freedesktop.org/~xorg/X11R6.8.0/src/X11R6.8.0-src6.tar.gz"
+   "http://freedesktop.org/~xorg/X11R6.8.0/src/X11R6.8.0-src7.tar.gz"
+)
+compile_version=1.7.1
+recipe_type=makefile
+dir=xc
+build_target="World"
+
+post_install() {
+	make install.man
+}

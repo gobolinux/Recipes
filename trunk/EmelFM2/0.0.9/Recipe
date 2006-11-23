@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for EmelFM2 by Felix Breuer <felix@fbreuer.de>, on Sun Sep 5 22:17:33 CEST 2004
+# Recipe for version 0.0.9 by Felix Breuer <felix@fbreuer.de>, on Sun Sep 5 22:17:33 CEST 2004
+compile_version=1.7.1
+url="http://dasui.prima.de/~tooar/emelfm2-0.0.9.tar.gz"
+file_size=467516
+file_md5=d627839065b51ad90ded488e9d34c4a8
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+	"PREFIX=$target"
+)

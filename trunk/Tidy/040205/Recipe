@@ -1,0 +1,10 @@
+url="http://tidy.sourceforge.net/src/tidy_src.tgz"
+file_size=239497
+file_md5=191e215834e57e0ac90b0e2b6d7c3545
+dir=tidy/build/gnuauto
+compile_version=1.7.1
+recipe_type=configure
+pre_build() {
+   cd ../..
+   sh build/gnuauto/setup.sh
+}

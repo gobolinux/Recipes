@@ -1,0 +1,20 @@
+# Recipe for OpenTTD by Luíza D. Utsch (yggdrasilbury@gmail.com), on Thu Jul 20 19:38:17 BRT 2006
+# Recipe for version 0.4.7 by Luíza D. Utsch (yggdrasilbury@gmail.com), on Thu Jul 20 19:38:17 BRT 2006
+compile_version=1.7.1
+url="$httpSourceforge/openttd/openttd-0.4.7-source.tar.bz2"
+file_size=2202261
+file_md5=7a7201ed0f6c1727ac22a977d20c7611
+dir='openttd-0.4.7'
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=(
+"PREFIX=$target" 
+"BINARY_DIR=bin" # already prefixed with $PREFIX
+"DATA_DIR=Share/openttd" # location of Transport Tycoon data files
+"ICON_DIR=Share/openttd/icons"
+"PERSONAL_DIR=.openttd"
+"USE_HOMEDIR=1"
+"INSTALL=1"
+)
+

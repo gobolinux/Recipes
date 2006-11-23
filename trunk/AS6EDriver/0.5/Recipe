@@ -1,0 +1,14 @@
+compile_version=1.7.1
+url="$httpSourceforge/as6edriver/as6edriver-0.5.tar.gz"
+file_size=855005
+file_md5=52663aadb38e96efe3fccb444f693321
+recipe_type=configure
+
+pre_install() {
+    sed -i "/ root /d" Makefile
+}
+
+post_install() {
+    chown 0 $target/bin/as6edriver
+    sudo -u "#0" chmod +s $target/bin/as6edriver
+}

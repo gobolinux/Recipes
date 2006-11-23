@@ -1,0 +1,9 @@
+# by Guilherme Bedin
+
+url=http://freshmeat.net/redir/ripmime/9027/url_tgz/ripmime-1.3.0.5.tar.gz
+compile_version=1.7.1
+recipe_type=makefile
+
+make_variables=(
+   "LOCATION=$target"
+)

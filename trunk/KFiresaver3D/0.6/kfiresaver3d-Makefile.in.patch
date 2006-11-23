@@ -1,0 +1,12 @@
+--- ./kfiresaver3d/Makefile.in	2002-09-09 15:33:30.000000000 -0500
++++ ./kfiresaver3d/Makefile.in.new	2006-03-13 18:33:33.000000000 -0600
+@@ -590,6 +590,9 @@
+ #>- 	$(mkinstalldirs) $(kde_appsdir)/System/
+ #>+ 1
+ 	$(mkinstalldirs) $(DESTDIR)$(kde_appsdir)/System/
++#>- 	$(mkinstalldirs) $(kde_appsdir)/System/ScreenSavers
++#>+ 1
++	$(mkinstalldirs) $(DESTDIR)$(kde_appsdir)/System/ScreenSavers
+ #>- 	$(INSTALL_DATA) $(srcdir)/kfiresaver3D.desktop $(kde_appsdir)/System/ScreenSavers
+ #>+ 1
+ 	$(INSTALL_DATA) $(srcdir)/kfiresaver3D.desktop $(DESTDIR)$(kde_appsdir)/System/ScreenSavers

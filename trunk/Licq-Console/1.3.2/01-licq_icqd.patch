@@ -1,0 +1,20 @@
+diff -Nur licq-1.3.2/include/licq_icqd.h licq-1.3.2-fabio.m/include/licq_icqd.h
+--- licq-1.3.2/include/licq_icqd.h	2005-09-09 13:13:53.000000000 -0300
++++ licq-1.3.2-fabio.m/include/licq_icqd.h	2006-09-05 01:22:05.000000000 -0300
+@@ -39,6 +39,16 @@
+ class CReverseConnectToUserData;
+ class CMSN;
+ 
++/* Forward declarations for friend functions */
++void *Ping_tep(void *p);
++void *UpdateUsers_tep(void *p);
++void *MonitorSockets_tep(void *p);
++void *ReverseConnectToUser_tep(void *p);
++void *ProcessRunningEvent_Client_tep(void *p);
++void *ProcessRunningEvent_Server_tep(void *p);
++void *Shutdown_tep(void *p);
++void *ConnectToServer_tep(void *s);
++
+ const unsigned short IGNORE_MASSMSG    = 1;
+ const unsigned short IGNORE_NEWUSERS   = 2;
+ const unsigned short IGNORE_EMAILPAGER = 4;

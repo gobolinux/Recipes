@@ -1,0 +1,13 @@
+# Recipe for version 3.5.3 by Rui Andrada <shingonoide at gmail>, on Sun Jun 4 21:11:56 BRT 2006
+# by Maglan C. Diemer, 3.3.2 by roko
+url="ftp://ftp.oregonstate.edu/pub/kde/stable/3.5.3/src/kdemultimedia-3.5.3.tar.bz2"
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+  "--with-gnu-ld"
+  "--disable-debug"
+  "--disable-dependency-tracking"
+  "--with-arts-alsa"
+#  "DO_NOT_COMPILE=kaboodle"
+  #akode arts audiofile_artsplugin doc juk kaboodle kappfinder-data kfile-plugins kmid kmix libkcddb mpeglib mpg123_artsplugin oggvorbis_artsplugin xine_artsplugin krec noatun kscd kioslave kaudiocreator mpeglib_artsplug
+)

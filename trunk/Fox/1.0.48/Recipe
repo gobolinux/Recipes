@@ -1,0 +1,6 @@
+url=http://www.fox-toolkit.org/ftp/fox-1.0.48.tar.gz
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+  "--with-opengl=opengl"
+)

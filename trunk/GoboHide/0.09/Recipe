@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for GoboHide by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Dec 20 00:20:22 BRST 2004
+# Recipe for version 0.09 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Dec 20 00:20:22 BRST 2004
+compile_version=1.7.1
+url="http://gobolinux.org/download/gobohide/GoboHide-0.09.tar.bz2"
+file_size=5663
+file_md5=0104688713b2ffe30636cea330a6a664
+recipe_type=makefile
+
+make_variables=("PREFIX=$target")
+
+pre_install() {
+	cp gobohide $target/bin
+	cp gobohide.8 $target/man/man8
+	cp hier.7 $target/man/man7
+}

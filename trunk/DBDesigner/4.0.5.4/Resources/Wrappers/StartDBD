@@ -1,0 +1,31 @@
+#!/bin/bash
+
+#ripped from startdbd, Shingo
+. /System/Settings/bashrc
+if [ ! -d ~/.DBDesigner4 ]; then
+  mkdir ~/.DBDesigner4
+fi
+
+app_ld_path="/Programs/DBDesigner/Current/Linuxlib"
+# First check to see if we have an LD_LIBRARY_PATH environment variable
+if [ -n "$LD_LIBRARY_PATH" ]; then
+# we do, so prepend our path first
+  export LD_LIBRARY_PATH="$app_ld_path:$LD_LIBRARY_PATH"
+else
+  # we do not, so we will create the env var.
+  export LD_LIBRARY_PATH="$app_ld_path"
+fi
+
+# make sure we have something specified for the LANG environment variable
+if [ -z "$LANG" ]; then
+  # set LANG to an appropriate value
+  export LANG=en_US
+fi
+
+#LD_LIBRARY_PATH=":$LD_LIBRARY_PATH"
+#use the original qt files
+export CLX_USE_LIBQT=yes
+#QT smooth fonts
+export QT_XFT=true
+echo Starting DBDesigner4 ...
+/Programs/DBDesigner/Current/DBDesigner4 $* 2> ~/.DBDesigner4/DBD4.log

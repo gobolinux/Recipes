@@ -1,0 +1,10 @@
+# Recipe for version 1.3.6 by Andre Detsch, on Fri Jul 22 16:37:51 BRT 2005
+# by Guilherme Bedin
+
+url=ftp://ftp.lyx.org/pub/lyx/stable/lyx-1.3.6.tar.bz2
+compile_version=1.7.1
+recipe_type=configure
+
+configure_options=(
+  "--with-frontend=qt"
+)

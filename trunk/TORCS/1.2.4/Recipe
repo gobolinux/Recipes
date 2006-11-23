@@ -1,0 +1,27 @@
+# Recipe for version 1.2.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Oct 12 12:01:49 BRST 2006
+# Recipe (MakeRecipe) for TORCS by roko, <ro.ko@mcnon.com>, , on Fri Oct 22 23:04:05 BRST 2004
+compile_version=1.7.1
+urls=(
+"$httpSourceforge/torcs/TORCS-1.2.4-src.tgz"                    # mandatory
+"$httpSourceforge/torcs/TORCS-1.2.4-data.tgz"                   # mandatory
+"$httpSourceforge/torcs/TORCS-1.2.4-data-cars-extra.tgz"        # mandatory
+"$httpSourceforge/torcs/TORCS-1.2.4-data-tracks-road.tgz"       # mandatory
+"$httpSourceforge/torcs/TORCS-1.2.4-data-tracks-oval.tgz"       # optional
+"$httpSourceforge/torcs/TORCS-1.2.4-data-tracks-dirt.tgz"       # optional
+"$httpSourceforge/torcs/TORCS-1.2.4-src-robots-base.tgz"        # mandatory
+"$httpSourceforge/torcs/TORCS-1.2.4-src-robots-berniw.tgz"      # optional
+"$httpSourceforge/torcs/TORCS-1.2.4-src-robots-bt.tgz"          # optional
+"$httpSourceforge/torcs/TORCS-1.2.4-src-robots-olethros.tgz"    # optional
+"$httpSourceforge/torcs/TORCS-1.2.4-data-cars-Patwo-Design.tgz" # optional
+)
+dir="torcs-1.2.4"
+recipe_type=configure
+
+# TORCS *needs* this. Do not remove.
+configure_options=(
+    --x-libraries=$goboLibraries
+)
+
+pre_link(){
+    cd .. && cp -vR categories data menu tracks cars $target/Shared/games/torcs/ 
+}

@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Ecasound by roko, <ro.ko@mcnon.com>, on Fri Oct 29 23:05:38 BRST 2004
+# Recipe for version 2.3.4 by roko, <ro.ko@mcnon.com>, on Fri Oct 29 23:05:38 BRST 2004
+compile_version=1.7.1
+url="http://ecasound.seul.org/download/ecasound-2.3.4.tar.gz"
+file_size=968735
+file_md5=4d8e319b6c231acfe4884cc24114cace
+recipe_type=configure
+configure_options=(
+--enable-shared
+--disable-rubyecasound 
+--with-python-modules=$target/lib/python2.3/site-packages
+)

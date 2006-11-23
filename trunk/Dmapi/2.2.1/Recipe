@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for Dmapi by ro.ko@mcnon.com, on Tue Oct 12 00:32:25 BRST 2004
+# Recipe for version 2.2.1.src by ro.ko@mcnon.com, on Tue Oct 12 00:32:25 BRST 2004
+compile_version=1.7.1
+url="ftp://oss.sgi.com/projects/xfs/download/cmd_tars/dmapi-2.2.1.src.tar.gz"
+file_size=78018
+file_md5=f214fb062f872ecbe6946bff95c1127a
+recipe_type=configure
+dir="dmapi-2.2.1"
+configure_options=(
+--libexecdir=$target/lib
+)
+install_target="install install-dev"
+pre_link() {
+   ln -sf $target/lib/libdm.so.0.0.4 $target/lib/libdm.so
+}

@@ -1,0 +1,31 @@
+# Recipe for version 0.4.2 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jan 20 23:38:41 CET 2006
+# Recipe (MakeRecipe) for Rlocate by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jul 29 03:41:13 CEST 2005
+compile_version=1.7.1
+url="$httpSourceforge/rlocate/rlocate-0.4.2.tar.gz"
+recipe_type=configure
+
+sandbox_options=(
+    "--no-sandbox"
+)
+
+configure_options=(
+    "--enable-sandboxed"
+)
+
+pre_build () {
+    # Add group rlocate
+    if ! grep -q rlocate $goboSettings/group
+    then
+        groupadd rlocate
+    fi
+}
+
+pre_link () {
+    # "Steal" links from findutils and slocate
+    ln -sf $target/man/man1/updatedb.1 $goboManuals/man1/
+    ln -sf $target/bin/* $goboExecutables/
+}
+
+post_install() {
+    depmod
+}

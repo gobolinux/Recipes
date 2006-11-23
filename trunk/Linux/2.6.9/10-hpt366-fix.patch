@@ -1,0 +1,85 @@
+--- linux.vanilla-2.6.9/drivers/ide/pci/hpt366.c	2004-10-20 23:16:53.000000000 +0100
++++ linux-2.6.9/drivers/ide/pci/hpt366.c	2004-10-24 18:04:21.000000000 +0100
+@@ -10,6 +10,11 @@
+  * donation of an ABit BP6 mainboard, processor, and memory acellerated
+  * development and support.
+  *
++ *
++ * Highpoint have their own driver (source except for the raid part)
++ * available from http://www.highpoint-tech.com/hpt3xx-opensource-v131.tgz
++ * This may be useful to anyone wanting to work on the mainstream hpt IDE.
++ *
+  * Note that final HPT370 support was done by force extraction of GPL.
+  *
+  * - add function for getting/setting power status of drive
+@@ -103,7 +108,10 @@
+ 		u8 c0, c1;
+ 
+ 		p += sprintf(p, "\nController: %d\n", i);
+-		p += sprintf(p, "Chipset: HPT%s\n", chipset_nums[class_rev]);
++		if(class_rev < 9)
++			p += sprintf(p, "Chipset: HPT%s\n", chipset_nums[class_rev]);
++		else
++			p += sprintf(p, "Chipset: HPT revision %d\n", class_rev);
+ 		p += sprintf(p, "--------------- Primary Channel "
+ 				"--------------- Secondary Channel "
+ 				"--------------\n");
+@@ -169,6 +177,12 @@
+ }
+ #endif  /* defined(DISPLAY_HPT366_TIMINGS) && defined(CONFIG_PROC_FS) */
+ 
++/*
++ *	This wants fixing so that we do everything not by classrev
++ *	(which breaks on the newest chips) but by creating an
++ *	enumeration of chip variants and using that
++ */
++ 
+ static u32 hpt_revision (struct pci_dev *dev)
+ {
+ 	u32 class_rev;
+@@ -466,7 +480,11 @@
+ {
+ 	u8 speed = ide_dma_speed(drive, hpt3xx_ratemask(drive));
+ 
+-	if (!(speed))
++	if (!speed)
++		return 0;
++		
++	/* If we don't have any timings we can't do a lot */
++	if (pci_get_drvdata(HWIF(drive)->pci_dev) == NULL)
+ 		return 0;
+ 
+ 	(void) hpt3xx_tune_chipset(drive, speed);
+@@ -886,7 +904,11 @@
+ 
+ 	/*
+ 	 * default to pci clock. make sure MA15/16 are set to output
+-	 * to prevent drives having problems with 40-pin cables.
++	 * to prevent drives having problems with 40-pin cables. Needed
++	 * for some drives such as IBM-DTLA which will not enter ready
++	 * state on reset when PDIAG is a input.
++	 *
++	 * ToDo: should we set 0x21 when using PLL mode ?
+ 	 */
+ 	pci_write_config_byte(dev, 0x5b, 0x23);
+ 
+@@ -981,6 +1003,9 @@
+ 	 * result in slow reads when using a 33MHz PCI clock. we also
+ 	 * don't like to use the PLL because it will cause glitches
+ 	 * on PRST/SRST when the HPT state engine gets reset.
++	 *
++	 * ToDo: Use 66MHz PLL when ATA133 devices are present on a
++	 * 372 device so we can get ATA133 support
+ 	 */
+ 	if (pci_get_drvdata(dev)) 
+ 		goto init_hpt37X_done;
+@@ -1030,6 +1055,9 @@
+ 	} 
+ 
+ init_hpt37X_done:
++	if (!pci_get_drvdata(dev))
++		printk(KERN_ERR "HPT37X%s: unknown bus timing [%d %d].\n", 
++			is_372n?"N":"", pll, freq);
+ 	/* reset state engine */
+ 	pci_write_config_byte(dev, 0x50, 0x37); 
+ 	pci_write_config_byte(dev, 0x54, 0x37); 

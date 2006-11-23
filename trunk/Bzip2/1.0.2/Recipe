@@ -1,0 +1,13 @@
+url=ftp://sources.redhat.com/pub/bzip2/v102/bzip2-1.0.2.tar.gz
+compile_version=1.7.1
+recipe_type=makefile
+install_variables=(
+   "PREFIX=$target"
+)
+pre_build() {
+   make -f Makefile-libbz2_so
+}
+post_install() {
+   cp -a libbz2.so* $target/lib
+   ln -nfs $target/lib/libbz2.so* $goboLibraries
+}

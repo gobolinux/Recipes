@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for Linux-PAM by Jonas Karlsson <jonka750@student.liu.se>, on Thu Nov 24 13:47:01 CET 2005
+# Recipe for version 0.99.2.0 by Jonas Karlsson <jonka750@student.liu.se>, on Thu Nov 24 13:47:01 CET 2005
+compile_version=1.7.1
+url="http://www.kernel.org/pub/linux/libs/pam/pre/library/Linux-PAM-0.99.2.0.tar.bz2"
+file_size=710111
+file_md5=5f44d3cfe402dba91b01a6b1c40aba2a
+recipe_type=configure
+
+configure_options=(
+	"--enable-includedir=$target/include"
+	"--enable-docdir=$target/doc/pam"
+	"--enable-mandir=$target/man"
+	"--enable-read-both-confs"
+)

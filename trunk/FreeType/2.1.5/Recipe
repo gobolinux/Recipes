@@ -1,0 +1,13 @@
+# by Giusepe Casagrande, Jeremy Vernon
+
+url=$httpSourceforge/freetype/freetype-2.1.5.tar.gz
+compile_version=1.7.1
+recipe_type=configure
+# weird configure script accepts prefix but PrepareProgram doesn't detect it
+configure_options=(
+   "--prefix=$target"
+)
+# XFree86 also has a FreeType; We want this one to be the dominant FreeType
+symlink_options=(
+   "--conflict overwrite"
+)

@@ -1,0 +1,27 @@
+# Recipe (MakeRecipe) for OCaml by  Ozgur Ulukir, on Mon Dec 20 17:41:24 EET 2004
+# Recipe for version 3.08.2 by  Ozgur Ulukir, on Mon Dec 20 17:41:24 EET 2004
+
+url="http://caml.inria.fr/distrib/ocaml-3.08/ocaml-3.08.2.tar.bz2"
+file_size=2052501
+file_md5=608319707707cf4ac3f7a13eb63260ad
+compile_version=1.7.1
+recipe_type=makefile
+makefile='Makefile'
+pre_build() {
+        configure -prefix $target
+}
+
+# Make has to have an argument, so the "make" step does not work.
+# Use pre_install() instead:
+pre_install() {
+        make world.opt
+}
+
+# If Emacs is present install the Emacs mode.
+pre_link() {
+        if [ -x emacs ]; then
+                cd emacs
+                make install
+        fi
+}
+

@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Tk by Peter Eriksen <s022018@student.dtu.dk>, on Mon Nov 29 21:31:38 CET 2004
+# Recipe for version 8.4.8 by Peter Eriksen <s022018@student.dtu.dk>, on Mon Nov 29 21:31:38 CET 2004
+compile_version=1.7.1
+url="$httpSourceforge/tcl/tk8.4.8-src.tar.gz"
+file_size=3265937
+file_md5=74eacf3280caef77e448ee5394474dfc
+dir='tk8.4.8/unix'
+recipe_type=configure
+
+#configure_options=("--with-tcl=/Programs/Tcl/8.4.8")

@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for AEWM by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Fri Dec 24 13:26:00 BRST 2004
+# Recipe for version 1.2.5 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Fri Dec 24 13:26:00 BRST 2004
+compile_version=1.7.1
+url="http://www.red-bean.com/~decklin/aewm/aewm-1.2.5.tar.gz"
+file_size=40303
+file_md5=dc59e5352d60a8a4fd859bb5a8b6e515
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=("DESTDIR=$target" "XROOT=" "CFGDIR=$target/../Settings/aewm")

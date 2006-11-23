@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for FindUtils by roko, <ro.ko@mcnon.com>, , on Fri Oct 22 20:28:10 BRST 2004
+# Recipe for version 4.2.1 by roko, <ro.ko@mcnon.com>, , on Fri Oct 22 20:28:10 BRST 2004
+compile_version=1.7.1
+url="ftp://alpha.gnu.org/gnu/findutils/findutils-4.2.1.tar.gz"
+file_size=919677
+file_md5=a5f7267f247524f8be553952bb53068e
+recipe_type=configure
+post_install() {
+mkdir /Programs/FindUtils/Variable
+}

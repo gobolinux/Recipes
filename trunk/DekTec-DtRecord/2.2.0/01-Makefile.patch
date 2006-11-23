@@ -1,0 +1,24 @@
+--- DtRecord/Makefile.orig	2006-01-17 16:14:42.000000000 -0200
++++ DtRecord/Makefile	2006-01-17 16:16:05.000000000 -0200
+@@ -2,6 +2,8 @@
+ # Makefile for the DtRecord (LINUX)
+ # ========================================================================================
+ 
++PREFIX = /usr/local
++BINDIR = $(PREFIX)/bin
+ 
+ # ========================================================================================
+ # Set include directories. Make sure the include path to the DTAPI is correct
+@@ -32,6 +34,12 @@ all: $(TARGET)
+ $(TARGET): $(SRC:.cpp=.o)
+ 		$(CXX) $(CPPFLAGS) $(LDFLAGS) $^ $(LDLIBS) -o $@
+ 
++
++# ========================================================================================
++# Make install option
++install: $(TARGET)
++	cp $(TARGET) $(BINDIR)
++
+ # ========================================================================================
+ # Clean all option
+ 

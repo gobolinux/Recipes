@@ -1,0 +1,12 @@
+diff -Naur man-1.5k.orig/src/man.conf.in man-1.5k/src/man.conf.in
+--- man-1.5k.orig/src/man.conf.in	2002-07-17 13:08:40.000000000 -0600
++++ man-1.5k/src/man.conf.in	2002-09-28 17:43:41.000000000 -0600
+@@ -36,7 +36,7 @@
+ #
+ # Every automatically generated MANPATH includes these fields
+ #
+-MANPATH	/usr/man
++#MANPATH	/usr/man
+ MANPATH /usr/share/man
+ MANPATH	/usr/local/man
+ MANPATH	/usr/X11R6/man

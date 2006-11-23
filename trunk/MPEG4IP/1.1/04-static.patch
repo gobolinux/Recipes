@@ -1,0 +1,11 @@
+--- mpeg4ip-1.1/lib/SDLAudio/src/audio/SDL_audio.c.orig	2006-01-06 10:19:18.000000000 -0200
++++ mpeg4ip-1.1/lib/SDLAudio/src/audio/SDL_audio.c	2006-01-06 10:19:28.000000000 -0200
+@@ -112,7 +112,7 @@ static int audio_configured = 0;
+ #endif
+ 
+ /* The general mixing thread function */
+-static int SDL_RunAudio(void *audiop)
++int SDL_RunAudio(void *audiop)
+ {
+ 	SDL_AudioDevice *audio = (SDL_AudioDevice *)audiop;
+ 	Uint8 *stream;

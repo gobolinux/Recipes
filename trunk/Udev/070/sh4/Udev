@@ -1,0 +1,41 @@
+#!/bin/sh
+
+. GoboPath
+
+# Assure that udev is the hotplug handler
+echo "$goboExecutables/udev" > $goboStatus/sys/kernel/hotplug
+udevsend
+mount -n -t tmpfs tmpfs $goboDevices
+
+# call udevstart
+mkdir -p $goboDevices/.udevdb/
+udevstart
+
+# make extra nodes
+mknod $goboDevices/initctl p
+mkdir -p $goboDevices/pts
+mkdir -p $goboDevices/shm
+ln -nfs $goboStatus/self/fd   $goboDevices/fd
+ln -nfs $goboStatus/self/fd/0 $goboDevices/stdin
+ln -nfs $goboStatus/self/fd/1 $goboDevices/stdout
+ln -nfs $goboStatus/self/fd/2 $goboDevices/stderr
+ln -nfs $goboStatus/kcore     $goboDevices/core
+
+# ST specific stuff
+mknod $goboDevices/st20 c 63 0
+mkdir -p $goboDevices/dvb/adapter0
+ln -nfs adapter0 $goboDevices/dvb/sti55XX
+
+for i in 0 1 2 3 4 5
+do
+    mknod $goboDevices/mtd$i                   c  90 $(( i * 2 ))
+    mknod $goboDevices/dvb/adapter0/audio$i    c 249 $i
+    mknod $goboDevices/dvb/adapter0/demux$i    c 242 $i
+    mknod $goboDevices/dvb/adapter0/dvr$i      c 242 $(( i + 128 ))
+    mknod $goboDevices/dvb/adapter0/frontend$i c 250 $i
+    mknod $goboDevices/dvb/adapter0/net$i      c 251 $i
+    mknod $goboDevices/dvb/adapter0/video$i    c 248 $i
+done
+
+mount /dev/pts
+mount /dev/shm

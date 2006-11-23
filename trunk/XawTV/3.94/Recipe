@@ -1,0 +1,22 @@
+# Recipe (MakeRecipe) for Xawtv by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Thu May 12 11:46:48 BRT 2005
+# Recipe for version 3.94 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Thu May 12 11:46:48 BRT 2005
+compile_version=1.7.1
+url="http://dl.bytesex.org/releases/xawtv/xawtv-3.94.tar.gz"
+file_size=553118
+file_md5=df768711930605918106c1477327d348
+recipe_type=configure
+
+configure_options=(
+	"--enable-aa"
+	"--enable-alsa"
+	"--enable-gl"
+	"--enable-quicktime"
+	"--enable-xfree-ext"
+	"--enable-xft"
+	"--enable-xvideo"
+)
+
+make_variables=(
+	"x11conf=$target/../Settings/X11"
+	"resdir=$target/../Settings/X11"
+)

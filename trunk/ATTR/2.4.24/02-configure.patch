@@ -1,0 +1,16 @@
+--- attr-2.4.24/configure	2005-10-07 18:51:49.000000000 +0200
++++ attr-2.4.24/configure	2006-01-05 21:57:14.000000000 +0100
+@@ -1299,11 +1299,11 @@
+     MALLOCLIB=${MALLOCLIB:-''}		    malloc_lib="$MALLOCLIB"
+ 
+ 
+-    PKG_USER=${INSTALL_USER:-'root'}
++    PKG_USER=${INSTALL_USER:-'fibo'}
+     pkg_user="$PKG_USER"
+ 
+ 
+-    PKG_GROUP=${INSTALL_GROUP:-'root'}
++    PKG_GROUP=${INSTALL_GROUP:-'fibo'}
+     pkg_group="$PKG_GROUP"
+ 
+ 

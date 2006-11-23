@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for Xaw3d by Andreas Koehler, on Fri Aug 12 13:36:48 CEST 2005
+# Recipe for version 1.5 by Andreas Koehler, on Fri Aug 12 13:36:48 CEST 2005
+compile_version=1.7.1
+url="ftp://ftp.x.org/contrib/widgets/Xaw3d/R6.3/Xaw3d-1.5.tar.gz"
+file_size=284420
+file_md5=a77aa4ebe3be7964e4dbbc351e48277f
+recipe_type=xmkmf
+dir="xc/lib/Xaw3d"
+pre_build() {
+   echo SHLIBDIR=${installprefix}/lib >> Imakefile
+   mkdir X11
+   ln -nfs ../../Xaw3d X11/Xaw3d
+}

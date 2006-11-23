@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for Foremost by Luíza D. Utsch (yggdrasilbury@gmail.com), on Wed Jul 26 12:26:07 BRT 2006
+# Recipe for version 1.2 by Luíza D. Utsch (yggdrasilbury@gmail.com), on Wed Jul 26 12:26:07 BRT 2006
+compile_version=1.7.1
+url="http://foremost.sourceforge.net/pkg/foremost-1.2.tar.gz"
+file_size=50104
+file_md5=650f6e42c1604a39601a48c3fffd814a
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=(
+    "BIN=$target/bin"
+    "MAN=$target/man"
+    "CONF=$settings_target"
+)

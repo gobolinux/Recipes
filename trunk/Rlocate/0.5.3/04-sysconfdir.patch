@@ -1,0 +1,32 @@
+diff -Naur rlocate-0.5.3/src/Makefile.am rlocate-0.5.3.new/src/Makefile.am
+--- rlocate-0.5.3/src/Makefile.am	2006-09-26 10:44:48.000000000 +0200
++++ rlocate-0.5.3.new/src/Makefile.am	2006-11-12 00:42:30.000000000 +0100
+@@ -12,13 +12,15 @@
+ MODULE_CFG = $(RLOCATE_DB_DIR)/module.cfg
+ RLOCATE_GRP = $(rlocate_group)
+ RLOCATED_CMD = $(DESTDIR)$(sbindir)/$(rlocated)
++RLOCATE_CFG = $(DESTDIR)$(sysconfdir)/$(rlocate)
+ 
+ AM_CPPFLAGS = -DRLOCATE_DB=\"$(RLOCATE_DB)\" \
+            -DRLOCATE_DB_TMP=\"$(RLOCATE_DB_TMP)\" \
+            -DRLOCATE_DB_DIR=\"$(RLOCATE_DB_DIR)\" \
+            -DMODULE_CFG=\"$(MODULE_CFG)\" \
+            -DRLOCATE_GRP=\"$(RLOCATE_GRP)\" \
+-           -DRLOCATED_CMD=\"$(RLOCATED_CMD)\"
++           -DRLOCATED_CMD=\"$(RLOCATED_CMD)\" \
++           -DRLOCATE_CFG=\"$(RLOCATE_CFG)\"
+ 
+ bin_PROGRAMS = rlocate
+ rlocate_SOURCES = pidfile.h pidfile.c slocate.c slocate.h \
+diff -Naur rlocate-0.5.3/src/slocate.h rlocate-0.5.3.new/src/slocate.h
+--- rlocate-0.5.3/src/slocate.h	2006-09-26 10:44:48.000000000 +0200
++++ rlocate-0.5.3.new/src/slocate.h	2006-11-12 00:42:45.000000000 +0100
+@@ -33,7 +33,7 @@
+ #define WARN_MESSAGE "8 days"
+ 
+ #define MTAB_FILE "/etc/mtab"
+-#define UPDATEDB_FILE "/etc/updatedb.conf"
++#define UPDATEDB_FILE RLOCATE_CFG"/updatedb.conf"
+ 
+ /* More fitting paths for FreeBSD -matt */
+ #if defined(__FreeBSD__)

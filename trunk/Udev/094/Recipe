@@ -1,0 +1,55 @@
+# Recipe for version 094 by Andre Detsch <detsch@gobolinux.org>, on Sun Jun 18 19:39:20 BRT 2006
+# Recipe for Udev 094 by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.7.1
+url="http://www.kernel.org/pub/linux/utils/kernel/hotplug/udev-094.tar.bz2"
+recipe_type=makefile
+makefile='Makefile'
+
+build_target="all install etc/udev/udev.conf"
+
+make_variables=(
+   "EXTRAS=extras/ata_id extras/cdrom_id extras/dasd_id extras/edd_id extras/firmware extras/floppy extras/path_id extras/run_directory extras/scsi_id extras/usb_id extras/volume_id"
+)
+
+build_variables=(
+   "prefix=$target"
+   "etcdir=$goboSettings"
+   "udevdir=$goboDevices"
+)
+
+install_variables=(
+   "DESTDIR=$target"
+)
+
+pre_link() {
+   pushd $target
+   mkdir -p Resources/Defaults/Settings
+   cp -a etc/* Resources/Defaults/Settings/
+   rm -rf etc
+   cp $dir/etc/udev/gentoo/udev.rules Resources/Defaults/Settings/udev/rules.d/50-udev.rules
+   cp $dir/etc/udev/05-udev-early.rules Resources/Defaults/Settings/udev/rules.d
+   cp $dir/etc/udev/60-persistent-storage.rules Resources/Defaults/Settings/udev/rules.d
+   mv usr/bin/* bin/
+   mv usr/sbin/* sbin/
+   mv usr/share/man/man8/* man/man8
+   rm -rf usr
+   pushd bin
+   for i in ../lib/udev/*
+   do
+   	[ -x $i ] && ln -s $i .
+   done
+   popd
+
+   mkdir lib/udev/devices
+   pushd lib/udev/devices
+   mkdir pts shm
+   ln -s $goboStatus/kcore core
+   mknod null c 1 3
+   mknod tty1 c 4 1
+   mknod tty2 c 4 2
+   mknod tty3 c 4 3
+   mknod tty4 c 4 4
+   mknod tty5 c 4 5
+   popd
+   popd
+}

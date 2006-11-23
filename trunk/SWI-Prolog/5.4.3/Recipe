@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for SWI-Prolog by Hisham Muhammad, on Wed Nov 10 22:10:13 BRST 2004
+# Recipe for version 5.4.3 by Hisham Muhammad, on Wed Nov 10 22:10:13 BRST 2004
+compile_version=1.7.1
+url="http://gollem.science.uva.nl/cgi-bin/nph-download/SWI-Prolog/pl-5.4.3.tar.gz"
+file_size=7973317
+file_md5=57ec50ed230181df5448d041bec1a86e
+recipe_type=configure
+make_variables=(
+   "prefix=$target"
+)

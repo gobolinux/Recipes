@@ -1,0 +1,23 @@
+===== mm/vmscan.c 1.231 vs edited =====
+Index: linux-2.6.9-ck3/mm/vmscan.c
+===================================================================
+--- linux-2.6.9-ck3.orig/mm/vmscan.c	2004-11-05 23:34:01.587977546 +1100
++++ linux-2.6.9-ck3/mm/vmscan.c	2004-11-05 23:35:51.412261593 +1100
+@@ -379,7 +379,7 @@ static int shrink_list(struct list_head 
+ 
+ 		referenced = page_referenced(page, 1);
+ 		/* In active use or really unfreeable?  Activate it. */
+-		if (referenced && page_mapping_inuse(page))
++		if (referenced && sc->priority && page_mapping_inuse(page))
+ 			goto activate_locked;
+ 
+ #ifdef CONFIG_SWAP
+@@ -719,7 +719,7 @@ refill_inactive_zone(struct zone *zone, 
+ 		if (page_mapped(page)) {
+ 			if (!reclaim_mapped ||
+ 			    (total_swap_pages == 0 && PageAnon(page)) ||
+-			    page_referenced(page, 0)) {
++			    (page_referenced(page, 0) && sc->priority)) {
+ 				list_add(&page->lru, &l_active);
+ 				continue;
+ 			}

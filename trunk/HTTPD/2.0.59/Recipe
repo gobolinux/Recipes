@@ -1,0 +1,19 @@
+# Recipe for version 2.0.59 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Sep 8 20:37:27 CEST 2006
+# Recipe (MakeRecipe) for HTTPD by Peter Eriksen <s022018@student.dtu.dk>, on Wed Nov 3 09:41:50 CET 2004
+compile_version=1.7.1
+url="http://www.apache.org/dist/httpd/httpd-2.0.59.tar.bz2"
+recipe_type=configure
+configure_options=(
+   --enable-rewrite
+   --enable-php
+   --enable-ssl
+   --enable-headers
+   --enable-dav
+   --enable-dav-fs
+)
+
+pre_link() {
+   mkdir -p ${target}/lib/httpd
+   mv ${target}/modules ${target}/lib/httpd
+   ln -s ${goboLibraries}/httpd/modules ${target}
+}

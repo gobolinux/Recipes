@@ -1,0 +1,14 @@
+# Recipe for version 2.7.28 by Jonatan Liljedahl <lijon@kymatica.com>, on Sun Jan 29 00:00:15 BRST 2006
+# Recipe (MakeRecipe) for Lilypond by Jonatan Liljedahl <lijon@kymatica.com>, on Sat Apr 9 17:23:57 BRT 2005
+compile_version=1.7.1
+url="http://lilypond.org/download/v2.7/lilypond-2.7.28.tar.gz"
+recipe_type=configure
+makefile=GNUmakefile
+make_variables=(
+  "DOCUMENTATION=no"
+)
+configure_options=(
+  "--with-ncsb-dir=/Files/Fonts/Ghostscript"
+)
+
+

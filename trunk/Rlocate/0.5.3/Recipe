@@ -1,0 +1,49 @@
+# Recipe for version 0.5.3 by Jonas Karlsson <jonka750@student.liu.se>, on Thu Sep 28 09:47:52 CEST 2006
+# Recipe (MakeRecipe) for Rlocate by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jul 29 03:41:13 CEST 2005
+compile_version=1.7.1
+url="$httpSourceforge/rlocate/rlocate-0.5.3.tar.gz"
+file_size=181867
+file_md5=565f279b3c6ccfdf6a5b2a80e42bfe3e
+recipe_type=configure
+autogen_before_configure=yes
+unmanaged_files=(
+    "${goboModules}/Current/misc/rlocate.ko"
+)
+
+configure_options=(
+   "--enable-sandboxed"
+   "--with-devdir=${goboDevices}"
+   "--with-statusdir=${goboStatus}"
+   "--with-moduledir=${target}/Resources/Unmanaged/${goboModules}/Current/misc"
+   "--with-kernel=${goboModules}/Current/source"
+)
+
+pre_build () {
+    # Add group rlocate if it not exists
+    if ! grep -q rlocate $goboSettings/group
+    then
+        groupadd rlocate
+    fi
+}
+
+pre_link () {
+    # "Steal" links from findutils and slocate
+    ln -sf ${target}/man/man1/updatedb.1 ${goboManuals}/man1/
+    ln -sf ${target}/bin/* ${goboExecutables}/
+    
+    if [ ! -L ${variable_target}/rlocate ]
+    then
+      mkdir -p ${variable_target}/rlocate
+      chown 0:rlocate ${variable_target}/rlocate
+      chmod 0750 ${variable_target}/rlocate
+    fi
+
+    # Make a note that this is a third part module that needs
+    # recompiling with a new kernel
+    mkdir -p ${target}/Shared/Compile/Recompile/Linux/
+    touch ${target}/Shared/Compile/Recompile/Linux/Rlocate
+}
+
+post_install() {
+    depmod
+}

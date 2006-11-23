@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for XTermset by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jul 11 17:19:01 BRT 2005
+# Recipe for version 0.5.2 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jul 11 17:19:01 BRT 2005
+compile_version=1.7.1
+url="$httpSourceforge/clts/xtermset-0.5.2.tar.gz"
+file_size=46328
+file_md5=36c9273884ed74e8b872adb3622d50d9
+recipe_type=configure
+
+pre_build() {
+	automake --add-missing --copy
+}

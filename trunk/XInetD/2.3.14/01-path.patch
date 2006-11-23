@@ -1,0 +1,160 @@
+diff -uNr xinetd-2.3.14-ori/configure xinetd-2.3.14-gobo/configure
+--- xinetd-2.3.14-ori/configure	2005-03-30 20:15:27.000000000 -0300
++++ xinetd-2.3.14-gobo/configure	2005-11-02 13:20:26.000000000 -0200
+@@ -338,7 +338,7 @@
+ # by default will actually change.
+ # Use braces instead of parens because sh, perl, etc. also accept them.
+ bindir='${exec_prefix}/bin'
+-sbindir='${exec_prefix}/sbin'
++sbindir='${exec_prefix}/bin'
+ libexecdir='${exec_prefix}/libexec'
+ datadir='${prefix}/share'
+ sysconfdir='${prefix}/etc'
+diff -uNr xinetd-2.3.14-ori/contrib/xinetd xinetd-2.3.14-gobo/contrib/xinetd
+--- xinetd-2.3.14-ori/contrib/xinetd	2004-01-03 10:36:27.000000000 -0200
++++ xinetd-2.3.14-gobo/contrib/xinetd	2005-11-02 14:05:16.000000000 -0200
+@@ -10,39 +10,20 @@
+ #              limits on the number of servers that can be started, \
+ #              among other things.
+ #
+-# processname: /usr/sbin/xinetd
+-# config: /etc/sysconfig/network
+-# config: /etc/xinetd.conf
+-# pidfile: /var/run/xinetd.pid
++# processname: /Programs/XInetD/Current/bin/xinetd
++# config: /System/Settings/xinetd.conf
++# pidfile: /System/Variable/run/xinetd.pid
++
++PROCCESS=/Programs/XInetD/Current/bin/xinetd
++CONFIG=/System/Settings/xinetd.conf
++EXTRAOPTIONS=""
+ 
+-PATH=/sbin:/bin:/usr/bin:/usr/sbin
+-
+-# Source function library.
+-. /etc/init.d/functions
+-
+-# Get config.
+-test -f /etc/sysconfig/network && . /etc/sysconfig/network
+-
+-# More config
+-
+-test -f /etc/sysconfig/xinetd && . /etc/sysconfig/xinetd
+-
+-# Check that networking is up.
+-[ ${NETWORKING} = "yes" ] || exit 0
+-
+-[ -f /usr/sbin/xinetd ] || exit 1
+-[ -f /etc/xinetd.conf ] || exit 1
++[ -f ${PROCCESS} ] || exit 1
++[ -f ${CONFIG} ] || exit 1
+ 
+ RETVAL=0
+ 
+-if [ "$NETWORKING_IPV6" = "yes" ] && [ -x /usr/sbin/xinetd6 ]; then
+-    prog="xinetd6"
+-else
+-    prog="xinetd"
+-fi
+-
+ start(){
+-    echo -n $"Starting $prog: "
+     # Need to get rid of localization for external services - 
+     # it doesn't make much sense to have i18n on the server side here
+ 
+@@ -55,26 +36,20 @@
+     LC_COLLATE=en_US
+     export LANG LC_TIME LC_ALL LC_MESSAGES LC_NUMERIC LC_MONETARY LC_COLLATE
+     unset HOME MAIL USER USERNAME
+-    daemon $prog -stayalive -reuse -pidfile /var/run/xinetd.pid "$EXTRAOPTIONS"
++    ${PROCCESS} -stayalive -reuse ${EXTRAOPTIONS}
+     RETVAL=$?
+-    echo
+-    touch /var/lock/subsys/xinetd
+     return $RETVAL
+ }
+ 
+ stop(){
+-    echo -n $"Stopping $prog: "
+-    killproc $prog
++    KillProcess ${PROCCESS}
+     RETVAL=$?
+-    echo
+-    rm -f /var/lock/subsys/xinetd
+     return $RETVAL
+ 
+ }
+ 
+ reload(){
+-    echo -n $"Reloading configuration: "	
+-    killproc $prog -HUP
++    killall ${PROCCESS} -HUP
+     RETVAL=$?
+     echo
+     return $RETVAL
+@@ -85,27 +60,6 @@
+     start
+ }
+ 
+-condrestart(){
+-    [ -e /var/lock/subsys/xinetd ] && restart
+-    return 0
+-}
+-
+-dump(){
+-    echo -n $"Dumping configuration: "	
+-    killproc $prog -USR1
+-    RETVAL=$?
+-    echo
+-    return $RETVAL
+-}
+-
+-check(){
+-    echo -n $"Performing Consistency Check: "	
+-    /bin/kill -s IOT $prog
+-    RETVAL=$?
+-    echo
+-    return $RETVAL
+-}
+-
+ # See how we were called.
+ case "$1" in
+     start)
+@@ -114,26 +68,14 @@
+     stop)
+ 	stop
+ 	;;
+-    status)
+-	status $prog
+-	;;
+     restart)
+ 	restart
+ 	;;
+     reload)
+ 	reload
+ 	;;
+-    condrestart)
+-	condrestart
+-	;;
+-    dump)
+-        dump
+-        ;;
+-    check)
+-        check
+-        ;;
+     *)
+-	echo $"Usage: $0 {start|stop|status|restart|condrestart|reload|dump|check}"
++	echo $"Usage: $0 {start|stop|restart|reload}"
+ 	RETVAL=1
+ esac
+ 
+diff -uNr xinetd-2.3.14-ori/contrib/xinetd.conf xinetd-2.3.14-gobo/contrib/xinetd.conf
+--- xinetd-2.3.14-ori/contrib/xinetd.conf	2004-01-03 10:48:39.000000000 -0200
++++ xinetd-2.3.14-gobo/contrib/xinetd.conf	2005-11-02 12:21:21.000000000 -0200
+@@ -46,5 +46,5 @@
+ #	banner_success	=
+ }
+ 
+-includedir /etc/xinetd.d
++includedir /System/Settings/xinetd.d
+  

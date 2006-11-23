@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Baobab by Jonas Karlsson <jonka750@student.liu.se>, on Sat Aug 26 21:43:33 CEST 2006
+# Recipe for version 2.4.2 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Aug 26 21:43:33 CEST 2006
+compile_version=1.7.1
+url="http://www.marzocca.net/linux/downloads/baobab-2.4.2.tar.gz"
+file_size=221665
+file_md5=5c99413e18a07b562fbfd7f8c707ae07
+recipe_type=configure
+sandbox_options=(
+   "--add-allowed ${gconf_settings_path}/gconf/gconf.xml.defaults"
+)

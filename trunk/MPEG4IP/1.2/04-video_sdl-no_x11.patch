@@ -1,0 +1,22 @@
+--- mpeg4ip-1.2/player/src/video_sdl.cpp.orig	2006-01-06 11:33:59.000000000 -0200
++++ mpeg4ip-1.2/player/src/video_sdl.cpp	2006-01-06 11:41:50.000000000 -0200
+@@ -43,10 +43,6 @@
+ #define WM_WIN 1
+ #endif
+ 
+-#if defined (__unix__)
+-#define WM_X11
+-#endif
+-
+ #ifdef _WIN32
+ DEFINE_MESSAGE_MACRO(video_message, "videosync")
+ #else
+@@ -264,7 +260,7 @@ void  CSDLVideo::set_screen_size(int ful
+     int ret;
+     ret = SDL_GetWMInfo(&info);
+     if (ret > 0) {
+-#ifdef unix
++#ifdef WM_X11
+       if (info.subsystem == SDL_SYSWM_X11) {
+ 	info.info.x11.lock_func();
+ 	XMoveWindow(info.info.x11.display, info.info.x11.wmwindow, 

@@ -1,0 +1,38 @@
+Here is a slightly broken recipe for Xfree86 4.3.0.1.  You can make it be
+a recipe for 4.3.0 by removing the 4.3.0.1 patch.  X is composed of more
+than one tarball that all extract to a directory called xc.  aunpack can't
+handle this because it extracts to a temporary directory and then trys to
+move that directory to the destination.  I imagine this will be a problem
+for all Recipes which define urls instead of url.  Since I don't know perl
+I changed the "do aunpack -f "$f" " line of Compile to "do abrir "$f".
+
+For some reason make install install.man does not do the same thing as:
+make install
+make install.man
+so I added a pre_link to do the man pages.
+
+The patches apply correctly but I don't think I made them correctly
+because they say "missing header for unified diff at line 3 of patch" when
+they are applied.
+
+I originally had :
+#define BuildFonts NO
+#define FontDir /File/Fonts
+in the host.def patch, but X could not find the fonts in /File/Fonts when
+I tried to run it.  It first claimed the directories inside /File/Fonts
+didn't exist and then claims it can not init them.  Since these aren't in
+host.def the X11.tmpl patch isn't necessary, but I keep it incase anyone
+can figure out how to make X find the fonts in /File/Fonts.
+
+The inc.Imakefile might be made unneccessary by defining LinkGLToUsr or
+AlternateIncRoot to NO but I don't know what else that will affect.
+
+Finally this Recipe does not work if there are links in /usr to an
+existing X installation.  The install tries to remove specific files in
+/usr as long as they aren't there it works.  I removed /Programs/XFree86
+and then did a find /System/Links | RemoveBroken to install this one, but
+I imagine moving /Progams/XFree86/<actual directory current refers to>
+doing a find /System/Links | RemoveBroken and then moving the directory
+back to its original location would also work.
+
+  -- Jeremy Vernon

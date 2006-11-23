@@ -1,0 +1,15 @@
+--- emelfm2-0.1.7/plugins/e2p_dircmp.c.orig	2006-07-10 21:56:39.000000000 +0200
++++ emelfm2-0.1.7/plugins/e2p_dircmp.c	2006-07-10 22:00:21.000000000 +0200
+@@ -380,9 +380,9 @@
+ 	guchar sum [HASH_LENGTH+1]; //computed hash + trailing \0
+ 
+ 	gint descriptor = TEMP_FAILURE_RETRY (open (filename, O_RDONLY
+-#ifdef __USE_GNU
+-	| O_NOATIME
+-#endif
++//#ifdef __USE_GNU
++//	| O_NOATIME
++//#endif
+ 	));
+ 	if (descriptor < 0)
+ 	{

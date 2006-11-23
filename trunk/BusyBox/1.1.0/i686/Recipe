@@ -1,0 +1,13 @@
+pre_build() {
+	if [ ! -f .config ]
+	then
+        cp "$archsubdir"/dot-config .config
+        GrepReplace "PREFIX=\"./_install\"" \
+                    "PREFIX=\"$target\"" \
+                    .config
+#		yes "" | make oldconfig
+	fi
+
+	make menuconfig
+}
+

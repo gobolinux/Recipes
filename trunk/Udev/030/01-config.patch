@@ -1,0 +1,230 @@
+diff -Naur udev-025.orig/etc/udev/udev.conf.in udev-025/etc/udev/udev.conf.in
+--- udev-025.orig/etc/udev/udev.conf.in	2004-04-21 17:39:10.000000000 -0400
++++ udev-025/etc/udev/udev.conf.in	2004-04-26 17:05:32.237223522 -0400
+@@ -1,34 +1,25 @@
+-# udev.conf
+-# The main config file for udev
+-#
+-# This file can be used to override some of udev's default values
+-# for where it looks for files, and where it places device nodes.
++# udev.conf: Main configuration for udev(8).
+ 
+-
+-# udev_root - where in the filesystem to place the device nodes
++# Location of device nodes.
+ udev_root="@udevdir@/"
+ 
+-# udev_db - The name and location of the udev database.
++# The name and location of the udev database.
+ udev_db="@udevdir@/.udev.tdb"
+ 
+-# udev_rules - The name and location of the udev rules file
+-udev_rules="/etc/udev/rules.d/"
+-
+-# udev_permissions - The name and location of the udev permission file
+-udev_permissions="/etc/udev/permissions.d/"
++# The name and location of the udev rules directory, which may contain any
++# number of rules config files.
++udev_rules="/System/Settings/udev/udev.rules"
++
++# The name and location of the udev permissions directory, which may contain
++# any number of permissions config files.
++udev_permissions="/System/Settings/udev/udev.permissions"
+ 
+-# default_mode - set the default mode for all nodes that have no
+-#                explicit match in the permissions file
++# The default permissions for all nodes that have no explicit match in the
++# permissions configuration files.
+-default_mode="0600"
++default_mode="0660"
+-
+-# default_owner - set the default owner for all nodes that have no
+-#                 explicit match in the permissions file
+-default_owner="root"
++default_owner="gobo"
+-
+-# default_group - set the default group for all nodes that have no
+-#                 explicit match in the permissions file
+-default_group="root"
++default_group="gobo"
+ 
+-# udev_log - set to "yes" if you want logging, else "no"
+-udev_log="yes"
++# Set to "yes" to enable logging, otherwise "no".
++udev_log="no"
+ 
+diff -Naur udev-025.orig/etc/udev/udev.permissions udev-025/etc/udev/udev.permissions
+--- udev-025.orig/etc/udev/udev.permissions	2004-04-21 17:39:10.000000000 -0400
++++ udev-025/etc/udev/udev.permissions	2004-04-26 16:51:48.574898701 -0400
+@@ -1,10 +1,107 @@
+-#name:user:group:mode
+-ttyUSB0:root:uucp:0660
+-ttyUSB1:root:uucp:0666
+-pl2303:500:500:0666
+-visor:root:uucp:0666
+-dsp1:::0666
+-camera*:500:500:0666
++# /etc/udev/udev.permissions: Permission configuration for udev(8).
++# Syntax:
++#  <device>:<uid>:<gid>:<mode>
++
++# Character devices.
++
++ptmx:gobo:tty:0666
++random:gobo:gobo:0666
++urandom:gobo:gobo:0444
++kmem:gobo:kmem:0640
++mem:gobo:kmem:0640
++port:gobo:kmem:0640
++null:gobo:gobo:0666
++zero:gobo:gobo:0666
++full:gobo:gobo:0666
++aio:gobo:gobo:0444
++kmsg:gobo:gobo:0600
++
++rtc:gobo:gobo:0660
++
++ttyS[0-9]*:gobo:dialout:0660
++ttyUSB[0-9]*:gobo:dialout:0660
++rfcomm[0-9]*:gobo:dialout:0660
++tty[BCDEFHILMPRSTUVWX][0-9]*:gobo:dialout:0660
++ttyS[ACIR][0-9]*:gobo:dialout:0660
++ttyUSB[0-9]*:gobo:dialout:0660
++ttyACM[0-9]*:gobo:dialout:0660
++ippp[0-9]*:gobo:dialout:0660
++isdn[0-9]*:gobo:dialout:0660
++isdnctrl[0-9]*:gobo:dialout:0660
++capi[0-9.]*:gobo:dialout:0660
++dcbri[0-9]*:gobo:dialout:0660
++ircomm[0-9]*:gobo:dialout:0660
++
++tty:gobo:tty:0666
++tty[0-9]*:gobo:tty:0666
++vcs*:gobo:gobo:0600
++console:gobo:tty:0622
++
++snd/*:gobo:audio:0660
++admmidi*:gobo:audio:0660
++adsp*:gobo:audio:0660
++aload*:gobo:audio:0660
++amidi*:gobo:audio:0660
++amixer*:gobo:audio:0660
++audio*:gobo:audio:0660
++dmfm*:gobo:audio:0660
++dmmidi*:gobo:audio:0660
++dsp*:gobo:audio:0660
++midi*:gobo:audio:0660
++mixer*:gobo:audio:0660
++music:gobo:audio:0660
++sequencer*:gobo:audio:0660
++
++usb/lp[0-9]*:gobo:lp:0660
++lp[0-9]*:gobo:lp:0660
++parport[0-9]*:gobo:lp:0660
++irlpt[0-9]*:gobo:lp:0660
++usblp[0-9]*:gobo:lp:0660
++
++input/*:gobo:gobo:0644
++psaux:gobo:gobo:0644
++js:gobo:gobo:0644
++djs:gobo:gobo:0644
++
++dri/card[0-9]*:gobo:video:0660
++fb[0-9]*:gobo:video:0620
++agpgart:gobo:video:0660
++nvidia*:gobo:video:0660
++
++video[0-9]*:gobo:video:0660
++radio[0-9]*:gobo:video:0660
++vbi[0-9]*:gobo:video:0660
++vtx[0-9]*:gobo:video:0660
++
++# Block devices.
++
++fd[0-9]*:gobo:floppy:0660
++
++ram[0-9]*:gobo:disk:0660
++raw[0-9]*:gobo:disk:0660
++
++hd*:gobo:disk:0660
++
++sd[a-z]:gobo:disk:0660
++sd[a-z][0-9]*:gobo:disk:0660
++sd[a-i][a-z]:gobo:disk:0660
++sd[a-i][a-z][0-9]*:gobo:disk:0660
++s[grt][0-9]*:gobo:disk:0660
++scd[0-9]*:gobo:cdrom:0660
++
++dasd[0-9]*:gobo:disk:0660
++ataraid[0-9]*:gobo:disk:0660
++
++loop[0-9]*:gobo:disk:0660
++md[0-9]*:gobo:disk:0660
++dm-*:gobo:disk:0640
++
++ht[0-9]*:gobo:tape:0660
++nht[0-9]*:gobo:tape:0660
++pt[0-9]*:gobo:tape:0660
++npt[0-9]*:gobo:tape:0660
++st[0-9]*:gobo:tape:0660
++nst[0-9]*:gobo:tape:0660
++
+-sgi_fetchop:root:root:666
+-iseries/vcd*:root:disk:660
+-iseries/vd*:root:disk:660
++sgi_fetchop:gobo:gobo:666
++iseries/vcd*:gobo:disk:660
++iseries/vd*:gobo:disk:660
+diff -aur udev-025.orig/etc/udev/udev.rules udev-025/etc/udev/udev.rules
+--- udev-025.orig/etc/udev/udev.rules	2004-04-21 17:39:10.000000000 -0400
++++ udev-025/etc/udev/udev.rules	2004-04-26 16:51:48.575898584 -0400
+@@ -1,35 +1,27 @@
+-# There are a number of modifiers that are allowed to be used in some of the
+-# fields.  See the udev man page for a full description of them.
+-#
+-# See the udev.rules.examples file for more examples of how to create rules
+-#
++# udev.rules: Rule definitions for udev(8).
+ 
+-# if this is a ide cdrom, name it the default name, and create a symlink to cdrom
++# Create the /dev/cdrom symlink.
+ BUS="ide", KERNEL="*[!0-9]", PROGRAM="/bin/cat /proc/ide/%k/media", RESULT="cdrom", NAME="%k", SYMLINK="cdrom"
+ 
+-# create a symlink named after the device map name
+-# note devmap_name comes with extras/multipath
+-KERNEL="dm-[0-9]*", PROGRAM="/sbin/devmap_name %M %m", NAME="%k", SYMLINK="%c"
+-
+-# DRI devices always go into a subdirectory (as per the LSB spec)
+-KERNEL="card*", NAME="dri/card%n"
+-
+-# alsa devices
+-KERNEL="controlC[0-9]*", NAME="snd/%k"
+-KERNEL="hw[CD0-9]*",     NAME="snd/%k"
+-KERNEL="pcm[CD0-9cp]*",  NAME="snd/%k"
+-KERNEL="midiC[D0-9]*",   NAME="snd/%k"
+-KERNEL="timer",          NAME="snd/%k"
+-KERNEL="seq",            NAME="snd/%k"
++# DRI devices always go into a subdirectory (as per the LSB spec).
++KERNEL="card*",		NAME="dri/card%n"
+ 
+-# input devices
++# ALSA devices get into /dev/snd/.
++KERNEL="controlC[0-9]*",NAME="snd/%k"
++KERNEL="hw[CD0-9]*",	NAME="snd/%k"
++KERNEL="pcm[CD0-9cp]*",	NAME="snd/%k"
++KERNEL="midiC[D0-9]*",	NAME="snd/%k"
++KERNEL="timer",		NAME="snd/%k"
++KERNEL="seq",		NAME="snd/%k"
++
++# Input core devices go into /dev/input/.
+ KERNEL="mice",		NAME="input/%k"
+ KERNEL="mouse*",	NAME="input/%k"
+ KERNEL="event*",	NAME="input/%k"
+ KERNEL="js*",		NAME="input/%k"
+ KERNEL="ts*",		NAME="input/%k"
+ 
+-# USB devices
++# Assorted USB devices get a subdir as well.
+ KERNEL="hiddev*",	NAME="usb/%k"
+ KERNEL="auer*",		NAME="usb/%k"
+ KERNEL="legousbtower*",	NAME="usb/%k"

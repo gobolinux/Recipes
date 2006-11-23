@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Mii-Tool by Fabio Mierlo, on Sat May 27 16:31:00 BRT 2006
+# Recipe for version 1.9.1.1 by Fabio Mierlo, on Sat May 27 16:31:00 BRT 2006
+compile_version=1.7.1
+url="http://www.metux.de/pub/mii-tool/mii-tool-1.9.1.1.tar.bz2"
+file_size=15145
+file_md5=f65dbeb1c2392acffd4c94138b1f2e52
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)

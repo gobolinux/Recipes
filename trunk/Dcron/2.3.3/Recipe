@@ -1,0 +1,18 @@
+# Recipe (MakeRecipe) for Dcron by Jonas Karlsson <jonka750@student.liu.se>, on Mon Apr 11 09:44:21 CEST 2005
+# Recipe for version 2.3.3 by Jonas Karlsson <jonka750@student.liu.se>, on Mon Apr 11 09:44:21 CEST 2005
+compile_version=1.7.1
+url="http://www.ibiblio.org/pub/Linux/system/daemons/cron/dcron-2.3.3.tar.gz"
+file_size=22962
+file_md5=537cda2dff7dfaf87660fee91b2cf78f
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+   "prefix=$target"
+)
+post_install(){
+mkdir ${goboPrograms}/Dcron/2.3.3/cron
+mkdir ${goboPrograms}/Dcron/2.3.3/cron/crontabs
+echo -e "# MIN HOUR DAY MONTH DAYOFWEEK   COMMAND\n" >> ${goboPrograms}/Dcron/2.3.3/cron/crontabs/${USER}
+ln -s ${goboPrograms}/Dcron/2.3.3/cron ${goboVariable}/spool/cron
+}

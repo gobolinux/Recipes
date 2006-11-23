@@ -1,0 +1,39 @@
+# Recipe for version 0.8.0 by Andre Detsch <detsch@gobolinux.org>, on Wed Apr 26 16:47:58 BRT 2006
+# Recipe (MakeRecipe) for QEMU by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sun Oct 17 23:20:23 BRST 2004
+compile_version=1.7.1
+url="http://fabrice.bellard.free.fr/qemu/qemu-0.8.0.tar.gz"
+recipe_type=makefile
+makefile='Makefile'
+
+sandbox_options=(
+    "--no-sandbox"
+)
+
+pre_build() {
+
+	# This is for kqemu accelerator.
+	wget http://www.qemu.org/kqemu-0.7.2.tar.gz
+	aunpack kqemu-0.7.2.tar.gz
+	sed -i "
+		s@kernel_path=.*@kernel_path=${goboModules}/`uname -r`/@
+		s@device=.*@device=${goboDevices}/kqemu@
+	" kqemu/install.sh
+	chmod +x kqemu/install.sh
+
+	[ -z "$CPU" ] && cpu=`uname -m` || cpu=$CPU	
+	[ -z "$CC"  ] && CC="gcc"
+	[ -z "$crossCompiler" ] && CROSS="" || CROSS="--cross-prefix=$crossCompiler"
+
+	./configure --prefix=$target --cc=$CC $CROSS cpu=$CPU
+}
+
+#pre_install() {
+#	cd kqemu
+#	sed -i "
+#		s@kernel_path=.*@kernel_path=/System/Kernel/Modules/`uname -r`/@
+#		s@device=.*@device=/System/Kernel/Devices/kqemu@
+#	" install.sh
+#	chmod +x install.sh
+#	make
+#	cd ..
+#}

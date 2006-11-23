@@ -1,0 +1,16 @@
+# Recipe for version 3.1 by Andre Detsch <detsch@gobolinux.org>, on Wed Jun 14 21:18:05 BRT 2006
+url=$ftpGnu/bash/bash-3.1.tar.gz
+needs_safe_linking=yes
+compile_version=1.7.1
+recipe_type=configure
+
+configure_options=(
+#   "--with-installed-readline"
+   "--enable-readline"
+)
+
+pre_install() {
+   cd $target/bin
+   ln -nfs bash sh
+   cd -
+}

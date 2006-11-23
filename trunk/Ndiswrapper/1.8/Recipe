@@ -1,0 +1,21 @@
+# Recipe for version 1.8 by Jonas Karlsson <jonka750@student.liu.se>, on Mon Jan 16 17:41:33 CET 2006
+# Recipe (MakeRecipe) for Ndiswrapper by Jonas Karlsson <jonka750@student.liu.se>, on Sun Jul 24 00:52:28 CEST 2005
+compile_version=1.7.1
+url="$httpSourceforge/ndiswrapper/ndiswrapper-1.8.tar.gz"
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+    "DESTDIR=$target"
+)
+
+sandbox_options=(
+    "--no-sandbox"
+)
+
+pre_build(){
+    make distclean
+}
+
+post_install(){
+    depmod
+}

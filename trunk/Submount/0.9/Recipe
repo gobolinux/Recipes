@@ -1,0 +1,10 @@
+# Submount Meta Recipe by Jonas Karlsson <jonka750@student.liu.se>
+# 2005-04-10
+# Recipe for version 0.9
+
+include=(
+"Submountd--0.9"
+"subfs--0.9"
+)
+compile_version=1.7.1
+recipe_type=meta

@@ -1,0 +1,13 @@
+compile_version=1.7.1
+url="ftp://ftp.info-zip.org/pub/infozip/src/unzip550.tar.gz"
+file_size=1068662
+file_md5=798592d62e37f92571184236947122ed
+recipe_type=makefile
+dir="unzip-5.50"
+makefile="unix/Makefile"
+build_target=generic
+
+install_variables=(
+  "prefix=/Programs/Unzip/5.50"
+)
+

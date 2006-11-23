@@ -1,0 +1,14 @@
+# Recipe for version 0.6.1 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Dec 14 17:16:58 BRST 2004
+# Recipe (MakeRecipe) for QEMU by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sun Oct 17 23:20:23 BRST 2004
+compile_version=1.7.1
+url="http://fabrice.bellard.free.fr/qemu/qemu-0.6.1.tar.gz"
+recipe_type=makefile
+makefile='Makefile'
+
+pre_build() {
+	[ -z "$CPU" ] && cpu=`uname -m` || cpu=$CPU
+	[ -z "$CC"  ] && CC="gcc"
+	[ -z "$crossCompiler" ] && CROSS="" || CROSS="--cross-prefix=$crossCompiler"
+	
+        ./configure --prefix=$target --cc=$CC $CROSS cpu=$CPU
+}

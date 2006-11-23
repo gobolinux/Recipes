@@ -1,0 +1,40 @@
+diff -Naur lua-5.0.2/config lua-5.0.2-new/config
+--- lua-5.0.2/config	2003-04-11 11:00:41.000000000 -0300
++++ lua-5.0.2-new/config	2005-08-18 09:21:26.000000000 -0300
+@@ -25,15 +25,15 @@
+ # interface (e.g., Linux, Solaris, IRIX, BSD, AIX, HPUX, and probably others),
+ # uncomment the next two lines.
+ #
+-#LOADLIB= -DUSE_DLOPEN=1
+-#DLLIB= -ldl
++LOADLIB= -DUSE_DLOPEN=1
++DLLIB= -ldl
+ #
+ # In Linux with gcc, you should also uncomment the next definition for
+ # MYLDFLAGS, which passes -E (= -export-dynamic) to the linker. This option
+ # allows dynamic libraries to link back to the `lua' program, so that they do
+ # not need the Lua libraries. (Other systems may have an equivalent facility.)
+ #
+-#MYLDFLAGS= -Wl,-E
++MYLDFLAGS= -Wl,-E
+ #
+ # On Windows systems. support for dynamic loading is enabled by default.
+ # To disable this support, uncomment the next line.
+@@ -119,7 +119,7 @@
+ # debug information. If you only want the shared libraries, you may want to
+ # add -fPIC to MYCFLAGS.
+ #
+-MYCFLAGS= -O2
++MYCFLAGS= -O2 -fomit-frame-pointer
+ #MYCFLAGS= -O3 -fomit-frame-pointer # -fPIC
+ 
+ # Write here any options you may need for your C linker.
+@@ -148,7 +148,7 @@
+ 
+ # Locations for "make install". You may need to be root do "make install".
+ #
+-INSTALL_ROOT= /usr/local
++INSTALL_ROOT= $(PREFIX)
+ INSTALL_BIN= $(INSTALL_ROOT)/bin
+ INSTALL_INC= $(INSTALL_ROOT)/include
+ INSTALL_LIB= $(INSTALL_ROOT)/lib

@@ -1,0 +1,15 @@
+# by Leandro Motta Barros
+
+url=$httpSourceforge/fltk/fltk-1.1.4-source.tar.bz2
+dir=fltk-1.1.4
+compile_version=1.7.1
+recipe_type=configure
+
+# Don't know if the '--enable-xft' and '--enable-xdbe' options should
+# really be included in the recipe.
+configure_options=(
+   "--enable-threads"
+   "--enable-xft"
+   "--enable-xdbe"
+   "--enable-gl"
+)

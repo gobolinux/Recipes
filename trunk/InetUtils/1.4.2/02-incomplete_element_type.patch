@@ -1,0 +1,52 @@
+--- inetutils-1.4.2/ftp/ftp_var.h.orig	2006-06-19 11:12:36.000000000 -0300
++++ inetutils-1.4.2/ftp/ftp_var.h	2006-06-19 11:12:50.000000000 -0300
+@@ -36,6 +36,24 @@
+ #include <sys/param.h>
+ #include <setjmp.h>
+ 
++/*
++ * Format of command table.
++ */
++struct cmd {
++	char	*c_name;	/* name of command */
++	char	*c_help;	/* help string */
++	char	c_bell;		/* give bell when command completes */
++	char	c_conn;		/* must be connected to use command */
++	char	c_proxy;	/* proxy server may execute */
++	void	(*c_handler) __P((int, char **)); /* function to call */
++};
++
++struct macel {
++	char mac_name[9];	/* macro name */
++	char *mac_start;	/* start of macro in macbuf */
++	char *mac_end;		/* end of macro in macbuf */
++};
++
+ #include "extern.h"
+ 
+ #ifndef FTP_EXTERN
+@@ -108,24 +126,6 @@ FTP_EXTERN int	mflag;		/* flag: if != 0,
+ 
+ FTP_EXTERN int	options;	/* used during socket creation */
+ 
+-/*
+- * Format of command table.
+- */
+-struct cmd {
+-	char	*c_name;	/* name of command */
+-	char	*c_help;	/* help string */
+-	char	c_bell;		/* give bell when command completes */
+-	char	c_conn;		/* must be connected to use command */
+-	char	c_proxy;	/* proxy server may execute */
+-	void	(*c_handler) __P((int, char **)); /* function to call */
+-};
+-
+-struct macel {
+-	char mac_name[9];	/* macro name */
+-	char *mac_start;	/* start of macro in macbuf */
+-	char *mac_end;		/* end of macro in macbuf */
+-};
+-
+ FTP_EXTERN int macnum;			/* number of defined macros */
+ FTP_EXTERN struct macel macros[16];
+ FTP_EXTERN char macbuf[4096];

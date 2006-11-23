@@ -1,0 +1,55 @@
+# Recipe for version 1.0pre8 by Andy Feldman (nereusren@gmail.com), on Sat Jun 17 10:15:10 CDT 2006
+urls=(
+   "http://www1.mplayerhq.hu/MPlayer/releases/MPlayer-1.0pre8.tar.bz2"
+   "http://www1.mplayerhq.hu/MPlayer/Skin/plastik-2.0.tar.bz2"
+)
+
+#NOTE: these codec addresses should be updated with the recipe. Browse to http://www1.mplayerhq.hu/MPlayer/releases/codecs/ to see what is most recent.
+mp_all_codecs_prefix="all-20060611"
+mp_essential_codecs_prefix="essential-20060611"
+mp_codecs_dir="/Files/Codecs/MPlayer"
+skindir="$target/Shared/mplayer/Skin"
+
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+   "--enable-gui"
+   "--with-win32libdir=$mp_codecs_dir"
+   "--with-codecsdir=$mp_codecs_dir"
+   "--enable-largefiles"
+   "--enable-linux-devfs"
+   "--language=all"
+)
+
+pre_build() {
+   Ask_Option "Which codecs to install? [N]one/[e]ssential/[a]ll"
+   echo
+   case "$REPLY" in
+   e|E) mp_codecs_prefix=$mp_essential_codecs_prefix ;;
+   a|A) mp_codecs_prefix=$mp_all_codecs_prefix ;;
+   *) return;;
+   esac
+
+   # This will install several codecs in $mp_codecs_dir
+   wget --directory-prefix ${goboTemp} --continue --tries=0 http://www1.mplayerhq.hu/MPlayer/releases/codecs/${mp_codecs_prefix}.tar.bz2
+   if [ ! -d $mp_codecs_dir ]
+   then
+      Log_Normal "Making directory ${mp_codecs_dir}..."
+      Sudo mkdir --mode=a+rwx --parents $mp_codecs_dir
+   fi
+   if [ ! -w $mp_codecs_dir ]
+   then
+      Log_Normal "Adding write privileges to ${mp_codecs_dir}..."
+      Sudo chmod a+w $mp_codecs_dir
+   fi
+   aunpack -X/tmp "${goboTemp}/${mp_codecs_prefix}.tar.bz2"
+   mv -f ${goboTemp}/$mp_codecs_prefix/* $mp_codecs_dir
+}
+
+pre_install() {
+   mkdir -p ${skindir}
+   cp -a ../plastik ${skindir}
+   ln -nfs plastik ${skindir}/default
+
+   ln -sfn /Files/Fonts/TrueType/Vera.ttf ${target}/Shared/mplayer/subfont.ttf
+}

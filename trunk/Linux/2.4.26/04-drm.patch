@@ -1,0 +1,18 @@
+--- linux-2.4.26/drivers/char/drm/drmP.h.orig	2004-05-04 13:31:53.000000000 -0300
++++ linux-2.4.26/drivers/char/drm/drmP.h	2004-05-04 14:58:27.000000000 -0300
+@@ -175,6 +175,7 @@
+   })
+ 
+ #elif __i386__
++#ifndef __ASM_SYSTEM_H /* this header already defines __cmpxchg */
+ static inline unsigned long __cmpxchg(volatile void *ptr, unsigned long old,
+ 				      unsigned long new, int size)
+ {
+@@ -205,6 +206,7 @@
+ #define cmpxchg(ptr,o,n)						\
+   ((__typeof__(*(ptr)))__cmpxchg((ptr),(unsigned long)(o),		\
+ 				 (unsigned long)(n),sizeof(*(ptr))))
++#endif /* __ASM_SYSTEM_H */
+ #endif /* i386 & alpha */
+ #endif
+ #define __REALLY_HAVE_SG	(__HAVE_SG)

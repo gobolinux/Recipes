@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for Links by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Nov 23 18:09:18 BRST 2004
+# Recipe for version 2.1pre15 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Nov 23 18:09:18 BRST 2004
+compile_version=1.7.1
+url="http://atrey.karlin.mff.cuni.cz/~clock/twibright/links/download/links-2.1pre15.tar.bz2"
+file_size=3789080
+file_md5=d70a0ad41fba921f04d222d3546827de
+recipe_type=configure
+
+configure_options=(
+	"--enable-javascript"
+	"--with-libfl"
+	"--enable-graphics"
+	"--with-ssl"
+	"--with-x"
+)

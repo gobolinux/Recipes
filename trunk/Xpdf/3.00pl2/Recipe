@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for XPDF by roko, <ro.ko@mcnon.com>, on Fri Dec 10 01:41:17 BRST 2004
+# Recipe for version 3.00 by roko, <ro.ko@mcnon.com>, on Fri Dec 10 01:41:17 BRST 2004
+# Security patch pl2 and freetype patch added, configure options removed as they are not
+# needed, david <dsmith@algonet.se>, 2005-01-06
+compile_version=1.7.1
+url="ftp://ftp.ibiblio.org/pub/Linux/apps/graphics/viewers/X/xpdf/xpdf-3.00.tar.gz"
+#url="ftp://ftp.foolabs.com/pub/xpdf/xpdf-3.00.tar.gz"
+file_size=534697
+file_md5=95294cef3031dd68e65f331e8750b2c2
+recipe_type=configure

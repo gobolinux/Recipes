@@ -1,0 +1,10 @@
+# Recipe for ALSA-Lib 1.0.5 by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.7.1
+url="ftp://ftp.alsa-project.org/pub/lib/alsa-lib-1.0.5.tar.bz2"
+file_size=576678
+file_md5=fc9d701a8a26c09db0aaf3faef13eeb0
+recipe_type=configure
+
+configure_options=(
+	"--enable-static"
+)

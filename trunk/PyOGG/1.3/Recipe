@@ -1,0 +1,17 @@
+# Recipe for PyOGG 1.3 by Jonatan Liljedahl <lijon@kymatica.com>
+url="http://www.vorbis.com/files/1.0.1/unix/py/pyogg-1.3.tar.gz"
+compile_version=1.7.1
+recipe_type=python
+pre_build() {
+	cat > Setup << _EOF_
+ogg_libs = ogg
+ogg_lib_dir = $goboLibraries
+ogg_include_dir = $goboHeaders
+_EOF_
+#	python setup.py build
+}
+pre_link() {
+#	python setup.py install --prefix $target
+	cd $target/include
+	ln -nsf python2.?/pyogg .
+}

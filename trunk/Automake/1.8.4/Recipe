@@ -1,0 +1,7 @@
+# Recipe for version 1.8.4 by Andre Destch
+url=$ftpGnu/automake/automake-1.8.4.tar.gz
+compile_version=1.7.1
+recipe_type=configure
+pre_install() {
+   ln -s $target/Shared/automake-1.7 $target/Shared/automake
+}

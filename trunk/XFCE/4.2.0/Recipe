@@ -1,0 +1,61 @@
+# Recipe for version 4.2.0 by roko, <ro.ko@mcnon.com>, on Sat Feb 26 21:28:03 CET 2005
+## xfce 4.2.0
+## 20040621 Dave Dodge 
+
+compile_version=1.7.1
+recipe_type=meta
+
+## Here's the dependencies for the subpackages, which explains the build
+## order and any external dependencies for xfce itself:
+
+## DBH--1.0.18:
+## GTK-XFCE-Engine--2.1.9: GTK+--2.4.3 GLib--2.4.2
+## LibXFCE4Util--4.05: GLib--2.4.2
+## LibXFCE4MCS--4.2.0: LibXFCE4Util--4.2.0
+## LibXFCEGUI4--4.2.0: GTK+--2.4.3 LibXFCE4Util--4.2.0
+## XFCE-MCS-Manager--4.2.0: LibXFCE4MCS--4.2.0 LibXFCEGUI4--4.2.0
+## XFCalendar--0.1.8: LibXFCE4MCS--4.2.0 XFCE-MCS-Manager--4.2.0 LibXFCEGUI4--4.2.0 DBH--1.0.18
+## XFCE-MCS-Plugins--4.2.0: GTK+--2.4.3 XFCE-MCS-Manager--4.2.0
+## XFCE-Utils--4.2.0: LibXFCEGUI4--4.2.0 LibXFCE4MCS--4.2.0 XFCE-MCS-Manager--4.05
+## XFCE4-IconBox--4.2.0: LibXFCEGUI4--4.2.0 LibXFCE4MCS--4.2.0
+## XFCE4-Panel--4.2.0: LibXFCEGUI4--4.2.0 LibXFCE4MCS--4.2.0 XFCE-MCS-Manager--4.2.0 LibXML2--2.6.9
+## XFCE4-Mixer--4.2.0: XFCE4-Panel--4.2.0
+## XFCE4-Systray--4.2.0: XFCE4-Panel--4.2.0
+## XFCE4-Themes--4.2.0: XFCE4-Panel--4.2.0
+## XFCE4-Toys--4.2.0: XFCE4-Panel--4.2.0
+## XFCE4-Trigger-Launcher--4.2.0: XFCE4-Panel--4.2.0
+## XFDesktop--4.2.0: LibXFCE4MCS--4.2.0 LibXFCEGUI4--4.2.0
+## XFFM--4.2.0: DBH--1.0.18 Glib--2.4.2 GTK+--2.4.3 LibXFCE4MCS--4.2.0 LibXFCE4Util--4.2.0 LibXFCEGUI4--4.2.0 LibXML2--2.6.9
+## XFFM-Icons--4.2.0: XFFM--4.2.0
+## XFPrint--4.2.0: GLib--2.4.2 LibXFCEGUI4--4.2.0 A2PS--4.13b
+## XFWM4--4.2.0: LibXFCE4MCS--4.2.0 LibXFCEGUI4--4.2.0 XFCE-MCS-Manager--4.2.0
+## XFWM4-Themes--4.2.0: XFWM4--4.2.0
+
+## NOTE: xfce4 also has a "sample plugin" in its source base, but as
+## of 4.2.0 it remains broken and cannot even be compiled.  So I'm
+## leaving it out.  It would have been XFCE4-Sample-Plugin--0.1.2.
+
+include=(
+	DBH--1.0.20
+	GTK-XFCE-Engine--2.2.5
+	LibXFCE4Util--4.2.0
+	LibXFCE4MCS--4.2.0
+	LibXFCEGUI4--4.2.0
+	XFCE-MCS-Manager--4.2.0
+	XFCalendar--4.2.0
+	XFCE-MCS-Plugins--4.2.0
+	XFCE-Utils--4.2.0
+	XFCE4-IconBox--4.2.0
+	XFCE4-Panel--4.2.0
+	XFCE4-Mixer--4.2.0
+	XFCE4-Systray--4.2.0
+	XFCE4-Themes--4.2.0
+	XFCE4-Toys--4.2.0
+	XFCE4-Trigger-Launcher--4.2.0
+	XFDesktop--4.2.0
+	XFFM--4.2.0
+	XFFM-Icons--4.2.0
+	XFPrint--4.2.0
+	XFWM4--4.2.0
+	XFWM4-Themes--4.2.0
+)

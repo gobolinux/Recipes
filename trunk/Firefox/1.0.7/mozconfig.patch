@@ -1,0 +1,7 @@
+--- mozilla/.mozconfig.old	1970-01-01 01:00:00.000000000 +0100
++++ mozilla/.mozconfig	2005-05-03 20:31:00.000000000 +0200
+@@ -0,0 +1,4 @@
++. $topsrcdir/browser/config/mozconfig
++
++# Options for client.mk.
++mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/FireFox

@@ -1,0 +1,12 @@
+diff -Naur neverball-1.4.0/share/config.h neverball-1.4.0.mod/share/config.h
+--- neverball-1.4.0/share/config.h	2004-07-21 23:35:21.000000000 +0200
++++ neverball-1.4.0.mod/share/config.h	2004-10-26 00:46:25.000000000 +0200
+@@ -20,7 +20,7 @@
+ 
+ /*---------------------------------------------------------------------------*/
+ 
+-#define CONFIG_DATA "./data"
++#define CONFIG_DATA "/Programs/Neverball/Current/data"
+ #define CONFIG_USER ".neverball"
+ 
+ /*

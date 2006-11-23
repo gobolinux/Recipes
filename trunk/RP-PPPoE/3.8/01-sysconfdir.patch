@@ -1,0 +1,52 @@
+--- rp-pppoe-3.8/src/Makefile.in	2006-04-02 11:29:42.000000000 -0300
++++ rp-pppoe-3.8-fabio.m/src/Makefile.in	2006-09-03 18:56:56.000000000 -0300
+@@ -48,11 +48,11 @@
+ @LIC_MAKEFILE_INCLUDE@
+ 
+ # Kernel-mode plugin gets installed here.
+-PLUGIN_DIR=/etc/ppp/plugins
++PLUGIN_DIR=@sysconfdir@/ppp/plugins
+ PLUGIN_PATH=$(PLUGIN_DIR)/rp-pppoe.so
+ 
+ # Configuration file paths
+-PPPOESERVER_PPPD_OPTIONS=/etc/ppp/pppoe-server-options
++PPPOESERVER_PPPD_OPTIONS=@sysconfdir@/ppp/pppoe-server-options
+ 
+ PATHS='-DPPPOE_PATH="$(PPPOE_PATH)"' '-DPPPD_PATH="$(PPPD_PATH)"' \
+ 	'-DPLUGIN_PATH="$(PLUGIN_PATH)"' \
+@@ -166,23 +166,23 @@
+ 	$(install) -m 644 ../man/pppoe-setup.8 $(RPM_INSTALL_ROOT)$(mandir)/man8
+ 	-mkdir -p $(RPM_INSTALL_ROOT)$(mandir)/man5
+ 	$(install) -m 644 ../man/pppoe.conf.5 $(RPM_INSTALL_ROOT)$(mandir)/man5
+-	-mkdir -p $(RPM_INSTALL_ROOT)/etc/ppp
+-	-mkdir -p $(RPM_INSTALL_ROOT)$(PLUGIN_DIR)
+-	-echo "# Directory created by rp-pppoe for kernel-mode plugin" > $(RPM_INSTALL_ROOT)$(PLUGIN_DIR)/README
+-	@if test -r rp-pppoe.so; then $(install) -m 755 rp-pppoe.so $(RPM_INSTALL_ROOT)$(PLUGIN_DIR); fi
++	-mkdir -p @sysconfdir@/ppp
++	-mkdir -p $(PLUGIN_DIR)
++	-echo "# Directory created by rp-pppoe for kernel-mode plugin" > $(PLUGIN_DIR)/README
++	@if test -r rp-pppoe.so; then $(install) -m 755 rp-pppoe.so $(PLUGIN_DIR); fi
+ 	@for i in pppoe.conf firewall-standalone firewall-masq ; do \
+-		if [ ! -f $(RPM_INSTALL_ROOT)/etc/ppp/$$i ] ; then \
+-			$(install) -m 644 ../configs/$$i $(RPM_INSTALL_ROOT)/etc/ppp ; \
++		if [ ! -f @sysconfdir@/ppp/$$i ] ; then \
++			$(install) -m 644 ../configs/$$i @sysconfdir@/ppp ; \
+ 		else \
+-			echo "NOT overwriting existing $(RPM_INSTALL_ROOT)/etc/ppp/$$i" ;\
+-			$(install) -m 644 ../configs/$$i $(RPM_INSTALL_ROOT)/etc/ppp/$$i-$(VERSION) ;\
++			echo "NOT overwriting existing @sysconfdir@/ppp/$$i" ;\
++			$(install) -m 644 ../configs/$$i @sysconfdir@/ppp/$$i-$(VERSION) ;\
+ 		fi ;\
+ 	done
+-	@if [ ! -f $(RPM_INSTALL_ROOT)$(PPPOESERVER_PPPD_OPTIONS) ] ; then \
+-		$(install) -m 644 ../configs/pppoe-server-options $(RPM_INSTALL_ROOT)$(PPPOESERVER_PPPD_OPTIONS) ; \
++	@if [ ! -f $(PPPOESERVER_PPPD_OPTIONS) ] ; then \
++		$(install) -m 644 ../configs/pppoe-server-options $(PPPOESERVER_PPPD_OPTIONS) ; \
+ 	else \
+-		echo "NOT overwriting existing $(RPM_INSTALL_ROOT)$(PPPOESERVER_PPPD_OPTIONS)"; \
+-		$(install) -m 644 ../configs/pppoe-server-options $(RPM_INSTALL_ROOT)$(PPPOESERVER_PPPD_OPTIONS)-example ; \
++		echo "NOT overwriting existing $(PPPOESERVER_PPPD_OPTIONS)"; \
++		$(install) -m 644 ../configs/pppoe-server-options $(PPPOESERVER_PPPD_OPTIONS)-example ; \
+ 	fi
+ 	@if [ -f /etc/redhat-release ] ; then \
+ 		echo "Looks like a Red Hat system; installing $(RPM_INSTALL_ROOT)/etc/rc.d/init.d/pppoe" ; \

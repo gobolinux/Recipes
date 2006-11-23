@@ -1,0 +1,19 @@
+# by Leandro Motta Barros
+
+url=$ftpGnu/emacs/emacs-21.3.tar.gz
+compile_version=1.7.1
+recipe_type=configure
+
+# Remove source Emacs Lisp files. Be carefull not to remove .el files
+# that don't have a corresponding .elc file.
+# I don't know if this step is working right (does it work for regular
+# (non-gobo) users?).
+post_install() {
+   pushd $target
+   find . -name "*.el" | while read fileName; do
+                            if [ -e "${fileName}c" ]; then
+                               rm "$fileName"
+                            fi
+                         done
+   popd
+}

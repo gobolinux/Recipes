@@ -1,0 +1,20 @@
+# Recipe for version 5.0.3 by Andre Detsch, on Mon Mar 7 21:11:58 BRT 2005
+### PHP 5.0.3
+# GoboLinux Recipe created by Taeber Rapczak <taeber@rapczak.com>
+# June 14, 2004
+
+### Compile Version
+compile_version=1.7.1
+
+### Download Section
+url="http://www.php.net/get/php-5.0.3.tar.bz2/from/us3.php.net/mirror"
+mirror_urls=(
+	"http://www.php.net/get/php-5.0.3.tar.bz2/from/us2.php.net/mirror"
+	"http://www.php.net/get/php-5.0.3.tar.bz2/from/us4.php.net/mirror"
+)
+
+### File Information
+file="php-5.0.3.tar.bz2"
+
+### Compilation Variables
+recipe_type=configure

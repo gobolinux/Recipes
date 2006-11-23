@@ -1,0 +1,13 @@
+# Recipe for version 2.1pre17 by Andre Detsch, on Tue Mar 8 21:41:45 BRT 2005
+# Recipe (MakeRecipe) for Links by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Nov 23 18:09:18 BRST 2004
+compile_version=1.7.1
+url="http://atrey.karlin.mff.cuni.cz/~clock/twibright/links/download/links-2.1pre17.tar.bz2"
+recipe_type=configure
+
+configure_options=(
+	"--enable-javascript"
+	"--with-libfl"
+	"--enable-graphics"
+	"--with-ssl"
+	"--with-x"
+)

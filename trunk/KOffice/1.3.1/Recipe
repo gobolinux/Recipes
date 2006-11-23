@@ -1,0 +1,9 @@
+# by Maglan C. Diemer
+
+url=ftp://ftp.kde.org/pub/kde/stable/koffice-1.3.1/src/koffice-1.3.1.tar.bz2
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+   "--disable-debug"
+   "--disable-dependency-tracking"
+)

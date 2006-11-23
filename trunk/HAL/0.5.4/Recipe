@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for HAL by Carlo J. Calica <ccalica@gmail.com>, on Sat Oct 1 21:36:06 PDT 2005
+# Recipe for version 0.5.4 by Carlo J. Calica <ccalica@gmail.com>, on Sat Oct 1 21:36:08 PDT 2005
+compile_version=1.7.1
+url="http://freedesktop.org/~david/dist/hal-0.5.4.tar.gz"
+file_size=1476396
+file_md5=2f84ddbc22bc35baa9388e7794d1fa31
+recipe_type=configure
+configure_options=(
+    "--enable-fstab-sync"
+)
+
+pre_link() {
+    mkdir -p $target/../Settings/udev/rules.d
+    cp -r $recipedir/60-HAL.rules $target/../Settings/udev/rules.d
+}

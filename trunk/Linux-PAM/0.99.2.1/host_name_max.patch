@@ -1,0 +1,13 @@
+--- Linux-PAM-0.99.2.0/modules/pam_echo/pam_echo.c	2005-09-20 13:56:56.000000000 +0200
++++ Linux-PAM-0.99.2.0.new/modules/pam_echo/pam_echo.c	2005-11-24 12:06:16.000000000 +0100
+@@ -33,6 +33,10 @@
+  * OF THE POSSIBILITY OF SUCH DAMAGE.
+  */
+ 
++#ifndef HOST_NAME_MAX
++#define HOST_NAME_MAX 256
++#endif
++
+ #if defined(HAVE_CONFIG_H)
+ #include "config.h"
+ #endif

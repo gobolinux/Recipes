@@ -1,0 +1,9 @@
+# Recipe for version 5.96 by Andre Detsch <detsch@gobolinux.org>, on Sat Jun 17 17:24:28 BRT 2006
+url=$ftpGnu/coreutils/coreutils-5.96.tar.bz2
+compile_version=1.7.1
+recipe_type=configure
+install_target="install install-root"
+needs_safe_linking=yes
+pre_link() {
+   mv $target/bin/install $target/bin/real_install
+}

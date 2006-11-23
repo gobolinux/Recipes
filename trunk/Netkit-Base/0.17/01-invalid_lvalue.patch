@@ -1,0 +1,11 @@
+--- netkit-base-0.17/inetd/servtab.c.orig	2006-06-19 12:09:55.000000000 -0300
++++ netkit-base-0.17/inetd/servtab.c	2006-06-19 12:10:09.000000000 -0300
+@@ -771,7 +771,7 @@ loadconfigent(struct servtab *cp)
+ 			return;
+ 		}
+ 		
+-#define SWAP(type, a, b) {type c=(type)a; (type)a=(type)b; (type)b=(type)c;}
++#define SWAP(type, a, b) {type c=(type)a; a=b; b=c;}
+ 
+ 		/*
+ 		 * sep->se_wait may be holding the pid of a daemon

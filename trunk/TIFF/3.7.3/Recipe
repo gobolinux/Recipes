@@ -1,0 +1,12 @@
+# Recipe for version 3.7.3 by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 11:23:44 BRT 2005
+
+url=ftp://ftp.remotesensing.org/pub/libtiff/tiff-3.7.3.tar.gz
+compile_version=1.7.1
+recipe_type=configure
+
+pre_install() {
+   GrepReplace "/System/Links/Manuals" "$target/man" man/Makefile
+   GrepReplace "/System/Links/Manuals" "$target/man" man/lib/Makefile
+   GrepReplace "/System/Links/Manuals" "$target/man" man/apps/Makefile
+}
+

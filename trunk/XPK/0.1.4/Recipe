@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for XPK by Aitor Pérez Iturri, on sáb abr 1 09:22:47 CEST 2006
+# Recipe for version 0.1.4 by Aitor Pérez Iturri, on sáb abr 1 09:22:47 CEST 2006
+compile_version=1.7.1
+url="http://vesuri.jormas.com/xpk/xpk-0.1.4.tar.gz"
+file_size=239341
+file_md5=02b3992f43854a7e50a93005f9fbb84d
+recipe_type=configure
+
+docs=(
+	"./doc/xpkmaster.doc"
+	"./doc/xpksub.doc"
+	"./doc/xpkpreferences.doc"
+)

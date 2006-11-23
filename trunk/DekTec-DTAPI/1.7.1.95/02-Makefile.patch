@@ -1,0 +1,32 @@
+--- LinuxSDK/DTAPI/Makefile.orig	2006-01-17 16:40:18.000000000 -0200
++++ LinuxSDK/DTAPI/Makefile	2006-01-17 16:42:14.000000000 -0200
+@@ -12,6 +12,14 @@ ifndef SOURCEROOT
+ endif
+ 
+ # ========================================================================================
++# PREFIX can be speficied on the command line or environment. Defines the path where the
++# application will get installed
++
++ifndef PREFIX
++	PREFIX = /usr
++endif
++
++# ========================================================================================
+ # Set include directories. Make sure the include paths to the Dta1xx and Dtu2xx drivers
+ # are correct
+ 
+@@ -42,6 +50,14 @@ all: $(TARGET).o
+ $(TARGET).o: $(SRC:.cpp=.o)
+ 		$(LD) -r $^ -o $@
+ 
++
++# ========================================================================================
++# Make install option
++install: $(TARGET).o
++	cp $(TARGET).o $(PREFIX)/lib
++	cp ./Include/*.h $(PREFIX)/include
++
++
+ # ========================================================================================
+ # Clean all option
+ 

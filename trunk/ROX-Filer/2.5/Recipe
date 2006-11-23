@@ -1,0 +1,27 @@
+# Recipe for version 2.5 by Jonatan Liljedahl <lijon@kymatica.com>, on Fri Aug 11 22:59:56 CEST 2006
+# by Jonatan Liljedahl
+# 2004.01.28 02:44
+compile_version=1.7.1
+url=http://surfnet.dl.sourceforge.net/sourceforge/rox/rox-filer-2.5.tar.bz2
+
+### DID NOT WORK...
+#RoxVersion=$(sed -n 's/^.*<Version>\([.0-9]*\).*<\/Version>.*$/\1/p' ROX-Filer/AppInfo.xml)
+#target=$target/../${RoxVersion}-$(date -r $dir +%y%m%d)
+
+recipe_type=makefile
+do_build=no
+sandbox_options=(
+    "-c install_wrapper.sh"
+)
+pre_install() {
+    ROX-Filer/AppRun --compile
+    echo -e "#!/bin/sh\ninstall.sh --prefix $target" > install_wrapper.sh
+    chmod +x install_wrapper.sh
+}
+
+### DID NOT WORK EITHER
+#pre_link() {
+#    RoxVersion=$(sed -n 's/^.*<Version>\([.0-9]*\).*<\/Version>.*$/\1/p' ROX-Filer/AppInfo.xml)
+#    newtarget=$target/../${RoxVersion}-$(date -r $dir +%y%m%d)
+#    mv $target $newtarget
+#}

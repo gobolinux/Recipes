@@ -1,0 +1,58 @@
+diff -Naur dega-1.07-old/Makefile dega-1.07-new/Makefile
+--- dega-1.07-old/Makefile	2003-11-20 02:36:50.000000000 -0200
++++ dega-1.07-new/Makefile	2003-11-20 02:40:03.000000000 -0200
+@@ -1,3 +1,6 @@
++
++DESTDIR=/usr
++
+ OPTFLAGS=-O3 -fomit-frame-pointer -funroll-loops
+ #OPTFLAGS=-O3 -fomit-frame-pointer -funroll-loops -march=i686 -mcpu=i686
+ #OPTFLAGS=-xM -O3
+@@ -36,3 +39,6 @@
+ 
+ distclean: clean
+ 	rm -f *~ */*~
++
++install: dega
++	cp dega $(DESTDIR)/bin
+diff -Naur dega-1.07-old/configure dega-1.07-new/configure
+--- dega-1.07-old/configure	1969-12-31 21:00:00.000000000 -0300
++++ dega-1.07-new/configure	2003-11-20 02:52:43.000000000 -0200
+@@ -0,0 +1,37 @@
++#!/bin/sh
++
++# Simple configure script for Dega:
++
++for i in "libSDL" # "libX11" "libfoo" "libbar"
++do
++   echo -n "Checking for $i... "
++   if ldconfig -p | grep "$i" &> /dev/null
++   then
++      echo "ok"
++   else
++      echo "no"
++      echo "Please make sure $i is in your \$LD_LIBRARY_PATH"
++      echo "and that your ldconfig cache is up to date"
++      echo "(run 'ldconfig' as superuser to update it.)"
++      exit 1
++   fi
++done
++
++while [ "$1" ]
++do
++   value=`echo "$1" | sed 's/.*=//'`
++   case "$1" in
++   --prefix=*)
++      echo "Setting prefix... $value"
++      cp Makefile Makefile.old
++      sed 's:^DESTDIR=.*$:DESTDIR='$value':' Makefile.old > Makefile
++      ;;
++   --help)
++      echo "Usage: configure [--prefix=<path>]"
++      exit 0
++      ;;
++   esac
++   shift
++done
++
++echo "Dega is now configured."

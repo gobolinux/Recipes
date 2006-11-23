@@ -1,0 +1,299 @@
+--- LinuxSDK/Dta1xx/Makefile.orig	2006-01-17 15:49:06.000000000 -0200
++++ LinuxSDK/Dta1xx/Makefile	2006-01-17 15:50:51.000000000 -0200
+@@ -1,148 +1,148 @@
+-# ========================================================================================
+-# Makefile for Dta1xx Linux device driver
+-# ========================================================================================
+-
+-# ========================================================================================
+-# KERNELDIR can be speficied on the command line or in the environment. Below you will
+-# find the most common paths (undefine the correct one)
+-
+-# Get kernel version
+-CURRENT = $(shell uname -r)
+-
+-ifndef KERNELDIR
+-	KERNELDIR = /lib/modules/$(CURRENT)/build/include
+-	#KERNELDIR = /usr/src/linux-2.4.20-3/include
+-	#KERNELDIR = /usr/include/linux/include
+-endif
+-
+-# ========================================================================================
+-# Common code
+-# ========================================================================================
+-
+-# check for SMP
+-ifdef CONFIG_SMP
+-	CFLAGS += -D__SMP__ -DSMP
+-endif
+-
+-# ========================================================================================
+-# TARGET/Source definitions
+-
+-# extension depends on kernel version
+-ifneq (,$(findstring 2.4.,$(CURRENT)))
+-	EXT = c
+-else
+-	EXT = o
+-endif
+-
+-SRCDIR = ./Source/
+-TARGET = Dta1xx
+-SRC    = $(SRCDIR)Dta1xx.$(EXT) $(SRCDIR)Rate.$(EXT) $(SRCDIR)IoCtl.$(EXT) $(SRCDIR)Interrupt.$(EXT) \
+-		$(SRCDIR)Utility.$(EXT) $(SRCDIR)Init.$(EXT) $(SRCDIR)Utility.$(EXT) $(SRCDIR)RxIoCtl.$(EXT) \
+-		$(SRCDIR)TxIoCtl.$(EXT) $(SRCDIR)Flags.$(EXT) $(SRCDIR)Target.$(EXT) $(SRCDIR)LowLevel.$(EXT) \
+-		$(SRCDIR)Dma.$(EXT) $(SRCDIR)EepromControl.$(EXT) $(SRCDIR)Vpd.$(EXT)
+-		
+-# Installation directory
+-INSTALLDIR = /lib/modules/$(CURRENT)/misc
+-
+-# ========================================================================================
+-# Kernel 2.4 makefile:
+-# ========================================================================================
+-
+-ifneq (,$(findstring 2.4.,$(CURRENT)))
+-
+-# ========================================================================================
+-# Set include directories
+-
+-INCLUDEDIR = $(KERNELDIR) -I./Include
+-
+-# ========================================================================================
+-# Compile flags
+-
+-CFLAGS += -O2 -D__KERNEL__ -DMODULE -I$(INCLUDEDIR)
+-
+-# Enable version support (look in config.h\autoconf.h and check if CONFIG_MODVERSIONS
+-# is defined)
+-MODVER = $(shell if cat $(KERNELDIR)/linux/config.h $(KERNELDIR)/linux/autoconf.h \
+-		2>/dev/null | grep -q \
+-		'^[[:space:]]*\#define[[:space:]]*CONFIG_MODVERSIONS[[:space:]]*1'; \
+-		then echo 1; else echo 0; fi)
+-ifeq ($(MODVER),1)
+-	CFLAGS += -DMODVERSIONS -include $(KERNELDIR)/linux/modversions.h
+-endif
+-
+-
+-# ========================================================================================
+-# Make all option
+-
+-all: $(TARGET).ko
+-$(TARGET).ko: $(SRC:.c=.o)
+-		$(LD) -r $^ -o $@
+-		
+-# ========================================================================================
+-# Install option
+-
+-install:
+-	install -d $(INSTALLDIR)
+-	install -c $(TARGET).ko $(INSTALLDIR)
+-
+-
+-# ========================================================================================
+-# Kernel 2.6 makefile
+-# ========================================================================================
+-
+-else
+-
+-# ========================================================================================
+-# Variables 
+-
+-EXTRA_CFLAGS = -DEXPORT_SYMTAB
+-KDIR = /lib/modules/$(CURRENT)/build
+-PWD = $(shell pwd)
+- 
+-# ========================================================================================
+-# Objects
+-
+-$(TARGET)-objs := $(SRC)
+-obj-m := $(TARGET).o
+-
+-# ========================================================================================
+-# Default option
+-
+-default:
+-	make -C $(KDIR) SUBDIRS=$(PWD) modules
+-
+-# ========================================================================================
+-# Target compiling 
+-
+-$(TARGET).o: $(SRC)
+-	$(LD) $(LD_RFLAG) -r -o $@ $(SRC)
+-	
+-# ========================================================================================
+-# Install option
+-
+-install:
+-	# If the makefile failes to create the $(INSTALLDIR) execute the remove command below.
+-	# WARNING: this will delete all files in the $(INSTALLDIR) directory. Make a backup of
+-	# important files in this directory
+-	# rm -d -r -f $(INSTALLDIR)
+-	
+-	install -d $(INSTALLDIR)
+-	su -c "cp -v $(TARGET).ko $(INSTALLDIR) && /sbin/depmod -a"
+-	
+-endif
+-
+-# ========================================================================================
+-# End of kernel specific code
+-# ========================================================================================
+-
+-
+-
+-# ========================================================================================
+-# Clean all option
+-
+-clean:
+-	rm -f $(SRCDIR)*.o $(SRCDIR)*.ko $(SRCDIR)*.o.cmd $(SRCDIR)*~ $(SRCDIR)core $(SRCDIR).depend
+-	rm -f *.o *.ko .*.o.cmd .*.ko.cmd *.mod.c
+-	rm -rf .tmp_versions
+-	
+--include $(KERNELDIR)/Rules.make
++# ========================================================================================
++# Makefile for Dta1xx Linux device driver
++# ========================================================================================
++
++# ========================================================================================
++# KERNELDIR can be speficied on the command line or in the environment. Below you will
++# find the most common paths (undefine the correct one)
++
++# Get kernel version
++CURRENT = $(shell uname -r)
++
++ifndef KERNELDIR
++	KERNELDIR = /lib/modules/$(CURRENT)/build/include
++	#KERNELDIR = /usr/src/linux-2.4.20-3/include
++	#KERNELDIR = /usr/include/linux/include
++endif
++
++# ========================================================================================
++# Common code
++# ========================================================================================
++
++# check for SMP
++ifdef CONFIG_SMP
++	CFLAGS += -D__SMP__ -DSMP
++endif
++
++# ========================================================================================
++# TARGET/Source definitions
++
++# extension depends on kernel version
++ifneq (,$(findstring 2.4.,$(CURRENT)))
++	EXT = c
++else
++	EXT = o
++endif
++
++SRCDIR = ./Source/
++TARGET = Dta1xx
++SRC    = $(SRCDIR)Dta1xx.$(EXT) $(SRCDIR)Rate.$(EXT) $(SRCDIR)IoCtl.$(EXT) $(SRCDIR)Interrupt.$(EXT) \
++		$(SRCDIR)Utility.$(EXT) $(SRCDIR)Init.$(EXT) $(SRCDIR)Utility.$(EXT) $(SRCDIR)RxIoCtl.$(EXT) \
++		$(SRCDIR)TxIoCtl.$(EXT) $(SRCDIR)Flags.$(EXT) $(SRCDIR)Target.$(EXT) $(SRCDIR)LowLevel.$(EXT) \
++		$(SRCDIR)Dma.$(EXT) $(SRCDIR)EepromControl.$(EXT) $(SRCDIR)Vpd.$(EXT)
++		
++# Installation directory
++INSTALLDIR = /lib/modules/$(CURRENT)/misc
++
++# ========================================================================================
++# Kernel 2.4 makefile:
++# ========================================================================================
++
++ifneq (,$(findstring 2.4.,$(CURRENT)))
++
++# ========================================================================================
++# Set include directories
++
++INCLUDEDIR = $(KERNELDIR) -I./Include
++
++# ========================================================================================
++# Compile flags
++
++CFLAGS += -O2 -D__KERNEL__ -DMODULE -I$(INCLUDEDIR)
++
++# Enable version support (look in config.h\autoconf.h and check if CONFIG_MODVERSIONS
++# is defined)
++MODVER = $(shell if cat $(KERNELDIR)/linux/config.h $(KERNELDIR)/linux/autoconf.h \
++		2>/dev/null | grep -q \
++		'^[[:space:]]*\#define[[:space:]]*CONFIG_MODVERSIONS[[:space:]]*1'; \
++		then echo 1; else echo 0; fi)
++ifeq ($(MODVER),1)
++	CFLAGS += -DMODVERSIONS -include $(KERNELDIR)/linux/modversions.h
++endif
++
++
++# ========================================================================================
++# Make all option
++
++all: $(TARGET).ko
++$(TARGET).ko: $(SRC:.c=.o)
++		$(LD) -r $^ -o $@
++		
++# ========================================================================================
++# Install option
++
++install:
++	install -d $(INSTALLDIR)
++	install -c $(TARGET).ko $(INSTALLDIR)
++
++
++# ========================================================================================
++# Kernel 2.6 makefile
++# ========================================================================================
++
++else
++
++# ========================================================================================
++# Variables 
++
++EXTRA_CFLAGS = -DEXPORT_SYMTAB
++KDIR = /lib/modules/$(CURRENT)/build
++PWD = $(shell pwd)
++ 
++# ========================================================================================
++# Objects
++
++$(TARGET)-objs := $(SRC)
++obj-m := $(TARGET).o
++
++# ========================================================================================
++# Default option
++
++default:
++	make -C $(KDIR) SUBDIRS=$(PWD) modules
++
++# ========================================================================================
++# Target compiling 
++
++$(TARGET).o: $(SRC)
++	$(LD) $(LD_RFLAG) -r -o $@ $(SRC)
++	
++# ========================================================================================
++# Install option
++
++install:
++	# If the makefile failes to create the $(INSTALLDIR) execute the remove command below.
++	# WARNING: this will delete all files in the $(INSTALLDIR) directory. Make a backup of
++	# important files in this directory
++	# rm -d -r -f $(INSTALLDIR)
++	
++	install -d $(INSTALLDIR)
++	su -c "cp -v $(TARGET).ko $(INSTALLDIR) && /sbin/depmod -a"
++	
++endif
++
++# ========================================================================================
++# End of kernel specific code
++# ========================================================================================
++
++
++
++# ========================================================================================
++# Clean all option
++
++clean:
++	rm -f $(SRCDIR)*.o $(SRCDIR)*.ko $(SRCDIR)*.o.cmd $(SRCDIR)*~ $(SRCDIR)core $(SRCDIR).depend
++	rm -f *.o *.ko .*.o.cmd .*.ko.cmd *.mod.c
++	rm -rf .tmp_versions
++	
++-include $(KERNELDIR)/Rules.make

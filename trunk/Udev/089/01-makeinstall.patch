@@ -1,0 +1,10 @@
+--- udev-084-orig/Makefile	2006-01-29 23:51:38.000000000 -0800
++++ udev-084/Makefile	2006-02-06 20:24:48.000000000 -0800
+@@ -285,7 +285,6 @@
+ .PHONY: uninstall-man
+ 
+ install-bin:
+-	$(INSTALL) -d $(DESTDIR)$(udevdir)
+ 	$(INSTALL_PROGRAM) -D udevd $(DESTDIR)$(sbindir)/udevd
+ 	$(INSTALL_PROGRAM) -D udevcontrol $(DESTDIR)$(sbindir)/udevcontrol
+ 	$(INSTALL_PROGRAM) -D udevmonitor $(DESTDIR)$(usrsbindir)/udevmonitor

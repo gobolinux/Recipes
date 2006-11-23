@@ -1,0 +1,15 @@
+# by Leandro Motta Barros
+
+# There is one little thing to check in this Recipe before considering
+# it a very good one: In 'Resources/Environment' file I set the
+# 'ESDL_PATH' varible. I'm not sure, but I think this is only used to
+# compile Wings3D. Anyway, I can't imagine any other project using
+# ESDL apart of Wings3D...
+
+url=$httpSourceforge/esdl/esdl-0.93.0909.src.tar.gz
+dir=esdl-0.93.0909
+compile_version=1.7.1
+recipe_type=makefile
+install_variables=(
+   "INSTALLDIR=$target/lib/esdl"
+)

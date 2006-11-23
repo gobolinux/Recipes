@@ -1,0 +1,19 @@
+--- kdelibs-3.2.3/kio/misc/kpac/Makefile.am.orig	2004-08-29 21:43:00.000000000 -0300
++++ kdelibs-3.2.3/kio/misc/kpac/Makefile.am	2004-08-29 21:43:06.000000000 -0300
+@@ -24,4 +24,4 @@
+ proxyscoutdata_DATA = eventsrc
+ 
+ install-exec-local:
+-	@(chown root $(DESTDIR)$(bindir)/kpac_dhcp_helper && chmod 4755 $(DESTDIR)$(bindir)/kpac_dhcp_helper) || echo "Please make kpac_dhcp_helper setuid root"
++	@(chown 0 $(DESTDIR)$(bindir)/kpac_dhcp_helper && chmod 4755 $(DESTDIR)$(bindir)/kpac_dhcp_helper) || echo "Please make kpac_dhcp_helper setuid root"
+--- kdelibs-3.2.3/kio/misc/kpac/Makefile.in.orig	2004-08-29 21:43:12.000000000 -0300
++++ kdelibs-3.2.3/kio/misc/kpac/Makefile.in	2004-08-29 21:43:19.000000000 -0300
+@@ -917,7 +917,7 @@
+ 
+ 
+ install-exec-local:
+-	@(chown root $(DESTDIR)$(bindir)/kpac_dhcp_helper && chmod 4755 $(DESTDIR)$(bindir)/kpac_dhcp_helper) || echo "Please make kpac_dhcp_helper setuid root"
++	@(chown 0 $(DESTDIR)$(bindir)/kpac_dhcp_helper && chmod 4755 $(DESTDIR)$(bindir)/kpac_dhcp_helper) || echo "Please make kpac_dhcp_helper setuid root"
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.
+ # Otherwise a system limit (for SysV at least) may be exceeded.
+ .NOEXPORT:

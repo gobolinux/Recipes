@@ -1,0 +1,8 @@
+# by Guilherme Bedin
+url="$httpSourceforge/sodipodi/sodipodi-0.34.tar.gz"
+compile_version=1.7.1
+recipe_type=configure
+
+configure_options=(
+  "--with-kde"
+)

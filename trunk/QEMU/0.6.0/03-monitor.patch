@@ -1,0 +1,10 @@
+--- qemu-0.6.0/monitor.c.orig	2004-07-20 01:07:04.000000000 -0300
++++ qemu-0.6.0/monitor.c	2004-07-20 01:07:15.000000000 -0300
+@@ -23,6 +23,7 @@
+  */
+ #include "vl.h"
+ #include "disas.h"
++#include <longjmp.h>
+ 
+ //#define DEBUG
+ 

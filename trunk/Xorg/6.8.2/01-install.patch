@@ -1,0 +1,28 @@
+diff -Naur xc/config/cf/host.def xc-new/config/cf/host.def
+--- xc/config/cf/host.def	1969-12-31 21:00:00.000000000 -0300
++++ xc-new/config/cf/host.def	2004-09-10 18:12:43.000000000 -0300
+@@ -0,0 +1,24 @@
++#define ProjectRoot /Programs/Xorg/6.8.2
++#define EtcX11Directory /Programs/Xorg/Settings/X11
++#define FontconfigFontsConfDir /Programs/Fontconfig/Settings/fonts
++#define Build75DpiFonts 		NO
++#define Build100DpiFonts 		NO
++#define BuildSpeedoFonts 		NO
++#define BuildType1Fonts 		NO
++#define BuildCIDFonts 			NO
++#define BuildTrueTypeFonts 		NO
++#define BuildCyrillicFonts 		NO
++#define HasFontconfig			YES
++#define HasFreetype2			YES
++#define HasExpat			YES
++#define HasLibpng			YES
++#define HasZlib				YES
++#define NothingOutsideProjectRoot	YES
++#define InstallXserverSetUID	YES
++/* Not sure if theese are needed. They could be use to turn off
++ * parts of the build where previous recipes had Imakefile patches,
++ * but those parts don't seem to turn up in the generated Makefiles
++ * anyway.
++#define LinkGLToUsrInclude		NO
++#define LinkGLToUsrLib		NO
++*/

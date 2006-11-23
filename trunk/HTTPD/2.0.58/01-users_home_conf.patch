@@ -1,0 +1,12 @@
+diff -Nur httpd-2.0.58/docs/conf/httpd-std.conf.in httpd-2.0.58-fabio.m/docs/conf/httpd-std.conf.in
+--- httpd-2.0.58/docs/conf/httpd-std.conf.in	2005-11-13 15:13:06.000000000 -0200
++++ httpd-2.0.58-fabio.m/docs/conf/httpd-std.conf.in	2006-07-23 16:44:53.000000000 -0300
+@@ -371,7 +371,7 @@
+ # Control access to UserDir directories.  The following is an example
+ # for a site where these directories are restricted to read-only.
+ #
+-#<Directory /home/*/public_html>
++#<Directory /Users/*/public_html>
+ #    AllowOverride FileInfo AuthConfig Limit Indexes
+ #    Options MultiViews Indexes SymLinksIfOwnerMatch IncludesNoExec
+ #    <Limit GET POST OPTIONS PROPFIND>

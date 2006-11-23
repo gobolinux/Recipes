@@ -1,0 +1,8 @@
+# Recipe for version 3.5.3 by Rui Andrada <shingonoide at gmail>, on Sun Jun 4 12:55:57 BRT 2006
+url="ftp://ftp.oregonstate.edu/pub/kde/stable/3.5.3/src/kde-i18n/kde-i18n-pt_BR-3.5.3.tar.bz2"
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+)

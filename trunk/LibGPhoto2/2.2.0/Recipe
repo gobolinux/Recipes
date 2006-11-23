@@ -1,0 +1,11 @@
+# Recipe for version 2.2.0 by Andre Detsch <detsch@gobolinux.org>, on Thu Oct 12 18:35:24 BRST 2006
+compile_version=1.7.1
+url=$httpSourceforge/gphoto/libgphoto2-2.2.0.tar.gz
+recipe_type=configure
+pre_build() {
+   mkdir gphoto2
+   for i in libgphoto2/* libgphoto2_port/libgphoto2_port/* 
+   do 
+      ln -sfn `readlink -f $i` gphoto2/
+   done
+}

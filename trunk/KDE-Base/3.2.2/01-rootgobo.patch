@@ -1,0 +1,118 @@
+diff -Naur kdebase-3.2.2/kcheckpass/Makefile.am kdebase-3.2.2-GOBO/kcheckpass/Makefile.am
+--- kdebase-3.2.2/kcheckpass/Makefile.am	2003-11-30 04:42:21.000000000 -0500
++++ kdebase-3.2.2-GOBO/kcheckpass/Makefile.am	2004-04-30 10:45:27.872460552 -0400
+@@ -21,5 +21,5 @@
+ 	-@test -n "$(DESTDIR)" || test -z "$(PAM)" || $(top_srcdir)/mkpamserv $(PAM)
+ 
+ install-exec-hook:
+-	@(chown root $(DESTDIR)$(bindir)/kcheckpass && chmod 4755 $(DESTDIR)$(bindir)/kcheckpass) \
+-	|| echo "Error: Could not install kcheckpass as setuid root (possibly you won't be able to unlock)!!\n"
++	@(chown gobo $(DESTDIR)$(bindir)/kcheckpass && chmod 4755 $(DESTDIR)$(bindir)/kcheckpass) \
++	|| echo "Error: Could not install kcheckpass as setuid gobo (possibly you won't be able to unlock)!!\n"
+diff -Naur kdebase-3.2.2/kcheckpass/Makefile.in kdebase-3.2.2-GOBO/kcheckpass/Makefile.in
+--- kdebase-3.2.2/kcheckpass/Makefile.in	2004-04-05 11:09:09.000000000 -0400
++++ kdebase-3.2.2-GOBO/kcheckpass/Makefile.in	2004-04-30 10:45:44.344956352 -0400
+@@ -835,8 +835,8 @@
+ 	-@test -n "$(DESTDIR)" || test -z "$(PAM)" || $(top_srcdir)/mkpamserv $(PAM)
+ 
+ install-exec-hook:
+-	@(chown root $(DESTDIR)$(bindir)/kcheckpass && chmod 4755 $(DESTDIR)$(bindir)/kcheckpass) \
+-	|| echo "Error: Could not install kcheckpass as setuid root (possibly you won't be able to unlock)!!\n"
++	@(chown gobo $(DESTDIR)$(bindir)/kcheckpass && chmod 4755 $(DESTDIR)$(bindir)/kcheckpass) \
++	|| echo "Error: Could not install kcheckpass as setuid gobo (possibly you won't be able to unlock)!!\n"
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.
+ # Otherwise a system limit (for SysV at least) may be exceeded.
+ .NOEXPORT:
+diff -Naur kdebase-3.2.2/kcontrol/fileshare/Makefile.am kdebase-3.2.2-GOBO/kcontrol/fileshare/Makefile.am
+--- kdebase-3.2.2/kcontrol/fileshare/Makefile.am	2003-09-02 09:53:58.000000000 -0400
++++ kdebase-3.2.2-GOBO/kcontrol/fileshare/Makefile.am	2004-04-30 10:53:47.850452344 -0400
+@@ -20,4 +20,4 @@
+ install-exec-hook:
+ 	@-rm -f $(DESTDIR)/$(bindir)/filesharelist
+ 	@$(LN_S) fileshareset $(DESTDIR)/$(bindir)/filesharelist
+-	@(chown root $(DESTDIR)/$(bindir)/fileshareset && chmod 4755 $(DESTDIR)/$(bindir)/fileshareset) || echo "Was not able to make fileshareset setuid root"
++	@(chown gobo $(DESTDIR)/$(bindir)/fileshareset && chmod 4755 $(DESTDIR)/$(bindir)/fileshareset) || echo "Was not able to make fileshareset setuid gobo"
+diff -Naur kdebase-3.2.2/kcontrol/fileshare/Makefile.in kdebase-3.2.2-GOBO/kcontrol/fileshare/Makefile.in
+--- kdebase-3.2.2/kcontrol/fileshare/Makefile.in	2004-04-05 11:09:10.000000000 -0400
++++ kdebase-3.2.2-GOBO/kcontrol/fileshare/Makefile.in	2004-04-30 10:53:59.259717872 -0400
+@@ -870,7 +870,7 @@
+ install-exec-hook:
+ 	@-rm -f $(DESTDIR)/$(bindir)/filesharelist
+ 	@$(LN_S) fileshareset $(DESTDIR)/$(bindir)/filesharelist
+-	@(chown root $(DESTDIR)/$(bindir)/fileshareset && chmod 4755 $(DESTDIR)/$(bindir)/fileshareset) || echo "Was not able to make fileshareset setuid root"
++	@(chown gobo $(DESTDIR)/$(bindir)/fileshareset && chmod 4755 $(DESTDIR)/$(bindir)/fileshareset) || echo "Was not able to make fileshareset setuid gobo"
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.
+ # Otherwise a system limit (for SysV at least) may be exceeded.
+ .NOEXPORT:
+diff -Naur kdebase-3.2.2/kdesu/kdesu/kdesu.cpp kdebase-3.2.2-GOBO/kdesu/kdesu/kdesu.cpp
+--- kdebase-3.2.2/kdesu/kdesu/kdesu.cpp	2003-08-01 03:46:21.000000000 -0400
++++ kdebase-3.2.2-GOBO/kdesu/kdesu/kdesu.cpp	2004-04-30 10:52:21.827529816 -0400
+@@ -57,7 +57,7 @@
+     { "+command", I18N_NOOP("Specifies the command to run."), 0 },
+     { "c <command>", I18N_NOOP("Specifies the command to run."), "" },
+     { "f <file>", I18N_NOOP("Run command under target uid if <file> is not writable."), "" },
+-    { "u <user>", I18N_NOOP("Specifies the target uid."), "root" },
++    { "u <user>", I18N_NOOP("Specifies the target uid."), "gobo" },
+     { "n", I18N_NOOP("Do not keep password."), 0 },
+     { "s", I18N_NOOP("Stop the daemon (forgets all passwords)."), 0 },
+     { "t", I18N_NOOP("Enable terminal output (no password keeping)."), 0 },
+@@ -196,7 +196,7 @@
+     if ((priority > 50) || (scheduler != SuProcess::SchedNormal))
+     {
+         change_uid = true;
+-        auth_user = "root";
++        auth_user = "gobo";
+     }
+ 
+     // Get command
+diff -Naur kdebase-3.2.2/kdesu/kdesu/sudlg.cpp kdebase-3.2.2-GOBO/kdesu/kdesu/sudlg.cpp
+--- kdebase-3.2.2/kdesu/kdesu/sudlg.cpp	2003-04-11 08:27:59.000000000 -0400
++++ kdebase-3.2.2-GOBO/kdesu/kdesu/sudlg.cpp	2004-04-30 10:53:04.392059024 -0400
+@@ -21,9 +21,9 @@
+     setCaption(i18n("Run as %1").arg(user));
+ 
+     QString prompt;
+-    if (m_User == "root")
++    if (m_User == "gobo")
+ 	prompt = i18n("The action you requested needs root privileges. "
+-		"Please enter root's password below or click "
++		"Please enter gobo's password below or click "
+ 		"Ignore to continue with your current privileges.");
+     else
+ 	prompt = i18n("The action you requested needs additional privileges. "
+diff -Naur kdebase-3.2.2/kdesu/kdesud/Makefile.am kdebase-3.2.2-GOBO/kdesu/kdesud/Makefile.am
+--- kdebase-3.2.2/kdesu/kdesud/Makefile.am	2002-07-01 07:13:01.000000000 -0400
++++ kdebase-3.2.2-GOBO/kdesu/kdesud/Makefile.am	2004-04-30 10:47:09.295041976 -0400
+@@ -21,7 +21,7 @@
+ 	@echo "********************************************************"
+ 
+ install-exec-hook: 
+-	@(chown root:@nogroup@ $(DESTDIR)$(bindir)/kdesud && chmod 2755  $(DESTDIR)$(bindir)/kdesud) \
++	@(chown gobo:@nogroup@ $(DESTDIR)$(bindir)/kdesud && chmod 2755  $(DESTDIR)$(bindir)/kdesud) \
+ 	|| echo "Error: Could not install kdesud as setgid nogroup!!\n" \
+ 	"The password caching feature is disabled."
+ 
+diff -Naur kdebase-3.2.2/kdesu/kdesud/Makefile.in kdebase-3.2.2-GOBO/kdesu/kdesud/Makefile.in
+--- kdebase-3.2.2/kdesu/kdesud/Makefile.in	2004-04-05 11:09:12.000000000 -0400
++++ kdebase-3.2.2-GOBO/kdesu/kdesud/Makefile.in	2004-04-30 10:47:23.300912760 -0400
+@@ -840,7 +840,7 @@
+ 	@echo "********************************************************"
+ 
+ install-exec-hook: 
+-	@(chown root:@nogroup@ $(DESTDIR)$(bindir)/kdesud && chmod 2755  $(DESTDIR)$(bindir)/kdesud) \
++	@(chown gobo:@nogroup@ $(DESTDIR)$(bindir)/kdesud && chmod 2755  $(DESTDIR)$(bindir)/kdesud) \
+ 	|| echo "Error: Could not install kdesud as setgid nogroup!!\n" \
+ 	"The password caching feature is disabled."
+ 
+diff -Naur kdebase-3.2.2/kdesu/kdesud/handler.cpp kdebase-3.2.2-GOBO/kdesu/kdesud/handler.cpp
+--- kdebase-3.2.2/kdesu/kdesud/handler.cpp	2003-09-21 04:34:55.000000000 -0400
++++ kdebase-3.2.2-GOBO/kdesu/kdesud/handler.cpp	2004-04-30 10:47:39.367470272 -0400
+@@ -254,7 +254,7 @@
+ 
+         QCString auth_user;
+         if ((m_Scheduler != SuProcess::SchedNormal) || (m_Priority > 50))
+-            auth_user = "root";
++            auth_user = "gobo";
+         else
+             auth_user = user;
+         key = makeKey(2, m_Host, auth_user, command);

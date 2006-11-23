@@ -1,0 +1,24 @@
+# Recipe (MakeRecipe) for XFPrint by Jonas Karlsson <jonka750@student.liu.se>, on Thu Jun 1 12:36:14 CEST 2006
+# Recipe for version 4.3.90.1 by Jonas Karlsson <jonka750@student.liu.se>, on Thu Jun 1 12:36:14 CEST 2006
+compile_version=1.7.1
+url="$httpSourceforge/xfce/xfce-4.3.90.1-src.tar.bz2"
+file_size=18898770
+file_md5=ff848a8fbf81dad163151281b54ca52f
+recipe_type=configure
+dir='xfce-4.3.90.1/src'
+pre_patch()
+{
+    if [ ! -d xfprint-4.3.90.1 ]
+    then
+        tar jxvf xfprint-4.3.90.1.tar.bz2
+    fi
+}
+pre_build()
+{
+    if [ ! -d xfprint-4.3.90.1 ]
+    then
+        tar jxvf xfprint-4.3.90.1.tar.bz2
+    fi
+    cd xfprint-4.3.90.1
+}
+

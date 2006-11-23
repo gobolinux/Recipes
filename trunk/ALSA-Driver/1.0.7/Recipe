@@ -1,0 +1,25 @@
+# Recipe for version 1.0.7 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Fri Dec 17 13:00:57 BRST 2004
+# by Hisham Muhammad
+# sequencer support by Giusepe Casagrande
+# cards VIA 82XX chipset by Maglan C. Diemer
+
+# Warning:
+# Assumes /etc/init.d and /etc/rc.d don't exist.
+# Will fail otherwise.
+
+url=ftp://ftp.alsa-project.org/pub/driver/alsa-driver-1.0.7.tar.bz2
+file_md5=30be8b50ab699f917fb20537bc6509ad
+file_size=1829053
+compile_version=1.7.1
+recipe_type=configure
+
+configure_options=(
+   "--with-moddir=$goboModules/`uname -r`/sound"
+   "--with-kernel=$goboModules/`uname -r`/build"
+   "--with-redhat=no"
+   "--with-suse=no"
+   "--with-cards=all"
+   "--with-sequencer=yes"
+   "--with-oss=yes"
+   "--with-cards=all"
+)

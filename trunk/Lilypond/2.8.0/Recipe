@@ -1,0 +1,13 @@
+# Recipe for version 2.8.0 by Laurent Pelecq (laurent.pelecq at soleil.org), on mar mar 28 22:35:28 CEST 2006
+compile_version=1.7.1
+url="http://lilypond.org/download/v2.8/lilypond-2.8.0.tar.gz"
+recipe_type=configure
+makefile=Makefile
+
+make_variables=(
+  "DOCUMENTATION=no"
+)
+
+configure_options=(
+  "--with-ncsb-dir=/Files/Fonts/Ghostscript"
+)

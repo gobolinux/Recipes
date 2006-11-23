@@ -1,0 +1,16 @@
+diff -Naur wmSMPmon/Makefile wmSMPmon/Makefile
+--- wmSMPmon/Makefile	2003-03-10 13:54:28.000000000 +0100
++++ wmSMPmon/Makefile	2005-07-19 15:38:55.000000000 +0200
+@@ -1,5 +1,6 @@
+ #(c)1999-2003 redseb 
+ 
++PREFIX = /usr/local
+ SRC = wmSMPmon.c ../wmgeneral/wmgeneral.c 
+ EXE = wmSMPmon
+ OBJ = $(SRC:.c=.o)
+@@ -20,4 +21,4 @@
+ 	rm -rf ../wmgeneral/*.o
+ 
+ install:
+-	$(INSTALL) $(EXE) /usr/local/bin/
++	$(INSTALL) $(EXE) $(PREFIX)/bin/

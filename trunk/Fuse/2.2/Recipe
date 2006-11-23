@@ -1,0 +1,14 @@
+# Recipe for version 2.2 by Jonatan Liljedahl <lijon@kymatica.com>, on Thu Mar 10 19:38:44 BRT 2005
+# Recipe (MakeRecipe) for Fuse by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sat Dec 4 19:43:25 BRST 2004
+compile_version=1.7.1
+url="$httpSourceforge/fuse/fuse-2.2.tar.gz"
+recipe_type=configure
+sandbox_options=("--no-sandbox")
+
+configure_options=(
+	"--enable-kernel-module"
+	"--enable-lib"
+	"--enable-util"
+	"--enable-example"
+	"--with-kernel=$goboModules/`uname -r`/build"
+)

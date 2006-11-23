@@ -1,0 +1,22 @@
+# Recipe (MakeRecipe) for XFSProgs by ro.ko@mcnon.com, on Tue Oct 12 00:32:49 BRST 2004
+# Recipe for version 2.6.25.src by ro.ko@mcnon.com, on Tue Oct 12 00:32:49 BRST 2004
+compile_version=1.7.1
+url="ftp://oss.sgi.com/projects/xfs/download/cmd_tars/xfsprogs-2.6.25.src.tar.gz"
+file_size=850101
+file_md5=4693399ce748e1357fc47c7ec443b17c
+recipe_type=configure
+dir="xfsprogs-2.6.25"
+pre_build() {
+   export DEBUG=-DNDEBUG  # OPTIMIZER=-O
+}
+configure_options=(
+--libexecdir=$target/lib
+--enable-shared=yes
+#--enable-static=no
+#--enable-readline=yes
+#--enable-editline=yes
+)
+install_target="install install-dev"
+pre_link() {
+   ln -sf $target/lib/libhandle.so.1.0.3 $target/lib/libhandle.so
+}

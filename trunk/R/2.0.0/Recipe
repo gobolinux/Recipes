@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for R by roko, <ro.ko@mcnon.com>, , on Sat Oct 9 05:00:34 BRT 2004
+# Recipe for version 2.0.0 by roko, <ro.ko@mcnon.com>, , on Sat Oct 9 05:00:34 BRT 2004
+compile_version=1.7.1
+url="htttp://cran.at.r-project.org/src/base/R-2/R-2.0.0.tar.gz"
+file_size=10676072
+file_md5=3900bca37cabb4b76b8d736d51cc9251
+recipe_type=configure
+configure_options=(
+"--with-x"
+)

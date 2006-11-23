@@ -1,0 +1,30 @@
+# Recipe for version 1.23 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Sep 1 21:15:45 CEST 2006
+# Recipe (MakeRecipe) for Ndiswrapper by Jonas Karlsson <jonka750@student.liu.se>, on Sun Jul 24 00:52:28 CEST 2005
+compile_version=1.7.1
+url="$httpSourceforge/ndiswrapper/ndiswrapper-1.23.tar.gz"
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+    "DESTDIR=$target"
+    "INST_DIR=$target/Resources/Unmanaged/${goboKernel}/Modules/Current/misc"
+    "KBUILD=$goboModules/Current/build"
+)
+
+unmanaged_files=(
+    "${goboKernel}/Modules/Current/misc/ndiswrapper.ko"
+)
+
+pre_build(){
+    make distclean
+}
+
+pre_link () {
+    # Make the a note that this is a third part module that needs
+    # recompiling with a new kernel
+    mkdir -p ${target}/Shared/Compile/Recompile/Linux/
+    touch ${target}/Shared/Compile/Recompile/Linux/Ndiswrapper
+}
+
+post_install(){
+    depmod
+}

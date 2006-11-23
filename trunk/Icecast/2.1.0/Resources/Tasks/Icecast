@@ -1,0 +1,16 @@
+#!/bin/sh
+
+
+case "$1" in
+[Ss]tart)
+  /Programs/Icecast/Current/bin/icecast -b -c /Programs/Icecast/Settings/icecast.xml 
+
+  ;;
+[Ss]top)
+  killall icecast
+  ;;
+esac
+
+
+
+

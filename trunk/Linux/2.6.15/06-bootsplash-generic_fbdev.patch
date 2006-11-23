@@ -1,0 +1,11 @@
+--- linux-2.6.14.3/drivers/video/bootsplash/Kconfig.orig	2006-01-03 11:30:27.000000000 -0200
++++ linux-2.6.14.3/drivers/video/bootsplash/Kconfig	2006-01-03 11:30:51.000000000 -0200
+@@ -6,7 +6,7 @@ menu "Bootsplash configuration"
+ 
+ config BOOTSPLASH
+ 	bool "Bootup splash screen"
+-	depends on FRAMEBUFFER_CONSOLE && FB_VESA
++	depends on FRAMEBUFFER_CONSOLE
+ 	default n
+         ---help---
+           This option enables the Linux bootsplash screen. For more 

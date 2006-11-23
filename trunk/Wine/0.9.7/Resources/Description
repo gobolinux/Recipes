@@ -1,0 +1,12 @@
+[Name]  wine
+[Summary]  An MS Windows emulator (ALPHA)
+[Description]  Wine is a program which allows running Microsoft Windows programs
+(including DOS, Windows 3.x and Win32 executables) on Unix.  It
+consists of a program loader which loads and executes a Microsoft
+Windows binary, and a library (called Winelib) that implements Windows
+API calls using their Unix or X11 equivalents.  The library may also
+be used for porting Win32 code into native Unix executables.
+ Depending on the programs you want to run, you will need to install certain parts of Windows on your system.  Read 'man wine' for further information. You can invoke wine by entering: 'wine program.exe'
+[Suse Category]  System/Emulators/PC
+[License]  LGPL, Other License(s), see package
+[Homepage]  http://www.winehq.com

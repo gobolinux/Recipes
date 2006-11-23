@@ -1,0 +1,10 @@
+url=http://www.ctan.org/tex-archive/support/psutils/psutils-p17.tar.gz
+dir=psutils
+compile_version=1.7.1
+recipe_type=makefile
+makefile=Makefile.unix
+make_variables=(
+   "BINDIR=$target/bin"
+   "INCLUDEDIR=$target/include/psutils"
+   "MANDIR=$target/man/man1"
+)

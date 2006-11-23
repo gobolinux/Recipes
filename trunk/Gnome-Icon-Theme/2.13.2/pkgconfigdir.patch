@@ -1,0 +1,11 @@
+--- gnome-icon-theme-2.13.2/Makefile.in	2005-11-14 18:08:12.000000000 +0100
++++ gnome-icon-theme-2.13.2.new/Makefile.in	2005-11-28 11:48:40.000000000 +0100
+@@ -198,7 +198,7 @@
+ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
+ SUBDIRS = 12x12 16x16 24x24 32x32 36x36 48x48 72x72 96x96 192x192 scalable po
+-pkgconfigdir = $(datadir)/pkgconfig
++pkgconfigdir = $(prefix)/lib/pkgconfig
+ pkgconfig_DATA = gnome-icon-theme.pc
+ THEME_IN_FILES = index.theme.in
+ hicolor_dirs = \

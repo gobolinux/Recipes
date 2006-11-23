@@ -1,0 +1,41 @@
+--- dcron/Makefile	2002-12-17 21:08:49.000000000 +0100
++++ dcron.new/Makefile	2005-07-25 14:46:18.000000000 +0200
+@@ -10,6 +10,7 @@
+ D_OBJS = crontab.o subs.o
+ PROTOS= protos.h
+ DISTTAR= /home/httpd/htdocs/FreeSrc/dcron29.tgz
++PREFIX=/usr
+ 
+ all:	${PROTOS} crond crontab
+ 
+@@ -31,18 +32,18 @@
+ 	rm -f *.o dcron.tgz $(PROTOS)
+ 
+ install:
+-	rm -f /usr/bin/crond /usr/bin/crontab
+-	cp crond crontab /usr/bin
+-	chown root.wheel /usr/bin/crond
+-	chown root.cron /usr/bin/crontab
+-	chmod 700 /usr/bin/crond
+-	chmod 4750 /usr/bin/crontab
+-	-mkdirs /usr/man/man1
+-	-mkdirs /usr/man/man8
+-	cp crontab.1 /usr/man/man1
+-	cp crond.8 /usr/man/man8
+-	chmod 444 /usr/man/man1/crontab.1
+-	chmod 444 /usr/man/man8/crond.8
++	rm -f $(PREFIX)/bin/crond $(PREFIX)/bin/crontab
++	cp crond crontab $(PREFIX)/bin
++	chown 0.0 $(PREFIX)/bin/crond
++	chown 0.cron $(PREFIX)/bin/crontab
++	chmod 700 $(PREFIX)/bin/crond
++	chmod 4750 $(PREFIX)/bin/crontab
++	mkdir -p $(PREFIX)/man/man1
++	mkdir -p $(PREFIX)/man/man8
++	cp crontab.1 $(PREFIX)/man/man1
++	cp crond.8 $(PREFIX)/man/man8
++	chmod 444 $(PREFIX)/man/man1/crontab.1
++	chmod 444 $(PREFIX)/man/man8/crond.8
+ 
+ # dillon-specific
+ #

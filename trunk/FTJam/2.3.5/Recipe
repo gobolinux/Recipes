@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for FTJam by Andy Feldman (nereusren@gmail.com), on Sun Mar 5 13:06:27 CST 2006
+# Recipe for version 2.3.5 by Andy Feldman (nereusren@gmail.com), on Sun Mar 5 13:06:27 CST 2006
+# Warning! If this recipe is being used on an architecture other than Linux/x86, the "cp -v bin.linuxx86/jam" line must be updated! -andy
+compile_version=1.7.1
+url="$httpSourceforge/freetype/ftjam-2.3.5.tar.bz2"
+file_size=124721
+file_md5=98d72533874ff8b8dac63f553c62dc5e
+recipe_type=makefile
+makefile='Makefile'
+do_install=no
+pre_link () {
+Sudo cp -v bin.linuxx86/jam $target/bin
+}

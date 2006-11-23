@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for MCS by Peter Eriksen <s022018@student.dtu.dk>, on Fri Nov 5 01:10:22 CET 2004
+# Recipe for version 1.0.4 by Peter Eriksen <s022018@student.dtu.dk>, on Fri Nov 5 01:10:22 CET 2004
+compile_version=1.7.1
+url="http://www.go-mono.com/archive/1.0.4/mcs-1.0.4.tar.gz"
+file_size=10428296
+file_md5=97f409e51cbeee5d6460413ef1b8555d
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "DESTDIR=$target"
+   "destdir=$target"
+)

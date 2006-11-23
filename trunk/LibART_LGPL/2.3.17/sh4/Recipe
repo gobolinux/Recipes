@@ -1,0 +1,5 @@
+pre_build() {
+    touch config.h
+    $HOSTCC -c gen_art_config.c
+    $HOSTCC gen_art_config.o -o gen_art_config
+}

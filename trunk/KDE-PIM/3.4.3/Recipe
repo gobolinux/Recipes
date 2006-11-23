@@ -1,0 +1,19 @@
+# Recipe for version 3.4.3 by Maglan C. Diemer, maglan@univates.br, on Qui Nov 17 07:48:22 BRST 2005
+# by Maglan C. Diemer && Andre Detsch
+
+url="ftp://ftp.kde.org/pub/kde/stable/3.4.3/src/kdepim-3.4.3.tar.bz2"
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+)
+
+pre_install() {
+	# Change install path for designer plugins so they go to $target
+	# and not /Programs/KDE-Libs
+	repl_from='$(DESTDIR)$(kde_widgetdir)'
+	repl_to="$target/lib/kde3/plugins/designer"
+	GrepReplace "$repl_from" "$repl_to" ./libkdepim/kpartsdesignerplugin/Makefile
+	GrepReplace "$repl_from" "$repl_to" ./libkdepim/Makefile
+}

@@ -1,0 +1,8 @@
+# by Leandro Motta Barros
+
+url=$httpSourceforge/cal3d/cal3d-0.9.1.tar.bz2
+compile_version=1.7.1
+recipe_type=configure
+autogen_before_configure=yes
+
+# perhaps should add '--enable-static' to 'configure_options'.

@@ -1,0 +1,15 @@
+# by Andre Detsch
+
+url=http://www.river-bank.demon.co.uk/download/sip/sip-3.9.tar.gz
+compile_version=1.7.1
+recipe_type=makefile
+pre_build() {
+   PrepareProgram -t SIP 3.9
+   mkdir -p $target/include/python2.3
+   mkdir -p $target/lib/python2.3/site-packages/
+   python build.py -b $target/bin -e $target/include -d $target/lib/python2.3/site-packages/
+}
+pre_link() {   
+   # there is a bug inside Makefile... they try to copy sipconfig.py to /P/Python/...
+   cp sipconfig.py $target/lib/python2.3/site-packages/
+}

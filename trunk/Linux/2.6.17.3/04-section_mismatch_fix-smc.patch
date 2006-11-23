@@ -1,0 +1,47 @@
+--- linux-2.6.17.3/drivers/net/smc-ultra.c	2006-07-06 12:14:04.000000000 -0300
++++ linux-2.6.17.3.orig/drivers/net/smc-ultra.c	2006-07-06 12:13:55.000000000 -0300
+@@ -553,7 +553,7 @@ MODULE_LICENSE("GPL");
+ 
+ /* This is set up so that only a single autoprobe takes place per call.
+ ISA device autoprobes on a running machine are not recommended. */
+-int
++int __init
+ init_module(void)
+ {
+ 	struct net_device *dev;
+--- linux-2.6.17.3/drivers/net/smc-ultra32.c	2006-07-06 12:14:04.000000000 -0300
++++ linux-2.6.17.3.orig/drivers/net/smc-ultra32.c	2006-07-06 12:13:55.000000000 -0300
+@@ -421,7 +421,7 @@ static struct net_device *dev_ultra[MAX_
+ MODULE_DESCRIPTION("SMC Ultra32 EISA ethernet driver");
+ MODULE_LICENSE("GPL");
+ 
+-int init_module(void)
++int __init init_module(void)
+ {
+ 	int this_dev, found = 0;
+ 
+--- linux-2.6.17.3/drivers/net/smc9194.c	2006-07-06 12:14:04.000000000 -0300
++++ linux-2.6.17.3.orig/drivers/net/smc9194.c	2006-07-06 12:13:55.000000000 -0300
+@@ -732,12 +732,9 @@ static int ifport;
+ struct net_device * __init smc_init(int unit)
+ {
+ 	struct net_device *dev = alloc_etherdev(sizeof(struct smc_local));
+-	static struct devlist *smcdev = smc_devlist;
++	struct devlist *smcdev = smc_devlist;
+ 	int err = 0;
+ 
+-#ifndef NO_AUTOPROBE
+-	smcdev = smc_devlist;
+-#endif
+ 	if (!dev)
+ 		return ERR_PTR(-ENODEV);
+ 
+@@ -1607,7 +1604,7 @@ MODULE_PARM_DESC(io, "SMC 99194 I/O base
+ MODULE_PARM_DESC(irq, "SMC 99194 IRQ number");
+ MODULE_PARM_DESC(ifport, "SMC 99194 interface port (0-default, 1-TP, 2-AUI)");
+ 
+-int init_module(void)
++int __init init_module(void)
+ {
+ 	if (io == 0)
+ 		printk(KERN_WARNING

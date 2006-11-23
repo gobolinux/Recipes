@@ -1,0 +1,32 @@
+--- crypto-5.2.1/GNUmakefile.orig	2004-08-08 22:35:12.000000000 -0300
++++ crypto-5.2.1/GNUmakefile	2004-08-09 23:02:47.000000000 -0300
+@@ -9,10 +9,17 @@
+ # LDFLAGS = -Wl,--gc-sections
+ ARFLAGS = -cr	# ar needs the dash on OpenBSD
+ RANLIB = ranlib
++CP = cp
++MKDIR = mkdir
+ UNAME = $(shell uname)
+ ISX86 = $(shell uname -m | grep -c "i.86\|x86_64")
+ ISMINGW = $(shell uname | grep -c "MINGW32")
+ 
++# Default prefix for make install
++ifeq ($(PREFIX),)
++PREFIX = /usr
++endif
++
+ ifeq ($(CXX),gcc)	# for some reason CXX is gcc on cygwin 1.1.4
+ CXX = g++
+ endif
+@@ -80,6 +87,11 @@
+ clean:
+ 	$(RM) cryptest.exe libcryptopp.a $(LIBOBJS) $(TESTOBJS) cryptopp.dll libcryptopp.dll.a libcryptopp.import.a cryptest.import.exe dlltest.exe $(DLLOBJS) $(LIBIMPORTOBJS) $(TESTIMPORTOBJS) $(DLLTESTOBJS)
+ 
++install:
++	$(MKDIR) -p $(PREFIX)/include/cryptopp
++	$(CP) *.h $(PREFIX)/include/cryptopp
++	$(CP) *.a $(PREFIX)/lib
++
+ libcryptopp.a: $(LIBOBJS)
+ 	$(AR) $(ARFLAGS) $@ $(LIBOBJS)
+ 	$(RANLIB) $@

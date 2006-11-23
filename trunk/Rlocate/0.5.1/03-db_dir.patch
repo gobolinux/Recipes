@@ -1,0 +1,45 @@
+diff -Naur rlocate-0.5.1.old/src/Makefile.am rlocate-0.5.1/src/Makefile.am
+--- rlocate-0.5.1.old/src/Makefile.am	2006-05-07 15:51:50.000000000 +0200
++++ rlocate-0.5.1/src/Makefile.am	2006-07-16 22:51:48.000000000 +0200
+@@ -31,11 +31,8 @@
+ AM_CFLAGS = -O2 -Wall
+ 
+ install-exec-hook:
+-	$(INSTALL) -d $(RLOCATE_DB_DIR)
+ 	chown $(root_uid):$(rlocate_group) $(DESTDIR)$(bindir)/$(rlocate)
+-	chown $(root_uid):$(rlocate_group) $(RLOCATE_DB_DIR)
+ 	chmod 2755 $(DESTDIR)$(bindir)/$(rlocate)
+-	chmod 0750 $(RLOCATE_DB_DIR)
+ 	-$(LN_S) -f $(rlocate) $(DESTDIR)$(bindir)/$(updatedb)
+ 	-$(LN_S) -f $(rlocate) $(DESTDIR)$(bindir)/$(locate)
+ if CRON
+@@ -63,5 +60,3 @@
+ 	grep -v "rlocate\|updatedb" $(DESTDIR)/etc/crontab >$(DESTDIR)/etc/crontab.$(rlocate)
+ 	mv $(DESTDIR)/etc/crontab.$(rlocate) $(DESTDIR)/etc/crontab
+ endif
+-	rm -f $(RLOCATE_DB_DIR)/*
+-	-rmdir $(RLOCATE_DB_DIR)
+diff -Naur rlocate-0.5.1.old/src/Makefile.in rlocate-0.5.1/src/Makefile.in
+--- rlocate-0.5.1.old/src/Makefile.in	2006-05-07 15:51:50.000000000 +0200
++++ rlocate-0.5.1/src/Makefile.in	2006-07-16 22:51:58.000000000 +0200
+@@ -556,11 +556,8 @@
+ 
+ 
+ install-exec-hook:
+-	$(INSTALL) -d $(RLOCATE_DB_DIR)
+ 	chown $(root_uid):$(rlocate_group) $(DESTDIR)$(bindir)/$(rlocate)
+-	chown $(root_uid):$(rlocate_group) $(RLOCATE_DB_DIR)
+ 	chmod 2755 $(DESTDIR)$(bindir)/$(rlocate)
+-	chmod 0750 $(RLOCATE_DB_DIR)
+ 	-$(LN_S) -f $(rlocate) $(DESTDIR)$(bindir)/$(updatedb)
+ 	-$(LN_S) -f $(rlocate) $(DESTDIR)$(bindir)/$(locate)
+ @CRON_TRUE@	$(mkinstalldirs) $(DESTDIR)/etc/cron.daily/
+@@ -582,8 +579,6 @@
+ @CRON_TRUE@	rm -f $(DESTDIR)/etc/cron.daily/rlocate
+ @CRON_FALSE@	grep -v "rlocate\|updatedb" $(DESTDIR)/etc/crontab >$(DESTDIR)/etc/crontab.$(rlocate)
+ @CRON_FALSE@	mv $(DESTDIR)/etc/crontab.$(rlocate) $(DESTDIR)/etc/crontab
+-	rm -f $(RLOCATE_DB_DIR)/*
+-	-rmdir $(RLOCATE_DB_DIR)
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.
+ # Otherwise a system limit (for SysV at least) may be exceeded.
+ .NOEXPORT:

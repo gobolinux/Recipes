@@ -1,0 +1,19 @@
+--- libMicro-0.3.0/Makefile.orig	2006-07-11 11:31:47.000000000 -0300
++++ libMicro-0.3.0/Makefile	2006-07-11 11:32:49.000000000 -0300
+@@ -34,6 +34,7 @@
+ include Makefile.benchmarks
+ 
+ BINS=		$(ALL:%=bin/%) bin/tattle
++PREFIX=		/usr
+ 
+ TARBALL_CONTENTS = 	\
+ 	Makefile.benchmarks \
+@@ -81,6 +82,8 @@ $(BINS): bin
+ 	@ln -sf ../wrapper $@
+ 	@chmod +x bench wrapper
+ 
++install:
++	@cp bin/* $(PREFIX)/bin
+ 
+ libMicro.tar:	FORCE
+ 	@chmod +x ./mk_tarball wrapper

@@ -1,0 +1,10 @@
+--- esound-0.2.8/esddsp.c.orig	2004-09-06 23:57:44.000000000 -0300
++++ esound-0.2.8/esddsp.c	2004-09-07 00:00:16.000000000 -0300
+@@ -34,6 +34,7 @@
+ 
+ #include "config.h"
+ 
++#define _GNU_SOURCE
+ #include <dlfcn.h>
+ #include <stdarg.h>
+ #include <stdlib.h>

@@ -1,0 +1,32 @@
+# Recipe for version 4.2.3.2 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Apr 3 10:37:02 BRT 2006
+## xfce 4.2.3.2
+## 20040621 Dave Dodge 
+
+compile_version=1.7.1
+recipe_type=meta
+
+include=(
+	DBH--1.0.24            		# ok
+	GTK-XFCE-Engine--2.2.8 		# ok
+	LibXFCE4Util--4.2.3.2  		# ok
+	LibXFCE4MCS--4.2.3     		# ok
+	LibXFCEGUI4--4.2.3     		# ok
+	XFCE-MCS-Manager--4.2.3     # ok
+	XFCE-MCS-Plugins--4.2.3     # ok
+	XFCE-Utils--4.2.3           # ok
+	XFCalendar--4.2.3      		# ok
+	XFCE4-AppFinder--4.2.3      # ok
+	XFCE4-IconBox--4.2.3        # ok
+	XFCE4-Icon-Theme--4.2.3     # ok
+	XFCE4-Panel--4.2.3          # ok
+	XFCE4-Mixer--4.2.3          # ok
+	XFCE4-Session--4.2.3        # ok
+	XFCE4-Systray--4.2.3        # ok
+	XFCE4-Toys--4.2.3           # ok
+	XFCE4-Trigger-Launcher--4.2.3 # ok
+	XFDesktop--4.2.3            # ok
+	XFFM--4.2.3                 # ok
+	XFPrint--4.2.3              # ok
+	XFWM4--4.2.3.2              # ok
+	XFWM4-Themes--4.2.3         # ok
+)

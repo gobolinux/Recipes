@@ -1,0 +1,16 @@
+# Recipe for version 3.17 by Andre Detsch <detsch@gobolinux.org>, on Wed Nov 8 16:32:41 BRST 2006
+# on Sat Apr 16 12:56:40 CEST 2005
+
+compile_version=1.7.1
+url="http://www.riverbankcomputing.com/Downloads/PyQt3/GPL/PyQt-x11-gpl-3.17.tar.gz"
+
+recipe_type=makefile
+pre_build() {
+   PrepareProgram -t PyQt 3.17
+   mkdir -p $target/include/python2.4
+   mkdir -p $target/lib/python2.4/site-packages/
+   mkdir -p $target/Shared/sip
+#   mkdir -p $target/QScintilla/lib
+#   mkdir -p $target/QScintilla/include
+   echo yes | python configure.py -b $target/bin -v $target/Shared/sip -d $target/lib/python2.4/site-packages/ -n ${goboPrograms}/QScintilla/Current/include -o ${goboPrograms}/QScintilla/Current/lib
+}

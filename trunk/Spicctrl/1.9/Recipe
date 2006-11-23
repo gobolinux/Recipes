@@ -1,0 +1,9 @@
+compile_version=1.7.1
+url="http://popies.net/sonypi/spicctrl-1.9.tar.bz2"
+file_size=10917
+file_md5=775a1959c03e59830303b8320ca379d2
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)

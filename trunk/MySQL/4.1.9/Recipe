@@ -1,0 +1,28 @@
+# Recipe (MakeRecipe) for MySQL by Volker Wieban <buckoven@yaklinux.org>, on Thu Jan 20 20:04:11 BRST 2005
+# Recipe for version 4.1.9 by Volker Wieban <buckoven@yaklinux.org>, on Thu Jan 20 20:04:11 BRST 2005
+compile_version=1.7.1
+url="http://sunsite.informatik.rwth-aachen.de/mysql/Downloads/MySQL-4.1/mysql-4.1.9.tar.gz"
+file_size=22308321
+file_md5=7bc44befe155d619c4e4705f68874278
+
+pre_build() {
+   if ! grep -q mysql $goboSettings/group
+   then
+      Log_Normal "Adding group mysql"
+      groupadd mysql
+   fi
+
+   if ! grep -q "mysql:x:" $goboSettings/passwd
+   then
+      Log_Normal "Adding user mysql"
+      useradd mysql -g mysql -c 'added by Compile for MySQL' -d $goboPrograms/MySQL -s $goboExecutables/false
+   fi
+}
+
+post_install() {
+    Log_Normal "Installing prepared tables"
+    $target/bin/mysql_install_db
+    Log_Normal "Changing ownership of Variable to mysql:mysql"
+    chown -R mysql:mysql $goboPrograms/MySQL/Variable
+}
+recipe_type=configure

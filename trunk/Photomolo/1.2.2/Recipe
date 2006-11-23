@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Photomolo by Leandro Motta Barrros, on Sun Jul 3 20:01:51 BRT 2005
+# Recipe for version 1.2.2 by Leandro Motta Barrros, on Sun Jul 3 20:01:51 BRT 2005
+compile_version=1.7.1
+url="http://www.funet.fi/pub/sci/graphics/packages/photomolo/photomolo-1.2.2.tar.gz"
+file_size=66017
+file_md5=cb6317d4c87cbfb06bed50e51c74ed22
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "DESTDIR=$target"
+   "PREFIX=$target"
+)

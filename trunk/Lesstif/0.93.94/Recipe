@@ -1,0 +1,7 @@
+# Recipe for version 0.93.94 by Andre Destch
+url="$httpSourceforge/lesstif/lesstif-0.93.94.tar.bz2"
+compile_version=1.7.1
+recipe_type=configure
+configure_variables=(
+   "ACLOCALDIR=$target/Shared/aclocal"
+)

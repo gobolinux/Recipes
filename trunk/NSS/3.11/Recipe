@@ -1,0 +1,59 @@
+# Recipe (MakeRecipe) for NSS by Jonas Karlsson <jonka750@student.liu.se>, on Wed May 31 09:34:32 CEST 2006
+# Recipe for version 3.11 by Jonas Karlsson <jonka750@student.liu.se>, on Wed May 31 09:34:32 CEST 2006
+compile_version=1.7.1
+url="http://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/NSS_3_11_RTM/src/nss-3.11.tar.gz"
+file_size=5002908
+file_md5=9be73bd73e361e5e36edf77f456fa20a
+recipe_type=makefile
+build_target=nss_build_all
+do_install=no
+dir=nss-3.11
+
+pre_build(){
+    export WORKINGDIR=$PWD
+    export BUILD_OPT=1
+    cd mozilla
+    pushd security/nss
+    echo $PWD
+}
+
+pre_install(){
+    popd
+    export NSS_LINUXDIR=$(basename `ls -d $WORKINGDIR/mozilla/dist/Linux*`)
+    #private__test_build
+}
+
+pre_link() {
+    install -v -m755 nsprpub/$NSS_LINUXDIR/config/nspr-config \
+                     security/nss/cmd/config/nss-config \
+                     ${target}/bin &&
+    install -v -m755 -d ${target}/lib/pkgconfig &&
+    install -v -m644 nsprpub/lib/pkgconfig/nspr.pc \
+                     security/nss/lib/pkgconfig/nss.pc \
+                    ${target}/lib/pkgconfig &&
+
+    cd dist &&
+    install -v -m755 $NSS_LINUXDIR/lib/*.so ${target}/lib &&
+    install -v -m644 $NSS_LINUXDIR/lib/{*.chk,libcrmf.a} ${target}/lib &&
+
+    install -v -m755 -d ${target}/include/{nss,nspr} &&
+    install -v -m644 {public,private}/nss/* ${target}/include/nss &&
+    cp -v -RL $NSS_LINUXDIR/include/* ${target}/include/nspr &&
+    chmod -v 644 ${target}/include/nspr/prvrsion.h
+}
+
+private__test_build() {
+    zsh
+    
+    export DOMSUF=google.com &&
+    export PATH=$PATH:$WORKINGDIR/mozilla/dist/$NSS_LINUXDIR/bin &&
+    export TEST_RESULTSDIR=$WORKINGDIR/mozilla/tests_results/security &&
+
+    cd security/nss/tests &&
+    sed -i 's/gmake/make/' common/init.sh &&
+    ./all.sh &&
+
+    grep Passed $TEST_RESULTSDIR/$(hostname).1/results.html | wc -l &&
+
+    exit
+}

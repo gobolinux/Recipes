@@ -1,0 +1,33 @@
+# Recipe for Udev 030 by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.7.1
+url="http://www.kernel.org/pub/linux/utils/kernel/hotplug/udev-030.tar.bz2"
+file_size=383027
+file_md5=8202bf86e9f2cb5483d473f9977eeafc
+recipe_type=makefile
+makefile='Makefile'
+
+build_target="all etc/udev/udev.conf"
+build_variables=(
+   "prefix=$target"
+   "etcdir=$target/../Settings"
+   "udevdir=$goboDevices"
+)
+
+install_variables=(
+   "DESTDIR=$target"
+)
+pre_build() {
+   sed -i "s:\/sbin\/udev:$target&:" udevstart.c
+   sed -i "s:\/etc:$target\/..\/Settings:" etc/udev/udev.conf.in
+}
+pre_link() {
+   pushd $target
+   cp -a etc/* ../Settings
+   rm -rf etc
+   rmdir udev
+   mv usr/bin/* bin/
+   mv usr/share/man/man8/* man/man8
+   rm -rf usr
+   ln -sf $target/sbin/udev $target/../Settings/hotplug.d/default/udev.hotplug
+   popd
+}

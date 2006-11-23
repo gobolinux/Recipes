@@ -1,0 +1,14 @@
+--- scratchbox-1.0.1/tools/scratchbox-base/Makefile.orig	2005-07-12 08:49:35.000000000 -0300
++++ scratchbox-1.0.1/tools/scratchbox-base/Makefile	2005-07-12 09:11:38.000000000 -0300
+@@ -42,9 +42,9 @@
+ 	install -m 644 $(GARDIR)/doc/cpu-transparency.howto $(SBOX_DIR)/doc/
+ 
+ 	echo "$(SBOX_VERSION)" > $(SBOX_DIR)/etc/scratchbox-version
+-	822-date >> $(SBOX_DIR)/etc/scratchbox-version
++	date >> $(SBOX_DIR)/etc/scratchbox-version
+ 
+-	env SBOX_DIR=$(SBOX_DIR) /bin/sh files/copy_libs.sh
++	env SBOX_DIR=$(SBOX_DIR) /bin/sh files/copy_libs-gobolinux.sh
+ 
+ 	$(MAKECOOKIE)
+ 

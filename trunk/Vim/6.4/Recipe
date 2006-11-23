@@ -1,0 +1,17 @@
+# Recipe for version 6.4 by Andre Detsch, on Mon Oct 31 16:03:07 BRST 2005
+# Recipe (MakeRecipe) for Vim by Matthias Wolf, on Tue Sep 21 12:10:37 CEST 2004
+compile_version=1.7.1
+url="ftp://ftp.vim.org/pub/vim/unix/vim-6.4.tar.bz2"
+dir='vim64'
+recipe_type=configure
+
+configure_options=(
+	"--prefix=$target"
+	"--enable-xim"
+	"--with-x"
+	"--enable-gui=gtk2"
+)
+
+pre_link() {
+	ln -s vim $target/bin/vi
+}

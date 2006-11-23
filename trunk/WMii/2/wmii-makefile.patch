@@ -1,0 +1,11 @@
+--- wmii-2/util/Makefile.orig	2005-11-25 10:14:08.000000000 -0200
++++ wmii-2/util/Makefile	2005-11-25 10:14:13.000000000 -0200
+@@ -54,7 +54,7 @@ wmimenu: ${OBJ_menu}
+ 
+ wmir: ${OBJ_r}
+ 	@echo LD $@
+-	@${CC} -o $@ ${OBJ_r} ${LDFLAGS} -static
++	@${CC} -o $@ ${OBJ_r} ${LDFLAGS}
+ 
+ wmifs: ${OBJ_fs}
+ 	@echo LD $@

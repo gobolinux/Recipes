@@ -1,0 +1,23 @@
+# Recipe (MakeRecipe) for Ndiswrapper by Jonas Karlsson <jonka750@student.liu.se>, on Sun Jul 24 00:52:28 CEST 2005
+# Recipe for version 1.2 by Jonas Karlsson <jonka750@student.liu.se>, on Sun Jul 24 00:52:28 CEST 2005
+compile_version=1.7.1
+url="$httpSourceforge/ndiswrapper/ndiswrapper-1.2.tar.gz"
+file_size=150068
+file_md5=5be0bbe524b68de03c1fc1b0b85b3b60
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+    "DESTDIR=$target"
+)
+
+sandbox_options=(
+    "--no-sandbox"
+)
+
+pre_build(){
+    make distclean
+}
+
+post_install(){
+    depmod
+}

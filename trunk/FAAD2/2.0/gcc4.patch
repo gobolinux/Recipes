@@ -1,0 +1,12 @@
+diff -ru orig/faad2/common/mp4ff/mp4ff.c faad2/common/mp4ff/mp4ff.c
+--- orig/faad2/common/mp4ff/mp4ff.c	2004-01-11 16:52:18.000000000 +0100
++++ faad2/common/mp4ff/mp4ff.c	2006-05-16 22:26:38.000000000 +0200
+@@ -87,7 +87,7 @@
+     if (ff) free(ff);
+ }
+ 
+-static void mp4ff_track_add(mp4ff_t *f)
++void mp4ff_track_add(mp4ff_t *f)
+ {
+     f->total_tracks++;
+ 

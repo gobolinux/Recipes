@@ -1,0 +1,24 @@
+# Recipe for version 3.5.5 by Andre Detsch <detsch@gobolinux.org>, on Wed Nov 8 16:44:52 BRST 2006
+# by Maglan C. Diemer , 3.3.2 by roko
+compile_version=1.7.1
+url="ftp://ftp.oregonstate.edu/pub/kde/stable/3.5.5/src/kdebase-3.5.5.tar.bz2"
+dir='kdebase-3.5.5'
+recipe_type=configure
+
+create_dirs_first=yes
+pre_build() {
+  ln -sf $goboPrograms/KDE-Libs/3.5.5/include/kbookmarknotifier.h $target/include/kbookmarknotifier.h
+}
+
+post_install() {
+  rm -f $target/include/kbookmarknotifier.h
+}
+
+configure_options=(
+   "--disable-debug"
+   "--with-shadow"
+   "--disable-libsuffix"             
+#  "DO_NOT_COMPILE="
+#libkonq applnk doc drkonqi kappfinder kate kcheckpass kcminit  kcontrol  kdcop  kdebugdialog  kdepasswd  kdeprint  kdesu  kdialog  kfind  khelpcenter khotkeys  kicker  kioslave  klipper  kmenuedit  konsole  kpager  kpersonalizer  kreadconfig  kscreensaver  ksmserver  ksplashml  kstart  ksysguard ksystraycmd  ktip  kwin  kxkb  l10n  nsplugins  pics  konqueror  kdesktop kdm
+)
+

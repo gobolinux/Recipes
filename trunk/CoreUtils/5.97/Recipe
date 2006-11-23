@@ -1,0 +1,11 @@
+# Recipe for version 5.97 by Laurent Pelecq (laurent.pelecq at soleil.org), on dim jui 30 18:19:14 CEST 2006
+url=$ftpGnu/coreutils/coreutils-5.97.tar.bz2
+file_size=5064684
+file_md5=1537379b6264a1def443713988a78020
+compile_version=1.7.1
+recipe_type=configure
+install_target="install install-root"
+needs_safe_linking=yes
+pre_link() {
+   mv $target/bin/install $target/bin/real_install
+}

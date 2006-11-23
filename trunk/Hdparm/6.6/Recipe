@@ -1,0 +1,9 @@
+# Recipe for version 6.6 by Andre Detsch <detsch@gobolinux.org>, on Sun Jun 18 19:23:16 BRT 2006
+# Recipe (MakeRecipe) for Hdparm by  Ozgur Ulukir, on Fri Dec 17 22:07:37 EET 2004
+compile_version=1.7.1
+url="http://www.ibiblio.org/pub/Linux/system/hardware/hdparm-6.6.tar.gz"
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "DESTDIR=$target"
+)

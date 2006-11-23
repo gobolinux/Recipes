@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for Gnome-Panel by Matthias Wolf, on Tue Jul 26 13:06:31 CEST 2005
+# Recipe for version 2.10.2 by Matthias Wolf, on Tue Jul 26 13:06:31 CEST 2005
+compile_version=1.7.1
+url="http://ftp.gnome.org/pub/GNOME/desktop/2.10/2.10.2/sources/gnome-panel-2.10.2.tar.bz2"
+file_size=2366827
+file_md5=c1756cac74a4c8b45ce3b9a884515baa
+recipe_type=configure
+configure_options=(
+    "--with-gconf-source=xml::${target}/../Settings/gconf/gconf.xml.defaults"
+    "--with-gconf-source-file-dir=${target}/../Settings/gconf/schemas"
+)
+
+pre_install() {
+   mkdir -m 0755 -p "${target}/../Settings/gconf/gconf.xml.defaults"
+   mkdir -m 0755 -p "${target}/../Settings/gconf/schemas"
+}

@@ -1,0 +1,18 @@
+# Modified by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.7.1
+url="ftp://atrey.karlin.mff.cuni.cz/pub/linux/pci/pciutils-2.1.11.tar.gz"
+file_size=120948
+file_md5=1d40f90aaae69594790bdb8ff90b4a41
+
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
+
+pre_link() {
+   mkdir -p $target/include/pci
+   mkdir -p $target/lib
+   cp lib/*.h $target/include/pci
+   cp lib/libpci.a $target/lib
+}

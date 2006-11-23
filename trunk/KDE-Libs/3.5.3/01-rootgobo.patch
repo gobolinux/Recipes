@@ -1,0 +1,43 @@
+diff -Naur kdelibs-3.4.92-org/kio/misc/Makefile.am kdelibs-3.4.92/kio/misc/Makefile.am
+--- kdelibs-3.4.92-org/kio/misc/Makefile.am	2005-02-04 00:33:18.000000000 +0100
++++ kdelibs-3.4.92/kio/misc/Makefile.am	2005-03-08 23:22:41.000000000 +0100
+@@ -56,5 +56,5 @@
+ install-exec-hook:
+ 	@-rm -f $(DESTDIR)/$(bindir)/filesharelist
+ 	@$(LN_S) fileshareset $(DESTDIR)/$(bindir)/filesharelist
+-	@(chown root $(DESTDIR)/$(bindir)/fileshareset && chmod 4755 $(DESTDIR)/$(bindir)/fileshareset) || echo "Was not able to make fileshareset setuid root"
++	@(chown 0 $(DESTDIR)/$(bindir)/fileshareset && chmod 4755 $(DESTDIR)/$(bindir)/fileshareset) || echo "Was not able to make fileshareset setuid root"
+ 
+diff -Naur kdelibs-3.4.92-org/kio/misc/Makefile.in kdelibs-3.4.92/kio/misc/Makefile.in
+--- kdelibs-3.4.92-org/kio/misc/Makefile.in	2005-02-25 19:10:04.000000000 +0100
++++ kdelibs-3.4.92/kio/misc/Makefile.in	2005-03-08 23:23:38.000000000 +0100
+@@ -1130,7 +1130,7 @@
+ install-exec-hook:
+ 	@-rm -f $(DESTDIR)/$(bindir)/filesharelist
+ 	@$(LN_S) fileshareset $(DESTDIR)/$(bindir)/filesharelist
+-	@(chown root $(DESTDIR)/$(bindir)/fileshareset && chmod 4755 $(DESTDIR)/$(bindir)/fileshareset) || echo "Was not able to make fileshareset setuid root"
++	@(chown 0 $(DESTDIR)/$(bindir)/fileshareset && chmod 4755 $(DESTDIR)/$(bindir)/fileshareset) || echo "Was not able to make fileshareset setuid root"
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.
+ # Otherwise a system limit (for SysV at least) may be exceeded.
+ .NOEXPORT:
+diff -Naur kdelibs-3.4.92-org/kio/misc/kpac/Makefile.am kdelibs-3.4.92/kio/misc/kpac/Makefile.am
+--- kdelibs-3.4.92-org/kio/misc/kpac/Makefile.am	2003-12-25 16:52:00.000000000 +0100
++++ kdelibs-3.4.92/kio/misc/kpac/Makefile.am	2005-03-08 23:23:06.000000000 +0100
+@@ -24,4 +24,4 @@
+ proxyscoutdata_DATA = eventsrc
+ 
+ install-exec-local:
+-	@(chown root $(DESTDIR)$(bindir)/kpac_dhcp_helper && chmod 4755 $(DESTDIR)$(bindir)/kpac_dhcp_helper) || echo "Please make kpac_dhcp_helper setuid root"
++	@(chown 0 $(DESTDIR)$(bindir)/kpac_dhcp_helper && chmod 4755 $(DESTDIR)$(bindir)/kpac_dhcp_helper) || echo "Please make kpac_dhcp_helper setuid root"
+diff -Naur kdelibs-3.4.92-org/kio/misc/kpac/Makefile.in kdelibs-3.4.92/kio/misc/kpac/Makefile.in
+--- kdelibs-3.4.92-org/kio/misc/kpac/Makefile.in	2005-02-25 19:10:04.000000000 +0100
++++ kdelibs-3.4.92/kio/misc/kpac/Makefile.in	2005-03-08 23:23:25.000000000 +0100
+@@ -936,7 +936,7 @@
+ 
+ 
+ install-exec-local:
+-	@(chown root $(DESTDIR)$(bindir)/kpac_dhcp_helper && chmod 4755 $(DESTDIR)$(bindir)/kpac_dhcp_helper) || echo "Please make kpac_dhcp_helper setuid root"
++	@(chown 0 $(DESTDIR)$(bindir)/kpac_dhcp_helper && chmod 4755 $(DESTDIR)$(bindir)/kpac_dhcp_helper) || echo "Please make kpac_dhcp_helper setuid root"
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.
+ # Otherwise a system limit (for SysV at least) may be exceeded.
+ .NOEXPORT:

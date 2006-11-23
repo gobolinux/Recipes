@@ -1,0 +1,9 @@
+configure_options=(
+    "${configure_options[@]}"
+    --cpu=armv5tel
+)
+
+make_variables=(
+	STRIP=$STRIP
+	INSTALLSTRIP=
+)

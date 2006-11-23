@@ -1,0 +1,9 @@
+url=ftp://ftp.openssl.org/source/openssl-0.9.7c.tar.gz
+compile_version=1.7.1
+recipe_type=configure
+configure=Configure
+configure_options=(
+   linux-elf
+   shared
+)
+build_target="all test"

@@ -1,0 +1,11 @@
+# by Maglan C. Diemer 3.3.2 by roko
+
+url="ftp://ftp.kde.org/pub/kde/stable/3.3.2/src/kdegames-3.3.2.tar.bz2"
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+  "DO_NOT_COMPILE=ktuberling"
+  # atlantik doc kasteroids katomic kbackgammon kbattleship kblackbox kbounce kenolaba kfouleggs kgoldrunner kjumbingcube klickety klines kmahjongg kimes kolf konquest kpat kpoker kreversi ksame kshisen ksmiletris ksnake ksokoban kspaceduel ktron ktuberling kwin4lskat
+)

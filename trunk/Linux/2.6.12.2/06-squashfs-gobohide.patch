@@ -1,0 +1,32 @@
+diff -X dontdiff-2.6 -Nur linux-2.6.10/fs/squashfs/inode.c linux-2.6.10-Gobo/fs/squashfs/inode.c
+--- linux-2.6.10/fs/squashfs/inode.c	2005-01-17 23:02:49.000000000 -0200
++++ linux-2.6.10-Gobo/fs/squashfs/inode.c	2005-01-17 23:02:59.000000000 -0200
+@@ -42,6 +42,7 @@
+ #include <linux/zlib.h>
+ #include <linux/blkdev.h>
+ #include <linux/vmalloc.h>
++#include <linux/gobolinux.h>
+ 
+ #ifdef SQUASHFS_TRACE
+ #define TRACE(s, args...)				printk(KERN_NOTICE "SQUASHFS: "s, ## args)
+@@ -1550,9 +1551,19 @@
+ 						next_offset, dire->size + 1, &next_block, &next_offset))
+ 				goto failed_read;
+ 			length += dire->size + 1;
+-
++#ifdef CONFIG_GOBOHIDE_FS
++			{
++				struct inode inode_info;
++
++				inode_info.i_ino = SQUASHFS_MK_VFS_INODE(dirh.start_block, dire->offset);
++				inode_info.i_sb = file->f_dentry->d_sb;
++				if((file->f_pos >= length) || (gobolinux_hide(inode_info.i_ino, &inode_info) > 0))
++					continue;
++			}
++#else
+ 			if(file->f_pos >= length)
+ 				continue;
++#endif
+ 
+ 			dire->name[dire->size + 1] = '\0';
+ 

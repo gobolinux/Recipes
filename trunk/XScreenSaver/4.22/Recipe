@@ -1,0 +1,13 @@
+# By Leandro Motta Barros, 02005-07-02
+compile_version=1.7.1
+url="http://www.jwz.org/xscreensaver/xscreensaver-4.22.tar.gz"
+file_size=4620066
+file_md5=9f37c428f034e581026e243445378195
+recipe_type=configure
+
+make_variables=(
+   "GTK_DATADIR=$target/share"
+   "KDEDIR=$target"
+   "datadir=$target/share"
+   "gnulocaledir=$target/share/locale"
+)

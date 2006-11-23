@@ -1,0 +1,16 @@
+# by Maglan C. Diemer && Andre Detsch
+
+url="ftp://ftp.kde.org/pub/kde/stable/3.3/src/kdelibs-3.3.0.tar.bz2"
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+  "--with-alsa"
+  "--enable-fast-malloc=full"
+)
+post_install() {
+  chmod 4755 $target/bin/fileshareset
+  chmod 4755 $target/bin/kpac_dhcp_helper
+  chmod 4755 $target/bin/kgrantpty
+}

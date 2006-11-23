@@ -1,0 +1,17 @@
+--- libpng-1.2.6/scripts/makefile.linux.orig	2003-01-24 00:17:05.000000000 -0500
++++ libpng-1.2.6/scripts/makefile.linux	2003-01-24 00:22:41.000000000 -0500
+@@ -97,12 +97,12 @@
+ 	ln -sf $(LIBNAME).so.$(PNGVER) $(LIBNAME).so.$(PNGMAJ)
+ 
+ $(LIBNAME).so.$(PNGVER): $(OBJSDLL)
+-	$(CC) -shared -Wl,-soname,$(LIBNAME).so.$(PNGMAJ) \
++	$(CC) -shared -Wl,-soname,$(LIBNAME).so.$(PNGMAJ) -lz \
+ 	-o $(LIBNAME).so.$(PNGVER) \
+ 	$(OBJSDLL)
+ 
+ libpng.so.3.$(PNGMIN): $(OBJSDLL)
+-	$(CC) -shared -Wl,-soname,libpng.so.3 \
++	$(CC) -shared -Wl,-soname,libpng.so.3 -lz \
+ 	-o libpng.so.3.$(PNGMIN) \
+ 	$(OBJSDLL)
+ 

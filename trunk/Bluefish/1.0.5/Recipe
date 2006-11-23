@@ -1,0 +1,6 @@
+# Recipe for version 1.0.5 by Harald Klimach, on Sun Jul 23 14:14:15 CEST 2006
+# Recipe (MakeRecipe) for Bluefish by Volker Wieban <buckoven@yaklinux.org>, on Tue Feb 1.0.51:52:43 BRST 2005
+compile_version=1.7.1
+url="http://www.bennewitz.com/bluefish/stable/source/bluefish-1.0.5.tar.bz2"
+recipe_type=configure
+sandbox_options=( "--no-sandbox" )

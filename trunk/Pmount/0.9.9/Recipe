@@ -1,0 +1,14 @@
+# Recipe for version 0.9.9 by Jonatan Liljedahl <lijon@kymatica.com>, on Sun Apr 16 19:15:23 BRT 2006
+# Recipe (MakeRecipe) for Pmount by Carlo J. Calica <ccalica@gmail.com>, on Tue Oct 4 19:32:52 PDT 2005
+compile_version=1.7.1
+url="http://www.piware.de/projects/pmount-0.9.9.tar.gz"
+
+recipe_type=configure
+
+#recipe_type=makefile
+#makefile='Makefile'
+
+make_variables=(
+#    "PREFIX=$target"
+    "SYSCONF=$target/../Settings"
+)

@@ -1,0 +1,17 @@
+# Recipe for version 3.6.1 by Andre Destch
+
+url=ftp://ftp.remotesensing.org/pub/libtiff/tiff-v3.6.1.tar.gz
+compile_version=1.7.1
+recipe_type=configure
+
+configure_options=(
+ "--prefix=$target"
+ "--noninteractive"
+)
+
+pre_install() {
+   GrepReplace "/System/Links/Manuals" "$target/man" man/Makefile
+   GrepReplace "/System/Links/Manuals" "$target/man" man/lib/Makefile
+   GrepReplace "/System/Links/Manuals" "$target/man" man/apps/Makefile
+}
+

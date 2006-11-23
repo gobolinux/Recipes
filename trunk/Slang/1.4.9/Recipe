@@ -1,0 +1,6 @@
+# Recipe for version 1.4.9 by Maglan Cristiano Diemer, on Wed Nov 16 15:03:21 EDT 2005
+url="ftp://space.mit.edu/pub/davis/slang/v1.4/slang-1.4.9.tar.bz2"
+compile_version=1.7.1
+recipe_type=configure
+
+install_target="install install-elf"

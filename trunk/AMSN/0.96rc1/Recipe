@@ -1,0 +1,10 @@
+# Recipe for version 0.96rc1 
+# Recipe for version 0.95 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Thu Feb 9 00:22:26 BRST 2006
+# by Guilherme Bedin
+url=$httpSourceforge/amsn/amsn-0.96RC1.tar.bz2
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+   --with-tcl=$tcl_path/lib
+   --with-tk=$tk_path/lib
+)

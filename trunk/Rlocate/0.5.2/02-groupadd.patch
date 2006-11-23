@@ -1,0 +1,45 @@
+diff -Naur rlocate-0.5.1.old/src/rlocate-scripts/Makefile rlocate-0.5.1/src/rlocate-scripts/Makefile
+--- rlocate-0.5.1.old/src/rlocate-scripts/Makefile	2006-05-07 15:51:50.000000000 +0200
++++ rlocate-0.5.1/src/rlocate-scripts/Makefile	2006-07-16 22:38:38.000000000 +0200
+@@ -343,12 +343,9 @@
+ 	rm $(srcdir)/rlocate-checkpoint.temp
+ 
+ install-exec-hook:
+-	-/usr/sbin/groupadd $(rlocate_group)
+ 	chown $(root_uid):$(rlocate_group) $(DESTDIR)$(bindir)/rlocate-checkpoint
+ 	chmod 2755 $(DESTDIR)$(bindir)/rlocate-checkpoint
+ 
+-uninstall-hook:
+-	-/usr/sbin/groupdel $(rlocate_group)
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.
+ # Otherwise a system limit (for SysV at least) may be exceeded.
+ .NOEXPORT:
+diff -Naur rlocate-0.5.1.old/src/rlocate-scripts/Makefile.am rlocate-0.5.1/src/rlocate-scripts/Makefile.am
+--- rlocate-0.5.1.old/src/rlocate-scripts/Makefile.am	2006-05-07 15:51:50.000000000 +0200
++++ rlocate-0.5.1/src/rlocate-scripts/Makefile.am	2006-07-16 22:38:28.000000000 +0200
+@@ -18,9 +18,5 @@
+ 	rm $(srcdir)/rlocate-checkpoint.temp
+ 
+ install-exec-hook:
+-	-/usr/sbin/groupadd $(rlocate_group)
+ 	chown $(root_uid):$(rlocate_group) $(DESTDIR)$(bindir)/rlocate-checkpoint
+ 	chmod 2755 $(DESTDIR)$(bindir)/rlocate-checkpoint
+-
+-uninstall-hook:
+-	-/usr/sbin/groupdel $(rlocate_group)
+diff -Naur rlocate-0.5.1.old/src/rlocate-scripts/Makefile.in rlocate-0.5.1/src/rlocate-scripts/Makefile.in
+--- rlocate-0.5.1.old/src/rlocate-scripts/Makefile.in	2006-05-07 15:51:50.000000000 +0200
++++ rlocate-0.5.1/src/rlocate-scripts/Makefile.in	2006-07-16 22:38:48.000000000 +0200
+@@ -343,12 +343,9 @@
+ 	rm $(srcdir)/rlocate-checkpoint.temp
+ 
+ install-exec-hook:
+-	-/usr/sbin/groupadd $(rlocate_group)
+ 	chown $(root_uid):$(rlocate_group) $(DESTDIR)$(bindir)/rlocate-checkpoint
+ 	chmod 2755 $(DESTDIR)$(bindir)/rlocate-checkpoint
+ 
+-uninstall-hook:
+-	-/usr/sbin/groupdel $(rlocate_group)
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.
+ # Otherwise a system limit (for SysV at least) may be exceeded.
+ .NOEXPORT:

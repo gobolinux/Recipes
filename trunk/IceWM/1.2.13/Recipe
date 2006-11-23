@@ -1,0 +1,13 @@
+# by Leandro Motta Barros
+
+url=$httpSourceforge/icewm/icewm-1.2.13.tar.gz
+compile_version=1.7.1
+recipe_type=configure
+
+# perhaps these options are not the best
+configure_options=(
+   "--enable-shaped-decorations"
+   "--enable-gradients"
+   "--enable-antialiasing"
+   "--enable-corefonts"
+)

@@ -1,0 +1,20 @@
+# Recipe for version 1.0.14 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Oct 11 12:01:21 BRST 2005
+# Recipe (MakeRecipe) for Unionfs by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Fri Mar 4 20:13:33 BRT 2005
+compile_version=1.7.1
+url="ftp://ftp.fsl.cs.sunysb.edu/pub/unionfs/unionfs-1.0.14.tar.gz"
+file_size=142322
+file_md5=6b6e1a8b13b9e605462035fa6621ed3b
+recipe_type=makefile
+
+makefile='Makefile'
+sandbox_options=("--no-sandbox")
+
+make_variables=(
+   "PREFIX=$target"
+   "MODDIR=$goboModules/`uname -r`"
+   "LINUXSRC=$goboModules/`uname -r`/build"
+)
+
+pre_build() {
+   GrepReplace "readthereadme tags unionfs" "readthereadme unionfs" Makefile
+}

@@ -1,0 +1,104 @@
+# by Leandro Motta Barros
+
+# This Recipe is far from good, but was the best I could do in a
+# reasonable amount of time given Boost's build system. At least
+# it serves as documentation on how to build Boost.
+
+# I don't know if this still works with the latest 'Compile'.
+
+url=$httpSourceforge/boost/boost-1.30.2.tar.bz2
+compile_version=1.7.1
+recipe_type=makefile
+do_build=no
+do_install=no
+
+# Recipes were supposed to be declarative, but Boost's build system is
+# really weird. Putting the entire build/install procedure in
+# 'pre_install()' was the only way I found to make a working Recipe.
+pre_install() {
+   pushd $dir
+
+   # Compile bjam
+   pushd tools/build/jam_src
+   ./build.sh
+   ln -sf `pwd`/bin.linuxx86/bjam /System/Links/Executables # temporary link...
+   popd
+
+   # Copy documentation (Before building, because the libs are built in
+   # the same directories as the documentation. Arf!)
+   mkdir -p $target/doc
+   cp -r libs/* $target/doc
+
+   # Build
+   bjam "-sTOOLS=gcc"
+
+   # Copy files (Some libs have the same name in debug and release versions, so I add a
+   # '_debug' suffix manually. Ugh!)
+   cp libs/python/build/bin/libboost_python.a/gcc/debug/runtime-link-dynamic/libboost_python_debug.a \
+      libs/python/build/bin/libboost_python.a/gcc/release/runtime-link-dynamic/libboost_python.a \
+      libs/python/build/bin/libboost_python.so/gcc/debug/runtime-link-dynamic/shared-linkable-true/libboost_python_debug.so \
+      libs/python/build/bin/libboost_python.so/gcc/debug/runtime-link-dynamic/shared-linkable-true/libboost_python_debug.so.1.30.2 \
+      libs/python/build/bin/libboost_python.so/gcc/release/runtime-link-dynamic/shared-linkable-true/libboost_python.so \
+      libs/python/build/bin/libboost_python.so/gcc/release/runtime-link-dynamic/shared-linkable-true/libboost_python.so.1.30.2 \
+      libs/regex/build/bin/libboost_regex.a/gcc/debug/runtime-link-dynamic/libboost_regex_debug.a \
+      libs/regex/build/bin/libboost_regex.a/gcc/release/runtime-link-dynamic/libboost_regex.a \
+      libs/regex/build/bin/libboost_regex.so/gcc/debug/runtime-link-dynamic/shared-linkable-true/libboost_regex_debug.so \
+      libs/regex/build/bin/libboost_regex.so/gcc/debug/runtime-link-dynamic/shared-linkable-true/libboost_regex_debug.so.1.30.2 \
+      libs/regex/build/bin/libboost_regex.so/gcc/release/runtime-link-dynamic/shared-linkable-true/libboost_regex.so \
+      libs/regex/build/bin/libboost_regex.so/gcc/release/runtime-link-dynamic/shared-linkable-true/libboost_regex.so.1.30.2 \
+      libs/thread/build/bin/libboost_thread.so/gcc/debug/runtime-link-dynamic/shared-linkable-true/threading-multi/libboost_threadd.so \
+      libs/thread/build/bin/libboost_thread.so/gcc/debug/runtime-link-dynamic/shared-linkable-true/threading-multi/libboost_threadd.so.1.30.2 \
+      libs/thread/build/bin/libboost_thread.so/gcc/release/runtime-link-dynamic/shared-linkable-true/threading-multi/libboost_thread.so \
+      libs/thread/build/bin/libboost_thread.so/gcc/release/runtime-link-dynamic/shared-linkable-true/threading-multi/libboost_thread.so.1.30.2 \
+      libs/date_time/build/bin/libboost_date_time.a/gcc/release/runtime-link-dynamic/libboost_date_time.a \
+      libs/date_time/build/bin/libboost_date_time.so/gcc/release/runtime-link-dynamic/shared-linkable-true/libboost_date_time.so \
+      libs/date_time/build/bin/libboost_date_time.so/gcc/release/runtime-link-dynamic/shared-linkable-true/libboost_date_time.so.1.30.2 \
+      $target/lib -P
+
+   cp libs/date_time/build/bin/libboost_date_time.a/gcc/debug/runtime-link-dynamic/libboost_date_time.a \
+      $target/lib/libboost_date_time_debug.a -P
+
+   cp libs/date_time/build/bin/libboost_date_time.so/gcc/debug/runtime-link-dynamic/shared-linkable-true/libboost_date_time.so.1.30.2 \
+      $target/lib/libboost_date_time_debug.so.1.30.2 -P
+
+   ln -s libboost_date_time_debug.so.1.30.2 $target/lib/libboost_date_time_debug.so
+
+   cp libs/filesystem/build/bin/libboost_filesystem.a/gcc/debug/runtime-link-dynamic/libboost_filesystem.a \
+      $target/lib/libboost_filesystem_debug.a -P
+
+   cp libs/filesystem/build/bin/libboost_filesystem.a/gcc/release/runtime-link-dynamic/libboost_filesystem.a \
+      $target/lib -P
+
+   cp libs/signals/build/bin/libboost_signals.a/gcc/release/runtime-link-dynamic/libboost_signals.a \
+      libs/signals/build/bin/libboost_signals.so/gcc/release/runtime-link-dynamic/shared-linkable-true/libboost_signals.so \
+      libs/signals/build/bin/libboost_signals.so/gcc/release/runtime-link-dynamic/shared-linkable-true/libboost_signals.so.1.30.2 \
+      $target/lib -P
+
+   cp libs/signals/build/bin/libboost_signals.a/gcc/debug/runtime-link-dynamic/libboost_signals.a \
+      $target/lib/libboost_signals_debug.a -P
+   
+   cp libs/signals/build/bin/libboost_signals.so/gcc/debug/runtime-link-dynamic/shared-linkable-true/libboost_signals.so.1.30.2 \
+      $target/lib/libboost_signals_debug.so.1.30.2 -P
+
+   ln -s libboost_signals_debug.so.1.30.2 $target/lib/libboost_signals_debug.so
+
+   cp libs/test/build/bin/libboost_prg_exec_monitor.a/gcc/debug/runtime-link-static/threading-multi/libboost_prg_exec_monitor.a \
+      libs/test/build/bin/libboost_prg_exec_monitor.so/gcc/debug/runtime-link-dynamic/shared-linkable-true/threading-multi/libboost_prg_exec_monitor.so \
+      libs/test/build/bin/libboost_prg_exec_monitor.so/gcc/debug/runtime-link-dynamic/shared-linkable-true/threading-multi/libboost_prg_exec_monitor.so.1.30.2 \
+      libs/test/build/bin/libboost_test_exec_monitor.a/gcc/debug/runtime-link-static/threading-multi/libboost_test_exec_monitor.a \
+      libs/test/build/bin/libboost_test_exec_monitor.so/gcc/debug/runtime-link-dynamic/shared-linkable-true/threading-multi/libboost_test_exec_monitor.so \
+      libs/test/build/bin/libboost_test_exec_monitor.so/gcc/debug/runtime-link-dynamic/shared-linkable-true/threading-multi/libboost_test_exec_monitor.so.1.30.2 \
+      libs/test/build/bin/libboost_unit_test_framework.a/gcc/debug/runtime-link-static/threading-multi/libboost_unit_test_framework.a \
+      libs/test/build/bin/libboost_unit_test_framework.so/gcc/debug/runtime-link-dynamic/shared-linkable-true/threading-multi/libboost_unit_test_framework.so \
+      libs/test/build/bin/libboost_unit_test_framework.so/gcc/debug/runtime-link-dynamic/shared-linkable-true/threading-multi/libboost_unit_test_framework.so.1.30.2 \
+      $target/lib -P
+
+   cp -r boost $target/include
+
+   cp tools/build/jam_src/bin.linuxx86/bjam $target/bin
+
+   # Cleanup
+   rm /System/Links/Executables/bjam # remove temporary link...
+
+   popd
+}

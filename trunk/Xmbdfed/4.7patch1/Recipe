@@ -1,0 +1,20 @@
+# Recipe for Xmbdfed 4.7patch1 by Hisham Muhammad
+
+compile_version=1.7.1
+url="http://ftp.debian.org/debian/pool/main/x/xmbdfed/xmbdfed_4.7patch1.orig.tar.gz"
+file_size=297402
+file_md5=d82068050bf20ccbc9ea4867371920f6
+dir='xmbdfed-4.7patch1'
+recipe_type=makefile
+makefile='Makefile'
+build_variables=(
+   "FTYPE_DEFS=-DHAVE_FREETYPE"
+   "INCS=-I/Programs/FreeType/Current/include/freetype2"
+   "LIBS=-lXm -lXpm -lXmu -lXt -lXext -lX11 -lSM -lICE -lfreetype"
+)
+do_install=no
+#create_dirs_first=yes
+pre_install() {
+   cp xmbdfed $target/bin
+   cp xmbdfed.man $target/man/man1/
+}

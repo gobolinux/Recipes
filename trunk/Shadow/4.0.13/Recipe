@@ -1,0 +1,17 @@
+# Recipe for version 4.0.13 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Wed Dec 21 11:48:52 BRST 2005
+compile_version=1.7.1
+url=ftp://ftp.pld.org.pl/software/shadow/shadow-4.0.13.tar.bz2
+recipe_type=configure
+
+configure_options=(
+	"--enable-shared"
+	"--enable-static"
+	"--without-libpam"
+        "--disable-shadowgrp"
+)
+
+pre_build() {
+	aclocal 2> /dev/null
+	automake
+}
+

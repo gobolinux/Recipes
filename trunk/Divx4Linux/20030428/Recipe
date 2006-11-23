@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for Divx4Linux-STD by roko, <ro.ko@mcnon.com>, on Sat Jan 1 12:15:27 BRST 2005
+# Recipe for version 20030428 by roko, <ro.ko@mcnon.com>, on Sat Jan 1 12:15:27 BRST 2005
+compile_version=1.7.1
+url="http://download.divx.com/divx/divx4linux-std-20030428.tar.gz"
+file_size=414838
+file_md5=6332d98ad949a40c588681acbf4078f4
+dir='divx4linux-20030428'
+recipe_type=manifest
+pre_link() {
+cp -v *.so $target/lib
+cp -v *.h $target/include
+cp -v *.htm $target/doc &&
+cd $target/lib
+ln -s  libdivxdecore.so libdivxdecore.so.0
+ln -s libdivxencore.so libdivxencore.so.0
+ }

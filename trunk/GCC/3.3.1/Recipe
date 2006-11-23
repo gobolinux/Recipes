@@ -1,0 +1,23 @@
+# by Hisham Muhammad
+
+url=$ftpGnu/gcc/gcc-3.3.1/gcc-3.3.1.tar.bz2
+compile_version=1.7.1
+recipe_type=configure
+needs_build_directory=yes
+configure_options=(
+   "--enable-shared"
+   "--enable-threads=posix"
+   "--enable-__cxa_atexit"
+   "--enable-clocale=gnu"
+   "--enable-languages=c,c++,objc"
+)
+post_install() {
+   cd "$target/bin"
+   ln -s gcc cc
+   cd "$target/lib"
+   ln -s "$target/bin/cpp" .
+   cd "$goboExecutables"
+   ln -nsf "$target/bin/cc" .
+   cd "$goboLibraries"
+   ln -nsf "$target/lib/cpp" .
+}

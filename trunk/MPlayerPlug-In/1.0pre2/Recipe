@@ -1,0 +1,7 @@
+url=$httpSourceforge/mplayerplug-in/mplayerplug-in-1.0pre2.tar.gz
+dir=mplayerplug-in
+compile_version=1.7.1
+recipe_type=configure
+post_install() {
+   ln -nfs $target/*.so /Files/Plugins/Netscape
+}

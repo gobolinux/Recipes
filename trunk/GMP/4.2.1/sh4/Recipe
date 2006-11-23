@@ -1,0 +1,12 @@
+configure_options=(
+	MPN_PATH="sh generic"
+	--enable-mpbsd
+)
+
+pre_build() {
+	echo "Running autoconf..." && autoconf
+}
+
+pre_link() {
+	cp mpn/sh/gmp-mparam.h $target/include
+}

@@ -1,0 +1,13 @@
+# Recipe for version 1.2.19 by Ozgur Ulukir ozgurulukir@yahoo.com, on Tue Dec 28 05:44:05 EET 2004
+# Recipe (MakeRecipe) for IceWM by  Ozgur Ulukir, on Tue Dec 21 21:23:03 EET 2004
+compile_version=1.7.1
+url="$httpSourceforge/icewm/icewm-1.2.19.tar.gz"
+recipe_type=configure
+
+configure_options=(
+   "--enable-shaped-decorations"
+   "--enable-gradients"
+   "--enable-antialiasing"
+   "--enable-corefonts"
+)
+

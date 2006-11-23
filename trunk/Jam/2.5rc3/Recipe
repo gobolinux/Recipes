@@ -1,0 +1,21 @@
+compile_version=1.7.1
+url="ftp://ftp.perforce.com/pub/jam/jam-2.5.tar"
+file_size=624640
+file_md5=d340f3c73d16a1206d0e8c88a66428e7
+dir='jam-2.5'
+recipe_type=makefile
+makefile='Makefile'
+
+pre_build() {
+
+   make mkjambase
+   mkjambase jambase.c Jambase
+
+   cat <<EOF >>Makefile
+
+install: \$(EXENAME)
+	cp bin.linuxx86/jam $target/bin
+	cp bin.linuxx86/mkjambase $target/bin
+	cp RELNOTES Jambase *.html $target/doc
+EOF
+}

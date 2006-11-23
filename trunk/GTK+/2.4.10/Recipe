@@ -1,0 +1,8 @@
+# Recipe for version 2.4.10 by Andre Detsch, on Thu Sep 30 23:20:57 BRT 2004
+compile_version=1.7.1
+url="ftp://ftp.gtk.org/pub/gtk/v2.4/gtk+-2.4.10.tar.bz2"
+recipe_type=configure
+
+configure_options=(
+	"--with-xinput"
+)

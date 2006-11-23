@@ -1,0 +1,8 @@
+# Recipe for version 3.2.3 by Maglan Diemer
+url="ftp://ftp.kde.org/pub/kde/stable/3.2.3/src/kde-i18n/kde-i18n-pt_BR-3.2.3.tar.bz2"
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+)

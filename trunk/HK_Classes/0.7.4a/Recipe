@@ -1,0 +1,18 @@
+# Recipe (MakeRecipe) for HK_Classes by Maglan C. Diemer, maglan@univates.br, on Qui Ago 18 10:04:45 BRT 2005
+# Recipe for version 0.7.4a by Maglan C. Diemer, maglan@univates.br, on Qui Ago 18 10:04:45 BRT 2005
+compile_version=1.7.1
+url="$httpSourceforge/hk-classes/hk_classes-0.7.4a.tar.bz2"
+file_size=725851
+file_md5=7b4de2d97c05d4a59d54cfab602fc062
+recipe_type=configure
+configure_options=(
+    "--with-pythondir=$goboPrograms/Python/Current"
+)
+make_variables=(
+    "DESTDIR=$target"
+)
+
+pre_link() {
+    mv $target/Programs/Python/2.4.1/lib/python2.4 $target/lib
+    rm -rf $target/Programs
+}

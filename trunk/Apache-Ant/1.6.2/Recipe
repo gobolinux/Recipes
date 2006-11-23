@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for Apache-Ant by Hisham Muhammad, on Mon Aug 30 15:40:45 BRT 2004
+# Recipe for version 1.6.2 by Hisham Muhammad, on Mon Aug 30 15:40:45 BRT 2004
+compile_version=1.7.1
+url="http://apache.usp.br/ant/source/apache-ant-1.6.2-src.tar.gz"
+file_size=7072977
+file_md5=638b971084526823054eb3cfc94de437
+dir='apache-ant-1.6.2'
+recipe_type=makefile
+do_build=no
+do_install=no
+pre_install() {
+  build.sh -Ddist.dir=$target dist
+}

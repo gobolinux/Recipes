@@ -1,0 +1,26 @@
+# Recipe for version 5.1.1 by Jonas Karlsson <jonka750@student.liu.se>, on Wed Dec 21 17:38:21 CET 2005
+### PHP 5.1.1
+# GoboLinux Recipe created by Taeber Rapczak <taeber@rapczak.com>
+# June 14, 2004
+
+### Compile Version
+compile_version=1.7.1
+
+### Download Section
+url="http://www.php.net/get/php-5.1.1.tar.bz2/from/us3.php.net/mirror"
+mirror_urls=(
+	"http://www.php.net/get/php-5.1.1.tar.bz2/from/us2.php.net/mirror"
+	"http://www.php.net/get/php-5.1.1.tar.bz2/from/us4.php.net/mirror"
+)
+
+### File Information
+file="php-5.1.1.tar.bz2"
+
+### Compilation Variables
+recipe_type=configure
+
+configure_options=(
+--with-openssl
+--with-ldap
+--with-mysql
+)

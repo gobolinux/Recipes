@@ -1,0 +1,21 @@
+--- qemu-0.6.0/Makefile.target.orig	2004-07-20 00:21:34.000000000 -0300
++++ qemu-0.6.0/Makefile.target	2004-07-20 00:21:58.000000000 -0300
+@@ -7,7 +7,7 @@
+ VPATH+=:$(SRC_PATH)/linux-user
+ DEFINES+=-I$(SRC_PATH)/linux-user -I$(SRC_PATH)/linux-user/$(TARGET_ARCH)
+ endif
+-CFLAGS=-Wall -O2 -g -fno-strict-aliasing
++CFLAGS=-Wall -O1 -g -fno-strict-aliasing
+ LDFLAGS=-g
+ LIBS=
+ HELPER_CFLAGS=$(CFLAGS)
+@@ -32,9 +32,6 @@
+
+ ifeq ($(ARCH), i386)
+ PROGS+=$(QEMU_SYSTEM)
+-ifndef CONFIG_SOFTMMU
+-CONFIG_STATIC=y
+-endif
+ else
+ # the system emulator using soft mmu is portable
+ ifdef CONFIG_SOFTMMU

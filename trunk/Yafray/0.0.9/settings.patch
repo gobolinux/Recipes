@@ -1,0 +1,11 @@
+--- yafrayold/linux-settings.py	2006-10-07 13:52:28.000000000 -0300
++++ yafray/linux-settings.py	2006-10-07 13:54:09.000000000 -0300
+@@ -8,7 +8,7 @@
+ 
+ def init(args): 
+ 	global prefix
+-	prefix = args.get('prefix','/usr/local')
++	prefix = args.get('prefix','/Programs/Yafray/Current')
+ 
+ def get_libpath(args): return prefix+"/lib"
+ def get_pluginpath(args): return prefix+"/lib/yafray"

@@ -1,0 +1,23 @@
+diff -Naur ndiswrapper-1.2.old/Makefile ndiswrapper-1.2/Makefile
+--- ndiswrapper-1.2.old/Makefile	2005-06-10 21:24:31.000000000 +0200
++++ ndiswrapper-1.2/Makefile	2005-07-27 11:29:37.000000000 +0200
+@@ -7,7 +7,7 @@
+ DIST_SUBDIRS=utils driver debian
+ 
+ DESTDIR = 
+-mandir = $(DESTDIR)$(shell [ -d /usr/man/man8 ] && echo /usr/man || echo /usr/share/man )
++mandir = $(DESTDIR)$(shell [ -d /man/man8 ] && echo /man || echo /share/man )
+ 
+ KVERS ?= $(shell uname -r)
+ 
+diff -Naur ndiswrapper-1.2.old/utils/Makefile ndiswrapper-1.2/utils/Makefile
+--- ndiswrapper-1.2.old/utils/Makefile	2005-06-10 21:24:31.000000000 +0200
++++ ndiswrapper-1.2/utils/Makefile	2005-07-27 11:39:26.000000000 +0200
+@@ -1,6 +1,6 @@
+ DESTDIR =
+ sbindir = $(DESTDIR)/sbin
+-usrsbindir = $(DESTDIR)/usr/sbin
++usrsbindir = $(DESTDIR)/sbin
+ 
+ DRIVER_DIR ?= ../driver
+ 

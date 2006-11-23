@@ -1,0 +1,12 @@
+--- LinuxSDK/Dta1xx/Makefile.orig	2006-01-17 15:54:59.000000000 -0200
++++ LinuxSDK/Dta1xx/Makefile	2006-01-17 15:55:23.000000000 -0200
+@@ -127,7 +127,8 @@ install:
+ 	# rm -d -r -f $(INSTALLDIR)
+ 	
+ 	install -d $(INSTALLDIR)
+-	su -c "cp -v $(TARGET).ko $(INSTALLDIR) && /sbin/depmod -a"
++	cp -v $(TARGET).ko $(INSTALLDIR)
++	/sbin/depmod -a
+ 	
+ endif
+ 

@@ -1,0 +1,68 @@
+Submitted by: ttrepl@yahoo.de
+Date: 2003-09-09
+Initial Package Version: 5.0
+Description: Removes installation of hostname binary, and also suppresses
+tests on that binary.
+
+diff -Naur coreutils-5.0.orig/man/Makefile.in coreutils-5.0/man/Makefile.in
+--- coreutils-5.0.orig/man/Makefile.in	2003-04-02 16:28:42.000000000 +0200
++++ coreutils-5.0/man/Makefile.in	2003-09-09 17:57:47.000000000 +0200
+@@ -152,7 +152,7 @@
+   basename.1 cat.1 chgrp.1 chmod.1 chown.1 chroot.1 cksum.1 comm.1 \
+   cp.1 csplit.1 cut.1 date.1 dd.1 df.1 dir.1 dircolors.1 dirname.1 du.1 \
+   echo.1 env.1 expand.1 expr.1 factor.1 false.1 fmt.1 fold.1 groups.1 \
+-  head.1 hostid.1 hostname.1 id.1 install.1 join.1 link.1 ln.1 logname.1 \
++  head.1 hostid.1 id.1 install.1 join.1 link.1 ln.1 logname.1 \
+   ls.1 md5sum.1 mkdir.1 mkfifo.1 mknod.1 mv.1 nice.1 nl.1 nohup.1 od.1 \
+   paste.1 pathchk.1 pinky.1 pr.1 printenv.1 printf.1 ptx.1 pwd.1 readlink.1 \
+   rm.1 rmdir.1 seq.1 sha1sum.1 shred.1 sleep.1 sort.1 split.1 stat.1 stty.1 \
+@@ -401,7 +401,6 @@
+ groups.1:	$(common_dep)	$(srcdir)/groups.x	../src/groups.sh
+ head.1:		$(common_dep)	$(srcdir)/head.x	../src/head.c
+ hostid.1:	$(common_dep)	$(srcdir)/hostid.x	../src/hostid.c
+-hostname.1:	$(common_dep)	$(srcdir)/hostname.x	../src/hostname.c
+ id.1:		$(common_dep)	$(srcdir)/id.x		../src/id.c
+ install.1:	$(common_dep)	$(srcdir)/install.x	../src/install.c
+ join.1:		$(common_dep)	$(srcdir)/join.x	../src/join.c
+@@ -481,7 +480,7 @@
+ check-x-vs-1:
+ 	PATH=../src@PATH_SEPARATOR@$$PATH; export PATH;			\
+ 	t=ls-files.$$$$;						\
+-	(cd $(srcdir) && ls -1 *.x) | sed 's/\.x$$//' | sort > $$t;	\
++	(cd $(srcdir) && ls -1 *.x) | grep -v 'hostname.x' | sed 's/\.x$$//' | sort > $$t;	\
+ 	echo $(dist_man_MANS) | fmt -w1 | sed 's/\.1$$//' | sort -u	\
+ 	  | diff - $$t || { rm $$t; exit 1; };				\
+ 	rm $$t
+diff -Naur coreutils-5.0.orig/README coreutils-5.0/README
+--- coreutils-5.0.orig/README	2003-03-29 15:24:00.000000000 +0100
++++ coreutils-5.0/README	2003-09-09 17:36:56.000000000 +0200
+@@ -9,7 +9,7 @@
+ 
+   basename cat chgrp chmod chown chroot cksum comm cp csplit cut date dd
+   df dir dircolors dirname du echo env expand expr factor false fmt fold
+-  ginstall groups head hostid hostname id join kill link ln logname ls
++  ginstall groups head hostid id join kill link ln logname ls
+   md5sum mkdir mkfifo mknod mv nice nl nohup od paste pathchk pinky pr
+   printenv printf ptx pwd readlink rm rmdir seq sha1sum shred sleep sort
+   split stat stty su sum sync tac tail tee test touch tr true tsort tty
+diff -Naur coreutils-5.0.orig/src/Makefile.in coreutils-5.0/src/Makefile.in
+--- coreutils-5.0.orig/src/Makefile.in	2003-04-02 16:46:19.000000000 +0200
++++ coreutils-5.0/src/Makefile.in	2003-09-09 17:36:38.000000000 +0200
+@@ -165,7 +165,7 @@
+   cat cksum comm csplit cut expand fmt fold head join md5sum \
+   nl od paste pr ptx sha1sum sort split sum tac tail tr tsort unexpand uniq wc \
+   basename date dirname echo env expr factor false \
+-  hostname id kill logname pathchk printenv printf pwd seq sleep tee \
++  id kill logname pathchk printenv printf pwd seq sleep tee \
+   test true tty whoami yes \
+   @OPTIONAL_BIN_PROGS@ @DF_PROG@
+ 
+@@ -305,7 +305,7 @@
+ 	tac$(EXEEXT) tail$(EXEEXT) tr$(EXEEXT) tsort$(EXEEXT) \
+ 	unexpand$(EXEEXT) uniq$(EXEEXT) wc$(EXEEXT) basename$(EXEEXT) \
+ 	date$(EXEEXT) dirname$(EXEEXT) echo$(EXEEXT) env$(EXEEXT) \
+-	expr$(EXEEXT) factor$(EXEEXT) false$(EXEEXT) hostname$(EXEEXT) \
++	expr$(EXEEXT) factor$(EXEEXT) false$(EXEEXT) \
+ 	id$(EXEEXT) kill$(EXEEXT) logname$(EXEEXT) pathchk$(EXEEXT) \
+ 	printenv$(EXEEXT) printf$(EXEEXT) pwd$(EXEEXT) seq$(EXEEXT) \
+ 	sleep$(EXEEXT) tee$(EXEEXT) test$(EXEEXT) true$(EXEEXT) \

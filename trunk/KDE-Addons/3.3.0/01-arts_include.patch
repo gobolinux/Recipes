@@ -1,0 +1,26 @@
+diff -Naur kdeaddons-3.3.0/noatun-plugins/wavecapture/Makefile.am kdeaddons-3.3.0.patched/noatun-plugins/wavecapture/Makefile.am
+--- kdeaddons-3.3.0/noatun-plugins/wavecapture/Makefile.am	2003-04-28 07:06:03.000000000 -0300
++++ kdeaddons-3.3.0.patched/noatun-plugins/wavecapture/Makefile.am	2004-09-17 11:04:30.000000000 -0300
+@@ -1,6 +1,7 @@
+ # $Id: Makefile.am,v 1.6 2003/04/28 06:50:08 coolo Exp $
+ 
+-INCLUDES = -I$(kde_includes)/arts $(all_includes)
++# TODO: change '/Programs/KDE-Multimedia/Current' to something portable
++INCLUDES = -I$(kde_includes)/arts /Programs/KDE-Multimedia/Current/include/arts $(all_includes)
+ kde_module_LTLIBRARIES = noatunwavecapture.la
+ 
+ 
+diff -Naur kdeaddons-3.3.0/noatun-plugins/wavecapture/Makefile.in kdeaddons-3.3.0.patched/noatun-plugins/wavecapture/Makefile.in
+--- kdeaddons-3.3.0/noatun-plugins/wavecapture/Makefile.in	2004-08-13 20:42:52.000000000 -0300
++++ kdeaddons-3.3.0.patched/noatun-plugins/wavecapture/Makefile.in	2004-09-17 11:04:44.000000000 -0300
+@@ -360,7 +360,9 @@
+ xdg_appsdir = @xdg_appsdir@
+ xdg_directorydir = @xdg_directorydir@
+ xdg_menudir = @xdg_menudir@
+-INCLUDES = -I$(kde_includes)/arts $(all_includes)
++
++# TODO: change '/Programs/KDE-Multimedia/Current' to something portable
++INCLUDES = -I$(kde_includes)/arts -I/Programs/KDE-Multimedia/Current/include/arts $(all_includes)
+ kde_module_LTLIBRARIES = noatunwavecapture.la
+ #>- noatunwavecapture_la_LDFLAGS = $(all_libraries) -module -avoid-version -no-undefined
+ #>+ 1

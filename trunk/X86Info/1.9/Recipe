@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for X86Info by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon May 16 14:26:31 BRT 2005
+# Recipe for version 1.9 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon May 16 14:26:31 BRT 2005
+compile_version=1.7.1
+url="http://www.codemonkey.org.uk/projects/x86info/x86info-1.9.tgz"
+file_size=31332
+file_md5=b0a31bc1bedf6b15e17e185f8d44c172
+recipe_type=makefile
+makefile='Makefile'
+install_target=x86info
+
+pre_link() {
+	cp x86info $target/bin
+	cp x86info.1 $target/man/man1
+}

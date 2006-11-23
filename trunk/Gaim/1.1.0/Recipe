@@ -1,0 +1,9 @@
+# Recipe for version 1.1.0 by Matthias Wolf, on Sun Dec 5 11:48:54 CET 2004
+# Recipe (MakeRecipe) for Gaim by Matthias Wolf, on Wed Oct 20 11:40:27 CEST 2004
+compile_version=1.7.1
+url="$httpSourceforge/gaim/gaim-1.1.0.tar.bz2"
+recipe_type=configure
+
+#configure-options=(
+#"--disable-binreloc"
+#)

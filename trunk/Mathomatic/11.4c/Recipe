@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Mathomatic by roko, <ro.ko@mcnon.com>, on Wed Oct 27 00:12:53 BRST 2004
+# Recipe for version 11.4c by roko, <ro.ko@mcnon.com>, on Wed Oct 27 00:12:53 BRST 2004
+compile_version=1.7.1
+url="http://www.panix.com/~gesslein/mathomatic-11.4c.tgz"
+file_size=121344
+file_md5=d0a435dea4191cb6d7dd4b103b622eaf
+recipe_type=makefile
+makefile='makefile'
+make_variables=(
+   "prefix=$target"
+)

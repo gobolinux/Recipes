@@ -1,0 +1,12 @@
+# Recipe for version 3.5.0 by Andre Detsch <detsch@gmail.com>, on Ter Nov 29 18:14:39 BRST 2005
+# KDE-Libs meta-recipe 
+# by Andre Detsch
+
+# ARTS and Libs compilation don't support different prefixes yet...
+
+include=(
+   "ARTS--1.5.0"
+   "KDE-Libs-Itself--3.5.0"
+)
+compile_version=1.7.1
+recipe_type=meta

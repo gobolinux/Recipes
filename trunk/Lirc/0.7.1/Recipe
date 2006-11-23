@@ -1,0 +1,24 @@
+# Recipe (MakeRecipe) for Lirc by Fabio Mierlo, on Mon May 30 01:19:58 BRT 2005
+# Recipe for version 0.7.1 by Fabio Mierlo, on Mon May 30 01:19:58 BRT 2005
+compile_version=1.7.1
+url="$httpSourceforge/lirc/lirc-0.7.1.tar.bz2"
+file_size=487288
+file_md5=642e543e25dd6ad72416784bb6166d54
+recipe_type=configure
+
+
+sandbox_options=(
+   "--no-sandbox"
+)
+
+configure_options=(
+	"--with-devdir=$goboDevices"
+	"--with-kerneldir=$goboModules/`uname -r`/build"
+	"--with-moduledir=%goboModules/`uname -r`/"
+	"--with-transmitter"
+	"--with-x"
+	"--with-driver=serial"
+	"--with-major=61"
+	"--with-port=0x3f8"
+	"--with-irq=4"
+)

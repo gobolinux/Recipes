@@ -1,0 +1,14 @@
+--- linux-2.6.10/fs/devfs/base.c	2004-12-24 19:34:01.000000000 -0200
++++ linux-2.6.10-Gobo/fs/devfs/base.c	2005-01-17 22:54:11.000000000 -0200
+@@ -2827,9 +2827,9 @@
+ 
+ 	if (!(boot_options & OPTION_MOUNT))
+ 		return;
+-	err = do_mount("none", "/dev", "devfs", 0, NULL);
++	err = do_mount("none", "/System/Kernel/Devices", "devfs", 0, NULL);
+ 	if (err == 0)
+-		printk(KERN_INFO "Mounted devfs on /dev\n");
++		printk(KERN_INFO "Mounted devfs on /System/Kernel/Devices\n");
+ 	else
+ 		PRINTK("(): unable to mount devfs, err: %d\n", err);
+ }				/*  End Function mount_devfs_fs  */

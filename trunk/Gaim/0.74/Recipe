@@ -1,0 +1,13 @@
+# by Michael Homer
+# 2004.01.28 02:44
+
+url=$httpSourceforge/gaim/gaim-0.74.tar.bz2
+compile_version=1.7.1
+recipe_type=configure
+
+pre_build () {
+# echo "Checking for log patch... "
+# [ -e "gaim-0.74-log_free.patch" ] || wget http://www.gtlib.cc.gatech.edu/pub/gentoo/gentoo-x86-portage/net-im/gaim/files/gaim-0.74-log_free.patch
+# echo "Applying log patch... "
+# patch -p0 < gaim-0.74-log_free.patch 
+}

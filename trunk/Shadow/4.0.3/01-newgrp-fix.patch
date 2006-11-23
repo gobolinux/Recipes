@@ -1,0 +1,25 @@
+Submitted By: Greg Schafer <gschafer at zip dot com dot au>
+Date: 2003-09-01
+Initial Package Version: 4.0.3
+Origin: LFS Mailing Lists
+Description: Fixes the newgrp command in the shadow suite - now also appearing in Shadow CVS
+
+diff -uNr shadow-4.0.3.orig/src/newgrp.c shadow-4.0.3/src/newgrp.c
+--- shadow-4.0.3.orig/src/newgrp.c	2002-01-07 02:00:07.000000000 +1100
++++ shadow-4.0.3/src/newgrp.c	2003-03-11 12:02:12.000000000 +1100
+@@ -398,6 +398,7 @@
+ 		SYSLOG ((LOG_INFO,
+ 			 "user `%s' (login `%s' on %s) switched to group `%s'",
+ 			 name, loginname, tty, group));
++#ifdef USE_PAM
+ 		if (getdef_bool ("CLOSE_SESSIONS")) {
+ 			/*
+ 			 * We want to fork and exec the new shell in the child, leaving the
+@@ -450,6 +451,7 @@
+ 			signal (SIGTTIN, SIG_DFL);
+ 			signal (SIGTTOU, SIG_DFL);
+ 		}
++#endif // USE_PAM
+ 	}
+ #endif				/* USE_SYSLOG */
+ 

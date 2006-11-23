@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Rubygems by Harald Klimach, on Sun Jan 29 23:47:03 CET 2006
+# Recipe for version 0.8.11 by Harald Klimach, on Sun Jan 29 23:47:03 CET 2006
+compile_version=1.7.1
+url="http://rubyforge.org/frs/download.php/5207/rubygems-0.8.11.tgz"
+file_size=160265
+file_md5=aa363b428c4c1fc2e076a4ff77b957d7
+recipe_type=manifest
+function pre_install() {
+  ruby setup.rb
+}

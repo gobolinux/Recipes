@@ -1,0 +1,14 @@
+# by Jonatan Liljedahl
+url=http://www.m-arriaga.net/software/libtrash/libtrash-latest.tgz
+dir=libtrash-2.1
+compile_version=1.7.1
+recipe_type=makefile
+make_variables=(
+    INSTLIBDIR=$target/lib
+    SYSCONFFILE=$target/../Settings/libtrash.conf
+)
+pre_install() {
+    cd $dir/src &&
+    cp Makefile Makefile.old &&
+    grep -v ldconfig Makefile.old > Makefile
+}

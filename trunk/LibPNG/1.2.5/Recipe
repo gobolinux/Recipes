@@ -1,0 +1,11 @@
+url=$httpSourceforge/libpng/libpng-1.2.5.tar.bz2
+dir=libpng-1.2.5
+compile_version=1.7.1
+recipe_type=makefile
+makefile=scripts/makefile.linux
+make_variables=(
+   "prefix=$target"
+   ZLIBLIB="/System/Links/Libraries"
+   ZLIBINC="/System/Links/Headers"
+)
+

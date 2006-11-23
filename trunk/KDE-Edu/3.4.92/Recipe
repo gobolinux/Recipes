@@ -1,0 +1,11 @@
+# by Maglan C. Diemer 3.3.2 by roko
+
+url="ftp://ftp.oregonstate.edu/pub/kde/unstable/3.5-beta2/src/kdeedu-3.4.92.tar.bz2"
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+ # "DO_NOT_COMPILE="
+ # libkdeedu applnk doc kalzium kbruch keduca khangman kig kiten klatin klettres kmathtool kmessedwords kmplot kpercentage kstars ktouch kturtle kverbos kvoctrain kwordquiz" 
+)

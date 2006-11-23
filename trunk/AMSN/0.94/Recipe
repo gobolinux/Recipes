@@ -1,0 +1,30 @@
+# by Guilherme Bedin
+
+url=$httpSourceforge/amsn/amsn-0_94.tar.gz
+dir=amsn-0_94
+compile_version=1.7.1
+recipe_type=makefile
+make_variables=( 
+   prefix="$target" 
+)
+pre_build() {
+  mv Makefile Makefile.original
+  cat << EOF > Makefile
+all:
+	cd plugins/traydock ; configure ; make 
+
+install:
+	ln -s "$target/amsn" "$target/bin/amsn"
+
+EOF
+			
+}
+
+pre_install() {
+  cp -r * "$target" 
+  cd "$target"
+  rm Makefile
+  rm amsn.spec plwav.exe amsn.debianmenu
+  cd -
+  
+}

@@ -1,0 +1,17 @@
+# Recipe for version 2.16.1 by Andre Detsch, on Mon Jun 20 17:00:43 BRT 2005
+url=$ftpGnu/binutils/binutils-2.16.1.tar.bz2
+file_size=12549917
+file_md5=6a9d529efb285071dad10e1f3d2b2967
+needs_build_directory=yes
+needs_safe_linking=yes
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+   "--enable-shared"
+)
+make_variables=(
+   "tooldir=$target"
+)
+pre_install() {
+   cp include/libiberty.h $target/include
+}

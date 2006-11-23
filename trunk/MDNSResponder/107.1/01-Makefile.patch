@@ -1,0 +1,137 @@
+--- mDNSResponder-107.1/mDNSPosix/Makefile	2005-04-14 18:07:10.000000000 -0300
++++ mDNSResponder-107.1-GoboLinux/mDNSPosix/Makefile.GoboLinux	2005-12-05 14:13:32.000000000 -0200
+@@ -331,16 +331,18 @@
+ endif
+ endif
+ 
++# If not otherwise defined, we install into /usr/lib and /usr/include
++# and our startup script is called mdns (e.g. /etc/init.d/mdns)
++INSTBASE?=/Programs/MDNSResponder/107.1
++STARTUPSCRIPTNAME?=mdns
++
++
+ NSSLIBNAME  := libnss_mdns
+ NSSVERSION  := 0.2
+ NSSLIBFILE  := $(NSSLIBNAME)-$(NSSVERSION).so
+ NSSLINKNAME := $(NSSLIBNAME).so.2
+-NSSINSTPATH := /lib
++NSSINSTPATH := $(INSTBASE)/lib
+ 
+-# If not otherwise defined, we install into /usr/lib and /usr/include
+-# and our startup script is called mdns (e.g. /etc/init.d/mdns)
+-INSTBASE?=/usr
+-STARTUPSCRIPTNAME?=mdns
+ 
+ ifeq ($(HAVE_IPV6),1)
+ CFLAGS_OS += -DHAVE_IPV6=1
+@@ -352,31 +354,31 @@
+ 
+ # If directory /usr/share/man exists, then we install man pages into that, else /usr/man
+ ifeq ($(wildcard /usr/share/man), /usr/share/man)
+-MANPATH := /usr/share/man
++MANPATH := $(INSTBASE)/man
+ else
+-MANPATH := /usr/man
++MANPATH := $(INSTBASE)/man
+ endif
+ 
+ # If directories /etc/init.d/rc*.d exist, then we install into that (Suse)
+-ifeq ($(wildcard /etc/init.d/rc2.d/), /etc/init.d/rc2.d/)
+-STARTUPSCRIPTDIR = /etc/init.d
+-RUNLEVELSCRIPTSDIR = /etc/init.d
+-else
++#ifeq ($(wildcard /etc/init.d/rc2.d/), /etc/init.d/rc2.d/)
++#STARTUPSCRIPTDIR = /etc/init.d
++#RUNLEVELSCRIPTSDIR = /etc/init.d
++#else
+ # else if directory /etc/rc.d/init.d/ exists, then we install into that (old Linux)
+-ifeq ($(wildcard /etc/rc.d/init.d/), /etc/rc.d/init.d/)
+-STARTUPSCRIPTDIR = /etc/rc.d/init.d
+-RUNLEVELSCRIPTSDIR = /etc/rc.d
+-else
++#ifeq ($(wildcard /etc/rc.d/init.d/), /etc/rc.d/init.d/)
++#STARTUPSCRIPTDIR = /etc/rc.d/init.d
++#RUNLEVELSCRIPTSDIR = /etc/rc.d
++#else
+ # else if directory /etc/init.d/ exists, then we install into that (new Linux)
+-ifeq ($(wildcard /etc/init.d/), /etc/init.d/)
+-STARTUPSCRIPTDIR = /etc/init.d
+-RUNLEVELSCRIPTSDIR = /etc
+-else
++#ifeq ($(wildcard /etc/init.d/), /etc/init.d/)
++#STARTUPSCRIPTDIR = /etc/init.d
++#RUNLEVELSCRIPTSDIR = /etc
++#else
+ # else install into /etc/rc.d/ (*BSD)
+ STARTUPSCRIPTDIR = $(INSTBASE)/etc/rc.d
+-endif
+-endif
+-endif
++#endif
++#endif
++#endif
+ 
+ CFLAGS = $(CFLAGS_COMMON) $(CFLAGS_OS) $(CFLAGS_DEBUG)
+ 
+@@ -384,7 +386,9 @@
+ 
+ all: setup Daemon libdns_sd Client Responder ProxyResponder Identify NetMonitor dnsextd $(OPTIONALTARG)
+ 
+-install: setup InstalledDaemon InstalledLib InstalledStartup InstalledManPages $(OPTINSTALL)
++#install: setup InstalledDaemon InstalledLib InstalledStartup InstalledManPages $(OPTINSTALL)
++install: setup InstalledDaemon InstalledLib InstalledManPages $(OPTINSTALL)
++
+ 
+ # 'setup' sets up the build directory structure the way we want
+ setup:
+@@ -442,7 +446,7 @@
+ InstalledStartup: $(STARTUPSCRIPTDIR)/$(STARTUPSCRIPTNAME)
+ 	@echo $+ " installed"
+ 
+-InstalledNSS: $(NSSINSTPATH)/$(NSSLINKNAME) /etc/nss_mdns.conf $(MANPATH)/man5/nss_mdns.conf.5 $(MANPATH)/man8/libnss_mdns.8
++InstalledNSS: $(NSSINSTPATH)/$(NSSLINKNAME) $(INSTBASE)/../Settings/nss_mdns.conf $(MANPATH)/man5/nss_mdns.conf.5 $(MANPATH)/man8/libnss_mdns.8
+ 	@echo $+ " installed"
+ 
+ InstalledManPages: $(MANPATH)/man8/mdnsd.8
+@@ -480,31 +484,33 @@
+ 
+ $(NSSINSTPATH)/$(NSSLINKNAME): $(NSSINSTPATH)/$(NSSLIBFILE)
+ 	$(LN) $< $@
+-	ldconfig
++ifdef LDCONFIG
++	$(LDCONFIG)
++endif
+ 
+ $(NSSINSTPATH)/$(NSSLIBFILE): $(BUILDDIR)/$(NSSLIBFILE)
+ 	$(CP) $< $@
+ 	chmod 444 $@
+ 
+-/etc/nss_mdns.conf: nss_mdns.conf
++$(INSTBASE)/../Settings/nss_mdns.conf: nss_mdns.conf
+ 	$(CP) $< $@
+-	chmod 444 $@
++	chmod 644 $@
+ 	# Check the nsswitch.conf file.
+ 	# If 'mdns' does not already appear on the "hosts:" line, then add it right before 'dns'
+-	cp -f /etc/nsswitch.conf /etc/nsswitch.conf.pre-mdns
+-	sed -e '/mdns/!s/^\(hosts:.*\)dns\(.*\)/\1mdns dns\2/' /etc/nsswitch.conf.pre-mdns > /etc/nsswitch.conf
++	cp -f /etc/nsswitch.conf $(INSTBASE)/../Settings/nsswitch.conf.pre-mdns
++	sed -e '/mdns/!s/^\(hosts:.*\)dns\(.*\)/\1mdns dns\2/'  $(INSTBASE)/../Settings/nsswitch.conf.pre-mdns >  $(INSTBASE)/../Settings/nsswitch.conf
+ 
+ $(MANPATH)/man5/%.5: %.5
+ 	cp $< $@
+-	chmod 444 $@
++	chmod 644 $@
+ 
+ $(MANPATH)/man8/%.8: %.8
+ 	cp $< $@
+-	chmod 444 $@
++	chmod 644 $@
+ 
+ $(MANPATH)/man8/mdnsd.8: $(SHAREDDIR)/mDNSResponder.8
+ 	cp $< $@
+-	chmod 444 $@
++	chmod 644 $@
+ 
+ #############################################################################
+ 

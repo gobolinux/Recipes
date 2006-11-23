@@ -1,0 +1,13 @@
+--- ./configure	2006-06-08 22:02:45.000000000 +0200
++++ ./configure	2006-06-08 22:03:36.000000000 +0200
+@@ -5886,8 +5886,8 @@
+ 
+     echo "$as_me:$LINENO: checking Hackish check for FLTK" >&5
+ echo $ECHO_N "checking Hackish check for FLTK... $ECHO_C" >&6
+-    LIBFLTK_CXXFLAGS=`fltk-config --cxxflags`
+-    LIBFLTK_LIBS=`fltk-config --ldflags`
++    LIBFLTK_CXXFLAGS=`fltk2-config --cxxflags`
++    LIBFLTK_LIBS=`fltk2-config --ldflags`
+ 
+ 
+ if test "x$enable_jpeg" = "xyes"; then

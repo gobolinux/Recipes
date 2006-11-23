@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Sloccount by Rafael Guterres Jeffman (rafasgj), on Mon Oct 24 10:49:34 BRST 2005
+# Recipe for version 2.26 by Rafael Guterres Jeffman (rafasgj), on Mon Oct 24 10:49:34 BRST 2005
+compile_version=1.7.1
+url="http://www.dwheeler.com/sloccount/sloccount-2.26.tar.gz"
+file_size=190948
+file_md5=09abd6e2a016ebaf7552068a1dba1249
+recipe_type=makefile
+makefile='makefile'
+make_variables=(
+   "PREFIX=$target"
+)

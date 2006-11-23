@@ -1,0 +1,36 @@
+# Recipe (MakeRecipe) for Evidence by roko, <ro.ko@mcnon.com>, , on Sat Oct 9 03:44:43 BRT 2004
+# Recipe for version 20040808 by roko, <ro.ko@mcnon.com>, , on Sat Oct 9 03:44:43 BRT 2004
+compile_version=1.7.1
+#by roko, <ro.ko@mcnon.com>, , ro.ko@mcnon.com
+url="$httpSourceforge/evidence/evidence-0.9.8-20040808.tar.gz"
+file_size=5895047
+file_md5=fca513396dfa08f8f479639450d38d15
+dir='evidence-0.9.8'
+recipe_type=configure
+configure_options=(
+	#--enable-dbus       
+	#--enable-dcop           
+	--enable-ecore-ipc      
+	--enable-ecore         
+	--enable-canvas-evas2   
+	#--enable-extra-themes 
+	--enable-extra-iconsets 
+	--enable-tree-view  
+	--enable-icon-view  
+	--enable-browser-view   
+	--enable-xds  
+	--enable-x    
+	#--enable-backend-kio   
+	#--enable-attrs    
+	#--enable-acls           
+        --enable-libmagic               
+ 	--enable-sharedmime     
+ 	--enable-plugin-extractor
+ 	--enable-plugin-vorbis 
+ 	--enable-plugin-id3     
+ 	--enable-thumbnailer-xine
+ 	--disable-thumbnailer-avi
+ 	--enable-thumbnailer-mpeg3
+ 	--enable-plugin-ttf
+	#--with-libavi=/Programs/Avifile/Current
+)

@@ -1,0 +1,1228 @@
+diff -Naur WindowMaker-0.92.0.old/src/defaults.c WindowMaker-0.92.0/src/defaults.c
+--- WindowMaker-0.92.0.old/src/defaults.c	2005-04-08 12:59:16.000000000 +0200
++++ WindowMaker-0.92.0/src/defaults.c	2005-07-19 12:17:34.000000000 +0200
+@@ -221,6 +221,11 @@
+     {NULL, 0, 0}
+ };
+ 
++static WOptionEnumeration seTitlebarModes[] = {
++    {"new", TS_NEW, 0}, {"old", TS_OLD, 0},
++    {"next", TS_NEXT, 0}, {NULL, 0, 0}
++};
++
+ static WOptionEnumeration seColormapModes[] = {
+     {"Manual", WCM_CLICK, 0}, {"ClickToFocus", WCM_CLICK, 1},
+     {"Auto", WCM_POINTER, 0}, {"FocusFollowMouse", WCM_POINTER, 1},
+@@ -356,8 +361,8 @@
+     {"FocusMode",	"manual",		seFocusModes,
+     &wPreferences.focus_mode,	getEnum,	NULL
+     }, /* have a problem when switching from manual to sloppy without restart */
+-    {"NewStyle",	"NO",			NULL,
+-    &wPreferences.new_style, 	getBool, 	NULL
++    {"NewStyle",       "new",                  seTitlebarModes,
++       &wPreferences.new_style,        getEnum,        NULL
+     },
+     {"DisableDock",	"NO",		(void*) WM_DOCK,
+     NULL, 	getBool,        setIfDockPresent
+@@ -1198,8 +1203,8 @@
+         if (plvalue) {
+             /* convert data */
+             (*entry->convert)(NULL, entry, plvalue, entry->addr, &tdata);
+-            if (entry->update) {
+-                (*entry->update)(NULL, entry, tdata, entry->extra_data);
++             if (entry->update) {
++                 (*entry->update)(NULL, entry, tdata, entry->extra_data);
+             }
+         }
+     }
+diff -Naur WindowMaker-0.92.0.old/src/def_pixmaps.h WindowMaker-0.92.0/src/def_pixmaps.h
+--- WindowMaker-0.92.0.old/src/def_pixmaps.h	2004-10-12 19:54:26.000000000 +0200
++++ WindowMaker-0.92.0/src/def_pixmaps.h	2005-07-19 12:17:34.000000000 +0200
+@@ -97,6 +97,272 @@
+     ".........."
+ };
+ 
++static char *NEXT_CLOSE_XPM[] = {
++"10 10 69 1",
++" 	c None",
++".	c #FBFBFB",
++"+	c #F9F9F9",
++"@	c #F7F7F7",
++"#	c #F4F4F4",
++"$	c #F0F0F0",
++"%	c #EDEDED",
++"&	c #E8E8E8",
++"*	c #AFAFAF",
++"=	c #FCFCFC",
++"-	c #8B8B8B",
++";	c #DEDEDE",
++">	c #E0E0E0",
++",	c #C7C7C7",
++"'	c #999999",
++")	c #2B2B2B",
++"!	c #878787",
++"~	c #F1F1F1",
++"{	c #222222",
++"]	c #C2C2C2",
++"^	c #EBEBEB",
++"/	c #DCDCDC",
++"(	c #9F9F9F",
++"_	c #363636",
++":	c #FEFEFE",
++"<	c #C1C1C1",
++"[	c #232323",
++"}	c #CFCFCF",
++"|	c #282828",
++"1	c #D5D5D5",
++"2	c #FAFAFA",
++"3	c #F6F6F6",
++"4	c #D3D3D3",
++"5	c #121212",
++"6	c #BEBEBE",
++"7	c #898989",
++"8	c #838383",
++"9	c #EEEEEE",
++"0	c #E9E9E9",
++"a	c #CDCDCD",
++"b	c #080808",
++"c	c #131313",
++"d	c #A1A1A1",
++"e	c #7F7F7F",
++"f	c #808080",
++"g	c #D9D9D9",
++"h	c #8D8D8D",
++"i	c #1D1D1D",
++"j	c #C9C9C9",
++"k	c #B4B4B4",
++"l	c #191919",
++"m	c #6A6A6A",
++"n	c #6C6C6C",
++"o	c #7A7A7A",
++"p	c #B1B1B1",
++"q	c #202020",
++"r	c #BBBBBB",
++"s	c #D4D4D4",
++"t	c #151515",
++"u	c #515151",
++"v	c #747474",
++"w	c #3A3A3A",
++"x	c #CCCCCC",
++"y	c #B3B3B3",
++"z	c #939393",
++"A	c #A3A3A3",
++"B	c #919191",
++"C	c #858585",
++"D	c #7C7C7C",
++"...+@#$%&*",
++"=-;#%>,')!",
++"=~{]^/(_!!",
++"=:<[}*|1(!",
++"2@345[>678",
++"@90abc6def",
++"#ghijklmno",
++"~pqrgs(tuv",
++"%wxx'-p8tn",
++"yzAB7C8enD"};
++
++
++static char * NEXT_BROKEN_CLOSE_XPM[] = {
++"10 10 8 1",
++" 	c None",
++".	c #E0E0E0",
++"+	c #7D7D7D",
++"@	c #DBDBDB",
++"#	c #BDBDBD",
++"$	c #080808",
++"%	c #363636",
++"&	c #D4D4D4",
++".........+",
++".+@...#+$+",
++"..$#.@+%++",
++"..###++&++",
++"...&...#++",
++"...&..#+++",
++".@+##+%%%+",
++".+$#@&+$%%",
++".%##++++$%",
++"++++++++%+"};
++
++static char *NEXT_KILL_XPM[] = {
++"10 10 64 1",
++" 	c None",
++".	c #FBFBFB",
++"+	c #FAFAFA",
++"@	c #F7F7F7",
++"#	c #F5F5F5",
++"$	c #F6F6F6",
++"%	c #EEEEEE",
++"&	c #B3B3B3",
++"*	c #FCFCFC",
++"=	c #8B8B8B",
++"-	c #E3E3E3",
++";	c #F4F4F4",
++">	c #ECECEC",
++",	c #EAEAEA",
++"'	c #BFBFBF",
++")	c #474747",
++"!	c #A5A5A5",
++"~	c #EFEFEF",
++"{	c #262626",
++"]	c #B6B6B6",
++"^	c #B4B4B4",
++"/	c #282828",
++"(	c #A3A3A3",
++"_	c #FEFEFE",
++":	c #E0E0E0",
++"<	c #B8B8B8",
++"[	c #C5C5C5",
++"}	c #DCDCDC",
++"|	c #D3D3D3",
++"1	c #E4E4E4",
++"2	c #B1B1B1",
++"3	c #878787",
++"4	c #D5D5D5",
++"5	c #202020",
++"6	c #222222",
++"7	c #F1F1F1",
++"8	c #959595",
++"9	c #838383",
++"0	c #DBDBDB",
++"a	c #252525",
++"b	c #E9E9E9",
++"c	c #F0F0F0",
++"d	c #999999",
++"e	c #808080",
++"f	c #9B9B9B",
++"g	c #C2C2C2",
++"h	c #7C7C7C",
++"i	c #7A7A7A",
++"j	c #232323",
++"k	c #CCCCCC",
++"l	c #C1C1C1",
++"m	c #181818",
++"n	c #404040",
++"o	c #747474",
++"p	c #E7E7E7",
++"q	c #303030",
++"r	c #C9C9C9",
++"s	c #ACACAC",
++"t	c #787878",
++"u	c #141414",
++"v	c #6C6C6C",
++"w	c #8F8F8F",
++"x	c #858585",
++"y	c #7F7F7F",
++"...+@#$$%&",
++"*=-+;>,')!",
++"*~{];#^/((",
++"*_:<[}|123",
++"+@+456;789",
++"@~706abcde",
++"#0fg#$3ehi",
++"c=jk>%lmno",
++"pqr}s(^tuv",
++"2w!d=x9yvh"};
++
++static char *NEXT_ICONIFY_XPM[] = {
++"10 10 72 1",
++" 	c None",
++".	c #FCFCFC",
++"+	c #FAFAFA",
++"@	c #F8F8F8",
++"#	c #F6F6F6",
++"$	c #F2F2F2",
++"%	c #EFEFEF",
++"&	c #EAEAEA",
++"*	c #A6A6A6",
++"=	c #FEFEFE",
++"-	c #FDFDFD",
++";	c #F9F9F9",
++">	c #E2E2E2",
++",	c #CBCBCB",
++"'	c #AFAFAF",
++")	c #808080",
++"!	c #717171",
++"~	c #FFFFFF",
++"{	c #FBFBFB",
++"]	c #F1F1F1",
++"^	c #E5E5E5",
++"/	c #CCCCCC",
++"(	c #838383",
++"_	c #A0A0A0",
++":	c #989898",
++"<	c #8B8B8B",
++"[	c #7F7F7F",
++"}	c #E8E8E8",
++"|	c #ADADAD",
++"1	c #181818",
++"2	c #171717",
++"3	c #161616",
++"4	c #141414",
++"5	c #0A0A0A",
++"6	c #000000",
++"7	c #A2A2A2",
++"8	c #747474",
++"9	c #6C6C6C",
++"0	c #F0F0F0",
++"a	c #B9B9B9",
++"b	c #B7B7B7",
++"c	c #B1B1B1",
++"d	c #868686",
++"e	c #020202",
++"f	c #EDEDED",
++"g	c #939393",
++"h	c #676767",
++"i	c #696969",
++"j	c #8E8E8E",
++"k	c #787878",
++"l	c #757575",
++"m	c #777777",
++"n	c #767676",
++"o	c #EBEBEB",
++"p	c #525252",
++"q	c #626262",
++"r	c #F3F3F3",
++"s	c #E1E1E1",
++"t	c #B5B5B5",
++"u	c #5F5F5F",
++"v	c #424242",
++"w	c #5B5B5B",
++"x	c #9D9D9D",
++"y	c #969696",
++"z	c #E4E4E4",
++"A	c #444444",
++"B	c #2E2E2E",
++"C	c #A9A9A9",
++"D	c #7C7C7C",
++"E	c #797979",
++"F	c #5D5D5D",
++"G	c #646464",
++"...+@#$%&*",
++".=-;%>,')!",
++"-~={]^/'(!",
++"_'*:<[}|)!",
++"123456%789",
++"0abcdefghi",
++"jklmneonpq",
++"rs^>te}uvw",
++"f_xy9ezABp",
++"CDDEue7FpG"};
++
+ #ifdef XKB_BUTTON_HINT
+ #include "extend_pixmaps.h"
+ #endif /* XKB_BUTTON_HINT */
+diff -Naur WindowMaker-0.92.0.old/src/extend_pixmaps.h WindowMaker-0.92.0/src/extend_pixmaps.h
+--- WindowMaker-0.92.0.old/src/extend_pixmaps.h	2004-10-12 19:55:09.000000000 +0200
++++ WindowMaker-0.92.0/src/extend_pixmaps.h	2005-07-19 12:17:34.000000000 +0200
+@@ -113,5 +113,79 @@
+ };
+ 
+ 
++static char *NEXT_XKBGROUP1_XPM[] = {
++"10 10 6 1",
++" 	c None",
++".	c #E0E0E0",
++"+	c #7D7D7D",
++"@	c #363636",
++"#	c #080808",
++"$	c #BDBDBD",
++".........+",
++"..@@@@@@++",
++"..@####+++",
++"..#+$$$$++",
++"..###+.$++",
++"..#++..$++",
++"..#$.$$$++",
++"..#@@@@+++",
++".$+#####@@",
++"+++++++@@@"};
+ 
++static char *NEXT_XKBGROUP2_XPM[] = {
++"10 10 6 1",
++" 	c None",
++".	c #E0E0E0",
++"+	c #7D7D7D",
++"@	c #BDBDBD",
++"#	c #080808",
++"$	c #363636",
++".........+",
++".@##@@$#++",
++".#.+#+###+",
++".#+######+",
++".########+",
++"..######++",
++"..@####+++",
++".@@@#$++++",
++".@++#$++$$",
++"+++++++$$$"};
++
++static char *NEXT_XKBGROUP3_XPM[] = {
++"10 10 6 1",
++" 	c None",
++".	c #E0E0E0",
++"+	c #7D7D7D",
++"@	c #BDBDBD",
++"#	c #080808",
++"$	c #363636",
++".........+",
++"..@####.++",
++".@######.+",
++".#.+##.+#+",
++".#++##++#+",
++".########+",
++".##@##@##+",
++".+##@@##$+",
++".@+####$$$",
++"+++++++$$$"};
++
++static char *NEXT_XKBGROUP4_XPM[] = {
++"10 10 6 1",
++" 	c None",
++".	c #E0E0E0",
++"+	c #7D7D7D",
++"@	c #BDBDBD",
++"#	c #080808",
++"$	c #363636",
++".........+",
++"..@####.++",
++".@#@@@@#.+",
++".##$@@#$#+",
++".#$$@@$$#+",
++".#@@@@++#+",
++".#+#++#.#+",
++".+#+##$#$+",
++".@+####$$$",
++"+++++++$$$"};
+ 
+diff -Naur WindowMaker-0.92.0.old/src/framewin.c WindowMaker-0.92.0/src/framewin.c
+--- WindowMaker-0.92.0.old/src/framewin.c	2004-10-15 00:55:15.000000000 +0200
++++ WindowMaker-0.92.0/src/framewin.c	2005-07-19 12:17:34.000000000 +0200
+@@ -134,12 +134,15 @@
+     else
+         theight = 0;
+ 
+-    if (wPreferences.new_style) {
++    if (wPreferences.new_style == TS_NEW) {
+         bsize = theight;
+-    } else {
++    } else if (wPreferences.new_style == TS_OLD) {
+         bsize = theight - 7;
++    } else {
++        bsize = theight - 8;
+     }
+ 
++
+     if (fwin->titlebar) {
+         /* if we had a titlebar and is requesting for one,
+          * check if the size has changed and resize it */
+@@ -148,7 +151,7 @@
+ 
+             fwin->flags.need_texture_remake = 1;
+ 
+-            if (wPreferences.new_style) {
++            if (wPreferences.new_style == TS_NEW) {
+                 if (fwin->left_button) {
+                     wCoreConfigure(fwin->left_button, 0, 0, bsize, bsize);
+                 }
+@@ -190,7 +193,7 @@
+             /* we had a titlebar, but now we don't need it anymore */
+             for (i=0; i < (fwin->flags.single_texture ? 1 : 3); i++) {
+                 FREE_PIXMAP(fwin->title_back[i]);
+-                if (wPreferences.new_style) {
++                if (wPreferences.new_style == TS_NEW) {
+                     FREE_PIXMAP(fwin->lbutton_back[i]);
+                     FREE_PIXMAP(fwin->rbutton_back[i]);
+ #ifdef XKB_BUTTON_HINT
+@@ -228,7 +231,7 @@
+ 
+             if (flags & WFF_LEFT_BUTTON) {
+                 fwin->flags.left_button = 1;
+-                if (wPreferences.new_style) {
++                if (wPreferences.new_style == TS_NEW) {
+                     fwin->left_button = wCoreCreate(fwin->core, 0, 0,
+                                                     bsize, bsize);
+                     if (width < theight*4) {
+@@ -236,7 +239,7 @@
+                     } else {
+                         XMapRaised(dpy, fwin->left_button->window);
+                     }
+-                } else {
++                } else if (wPreferences.new_style == TS_OLD) {
+                     fwin->left_button =
+                         wCoreCreate(fwin->titlebar, 3, (theight-bsize)/2,
+                                     bsize, bsize);
+@@ -249,13 +252,26 @@
+                     } else {
+                         XMapRaised(dpy, fwin->left_button->window);
+                     }
++               } else {
++                    fwin->left_button = 
++                        wCoreCreate(fwin->titlebar, 3, (theight-bsize)/2,
++                                    bsize, bsize);
++
++                    XSetWindowBackground(dpy, fwin->left_button->window,
++                                         scr->widget_texture->dark.pixel);
++
++                    if (width < theight*3) {
++                        fwin->flags.lbutton_dont_fit = 1;
++                    } else {
++                        XMapRaised(dpy, fwin->left_button->window);
++                    }
+                 }
+             }
+ 
+ #ifdef XKB_BUTTON_HINT
+             if (flags & WFF_LANGUAGE_BUTTON) {
+                 fwin->flags.language_button = 1;
+-                if (wPreferences.new_style) {
++                if (wPreferences.new_style == TS_NEW) {
+                     fwin->language_button = wCoreCreate(fwin->core,
+                                                         bsize, 0, bsize, bsize);
+ 
+@@ -283,18 +299,25 @@
+ 
+             if (flags & WFF_RIGHT_BUTTON) {
+                 fwin->flags.right_button = 1;
+-                if (wPreferences.new_style) {
++                if (wPreferences.new_style == TS_NEW) {
+                     fwin->right_button =
+                         wCoreCreate(fwin->core, width-bsize+1, 0,
+                                     bsize, bsize);
+-                } else {
++                } else if (wPreferences.new_style == TS_OLD) {
+                     fwin->right_button =
+                         wCoreCreate(fwin->titlebar, width-bsize-3,
+                                     (theight-bsize)/2, bsize, bsize);
+                     XSetWindowBackground(dpy, fwin->right_button->window,
+                                          scr->widget_texture->normal.pixel);
++                } else {
++                    fwin->right_button =
++                        wCoreCreate(fwin->titlebar, width-bsize-3,
++                                    (theight-bsize)/2, bsize, bsize);
++                    XSetWindowBackground(dpy, fwin->right_button->window,
++                                         scr->widget_texture->dark.pixel);
+                 }
+ 
++
+                 if (width < theight*2) {
+                     fwin->flags.rbutton_dont_fit = 1;
+                 } else {
+@@ -302,7 +325,7 @@
+                 }
+             }
+ 
+-            if (wPreferences.new_style)
++            if (wPreferences.new_style == TS_NEW)
+                 updateTitlebar(fwin);
+ 
+             XMapRaised(dpy, fwin->titlebar->window);
+@@ -436,7 +459,7 @@
+ 
+     for (i=0; i < (fwin->flags.single_texture ? 1 : 3); i++) {
+         FREE_PIXMAP(fwin->title_back[i]);
+-        if (wPreferences.new_style) {
++        if (wPreferences.new_style == TS_NEW) {
+             FREE_PIXMAP(fwin->lbutton_back[i]);
+ #ifdef XKB_BUTTON_HINT
+             FREE_PIXMAP(fwin->languagebutton_back[i]);
+@@ -473,7 +496,7 @@
+     x = 0;
+     w = fwin->core->width + 1;
+ 
+-    if (wPreferences.new_style) {
++    if (wPreferences.new_style == TS_NEW) {
+         if (fwin->flags.hide_left_button || !fwin->left_button
+             || fwin->flags.lbutton_dont_fit) {
+             x = 0;
+@@ -522,14 +545,14 @@
+     }
+ #endif
+ 
+-    if (wPreferences.new_style) {
++    if (wPreferences.new_style == TS_NEW) {
+         if (!fwin->flags.hide_right_button && fwin->right_button
+             && !fwin->flags.rbutton_dont_fit) {
+             w -= fwin->right_button->width;
+         }
+     }
+ 
+-    if (wPreferences.new_style || fwin->titlebar->width!=w)
++    if (wPreferences.new_style == TS_NEW || fwin->titlebar->width!=w)
+         fwin->flags.need_texture_remake = 1;
+ 
+     wCoreConfigure(fwin->titlebar, x, 0, w, theight);
+@@ -557,7 +580,7 @@
+ #endif
+ 
+     if (fwin->titlebar) {
+-        if (wPreferences.new_style) {
++        if (wPreferences.new_style == TS_NEW) {
+             updateTitlebar(fwin);
+         } else {
+ #ifdef XKB_BUTTON_HINT
+@@ -606,7 +629,7 @@
+ 
+ 
+     if (fwin->titlebar) {
+-        if (wPreferences.new_style) {
++        if (wPreferences.new_style == TS_NEW) {
+             updateTitlebar(fwin);
+         } else {
+             XClearWindow(dpy, fwin->titlebar->window);
+@@ -648,7 +671,7 @@
+         return;
+     }
+ 
+-    if (wPreferences.new_style) {
++    if (wPreferences.new_style == TS_NEW) {
+         if (left) {
+             limg = RGetSubImage(img, 0, 0, bwidth, bheight);
+         } else
+@@ -791,7 +814,7 @@
+         if (fwin->title_texture[i]->any.type!=WTEX_SOLID) {
+             XSetWindowBackgroundPixmap(dpy, fwin->titlebar->window,
+                                        fwin->title_back[i]);
+-            if (wPreferences.new_style) {
++            if (wPreferences.new_style == TS_NEW) {
+                 if (fwin->left_button && fwin->lbutton_back[i])
+                     XSetWindowBackgroundPixmap(dpy, fwin->left_button->window,
+                                                fwin->lbutton_back[i]);
+@@ -810,7 +833,7 @@
+         } else {
+             pixel = fwin->title_texture[i]->solid.normal.pixel;
+             XSetWindowBackground(dpy, fwin->titlebar->window, pixel);
+-            if (wPreferences.new_style) {
++            if (wPreferences.new_style == TS_NEW) {
+                 if (fwin->left_button)
+                     XSetWindowBackground(dpy, fwin->left_button->window,
+                                          pixel);
+@@ -855,7 +878,7 @@
+ 
+     if (fwin->title_texture[state] && fwin->titlebar) {
+         FREE_PIXMAP(fwin->title_back[state]);
+-        if (wPreferences.new_style) {
++        if (wPreferences.new_style == TS_NEW) {
+             FREE_PIXMAP(fwin->lbutton_back[state]);
+             FREE_PIXMAP(fwin->rbutton_back[state]);
+ #ifdef XKB_BUTTON_HINT
+@@ -1023,7 +1046,7 @@
+         int allButtons = 1;
+ 
+ 
+-        if (!wPreferences.new_style) {
++        if (!wPreferences.new_style == TS_NEW) {
+             if (fwin->left_button && !fwin->flags.hide_left_button
+                 && !fwin->flags.lbutton_dont_fit)
+                 lofs += fwin->left_button->width + 3;
+@@ -1128,7 +1151,7 @@
+ reconfigure(WFrameWindow *fwin, int x, int y, int width, int height,
+             Bool dontMove)
+ {
+-    int k = (wPreferences.new_style ? 4 : 3);
++    int k = (wPreferences.new_style == TS_NEW ? 4 : 3);
+     int resizedHorizontally = 0;
+ 
+     if (dontMove)
+@@ -1203,7 +1226,7 @@
+             }
+         }
+ 
+-        if (wPreferences.new_style) {
++        if (wPreferences.new_style == TS_NEW) {
+             if (fwin->right_button)
+                 XMoveWindow(dpy, fwin->right_button->window,
+                             width - fwin->right_button->width + 1, 0);
+@@ -1318,7 +1341,7 @@
+         width = fwin->titlebar->width - 6 - 6;
+     }
+ 
+-    if (!wPreferences.new_style) {
++    if (!wPreferences.new_style == TS_NEW) {
+         if (fwin->left_button && !fwin->flags.hide_left_button
+             && !fwin->flags.lbutton_dont_fit)
+             width -= fwin->left_button->width + 3;
+@@ -1363,20 +1386,30 @@
+             }
+         }
+         XSetClipMask(dpy, copy_gc, None);
+-        XSetForeground(dpy, copy_gc, scr->white_pixel);
++        if (wPreferences.new_style == TS_NEXT) {
++            XSetForeground(dpy, copy_gc, scr->black_pixel);
++        } else {
++            XSetForeground(dpy, copy_gc, scr->white_pixel);
++        }
+         d=1;
+-        if (wPreferences.new_style) {
++        if (wPreferences.new_style == TS_NEW) {
+             XFillRectangle(dpy, button->window, copy_gc, 0, 0,
+                            button->width-1, button->height-1);
+             XSetForeground(dpy, copy_gc, scr->black_pixel);
+             XDrawRectangle(dpy, button->window, copy_gc, 0, 0,
+                            button->width-1, button->height-1);
+-        } else {
++        } else if (wPreferences.new_style == TS_OLD) {
+             XFillRectangle(dpy, button->window, copy_gc, 0, 0,
+                            button->width, button->height);
+             XSetForeground(dpy, copy_gc, scr->black_pixel);
+             XDrawRectangle(dpy, button->window, copy_gc, 0, 0,
+                            button->width, button->height);
++        } else {
++            XFillRectangle(dpy, button->window, copy_gc, 0, 0,
++                           button->width-3, button->height-3);
++            XSetForeground(dpy, copy_gc, scr->black_pixel);
++            XDrawRectangle(dpy, button->window, copy_gc, 0, 0,
++                           button->width-3, button->height-3);
+         }
+     } else {
+         XClearWindow(dpy, button->window);
+@@ -1389,7 +1422,7 @@
+         }
+         d=0;
+ 
+-        if (wPreferences.new_style) {
++        if (wPreferences.new_style == TS_NEW) {
+             if (texture->any.type==WTEX_SOLID || pushed) {
+                 wDrawBevel(button->window, button->width, button->height,
+                            (WTexSolid*)texture, WREL_RAISED);
+@@ -1406,7 +1439,7 @@
+         x = (button->width - width)/2 + d;
+         y = (button->height - image->height)/2 + d;
+         XSetClipOrigin(dpy, copy_gc, x-left, y);
+-        if (!wPreferences.new_style) {
++        if (!wPreferences.new_style == TS_NEW) {
+             XSetForeground(dpy, copy_gc, scr->black_pixel);
+             if (!pushed) {
+                 if (image->depth==1)
+@@ -1416,9 +1449,15 @@
+                     XCopyArea(dpy, image->image, button->window, copy_gc,
+                               left, 0, width, image->height, x, y);
+             } else {
+-                XSetForeground(dpy, copy_gc, scr->dark_pixel);
+-                XFillRectangle(dpy, button->window, copy_gc, 0, 0,
+-                               button->width, button->height);
++                if (wPreferences.new_style == TS_OLD) {
++                    XSetForeground(dpy, copy_gc, scr->dark_pixel);
++                    XFillRectangle(dpy, button->window, copy_gc, 0, 0,
++                                   button->width, button->height);
++                } else {
++                    XSetForeground(dpy, copy_gc, scr->black_pixel);
++                    XCopyArea(dpy, image->image, button->window, copy_gc,
++                                 left, 0, width, image->height, x, y);
++                }
+             }
+         } else {
+             if (pushed) {
+diff -Naur WindowMaker-0.92.0.old/src/menu.c WindowMaker-0.92.0/src/menu.c
+--- WindowMaker-0.92.0.old/src/menu.c	2005-03-05 00:36:47.000000000 +0100
++++ WindowMaker-0.92.0/src/menu.c	2005-07-19 12:17:34.000000000 +0200
+@@ -551,7 +551,7 @@
+         twidth = WMWidthOfString(scr->menu_title_font, menu->frame->title,
+                                  strlen(menu->frame->title));
+         theight = menu->frame->top_width;
+-        twidth += theight + (wPreferences.new_style ? 16 : 8);
++        twidth += theight + (wPreferences.new_style == TS_NEW ? 16 : 8);
+     } else {
+         twidth = 0;
+         theight = 0;
+diff -Naur WindowMaker-0.92.0.old/src/screen.c WindowMaker-0.92.0/src/screen.c
+--- WindowMaker-0.92.0.old/src/screen.c	2005-07-03 02:41:30.000000000 +0200
++++ WindowMaker-0.92.0/src/screen.c	2005-07-19 12:17:34.000000000 +0200
+@@ -162,41 +162,72 @@
+     WPixmap *pix;
+ 
+     /* create predefined pixmaps */
+-    pix = wPixmapCreateFromXPMData(scr, PRED_CLOSE_XPM);
++    if (wPreferences.new_style == TS_NEXT) {
++       pix = wPixmapCreateFromXPMData(scr, NEXT_CLOSE_XPM);
++    } else {
++       pix = wPixmapCreateFromXPMData(scr, PRED_CLOSE_XPM);
++    }
+     if (pix)
+         pix->shared = 1;
+     scr->b_pixmaps[WBUT_CLOSE] = pix;
+ 
+-    pix = wPixmapCreateFromXPMData(scr, PRED_BROKEN_CLOSE_XPM);
++    if (wPreferences.new_style == TS_NEXT) {
++        pix = wPixmapCreateFromXPMData(scr, NEXT_BROKEN_CLOSE_XPM);
++    } else {
++        pix = wPixmapCreateFromXPMData(scr, PRED_BROKEN_CLOSE_XPM);
++    }
+     if (pix)
+         pix->shared = 1;
+     scr->b_pixmaps[WBUT_BROKENCLOSE] = pix;
+ 
+-    pix = wPixmapCreateFromXPMData(scr, PRED_ICONIFY_XPM);
++    if (wPreferences.new_style == TS_NEXT) {
++        pix = wPixmapCreateFromXPMData(scr, NEXT_ICONIFY_XPM);
++    } else {
++        pix = wPixmapCreateFromXPMData(scr, PRED_ICONIFY_XPM);
++    }
+     if (pix)
+         pix->shared = 1;
+     scr->b_pixmaps[WBUT_ICONIFY] = pix;
+ #ifdef XKB_BUTTON_HINT
+-    pix = wPixmapCreateFromXPMData(scr, PRED_XKBGROUP1_XPM);
++    if (wPreferences.new_style == TS_NEXT) {
++        pix = wPixmapCreateFromXPMData(scr, NEXT_XKBGROUP1_XPM);
++    } else {
++        pix = wPixmapCreateFromXPMData(scr, PRED_XKBGROUP1_XPM);
++    }
+     if (pix)
+         pix->shared = 1;
+     scr->b_pixmaps[WBUT_XKBGROUP1] = pix;
+-    pix = wPixmapCreateFromXPMData(scr, PRED_XKBGROUP2_XPM);
++    if (wPreferences.new_style == TS_NEXT) {
++       pix = wPixmapCreateFromXPMData(scr, NEXT_XKBGROUP2_XPM);
++    } else {
++       pix = wPixmapCreateFromXPMData(scr, PRED_XKBGROUP2_XPM);
++    }
+     if (pix)
+         pix->shared = 1;
+     scr->b_pixmaps[WBUT_XKBGROUP2] = pix;
+-    pix = wPixmapCreateFromXPMData(scr, PRED_XKBGROUP3_XPM);
++    if (wPreferences.new_style == TS_NEXT) {
++       pix = wPixmapCreateFromXPMData(scr, NEXT_XKBGROUP3_XPM);
++    } else {
++       pix = wPixmapCreateFromXPMData(scr, PRED_XKBGROUP3_XPM);
++    }
+     if (pix)
+         pix->shared = 1;
+     scr->b_pixmaps[WBUT_XKBGROUP3] = pix;
+-    pix = wPixmapCreateFromXPMData(scr, PRED_XKBGROUP4_XPM);
++    if (wPreferences.new_style == TS_NEXT) {
++       pix = wPixmapCreateFromXPMData(scr, NEXT_XKBGROUP4_XPM);
++    } else {
++       pix = wPixmapCreateFromXPMData(scr, PRED_XKBGROUP4_XPM);
++    }
+     if (pix)
+         pix->shared = 1;
+     scr->b_pixmaps[WBUT_XKBGROUP4] = pix;
+ #endif
+ 
+-
+-    pix = wPixmapCreateFromXPMData(scr, PRED_KILL_XPM);
++    if (wPreferences.new_style == TS_NEXT) {
++       pix = wPixmapCreateFromXPMData(scr, NEXT_KILL_XPM);
++    } else {
++       pix = wPixmapCreateFromXPMData(scr, PRED_KILL_XPM);
++    }
+     if (pix)
+         pix->shared = 1;
+     scr->b_pixmaps[WBUT_KILL] = pix;
+diff -Naur WindowMaker-0.92.0.old/src/texture.c WindowMaker-0.92.0/src/texture.c
+--- WindowMaker-0.92.0.old/src/texture.c	2004-10-12 19:47:39.000000000 +0200
++++ WindowMaker-0.92.0/src/texture.c	2005-07-19 12:17:34.000000000 +0200
+@@ -707,20 +707,32 @@
+         segs[1].y1 = 1;
+         segs[1].x2 = width - 2;
+         segs[1].y2 = height - 2;
+-        XDrawSegments(dpy, d, dim, segs, 2);
++        if (wPreferences.new_style == TS_NEXT) {
++            XDrawSegments(dpy, d, dark, segs, 2);
++        } else {
++            XDrawSegments(dpy, d, dim, segs, 2);
++        }
+         segs[0].x1 = 0;
+         segs[0].x2 = width - 1;
+         segs[0].y2 = segs[0].y1 = height - 1;
+         segs[1].x1 = segs[1].x2 = width - 1;
+         segs[1].y1 = 0;
+         segs[1].y2 = height - 1;
+-        XDrawSegments(dpy, d, dark, segs, 2);
++        if (wPreferences.new_style == TS_NEXT) {
++            XDrawSegments(dpy, d, light, segs, 2);
++        } else {
++            XDrawSegments(dpy, d, dark, segs, 2);
++        }
+         segs[0].x1 = segs[0].y1 = segs[0].y2 = 0;
+         segs[0].x2 = width - 2;
+         segs[1].x1 = segs[1].y1 = 0;
+         segs[1].x2 = 0;
+         segs[1].y2 = height - 2;
+-        XDrawSegments(dpy, d, light, segs, 2);
++        if (wPreferences.new_style == TS_NEXT) {
++            XDrawSegments(dpy, d, dark, segs, 2);
++        } else {
++            XDrawSegments(dpy, d, light, segs, 2);
++        }
+         if (relief==WREL_ICON) {
+             segs[0].x1 = segs[0].y1 = segs[0].y2 = 1;
+             segs[0].x2 = width - 2;
+diff -Naur WindowMaker-0.92.0.old/src/WindowMaker.h WindowMaker-0.92.0/src/WindowMaker.h
+--- WindowMaker-0.92.0.old/src/WindowMaker.h	2004-10-25 03:48:39.000000000 +0200
++++ WindowMaker-0.92.0/src/WindowMaker.h	2005-07-19 12:17:34.000000000 +0200
+@@ -239,6 +239,10 @@
+ #define WD_BOTTOMLEFT	6
+ #define WD_BOTTOMRIGHT	7
+ 
++/* titlebar style */
++#define TS_NEW		0
++#define TS_OLD		1
++#define TS_NEXT		2
+ 
+ /* workspace border position */
+ #define	WB_NONE		0
+diff -Naur WindowMaker-0.92.0.old/WPrefs.app/Configurations.c WindowMaker-0.92.0/WPrefs.app/Configurations.c
+--- WindowMaker-0.92.0.old/WPrefs.app/Configurations.c	2004-10-23 05:03:35.000000000 +0200
++++ WindowMaker-0.92.0/WPrefs.app/Configurations.c	2005-07-19 12:17:34.000000000 +0200
+@@ -42,6 +42,7 @@
+     WMFrame *titlF;
+     WMButton *oldsB;
+     WMButton *newsB;
++    WMButton *nextB;
+ 
+     WMFrame *animF;
+     WMButton *animB;
+@@ -68,6 +69,7 @@
+ 
+ #define OLDS_IMAGE	"oldstyle"
+ #define NEWS_IMAGE	"newstyle"
++#define NEXT_IMAGE	"nextstyle"
+ 
+ #define ANIM_IMAGE	"animations"
+ #define SUPERF_IMAGE	"moreanim"
+@@ -86,14 +88,19 @@
+ static void
+ showData(_Panel *panel)
+ {
++    char *str;
++
+     WMPerformButtonClick(panel->icoB[GetSpeedForKey("IconSlideSpeed")]);
+ 
+     WMPerformButtonClick(panel->shaB[GetSpeedForKey("ShadeSpeed")]);
+ 
+-    if (GetBoolForKey("NewStyle")) {
+-        WMPerformButtonClick(panel->newsB);
++    str = GetStringForKey("Newstyle");
++    if (str && strcasecmp(str, "next") == 0) {
++       WMPerformButtonClick(panel->nextB);
++    } else if(str && strcasecmp(str, "old") == 0) {
++       WMPerformButtonClick(panel->oldsB);
+     } else {
+-        WMPerformButtonClick(panel->oldsB);
++       WMPerformButtonClick(panel->newsB);                     
+     }
+ 
+     WMSetButtonSelected(panel->animB, !GetBoolForKey("DisableAnimations"));
+@@ -325,21 +332,36 @@
+     }
+ 
+     panel->oldsB = WMCreateButton(panel->titlF, WBTOnOff);
+-    WMResizeWidget(panel->oldsB, 74, 40);
++    WMResizeWidget(panel->oldsB, 37, 40);
+     WMMoveWidget(panel->oldsB, 15, 60);
+     WMSetButtonImagePosition(panel->oldsB, WIPImageOnly);
+     path = LocateImage(OLDS_IMAGE);
+     if (path) {
+-        icon = WMCreatePixmapFromFile(scr, path);
+-        if (icon) {
+-            WMSetButtonImage(panel->oldsB, icon);
+-            WMReleasePixmap(icon);
+-        }
+-        wfree(path);
++       icon = WMCreatePixmapFromFile(scr, path);
++       if (icon) {
++          WMSetButtonImage(panel->oldsB, icon);
++           WMReleasePixmap(icon);
++       }
++    }
++               
++    panel->nextB = WMCreateButton(panel->titlF, WBTOnOff);
++    WMResizeWidget(panel->nextB, 37, 40);
++    WMMoveWidget(panel->nextB, 52, 60);
++    WMSetButtonImagePosition(panel->nextB, WIPImageOnly);
++    path = LocateImage(NEXT_IMAGE);
++    if (path) {
++       icon = WMCreatePixmapFromFile(scr, path);
++       if (icon) {
++           WMSetButtonImage(panel->nextB, icon);
++           WMReleasePixmap(icon);
++       }
++       wfree(path);
+     }
+ 
+     WMGroupButtons(panel->newsB, panel->oldsB);
+ 
++    WMGroupButtons(panel->newsB, panel->nextB);
++
+     WMMapSubwidgets(panel->titlF);
+ 
+     /**************** Features ******************/
+@@ -495,7 +517,13 @@
+     }
+     SetSpeedForKey(i, "ShadeSpeed");
+ 
+-    SetBoolForKey(WMGetButtonSelected(panel->newsB), "NewStyle");
++    if (WMGetButtonSelected(panel->newsB)) {
++       SetStringForKey("new", "NewStyle");
++    } else if (WMGetButtonSelected(panel->oldsB)) {
++       SetStringForKey("old", "NewStyle");                     
++    } else {
++       SetStringForKey("next", "NewStyle");                    
++    }
+ 
+     SetBoolForKey(!WMGetButtonSelected(panel->animB), "DisableAnimations");
+     SetBoolForKey(WMGetButtonSelected(panel->supB), "Superfluous");
+diff -Naur WindowMaker-0.92.0.old/WPrefs.app/tiff/Makefile.am WindowMaker-0.92.0/WPrefs.app/tiff/Makefile.am
+--- WindowMaker-0.92.0.old/WPrefs.app/tiff/Makefile.am	2004-11-06 20:41:39.000000000 +0100
++++ WindowMaker-0.92.0/WPrefs.app/tiff/Makefile.am	2005-07-19 12:17:34.000000000 +0200
+@@ -27,6 +27,7 @@
+ 	msty2.tiff \
+ 	msty3.tiff \
+ 	newstyle.tiff \
++	nextstyle.tiff \
+ 	nonopaque.tiff \
+ 	oldstyle.tiff \
+ 	opaque.tiff \
+diff -Naur WindowMaker-0.92.0.old/WPrefs.app/tiff/nextstyle.tiff WindowMaker-0.92.0/WPrefs.app/tiff/nextstyle.tiff
+--- WindowMaker-0.92.0.old/WPrefs.app/tiff/nextstyle.tiff	1970-01-01 01:00:00.000000000 +0100
++++ WindowMaker-0.92.0/WPrefs.app/tiff/nextstyle.tiff	2005-07-19 12:17:34.000000000 +0200
+@@ -0,0 +1 @@
++II* X  ttttttttttttttttttttttttttttttttttttttttttttttttttttttuuuuuuuuuuuuuuuuuuuuuttttttttttttttttttttttttttttttttt   """"""""""""""""""""""""""""""""""""""""""""""""""""""&&&&&&&&&&&&&&&&&&&&&(((&&&(((&&&&&&&&&&&&&&&&&&&&&&&&   """"""""""""""""""""""""""""""""""""""""""""""""""""""&&&&&&&&&&&&&&&&&&&&&&&&((((((((((((((((((((((((((((((   """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""((((((   """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""((((((""""""""""""""""""""""""""""""""""""""""""""""""""""""&&&"""                                       (((((((((""""""""""""""""""""""""""""""""""""""""""""""""""""""&&&"""    ·               ЎЎЎЎЎЄЎююю┤╢┤      (((((((((""""""""""""""""""""""""""""""""""""""""""""""""""""""&&&"""      ЛНФ▐цц · ЎЎЎццю═╥═дбд141ФСЛ      (((((((((""""""""""""""""""""""""""""""""""""""""""""""""""""""&&&"""      юЎЎ)()┼╩═ЎЄЎцццдемA@9ФНЛЛНЛ      (((((((((""""""""""""""""""""""""""""""""""""""""""""""""""""""&&&"""         ┼╩═),)╒╓╒┤║┤10)▐┌▐дедЛЙЛ      (((((((((""""""""""""""""""""""""""""""""""""""""""""""""""""""&&&"""      Ў· Ў  ▐▐▐)()цъц┼╞┼ФСЛЛЙГ      (((((((((""""""""""""""""""""""""""""""""""""""""""""""""""""""&&&"""   Ў· юЄЎююЎ╒╓╒ ┼╞┼дедГБГГЙГ      (((((((((""""""""""""""""""""""""""""""""""""""""""""""""""""""&&&"""   ЎЎЎ▐▐▐ФХФ $ ═╬═╜║╜  smsjusГБ{      (((((((((""""""""""""""""""""""""""""""""""""""""""""""""""""""&&&"""   ЎЄЎ┤▓┤ ()┼┬┼▐▐▐▐┌▐дед ZUR{u{      (((((((((""""""""""""""""""""""""""""""""""""""""""""""""""""""&&&"""   ююю9<A═╥╒╒╥╒ЬбдФХФ╜║┤ЛЕГjmj      (((((((((""""""""""""""""""""""""""""""""""""""""""""""""""""""&&&"""   ┤╢┤ФЩФдкмФЩЬФХЛФЙЛЛЙГГБЛsujГ}Г      (((((((((""""""""""""""""""""""""""""""""""""""""""""""""""""""&&&"""                                       (((((((((""""""""""""""""""""""""""""""""""""""""""""""""""""""&&&"""                                       (((((((((""""""""""""""""""""""""""""""""""""""""""""""""""""""&&&&&&&&&&&&&&&&&&&&&&&&&&&(((((((((((((((((((((((((((""""""""""""""""""""""""""""""""""""""""""""""""""""""&&&&&&&&&&&&&&&&&&&&&(((&&&(((((((((((((((((((((((((((                                                                                                               лллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллл   лллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллл   лллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллл   лллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллл   SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS   лллллл                                                                                                   ллл   лллллл                                                                                                   ллл   лллллл                                                                                                   ллл   лллллл                                                                                                   ллл   лллллл                                                                                                   ллл   лллллл                                                                                                   ллл   лллллл     ■              %       !       *                 N   0      ~                           @       O      Ф      Ь         (              /exports/home/wettoad/Coding/WM-0.80.0-patched/WPrefs.app/tiff/nextstyle.tiff Created with The GIMP    H      H   
+\ No newline at end of file
+diff -Naur WindowMaker-0.92.0.old/WPrefs.app/tiff/oldstyle.tiff WindowMaker-0.92.0/WPrefs.app/tiff/oldstyle.tiff
+--- WindowMaker-0.92.0.old/WPrefs.app/tiff/oldstyle.tiff	1999-05-01 19:44:44.000000000 +0200
++++ WindowMaker-0.92.0/WPrefs.app/tiff/oldstyle.tiff	2005-07-19 12:17:34.000000000 +0200
+@@ -1,5 +1 @@
+-II* .  ╕ЄИKР└AГ&D╕╨сCE
+-!j$о1№╟р+fь╕qт╟П9bТфдЄП(mЪtiе╧Ф1s╢м92ф╩Т;{▐ЬЩРЄ_YС┬EЛ+YE╣R■╦биPжD╡╥╒+дР/O╜║
+-4╠▀д~╓к5ZVйY╢|еКэ:Vn▀еSЗ╩╡7k┌лoг■y[┤n5и}█╬▌║О▌}l╧╜'Ўы3бoI 3f╬Ъ=gю╝∙╞ОЄbщфISWNY]░Ё,е№oP║iуцн[╢я┌╢gч^ Ф.ъ╢─ЄулVм╔6}цЎЮ)я╕╝{▀╡Зzn┐xx╠╤зO>Шtv╞эЫйя\╜▓ё╬ЕC╧/-n ╤╖З?Юм;╖ ▌K№їBпЇ╔Hх}ї╙уа=Є╘╫¤╪б▌p╔k▌56Hз┬	&(НВ=P■їЇ>4√╜v╟ч ,є=▄ш┬│V1ыгИ8R #w=JЗвV9ьИAs┐=Л╒ЦP▄I"А╕╝Н'Ё°в?ешГК0╢8В5Т4т╠_RL%гЭN-ёА╥К(Д,╔<╜0уO(хLb2█∙tK3╖Т═▐тs╬)у╔+╧м
+-╦:?G2╠е╕`M2фТ]*й╘R╥*н╠ф╥П╞▒ВК╧┘аК╡йT▒x├м"ГЄм╢`+3╕&├о*∙*╦у░║ыкзn└ъmа■i╕▒·Ъhи╔FЫn╝└[р┐└[j▒хV[i╜н╓┌i│▌6,▒╠¤О;▓р╬╙V'Ўодю║╦ю╗ы▒█Ю╗щ╡З^zянз╛·ш╗╧■╗гz ■вzРБ|░!Зb╕бЗjдaGuфG}┤1╟c╝▒╓s▄	&k▓Й'╩IзШvкщЫh·ЩзЩeъ┘gШc╢9зШi╓∙чZ`Ю╣Yh╤╔"+╗ЇеЧZ╢мх╦XaЩХЦ[q╡ХWO╦м1√[╖▀ї√┘pА6▐h╜═6rэї┤p╗эw╪qзЭw┘i+3╫Сz╫╜ў┘w┐¤ўxы╤╢=р░├П8`w3ЎTч╚уO8╤ВгЧ╪ыд╙╧8ЄФc∙      &       !       ш                
+-           Ё      ■                           5       &         R               oldstyle.tiff created with The GIMP 
+\ No newline at end of file
++II* X  ttttttttttttttttttttttttttttttttttttttttttttttttttttttuuuuuuuuuuuuuuuuuuuuuttttttttttttttttttttttttttttttttt   """"""""""""""""""""""""""""""""""""""""""""""""""""""&&&&&&&&&&&&&&&&&&&&&(((&&&(((&&&&&&&&&&&&&&&&&&&&&&&&   """"""""""""""""""""""""""""""""""""""""""""""""""""""&&&&&&&&&&&&&&&&&&&&&&&&((((((((((((((((((((((((((((((   """"""""""""""""""""""""""""""""""""""""""""""""""""""&&&&&&&&&&&&&&&&&&&&&(((&&&(((((((((((((((((((((((((((   """"""""""""""""""""""""""""""""""""""""""""""""""""""&&&                                          (((((((((""""""""""""""""""""""""""""""""""""""""""""""""""""""&&&   ееееееееееееееееееееееееееееееееееееSSS(((((((((""""""""""""""""""""""""""""""""""""""""""""""""""""""&&&   еее   SSSееееееееееееееееееSSS   еееSSS(((((((((""""""""""""""""""""""""""""""""""""""""""""""""""""""&&&   еееSSS   SSSееееееееееееSSS   SSSеееSSS(((((((((""""""""""""""""""""""""""""""""""""""""""""""""""""""&&&   ееееееSSS   SSSееееееSSS   SSSееееееSSS(((((((((""""""""""""""""""""""""""""""""""""""""""""""""""""""&&&   еееееееееSSS   SSSSSS   SSSеееееееееSSS(((((((((""""""""""""""""""""""""""""""""""""""""""""""""""""""&&&   ееееееееееееSSS      SSSееееееееееееSSS(((((((((""""""""""""""""""""""""""""""""""""""""""""""""""""""&&&   ееееееееееееSSS      SSSееееееееееееSSS(((((((((""""""""""""""""""""""""""""""""""""""""""""""""""""""&&&   еееееееееSSS   SSSSSS   SSSеееееееееSSS(((((((((""""""""""""""""""""""""""""""""""""""""""""""""""""""&&&   ееееееSSS   SSSееееееSSS   SSSееееееSSS(((((((((""""""""""""""""""""""""""""""""""""""""""""""""""""""&&&   еееSSS   SSSееееееееееееSSS   SSSеееSSS(((((((((""""""""""""""""""""""""""""""""""""""""""""""""""""""&&&   еее   SSSееееееееееееееееееSSS   еееSSS(((((((((""""""""""""""""""""""""""""""""""""""""""""""""""""""&&&   ееееееееееееееееееееееееееееееееееееSSS(((((((((""""""""""""""""""""""""""""""""""""""""""""""""""""""&&&   SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS(((((((((""""""""""""""""""""""""""""""""""""""""""""""""""""""&&&&&&&&&&&&&&&&&&&&&&&&&&&(((((((((((((((((((((((((((""""""""""""""""""""""""""""""""""""""""""""""""""""""&&&&&&&&&&&&&&&&&&&&&(((&&&(((((((((((((((((((((((((((                                                                                                               лллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллл   лллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллл   лллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллл   лллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллл   SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS   лллллл                                                                                                   ллл   лллллл                                                                                                   ллл   лллллл                                                                                                   ллл   лллллл                                                                                                   ллл   лллллл                                                                                                   ллл   лллллл                                                                                                   ллл   лллллл     ■              %       !       *                 M   0      ~                           @       O      Ф      Ь         (              /exports/home/wettoad/Coding/WM-0.80.0-patched/WPrefs.app/tiff/oldstyle.tiff  Created with The GIMP    H      H   
+\ No newline at end of file
+diff -Naur WindowMaker-0.92.0.old/WPrefs.app/xpm/Makefile.am WindowMaker-0.92.0/WPrefs.app/xpm/Makefile.am
+--- WindowMaker-0.92.0.old/WPrefs.app/xpm/Makefile.am	2004-11-06 20:41:40.000000000 +0100
++++ WindowMaker-0.92.0/WPrefs.app/xpm/Makefile.am	2005-07-19 12:17:34.000000000 +0200
+@@ -28,6 +28,7 @@
+ 	msty2.xpm \
+ 	msty3.xpm \
+ 	newstyle.xpm \
++	nextstyle.xpm \
+ 	nonopaque.xpm \
+ 	oldstyle.xpm \
+ 	opaque.xpm \
+diff -Naur WindowMaker-0.92.0.old/WPrefs.app/xpm/nextstyle.xpm WindowMaker-0.92.0/WPrefs.app/xpm/nextstyle.xpm
+--- WindowMaker-0.92.0.old/WPrefs.app/xpm/nextstyle.xpm	1970-01-01 01:00:00.000000000 +0100
++++ WindowMaker-0.92.0/WPrefs.app/xpm/nextstyle.xpm	2005-07-19 12:17:34.000000000 +0200
+@@ -0,0 +1,120 @@
++/* XPM */
++static char * nextstyle_xpm[] = {
++"37 33 84 1",
++" 	c None",
++".	c #747474",
++"+	c #757575",
++"@	c #000000",
++"#	c #222222",
++"$	c #262626",
++"%	c #282828",
++"&	c #080808",
++"*	c #FFFFFF",
++"=	c #FFFAFF",
++"-	c #FFFFF6",
++";	c #F6F6F6",
++">	c #F6F2F6",
++",	c #EEEEEE",
++"'	c #B4B6B4",
++")	c #8B8D94",
++"!	c #DEE6E6",
++"~	c #E6E6EE",
++"{	c #CDD2CD",
++"]	c #A4A1A4",
++"^	c #313431",
++"/	c #94918B",
++"(	c #EEF6F6",
++"_	c #292829",
++":	c #C5CACD",
++"<	c #E6E6E6",
++"[	c #A4A5AC",
++"}	c #414039",
++"|	c #948D8B",
++"1	c #8B8D8B",
++"2	c #292C29",
++"3	c #D5D6D5",
++"4	c #B4BAB4",
++"5	c #313029",
++"6	c #DEDADE",
++"7	c #A4A5A4",
++"8	c #8B898B",
++"9	c #F6FAFF",
++"0	c #F6FFFF",
++"a	c #DEDEDE",
++"b	c #181818",
++"c	c #E6EAE6",
++"d	c #C5C6C5",
++"e	c #8B8983",
++"f	c #EEF2F6",
++"g	c #EEEEF6",
++"h	c #101010",
++"i	c #201818",
++"j	c #838183",
++"k	c #838983",
++"l	c #949594",
++"m	c #202420",
++"n	c #CDCECD",
++"o	c #BDBABD",
++"p	c #202018",
++"q	c #736D73",
++"r	c #6A7573",
++"s	c #83817B",
++"t	c #B4B2B4",
++"u	c #202829",
++"v	c #C5C2C5",
++"w	c #201C18",
++"x	c #5A5552",
++"y	c #7B757B",
++"z	c #393C41",
++"A	c #CDD2D5",
++"B	c #D5D2D5",
++"C	c #9CA1A4",
++"D	c #BDBAB4",
++"E	c #8B8583",
++"F	c #6A6D6A",
++"G	c #949994",
++"H	c #A4AAAC",
++"I	c #94999C",
++"J	c #94958B",
++"K	c #94898B",
++"L	c #83818B",
++"M	c #73756A",
++"N	c #837D83",
++"O	c #060606",
++"P	c #070707",
++"Q	c #030303",
++"R	c #ABABAB",
++"S	c #535353",
++"..................+++++++...........@",
++"##################$$$$$$$%$%$$$$$$$$@",
++"##################$$$$$$$$%%%%%%%%%%@",
++"###################################%@",
++"###################################%&",
++"####################@@@@@@@@@@@@*%%%&",
++"####################@=****-;>,'@*%%%&",
++"####################@*)!=;~{]^/@*%%%&",
++"####################@*(_:><[}|1@*%%%&",
++"####################@**:2345678@*%%%&",
++"####################@*90ab_cd/e@*%%%&",
++"####################@9fg3hid7jk@*%%%&",
++"####################@;almnopqrs@*%%%&",
++"####################@>tuva67wxy@*%%%&",
++"####################@,zABClDEbF@*%%%&",
++"####################@'GHIJKeLMN@*%%%&",
++"####################@@@@@@@@@@@@*%%%&",
++"####################*************%%%&",
++"##################$$$$$$$$$%%%%%%%%%&",
++"##################$$$$$$$%$%%%%%%%%%&",
++"OOOOOOOOOOOOOOOOOOPPPPPPPPPPPPP&&&&&Q",
++"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
++"RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR@",
++"RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR@",
++"RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR@",
++"RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR@",
++"SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS*RR@",
++"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@R*RR@",
++"********************************R*RR@",
++"********************************R*RR@",
++"********************************R*RR@",
++"********************************R*RR@",
++"********************************R*RR@"};
+diff -Naur WindowMaker-0.92.0.old/WPrefs.app/xpm/oldstyle.xpm WindowMaker-0.92.0/WPrefs.app/xpm/oldstyle.xpm
+--- WindowMaker-0.92.0.old/WPrefs.app/xpm/oldstyle.xpm	1999-05-01 19:44:44.000000000 +0200
++++ WindowMaker-0.92.0/WPrefs.app/xpm/oldstyle.xpm	2005-07-19 12:17:34.000000000 +0200
+@@ -1,45 +1,51 @@
+ /* XPM */
+-static char * image_name[] = {
+-"38 33 9 1",
+-" 	c #739C739C739C",
+-".	c #000000000000",
+-"X	c #210821082108",
+-"o	c #294A294A294A",
+-"O	c #FFFFFFFFFFFF",
+-"+	c #084208420842",
+-"@	c #A528A528A528",
+-"#	c #529452945294",
+-"$	c #AD6AAD6AAD6A",
+-"                                     .",
+-"XXXXXXXXXXXXXXXXXXXoooooooooooooooooo.",
+-"XXXXXXXXXXXXXXXXXXXoooooooooooooooooo.",
+-"XXXXXXXXXXXXXXXXXXXoooooooooooooooooo.",
+-"XXXXXXXXXXXXXXXXXXXoOOOOOOOOOOOOOOooo+",
+-"XXXXXXXXXXXXXXXXXXXoO@@@@@@@@@@@@#ooo+",
+-"XXXXXXXXXXXXXXXXXXXoO@.#@@@@@@#.@#ooo+",
+-"XXXXXXXXXXXXXXXXXXXoO@#.#@@@@#.#@#ooo+",
+-"XXXXXXXXXXXXXXXXXXXoO@@#.#@@#.#@@#ooo+",
+-"XXXXXXXXXXXXXXXXXXXoO@@@#.##.#@@@#ooo+",
+-"XXXXXXXXXXXXXXXXXXXoO@@@@#..#@@@@#ooo+",
+-"XXXXXXXXXXXXXXXXXXXoO@@@@#..#@@@@#ooo+",
+-"XXXXXXXXXXXXXXXXXXXoO@@@#.##.#@@@#ooo+",
+-"XXXXXXXXXXXXXXXXXXXoO@@#.#@@#.#@@#ooo+",
+-"XXXXXXXXXXXXXXXXXXXoO@#.#@@@@#.#@#ooo+",
+-"XXXXXXXXXXXXXXXXXXXoO@.#@@@@@@#.@#ooo+",
+-"XXXXXXXXXXXXXXXXXXXoO@@@@@@@@@@@@#ooo+",
+-"XXXXXXXXXXXXXXXXXXXoO#############ooo+",
+-"XXXXXXXXXXXXXXXXXXXoooooooooooooooooo+",
+-"XXXXXXXXXXXXXXXXXXXoooooooooooooooooo+",
+-"+++++++++++++++++++++++++++++++++++++.",
+-"......................................",
+-"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$.",
+-"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$.",
+-"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$.",
+-"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$.",
+-"##################################O$$.",
+-".................................$O$$.",
+-"OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO$O$$.",
+-"OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO$O$$.",
+-"OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO$O$$.",
+-"OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO$O$$.",
+-"OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO$O$$."};
++static char * oldstyle_xpm[] = {
++"37 33 15 1",
++" 	c None",
++".	c #747474",
++"+	c #757575",
++"@	c #000000",
++"#	c #222222",
++"$	c #262626",
++"%	c #282828",
++"&	c #FFFFFF",
++"*	c #080808",
++"=	c #A5A5A5",
++"-	c #535353",
++";	c #060606",
++">	c #070707",
++",	c #030303",
++"'	c #ABABAB",
++"..................+++++++...........@",
++"##################$$$$$$$%$%$$$$$$$$@",
++"##################$$$$$$$$%%%%%%%%%%@",
++"##################$$$$$$$%$%%%%%%%%%@",
++"##################$&&&&&&&&&&&&&&%%%*",
++"##################$&============-%%%*",
++"##################$&=@-======-@=-%%%*",
++"##################$&=-@-====-@-=-%%%*",
++"##################$&==-@-==-@-==-%%%*",
++"##################$&===-@--@-===-%%%*",
++"##################$&====-@@-====-%%%*",
++"##################$&====-@@-====-%%%*",
++"##################$&===-@--@-===-%%%*",
++"##################$&==-@-==-@-==-%%%*",
++"##################$&=-@-====-@-=-%%%*",
++"##################$&=@-======-@=-%%%*",
++"##################$&============-%%%*",
++"##################$&-------------%%%*",
++"##################$$$$$$$$$%%%%%%%%%*",
++"##################$$$$$$$%$%%%%%%%%%*",
++";;;;;;;;;;;;;;;;;;>>>>>>>>>>>>>*****,",
++"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
++"''''''''''''''''''''''''''''''''''''@",
++"''''''''''''''''''''''''''''''''''''@",
++"''''''''''''''''''''''''''''''''''''@",
++"''''''''''''''''''''''''''''''''''''@",
++"---------------------------------&''@",
++"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'&''@",
++"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&'&''@",
++"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&'&''@",
++"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&'&''@",
++"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&'&''@",
++"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&'&''@"};

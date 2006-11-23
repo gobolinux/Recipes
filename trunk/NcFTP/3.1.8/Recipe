@@ -1,0 +1,13 @@
+# Recipe for version 3.1.8 by Andre Detsch, on Thu Aug 26 12:24:23 BRT 2004
+# by Andre Detsch
+# 2004.01.28 02:44
+
+url='ftp://ftp.ncftp.com/ncftp/ncftp-3.1.8-src.tar.bz2'
+dir='ncftp-3.1.8'
+compile_version=1.7.1
+recipe_type=configure
+
+pre_build() {
+   GrepReplace "mandir=/usr/local/share/man" "mandir=$target/man" Makefile
+}
+

@@ -1,0 +1,25 @@
+# Recipe (MakeRecipe) for GKrellM-Skins by Volker Wieban <buckoven@gobolinux.de>, on Sat Sep 4 17:04:28 BRT 2004
+# Recipe for version 20040904 by Volker Wieban <buckoven@gobolinux.de>, on Sat Sep 4 17:04:28 BRT 2004
+compile_version=1.7.1
+url="http://muhri.net/gkrellm/GKrellM-Skins.tar.gz"
+file_size=3553450
+file_md5=17c88c10cc320db2036720c90887690a
+dir='GKrellM-skins'
+recipe_type=manifest
+
+pre_link() {
+	mkdir -p $target/themes
+
+	for FILE in *.tar.gz; do
+                tar --directory=$target/themes -xzf $FILE
+	done
+
+	chown -Rf 0:0 $target/themes
+	chmod -R 755 $target/themes
+}
+
+post_install() {
+	for USERDIR in $goboUsers/*; do
+		[ -d $USERDIR/.gkrellm2/themes ] && ln --target-directory=$USERDIR/.gkrellm2/themes -s $target/themes/*
+	done
+}

@@ -1,0 +1,11 @@
+--- wvstreams-4.2.2/include/wvhttppool-old.h	2006-07-29 13:58:49.000000000 -0300
++++ wvstreams-4.2.2/include/wvhttppool.h	2006-07-29 13:34:52.000000000 -0300
+@@ -57,7 +57,7 @@
+     WvString linkname;
+     WvUrl url;
+ 
+-    WvUrlLink::WvUrlLink(WvStringParm _linkname, WvStringParm _url)
++    WvUrlLink(WvStringParm _linkname, WvStringParm _url)
+ 	: linkname(_linkname), url(_url)
+     {}
+ };

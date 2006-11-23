@@ -1,0 +1,8 @@
+# Recipe for version 1.4.0 by Andre Detsch, on Tue Jun 21 20:18:53 BRT 2005
+# Recipe (MakeRecipe) for Koffice by roko, <ro.ko@mcnon.com>, on Fri Nov 19 22:44:40 BRST 2004
+compile_version=1.7.1
+url="ftp://ftp.kde.org/pub/kde/stable/koffice-1.4/src/koffice-1.4.0.tar.bz2"
+recipe_type=configure
+configure_options=(
+#--without-wv2
+)

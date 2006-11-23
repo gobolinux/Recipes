@@ -1,0 +1,27 @@
+# by Carlo Calica and Jason Stubbs
+
+url=$httpSourceforge/pcmcia-cs/pcmcia-cs-3.2.7.tar.gz
+compile_version=1.7.1
+recipe_type=configure
+configure=Configure
+modify_configure=no
+build_target="all"
+configure_options=(
+   "-n"
+   "--target=$target"
+   "--kernel=/Depot/Sources/Linux/linux-2.4.26"
+   "--moddir=$goboModules/`uname -r`/build"
+   "--notrust"
+   "--cardbus"
+   "--apm"
+   "--nox11"
+)
+post_install()
+{
+	mv $target/usr/bin $target/bin
+	mv $target/usr/sbin $target/bin
+	mv $target/usr/man $target/man
+	mv $target/usr/X11R6/bin/* $target/bin
+	mv $target/etc $target/../Settings
+	mv $target/var $target/../Variable
+}

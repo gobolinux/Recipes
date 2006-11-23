@@ -1,0 +1,17 @@
+#!/bin/sh
+
+function call_pinfo() {
+   pinfo "$@" 2> /dev/null 
+}
+
+case "$1" in
+   "--INFO")
+      /bin/info "$@" ;;
+   "--PINFO")
+      callPinfo "$@" ;;
+   *)
+      if [ "$TERM" = "xterm" ]
+      then TERM=color_xterm call_pinfo "$@" 
+      else call_pinfo "$@"
+      fi
+esac # esac is ridiculous.

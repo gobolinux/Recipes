@@ -1,0 +1,9 @@
+# Recipe for version 6.1 by Andre Detsch <detsch@gobolinux.org>, on Sat Jul 1 22:01:56 BRT 2006
+# Recipe (MakeRecipe) for DVD+RW-Tools by Michael Farrell <michael@xinomorph.org>, on Sun Oct 31 13:52:23 CST 2004
+compile_version=1.7.1
+url="http://fy.chalmers.se/~appro/linux/DVD+RW/tools/dvd+rw-tools-6.1.tar.gz"
+recipe_type=makefile
+makefile='Makefile'
+sandbox_options=(
+    "--no-sandbox"
+)

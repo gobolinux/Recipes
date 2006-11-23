@@ -1,0 +1,11 @@
+--- linux-2.6.13.4/gobolinux/fs/ioctl.c.orig	2005-10-25 19:31:21.000000000 -0200
++++ linux-2.6.13.4/gobolinux/fs/ioctl.c	2005-10-25 23:53:20.000000000 -0200
+@@ -48,7 +48,7 @@ gobolinux_fs_ioctl (struct inode *inode,
+ 	}
+ 
+ 	/* We only support symbolic links and directories */
+-	if (hide->inode && (!S_ISLNK(inode->i_mode) || !S_ISDIR(inode->i_mode))) {
++	if (hide->inode && !S_ISREG(inode->i_mode) && !S_ISDIR(inode->i_mode)) {
+ 		error = -EINVAL;
+ 		goto out;
+ 	}

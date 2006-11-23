@@ -1,0 +1,38 @@
+diff -Naur kde-i18n-pt_BR-3.4.92/docs/common/Makefile.in kde-i18n-pt_BR-3.4.92-patched/docs/common/Makefile.in
+--- kde-i18n-pt_BR-3.4.92/docs/common/Makefile.in	2004-08-13 19:46:53.000000000 -0300
++++ kde-i18n-pt_BR-3.4.92-patched/docs/common/Makefile.in	2004-09-19 23:46:12.000000000 -0300
+@@ -497,20 +497,20 @@
+ #>+ 23
+ install-nls:
+ 	$(mkinstalldirs) $(DESTDIR)$(kde_htmldir)/$(KDE_LANG)/common
+-	@for base in fdl-translated.html gpl-translated.html kde-localised.css lgpl-translated.html logotp3.png ; do \
+-	  echo $(INSTALL_DATA) $$base $(DESTDIR)$(kde_htmldir)/$(KDE_LANG)/common/$$base ;\
+-	  $(INSTALL_DATA) $(srcdir)/$$base $(DESTDIR)$(kde_htmldir)/$(KDE_LANG)/common/$$base ;\
+-	done
+-	@echo "merging common and language specific dir" ;\
+-	if test ! -f $(kde_htmldir)/en/common/kde-common.css; then echo 'no english docs found in $(kde_htmldir)/en/common/'; exit 1; fi 
+-	@com_files=`cd $(kde_htmldir)/en/common && echo *` ;\
+-	cd $(DESTDIR)$(kde_htmldir)/$(KDE_LANG)/common ;\
+-	if test -n "$$com_files"; then for p in $$com_files ; do \
+-	  case " fdl-translated.html gpl-translated.html kde-localised.css lgpl-translated.html logotp3.png  " in \
+-	    *" $$p "*) ;; \
+-	    *) test ! -f $$p && echo $(LN_S) ../../en/common/$$p $(DESTDIR)$(kde_htmldir)/$(KDE_LANG)/common/$$p && $(LN_S) ../../en/common/$$p $$p ;; \
+-	  esac ; \
+-	done ; fi ; true
++#	@for base in fdl-translated.html gpl-translated.html kde-localised.css lgpl-translated.html logotp3.png ; do \
++#	  echo $(INSTALL_DATA) $$base $(DESTDIR)$(kde_htmldir)/$(KDE_LANG)/common/$$base ;\
++#	  $(INSTALL_DATA) $(srcdir)/$$base $(DESTDIR)$(kde_htmldir)/$(KDE_LANG)/common/$$base ;\
++#	done
++#	@echo "merging common and language specific dir" ;\
++#	if test ! -f $(kde_htmldir)/en/common/kde-common.css; then echo 'no english docs found in $(kde_htmldir)/en/common/'; exit 1; fi 
++#	@com_files=`cd $(kde_htmldir)/en/common && echo *` ;\
++#	cd $(DESTDIR)$(kde_htmldir)/$(KDE_LANG)/common ;\
++#	if test -n "$$com_files"; then for p in $$com_files ; do \
++#	  case " fdl-translated.html gpl-translated.html kde-localised.css lgpl-translated.html logotp3.png  " in \
++#	    *" $$p "*) ;; \
++#	    *) test ! -f $$p && echo $(LN_S) ../../en/common/$$p $(DESTDIR)$(kde_htmldir)/$(KDE_LANG)/common/$$p && $(LN_S) ../../en/common/$$p $$p ;; \
++#	  esac ; \
++#	done ; fi ; true
+ 
+ uninstall-nls:
+ 	for base in fdl-translated.html gpl-translated.html kde-localised.css lgpl-translated.html logotp3.png ; do \

@@ -1,0 +1,8 @@
+# Recipe for version 8.4.12 by Jonas Karlsson <jonka750@student.liu.se>, on Wed Mar 8 09:36:39 CET 2006
+compile_version=1.7.1
+url="$httpSourceforge/tcl/tcl8.4.12-src.tar.gz"
+dir='tcl8.4.12/unix'
+recipe_type=configure
+pre_link(){
+    ln -s ${target}/bin/tclsh8.4 ${target}/bin/tclsh
+}

@@ -1,0 +1,14 @@
+url=http://distro.ibiblio.org/pub/linux/distributions/sorcerer/sources/groff/1.19/groff-1.19.tar.bz2
+compile_version=1.7.1
+recipe_type=configure
+pre_build() {
+   export PAGE=A4
+}
+post_install() {
+   cd $target/bin
+   ln -s soelim zsoelim
+   ln -s eqn geqn
+   ln -s tbl gtbl
+   cd $goboExecutables
+   ln -s $target/bin/* .
+}

@@ -1,0 +1,19 @@
+# Recipe (MakeRecipe) for VLC by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sat Nov 26 10:25:00 BRST 2005
+# Recipe for version 0.8.2 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sat Nov 26 10:25:00 BRST 2005
+compile_version=1.7.1
+url="http://downloads.videolan.org/pub/videolan/vlc/0.8.2/vlc-0.8.2.tar.gz"
+file_size=8741593
+file_md5=0e56141a54055686c28e3de4dbed5990
+recipe_type=configure
+
+configure_options=(
+    --enable-dfb
+    --enable-dvbpsi
+    --disable-wxwindows
+    --disable-skins2
+#   --disable-ffmpeg
+)
+
+pre_build() {
+    [ ! -f .bootstrapped ] && echo "Running bootstrap..." && ./bootstrap
+}

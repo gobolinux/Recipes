@@ -1,0 +1,10 @@
+--- libtheora-1.0alpha2/examples/Makefile.in.org	2004-02-11 02:24:16.000000000 -0600
++++ libtheora-1.0alpha2/examples/Makefile.in	2004-02-11 02:24:54.000000000 -0600
+@@ -92,7 +92,6 @@
+ 
+ noinst_PROGRAMS = encoder_example dump_video $(player_example)
+ 
+-LDFLAGS = -all-static 
+ LDADD = ../lib/libtheora.la -logg -lm
+ 
+ dump_video_SOURCES = dump_video.c

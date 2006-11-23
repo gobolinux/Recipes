@@ -1,0 +1,10 @@
+--- vte-0.11.11/src/vtexft.c	2004-04-20 02:16:56.000000000 -0300
++++ vte-0.11.11-patched/src/vtexft.c	2004-07-27 23:48:11.000000000 -0300
+@@ -29,6 +29,7 @@
+ #include <gdk/gdkx.h>
+ #include <glib.h>
+ #include <fontconfig/fontconfig.h>
++#include <ft2build.h>
+ #include <X11/Xft/Xft.h>
+ #include "debug.h"
+ #include "vtebg.h"

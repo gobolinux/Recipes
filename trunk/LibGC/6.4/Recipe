@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for LibGC by Felix Breuer, on Sun Sep 5 17:11:57 BRT 2004
+# Recipe for version 6.4 by David Smith <dsmith@algonet.se>, on Wed Mar 02 20:42:51 CEST 2005
+compile_version=1.7.1
+url="http://www.hpl.hp.com/personal/Hans_Boehm/gc/gc_source/gc6.4.tar.gz"
+file_size=778553
+file_md5=ef03495e980b834a99c0e27eedaa546e
+recipe_type=configure
+configure_options=(
+	"--enable-cplusplus"
+)

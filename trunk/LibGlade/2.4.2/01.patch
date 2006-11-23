@@ -1,0 +1,11 @@
+--- libglade-2.5.1/glade/Makefile.in	2005-02-11 14:11:23.000000000 +0100
++++ libglade-2.5.1-new/glade/Makefile.in	2005-07-27 20:16:36.000000000 +0200
+@@ -235,7 +235,7 @@
+   -DG_LOG_DOMAIN=\"libglade\" \
+   -I$(top_srcdir) \
+   $(LIBGLADE_CFLAGS) \
+-  -DGLADE_LIBDIR=\""$(libdir)"\" \
++  -DGLADE_LIBDIR=\""/System/Links/Libraries"\" \
+   -DG_DISABLE_DEPRECATED \
+   -DGDK_DISABLE_DEPRECATED \
+   -DGDK_PIXBUF_DISABLE_DEPRECATED \

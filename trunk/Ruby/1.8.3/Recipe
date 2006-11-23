@@ -1,0 +1,10 @@
+# Recipe for version 1.8.3 by Rotem Zach, on Wed Oct 19 14:21:52 IST 2005
+# by Michael Homer
+# 2004.01.28 04:31
+compile_version=1.7.1
+url="ftp://ftp.ruby-lang.org/pub/ruby/ruby-1.8.3.tar.gz"
+recipe_type=configure
+
+configure_options=(
+ "--disable-frame-address"
+)

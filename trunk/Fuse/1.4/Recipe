@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for Fuse by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sat Dec 4 19:43:25 BRST 2004
+# Recipe for version 1.4 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sat Dec 4 19:43:25 BRST 2004
+compile_version=1.7.1
+url="$httpSourceforge/fuse/fuse-1.4.tar.gz"
+file_size=126979
+file_md5=abdcb47a202d84d844ffbb58dcc7ac8b
+recipe_type=configure
+sandbox_options=("--no-sandbox")
+
+configure_options=(
+	"--enable-kernel-module"
+	"--enable-lib"
+	"--enable-util"
+	"--enable-example"
+	"--with-kernel=$goboModules/`uname -r`/build"
+)

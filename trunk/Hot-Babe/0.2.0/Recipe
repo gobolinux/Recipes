@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Hot-Babe by Hisham Muhammad, on Thu Nov 25 20:27:37 BRST 2004
+# Recipe for version 0.2.0 by Hisham Muhammad, on Thu Nov 25 20:27:37 BRST 2004
+compile_version=1.7.1
+url="http://dindinx.net/hotbabe/downloads/hot-babe-0.2.0.tar.bz2"
+file_size=397541
+file_md5=e0de887b9ea75dad221830ccfcc3a6da
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "DESTDIR=$target"
+   "PREFIX=$target"
+)

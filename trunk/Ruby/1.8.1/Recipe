@@ -1,0 +1,11 @@
+# by Michael Homer
+# 2004.01.28 04:31
+
+url="http://rubyforge.org/download.php/262/ruby-1.8.1.tar.gz"
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+ "--disable-frame-address"
+)
+
+description="An object-oriented scripting language"

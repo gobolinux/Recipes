@@ -1,0 +1,54 @@
+--- speedfreq-0.7.2/Makefile	2003-10-18 06:56:53.000000000 +0200
++++ speedfreq-0.7.2.new/Makefile	2005-06-15 02:19:40.000000000 +0200
+@@ -1,26 +1,26 @@
+-VERSION ?= 0.7.2
++VERSION = 0.7.2
+ 
+-DISTFILES := $(shell bk sfiles -Ug)
++DISTFILES = $(shell bk sfiles -Ug)
+ 
+-BASENAME := speedfreq-$(VERSION)
++BASENAME = speedfreq-$(VERSION)
+ 
+-TARGETS := speedfreq speedfreqd $(SONAME) _speedfreqmodule.so
++TARGETS = speedfreq speedfreqd $(SONAME) _speedfreqmodule.so
+ 
+-SONAME := libspeedfreq.so.1
++SONAME = libspeedfreq.so.1
+ 
+-PREFIX ?= /usr
+-BIN ?= $(PREFIX)/bin
+-SBIN ?= $(PREFIX)/sbin
+-MAN ?= $(PREFIX)/share/man
+-LIB ?= $(PREFIX)/lib
+-INC ?= $(PREFIX)/include
+-PY_VER ?= 2.2
+-PY_INC ?= /usr/include/python$(PY_VER)
++PREFIX = /usr
++BIN = $(PREFIX)/bin
++SBIN = $(PREFIX)/sbin
++MAN = $(PREFIX)/share/man
++LIB = $(PREFIX)/lib
++INC = $(PREFIX)/include
++PY_VER = 2.4
++PY_INC = /Programs/Python/Current/include/python$(PY_VER)
+ 
+-INITD ?= /etc/rc.d/init.d
+-INST_OPTS := -o root -g root
++INITD = $(PREFIX)/init.d
++INST_OPTS = -o 0 -g 0
+ 
+-CFLAGS := -Werror -Wall -O -ggdb3
++CFLAGS = -Werror -Wall -O -ggdb3
+ 
+ all: $(TARGETS)
+ 
+@@ -86,7 +86,7 @@
+ 	install $(INST_OPTS) -m 644 man/man8/*.8 $(MAN)/man8
+ 	install $(INST_OPTS) -m 755 $(SONAME) $(LIB)
+ 	ln -sf $(SONAME) $(LIB)/$(basename $(SONAME))
+-	chown root.root $(LIB)/$(basename $(SONAME))
++	chown 0:0 $(LIB)/$(basename $(SONAME))
+ 	install $(INST_OPTS) -m 755 _speedfreqmodule.so \
+ 		$(LIB)/python$(PY_VER)/site-packages
+ 	install $(INST_OPTS) -m 644 speedfreq.py \

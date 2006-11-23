@@ -1,0 +1,19 @@
+# Recipe for version 1.1 by Leandro Motta Barrros, on Fri Jul 21 20:19:49 BRT 2006
+# Recipe (MakeRecipe) for OpenSceneGraph by Fabio Mierlo, on Thu Feb 17 23:19:03 BRST 2005
+compile_version=1.7.1
+url="http://www.openscenegraph.org/downloads/snapshots/OSG_OP_OT-1.1.zip"
+mirror_url="$httpSourceforge/openscenegraph/OSG_OP_OT-1.1.zip"
+
+recipe_type=makefile
+makefile="GNUmakefile"
+
+dir="`basename $url .zip`/OpenSceneGraph"
+
+environment=(
+   "OPENTHREADS_LIB_DIR=$target/lib"
+)
+
+install_variables=(
+   "INST_LOCATION=$target"
+   "INST_SHARE=$target/Shared"
+)

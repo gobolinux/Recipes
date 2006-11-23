@@ -1,0 +1,20 @@
+# Recipe (MakeRecipe) for ALSA-Driver by Peter Eriksen <s022018@student.dtu.dk>, on Sat Jan 15 15:04:12 CET 2005
+# Recipe for version 1.0.8 by Peter Eriksen <s022018@student.dtu.dk>, on Sat Jan 15 15:04:12 CET 2005
+compile_version=1.7.1
+url="ftp://ftp.alsa-project.org/pub/driver/alsa-driver-1.0.8.tar.bz2"
+file_size=1926689
+file_md5=97d11d734baedd8686d4284eb8273629
+recipe_type=configure
+
+sandbox_options=("--no-sandbox")
+
+configure_options=(
+   "--with-moddir=$goboModules/`uname -r`/sound"
+   "--with-kernel=$goboModules/`uname -r`/build"
+   "--with-redhat=no"
+   "--with-suse=no"
+   "--with-cards=all"
+   "--with-sequencer=yes"
+   "--with-oss=yes"
+   "--with-cards=all"
+)

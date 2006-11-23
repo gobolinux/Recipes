@@ -1,0 +1,14 @@
+--- shadow-4.0.8/libmisc/Makefile.am.orig	2005-04-26 19:39:02.000000000 -0300
++++ shadow-4.0.8/libmisc/Makefile.am	2005-04-26 19:39:44.000000000 -0300
+@@ -3,9 +3,9 @@
+ 
+ INCLUDES = -I$(top_srcdir)/lib
+ 
+-noinst_LIBRARIES = libmisc.a
++lib_LTLIBRARIES = libmisc.la
+ 
+-libmisc_a_SOURCES = \
++libmisc_la_SOURCES = \
+ 	addgrps.c \
+ 	age.c \
+ 	basename.c \

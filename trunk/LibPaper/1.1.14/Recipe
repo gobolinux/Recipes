@@ -1,0 +1,20 @@
+## 20040623 Dave Dodge
+
+url=http://ftp.debian.org/debian/pool/main/libp/libpaper/libpaper_1.1.14-3.tar.gz
+file_size=301674
+file_md5=ce8aa414571fb5afd278e2a6de0fac29
+dir=libpaper-1.1.14
+compile_version=1.7.1
+recipe_type=configure
+pre_build()
+{
+	## libpaper is broken, as it does not include
+	## the config.sub or config.guess scripts that its
+	## configure script requires.  We can get them from
+	## the automake installation, though.
+
+	autoreconf -i
+	automakeshare="${goboPrograms}/Automake/Current/share/automake-1.8"
+	cp "${automakeshare}/config.sub" "${dir}"
+	cp "${automakeshare}/config.guess" "${dir}"
+}

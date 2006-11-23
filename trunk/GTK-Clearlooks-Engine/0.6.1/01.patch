@@ -1,0 +1,11 @@
+--- clearlooks-0.6.1/themes/Clearlooks/metacity-1/Makefile.in	2005-06-10 14:36:32.000000000 +0200
++++ clearlooks-0.6.1/themes/Clearlooks/metacity-1/Makefile.in.new	2005-06-14 16:05:37.000000000 +0200
+@@ -162,7 +162,7 @@
+ target_alias = @target_alias@
+ gnome_data = @gnome_prefix@/share
+ dummy = 
+-themedir = $(gnome_data)/themes/Clearlooks/metacity-1
++themedir = $(target)/Shared/themes/Clearlooks/metacity-1
+ theme_DATA = metacity-theme-1.xml
+ EXTRA_DIST = metacity-theme-1.xml
+ all: all-am

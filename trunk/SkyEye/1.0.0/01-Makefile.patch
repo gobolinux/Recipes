@@ -1,0 +1,21 @@
+--- skyeye-1.0.0/Makefile.orig	2005-11-24 10:13:48.000000000 -0200
++++ skyeye-1.0.0/Makefile	2005-11-24 10:23:30.000000000 -0200
+@@ -22,6 +22,7 @@
+ 
+ prefix = /usr/local
+ exec_prefix = ${prefix}
++sysconfdir = /etc
+ 
+ host_alias = i686-pc-cygwin
+ target_alias = arm-elf
+@@ -119,6 +120,10 @@ clean: $(SIM_EXTRA_CLEAN)
+ 	rm -f binary/*.a
+ 	rm -f binary/skyeye
+ 
++install: binary/skyeye
++	cp binary/skyeye $(bindir)
++	cp skyeye.conf.sample $(sysconfdir)/skyeye.conf
++
+ distclean mostlyclean maintainer-clean realclean: clean
+ 	rm -f TAGS tags
+ 	rm -f binary/*

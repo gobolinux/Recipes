@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Git by Jonas Karlsson <jonka750@student.liu.se>, on Sat Apr 15 18:45:06 CEST 2006
+# Recipe for version 1.2.6 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Apr 15 18:45:06 CEST 2006
+compile_version=1.7.1
+url="http://www.kernel.org/pub/software/scm/git/git-1.2.6.tar.bz2"
+file_size=501550
+file_md5=27ac8c7afc201b90d603c1e2a8a1cf89
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+)

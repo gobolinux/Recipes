@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for Avifile by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Nov 22 23:23:15 BRST 2004
+# Recipe for version 0.6.0.20010503 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Nov 22 23:23:15 BRST 2004
+compile_version=1.7.1
+url="http://www.directfb.org/downloads/Misc/avifile-0.6.0.20010503.tar.gz"
+file_size=899707
+file_md5=df4139ede83515a1d3e5f173b6267747
+dir='avifile-0.6.0'
+recipe_type=configure
+
+configure_options=(
+	"--disable-qt"
+	"--disable-kde"
+)

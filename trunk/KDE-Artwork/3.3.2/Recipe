@@ -1,0 +1,11 @@
+# by Maglan C. Diemer ,3.3.2 by roko
+
+url="ftp://ftp.kde.org/pub/kde/stable/3.3.2/src/kdeartwork-3.3.2.tar.bz2"
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+ #  "DO_NOT_COMPILE="
+ #IconThemes icewm-themes kscreensaver kwin-styles kworldclock sounds styles wallpapers
+)

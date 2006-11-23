@@ -1,0 +1,11 @@
+# Recipe for version 4.0.16 by Hisham Muhammad <lode@gobolinux.org>, on Sat Jun 17 13:51:58 BRT 2006
+compile_version=1.7.1
+url=ftp://ftp.pld.org.pl/software/shadow/shadow-4.0.16.tar.bz2
+recipe_type=configure
+configure_options=(
+	"--enable-shared"
+	"--enable-static"
+	"--without-libpam"
+	"--without-selinux"
+        "--disable-shadowgrp"
+)

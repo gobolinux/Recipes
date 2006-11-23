@@ -1,0 +1,9 @@
+# Recipe by Felix Breuer <felix@fbreuer.de> 13.09.2004
+url="$httpSourceforge/scons/scons-src-0.96.1.tar.gz"
+compile_version=1.7.1
+recipe_type=manifest
+pre_link() {
+  cd src
+  sed -i -e "s/'script\/scons', 'script\/sconsign'/'script\/scons.py', 'script\/sconsign.py'/" setup.py
+  python setup.py install --prefix=$target
+}

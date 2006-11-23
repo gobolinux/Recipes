@@ -1,0 +1,42 @@
+diff -ru wmii-2-old/base/page.c wmii-2/base/page.c
+--- wmii-2-old/base/page.c	2005-07-31 00:14:00.000000000 +0200
++++ wmii-2/base/page.c	2005-09-22 12:24:04.927749592 +0200
+@@ -287,9 +287,9 @@
+     focus_frame(f, 1, 1, 1);
+     /* suppress all EnterNotifs */
+     XSelectInput(dpy, root, ROOT_MASK & ~StructureNotifyMask);
+-    XWarpPointer(dpy, None, f->win, 0, 0, 0, 0,
+-                 atoi(f->files[F_BORDER_W]->content),
+-                 atoi(f->files[F_BORDER_W]->content));
++/*     XWarpPointer(dpy, None, f->win, 0, 0, 0, 0, */
++/*                  atoi(f->files[F_BORDER_W]->content), */
++/*                  atoi(f->files[F_BORDER_W]->content)); */
+     XSelectInput(dpy, root, ROOT_MASK);
+     if(old)
+         draw_frame(old);
+@@ -460,9 +460,9 @@
+     focus_frame(f, 1, 0, 1);
+     if(is_managed_frame(f) && p->layout)
+         p->layout->manage(f);
+-    XWarpPointer(dpy, None, f->win, 0, 0, 0, 0,
+-                 atoi(f->files[F_BORDER_W]->content),
+-                 atoi(f->files[F_BORDER_W]->content));
++/*     XWarpPointer(dpy, None, f->win, 0, 0, 0, 0, */
++/*                  atoi(f->files[F_BORDER_W]->content), */
++/*                  atoi(f->files[F_BORDER_W]->content)); */
+     XSelectInput(dpy, root, ROOT_MASK);
+     if(old)
+         draw_frame(old);
+@@ -504,9 +504,9 @@
+         fr = get_selected(p);
+         if(fr) {
+             XSelectInput(dpy, root, ROOT_MASK & ~StructureNotifyMask);
+-            XWarpPointer(dpy, None, fr->win, 0, 0, 0, 0,
+-                         atoi(fr->files[F_BORDER_W]->content),
+-                         atoi(fr->files[F_BORDER_W]->content));
++/*             XWarpPointer(dpy, None, fr->win, 0, 0, 0, 0, */
++/*                          atoi(fr->files[F_BORDER_W]->content), */
++/*                          atoi(fr->files[F_BORDER_W]->content)); */
+             XSelectInput(dpy, root, ROOT_MASK);
+             draw_frame(fr);
+         }

@@ -1,0 +1,11 @@
+# Recipe for version 0.5.0 by Thomas Queste <tqueste@free.fr>, on Mon Apr 17 11:43:59 CEST 
+2006
+# Recipe (MakeRecipe) for Mrxvt by  Ozgur Ulukir, on Sun Dec 19 22:37:37 EET 2004
+compile_version=1.7.1
+url="$httpSourceforge/materm/mrxvt-0.5.0.tar.gz"
+recipe_type=configure
+
+configure_options=(
+  --enable-everything
+  --with-save-lines=10000
+)

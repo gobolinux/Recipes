@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for ViewVC by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Wed Jun 21 17:36:22 UTC 2006
+# Recipe for version 1.0.0 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Wed Jun 21 17:36:22 UTC 2006
+compile_version=1.7.1
+url="http://viewvc.tigris.org/files/documents/3330/31766/viewvc-1.0.0.tar.gz"
+file_size=378147
+file_md5=0d5b9363b42d74e9721bdd9f847d3c7c
+recipe_type=manifest
+
+pre_link() {
+    echo -e "$target\n\n" | ./viewvc-install
+
+    pushd $target >& /dev/null
+    mv *.conf ../Settings
+    ln -nfs ../Settings/*.conf .
+    popd >& /dev/null
+}

@@ -1,0 +1,11 @@
+# Recipe for version 4.2.7 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Wed May 11 13:35:21 BRT 2005
+# by Jonatan Liljedahl
+url=http://switch.dl.sourceforge.net/sourceforge/gimp-print/gimp-print-4.2.7.tar.gz
+compile_version=1.7.1
+recipe_type=configure
+install_variables=(
+    "gimp_plug_indir=$target/lib/gimp/1.2/plug-ins"
+    "cups_conf_serverbin=$target/lib/cups"
+    "cups_conf_datadir=$target/share/cups"
+    "cups_conf_serverroot=$target/../Settings/cups"
+)

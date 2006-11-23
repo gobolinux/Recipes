@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for Netwatch by Fabio Mierlo, on Sun Jul 23 14:46:02 BRT 2006
+# Recipe for version 1.0a by Fabio Mierlo, on Sun Jul 23 14:46:02 BRT 2006
+compile_version=1.7.1
+mirror_url="http://www.slctech.org/~mackay/netwatch-1.0a.src.tgz"
+url="ftp://ftp.slackware-brasil.com.br/slackware_source/n/netwatch/netwatch-1.0a.src.tar.gz"
+file_size=187581
+file_md5=0d9bbfe6930e058ea6c5eb9bacffdb77
+dir='netwatch-1.0a'
+recipe_type=configure
+
+pre_patch() {
+        sed -i "s,\/root,\/$goboUsers\/`SuperUserName`,g" netwatch.c netwatch.conf.eg README CHANGES
+	sed -i "s,root,`SuperUserName`,g" Makefile.in
+	export eca="s,\/usr,$target,g"
+	sed -i "$eca" Makefile.in
+}

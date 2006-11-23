@@ -1,0 +1,33 @@
+# Recipe for version 3.5.1 by Kosh <kosh.linux at gmail.com>, on Thu Feb 9 02:49:04 BRST 2006
+# by Maglan C. Diemer , 3.3.2 by roko
+compile_version=1.7.1
+url="ftp://ftp.oregonstate.edu/pub/kde/stable/3.5.1/src/kdebase-3.5.1.tar.bz2"
+dir='kdebase-3.5.1'
+recipe_type=configure
+create_dirs_first=yes
+
+configure_options=(
+    "--disable-debug"
+    "--with-shadow"
+#    "--disable-dnssd"
+#  "DO_NOT_COMPILE="
+#libkonq applnk doc drkonqi kappfinder kate kcheckpass kcminit  kcontrol  kdcop  kdebugdialog  kdepasswd  kdeprint  kdesu  kdialog  kfind  khelpcenter khotkeys  kicker  kioslave  klipper  kmenuedit  konsole  kpager  kpersonalizer  kreadconfig  kscreensaver  ksmserver  ksplashml  kstart  ksysguard ksystraycmd  ktip  kwin  kxkb  l10n  nsplugins  pics  konqueror  kdesktop kdm
+)
+
+pre_build(){
+    ln -sf $goboPrograms/KDE-Libs/3.5.1/include/kbookmarknotifier.h $goboPrograms/KDE-Base/3.5.1/include/kbookmarknotifier.h
+}
+
+pre_link(){
+    rm $goboPrograms/KDE-Base/3.5.1/include/kbookmarknotifier.h
+}
+
+# chmod below is not needed with Scripts >= 2.1.21
+post_install()  {
+	chmod 4755 $target/bin/kcheckpass
+	chmod 2755 $target/bin/kdesud
+
+#	GrepReplace "/Programs/Xorg/.*/" "/Programs/Xorg/Current/" $target/Shared/config/kdm/{kdmrc,README,Xresources,Xservers}
+#	rm -f $target/Shared/config/kdm/*~
+}
+

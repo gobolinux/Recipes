@@ -1,0 +1,24 @@
+# Recipe for Linux-PAM 0.77 by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.7.1
+url="http://www.kernel.org/pub/linux/libs/pam/pre/library/Linux-PAM-0.77.tar.bz2"
+file_size=334514
+file_md5=1163834de9a0eebaca5d074dcc83b6a9
+recipe_type=configure
+
+configure_options=(
+	"--enable-includedir=$target/include"
+	"--enable-docdir=$target/doc/pam"
+	"--enable-mandir=$target/man"
+	"--enable-read-both-confs"
+)
+
+post_install() {
+	pushd "$target/lib"
+	ln -s libpam.so.* libpam.so.0
+	ln -s libpam.so.0 libpam.so
+	ln -s libpam_misc.so.* libpam_misc.so.0
+	ln -s libpam_misc.so.0 libpam_misc.so
+	ln -s libpamc.so.* libpamc.so.0
+	ln -s libpamc.so.0 libpamc.so
+	popd
+}

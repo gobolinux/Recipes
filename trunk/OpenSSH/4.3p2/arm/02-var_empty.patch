@@ -1,0 +1,10 @@
+--- openssh-4.3p2/Makefile.in.orig	2006-04-28 12:30:06.000000000 -0300
++++ openssh-4.3p2/Makefile.in	2006-04-28 12:30:21.000000000 -0300
+@@ -249,7 +249,6 @@ install-files: scard-install
+ 	$(srcdir)/mkinstalldirs $(DESTDIR)$(mandir)/$(mansubdir)5
+ 	$(srcdir)/mkinstalldirs $(DESTDIR)$(mandir)/$(mansubdir)8
+ 	$(srcdir)/mkinstalldirs $(DESTDIR)$(libexecdir)
+-	(umask 022 ; $(srcdir)/mkinstalldirs $(DESTDIR)$(PRIVSEP_PATH))
+ 	$(INSTALL) -m 0755 $(STRIP_OPT) ssh $(DESTDIR)$(bindir)/ssh
+ 	$(INSTALL) -m 0755 $(STRIP_OPT) scp $(DESTDIR)$(bindir)/scp
+ 	$(INSTALL) -m 0755 $(STRIP_OPT) ssh-add $(DESTDIR)$(bindir)/ssh-add

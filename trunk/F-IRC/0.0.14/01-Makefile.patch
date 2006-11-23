@@ -1,0 +1,29 @@
+--- fi-0.0.14/Makefile.orig	2005-01-20 11:11:11.000000000 -0200
++++ fi-0.0.14/Makefile	2005-03-06 16:29:38.000000000 -0300
+@@ -1,8 +1,11 @@
+ VERSION=0.0.14
+ 
++DESTDIR=/usr
++SYSCONFDIR=/etc
++
+ DEBUG=-g -D_DEBUG -W -pedantic # -pg #-fprofile-arcs
+ LDFLAGS=-lncurses $(DEBUG) -O2
+-CFLAGS=-D$(shell uname) -O2 -Wall -DVERSION=\"$(VERSION)\" $(DEBUG)
++CFLAGS=-D$(shell uname) -O2 -Wall -DVERSION=\"$(VERSION)\" $(DEBUG) -DSYSCONFDIR=\"$(SYSCONFDIR)\"
+ 
+ OBJS=theme.o buffer.o channels.o error.o utils.o loop.o term.o tcp.o main.o irc.o user.o names.o config.o dcc.o
+ 
+@@ -12,10 +15,11 @@
+ 	$(CC) -Wall -W $(OBJS) $(LDFLAGS) -o fi
+ 
+ install: fi
+-	cp fi $(DESTDIR)/usr/bin
++	cp fi $(DESTDIR)/bin
++	cp firc.conf firc.theme $(SYSCONFDIR)
+ 
+ uninstall: clean
+-	rm -f $(DESTDIR)/usr/bin/fi
++	rm -f $(DESTDIR)/bin/fi
+ 
+ clean:
+ 	rm -f $(OBJS) fi core log.log gmon.out *.da

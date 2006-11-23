@@ -1,0 +1,22 @@
+# Recipe for version 1.9.25 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Aug 2 09:23:58 BRT 2006
+# Recipe (MakeRecipe) for SVGALib by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Wed Apr 27 15:39:32 BRT 2005
+compile_version=1.7.1
+url="http://www.arava.co.il/matan/svgalib/svgalib-1.9.25.tar.gz"
+file_size=987084
+file_md5=4dda7e779e550b7404cfe118f1d74222
+recipe_type=makefile
+makefile='Makefile'
+
+build_target="install"
+sandbox_options=("--no-sandbox")
+
+make_variables=(
+    prefix=$target
+    datadir=$settings_target/vga
+    mandir=$target/man
+)
+
+pre_link() {
+    mkdir -p $target/share/Compile/Linux
+    touch $target/share/Compile/Linux/$appname
+}

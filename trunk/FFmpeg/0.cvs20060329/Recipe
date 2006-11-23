@@ -1,0 +1,27 @@
+# Recipe for version 0.cvs20060329 by Laurent Pelecq (laurent.pelecq at soleil.org), on mar mai 23 21:22:30 CEST 2006
+# Recipe (MakeRecipe) for FFmpeg by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 16:03:06 BRT 2005
+compile_version=1.7.1
+url="http://ftp.debian.org/debian/pool/main/f/ffmpeg/ffmpeg_0.cvs20060329.orig.tar.gz"
+recipe_type=configure
+dir='ffmpeg-0.cvs20060329'
+
+configure_options=(
+    "--enable-libogg"
+    "--enable-vorbis"
+    "--enable-theora"
+    "--enable-xvid"
+    "--enable-a52"
+    "--enable-pp"
+    "--enable-gpl" 
+    "--enable-mp3lame"
+    "--enable-faac"
+    "--enable-shared"
+)
+
+pre_link() {
+    make -C $dir/libavcodec/libpostproc && \
+    	cp $dir/libavcodec/libpostproc/libpostproc.a $target/lib
+    
+    mkdir -p $target/include/postproc && \
+	cp libavcodec/libpostproc/postprocess.h $target/include/postproc
+}

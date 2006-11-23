@@ -1,0 +1,9 @@
+# Recipe for version 5.93 by Andre Detsch <detsch@gobolinux.org>, on Sex Dez 2 14:53:36 BRST 2005
+url=$ftpGnu/coreutils/coreutils-5.93.tar.bz2
+compile_version=1.7.1
+recipe_type=configure
+install_target="install install-root"
+needs_safe_linking=yes
+pre_link() {
+   mv $target/bin/install $target/bin/real_install
+}

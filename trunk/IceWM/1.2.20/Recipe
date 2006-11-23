@@ -1,0 +1,15 @@
+# Recipe for version 1.2.20 by Jonas Karlsson <jonka750@student.liu.se>, on Sat May 7 00:26:53 CEST 2005
+# Recipe (MakeRecipe) for IceWM by  Ozgur Ulukir, on Tue Dec 21 21:23:03 EET 2004
+compile_version=1.7.1
+url="$httpSourceforge/icewm/icewm-1.2.20.tar.gz"
+recipe_type=configure
+
+configure_options=(
+   "--enable-shaped-decorations"
+   "--enable-gradients"
+   "--enable-antialiasing"
+   "--enable-corefonts"
+   "--with-imlib"
+   "--with-icesound"
+)
+

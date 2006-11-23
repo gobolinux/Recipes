@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for TFTP-Server by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Jul 19 23:35:52 BRT 2006
+# Recipe for version 0.3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Jul 19 23:35:52 BRT 2006
+compile_version=1.7.1
+url="$httpSourceforge/tftp-server/tftpserverV0.3.tar.gz"
+file_size=17938
+file_md5=43c1099a93f79673652cf437510fd533
+dir='tftpserver'
+recipe_type=makefile
+
+make_variables=(
+    PREFIX=$target
+    SYSCONFDIR=$target/../Settings
+)

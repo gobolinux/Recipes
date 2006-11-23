@@ -1,0 +1,6 @@
+# Recipe for version 6.4.1 by Harald Klimach, on Tue Jan 17 16:30:45 CET 2006
+# Recipe (MakeRecipe) for GHC by Peter Eriksen <s022018@student.dtu.dk>, on Tue Feb 22 12:51:35 CET 2005
+compile_version=1.7.1
+url="http://www.haskell.org/ghc/dist/6.4.1/ghc-6.4.1-i386-unknown-linux.tar.bz2"
+dir='ghc-6.4.1'
+recipe_type=configure

@@ -1,0 +1,12 @@
+Index: linux-2.6.9-rc3-bk8/arch/i386/mm/init.c
+===================================================================
+--- linux-2.6.9-rc3-bk8.orig/arch/i386/mm/init.c	2004-10-08 23:02:53.000000000 +1000
++++ linux-2.6.9-rc3-bk8/arch/i386/mm/init.c	2004-10-09 15:43:18.283928793 +1000
+@@ -41,6 +41,7 @@
+ #include <asm/sections.h>
+ 
+ unsigned int __VMALLOC_RESERVE = 128 << 20;
++EXPORT_SYMBOL(__VMALLOC_RESERVE);
+ 
+ DEFINE_PER_CPU(struct mmu_gather, mmu_gathers);
+ unsigned long highstart_pfn, highend_pfn;

@@ -1,0 +1,30 @@
+# Recipe for version 2.5 by Andre Detsch <detsch@gobolinux.org>, on Wed Nov 1 10:17:59 BRST 2006
+# by Guilherme Bedin
+# 02/12/2003
+compile_version=1.7.1
+url=http://ftp.gnu.org/pub/gnu/glibc/glibc-2.5.tar.gz
+recipe_type=configure
+needs_build_directory=yes
+needs_safe_linking=yes
+keep_existing_target=yes
+sandbox_options=("--no-sandbox")
+configure_options=(
+    "--disable-profile"
+    "--enable-add-ons"
+    "--with-tls"
+    "--with-__thread"
+    "--enable-kernel=2.6.0"
+    "--libexecdir=${target}/lib"
+    "--with-headers=${linux_headers_path}/include"
+)
+
+install_target="install localedata/install-locales"
+
+pre_build() {
+    unset CFLAGS CXXFLAGS 
+}
+
+pre_install() {
+   ldconfig -C $target/Resources/Defaults/Settings/ld.so.cache
+   ldconfig
+}

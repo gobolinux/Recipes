@@ -1,0 +1,12 @@
+# by Jonatan Liljedahl
+# 2004.01.06 16:54
+
+url=http://modeemi.cs.tut.fi/~tuomov/ion/dl/ion-20020207.tar.gz
+compile_version=1.7.1
+recipe_type=makefile
+make_variables=(
+    "PREFIX=$target"
+    "ETCDIR=$target/../Settings"
+    "DOCDIR=$target/Shared/doc"
+    "X11_PREFIX=$goboPrograms/XFree86/Current"
+)

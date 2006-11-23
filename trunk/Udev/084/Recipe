@@ -1,0 +1,46 @@
+# Recipe for version 084 by Carlo J. Calica <ccalica@gmail.com>, on Mon Feb 6 20:22:26 PST 2006
+# Recipe for Udev 084 by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.7.1
+url="http://www.kernel.org/pub/linux/utils/kernel/hotplug/udev-084.tar.bz2"
+recipe_type=makefile
+makefile='Makefile'
+
+build_target="all etc/udev/udev.conf"
+
+make_variables=(
+   "EXTRAS=extras/cdrom_id extras/run_directory extras/volume_id extras/scsi_id extras/usb_id extras/firmware"
+)
+
+build_variables=(
+   "prefix=$target"
+   "etcdir=$goboSettings"
+   "udevdir=$goboDevices"
+#   "USE_KLIBC=true"
+)
+
+install_variables=(
+#   "prefix=$target"
+#   "etcdir=$target/Resources/Defaults/Settings"
+   "DESTDIR=$target"
+)
+
+# No longer needed starting 084  
+# Carlo J. Calica
+#pre_build() {
+#   sed -i "s:\@configdir@:$goboSettings\/udev:" etc/udev/udev.conf.in
+#}
+
+pre_link() {
+   pushd $target
+   mkdir -p Resources/Defaults
+   mkdir -p Resources/Defaults/Settings
+   cp -a etc/* Resources/Defaults/Settings/
+   rm -rf etc
+   cp $dir/etc/udev/gentoo/udev.rules Resources/Defaults/Settings/udev/rules.d/50-udev.rules
+   mv usr/bin/* bin/
+   mv usr/share/man/man8/* man/man8
+   rm -rf usr
+#   ln -sf $target/sbin/udev $target/../Settings/hotplug.d/default/udev.hotplug
+#   ln -sf $target/sbin/udevsend $target/../Settings/hotplug.d/default/10-udev.hotplug
+   popd
+}

@@ -1,0 +1,34 @@
+diff -Naur sysvinit-2.85-old/src/Makefile sysvinit-2.85/src/Makefile
+--- sysvinit-2.85-old/src/Makefile	2001-11-06 09:58:16.000000000 -0200
++++ sysvinit-2.85/src/Makefile	2003-12-07 16:47:49.000000000 -0200
+@@ -25,7 +25,8 @@
+ BIN_GROUP	= root
+ BIN_COMBO	= $(BIN_OWNER).$(BIN_GROUP)
+ INSTALL		= install -o $(BIN_OWNER) -g $(BIN_GROUP)
+-MANDIR		= /usr/share/man
++USRDIR          = /usr
++MANDIR		= $(USRDIR)/share/man
+ 
+ # Additional libs for Gnu Libc
+ ifneq ($(wildcard /usr/lib/libcrypt.a),)
+@@ -89,16 +90,16 @@
+ 			runlevel shutdown $(ROOT)/sbin
+ 		# These are not installed by default
+ ifeq ($(DEBIAN),)
+-		$(INSTALL) -m 555 utmpdump wall $(ROOT)/usr/bin
++		$(INSTALL) -m 555 utmpdump wall $(ROOT)$(USRDIR)/bin
+ endif
+ 		# $(INSTALL) -m 755 etc/initscript.sample $(ROOT)/etc
+-		$(INSTALL) -m 755 mesg last $(ROOT)/usr/bin
++		$(INSTALL) -m 755 mesg last $(ROOT)$(USRDIR)/bin
+ 		cd $(ROOT)/sbin; ln -sf halt reboot; chown $(BIN_COMBO) reboot
+ 		cd $(ROOT)/sbin; ln -sf halt poweroff; chown $(BIN_COMBO) poweroff
+ 		cd $(ROOT)/sbin; ln -sf init telinit; chown $(BIN_COMBO) telinit
+ 		cd $(ROOT)/bin; ln -sf ../sbin/killall5 pidof; chown $(BIN_COMBO) pidof
+-		cd $(ROOT)/usr/bin; ln -sf last lastb; chown $(BIN_COMBO) lastb
+-		$(INSTALL) -m 644 initreq.h $(ROOT)/usr/include
++		cd $(ROOT)$(USRDIR)/bin; ln -sf last lastb; chown $(BIN_COMBO) lastb
++		$(INSTALL) -m 644 initreq.h $(ROOT)$(USRDIR)/include
+ 		$(INSTALL) -m 644 ../man/*.8 $(ROOT)$(MANDIR)/man8
+ 		$(INSTALL) -m 644 ../man/*.5 $(ROOT)$(MANDIR)/man5
+ ifeq ($(DEBIAN),)

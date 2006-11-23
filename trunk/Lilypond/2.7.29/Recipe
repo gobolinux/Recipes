@@ -1,0 +1,11 @@
+# Recipe for version 2.7.29 by Jonatan Liljedahl <lijon@kymatica.com>, on Sat Jan 28 23:50:47 BRST 2006
+compile_version=1.7.1
+url="http://lilypond.org/download/v2.7/lilypond-2.7.29.tar.gz"
+recipe_type=configure
+makefile=GNUmakefile
+make_variables=(
+  "DOCUMENTATION=no"
+)
+configure_options=(
+  "--with-ncsb-dir=/Files/Fonts/Ghostscript"
+)

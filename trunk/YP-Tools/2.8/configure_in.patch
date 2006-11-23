@@ -1,0 +1,16 @@
+--- yp-tools-2.8/configure.in.orig	2005-04-26 12:16:18.000000000 -0300
++++ yp-tools-2.8/configure.in	2005-04-26 12:16:44.000000000 -0300
+@@ -26,11 +26,11 @@
+   libexecdir='${exec_prefix}/lib/yp'
+ fi
+ 
+-if test x"$ac_default_prefix" = x"/usr"
++if test x"$prefix" = x"/usr"
+ then
+    rootbindir="/bin"
+ else
+-   rootbindir=$ac_default_prefix"/bin"
++   rootbindir=$prefix"/bin"
+ fi
+ AC_SUBST(rootbindir)
+ 

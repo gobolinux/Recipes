@@ -1,0 +1,14 @@
+# Recipe for version 1.10 by Andy Feldman (nereusren@gmail.com), on Sat Mar 11 21:21:24 CST 2006
+# Recipe (MakeRecipe) for LibSepol by roko, <ro.ko@mcnon.com>, on Fri Apr 8 20:49:15 CEST 2005
+compile_version=1.7.1
+url="http://www.nsa.gov/selinux/archives/libsepol-1.10.tgz"
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(PREFIX="$target")
+install_variables=(DESTDIR="$target")
+pre_link() { 
+ln -sf $target/lib/libsepol.so.1 $target/lib/libsepol.so
+mv -fv $target/usr/share/man/man3/* $target/man/man3
+mv -fv $target/usr/share/man/man8/* $target/man/man8
+rm -Rf $target/usr
+} 

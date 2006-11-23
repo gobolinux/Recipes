@@ -1,0 +1,28 @@
+# Recipe (MakeRecipe) for Wings by Lucas C. Villa Real, on Tue Nov 7 00:42:00 BRST 2006
+# Recipe for version 0.98.35 by Lucas C. Villa Real, on Tue Nov 7 00:42:00 BRST 2006
+compile_version=1.7.1
+url="$httpSourceforge/wings/wings-0.98.35.tar.bz2"
+file_size=1000597
+file_md5=0d4121fd8bb77e548a2f23a208429d0a
+recipe_type=makefile
+makefile='Makefile'
+install_target='unix'
+
+pre_build() {
+    GrepReplace "^DEST_ROOT=.*" "DEST_ROOT=wings-build" unix/make_installer
+}
+
+pre_link() {
+    pushd wings-build >& /dev/null
+    GrepReplace "^INSTALL_DIR=.*" "INSTALL_DIR=$target" install_wings
+    GrepReplace "^ESDL_DIR=.*" "ESDL_DIR=$goboLibraries/esdl" install_wings
+    ./install_wings
+    popd >& /dev/null
+
+    echo -e "cd $target\n./wings" > $target/bin/wings
+    chmod +x $target/bin/wings
+}
+
+environment=(
+    ESDL_PATH=$esdl_path/lib/esdl
+)

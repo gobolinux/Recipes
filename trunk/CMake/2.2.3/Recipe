@@ -1,0 +1,9 @@
+compile_version=1.7.1
+url="http://www.cmake.org/files/v2.2/cmake-2.2.3.tar.gz"
+file_size=2427300
+file_md5=d29377b76fbab6a74107c49adc9e6457
+recipe_type=configure
+
+configure_options=(
+	--prefix=$target
+)

@@ -1,0 +1,19 @@
+# Recipe (MakeRecipe) for Nano by Laurent Pelecq (laurent.pelecq at soleil.org), on dim mar 26 15:32:24 CEST 2006
+# Recipe for version 1.3.10 by Laurent Pelecq (laurent.pelecq at soleil.org), on dim mar 26 15:32:25 CEST 2006
+compile_version=1.7.1
+url="http://www.nano-editor.org/dist/v1.3/nano-1.3.10.tar.gz"
+file_size=1166572
+file_md5=851609ae03ae967595a888219bad3e2d
+recipe_type=configure
+
+docs=(
+  "doc/nanorc.sample"
+)
+
+configure_options=(
+  "--with-slang"
+  "--enable-color"
+  "--enable-multibuffer"
+  "--enable-nanorc"
+  "--enable-utf8"
+)

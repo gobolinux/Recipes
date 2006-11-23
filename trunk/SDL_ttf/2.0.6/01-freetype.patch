@@ -1,0 +1,10 @@
+--- SDL_ttf-2.0.6/SDL_ttf.c.orig	2005-07-30 00:50:04.000000000 -0300
++++ SDL_ttf-2.0.6/SDL_ttf.c	2005-07-30 00:51:32.000000000 -0300
+@@ -39,6 +39,7 @@
+ #define FREEA(p) free(p)
+ #endif
+ 
++#include <ft2build.h>
+ #include <freetype/freetype.h>
+ #include <freetype/ftoutln.h>
+ #include <freetype/ttnameid.h>

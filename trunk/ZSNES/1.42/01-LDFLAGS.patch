@@ -1,0 +1,12 @@
+diff -Naur zsnes_1_42.orig/src/configure zsnes_1_42/src/configure
+--- zsnes_1_42.orig/src/configure	2005-01-20 00:21:54.000000000 -0200
++++ zsnes_1_42/src/configure	2006-07-15 21:21:25.000000000 -0300
+@@ -4013,7 +4013,7 @@
+ CFLAGS="$CFLAGS -I$opengl_prefix/include"
+ LDFLAGS-"$LDFLAGS -L$opengl_prefix/lib"
+ fi
+-LDFLAGS="$LDFLAGS -L$x_libraries"
++#LDFLAGS="$LDFLAGS -L$x_libraries"
+ echo "$as_me:$LINENO: checking for glGetError in -lGL" >&5
+ echo $ECHO_N "checking for glGetError in -lGL... $ECHO_C" >&6
+ if test "${ac_cv_lib_GL_glGetError+set}" = set; then

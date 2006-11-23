@@ -1,0 +1,17 @@
+# Recipe for lincvs 1.4.2 by zcram Wed Jul 27 22:51:56 UTC 2005
+compile_version=1.7.1
+url="http://lincvs.com/download/lincvs-1.4.2-0-generic-src.tgz"
+recipe_type=makefile
+file_size=1195241
+file_md5=eef1c4f807e05286f8785f99f8fa887f
+dir=lincvs-1.4.2
+
+pre_build() {
+   export QTDIR=$goboPrograms/Qt/Current
+   echo yes | nice -10 $goboPrograms/Qt/Current/bin/qmake -o Makefile lincvs.pro
+   mv Makefile Makefile.bak && cat Makefile.bak | sed "s%\$(INSTALL_ROOT)LinCVS%$target%g" > Makefile
+}
+
+pre_link() {
+   ln -sf $target/lincvs.bin $target/bin/lincvs
+}

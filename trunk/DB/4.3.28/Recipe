@@ -1,0 +1,14 @@
+# Recipe for version 4.3.28 by Andre Detsch, on Thu Jun 9 11:30:54 BRT 2005
+# Recipe (MakeRecipe) for DB by roko, <ro.ko@mcnon.com>, on Wed Feb 2 15:29:24 CET 2005
+compile_version=1.7.1
+url="ftp://ftp.sleepycat.com/releases/db-4.3.28.tar.gz"
+recipe_type=configure
+dir=db-4.3.28/build_unix
+configure=../dist/configure
+configure_options=(
+#  --enable-cxx       #     Build C++ API.
+#  --enable-java      #     Build Java API.
+#  --enable-rpc       #     Build RPC client/server.
+#  --enable-tcl       #     Build Tcl API.
+#  --enable-test      #     Configure to run the test suite.
+)

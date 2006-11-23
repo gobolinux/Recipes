@@ -1,0 +1,26 @@
+# Recipe for version 1.1.23 by David Smith <dsmith@algonet.se>, on Tue Jan 4 10:05:36 CET 2005
+compile_version=1.7.1
+url="ftp://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub/cups/1.1.23/cups-1.1.23-source.tar.bz2"
+file_size=8705521
+file_md5=4ce09b1dce09b6b9398af0daae9adf63
+dir='cups-1.1.23'
+recipe_type=configure
+
+configure_options=(
+	"--with-rcdir=$target"
+	"--with-doc=$target/doc"
+	"--with-fontpath=/Files/Fonts/Ghostscript"
+	"--with-cups-user=gobo"
+	"--with-cups-group=sys"
+	"--with-python"
+)
+
+post_install() {
+	Log_Normal "=================================================="
+	Log_Normal ""
+	Log_Normal "Note: when upgrading from CUPS 1.2.20 you may need"
+	Log_Normal "      to recreate your printers because of changes"
+	Log_Normal "      in the ppd uri format for usb printers."
+	Log_Normal ""
+	Log_Normal "=================================================="
+}

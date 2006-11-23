@@ -1,0 +1,8 @@
+url=$ftpGnu/coreutils/coreutils-5.0.tar.bz2
+compile_version=1.7.1
+recipe_type=configure
+install_target="install install-root"
+needs_safe_linking=yes
+pre_link() {
+   mv $target/bin/install $target/bin/real_install
+}

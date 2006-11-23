@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for Povray by roko, <ro.ko@mcnon.com>, on Tue Oct 26 23:48:59 BRST 2004
+# Recipe for version 3.6 by roko, <ro.ko@mcnon.com>, on Tue Oct 26 23:48:59 BRST 2004
+compile_version=1.7.1
+url="http://www.povray.org/redirect/www.povray.org/ftp/pub/povray/Official/Unix/povray-3.6.tar.bz2"
+file_size=8200160
+file_md5=b5789bb7eeaed0809c5c82d0efda571d
+dir='povray-3.6.1'
+recipe_type=configure
+configure_options=(
+	COMPILED_BY="name <email@address>"
+	"--with-svga"
+	"--with-x"
+)
+sandbox_options=("--no-sandbox") # copies povray.ini into home directory

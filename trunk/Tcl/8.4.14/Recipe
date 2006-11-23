@@ -1,0 +1,9 @@
+# Recipe for version 8.4.12 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Nov 6 11:13:47 BRST 2006
+compile_version=1.7.1
+url="$httpSourceforge/tcl/tcl8.4.14-src.tar.gz"
+dir='tcl8.4.14/unix'
+recipe_type=configure
+pre_link(){
+    ln -nfs ${target}/bin/tclsh8.4 ${target}/bin/tclsh
+    ln -nfs ${goboLibraries}/tk8.4 ${target}/lib/tk8.4
+}

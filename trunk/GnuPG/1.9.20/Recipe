@@ -1,0 +1,8 @@
+# Recipe for version 1.9.20 by Jonas Karlsson <jonka750@student.liu.se>, on Mon Jan 9 00:11:49 CET 2006
+# Recipe (MakeRecipe) for Gnupg by Giovani Facchini, on Qui Abr 14 17:00:52 BRT 2005
+compile_version=1.7.1
+url="ftp://ftp.gnupg.org/gcrypt/alpha/gnupg/gnupg-1.9.20.tar.bz2"
+recipe_type=configure
+configure_options=(
+    '--enable-gpg'
+)

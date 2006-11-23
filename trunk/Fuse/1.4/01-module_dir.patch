@@ -1,0 +1,61 @@
+diff -Nur fuse-1.4/configure fuse-1.4-lucasvr/configure
+--- fuse-1.4/configure	2004-10-14 10:30:36.000000000 -0200
++++ fuse-1.4-lucasvr/configure	2004-12-04 19:54:26.000000000 -0200
+@@ -2881,7 +2881,7 @@
+ fi;
+ 
+ 	if test -z "$kernelsrc"; then
+-		buildlink=/lib/modules/`uname -r`/build
++		buildlink=/System/Kernel/Modules/`uname -r`/build
+ 		if test -e $buildlink; then
+ 			kernelsrc=`(cd $buildlink; /bin/pwd)`
+ 		else
+@@ -2918,7 +2918,7 @@
+ 	echo "$as_me:$LINENO: result: $kernsrcver" >&5
+ echo "${ECHO_T}$kernsrcver" >&6
+ 	majver=`echo "$kernsrcver" | cut -f-2 -d.`
+-	kmoduledir=/lib/modules/$kernsrcver
++	kmoduledir=/System/Kernel/Modules/$kernsrcver
+ 
+ 
+ 
+diff -Nur fuse-1.4/configure.in fuse-1.4-lucasvr/configure.in
+--- fuse-1.4/configure.in	2004-10-14 10:26:07.000000000 -0200
++++ fuse-1.4-lucasvr/configure.in	2004-12-04 19:54:39.000000000 -0200
+@@ -32,7 +32,7 @@
+ 		[kernelsrc="$withval"])
+ 
+ 	if test -z "$kernelsrc"; then
+-		buildlink=/lib/modules/`uname -r`/build
++		buildlink=/System/Kernel/Modules/`uname -r`/build
+ 		if test -e $buildlink; then
+ 			kernelsrc=`(cd $buildlink; /bin/pwd)`
+ 		else
+@@ -56,7 +56,7 @@
+ 	fi
+ 	AC_MSG_RESULT([$kernsrcver])
+ 	majver=`echo "$kernsrcver" | cut -f-2 -d.`
+-	kmoduledir=/lib/modules/$kernsrcver
++	kmoduledir=/System/Kernel/Modules/$kernsrcver
+ 	AC_SUBST(kernelsrc)
+ 	AC_SUBST(majver)
+ 	AC_SUBST(kmoduledir)
+diff -Nur fuse-1.4/fuse.spec fuse-1.4-lucasvr/fuse.spec
+--- fuse-1.4/fuse.spec	2003-06-02 03:12:27.000000000 -0300
++++ fuse-1.4-lucasvr/fuse.spec	2004-12-04 19:54:01.000000000 -0200
+@@ -1,5 +1,5 @@
+ %define kernelversion %(uname -r)
+-%define fusemoduledir /lib/modules/%{kernelversion}/kernel/fs/fuse
++%define fusemoduledir /System/Kernel/Modules/%{kernelversion}/kernel/fs/fuse
+ 
+ %define kernelrel %(uname -r | sed -e s/-/_/g)
+ %define real_release 6
+@@ -40,7 +40,7 @@
+ # invoke configure with the --with-kernel option in case we attempt to
+ # compile for a different kernel and hope the path is right :-)
+ if [ "%{kernelversion}" != $(uname -r) ]; then
+-	for dir in /lib/modules/%{kernelversion}/build   \
++	for dir in /System/Kernel/Modules/%{kernelversion}/build   \
+ 		 /usr/src/linux-%{kernelversion}         \
+ 		 /usr/local/src/linux-%{kernelversion}   ; do 
+ 		if [ -d "$dir" ]; then

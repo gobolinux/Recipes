@@ -1,0 +1,10 @@
+# Recipe for version 0.9.7e by Andre Detsch, on Wed Dec 22 15:09:36 BRST 2004
+url=ftp://ftp.openssl.org/source/openssl-0.9.7e.tar.gz
+compile_version=1.7.1
+recipe_type=configure
+configure=Configure
+configure_options=(
+   linux-elf
+   shared
+)
+build_target="all test"

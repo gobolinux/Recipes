@@ -1,0 +1,29 @@
+# Recipe (MakeRecipe) for Sarab by Harald Klimach, on Mon Feb 6 23:06:31 CET 2006
+# Recipe for version 0.2.2 by Harald Klimach, on Mon Feb 6 23:06:31 CET 2006
+compile_version=1.7.1
+url="$httpSourceforge/sarab/sarab-0.2.2.tar.gz"
+file_size=22428
+file_md5=9ecafc5ed6730bb778851e219ef17d4a
+dir='sarab'
+recipe_type=manifest
+docs=(
+  "etc/rotation.schedule.README"
+  "etc/examples/9-tape_25-day"
+  "etc/examples/generate_toh.sh"
+  "etc/examples/gfs-differential"
+  "etc/examples/gfs-full"
+  "etc/examples/gfs-incremental"
+  "etc/examples/toh-3-tapes"
+  "etc/examples/toh-4-tapes"
+  "etc/examples/toh-5-tapes"
+  "etc/examples/toh-6-tapes"
+  "etc/examples/toh-7-tapes"
+  "etc/examples/toh-8-tapes"
+  "etc/examples/toh-9-tapes"
+)
+manifest=(
+  "sarab.sh:bin"
+  "etc/rotation.schedule:../Settings"
+  "etc/sarab.conf:../Settings"
+  "etc/sarab.dcf:../Settings"
+)

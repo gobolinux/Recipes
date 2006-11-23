@@ -1,0 +1,10 @@
+# Recipe for version 1.9.5 by Andre Detsch, on Tue Mar 1 15:55:22 BRT 2005
+url=$ftpGnu/automake/automake-1.9.5.tar.gz
+compile_version=1.7.1
+recipe_type=configure
+pre_install() {
+   pushd $target/Shared
+   ln -s automake-1.9 automake
+   ln -s aclocal-1.9 aclocal
+   popd
+}

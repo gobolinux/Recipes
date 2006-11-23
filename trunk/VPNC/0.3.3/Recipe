@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for VPNC by Jonatan Liljedahl <lijon@kymatica.com>, on Tue Aug 22 21:16:59 CEST 2006
+# Recipe for version 0.3.3 by Jonatan Liljedahl <lijon@kymatica.com>, on Tue Aug 22 21:16:59 CEST 2006
+compile_version=1.7.1
+url="http://www.unix-ag.uni-kl.de/~massar/vpnc/vpnc-0.3.3.tar.gz"
+file_size=59939
+file_md5=e7518cff21326fe7eb9795b60c25ae6a
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "ETCDIR=$settings_target/vpnc"
+   "PREFIX=$target"
+   "MANDIR=$target/man"
+)

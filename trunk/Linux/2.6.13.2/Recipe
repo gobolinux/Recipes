@@ -1,0 +1,58 @@
+# Recipe for version 2.6.13.2 by Jonas Karlsson <jonka750@student.liu.se>, on Sun Sep 18 19:39:26 CEST 2005
+# Recipe for Linux 2.6.13.2 by Lucas Correia Villa Real
+# Recipe for Linux 2.6.12.2 by Lucas Correia Villa Real
+# Recipe for Linux 2.6.11.9 by Lucas Correia Villa Real
+# Recipe for Linux 2.6.11 by Lucas Correia Villa Real
+compile_version=1.7.1
+url="http://www.kernel.org/pub/linux/kernel/v2.6/linux-2.6.13.2.tar.bz2"
+recipe_type=makefile
+
+# Targets
+build_target="all"
+install_target="modules_install"
+
+sandbox_options=(
+	"--no-sandbox"
+)
+
+pre_build() {
+	ln -nfs $goboModules/$version-Gobo /lib/modules
+	[ ! -f .config ] && {
+		[ ! -f $goboStatus/config.gz ] && {
+			cp "$recipedir"/dot-config .config
+		} || {
+			cp $goboStatus/config.gz .
+			gzip -d config.gz && mv config .config
+			yes "" | make oldconfig
+		}
+	}
+
+    source GoboPath
+	GrepReplace "\$(INSTALL_MOD_PATH)/lib/modules/\$(KERNELRELEASE)" \
+                "$goboModules/\$(KERNELRELEASE)" \
+                Makefile
+
+	make menuconfig
+}
+
+post_install() {
+	#
+	# This is arch-dependent. It should be preferred to parse .config
+	# and discover the architecture, but this is ok for now.
+	#
+	count=`ls $goboBoot/kernel-$version* 2> /dev/null | sort -n | wc -l | awk '{print $1}'`
+	[ "$count" = "0" ] && {
+		suffix="-Gobo"
+	} || {
+		let count="$count"+1
+		suffix="-$count-Gobo"
+	}
+	
+	# Copy and symlink the kernel image
+	cp arch/i386/boot/bzImage $goboBoot/kernel-$version$suffix
+	cp System.map $goboBoot/System.map-$version$suffix
+	
+	ln -sf kernel-$version$suffix $goboBoot/kernel
+	ln -sf System.map-$version$suffix $goboBoot/System.map
+	ln -nfs $goboModules/$version-Gobo $goboModules/Current
+}

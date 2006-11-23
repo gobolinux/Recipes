@@ -1,0 +1,13 @@
+# Recipe for version 2.0.7 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Aug 21 03:20:04 BRT 2006
+# Recipe for SDL_ttf 2.0.7 by Peter Eriksen <s022018@student.dtu.dk>
+compile_version=1.7.1
+url="http://www.libsdl.org/projects/SDL_ttf/release/SDL_ttf-2.0.7.tar.gz"
+recipe_type=configure
+
+configure_options=(
+    --with-sdl-prefix=$sdl_path
+)
+
+pre_build() {
+    [ ! -f .bootstrapped ] && ./autogen.sh && touch .bootstrapped
+}
