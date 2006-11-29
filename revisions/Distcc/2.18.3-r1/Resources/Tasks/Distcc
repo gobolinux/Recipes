@@ -1,0 +1,20 @@
+#!/bin/sh
+# By Otto Barnes
+
+source /System/Settings/BootOptions
+
+case "$1" in
+[Ss]tart)
+  DISTCCD_LOG=/System/Variable/log/distccd
+  touch $DISTCCD_LOG
+  chown nobody.nobody $DISTCCD_LOG
+  /Programs/Distcc/Current/bin/distccd --daemon --user nobody --log-file $DISTCCD_LOG --log-level debug --allow "$eth0_IP"/16 
+  ;;
+[Ss]top)
+  killall -SIGTERM distccd
+  ;;
+esac
+
+
+
+

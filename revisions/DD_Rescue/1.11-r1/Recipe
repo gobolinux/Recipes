@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for DD_Rescue by Andre Detsch, on Mon Feb 13 15:01:42 BRST 2006
+# Recipe for version 1.11 by Andre Detsch, on Mon Feb 13 15:01:42 BRST 2006
+compile_version=1.7.1
+url="http://www.garloff.de/kurt/linux/ddrescue/dd_rescue-1.11.tar.gz"
+file_size=17259
+file_md5=1fdd3716d5e8e33de66552efb176fe61
+dir='dd_rescue'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "DESTDIR=$target"
+   "prefix=$target"
+)

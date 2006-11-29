@@ -1,0 +1,9 @@
+# Recipe for version 0.9.9 by Fabio Mierlo, on Thu Jul 14 03:08:17 BRT 2005
+# Recipe (MakeRecipe) for OpenSceneGraph by Fabio Mierlo, on Thu Feb 17 23:19:03 BRST 2005
+compile_version=1.7.1
+recipe_type=meta
+include=(
+	"OpenSceneGraph-OpenThreads--0.9.9"
+	"OpenSceneGraph-Producer--0.9.9"
+	"OpenSceneGraph-Base--0.9.9"
+)

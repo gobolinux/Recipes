@@ -1,0 +1,6 @@
+# Recipe for version 6.6 by Harald Klimach, on Thu Oct 26 20:53:39 CEST 2006
+# Recipe (MakeRecipe) for GHC by Peter Eriksen <s022018@student.dtu.dk>, on Tue Feb 22 12:51:35 CET 2005
+compile_version=1.7.1
+url="http://haskell.org/ghc/dist/6.6/ghc-6.6-src.tar.bz2"
+dir='ghc-6.6'
+recipe_type=configure

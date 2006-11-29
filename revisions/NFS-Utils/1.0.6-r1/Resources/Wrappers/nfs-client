@@ -1,0 +1,74 @@
+#!/bin/sh
+# nfs   This shell script starts and stops the nfs services in a distribution
+#       independent fashion.
+#
+# description:  starts and stops nfs client services
+# chkconfig: 2345 60 86
+#
+# Copyright (c) 2000-2001 Mission Critical Linux, Inc.
+#
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+export PATH
+
+# Who am I?
+SCRIPT_NAME=`basename $0`
+
+# Grab our daemon functions.
+. `dirname $0`/nfs-functions
+
+# Kernel daemons and options
+PREFIX="rpc."		# Prefix for kernel execs (usually "rpc.")
+LOCKD="lockd"		# Lockd
+
+# User daemons and options
+STATD="rpc.statd"	# NLM Server
+
+# We use "type -path" instead of "which" since it's internal to bash.
+[ -x "`type -path $STATD`" ] || exit 0
+[ -x "`type -path $PREFIX$LOCKD`" ] || exit 0
+
+# Handle how we were called.
+case "$1" in
+start)
+    # Start rpc.statd daemon without options...
+    echo -n "Starting $STATD: "
+    startdaemon $STATD
+
+    echo -n "Starting $LOCKD: "
+    startdaemon $PREFIX$LOCKD
+
+    # if this lock file doesn't exist, init won't even try to run
+    # the shutdown script for this service on RedHat systems!
+    # on non-RedHat systems, /var/lock/subsys may not exist.
+    touch /var/lock/subsys/$SCRIPT_NAME &> /dev/null
+    ;;
+
+stop)
+    echo -n "Stopping $STATD: "
+    stopdaemon $STATD
+
+    echo -n "Stopping $LOCKD: "
+    stopdaemon $LOCKD
+
+    rm -f /var/lock/subsys/$SCRIPT_NAME 
+    ;;
+
+restart)
+    $0 stop
+    $0 start
+    ;;
+
+status)
+    daemonstatus $STATD
+    daemonstatus $LOCKD
+
+    exit 0
+    ;;
+
+*)
+    echo "Usage: $0 {start|stop|status|restart}"
+    exit 1
+esac
+
+exit 0

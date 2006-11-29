@@ -1,0 +1,12 @@
+# Recipe for version 3.5.3 by Rui Andrada <shingonoide at gmail>, on Sat Jun 3 00:20:45 BRT 2006
+# KDE-Libs meta-recipe 
+# by Andre Detsch
+
+# ARTS and Libs compilation don't support different prefixes yet...
+
+include=(
+   "ARTS--1.5.3"
+   "KDE-Libs-Itself--3.5.3"
+)
+compile_version=1.7.1
+recipe_type=meta

@@ -1,0 +1,12 @@
+# Recipe for version 0.9.7l by Jonas Karlsson <jonka750@student.liu.se>, on Tue Oct 10 16:28:45 CEST 2006
+compile_version=1.7.1
+url=ftp://ftp.openssl.org/source/openssl-0.9.7l.tar.gz
+recipe_type=configure
+file_size=3294357
+file_md5=b21d6e10817ddeccf5fbe1379987333e
+configure=Configure
+configure_options=(
+   linux-elf
+   shared
+)
+build_target="all test"

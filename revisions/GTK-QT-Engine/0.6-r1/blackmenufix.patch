@@ -1,0 +1,10 @@
+--- ./src/qt_theme_draw.c	2004-12-21 09:28:34.000000000 -0600
++++ ./src/qt_theme_draw.c.new	2006-04-16 13:42:37.000000000 -0500
+@@ -1777,6 +1777,7 @@
+         {
+           pixmap = pix_test;
+           parent_relative = FALSE;
++          gdk_drawable_set_colormap(pixmap, style->colormap);
+         }
+       
+       gdk_window_set_back_pixmap (window, pixmap, parent_relative);

@@ -1,0 +1,12 @@
+--- util-linux-2.12r/mount/rpcsvc/nfsmount_xdr.c	2000-04-19 00:51:58.000000000 +0200
++++ util-linux-2.12r.old/mount/rpcsvc/nfsmount_xdr.c	2006-07-29 14:42:21.000000000 +0200
+@@ -40,6 +40,9 @@
+ /* from @(#)mount.x	1.3 91/03/11 TIRPC 1.0 */
+ #include <asm/types.h>
+ 
++#define IXDR_GET_LONG(buf)           ((long)IXDR_GET_INT32(buf))
++#define IXDR_PUT_LONG(buf, v)        IXDR_PUT_INT32(buf, (long)(v))
++
+ bool_t
+ xdr_fhandle (XDR *xdrs, fhandle objp)
+ {

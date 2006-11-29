@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for Spca5xx by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Jun 20 14:54:10 BRT 2006
+# Recipe for version 20060501 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Jun 20 14:54:10 BRT 2006
+compile_version=1.7.1
+url="http://mxhaard.free.fr/spca50x/Download/spca5xx-20060501.tar.gz"
+file_size=192817
+file_md5=8fcec25715aea10f9ebec5728c37e752
+recipe_type=makefile
+makefile='Makefile'
+
+sandbox_options=("--no-sandbox")
+
+make_variables=(
+    KERNELDIR=$goboModules/`uname -r`/build
+    MODULE_INSTALLDIR=$goboModules/`uname -r`/kernel/drivers/usb/media
+)

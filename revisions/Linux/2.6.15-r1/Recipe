@@ -1,0 +1,78 @@
+# Recipe for version 2.6.15 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sun Jan 8 20:46:56 BRST 2006
+# Recipe for version 2.6.14.3 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Nov 25 12:35:37 CET 2005
+# Recipe for Linux 2.6.13.4 by Lucas Correia Villa Real
+# Recipe for Linux 2.6.12.2 by Lucas Correia Villa Real
+# Recipe for Linux 2.6.11.9 by Lucas Correia Villa Real
+# Recipe for Linux 2.6.11 by Lucas Correia Villa Real
+compile_version=1.7.1
+url="http://www.kernel.org/pub/linux/kernel/v2.6/linux-2.6.15.tar.bz2"
+recipe_type=makefile
+build_target="all"
+install_target="modules_install"
+
+sandbox_options=(
+	"--no-sandbox"
+)
+
+pre_build() {
+	if [ ! -f .config ]
+	then
+		if [ ! -f $goboStatus/config.gz ]
+		then
+			cp "$recipedir"/dot-config .config
+		else
+            Ask "Do you want to keep the current kernel configuration?" && {
+                cp $goboStatus/config.gz .
+                gzip -d config.gz && mv config .config
+                yes "" | make oldconfig
+            } || { 
+                Log_Normal "Using the kernel configuration shipped with the recipe"
+                cp "$recipedir"/dot-config .config
+            }
+		fi
+	fi
+
+    source GoboPath
+	GrepReplace "\$(INSTALL_MOD_PATH)/lib/modules/\$(KERNELRELEASE)" \
+                "$goboModules/\$(KERNELRELEASE)" \
+                Makefile
+	GrepReplace "CONFIG_LOCALVERSION=\"\"" \
+				"CONFIG_LOCALVERSION=\"-Gobo\"" \
+				.config
+
+	make menuconfig
+}
+
+post_install() {
+	#
+	# This is arch-dependent. It should be preferred to parse .config
+	# and discover the architecture, but this is ok for now.
+	#
+	count=`ls $goboBoot/kernel-$version* 2> /dev/null | sort -n | wc -l | awk '{print $1}'`
+	[ "$count" = "0" ] && {
+		suffix="-Gobo"
+	} || {
+		let count="$count"+1
+		suffix="-$count-Gobo"
+	}
+	
+    VERSION=`grep "^VERSION =" $dir/Makefile | awk '{print $3}'`
+    PATCHLEVEL=`grep "^PATCHLEVEL" $dir/Makefile | awk '{print $3}'`
+    SUBLEVEL=`grep "^SUBLEVEL" $dir/Makefile | awk '{print $3}'`
+    EXTRAVERSION=`grep "^EXTRAVERSION" $dir/Makefile | awk '{print $3}'`
+	
+    grep "^CONFIG_LOCALVERSION=" $dir/.config >& /dev/null && \
+        LOCALVERSION=`grep "^CONFIG_LOCALVERSION=" $dir/.config | cut -d= -f2 | sed 's/\"//g'` || \
+        LOCALVERSION="-Gobo"
+    
+    KERNELRELEASE="$VERSION.$PATCHLEVEL.$SUBLEVEL$EXTRAVERSION$LOCALVERSION"
+
+	# Copy and symlink the kernel image
+    cp arch/i386/boot/bzImage $goboBoot/kernel-$KERNELRELEASE
+    cp System.map $goboBoot/System.map-$KERNELRELEASE
+
+    ln -sf kernel-$KERNELRELEASE $goboBoot/kernel
+    ln -sf System.map-$KERNELRELEASE $goboBoot/System.map
+    ln -nfs $goboModules/$KERNELRELEASE $goboModules/Current
+    ln -nfs $goboModules/$KERNELRELEASE /lib/modules
+}

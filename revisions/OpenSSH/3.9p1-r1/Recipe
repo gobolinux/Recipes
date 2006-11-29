@@ -1,0 +1,32 @@
+# Recipe for OpenSSH 3.9p1 by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.7.1
+url="ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-3.9p1.tar.gz"
+file_size=854027
+file_md5=8e1774d0b52aff08f817f3987442a16e
+recipe_type=configure
+configure_options=(
+   "--sysconfdir=$target/../Settings/ssh"
+)
+
+pre_build() {
+   if ! [ -d $goboVariable/empty ]
+   then 
+   	mkdir $goboVariable/empty
+   	chmod 755 $goboVariable/empty
+   fi
+
+   chown 0:sys $goboVariable/empty
+
+   if ! grep -q sshd $goboSettings/group
+   then
+      Log_Normal "Adding group sshd"
+      groupadd sshd
+   fi
+
+   if ! grep -q "sshd:x:" $goboSettings/passwd
+   then
+      Log_Normal "Adding user sshd"
+      useradd -g sshd -c 'sshd privsep' -d $goboVariable/empty -s $goboExecutables/false sshd
+   fi
+}
+

@@ -1,0 +1,28 @@
+# Recipe for 18a5 by roko, <ro.ko@mcnon.com>, on Mon Dez 6 00:38:26 BRST 2004
+compile_version=1.7.1
+url="http://mozilla.isc.org/pub/mozilla.org/mozilla/releases/mozilla1.8a4/src/mozilla-source-1.8a5.tar.bz2"
+mirror_url="http://ftp.uni-erlangen.de/pub/mozilla.org/mozilla/releases/mozilla1.8a4/src/mozilla-source-1.8a5.tar.bz2"
+file_size=32529669
+file_md5=fa3e7a19b3ef455609ea0803b26e6e74
+dir='mozilla'
+recipe_type=configure
+configure_options=(
+  "--enable-crypto"
+  "--disable-tests"
+  "--disable-debug"
+  "--enable-strip"
+  "--with-pthreads"
+  "--enable-calendar"
+  "--enable-default-toolkit=gtk2"
+  "--with-x"
+  "--enable-freetype2"
+  "--with-system-zlib" 
+  "--with-system-jpeg"
+  "--with-system-png"
+  # "--with-system-mng"
+  "--disable-xft"
+  "--enable-pango"
+  "--disable-gnomevfs"   
+  "--disable-gnomeui"
+  "--with-libIDL-prefix=$goboPrograms/LibIDL/Current/"
+)

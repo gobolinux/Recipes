@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for VCG by Hisham Muhammad, on Mon May 29 17:59:43 BRT 2006
+# Recipe for version 1.30 by Hisham Muhammad, on Mon May 29 17:59:43 BRT 2006
+compile_version=1.7.1
+url="ftp://ftp.cs.uni-sb.de/pub/graphics/vcg/vcg.tgz"
+file_size=1445979
+file_md5=d69b3cb6138682cc3845d329ccef51df
+dir='vcg.1.30'
+recipe_type=makefile
+makefile=tMakefile

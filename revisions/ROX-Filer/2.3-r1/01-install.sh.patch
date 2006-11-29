@@ -1,0 +1,27 @@
+--- old/install.sh	2005-06-07 06:14:38.000000000 -0300
++++ install.sh	2005-09-13 22:06:07.000000000 -0300
+@@ -67,7 +67,9 @@
+ EOF
+ printf ">>> "
+ 
+-read REPLY
++DIR=$ROX_INSTALL_PREFIX
++REPLY=6
++[ "$DIR" ] || read REPLY
+ echo
+ 
+ case $REPLY in
+@@ -131,6 +133,13 @@
+ 	   CHOICESDIR=/etc/xdg
+ 	   MANDIR="$DIR/man"	# (not under share!)
+ 	   ;;
++	6)
++           APPDIR="$DIR/apps"
++	   BINDIR="$DIR/bin"
++	   SHAREDIR="$DIR/share"
++	   CHOICESDIR=$DIR/../Settings/xdg
++	   MANDIR="$DIR/man"	# (not under share!)
++	   ;;
+ 
+ 	*) die "Invalid choice!";;
+ esac

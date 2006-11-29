@@ -1,0 +1,7 @@
+url="http://ufoot.free.fr/archive/allegro-4.0.3.tar.gz"
+compile_version=1.7.1
+recipe_type=configure
+makefile='makefile'
+configure_options=(
+	"--enable-xwin-dga=true"
+)

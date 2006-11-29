@@ -1,0 +1,13 @@
+# by Leandro Motta Barros
+
+url=ftp://ftp.foolabs.com/pub/xpdf/xpdf-3.00.tar.gz
+compile_version=1.7.1
+recipe_type=configure
+
+# A4 paper as default may be controversial... (how is this actually used?)
+# And what about this FreeType option? Must check this...
+configure_options=(
+   "--enable-a4-paper"
+   "--enable-multithreaded"
+   "--with-freetype2-includes=/System/Links/Headers/freetype2/"
+)

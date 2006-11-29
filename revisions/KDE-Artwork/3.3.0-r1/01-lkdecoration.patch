@@ -1,0 +1,140 @@
+diff -Naur kdeartwork-3.3.0/kwin-styles/icewm/Makefile.am kdeartwork-3.3.0-patched/kwin-styles/icewm/Makefile.am
+--- kdeartwork-3.3.0/kwin-styles/icewm/Makefile.am	2004-09-19 20:41:11.000000000 -0300
++++ kdeartwork-3.3.0-patched/kwin-styles/icewm/Makefile.am	2004-09-19 20:43:33.000000000 -0300
+@@ -6,7 +6,7 @@
+ 
+ kwin3_icewm_la_SOURCES = icewm.cpp
+ kwin3_icewm_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN) -module
+-kwin3_icewm_la_LIBADD  = $(LIB_KDEUI) $(kde_libraries)/libkdecorations.la
++kwin3_icewm_la_LIBADD  = $(LIB_KDEUI) -lkdecorations
+ 
+ METASOURCES = AUTO
+ noinst_HEADERS = icewm.h
+diff -Naur kdeartwork-3.3.0/kwin-styles/icewm/Makefile.in kdeartwork-3.3.0-patched/kwin-styles/icewm/Makefile.in
+--- kdeartwork-3.3.0/kwin-styles/icewm/Makefile.in	2004-09-19 20:41:11.000000000 -0300
++++ kdeartwork-3.3.0-patched/kwin-styles/icewm/Makefile.in	2004-09-19 20:44:07.000000000 -0300
+@@ -63,8 +63,8 @@
+ kde_moduleLTLIBRARIES_INSTALL = $(INSTALL)
+ LTLIBRARIES = $(kde_module_LTLIBRARIES)
+ am__DEPENDENCIES_1 =
+-kwin3_icewm_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
+-	$(kde_libraries)/libkdecorations.la
++kwin3_icewm_la_DEPENDENCIES = $(am__DEPENDENCIES_1) 
++
+ am_kwin3_icewm_la_OBJECTS = icewm.lo
+ #>- kwin3_icewm_la_OBJECTS = $(am_kwin3_icewm_la_OBJECTS)
+ #>+ 1
+@@ -374,7 +374,7 @@
+ kde_module_LTLIBRARIES = kwin3_icewm.la
+ kwin3_icewm_la_SOURCES = icewm.cpp
+ kwin3_icewm_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN) -module
+-kwin3_icewm_la_LIBADD = $(LIB_KDEUI) $(kde_libraries)/libkdecorations.la
++kwin3_icewm_la_LIBADD = $(LIB_KDEUI) -lkdecorations
+ #>- METASOURCES = AUTO
+ noinst_HEADERS = icewm.h
+ lnkdir = $(kde_datadir)/kwin/
+diff -Naur kdeartwork-3.3.0/kwin-styles/plastik/Makefile.am kdeartwork-3.3.0-patched/kwin-styles/plastik/Makefile.am
+--- kdeartwork-3.3.0/kwin-styles/plastik/Makefile.am	2004-09-19 20:41:11.000000000 -0300
++++ kdeartwork-3.3.0-patched/kwin-styles/plastik/Makefile.am	2004-09-19 20:44:22.000000000 -0300
+@@ -14,7 +14,7 @@
+ kde_module_LTLIBRARIES = kwin3_plastik.la
+ kwin3_plastik_la_SOURCES = plastik.cpp plastikclient.cpp plastikbutton.cpp misc.cpp shadow.cpp
+ kwin3_plastik_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN) -module
+-kwin3_plastik_la_LIBADD = $(LIB_KDEUI) $(kde_libraries)/libkdecorations.la
++kwin3_plastik_la_LIBADD = $(LIB_KDEUI) -lkdecorations
+ kwin3_plastik_la_METASOURCES = AUTO
+ 
+ DISTCLEANFILES = $(kwin3_plastik_la_METASOURCES)
+diff -Naur kdeartwork-3.3.0/kwin-styles/plastik/Makefile.in kdeartwork-3.3.0-patched/kwin-styles/plastik/Makefile.in
+--- kdeartwork-3.3.0/kwin-styles/plastik/Makefile.in	2004-09-19 20:41:11.000000000 -0300
++++ kdeartwork-3.3.0-patched/kwin-styles/plastik/Makefile.in	2004-09-19 20:44:44.000000000 -0300
+@@ -63,8 +63,8 @@
+ kde_moduleLTLIBRARIES_INSTALL = $(INSTALL)
+ LTLIBRARIES = $(kde_module_LTLIBRARIES)
+ am__DEPENDENCIES_1 =
+-kwin3_plastik_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
+-	$(kde_libraries)/libkdecorations.la
++kwin3_plastik_la_DEPENDENCIES = $(am__DEPENDENCIES_1) 
++
+ am_kwin3_plastik_la_OBJECTS = plastik.lo plastikclient.lo \
+ 	plastikbutton.lo misc.lo shadow.lo
+ #>- kwin3_plastik_la_OBJECTS = $(am_kwin3_plastik_la_OBJECTS)
+@@ -384,7 +384,7 @@
+ kde_module_LTLIBRARIES = kwin3_plastik.la
+ kwin3_plastik_la_SOURCES = plastik.cpp plastikclient.cpp plastikbutton.cpp misc.cpp shadow.cpp
+ kwin3_plastik_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN) -module
+-kwin3_plastik_la_LIBADD = $(LIB_KDEUI) $(kde_libraries)/libkdecorations.la
++kwin3_plastik_la_LIBADD = $(LIB_KDEUI) -lkdecorations
+ #>- kwin3_plastik_la_METASOURCES = AUTO
+ DISTCLEANFILES = $(kwin3_plastik_la_METASOURCES)
+ #>- all: all-recursive
+diff -Naur kdeartwork-3.3.0/kwin-styles/riscos/Makefile.am kdeartwork-3.3.0-patched/kwin-styles/riscos/Makefile.am
+--- kdeartwork-3.3.0/kwin-styles/riscos/Makefile.am	2004-09-19 20:41:11.000000000 -0300
++++ kdeartwork-3.3.0-patched/kwin-styles/riscos/Makefile.am	2004-09-19 20:45:37.000000000 -0300
+@@ -30,7 +30,7 @@
+                           StickyButton.cpp
+ 
+ kwin3_riscos_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN) -module
+-kwin3_riscos_la_LIBADD = $(LIB_KDEUI) $(kde_libraries)/libkdecorations.la
++kwin3_riscos_la_LIBADD = $(LIB_KDEUI) -lkdecorations
+ kwin3_riscos_la_METASOURCES = AUTO
+ 
+ EXTRA_DIST = $(kwin_DATA)
+diff -Naur kdeartwork-3.3.0/kwin-styles/riscos/Makefile.in kdeartwork-3.3.0-patched/kwin-styles/riscos/Makefile.in
+--- kdeartwork-3.3.0/kwin-styles/riscos/Makefile.in	2004-09-19 20:41:11.000000000 -0300
++++ kdeartwork-3.3.0-patched/kwin-styles/riscos/Makefile.in	2004-09-19 20:45:56.000000000 -0300
+@@ -63,8 +63,8 @@
+ kde_moduleLTLIBRARIES_INSTALL = $(INSTALL)
+ LTLIBRARIES = $(kde_module_LTLIBRARIES)
+ am__DEPENDENCIES_1 =
+-kwin3_riscos_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
+-	$(kde_libraries)/libkdecorations.la
++kwin3_riscos_la_DEPENDENCIES = $(am__DEPENDENCIES_1) 
++
+ am_kwin3_riscos_la_OBJECTS = Button.lo CloseButton.lo HelpButton.lo \
+ 	IconifyButton.lo LowerButton.lo Manager.lo MaximiseButton.lo \
+ 	Static.lo StickyButton.lo
+@@ -390,7 +390,7 @@
+                           StickyButton.cpp
+ 
+ kwin3_riscos_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN) -module
+-kwin3_riscos_la_LIBADD = $(LIB_KDEUI) $(kde_libraries)/libkdecorations.la
++kwin3_riscos_la_LIBADD = $(LIB_KDEUI) -lkdecorations
+ #>- kwin3_riscos_la_METASOURCES = AUTO
+ EXTRA_DIST = $(kwin_DATA)
+ #>- all: all-am
+diff -Naur kdeartwork-3.3.0/kwin-styles/system/Makefile.am kdeartwork-3.3.0-patched/kwin-styles/system/Makefile.am
+--- kdeartwork-3.3.0/kwin-styles/system/Makefile.am	2004-09-19 20:41:11.000000000 -0300
++++ kdeartwork-3.3.0-patched/kwin-styles/system/Makefile.am	2004-09-19 20:44:52.000000000 -0300
+@@ -6,7 +6,7 @@
+ kwin3_system_la_SOURCES = systemclient.cpp
+ kwin3_system_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN) -module
+ #kwin_system_la_LDFLAGS = $(all_libraries) -avoid-version -module $(KDE_RPATH) $(KDE_MT_LDFLAGS)
+-kwin3_system_la_LIBADD = $(LIB_KDEUI) $(kde_libraries)/libkdecorations.la
++kwin3_system_la_LIBADD = $(LIB_KDEUI) -lkdecorations
+ 
+ METASOURCES = AUTO
+ noinst_HEADERS = systemclient.h
+diff -Naur kdeartwork-3.3.0/kwin-styles/system/Makefile.in kdeartwork-3.3.0-patched/kwin-styles/system/Makefile.in
+--- kdeartwork-3.3.0/kwin-styles/system/Makefile.in	2004-09-19 20:41:11.000000000 -0300
++++ kdeartwork-3.3.0-patched/kwin-styles/system/Makefile.in	2004-09-19 20:45:29.000000000 -0300
+@@ -63,8 +63,8 @@
+ kde_moduleLTLIBRARIES_INSTALL = $(INSTALL)
+ LTLIBRARIES = $(kde_module_LTLIBRARIES)
+ am__DEPENDENCIES_1 =
+-kwin3_system_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
+-	$(kde_libraries)/libkdecorations.la
++kwin3_system_la_DEPENDENCIES = $(am__DEPENDENCIES_1) 
++
+ am_kwin3_system_la_OBJECTS = systemclient.lo
+ #>- kwin3_system_la_OBJECTS = $(am_kwin3_system_la_OBJECTS)
+ #>+ 1
+@@ -360,7 +360,7 @@
+ kwin3_system_la_SOURCES = systemclient.cpp
+ kwin3_system_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN) -module
+ #kwin_system_la_LDFLAGS = $(all_libraries) -avoid-version -module $(KDE_RPATH) $(KDE_MT_LDFLAGS)
+-kwin3_system_la_LIBADD = $(LIB_KDEUI) $(kde_libraries)/libkdecorations.la
++kwin3_system_la_LIBADD = $(LIB_KDEUI) -lkdecorations
+ #>- METASOURCES = AUTO
+ noinst_HEADERS = systemclient.h
+ lnkdir = $(kde_datadir)/kwin/

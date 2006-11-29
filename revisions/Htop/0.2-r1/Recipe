@@ -1,0 +1,9 @@
+compile_version=1.7.1
+url="$httpSourceforge/htop/htop-0.2.tar.gz"
+file_size=24984
+file_md5=405b79f95c871aa10cd616a1828e0167
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)

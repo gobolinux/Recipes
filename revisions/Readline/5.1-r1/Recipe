@@ -1,0 +1,11 @@
+# Recipe for version 5.1 by Andre Detsch <detsch@gobolinux.org>, on Sat Jun 17 16:30:07 BRT 2006
+# Recipe (MakeRecipe) for Readline by Peter Eriksen <s022018@student.dtu.dk>, on Thu Nov 4 19:52:54 CET 2004
+compile_version=1.7.1
+urls=(
+    "ftp://ftp.gnu.org/pub/gnu/readline/readline-5.1.tar.gz"
+    # "ftp://ftp.gnu.org/pub/gnu/readline/readline-doc-5.0.tar.gz"
+)
+
+recipe_type=configure
+
+unpack_files=inside_first

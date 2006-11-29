@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for DekTec-DtRecord by Lucas Correia Villa Real, on Tue Jan 17 16:13:35 BRST 2006
+# Recipe for version 2.2.0 by Lucas Correia Villa Real, on Tue Jan 17 16:13:35 BRST 2006
+compile_version=1.7.1
+url="http://www.dektec.com/Products/DtRecord/Downloads/DtRecord.zip"
+file_size=131736
+file_md5=6ed0d1b283f02c1c3caecbd87f20c7a0
+dir='DtRecord'
+recipe_type=makefile
+unpack_files=files_in_root
+
+make_variables=(PREFIX=$target DTAPILIB=$goboLibraries/DTAPI.o)

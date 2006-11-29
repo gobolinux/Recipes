@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for Amarok by roko, <ro.ko@mcnon.com>, on Mon Jan 31 01:23:03 CET 2005
+compile_version=1.7.1
+url="$httpSourceforge/amarok/amarok-1.3.3.tar.bz2"
+recipe_type=configure
+configure_options=(
+  "--with-arts=$goboPrograms/KDE/Current/"
+  "--with-gstreamer=$goboPrograms/GStreamer/Current/"
+)

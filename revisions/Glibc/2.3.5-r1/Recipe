@@ -1,0 +1,32 @@
+# Recipe for version 2.3.5 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jun 20 17:41:00 BRT 2005
+# by Guilherme Bedin
+# 02/12/2003
+
+url=http://ftp.gnu.org/pub/gnu/glibc/glibc-2.3.5.tar.gz
+compile_version=1.7.1
+recipe_type=configure
+
+needs_build_directory=yes
+needs_safe_linking=yes
+
+install_target="install localedata/install-locales"
+
+pre_build() {
+ pushd ${dir}
+ 
+ wget http://ftp.gnu.org/gnu/glibc/glibc-linuxthreads-2.3.5.tar.bz2
+ tar xfj glibc-linuxthreads-2.3.5.tar.bz2
+ 
+ popd
+}
+
+configure_options=(
+  "--disable-profile"
+  "--enable-add-ons"
+  "--libexecdir=${target}/lib"
+  "--with-headers=/Programs/Linux/2.6.12/include"
+)
+
+pre_install() {
+  make -C ../glibc-2.3.5/linuxthreads/man
+}

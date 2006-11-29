@@ -1,0 +1,11 @@
+# Recipe for version 3.4.3 by Andre Detsch, on Fri Oct 14 00:45:59 BRST 2005
+# by Maglan C. Diemer
+
+url="ftp://ftp.kde.org/pub/kde/stable/3.4.3/src/kdetoys-3.4.3.tar.bz2"
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+  #"DO_NOT_COMPILE=kmoon ktux"
+)

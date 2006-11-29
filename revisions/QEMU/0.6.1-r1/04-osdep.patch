@@ -1,0 +1,14 @@
+--- qemu-snapshot-2004-07-19_23/osdep.h.orig	2004-07-20 01:18:26.000000000 -0300
++++ qemu-snapshot-2004-07-19_23/osdep.h	2004-07-20 01:25:07.000000000 -0300
+@@ -19,8 +19,9 @@
+ 
+ /* disabled pthread version of longjmp which prevent us from using an
+    alternative signal stack */
+-extern void __longjmp(jmp_buf env, int val);
+-#define longjmp __longjmp
++
++//extern void __longjmp(jmp_buf env, int val);
++//#define longjmp __longjmp
+ 
+ #endif
+ 

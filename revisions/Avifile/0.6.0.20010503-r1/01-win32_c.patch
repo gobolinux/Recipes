@@ -1,0 +1,53 @@
+--- avifile-0.6.0/plugins/libwin32/loader/win32.c.orig	2004-11-22 23:26:28.000000000 -0200
++++ avifile-0.6.0/plugins/libwin32/loader/win32.c	2004-11-22 23:30:59.000000000 -0200
+@@ -40,6 +40,7 @@
+ #include <loader.h>
+ #include <com.h>
+ 
++void* LookupExternalByName(const char* library, const char* name);
+ char* def_path=WIN32_PATH;
+ 
+ static void do_cpuid(unsigned int *regs)
+@@ -1109,12 +1110,12 @@
+     result=i;
+     }
+     if(s1)
+-    dbgprintf("MultiByteToWideChar(codepage %d, flags 0x%x, string 0x%x='%s',
+-	size %d, dest buffer 0x%x, dest size %d) => %d\n",
++    dbgprintf("MultiByteToWideChar(codepage %d, flags 0x%x, string 0x%x='%s',"
++	"size %d, dest buffer 0x%x, dest size %d) => %d\n",
+ 	    v1, v2, s1, s1, siz1, s2, siz2, result);
+     else
+-    dbgprintf("MultiByteToWideChar(codepage %d, flags 0x%x, string NULL,
+-	size %d, dest buffer 0x%x, dest size %d) =>\n",
++    dbgprintf("MultiByteToWideChar(codepage %d, flags 0x%x, string NULL,"
++	"size %d, dest buffer 0x%x, dest size %d) =>\n",
+ 	    v1, v2, siz1, s2, siz2, result);
+     return result;
+ }
+@@ -1622,7 +1623,7 @@
+     if(mod!=0x120)
+ 	result=GetProcAddress(mod, name);
+     else
+-	result=LookupExternalByName("kernel32.dll", name);
++	result=LookupExternalByName("kernel32.dll", (const char *)name);
+     dbgprintf("GetProcAddress(0x%x, '%s') => 0x%x\n", mod, name, result);
+     return result;
+ }
+@@ -1632,12 +1633,12 @@
+ {
+     long result=CreateFileMappingA(hFile, lpAttr, flProtect, dwMaxHigh, dwMaxLow, name);
+     if(!name)
+-    dbgprintf("CreateFileMappingA(file 0x%x, lpAttr 0x%x, 
+-	flProtect 0x%x, dwMaxHigh 0x%x, dwMaxLow 0x%x, name 0) => %d\n",
++    dbgprintf("CreateFileMappingA(file 0x%x, lpAttr 0x%x, "
++	"flProtect 0x%x, dwMaxHigh 0x%x, dwMaxLow 0x%x, name 0) => %d\n",
+ 	    hFile, lpAttr, flProtect, dwMaxHigh, dwMaxLow, result);
+     else
+-    dbgprintf("CreateFileMappingA(file 0x%x, lpAttr 0x%x, 
+-	flProtect 0x%x, dwMaxHigh 0x%x, dwMaxLow 0x%x, name 0x%x='%s') => %d\n",
++    dbgprintf("CreateFileMappingA(file 0x%x, lpAttr 0x%x, "
++	"flProtect 0x%x, dwMaxHigh 0x%x, dwMaxLow 0x%x, name 0x%x='%s') => %d\n",
+ 	    hFile, lpAttr, flProtect, dwMaxHigh, dwMaxLow, name, name, result);    
+     return result;
+ }    

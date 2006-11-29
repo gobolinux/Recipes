@@ -1,0 +1,14 @@
+diff -Puar pmount-0.9.3-orig/policy.h pmount-0.9.3/policy.h
+--- pmount-0.9.3-orig/policy.h	2005-06-27 06:16:23.000000000 -0700
++++ pmount-0.9.3/policy.h	2005-10-12 15:47:48.000000000 -0700
+@@ -14,8 +14,8 @@
+ #include <stdlib.h> /* for size_t */
+ 
+ #define MAX_LABEL_SIZE 255
+-#define MEDIADIR "/media/"
+-#define DEVDIR "/dev/"
++#define MEDIADIR "/Mount/Media/"
++#define DEVDIR "/System/Kernel/Devices/"
+ #define LOCKDIR "/var/lock/pmount/"
+ #define WHITELIST "/etc/pmount.allow"
+ 

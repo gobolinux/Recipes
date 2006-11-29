@@ -1,0 +1,16 @@
+# Recipe for version 1.2.7 by Andre Detsch, on Thu Sep 30 23:39:48 BRT 2004
+# Recipe for LibPNG 1.2.7 by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+# Recipe for LibPNG 1.2.8 by ozgur ulukir
+url=$httpSourceforge/libpng/libpng-1.2.8.tar.bz2
+file_size=384970
+file_md5=00cea4539bea4bd34cbf8b82ff9589cd
+compile_version=1.7.1
+dir=libpng-1.2.8
+recipe_type=makefile
+makefile=scripts/makefile.linux
+make_variables=(
+   prefix="$crossPrefixDir/$target"
+   ZLIBLIB="$crossPrefixDir/$goboLibraries"
+   ZLIBINC="$crossPrefixDir/$goboHeaders"
+)
+

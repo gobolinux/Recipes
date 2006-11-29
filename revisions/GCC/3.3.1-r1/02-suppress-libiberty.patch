@@ -1,0 +1,17 @@
+Patch originator: Greg Schafer
+Original Version: 3.3.1
+Description: Suppresses installation of libiberty, as we will be
+using the one from binutils.
+
+
+--- gcc-3.3.1/libiberty/Makefile.in.GWS	2003-03-23 21:16:03.000000000 +1100
++++ gcc-3.3.1/libiberty/Makefile.in	2003-08-10 16:05:06.000000000 +1000
+@@ -260,7 +260,7 @@
+ @MAINT@	echo stamp > stamp-functions
+ 
+ INSTALL_DEST = @INSTALL_DEST@
+-install: install_to_$(INSTALL_DEST) install-subdir
++install: install-subdir
+ 
+ install_to_libdir: all
+ 	${mkinstalldirs} $(DESTDIR)$(libdir)$(MULTISUBDIR)

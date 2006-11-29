@@ -1,0 +1,64 @@
+*** rox-2.1.1/ROX-Filer/src/menu.c	Wed Jan 21 15:03:15 2004
+--- rox-2.1.1/ROX-Filer/src/menu.c	Sun Mar 14 21:31:06 2004
+***************
+*** 1500,1506 ****
+  	GtkWidget	*menu, *item;
+  
+  	menu = gtk_menu_new();
+  	
+! 	if (g_list_length(paths) == 1)
+  	{
+  		DirItem	*item;
+--- 1500,1532 ----
+  	GtkWidget	*menu, *item;
+  
++ 	/* Check if all paths have same MIME type. */
++ 	gboolean all_same_type = TRUE;
++ 	gboolean all_same_subtype = TRUE;
++ 	DirItem *first_item, *nth_item;
++ 	GList *test_list = paths;
++ 
++ 	nth_item = diritem_new("");
++ 	first_item = diritem_new("");
++ 	diritem_restat(test_list->data, first_item, NULL);
++ 	
++ 	while (test_list) {
++ 		diritem_restat(test_list->data, nth_item, NULL);
++ 		if (strcmp(nth_item->mime_type->media_type, 
++ 		           first_item->mime_type->media_type))
++ 		{
++ 			all_same_type = FALSE;
++ 			break;
++ 		}
++ 		if (strcmp(nth_item->mime_type->subtype, first_item->mime_type->subtype))
++ 			all_same_subtype = FALSE;
++ 		test_list = g_list_next(test_list);
++ 	}
++ 
++ 	diritem_free(first_item);
++ 	diritem_free(nth_item);
++ 
+  	menu = gtk_menu_new();
+  	
+! 	if (g_list_length(paths) == 1 || all_same_type)
+  	{
+  		DirItem	*item;
+***************
+*** 1509,1515 ****
+  		diritem_restat(paths->data, item, NULL);
+  
+! 		add_sendto(menu,
+! 			   item->mime_type->media_type,
+! 			   item->mime_type->subtype);
+  
+  		add_sendto(menu, item->mime_type->media_type, NULL);
+--- 1535,1543 ----
+  		diritem_restat(paths->data, item, NULL);
+  
+! 		if (all_same_subtype) {
+! 			add_sendto(menu,
+! 				   item->mime_type->media_type,
+! 			   	item->mime_type->subtype);
+! 		}
+  
+  		add_sendto(menu, item->mime_type->media_type, NULL);

@@ -1,0 +1,8 @@
+# Recipe for version 4.8 by Andre Detsch, on Tue Mar 8 21:56:30 BRT 2005
+url=$ftpGnu/texinfo/texinfo-4.8.tar.bz2
+compile_version=1.7.1
+recipe_type=configure
+install_variables=(
+   "TEXMF=$target/Shared/texmf"
+)
+install_target="install install-tex"

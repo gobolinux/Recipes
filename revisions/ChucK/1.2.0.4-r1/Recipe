@@ -1,0 +1,20 @@
+# Recipe (MakeRecipe) for ChucK by Jonatan Liljedahl <lijon@kymatica.com>, on Thu Feb 9 20:54:21 BRST 2006
+# Recipe for version 1.2.0.4 by Jonatan Liljedahl <lijon@kymatica.com>, on Thu Feb 9 20:54:21 BRST 2006
+compile_version=1.7.1
+url="http://chuck.cs.princeton.edu/release/files/chuck-1.2.0.4.tgz"
+dir="chuck-1.2.0.4/src"
+file_size=1339948
+file_md5=f40e9ba894812d099aabd6e613084c19
+recipe_type=makefile
+makefile=makefile
+make_variables=(
+	"DESTDIR=$target/bin"
+)
+build_target=linux-alsa
+pre_link() {
+	pushd ..
+        cp doc/* $target/doc
+        cp -r examples $target/doc
+        cp [A-Z]* $target/doc
+        popd
+}

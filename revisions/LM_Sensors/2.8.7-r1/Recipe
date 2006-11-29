@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for LM_Sensors by Andre Detsch, on Wed Sep 1 10:41:45 BRT 2004
+# Recipe for version 2.8.7 by Andre Detsch, on Wed Sep 1 10:41:45 BRT 2004
+compile_version=1.7.1
+url="http://secure.netroedge.com/~lm78/archive/lm_sensors-2.8.7.tar.gz"
+file_size=791187
+file_md5=64b4a4f547b2e1eab8a574d871867ca5
+recipe_type=makefile
+makefile='Makefile'
+
+build_target="user"
+install_target="user_install"
+pre_build() {
+   GrepReplace "PREFIX := /usr/local" "PREFIX := $target" Makefile
+   GrepReplace "ETCDIR := /etc" "ETCDIR := $target/../Settings" Makefile
+}

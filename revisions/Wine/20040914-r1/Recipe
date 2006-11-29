@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Wine by Roko <ro.ko@mcnon.com>, on Thu Sep 30 21:46:16 BRT 2004
+# Recipe for version 20040914 by Roko <ro.ko@mcnon.com>, on Thu Sep 30 21:46:16 BRT 2004
+compile_version=1.7.1
+url="httpSourceforge/wine/Wine-20040914.tar.gz"
+file_size=11177588
+file_md5=600e08f0ae0ba2c3a88daced246392c9
+dir='wine-20040914'
+recipe_type=configure
+configure_options=(
+   "--without-curses"
+)

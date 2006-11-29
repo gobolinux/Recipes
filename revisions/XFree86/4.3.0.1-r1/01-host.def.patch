@@ -1,0 +1,8 @@
+--- xc/config/cf/host.def	2004-01-01 07:25:31.000000000 -0600
++++ xc.config.cf.host.def	2004-01-01 07:12:37.000000000 -0600
+@@ -0,0 +1,5 @@
++#define ProjectRoot /Programs/XFree86/4.3.0.1
++#define EtcX11Directory /Programs/XFree86/Settings/X11
++#define FontconfigFontsConfDir /Programs/XFree86/Settings/X11/fonts
++#define HasZlib YES
++

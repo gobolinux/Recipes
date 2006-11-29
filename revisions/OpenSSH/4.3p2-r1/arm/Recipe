@@ -1,0 +1,30 @@
+configure_options=(
+   ${configure_options[@]}
+   "--without-rpath"
+   "--cache-file=arm_cache.conf"
+   "--disable-etc-default-login"
+   "--disable-strip"
+)
+
+private__pre_build() {
+   cp $archsubdir/arm_cache.conf $dir
+   GrepReplace host_cpu target_cpu configure.in
+   autoconf
+   
+   if ! grep -q sshd $goboSettings/group
+   then
+      Log_Normal "Adding group sshd"
+      latest_gid=`cat $goboSettings/group | cut -d: -f3 | sort -n | tail -n 1`
+      new_gid=$(( latest_gid + 1 ))
+      echo "sshd:x:$new_gid" >> $goboSettings/group
+   fi
+
+   if ! grep -q "sshd:x:" $goboSettings/passwd
+   then
+      Log_Normal "Adding user sshd"
+      latest_uid=`cat $goboSettings/passwd | cut -d: -f3 | sort -n | tail -n 1`
+      new_uid=$(( latest_uid + 1 ))
+      new_gid=`grep sshd $goboSettings/group | cut -d: -f3`
+      echo "sshd:x:$new_uid:$new_gid::$goboVariable/empty:$goboExecutables/false" >> $goboSettings/passwd
+   fi
+}

@@ -1,0 +1,610 @@
+diff -aur kdebase-3.4.0-org/kcontrol/kfontinst/kio/KioFonts.cpp kdebase-3.4.0/kcontrol/kfontinst/kio/KioFonts.cpp
+--- kdebase-3.4.0-org/kcontrol/kfontinst/kio/KioFonts.cpp	2005-02-23 12:25:12.000000000 +0100
++++ kdebase-3.4.0/kcontrol/kfontinst/kio/KioFonts.cpp	2005-03-09 07:14:19.000000000 +0100
+@@ -84,6 +84,24 @@
+ 
+ #endif
+ 
++static const char *superuser_name()
++{
++    const char *root_str = "root";
++    struct passwd *entry = getpwuid(0);
++    if (! entry)
++       return root_str;
++    return entry->pw_name;
++}
++
++static const char *superuser_group()
++{
++    const char *root_str = "root";
++    struct group *entry = getgrgid(0);
++    if (! entry)
++       return root_str;
++    return entry->gr_name;
++}
++
+ #define MAX_IPC_SIZE   (1024*32)
+ #define TIMEOUT        2         // Time between last mod and writing files...
+ #define MAX_NEW_FONTS  20        // #fonts that can be installed before automatically configuring (related to above)
+@@ -194,8 +212,8 @@
+         addAtom(entry, KIO::UDS_NAME, 0, name);
+         addAtom(entry, KIO::UDS_FILE_TYPE, S_IFDIR);
+         addAtom(entry, KIO::UDS_ACCESS, 0744);
+-        addAtom(entry, KIO::UDS_USER, 0, "root");
+-        addAtom(entry, KIO::UDS_GROUP, 0, "root");
++        addAtom(entry, KIO::UDS_USER, 0, superuser_name());
++        addAtom(entry, KIO::UDS_GROUP, 0, superuser_group());
+         addAtom(entry, KIO::UDS_MIME_TYPE, 0, KFI_KIO_FONTS_PROTOCOL"/system-folder");
+         addAtom(entry, KIO::UDS_GUESSED_MIME_TYPE, 0, "application/octet-stream");
+ 
+@@ -1560,18 +1578,18 @@
+     KFI_DBUG << "finished ModifiedDirs" << endl;
+ }
+ 
+-#define SYS_USER "root"
+ QString CKioFonts::getRootPasswd(bool askPasswd)
+ {
+     KFI_DBUG << "getRootPasswd" << endl;
+     KIO::AuthInfo authInfo;
+-    SuProcess     proc(SYS_USER);
++    const char    *sys_user = superuser_name();
++    SuProcess     proc(sys_user);
+     bool          error=false;
+     int           attempts=0;
+     QString       errorMsg;
+ 
+     authInfo.url=KURL(KFI_KIO_FONTS_PROTOCOL ":///");
+-    authInfo.username=SYS_USER;
++    authInfo.username=sys_user;
+     authInfo.keepPassword=true;
+ 
+     if(!checkCachedAuthentication(authInfo) && !askPasswd)
+@@ -1583,7 +1601,7 @@
+             KFI_DBUG << "ATTEMPT : " << attempts << endl;
+             if(1==attempts)
+                 errorMsg=i18n("Incorrect password.\n");
+-            if((!openPassDlg(authInfo, errorMsg) && attempts) || ++attempts>4 || SYS_USER!=authInfo.username)
++            if((!openPassDlg(authInfo, errorMsg) && attempts) || ++attempts>4 || sys_user!=authInfo.username)
+                 error=true;
+         }
+     else
+@@ -1597,7 +1615,7 @@
+ 
+     if(!passwd.isEmpty())
+     {
+-        SuProcess proc(SYS_USER);
++        SuProcess proc(superuser_name());
+ 
+         if(itsCanStorePasswd)
+             itsPasswd=passwd;
+diff -aur kdebase-3.4.0-org/kdesktop/minicli.cpp kdebase-3.4.0/kdesktop/minicli.cpp
+--- kdebase-3.4.0-org/kdesktop/minicli.cpp	2005-01-03 15:50:46.000000000 +0100
++++ kdebase-3.4.0/kdesktop/minicli.cpp	2005-03-09 06:51:32.000000000 +0100
+@@ -70,6 +70,15 @@
+ 
+ #define KDESU_ERR strerror(errno)
+ 
++static const char *superuser_name()
++{
++    const char *root_str = "root";
++    struct passwd *entry = getpwuid(0);
++    if (! entry)
++       return root_str;
++    return entry->pw_name;
++}
++
+ Minicli::Minicli( QWidget *parent, const char *name)
+         :KDialog( parent, name ),
+          m_autoCheckedRunInTerm(false)
+@@ -117,7 +126,7 @@
+   m_iPriority = 50;
+   m_iScheduler = StubProcess::SchedNormal;
+ 
+-  m_dlg->leUsername->setText("root");
++  m_dlg->leUsername->setText(superuser_name());
+ 
+   setMaxCommandBoxWidth();
+ 
+@@ -305,7 +314,7 @@
+   m_dlg->cbRunInTerminal->setChecked(false);
+   m_dlg->cbRunAsOther->setChecked(false);
+ 
+-  m_dlg->leUsername->setText("root");
++  m_dlg->leUsername->setText(superuser_name());
+ 
+   m_dlg->cbPriority->setChecked(false);
+ 
+@@ -705,6 +714,7 @@
+ 
+ void Minicli::updateAuthLabel()
+ {
++  const char *sys_user = superuser_name();
+   if (m_dlg->cbPriority->isChecked() && (m_iPriority > 50) ||
+       (m_iScheduler != StubProcess::SchedNormal))
+   {
+@@ -718,9 +728,9 @@
+       m_prevChecked = m_dlg->cbRunAsOther->isChecked();
+       m_prevCached = true;
+     }
+-    if (m_dlg->leUsername->text() != QString::fromLatin1("root"))
++    if (m_dlg->leUsername->text() != QString::fromLatin1(sys_user))
+       m_dlg->lePassword->setText(QString::null);
+-    m_dlg->leUsername->setText(QString::fromLatin1("root"));
++    m_dlg->leUsername->setText(QString::fromLatin1(sys_user));
+     m_dlg->cbRunAsOther->setChecked(true);
+     m_dlg->cbRunAsOther->setEnabled(false);
+     m_dlg->leUsername->setEnabled(false);
+diff -aur kdebase-3.4.0-org/kdesu/kdesu/kdesu.cpp kdebase-3.4.0/kdesu/kdesu/kdesu.cpp
+--- kdebase-3.4.0-org/kdesu/kdesu/kdesu.cpp	2004-10-05 16:57:50.000000000 +0200
++++ kdebase-3.4.0/kdesu/kdesu/kdesu.cpp	2005-03-09 06:51:54.000000000 +0100
+@@ -13,6 +13,7 @@
+ #include <pwd.h>
+ #include <stdlib.h>
+ 
++#include <sys/types.h>
+ #include <sys/time.h>
+ #include <sys/resource.h>
+ #if defined(HAVE_SYS_WAIT_H)
+@@ -85,6 +86,15 @@
+ 
+ static int startApp();
+ 
++const char *superuser_name()
++{
++    const char *root_str = "root";
++    struct passwd *entry = getpwuid(0);
++    if (! entry)
++        return root_str;
++    return entry->pw_name;
++}
++
+ int main(int argc, char *argv[])
+ {
+     // FIXME: this can be considered a poor man's solution, as it's not
+@@ -209,7 +219,7 @@
+     if ((priority > 50) || (scheduler != SuProcess::SchedNormal))
+     {
+         change_uid = true;
+-        auth_user = "root";
++        auth_user = superuser_name();
+     }
+ 
+     // Get command
+diff -aur kdebase-3.4.0-org/kdesu/kdesu/sudlg.cpp kdebase-3.4.0/kdesu/kdesu/sudlg.cpp
+--- kdebase-3.4.0-org/kdesu/kdesu/sudlg.cpp	2005-02-04 00:18:56.000000000 +0100
++++ kdebase-3.4.0/kdesu/kdesu/sudlg.cpp	2005-03-09 06:51:54.000000000 +0100
+@@ -7,19 +7,23 @@
+ #include <qstring.h>
+ #include <klocale.h>
+ #include <kmessagebox.h>
++#include <pwd.h>
++#include <sys/types.h>
+ 
+ #include <kdesu/su.h>
+ #include "sudlg.h"
+ 
++const char *superuser_name();
+ 
+ KDEsuDialog::KDEsuDialog(QCString user, QCString auth_user, bool enableKeep, const QString& icon)
+     : KPasswordDialog(Password, enableKeep, User1, icon)
+ {
+     m_User = auth_user;
++    const char *sys_user = superuser_name();
+     setCaption(i18n("Run as %1").arg(user));
+ 
+     QString prompt;
+-    if (m_User == "root")
++    if (m_User == sys_user)
+ 	prompt = i18n("The action you requested needs root privileges. "
+ 		"Please enter root's password below or click "
+ 		"Ignore to continue with your current privileges.");
+diff -aur kdebase-3.4.0-org/kdesu/kdesud/Makefile.am kdebase-3.4.0/kdesu/kdesud/Makefile.am
+--- kdebase-3.4.0-org/kdesu/kdesud/Makefile.am	2002-06-15 06:39:49.000000000 +0200
++++ kdebase-3.4.0/kdesu/kdesud/Makefile.am	2005-03-09 06:51:54.000000000 +0100
+@@ -21,7 +21,7 @@
+ 	@echo "********************************************************"
+ 
+ install-exec-hook: 
+-	@(chown root:@nogroup@ $(DESTDIR)$(bindir)/kdesud && chmod 2755  $(DESTDIR)$(bindir)/kdesud) \
++	@(chown 0:@nogroup@ $(DESTDIR)$(bindir)/kdesud && chmod 2755  $(DESTDIR)$(bindir)/kdesud) \
+ 	|| echo "Error: Could not install kdesud as setgid nogroup!!\n" \
+ 	"The password caching feature is disabled."
+ 
+diff -aur kdebase-3.4.0-org/kdesu/kdesud/Makefile.in kdebase-3.4.0/kdesu/kdesud/Makefile.in
+--- kdebase-3.4.0-org/kdesu/kdesud/Makefile.in	2005-02-25 19:05:14.000000000 +0100
++++ kdebase-3.4.0/kdesu/kdesud/Makefile.in	2005-03-09 06:51:54.000000000 +0100
+@@ -877,7 +877,7 @@
+ 	@echo "********************************************************"
+ 
+ install-exec-hook: 
+-	@(chown root:@nogroup@ $(DESTDIR)$(bindir)/kdesud && chmod 2755  $(DESTDIR)$(bindir)/kdesud) \
++	@(chown 0:@nogroup@ $(DESTDIR)$(bindir)/kdesud && chmod 2755  $(DESTDIR)$(bindir)/kdesud) \
+ 	|| echo "Error: Could not install kdesud as setgid nogroup!!\n" \
+ 	"The password caching feature is disabled."
+ 
+diff -aur kdebase-3.4.0-org/kdesu/kdesud/handler.cpp kdebase-3.4.0/kdesu/kdesud/handler.cpp
+--- kdebase-3.4.0-org/kdesu/kdesud/handler.cpp	2004-02-24 12:30:10.000000000 +0100
++++ kdebase-3.4.0/kdesu/kdesud/handler.cpp	2005-03-09 06:51:54.000000000 +0100
+@@ -13,6 +13,7 @@
+ #include <signal.h>
+ #include <errno.h>
+ #include <string.h>
++#include <pwd.h>
+ 
+ #include <sys/types.h>
+ #include <sys/socket.h>
+@@ -34,6 +35,15 @@
+ extern Repository *repo;
+ void kdesud_cleanup();
+ 
++const char *superuser_name()
++{
++    const char *root_str = "root";
++    struct passwd *entry = getpwuid(0);
++    if (! entry)
++       return root_str;
++    return entry->pw_name;
++}
++
+ ConnectionHandler::ConnectionHandler(int fd)
+         : SocketSecurity(fd), m_exitCode(0), m_hasExitCode(false), m_needExitCode(false), m_pid(0)
+ {
+@@ -252,7 +262,7 @@
+ 
+         QCString auth_user;
+         if ((m_Scheduler != SuProcess::SchedNormal) || (m_Priority > 50))
+-            auth_user = "root";
++            auth_user = superuser_name();
+         else
+             auth_user = user;
+         key = makeKey(2, m_Host, auth_user, command);
+diff -aur kdebase-3.4.0-org/kdm/kfrontend/genkdmconf.c kdebase-3.4.0/kdm/kfrontend/genkdmconf.c
+--- kdebase-3.4.0-org/kdm/kfrontend/genkdmconf.c	2005-02-23 12:26:01.000000000 +0100
++++ kdebase-3.4.0/kdm/kfrontend/genkdmconf.c	2005-03-09 06:56:05.000000000 +0100
+@@ -591,7 +591,7 @@
+ "# Reassign ownership of the console to root, this should disallow\n"
+ "# assignment of console output to any random users's xterm. See Xstartup.\n"
+ "#\n"
+-"#chown root /dev/console\n"
++"#chown 0 /dev/console\n"
+ "#chmod 622 /dev/console\n"
+ "\n"
+ #ifdef _AIX
+@@ -1795,10 +1795,20 @@
+ 	}
+ }
+ 
++static const char * superuser_name()
++{
++    const char *root_str = "root";
++    struct passwd *entry = getpwuid (0);
++    if (! entry)
++       return root_str;
++    return entry->pw_name;
++}
++
+ static void
+ upd_facedir( Entry *ce, Section *cs ATTR_UNUSED )
+ {
+ 	char *oldpic, *newpic, *defpic, *rootpic;
++	const char *sys_user;
+ 	const char *dir;
+ 	struct passwd *pw;
+ 
+@@ -1809,9 +1819,10 @@
+ 		ASPrintf( &defpic, "%s/.default.face.icon", dir );
+ 		ASPrintf( &rootpic, "%s/root.face.icon", dir );
+ 		if (oldkde) {
++			sys_user = superuser_name();
+ 			setpwent();
+ 			while ((pw = getpwent()))
+-				if (strcmp( pw->pw_name, "root" )) {
++				if (strcmp( pw->pw_name, sys_user )) {
+ 					ASPrintf( &oldpic, "%s/../apps/kdm/pics/users/%s.png",
+ 					          oldkde, pw->pw_name );
+ 					ASPrintf( &newpic, "%s/%s.face.icon", dir, pw->pw_name );
+diff -aur kdebase-3.4.0-org/kdm/kfrontend/kdmshutdown.cpp kdebase-3.4.0/kdm/kfrontend/kdmshutdown.cpp
+--- kdebase-3.4.0-org/kdm/kfrontend/kdmshutdown.cpp	2005-02-23 12:26:02.000000000 +0100
++++ kdebase-3.4.0/kdm/kfrontend/kdmshutdown.cpp	2005-03-09 06:57:44.000000000 +0100
+@@ -35,6 +35,9 @@
+ #include <kstandarddirs.h>
+ #include <kuser.h>
+ 
++#include <pwd.h>
++#include <sys/types.h>
++
+ #include <qcombobox.h>
+ #include <qvbuttongroup.h>
+ #include <qstyle.h>
+@@ -57,6 +60,15 @@
+ int KDMShutdownBase::curPlugin = -1;
+ PluginList KDMShutdownBase::pluginList;
+ 
++static const char *superuser_name()
++{
++    const char *root_str = "root";
++    struct passwd *entry = getpwuid(0);
++    if (! entry)
++       return root_str;
++    return entry->pw_name;
++}
++
+ KDMShutdownBase::KDMShutdownBase( int _uid, QWidget *_parent )
+ 	: inherited( _parent )
+ 	, box( new QVBoxLayout( this, KDmh, KDsh ) )
+@@ -96,7 +108,7 @@
+ 			pluginList = KGVerify::init( _pluginsShutdown );
+ 		}
+ 		verify = new KGStdVerify( this, this,
+-		                          prevWidget, "root",
++		                          prevWidget, superuser_name(),
+ 		                          pluginList, KGreeterPlugin::Authenticate,
+ 		                          KGreeterPlugin::Shutdown );
+ 		verify->selectPlugin( curPlugin );
+diff -aur kdebase-3.4.0-org/kioslave/media/mediaimpl.cpp kdebase-3.4.0/kioslave/media/mediaimpl.cpp
+--- kdebase-3.4.0-org/kioslave/media/mediaimpl.cpp	2005-02-23 12:26:40.000000000 +0100
++++ kdebase-3.4.0/kioslave/media/mediaimpl.cpp	2005-03-09 07:05:20.000000000 +0100
+@@ -31,9 +31,29 @@
+ #include <qeventloop.h>
+ 
+ #include <sys/stat.h>
++#include <pwd.h>
++#include <grp.h>
+ 
+ #include "medium.h"
+ 
++static const char *superuser_name()
++{
++    const char *root_str = "root";
++    struct passwd *entry = getpwuid(0);
++    if (! entry)
++       return root_str;
++    return entry->pw_name;
++}
++
++static const char *superuser_group()
++{
++    const char *root_str = "root";
++    struct group *entry = getgrgid(0);
++    if (! entry)
++       return root_str;
++    return entry->gr_name;
++}
++
+ MediaImpl::MediaImpl() : QObject(), DCOPObject("mediaimpl"), mp_mounting(0L)
+ {
+ 
+@@ -299,8 +319,8 @@
+ 	addAtom(entry, KIO::UDS_ACCESS, 0555);
+ 	addAtom(entry, KIO::UDS_MIME_TYPE, 0, "inode/directory");
+ 	addAtom(entry, KIO::UDS_ICON_NAME, 0, "blockdevice");
+-	addAtom(entry, KIO::UDS_USER, 0, "root");
+-	addAtom(entry, KIO::UDS_GROUP, 0, "root");
++	addAtom(entry, KIO::UDS_USER, 0, superuser_name());
++	addAtom(entry, KIO::UDS_GROUP, 0, superuser_group());
+ }
+ 
+ void MediaImpl::slotStatResult(KIO::Job *job)
+diff -aur kdebase-3.4.0-org/kioslave/nfs/kio_nfs.cpp kdebase-3.4.0/kioslave/nfs/kio_nfs.cpp
+--- kdebase-3.4.0-org/kioslave/nfs/kio_nfs.cpp	2004-11-16 03:10:34.000000000 +0100
++++ kdebase-3.4.0/kioslave/nfs/kio_nfs.cpp	2005-03-09 07:01:06.000000000 +0100
+@@ -39,6 +39,7 @@
+ #include <memory.h>
+ #include <netdb.h>
+ #include <pwd.h>
++#include <grp.h>
+ #include <stdlib.h>
+ #include <strings.h>
+ #include <stdio.h>
+@@ -109,6 +110,24 @@
+ //#endif
+ 
+ 
++static const char *superuser_name()
++{
++    const char *root_str = "root";
++    struct passwd *entry = getpwuid(0);
++    if (! entry)
++       return root_str;
++    return entry->pw_name;
++}
++
++static const char *superuser_group()
++{
++    const char *root_str = "root";
++    struct group *entry = getgrgid(0);
++    if (! entry)
++       return root_str;
++    return entry->gr_name;
++}
++ 
+ extern "C" { int KDE_EXPORT kdemain(int argc, char **argv); }
+ 
+ int kdemain( int argc, char **argv )
+@@ -638,10 +657,10 @@
+    entry.append( atom );
+ 
+    atom.m_uds = KIO::UDS_USER;
+-   atom.m_str = "root";
++   atom.m_str = superuser_name();
+    entry.append( atom );
+    atom.m_uds = KIO::UDS_GROUP;
+-   atom.m_str = "root";
++   atom.m_str = superuser_group();
+    entry.append( atom );
+ 
+    //a dummy size
+diff -aur kdebase-3.4.0-org/kioslave/nntp/nntp.cpp kdebase-3.4.0/kioslave/nntp/nntp.cpp
+--- kdebase-3.4.0-org/kioslave/nntp/nntp.cpp	2004-11-16 03:10:34.000000000 +0100
++++ kdebase-3.4.0/kioslave/nntp/nntp.cpp	2005-03-09 07:02:26.000000000 +0100
+@@ -17,6 +17,8 @@
+ #include <stdio.h>
+ #include <unistd.h>
+ #include <errno.h>
++#include <pwd.h>
++#include <grp.h>
+ 
+ #include <qdir.h>
+ #include <qregexp.h>
+@@ -45,6 +47,24 @@
+ 
+ using namespace KIO;
+ 
++static const char *superuser_name()
++{
++    const char *root_str = "root";
++    struct passwd *entry = getpwuid(0);
++    if (! entry)
++       return root_str;
++    return entry->pw_name;
++}
++
++static const char *superuser_group()
++{
++    const char *root_str = "root";
++    struct group *entry = getgrgid(0);
++    if (! entry)
++       return root_str;
++    return entry->gr_name;
++}
++
+ extern "C" { int KDE_EXPORT kdemain(int argc, char **argv); }
+ 
+ int kdemain(int argc, char **argv) {
+@@ -465,13 +485,13 @@
+   entry.append(atom);
+ 
+   atom.m_uds = UDS_USER;
+-  atom.m_str = user.isEmpty() ? QString("root") : user;
++  atom.m_str = user.isEmpty() ? QString(superuser_name()) : user;
+   atom.m_long= 0;
+   entry.append(atom);
+ 
+   /*
+   atom.m_uds = UDS_GROUP;
+-  atom.m_str = "root";
++  atom.m_str = superuser_group();
+   atom.m_long=0;
+   entry->append(atom);
+   */
+diff -aur kdebase-3.4.0-org/kioslave/remote/remoteimpl.cpp kdebase-3.4.0/kioslave/remote/remoteimpl.cpp
+--- kdebase-3.4.0-org/kioslave/remote/remoteimpl.cpp	2005-02-23 12:26:43.000000000 +0100
++++ kdebase-3.4.0/kioslave/remote/remoteimpl.cpp	2005-03-09 07:06:10.000000000 +0100
+@@ -30,10 +30,30 @@
+ #include <qfile.h>
+ 
+ #include <sys/stat.h>
++#include <pwd.h>
++#include <grp.h>
+ 
+ #define WIZARD_URL "remote:/x-wizard_service.desktop"
+ #define WIZARD_SERVICE "knetattach"
+ 
++static const char *superuser_name()
++{
++    const char *root_str = "root";
++    struct passwd *entry = getpwuid(0);
++    if (! entry)
++       return root_str;
++    return entry->pw_name;
++}
++
++static const char *superuser_group()
++{
++    const char *root_str = "root";
++    struct group *entry = getgrgid(0);
++    if (! entry)
++       return root_str;
++    return entry->gr_name;
++}
++
+ RemoteImpl::RemoteImpl()
+ {
+ 	KGlobal::dirs()->addResourceType("remote_entries",
+@@ -167,8 +187,8 @@
+ 	addAtom(entry, KIO::UDS_ACCESS, 0777);
+ 	addAtom(entry, KIO::UDS_MIME_TYPE, 0, "inode/directory");
+ 	addAtom(entry, KIO::UDS_ICON_NAME, 0, "network");
+-	addAtom(entry, KIO::UDS_USER, 0, "root");
+-	addAtom(entry, KIO::UDS_GROUP, 0, "root");
++	addAtom(entry, KIO::UDS_USER, 0, superuser_name());
++	addAtom(entry, KIO::UDS_GROUP, 0, superuser_group());
+ }
+ 
+ static KURL findWizardRealURL()
+diff -aur kdebase-3.4.0-org/kioslave/system/systemimpl.cpp kdebase-3.4.0/kioslave/system/systemimpl.cpp
+--- kdebase-3.4.0-org/kioslave/system/systemimpl.cpp	2005-02-04 00:19:02.000000000 +0100
++++ kdebase-3.4.0/kioslave/system/systemimpl.cpp	2005-03-09 07:07:04.000000000 +0100
+@@ -29,6 +29,26 @@
+ #include <qdir.h>
+ 
+ #include <sys/stat.h>
++#include <pwd.h>
++#include <grp.h>
++
++static const char *superuser_name()
++{
++    const char *root_str = "root";
++    struct passwd *entry = getpwuid(0);
++    if (! entry)
++       return root_str;
++    return entry->pw_name;
++}
++
++static const char *superuser_group()
++{
++    const char *root_str = "root";
++    struct group *entry = getgrgid(0);
++    if (! entry)
++       return root_str;
++    return entry->gr_name;
++}
+ 
+ SystemImpl::SystemImpl() : QObject()
+ {
+@@ -129,8 +149,8 @@
+ 	addAtom(entry, KIO::UDS_ACCESS, 0555);
+ 	addAtom(entry, KIO::UDS_MIME_TYPE, 0, "inode/system_directory");
+ 	addAtom(entry, KIO::UDS_ICON_NAME, 0, "system");
+-	addAtom(entry, KIO::UDS_USER, 0, "root");
+-	addAtom(entry, KIO::UDS_GROUP, 0, "root");
++	addAtom(entry, KIO::UDS_USER, 0, superuser_name());
++	addAtom(entry, KIO::UDS_GROUP, 0, superuser_group());
+ }
+ 
+ void SystemImpl::createEntry(KIO::UDSEntry &entry,
+diff -aur kdebase-3.4.0-org/konqueror/keditbookmarks/Makefile.am kdebase-3.4.0/konqueror/keditbookmarks/Makefile.am
+--- kdebase-3.4.0-org/konqueror/keditbookmarks/Makefile.am	2005-02-04 00:19:04.000000000 +0100
++++ kdebase-3.4.0/konqueror/keditbookmarks/Makefile.am	2005-03-09 07:02:35.000000000 +0100
+@@ -13,7 +13,7 @@
+ dcop_DCOPIDLNG = true
+ keditbookmarks_la_SOURCES = main.cpp listview.cpp toplevel.cpp actionsimpl.cpp commands.cpp importers.cpp dcop.skel dcop.cpp bookmarkiterator.cpp  \
+                             testlink.cpp favicons.cpp updater.cpp exporters.cpp kbookmarknotifier.stub bookmarkinfo.cpp
+-kbookmarknotifier_DIR = $(includedir)
++kbookmarknotifier_DIR = $(kde_includes)
+ keditbookmarks_la_LIBADD  = $(top_builddir)/libkonq/libkonq.la
+ keditbookmarks_la_LDFLAGS = $(all_libraries) -module -avoid-version
+ 
+diff -aur kdebase-3.4.0-org/konqueror/keditbookmarks/Makefile.in kdebase-3.4.0/konqueror/keditbookmarks/Makefile.in
+--- kdebase-3.4.0-org/konqueror/keditbookmarks/Makefile.in	2005-02-25 19:05:18.000000000 +0100
++++ kdebase-3.4.0/konqueror/keditbookmarks/Makefile.in	2005-03-09 07:02:35.000000000 +0100
+@@ -603,7 +603,7 @@
+ libkdeinit_keditbookmarks_la_SOURCES = main.cpp listview.cpp toplevel.cpp actionsimpl.cpp commands.cpp importers.cpp  dcop.cpp bookmarkiterator.cpp  \
+                             testlink.cpp favicons.cpp updater.cpp exporters.cpp  bookmarkinfo.cpp dcop_skel.cpp kbookmarknotifier_stub.cpp
+ 
+-kbookmarknotifier_DIR = $(includedir)
++kbookmarknotifier_DIR = $(kde_includes)
+ #>- keditbookmarks_la_LIBADD = $(top_builddir)/libkonq/libkonq.la
+ #>+ 1
+ keditbookmarks_la_LIBADD = libkdeinit_keditbookmarks.la
+@@ -1048,8 +1048,8 @@
+ 	KDECONFIG="$(KDECONFIG)" $(DCOPIDLNG) $(srcdir)/dcop.h > dcop.kidl || ( rm -f dcop.kidl ; false )
+ dcop_skel.cpp: dcop.kidl
+ 	$(DCOPIDL2CPP) --c++-suffix cpp --no-signals --no-stub dcop.kidl
+-kbookmarknotifier.kidl: $(includedir)/kbookmarknotifier.h $(DCOP_DEPENDENCIES)
+-	$(DCOPIDL) $(includedir)/kbookmarknotifier.h > kbookmarknotifier.kidl || ( rm -f kbookmarknotifier.kidl ; false )
++kbookmarknotifier.kidl: $(kde_includes)/kbookmarknotifier.h $(DCOP_DEPENDENCIES)
++	$(DCOPIDL) $(kde_includes)/kbookmarknotifier.h > kbookmarknotifier.kidl || ( rm -f kbookmarknotifier.kidl ; false )
+ kbookmarknotifier_stub.h: kbookmarknotifier.kidl
+ 	$(DCOPIDL2CPP) --c++-suffix cpp --no-signals --no-skel kbookmarknotifier.kidl
+ 

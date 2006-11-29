@@ -1,0 +1,19 @@
+# by Guilherme Bedin
+# 02/12/2003
+
+url=$ftpGnu/gcc/gcc-3.3.2/gcc-3.3.2.tar.bz2
+compile_version=1.7.1
+recipe_type=configure
+needs_build_directory=yes
+configure_options=(
+   "--enable-shared"
+   "--enable-threads=posix"
+   "--enable-__cxa_atexit"
+   "--enable-clocale=gnu"
+   "--enable-languages=f77"
+)
+post_install() {
+   cd "$target/lib"
+   rm -f libiberty.a
+   ln -s /Programs/GCC/3.3.2/lib/* .
+}

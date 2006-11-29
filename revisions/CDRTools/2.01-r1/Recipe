@@ -1,0 +1,12 @@
+# Recipe for version 2.01 by  Ozgur Ulukir, on Thu Dec 23 03:57:09 EET 2004
+# by Andre Detsch
+# 2004.01.06 16:59
+
+url='ftp://ftp.berlios.de/pub/cdrecord/cdrtools-2.01.tar.gz'
+dir='cdrtools-2.01'
+compile_version=1.7.1
+recipe_type=makefile
+
+pre_build() {
+   GrepReplace "/opt/schily" "$target" DEFAULTS/Defaults.linux
+}

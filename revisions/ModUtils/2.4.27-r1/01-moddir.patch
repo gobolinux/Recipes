@@ -1,0 +1,93 @@
+diff -X dontdiff -Nur modutils-2.4.27/configure.in modutils-2.4.27-lucasvr/configure.in
+--- modutils-2.4.27/configure.in	2004-03-07 05:47:20.000000000 -0300
++++ modutils-2.4.27-lucasvr/configure.in	2004-05-10 22:25:09.000000000 -0300
+@@ -39,6 +39,15 @@
+   CFLAGS="-O2 -Wall"
+ fi
+ 
++AC_ARG_WITH(moddir,
++[  --with-moddir=path      Give the path for system modules directory.]
++[                         [ Defaults to /lib/modules ]],
++[if test ! -z "$withval"; then
++  MODDIR="\\\"$withval\\\""
++  CFLAGS="$CFLAGS -DMODDIR=$MODDIR"
++fi])
++AC_SUBST(MODDIR)
++
+ AC_PROG_CC
+ AC_PROG_RANLIB
+ AC_PROG_LN_S
+diff -X dontdiff -Nur modutils-2.4.27/util/alias.h modutils-2.4.27-lucasvr/util/alias.h
+--- modutils-2.4.27/util/alias.h	2004-02-22 04:33:30.000000000 -0300
++++ modutils-2.4.27-lucasvr/util/alias.h	2004-05-10 22:25:09.000000000 -0300
+@@ -9,7 +9,11 @@
+  */
+ static char *tbpath[] =
+ {
++#ifdef MODDIR
++	MODDIR,
++#else
+ 	"/lib/modules",
++#endif
+ 	NULL			/* marks the end of the list! */
+ };
+ 
+diff -X dontdiff -Nur modutils-2.4.27/util/config.c modutils-2.4.27-lucasvr/util/config.c
+--- modutils-2.4.27/util/config.c	2003-10-26 09:28:14.000000000 -0200
++++ modutils-2.4.27-lucasvr/util/config.c	2004-05-10 22:25:09.000000000 -0300
+@@ -65,6 +65,10 @@
+ #include "config.h"
+ #include "alias.h"
+ 
++#ifndef MODDIR
++#define MODDIR "/lib/modules"
++#endif
++
+ int flag_autoclean; /* set/used by modprobe and insmod */
+ 
+ struct utsname uts_info;
+@@ -196,7 +200,7 @@
+ 			return 1;	/* Config file is newer. */
+ 	}
+ 
+-	snprintf (dep, sizeof(dep), "%s/lib/modules/%s", base_dir, force_ver);
++	snprintf (dep, sizeof(dep), "%s/%s/%s", base_dir, MODDIR, force_ver);
+ 	return xftw (dep, check_update);
+ }
+ 
+@@ -492,8 +496,8 @@
+ 		 * specification, the default value is used since
+ 		 * the system can't work without one.
+ 		 */
+-		snprintf(tmp, sizeof(tmp), "%s/lib/modules/%s/modules.%s",
+-			base_dir, version, gf->base);
++		snprintf(tmp, sizeof(tmp), "%s/%s/%s/modules.%s",
++			base_dir, MODDIR, version, gf->base);
+ 		gf->name = xstrdup(tmp);
+ 	} else { /* xxxfile defined in modules.conf */
+ 		/*
+@@ -769,13 +773,13 @@
+ 
+ 			/* The first entry in the path list */
+ 			modpath[nmodpath].type = xstrdup("boot");
+-			snprintf(tmpline, sizeof(tmpline), "%s/lib/modules/boot", base_dir);
++			snprintf(tmpline, sizeof(tmpline), "%s/%s/boot", base_dir, MODDIR);
+ 			modpath[nmodpath].path = xstrdup(tmpline);
+ 			++nmodpath;
+ 
+ 			/* The second entry in the path list, `uname -r` */
+ 			modpath[nmodpath].type = xstrdup("toplevel");
+-			snprintf(tmpline, sizeof(tmpline), "%s/lib/modules/%s", base_dir, version);
++			snprintf(tmpline, sizeof(tmpline), "%s/%s/%s", base_dir, MODDIR, version);
+ 			modpath[nmodpath].path = xstrdup(tmpline);
+ 			++nmodpath;
+ 
+@@ -785,7 +789,7 @@
+ 				if (*k == '.' && ++n == 2)
+ 					break;
+ 			}
+-			snprintf(tmpline, sizeof(tmpline), "%s/lib/modules/%.*s", base_dir,
++			snprintf(tmpline, sizeof(tmpline), "%s/%s/%.*s", base_dir, MODDIR,
+ 				(/* typecast for Alpha */ int)(k - version), version);
+ 			modpath[nmodpath].path = xstrdup(tmpline);
+ 			++nmodpath;

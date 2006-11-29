@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for OpenSLP by David Smith <dsmith@algonet.se>, on tis mar 29 19:34:43 CEST 2005
+# Recipe for version 1.2.0 by David Smith <dsmith@algonet.se>, on tis mar 29 19:34:43 CEST 2005
+compile_version=1.7.1
+url="$httpSourceforge/openslp/openslp-1.2.0.tar.gz"
+file_size=548410
+file_md5=b101a73c11d759c6d7a48483f887fae7
+recipe_type=configure
+autogen_before_configure=yes

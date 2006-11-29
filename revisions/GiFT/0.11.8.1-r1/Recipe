@@ -1,0 +1,11 @@
+# Recipe for version 0.11.8.1 by Andy Feldman (nereusren@gmail.com), on Sat Apr 1 10:42:44 CST 2006
+# Recipe (MakeRecipe) for GiFT by Andy Feldman, on Sat Jun 18 00:08:38 CDT 2005
+compile_version=1.7.1
+url="$httpSourceforge/gift/gift-0.11.8.1.tar.bz2"
+recipe_type=configure
+include=(
+    "GiFT-OpenFT---0.2.1.6"
+    "GiFT-GNUTella--0.0.10.1"
+    "GiFT-FastTrack--0.8.9"
+    "GiFT-Ares--0.2.2"
+)

@@ -1,0 +1,101 @@
+diff -Nur kdebase-3.3.2/kioslave/nfs/kio_nfs.cpp kdebase-3.3.2-lucasvr/kioslave/nfs/kio_nfs.cpp
+--- kdebase-3.3.2/kioslave/nfs/kio_nfs.cpp	2004-07-17 14:52:07.000000000 -0300
++++ kdebase-3.3.2-lucasvr/kioslave/nfs/kio_nfs.cpp	2004-08-31 00:07:02.000000000 -0300
+@@ -39,6 +39,7 @@
+ #include <memory.h>
+ #include <netdb.h>
+ #include <pwd.h>
++#include <grp.h>
+ #include <stdlib.h>
+ #include <strings.h>
+ #include <stdio.h>
+@@ -108,6 +109,23 @@
+ }
+ //#endif
+ 
++const char *superuser_name()
++{
++    const char *root_str = "root";
++    struct passwd *entry = getpwuid(0);
++    if (! entry)
++       return root_str;
++    return entry->pw_name;
++}
++
++const char *superuser_group()
++{
++    const char *root_str = "root";
++    struct group *entry = getgrgid(0);
++    if (! entry)
++       return root_str;
++    return entry->gr_name;
++}
+ 
+ extern "C" { int kdemain(int argc, char **argv); }
+ 
+@@ -638,10 +656,10 @@
+    entry.append( atom );
+ 
+    atom.m_uds = KIO::UDS_USER;
+-   atom.m_str = "root";
++   atom.m_str = superuser_name();
+    entry.append( atom );
+    atom.m_uds = KIO::UDS_GROUP;
+-   atom.m_str = "root";
++   atom.m_str = superuser_group();
+    entry.append( atom );
+ 
+    //a dummy size
+diff -Nur kdebase-3.3.2/kioslave/nntp/nntp.cpp kdebase-3.3.2-lucasvr/kioslave/nntp/nntp.cpp
+--- kdebase-3.3.2/kioslave/nntp/nntp.cpp	2004-05-22 17:26:52.000000000 -0300
++++ kdebase-3.3.2-lucasvr/kioslave/nntp/nntp.cpp	2004-08-31 00:09:00.000000000 -0300
+@@ -17,6 +17,8 @@
+ #include <stdio.h>
+ #include <unistd.h>
+ #include <errno.h>
++#include <pwd.h>
++#include <grp.h>
+ 
+ #include <qdir.h>
+ #include <qregexp.h>
+@@ -45,6 +47,24 @@
+ 
+ using namespace KIO;
+ 
++const char *superuser_name()
++{
++    const char *root_str = "root";
++    struct passwd *entry = getpwuid(0);
++    if (! entry)
++       return root_str;
++    return entry->pw_name;
++}
++
++const char *superuser_group()
++{
++    const char *root_str = "root";
++    struct group *entry = getgrgid(0);
++    if (! entry)
++       return root_str;
++    return entry->gr_name;
++}
++
+ extern "C" { int kdemain(int argc, char **argv); }
+ 
+ int kdemain(int argc, char **argv) {
+@@ -465,13 +485,13 @@
+   entry.append(atom);
+ 
+   atom.m_uds = UDS_USER;
+-  atom.m_str = user.isEmpty() ? QString("root") : user;
++  atom.m_str = user.isEmpty() ? QString(superuser_name()) : user;
+   atom.m_long= 0;
+   entry.append(atom);
+ 
+   /*
+   atom.m_uds = UDS_GROUP;
+-  atom.m_str = "root";
++  atom.m_str = superuser_group();
+   atom.m_long=0;
+   entry->append(atom);
+   */

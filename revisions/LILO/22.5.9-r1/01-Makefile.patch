@@ -1,0 +1,20 @@
+--- lilo-22.5.9/Makefile.orig	2004-08-10 04:42:10.000000000 -0300
++++ lilo-22.5.9/Makefile	2004-08-10 04:46:57.000000000 -0300
+@@ -62,12 +62,11 @@
+ 
+ # End of configuration variables
+ 
+-SBIN_DIR=/sbin
+-CFG_DIR=/etc
+-BOOT_DIR=/boot
+-USRSBIN_DIR=/usr/sbin
+-MAN_DIR=`if [ -f /usr/bin/manpath ]; then \
+-  manpath | sed "s/:.*//"; else echo /usr/man; fi`
++SBIN_DIR=/Programs/LILO/Current/sbin
++CFG_DIR=/Programs/LILO/Settings
++BOOT_DIR=/System/Kernel/Boot
++USRSBIN_DIR=/Programs/LILO/Current/sbin
++MAN_DIR=/Programs/LILO/Current/man
+ BUILTIN=1
+ 
+ PCONFIG=$(LILO) `( if [ -r $$ROOT/etc/lilo.defines ]; then \

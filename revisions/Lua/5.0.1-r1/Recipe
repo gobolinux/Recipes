@@ -1,0 +1,14 @@
+# by Felix Breuer
+# 2004.01.16 20:13
+
+url=http://www.lua.org/ftp/lua-5.0.1.tar.gz
+compile_version=1.7.1
+recipe_type=makefile
+
+# We have to tell Lua to install its files to $target by editing the file
+#   lua-5.0.1/config
+# and setting 
+#   INSTALL_ROOT= $target
+pre_build() {
+  sed -i "s:^INSTALL_ROOT=\(.\)*$:INSTALL_ROOT= $target:" config
+}

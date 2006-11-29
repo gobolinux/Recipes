@@ -1,0 +1,45 @@
+diff -Naur pfstmo-1.0/src/fattal02/pde.cpp pfstmo-1.0-fabio/src/fattal02/pde.cpp
+--- pfstmo-1.0/src/fattal02/pde.cpp	2004-12-15 08:33:34.000000000 -0200
++++ pfstmo-1.0-fabio/src/fattal02/pde.cpp	2005-01-08 19:58:40.000000000 -0200
+@@ -420,12 +420,12 @@
+   }
+ 
+   // given function f restricted on levels
+-  pfs::Array2D** RHS = new (pfs::Array2D*)[levels+1];
++  pfs::Array2D** RHS = new pfs::Array2D* [levels+1];
+ 
+   // approximate initial sollutions on levels
+-  pfs::Array2DImpl** IU = new (pfs::Array2DImpl*)[levels+1];
++  pfs::Array2DImpl** IU = new pfs::Array2DImpl* [levels+1];
+   // target functions in cycles (approximate sollution error (uh - ~uh) )
+-  pfs::Array2DImpl** VF = new (pfs::Array2DImpl*)[levels+1];
++  pfs::Array2DImpl** VF = new pfs::Array2DImpl* [levels+1];
+ 
+   VF[0] = new pfs::Array2DImpl(xmax,ymax);
+   RHS[0] = F;
+diff -Naur pfstmo-1.0/src/fattal02/tmo_fattal02.cpp pfstmo-1.0-fabio/src/fattal02/tmo_fattal02.cpp
+--- pfstmo-1.0/src/fattal02/tmo_fattal02.cpp	2004-12-15 07:48:53.000000000 -0200
++++ pfstmo-1.0-fabio/src/fattal02/tmo_fattal02.cpp	2005-01-08 19:57:40.000000000 -0200
+@@ -229,7 +229,7 @@
+   int width = gradients[nlevels-1]->getCols();
+   int height = gradients[nlevels-1]->getRows();
+   int k;
+-  pfs::Array2D** fi = new (pfs::Array2D*)[nlevels];
++  pfs::Array2D** fi = new pfs::Array2D* [nlevels];
+ 
+   fi[nlevels-1] = new pfs::Array2DImpl(width,height);
+   for( k=nlevels-1 ; k>=0 ; k-- )
+@@ -323,11 +323,11 @@
+     nlevels++;
+     mins /= 2;
+   }
+-  pfs::Array2D** pyramids = new (pfs::Array2D*)[nlevels];
++  pfs::Array2D** pyramids = new pfs::Array2D* [nlevels];
+   createGaussianPyramids(H, pyramids, nlevels);
+ 
+   // calculate gradients and its average values on pyramid levels
+-  pfs::Array2D** gradients = new (pfs::Array2D*)[nlevels];
++  pfs::Array2D** gradients = new pfs::Array2D* [nlevels];
+   float* avgGrad = new float[nlevels];
+   for( k=0 ; k<nlevels ; k++ )
+   {

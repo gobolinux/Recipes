@@ -1,0 +1,24 @@
+diff -uNr ncurses-5.3.orig/aclocal.m4 ncurses-5.3/aclocal.m4
+--- ncurses-5.3.orig/aclocal.m4	2002-09-22 10 49:14.000000000 +1000
++++ ncurses-5.3/aclocal.m4	2003-03-19 12:34:43.000000000 +1100
+@@ -554,7 +554,7 @@
+ do
+ for cf_excp in "" MATH_EXCEPTION
+ do
+-	CXXFLAGS="$cf_save_CXXFLAGS -I${srcdir}/c++ -I${srcdir}/menu"
++	CXXFLAGS="$cf_save_CXXFLAGS -I${srcdir}/c++ -I${srcdir}/menu -I${srcdir}/include"
+ 	test -n "$cf_math" && CXXFLAGS="$CXXFLAGS -DETIP_NEEDS_${cf_math}"
+ 	test -n "$cf_excp" && CXXFLAGS="$CXXFLAGS -DETIP_NEEDS_${cf_excp}"
+ AC_TRY_COMPILE([
+diff -uNr ncurses-5.3.orig/configure ncurses-5.3/configure
+--- ncurses-5.3.orig/configure	2002-09-22 10:49:14.000000000 +1000
++++ ncurses-5.3/configure	2003-03-19 12:34:43.000000000 +1100
+@@ -9659,7 +9659,7 @@
+ do
+ for cf_excp in "" MATH_EXCEPTION
+ do
+-	CXXFLAGS="$cf_save_CXXFLAGS -I${srcdir}/c++ -I${srcdir}/menu"
++	CXXFLAGS="$cf_save_CXXFLAGS -I${srcdir}/c++ -I${srcdir}/menu -I${srcdir}/include"
+ 	test -n "$cf_math" && CXXFLAGS="$CXXFLAGS -DETIP_NEEDS_${cf_math}"
+ 	test -n "$cf_excp" && CXXFLAGS="$CXXFLAGS -DETIP_NEEDS_${cf_excp}"
+ cat >conftest.$ac_ext <<_ACEOF

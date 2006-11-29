@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for MLDonkey by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sun Sep 25 03:46:48 BRT 2005
+# Recipe for version 2.6.4 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sun Sep 25 03:46:48 BRT 2005
+compile_version=1.7.1
+url="http://savannah.nongnu.org/download/mldonkey/mldonkey-2.6.4.tar.bz2"
+file_size=2669228
+file_md5=d969f81b51e194fcaf46790686269e3e
+recipe_type=configure
+
+make_variables=("prefix=$target")
+configure_options=("--enable-batch")

@@ -1,0 +1,10 @@
+# Recipe for version 1.8.4 by Harald Klimach, on Sun Jan 29 23:44:51 CET 2006
+# by Michael Homer
+# 2004.01.28 04:31
+compile_version=1.7.1
+url="ftp://ftp.ruby-lang.org/pub/ruby/ruby-1.8.4.tar.gz"
+recipe_type=configure
+
+configure_options=(
+ "--disable-frame-address"
+)

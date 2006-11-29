@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Mixxx by ro.ko@mcnon.com, on Thu Oct 21 02:52:21 BRST 2004
+# Recipe for version 1.4a by ro.ko@mcnon.com, on Thu Oct 21 02:52:21 BRST 2004
+compile_version=1.7.1
+url="$httpSourceforge/mixxx/mixxx-1.4a.tar.gz"
+file_size=3842082
+file_md5=b5b00f17e1a107d307162b317722645c
+dir='mixxx-1.4/src'
+recipe_type=configure
+configure_options=(
+--enable-Jack
+--enable-Alsa
+)

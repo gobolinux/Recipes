@@ -1,0 +1,19 @@
+# Recipe (MakeRecipe) for Afinger by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Apr 26 14:24:24 BRT 2005
+# Recipe for version 0.43 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Apr 26 14:24:24 BRT 2005
+compile_version=1.7.1
+url="http://www.auxio.org/pub/auxio/afinger/afinger-0.43.tar.gz"
+file_size=24492
+file_md5=4f377dd2a35f269731d66aefb118ef49
+recipe_type=manifest
+
+pre_link() {
+	mkdir -p $target/../Settings
+	
+	GrepReplace "/usr/local/etc/afinger.conf" "$goboSettings/afinger.conf" afinger
+	cp afinger $target/bin
+	cp afinger.conf $target/../Settings
+
+	pushd $target/bin
+	ln -sf afinger finger
+	popd
+}

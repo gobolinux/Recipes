@@ -1,0 +1,10 @@
+--- qemu-snapshot-2004-07-19_23/monitor.c.orig	2004-07-20 01:09:40.000000000 -0300
++++ qemu-snapshot-2004-07-19_23/monitor.c	2004-07-20 01:09:47.000000000 -0300
+@@ -24,6 +24,7 @@
+ #include "vl.h"
+ #include "disas.h"
+ #include <dirent.h>
++#include <setjmp.h>
+ 
+ //#define DEBUG
+ //#define DEBUG_COMPLETION

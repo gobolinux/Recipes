@@ -1,0 +1,31 @@
+--- wmii-2-old/config.mk	2005-07-31 00:14:00.000000000 +0200
++++ wmii-2/config.mk	2005-11-08 13:37:40.000000000 +0100
+@@ -1,18 +1,18 @@
+ # Customize to fit your system
+ 
+ # paths
+-PREFIX      = /usr/local
+-CONFPREFIX  = ${PREFIX}/etc
+-MANPREFIX   = ${PREFIX}/share/man
+-SHAREPREFIX = ${PREFIX}/share
+-
+-INCDIR      = ${PREFIX}/include
+-LIBDIR      = ${PREFIX}/lib
+-X11DIR      = /usr/X11R6
++PREFIX      = /Programs/WMii/2
++CONFPREFIX  = /Programs/WMii/Settings
++MANPREFIX   = ${PREFIX}/man
++SHAREPREFIX = ${PREFIX}/Shared
++
++INCDIR      = /System/Links/Headers
++LIBDIR      = /System/Links/Libraries
++X11DIR      = /System/Links
+ 
+ # includes and libs
+-INCLUDES    = -I. -I${INCDIR} -I/usr/include -I${X11DIR}/include
+-LIBS        = -L${LIBDIR} -L/usr/lib -lc -lm -L${X11DIR}/lib -lX11
++INCLUDES    = -I. -I${INCDIR}
++LIBS        = -L${LIBDIR} -lc -lm -lX11
+ DRAW        = xlib
+ 
+ # cairo support

@@ -1,0 +1,13 @@
+# by Bill Burdick
+
+#The main GKrellM site seems to be down :(
+#url=http://www.gkrellm.net/gkrellm-2.1.28.tar.bz2
+url=http://csociety-ftp.ecn.purdue.edu/pub/gentoo/distfiles/gkrellm-2.1.28.tar.bz2
+compile_version=1.7.1
+recipe_type=configure
+make_variables=(
+   "INSTALLROOT=$target"
+)
+pre_install() {
+   mkdir -p $target/lib/gkrellm2/plugins
+}

@@ -1,0 +1,14 @@
+# Recipe for version 1.5.2 by Laurent Pelecq (laurent.pelecq at soleil.org), on dim jun 11 09:49:28 CEST 2006
+# Recipe (MakeRecipe) for OpenSP by roko, <ro.ko@mcnon.com>, , on Wed Oct 13 20:36:47 BRST 2004
+compile_version=1.7.1
+url="$httpSourceforge/openjade/OpenSP-1.5.2.tar.gz"
+recipe_type=configure
+configure_options=(
+	"--disable-rpath" # do not hardcode runtime library paths
+	"--disable-doc-build" # Require XMLTO
+  	#"--enable-http"          # include support for http
+	#"--enable-default-catalog=" #pathlist provide default catalog files e.g. /usr/local/lib/sgml/catalog
+ 	#"--enable-default-search-path=" #pathlist  provide a default value for SGML_SEARCH_PATH
+ 	# "--enable-xml-messages"   #include support for XML Formatted Messages
+)
+

@@ -1,0 +1,12 @@
+# by Michael Homer
+
+url=http://bluefish.mrball.net/downloads/bluefish-0.12.tar.bz2
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+	"--with-icon-path=/Programs/Bluefish/0.12/Shared/pixmaps"
+	"--datadir=/Programs/Bluefish/0.12/Shared"
+	"--with-gnome1-menu=/blahdontdothisfixmeplease"
+	"--with-gnome2-menu=/blahdontdothisfixmeplease"
+)
+create_dirs_first=yes

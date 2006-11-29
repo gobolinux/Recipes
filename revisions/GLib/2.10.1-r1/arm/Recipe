@@ -1,0 +1,11 @@
+configure_options=(
+    "--enable-debug=no"
+    "--with-threads=posix"
+    "--cache-file=arm_cache.conf"
+)
+
+pre_build() {
+    cp $archsubdir/arm_cache.conf $dir
+    GrepReplace host_cpu target_cpu configure.in
+    autoconf
+}

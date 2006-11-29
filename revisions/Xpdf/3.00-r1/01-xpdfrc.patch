@@ -1,0 +1,56 @@
+diff -Naur xpdf-3.00-orig/doc/sample-xpdfrc xpdf-3.00/doc/sample-xpdfrc
+--- xpdf-3.00-orig/doc/sample-xpdfrc	2004-01-21 23:26:44.000000000 -0200
++++ xpdf-3.00/doc/sample-xpdfrc	2004-05-12 12:18:57.000000000 -0300
+@@ -46,20 +46,20 @@
+ # this, but you'll need to adjust this to point to wherever
+ # ghostscript is installed on your system.
+ 
+-#displayFontT1 Times-Roman		/usr/local/share/ghostscript/fonts/n021003l.pfb
+-#displayFontT1 Times-Italic		/usr/local/share/ghostscript/fonts/n021023l.pfb
+-#displayFontT1 Times-Bold		/usr/local/share/ghostscript/fonts/n021004l.pfb
+-#displayFontT1 Times-BoldItalic		/usr/local/share/ghostscript/fonts/n021024l.pfb
+-#displayFontT1 Helvetica		/usr/local/share/ghostscript/fonts/n019003l.pfb
+-#displayFontT1 Helvetica-Oblique	/usr/local/share/ghostscript/fonts/n019023l.pfb
+-#displayFontT1 Helvetica-Bold		/usr/local/share/ghostscript/fonts/n019004l.pfb
+-#displayFontT1 Helvetica-BoldOblique	/usr/local/share/ghostscript/fonts/n019024l.pfb
+-#displayFontT1 Courier			/usr/local/share/ghostscript/fonts/n022003l.pfb
+-#displayFontT1 Courier-Oblique		/usr/local/share/ghostscript/fonts/n022023l.pfb
+-#displayFontT1 Courier-Bold		/usr/local/share/ghostscript/fonts/n022004l.pfb
+-#displayFontT1 Courier-BoldOblique	/usr/local/share/ghostscript/fonts/n022024l.pfb
+-#displayFontT1 Symbol			/usr/local/share/ghostscript/fonts/s050000l.pfb
+-#displayFontT1 ZapfDingbats		/usr/local/share/ghostscript/fonts/d050000l.pfb
++displayFontT1 Times-Roman		/Files/Fonts/Ghostscript/n021003l.pfb
++displayFontT1 Times-Italic		/Files/Fonts/Ghostscript/n021023l.pfb
++displayFontT1 Times-Bold		/Files/Fonts/Ghostscript/n021004l.pfb
++displayFontT1 Times-BoldItalic		/Files/Fonts/Ghostscript/n021024l.pfb
++displayFontT1 Helvetica		/Files/Fonts/Ghostscript/n019003l.pfb
++displayFontT1 Helvetica-Oblique	/Files/Fonts/Ghostscript/n019023l.pfb
++displayFontT1 Helvetica-Bold		/Files/Fonts/Ghostscript/n019004l.pfb
++displayFontT1 Helvetica-BoldOblique	/Files/Fonts/Ghostscript/n019024l.pfb
++displayFontT1 Courier			/Files/Fonts/Ghostscript/n022003l.pfb
++displayFontT1 Courier-Oblique		/Files/Fonts/Ghostscript/n022023l.pfb
++displayFontT1 Courier-Bold		/Files/Fonts/Ghostscript/n022004l.pfb
++displayFontT1 Courier-BoldOblique	/Files/Fonts/Ghostscript/n022024l.pfb
++displayFontT1 Symbol			/Files/Fonts/Ghostscript/s050000l.pfb
++displayFontT1 ZapfDingbats		/Files/Fonts/Ghostscript/d050000l.pfb
+ 
+ # If you need to display PDF files that refer to non-embedded fonts,
+ # you should add one or more fontDir options to point to the
+@@ -67,7 +67,7 @@
+ # .pfb, and .ttf files in those directories (other files will simply
+ # be ignored).
+ 
+-#fontDir		/usr/local/fonts/bakoma
++fontDir		/Files/Fonts/TrueType
+ 
+ #----- PostScript output control
+ 
+@@ -101,7 +101,7 @@
+ # the rasterizer entirely).
+ 
+ #t1libControl		low
+-#freetypeControl	low
++freetypeControl	high
+ 
+ # Set the command used to run a web browser when a URL hyperlink is
+ # clicked.

@@ -1,0 +1,24 @@
+diff -Naur kdesdk-3.3.0/kompare/Makefile.am kdesdk-3.3.0.patched/kompare/Makefile.am
+--- kdesdk-3.3.0/kompare/Makefile.am	2004-05-22 17:58:53.000000000 -0300
++++ kdesdk-3.3.0.patched/kompare/Makefile.am	2004-09-17 10:54:19.000000000 -0300
+@@ -6,7 +6,7 @@
+ 	-I$(srcdir)/komparenavtreepart \
+ 	-I$(srcdir)/komparepart \
+ 	-I$(srcdir)/interfaces \
+-	-I$(includedir)/ktexteditor \
++	-I$(kde_includes)/ktexteditor \
+ 	$(all_includes)
+ 
+ noinst_HEADERS =  kompare_shell.h kompareurldialog.h
+diff -Naur kdesdk-3.3.0/kompare/Makefile.in kdesdk-3.3.0.patched/kompare/Makefile.in
+--- kdesdk-3.3.0/kompare/Makefile.in	2004-08-13 21:02:09.000000000 -0300
++++ kdesdk-3.3.0.patched/kompare/Makefile.in	2004-09-17 10:55:20.000000000 -0300
+@@ -403,7 +403,7 @@
+ 	-I$(srcdir)/komparenavtreepart \
+ 	-I$(srcdir)/komparepart \
+ 	-I$(srcdir)/interfaces \
+-	-I$(includedir)/ktexteditor \
++	-I$(kde_includes)/ktexteditor \	
+ 	$(all_includes)
+ 
+ noinst_HEADERS = kompare_shell.h kompareurldialog.h

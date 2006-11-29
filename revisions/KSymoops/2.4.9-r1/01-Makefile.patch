@@ -1,0 +1,40 @@
+--- ksymoops-2.4.9/Makefile.orig	2004-12-13 23:06:45.000000000 -0200
++++ ksymoops-2.4.9/Makefile	2004-12-13 23:06:55.000000000 -0200
+@@ -13,11 +13,11 @@
+ # RedHat users might want defaults like these
+ # DEF_MAP := \"/boot/System.map-*r\"
+ 
+-DEF_VMLINUX :=				# default no vmlinux
+-DEF_KSYMS := \"/proc/ksyms\"		# default current ksyms
+-DEF_LSMOD := \"/proc/modules\"		# default current lsmod
+-DEF_OBJECTS := \"/lib/modules/*r/\"	# default current modules
+-DEF_MAP := \"/usr/src/linux/System.map\"	# default current map
++DEF_VMLINUX :=					# default no vmlinux
++DEF_KSYMS := \"/System/Kernel/Status/ksyms\"	# default current ksyms
++DEF_LSMOD := \"/System/Kernel/Status/modules\"	# default current lsmod
++DEF_OBJECTS := \"/System/Kernel/Modules/*r/\"	# default current modules
++DEF_MAP := \"/System/Kernel/Boot/System.map\"	# default current map
+ 
+ # Cross compile program prefix for installing cross ksymoops, and
+ # running binutils (objdump & nm), normally empty for system binutils
+@@ -35,7 +35,7 @@
+ CROSS :=				# prefix for installed program, nm, objdump
+ 
+ # Prefix for install libraries
+-INSTALL_PREFIX := /usr
++INSTALL_PREFIX := /Programs/KSymoops/Current
+ # Install program
+ INSTALL := /usr/bin/install
+ 
+@@ -56,7 +56,10 @@
+ 
+ PROGS := ksymoops
+ 
+-CC := gcc
++ifeq ($(CC),)
++	CC := gcc
++endif
++
+ CFLAGS += -Dlinux \
+ 	 -Wall \
+ 	 -Wno-conversion \

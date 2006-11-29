@@ -1,0 +1,28 @@
+# by Jeremy Vernon
+# 2004.01.06 16:54
+# updated by Michael Homer
+# 2004.01.28 02:53
+
+# TODO: It might be work taking a look in future advancements
+# on the way we manage variable files [hhm,2004.01.06]
+
+url=ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-3.8.1p1.tar.gz
+compile_version=1.7.1
+recipe_type=configure
+pre_build() {
+   if ! [ -d /var/empty ]
+   then mkdir /var/empty
+   fi
+   chown gobo:sys /var/empty
+   chmod 755 /var/empty
+   if ! grep -q sshd /etc/group
+   then
+      Log_Normal "Adding group sshd"
+      groupadd sshd
+   fi
+   if ! grep -q "sshd:x:" /etc/passwd
+   then
+      Log_Normal "Adding user sshd"
+      useradd -g sshd -c 'sshd privsep' -d /var/empty -s /bin/false sshd
+   fi
+}

@@ -1,0 +1,11 @@
+--- amsn-0.95/utils/TkCximage/src/TkCximage.cpp.orig	2006-02-09 01:08:18.000000000 -0200
++++ amsn-0.95/utils/TkCximage/src/TkCximage.cpp	2006-02-09 01:08:40.000000000 -0200
+@@ -133,7 +133,7 @@ int PlaceHook(Tcl_Interp *interp){
+ 		APPENDLOG( Tcl_GetStringResult(interp) );
+ 		return TCL_ERROR;
+ 	}
+-	const char *name = Tcl_GetStringResult(interp);
++	char *name = Tcl_GetStringResult(interp);
+ 	Tk_ImageType *typePhotoPtr = NULL;
+ 	Tk_GetImageMasterData(interp, name, &typePhotoPtr);
+ 	if (PhotoDisplayOriginal == NULL) {

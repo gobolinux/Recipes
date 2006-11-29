@@ -1,0 +1,15 @@
+--- xc/lib/GL/GL/Imakefile.orig	2004-08-10 12:47:50.000000000 -0300
++++ xc/lib/GL/GL/Imakefile	2004-08-10 12:51:04.000000000 -0300
+@@ -247,10 +247,8 @@
+ #if LinkGLToUsrLib && AlternateUsrLibDir
+ install::
+ 	MakeDir($(DESTDIR)$(SYSTEMUSRLIBDIR))
+-	$(RM) $(DESTDIR)$(SYSTEMUSRLIBDIR)/lib$(LIBNAME).so
+-	$(LN) $(SHLIBDIR)/lib$(LIBNAME).so $(DESTDIR)$(SYSTEMUSRLIBDIR)/lib$(LIBNAME).so || true
+-	$(RM) $(DESTDIR)$(SYSTEMUSRLIBDIR)/lib$(LIBNAME).so.1
+-	$(LN) $(SHLIBDIR)/lib$(LIBNAME).so.1 $(DESTDIR)$(SYSTEMUSRLIBDIR)/lib$(LIBNAME).so.1 || true
++	$(LN) -nfs $(SHLIBDIR)/lib$(LIBNAME).so $(DESTDIR)$(SYSTEMUSRLIBDIR)/lib$(LIBNAME).so || true
++	$(LN) -nfs $(SHLIBDIR)/lib$(LIBNAME).so.1 $(DESTDIR)$(SYSTEMUSRLIBDIR)/lib$(LIBNAME).so.1 || true
+ #endif
+ #endif
+ #if DebugLibGlx

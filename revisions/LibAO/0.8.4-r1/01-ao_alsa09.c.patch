@@ -1,0 +1,30 @@
+--- libao-0.8.4.backup/src/plugins/alsa09/ao_alsa09.c.org	2004-02-10 08:36:14.000000000 -0600
++++ libao-0.8.4.backup/src/plugins/alsa09/ao_alsa09.c	2004-02-10 08:39:27.000000000 -0600
+@@ -73,8 +73,8 @@
+ 	snd_pcm_t *pcm_handle;
+ 	int buffer_time;
+ 	int period_time;
+-	int buffer_size;
+-	int period_size;
++	unsigned long buffer_size;
++	unsigned long period_size;
+ 	int sample_size;
+ 	int bitformat;
+ 	char *dev;
+@@ -264,10 +264,14 @@
+ 		return err;
+ 
+ 	/* save the period size in bytes for posterity */
+-	internal->period_size = snd_pcm_hw_params_get_period_size(params, 0);
++	err = snd_pcm_hw_params_get_period_size(params, &internal->period_size, 0);
++	if (err < 0)
++		return err;
+ 
+ 	/* save the buffer size in bytes for posterity */
+-	internal->buffer_size = snd_pcm_hw_params_get_buffer_size(params);
++	err = snd_pcm_hw_params_get_buffer_size(params, &internal->buffer_size);
++	if (err < 0)
++		return err;
+ 
+ 	return 1;
+ }

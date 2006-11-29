@@ -1,0 +1,10 @@
+# by Michael Homer
+# 2004.01.28 02:44
+
+url="$httpSourceforge/zinf/zinf-2.2.4.tar.gz"
+compile_version=1.7.1
+recipe_type=configure
+
+pre_build () {
+ export CPPFLAGS='-I/System/Links/Headers/c++/3.2.2/backward/ -I/System/Links/H$
+}

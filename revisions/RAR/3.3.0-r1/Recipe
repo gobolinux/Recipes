@@ -1,0 +1,13 @@
+url="http://www.rarlab.com/rar/rarlinux-3.3.0.tar.gz"
+dir='rar'
+compile_version=1.7.1
+recipe_type=makefile
+makefile='Makefile'
+create_dirs_first=yes
+do_build=no
+make_variables=(
+   "PREFIX=$target"
+)
+pre_install() {
+   GrepReplace "/etc" "$target/../Settings" Makefile
+}

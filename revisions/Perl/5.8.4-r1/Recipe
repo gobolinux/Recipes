@@ -1,0 +1,14 @@
+# Recipe for version 5.8.4 by Carlo J. Calica
+url=http://www.perl.com/CPAN/src/perl-5.8.4.tar.gz
+compile_version=1.7.1
+recipe_type=makefile
+pre_build() {
+	# Configure options to consider:
+	# -Duseshrplib useful for embeding perl (ie mod_perl)
+	# a DBM would be useful (dbm_opem() for binding hashes to files) would add a dependency
+	# -Dlibspath
+	sh Configure -de -Dcc=gcc -Dprefix=$target -Dotherlibdirs=/System/Links/Libraries/perl5:/System/Links/Libraries/perl5/site_perl -Dlibpth=/System/Links/Libraries |tee /tmp/perl-config.log
+}
+pre_install() {
+	make test | tee /tmp/perl-test.log
+}

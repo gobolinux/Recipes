@@ -1,0 +1,18 @@
+#!/bin/sh
+
+case "$1" in
+    [sS]tart)
+        option="-h"
+        ;;
+    [sS]top)
+        option="-u"
+        ;;
+esac
+        
+for dir in /bin /etc /lib /sbin /tmp /var /usr /proc /dev /sys /lost+found /boot /home /linuxrc
+do
+    if [ -d "$dir" -o -h "$dir" ]
+    then
+        gobohide "$option" "$dir"
+    fi
+done

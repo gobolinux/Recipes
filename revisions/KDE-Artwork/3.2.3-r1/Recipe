@@ -1,0 +1,7 @@
+url="ftp://ftp.kde.org/pub/kde/stable/3.2.3/src/kdeartwork-3.2.3.tar.bz2"
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+)

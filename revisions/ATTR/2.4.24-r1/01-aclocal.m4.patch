@@ -1,0 +1,16 @@
+--- attr-2.4.24/aclocal.m4	2005-10-07 18:51:16.000000000 +0200
++++ attr-2.4.24/aclocal.m4	2006-01-05 21:57:30.000000000 +0100
+@@ -40,11 +40,11 @@
+     malloc_lib="$MALLOCLIB"
+     AC_SUBST(malloc_lib)
+ 
+-    PKG_USER=${INSTALL_USER:-'root'}
++    PKG_USER=${INSTALL_USER:-'fibo'}
+     pkg_user="$PKG_USER"
+     AC_SUBST(pkg_user)
+ 
+-    PKG_GROUP=${INSTALL_GROUP:-'root'}
++    PKG_GROUP=${INSTALL_GROUP:-'fibo'}
+     pkg_group="$PKG_GROUP"
+     AC_SUBST(pkg_group)
+ 

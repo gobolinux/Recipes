@@ -1,0 +1,20 @@
+url=http://ftp.cwi.nl/aeb/util-linux/util-linux-2.12.tar.gz
+compile_version=1.7.1
+recipe_type=configure
+needs_safe_linking=yes
+make_variables=(
+   "HAVE_KILL=yes"
+   "HAVE_SLN=yes"
+   "ETC_DIR=$target/../Settings"
+   "SBIN_DIR=$target/sbin"
+   "USRSBIN_DIR=$target/sbin"
+   "USRLIB_DIR=$target/lib"
+   "USRBIN_DIR=$target/bin"
+   "USRSHAREMISC_DIR=$target/share/misc"
+   "LOCALE_DIR=$target/share/locale"
+   "BIN_DIR=$target/bin"
+   "VAR_PATH=$target/../Variable"
+   "LOG_DIR=$target/../Variable/log"
+   "MAN_DIR=$target/man"
+   "INFO_DIR=$target/info"
+)

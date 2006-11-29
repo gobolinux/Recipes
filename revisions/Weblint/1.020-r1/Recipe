@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for Weblint by Maglan C. Diemer, maglan@univates.br, on Seg Nov 28 11:49:27 BRST 2005
+# Recipe for version 1.020 by Maglan C. Diemer, maglan@univates.br, on Seg Nov 28 11:49:27 BRST 2005
+compile_version=1.7.1
+url="ftp://ftp.cs.tu-berlin.de/pub/net/www/weblint/weblint-1.020.tar.gz"
+file_size=41264
+file_md5=032d12e353397e7675b1a739b0e7bc0a
+recipe_type=makefile
+makefile='Makefile'
+
+pre_build() {
+    GrepReplace "/usr/local" "$target" Makefile
+    GrepReplace "/usr/local" "$target" Makefile
+}

@@ -1,0 +1,21 @@
+# Recipe for version 2.4.1 by Andre Detsch, on Mon Apr 11 16:03:34 BRT 2005
+# by Andre Detsch
+# 2004.01.06 16:54
+
+compile_version=1.7.1
+
+url=http://python.org/ftp/python/2.4.1/Python-2.4.1.tgz
+recipe_type=configure
+configure_options=(
+  "--enable-shared"
+  "--with-cxx=no"
+)
+
+environment=(
+    "PYTHONOPTIMIZE=2"
+)
+
+post_install() {
+    echo "/System/Links/Libraries/python2.4/site-packages/" >  $target/lib/python2.4/site-packages/gobolinux.pth 
+    echo "/System/Links/Libraries/python2.3/site-packages/" >> $target/lib/python2.4/site-packages/gobolinux.pth 
+}

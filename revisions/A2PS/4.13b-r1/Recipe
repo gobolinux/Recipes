@@ -1,0 +1,9 @@
+## 20040621 Dave Dodge
+
+url=http://ftp.gnu.org/gnu/a2ps/a2ps-4.13b.tar.gz
+file_size=1944289
+file_md5=0c8e0c31b08c14f7a7198ce967eb3281
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(--with-medium=libpaper)
+dir=a2ps-4.13

@@ -1,0 +1,28 @@
+# Recipe (MakeRecipe) for Rlocate by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jul 29 03:41:13 CEST 2005
+# Recipe for version 0.3.2 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jul 29 03:41:13 CEST 2005
+compile_version=1.7.1
+url="$httpSourceforge/rlocate/rlocate-0.3.2.tar.gz"
+file_size=191217
+file_md5=e3c8371a6659bf1e0d9d1fe02c0efe6d
+recipe_type=configure
+
+sandbox_options=(
+    "--no-sandbox"
+)
+
+configure_options=(
+    "--enable-sandboxed"
+	"--with-moduledir=$goboModules/`uname -r`/misc"
+)
+
+pre_build () {
+    # Add group rlocate
+    if ! grep -q rlocate $goboSettings/group
+    then
+        groupadd rlocate
+    fi
+}
+
+post_install() {
+	depmod -a
+}

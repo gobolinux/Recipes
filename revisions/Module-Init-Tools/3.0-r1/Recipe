@@ -1,0 +1,10 @@
+# Recipe for Module-Init-Tools 3.0 by Lucas Correia Villa Real
+compile_version=1.7.1
+url="http://www.kernel.org/pub/linux/kernel/people/rusty/modules/module-init-tools-3.0.tar.bz2"
+file_size=120768
+file_md5=f8bfc480c4168978eca7037cd341da07
+recipe_type=configure
+
+configure_options=(
+	"--with-moddir=/System/Kernel/Modules"
+)

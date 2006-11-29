@@ -1,0 +1,17 @@
+url=$ftpGnu/non-gnu/flex/flex-2.5.4a.tar.gz
+dir=flex-2.5.4
+compile_version=1.7.1
+recipe_type=configure
+
+pre_build() {
+   autoconf
+}
+
+post_install() {
+cat $target/bin/lex << EOF
+#!/bin/sh
+exec flex -l "$@"
+EOF
+chmod 755 $target/bin/lex
+ln -nfs $target/bin/lex $goboExecutables
+}

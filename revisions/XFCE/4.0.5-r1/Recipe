@@ -1,0 +1,60 @@
+## xfce 4.0.5
+## 20040621 Dave Dodge 
+
+compile_version=1.7.1
+recipe_type=meta
+
+## Here's the dependencies for the subpackages, which explains the build
+## order and any external dependencies for xfce itself:
+
+## DBH--1.0.18:
+## GTK-XFCE-Engine--2.1.9: GTK+--2.4.3 GLib--2.4.2
+## LibXFCE4Util--4.05: GLib--2.4.2
+## LibXFCE4MCS--4.0.5: LibXFCE4Util--4.0.5
+## LibXFCEGUI4--4.0.5: GTK+--2.4.3 LibXFCE4Util--4.0.5
+## XFCE-MCS-Manager--4.0.5: LibXFCE4MCS--4.0.5 LibXFCEGUI4--4.0.5
+## XFCalendar--0.1.8: LibXFCE4MCS--4.0.5 XFCE-MCS-Manager--4.0.5 LibXFCEGUI4--4.0.5 DBH--1.0.18
+## XFCE-MCS-Plugins--4.0.5: GTK+--2.4.3 XFCE-MCS-Manager--4.0.5
+## XFCE-Utils--4.0.5: LibXFCEGUI4--4.0.5 LibXFCE4MCS--4.0.5 XFCE-MCS-Manager--4.05
+## XFCE4-IconBox--4.0.5: LibXFCEGUI4--4.0.5 LibXFCE4MCS--4.0.5
+## XFCE4-Panel--4.0.5: LibXFCEGUI4--4.0.5 LibXFCE4MCS--4.0.5 XFCE-MCS-Manager--4.0.5 LibXML2--2.6.9
+## XFCE4-Mixer--4.0.5: XFCE4-Panel--4.0.5
+## XFCE4-Systray--4.0.5: XFCE4-Panel--4.0.5
+## XFCE4-Themes--4.0.5: XFCE4-Panel--4.0.5
+## XFCE4-Toys--4.0.5: XFCE4-Panel--4.0.5
+## XFCE4-Trigger-Launcher--4.0.5: XFCE4-Panel--4.0.5
+## XFDesktop--4.0.5: LibXFCE4MCS--4.0.5 LibXFCEGUI4--4.0.5
+## XFFM--4.0.5: DBH--1.0.18 Glib--2.4.2 GTK+--2.4.3 LibXFCE4MCS--4.0.5 LibXFCE4Util--4.0.5 LibXFCEGUI4--4.0.5 LibXML2--2.6.9
+## XFFM-Icons--4.0.5: XFFM--4.0.5
+## XFPrint--4.0.5: GLib--2.4.2 LibXFCEGUI4--4.0.5 A2PS--4.13b
+## XFWM4--4.0.5: LibXFCE4MCS--4.0.5 LibXFCEGUI4--4.0.5 XFCE-MCS-Manager--4.0.5
+## XFWM4-Themes--4.0.5: XFWM4--4.0.5
+
+## NOTE: xfce4 also has a "sample plugin" in its source base, but as
+## of 4.0.5 it remains broken and cannot even be compiled.  So I'm
+## leaving it out.  It would have been XFCE4-Sample-Plugin--0.1.2.
+
+include=(
+	DBH--1.0.18
+	GTK-XFCE-Engine--2.1.9
+	LibXFCE4Util--4.0.5
+	LibXFCE4MCS--4.0.5
+	LibXFCEGUI4--4.0.5
+	XFCE-MCS-Manager--4.0.5
+	XFCalendar--0.1.8
+	XFCE-MCS-Plugins--4.0.5
+	XFCE-Utils--4.0.5
+	XFCE4-IconBox--4.0.5
+	XFCE4-Panel--4.0.5
+	XFCE4-Mixer--4.0.5
+	XFCE4-Systray--4.0.5
+	XFCE4-Themes--4.0.5
+	XFCE4-Toys--4.0.5
+	XFCE4-Trigger-Launcher--4.0.5
+	XFDesktop--4.0.5
+	XFFM--4.0.5
+	XFFM-Icons--4.0.5
+	XFPrint--4.0.5
+	XFWM4--4.0.5
+	XFWM4-Themes--4.0.5
+)

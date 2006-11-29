@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for IEEE80211 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Feb 25 13:25:07 CET 2006
+# Recipe for version 1.1.12 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Feb 25 13:25:07 CET 2006
+compile_version=1.7.1
+url="$httpSourceforge/ieee80211/ieee80211-1.1.12.tgz"
+file_size=65653
+file_md5=20da3f23dad2356da8f14d8b3d88d58e
+recipe_type=makefile
+makefile='Makefile'
+sandbox_options=('--no-sandbox')

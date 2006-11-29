@@ -1,0 +1,8 @@
+# Recipe for version 1.2.1 by Andre Detsch, on Tue Jan 31 13:33:31 BRST 2006
+url="$httpSourceforge/cdrdao/cdrdao-1.2.1.tar.gz"
+compile_version=1.7.1
+recipe_type=configure
+
+pre_link() {
+   chmod +s $target/bin/cdrdao
+}

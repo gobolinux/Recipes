@@ -1,0 +1,10 @@
+#
+# Doing this at compile time requires that we have GTK+ on the host system.
+# Not sure if this is the best place to put this hack into, but it works. (lucasvr)
+#
+dir="/Programs/Swfdec/Settings/gtk-2.0"
+if [ ! -f "$dir/gdk-pixbuf.loaders" ]
+then
+   mkdir -p "$dir"
+   gdk-pixbuf-query-loaders > "$dir/gdk-pixbuf.loaders"
+fi

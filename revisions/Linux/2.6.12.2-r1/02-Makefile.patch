@@ -1,0 +1,20 @@
+--- linux-2.6.11/Makefile	2005-03-02 04:38:13.000000000 -0300
++++ linux-2.6.11-Gobo/Makefile	2005-03-06 15:53:46.000000000 -0300
+@@ -1,7 +1,7 @@
+ VERSION = 2
+ PATCHLEVEL = 6
+ SUBLEVEL = 12
+-EXTRAVERSION = .2
++EXTRAVERSION = .2-Gobo
+ NAME=Woozy Numbat
+ 
+ # *DOCUMENTATION*
+@@ -556,7 +556,7 @@
+ # makefile but the arguement can be passed to make if needed.
+ #
+ 
+-MODLIB	:= $(INSTALL_MOD_PATH)/lib/modules/$(KERNELRELEASE)
++MODLIB	:= /System/Kernel/Modules/$(KERNELRELEASE)
+ export MODLIB
+ 
+ 

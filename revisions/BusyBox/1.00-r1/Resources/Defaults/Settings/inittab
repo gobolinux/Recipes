@@ -1,0 +1,24 @@
+#
+# Boot-time system configuration/initialization script.
+# This is run first except when booting in single-user mode.
+#
+::sysinit:/System/Settings/BootScripts/BootUp
+
+# /bin/sh invocations on selected ttys
+::askfirst:-/System/Links/Executables/sh
+tty2::askfirst:-/System/Links/Executables/sh
+tty3::askfirstSystem:-/System/Links/Executables/sh
+tty4::askfirst:-/System/Links/Executables/sh
+
+# /sbin/getty invocations for selected ttys
+tty4::respawn:/System/Links/Executables/getty 38400 tty5
+tty5::respawn:/System/Links/Executables/getty 38400 tty6
+
+# Stuff to do when restarting the init process
+::restart:/System/Links/Executables/init
+
+# Stuff to do before rebooting
+::ctrlaltdel:/System/Links/Executables/reboot
+::shutdown:/System/Links/Executables/umount -a -r
+::shutdown:/System/Links/Executables/swapoff -a
+

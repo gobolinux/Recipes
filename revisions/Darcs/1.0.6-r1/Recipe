@@ -1,0 +1,9 @@
+# Recipe for version 1.0.6 by Harald Klimach, on Sat Mar 4 18:35:57 CET 2006
+# Recipe (MakeRecipe) for Darcs by Harald Klimach, on Tue Jan 17 16:47:27 CET 2006
+compile_version=1.7.1
+url="http://www.darcs.net/darcs-1.0.6.tar.gz"
+recipe_type=configure
+makefile="GNUmakefile"
+configure_options=(
+   "--without-docs"
+)

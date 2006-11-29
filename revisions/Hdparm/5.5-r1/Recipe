@@ -1,0 +1,8 @@
+# Recipe for version 5.5 by Andre Destch
+url=http://www.ibiblio.org/pub/Linux/system/hardware/hdparm-5.4.tar.gz
+compile_version=1.7.1
+recipe_type=makefile
+make_variables=(
+   "DESTDIR=$target"
+   "manprefix=/"
+)

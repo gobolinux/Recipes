@@ -1,0 +1,11 @@
+--- openssh-4.3p2/Makefile.in.orig	2006-04-28 12:36:10.000000000 -0300
++++ openssh-4.3p2/Makefile.in	2006-04-28 12:43:24.000000000 -0300
+@@ -230,7 +230,7 @@ distprep: catman-do
+ 	-rm -rf autom4te.cache
+ 	(cd scard && $(MAKE) -f Makefile.in distprep)
+ 
+-install: $(CONFIGFILES) ssh_prng_cmds.out $(MANPAGES) $(TARGETS) install-files install-sysconf host-key check-config
++install: $(CONFIGFILES) ssh_prng_cmds.out $(MANPAGES) $(TARGETS) install-files install-sysconf check-config
+ install-nokeys: $(CONFIGFILES) ssh_prng_cmds.out $(MANPAGES) $(TARGETS) install-files install-sysconf
+ install-nosysconf: $(CONFIGFILES) ssh_prng_cmds.out $(MANPAGES) $(TARGETS) install-files
+ 

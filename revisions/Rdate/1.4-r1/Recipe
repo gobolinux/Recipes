@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Rdate by Jonas Karlsson <jonka750@student.liu.se>, on Thu Aug 10 16:16:20 CEST 2006
+# Recipe for version 1.4 by Jonas Karlsson <jonka750@student.liu.se>, on Thu Aug 10 16:16:20 CEST 2006
+compile_version=1.7.1
+url="http://freshmeat.net/redir/rdate/8862/url_tgz/rdate-1.4.tar.gz"
+file_size=11500
+file_md5=b2e5bbfa10ec480076750fd78fe7f7a5
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+   "mandir=$target/man"
+)

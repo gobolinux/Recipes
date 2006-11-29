@@ -1,0 +1,11 @@
+--- avifile-0.6.0/lib/aviwrite/AviAudioWriteStream.cpp.orig	2004-11-22 23:38:49.000000000 -0200
++++ avifile-0.6.0/lib/aviwrite/AviAudioWriteStream.cpp	2004-11-22 23:38:57.000000000 -0200
+@@ -5,7 +5,7 @@
+ using namespace Creators;
+ 
+ AviAudioWriteStream::AviAudioWriteStream(AviWriteFile* file, int ckid, int fourcc, WAVEFORMATEX* fmt,
+-					 int bitrate, int flags=0)
++					 int bitrate, int flags)
+     :AviWriteStream(file, ckid, AviStream::Audio, fourcc, bitrate, flags),
+     m_pIEnc(0), _status(0), _bitrate(bitrate)
+ //    AviWriteStream(AviWriteFile* file, int ckid,

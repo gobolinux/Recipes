@@ -1,0 +1,14 @@
+url="ftp://ftp.kde.org/pub/kde/stable/3.2/src/kdebase-3.2.2.tar.bz2"
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+  "--with-shadow"
+)
+post_install() {
+  chmod 4755 /Programs/KDE/3.2.2/bin/fileshareset
+  chmod 4755 /Programs/KDE/3.2.2/bin/kcheckpass
+  chmod 2755 /Programs/KDE/3.2.2/bin/kdesud
+}
+

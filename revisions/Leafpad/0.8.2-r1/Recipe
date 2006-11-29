@@ -1,0 +1,9 @@
+# Recipe for version 0.8.2 by Matthias Wolf, on Wed Jul 6 12:59:21 CEST 2005
+# Recipe (MakeRecipe) for Leafpad by Matthias Wolf, on Thu May 12 18:43:20 CEST 2005
+compile_version=1.7.1
+url="http://savannah.nongnu.org/download/leafpad/leafpad-0.8.2.tar.gz"
+recipe_type=configure
+
+configure_options=(
+	"--enable-chooser"
+)

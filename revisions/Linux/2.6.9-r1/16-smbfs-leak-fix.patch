@@ -1,0 +1,23 @@
+--- linux.vanilla-2.6.9/fs/smbfs/request.c	2004-10-20 22:33:50.000000000 +0100
++++ linux-2.6.9/fs/smbfs/request.c	2004-10-21 22:25:45.572329672 +0100
+@@ -634,6 +634,7 @@
+ 		req->rq_trans2buffer = smb_kmalloc(buf_len, GFP_NOFS);
+ 		if (!req->rq_trans2buffer)
+ 			goto out_no_mem;
++		memset(req->rq_trans2buffer, 0, buf_len);
+ 
+ 		req->rq_parm = req->rq_trans2buffer;
+ 		req->rq_data = req->rq_trans2buffer + parm_tot;
+@@ -657,8 +658,11 @@
+ 	 * Check whether we've received all of the data. Note that
+ 	 * we use the packet totals -- total lengths might shrink!
+ 	 */
+-	if (req->rq_ldata >= data_tot && req->rq_lparm >= parm_tot)
++	if (req->rq_ldata >= data_tot && req->rq_lparm >= parm_tot) {
++		req->rq_ldata = data_tot;
++		req->rq_lparm = parm_tot;
+ 		return 0;
++	}
+ 	return 1;
+ 
+ out_too_long:

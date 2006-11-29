@@ -1,0 +1,10 @@
+--- qemu-0.6.0/target-i386/helper2.c.orig	2004-07-20 00:59:38.000000000 -0300
++++ qemu-0.6.0/target-i386/helper2.c	2004-07-20 01:00:00.000000000 -0300
+@@ -24,6 +24,7 @@
+ #include <inttypes.h>
+ #include <signal.h>
+ #include <assert.h>
++#include <errno.h>
+ 
+ #include "cpu.h"
+ #include "exec-all.h"

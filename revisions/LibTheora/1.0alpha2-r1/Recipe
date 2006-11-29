@@ -1,0 +1,7 @@
+# by Jeremy Vernon
+url="http://www.theora.org/files/libtheora-1.0alpha2.tar.gz"
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+   "--enable-shared"
+)

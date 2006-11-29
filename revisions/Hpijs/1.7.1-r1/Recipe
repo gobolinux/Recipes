@@ -1,0 +1,24 @@
+# Recipe (MakeRecipe) for Hpijs by David Smith <dsmith@algonet.se>, on Wed Nov 3 20:28:27 CET 2004
+# Recipe for version 1.7.1 by David Smith <dsmith@algonet.se>, on Wed Nov 3 20:28:27 CET 2004
+compile_version=1.7.1
+url="$httpSourceforge/hpinkjet/hpijs-1.7.1.tar.gz"
+file_size=845193
+file_md5=cba40858e27204db0211c559bd606aaa
+recipe_type=configure
+
+configure_options=(
+  "--enable-cups-install=no"
+)
+
+pre_link() {
+  # install CUPS-files the Gobo way
+  CUPS_PPD_PATH="$target/Shared/cups/model"
+  CUPS_FILTER_PATH="$target/lib/cups/filter"
+
+  mkdir -p "$CUPS_PPD_PATH"
+  ln -s "$target/Shared/ppd" "$CUPS_PPD_PATH/foomatic-ppds"
+
+  mkdir -p "$CUPS_FILTER_PATH"
+  ln -s "$target/bin/foomatic-rip" "$CUPS_FILTER_PATH/foomatic-rip"
+}
+	  

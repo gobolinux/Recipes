@@ -1,0 +1,19 @@
+--- openttd-0.4.7/Makefile	2006-07-20 21:17:59.000000000 -0300
++++ openttd-0.4.7-new/Makefilew	2006-07-20 21:18:27.000000000 -0300
+@@ -936,11 +936,11 @@
+ 	install -m 644 data/opntitle.dat $(DATA_DIR_INSTALL)/data
+ 	install -m 644 media/openttd.64.png $(ICON_DIR_INSTALL)
+ 	install -m 644 media/openttd.32.xpm $(ICON_DIR_INSTALL)
+-ifndef USE_HOMEDIR
+-	cp scenario/* $(PERSONAL_DIR)/scenario/
+-else
+-	cp scenario/* $(DATA_DIR_INSTALL)/scenario/
+-endif
++#ifndef USE_HOMEDIR 
++#	cp scenario/* $(PERSONAL_DIR)/scenario/
++#else
++#	cp scenario/* $(DATA_DIR_INSTALL)/scenario/
++#endif
+ else	#MorphOS
+ install:
+ 	$(error make install is not supported on MorphOS)

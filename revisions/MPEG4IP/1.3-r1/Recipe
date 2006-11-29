@@ -1,0 +1,11 @@
+# Recipe for version 1.3 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sat Nov 26 11:38:37 BRST 2005
+# Recipe (MakeRecipe) for MPEG4IP by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sat Nov 26 11:14:50 BRST 2005
+compile_version=1.7.1
+url="$httpSourceforge/mpeg4ip/mpeg4ip-1.3.tar.gz"
+recipe_type=configure
+
+pre_build() {
+    pushd $dir
+    ./bootstrap
+    popd
+}

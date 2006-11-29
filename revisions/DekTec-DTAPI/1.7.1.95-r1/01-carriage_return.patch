@@ -1,0 +1,103 @@
+--- LinuxSDK/DTAPI/Makefile.orig	2006-01-17 15:42:22.000000000 -0200
++++ LinuxSDK/DTAPI/Makefile	2006-01-17 15:45:00.000000000 -0200
+@@ -1,50 +1,50 @@
+-# ========================================================================================
+-# Makefile for the DTAPI
+-# ========================================================================================
+-
+-
+-# ========================================================================================
+-# SOURCEROOT can be speficied on the command line or environment. Defines the root path
+-# to the standard sources
+-
+-ifndef SOURCEROOT
+-	SOURCEROOT = /usr/src/linux
+-endif
+-
+-# ========================================================================================
+-# Set include directories. Make sure the include paths to the Dta1xx and Dtu2xx drivers
+-# are correct
+-
+-DTA1XX_INCLUDE = ../Dta1xx/Include
+-DTU2XX_INCLUDE = ../Dtu2xx/Include
+-INCLUDEDIR     = $(SOURCEROOT)/include -I./Include -I$(DTA1XX_INCLUDE) -I$(DTU2XX_INCLUDE)
+-
+-# ========================================================================================
+-# Compile flags
+-
+-CPPFLAGS = -O2 -I$(INCLUDEDIR)
+-
+-# ========================================================================================
+-# TARGET/Source definitions
+-
+-SRCDIR = ./Source/
+-TARGET = DTAPI
+-OBJS   = $(TARGET).o
+-SRC    = $(SRCDIR)Dtapi.cpp $(SRCDIR)DtDevice.cpp $(SRCDIR)TsInpChannel.cpp \
+-         $(SRCDIR)TsOutpChannel.cpp $(SRCDIR)Utility.cpp $(SRCDIR)DeviceVpd.cpp \
+-         $(SRCDIR)TsOutpWrite.cpp $(SRCDIR)TsInpRead.cpp
+-
+-
+-# ========================================================================================
+-# Make all option
+-
+-all: $(TARGET).o
+-$(TARGET).o: $(SRC:.cpp=.o)
+-		$(LD) -r $^ -o $@
+-
+-# ========================================================================================
+-# Clean all option
+-
+-clean:
+-	rm -f $(SRCDIR)*.o $(SRCDIR)*~ $(SRCDIR)core $(SRCDIR).depend
+-	rm -f *.o *~ core .depend
++# ========================================================================================
++# Makefile for the DTAPI
++# ========================================================================================
++
++
++# ========================================================================================
++# SOURCEROOT can be speficied on the command line or environment. Defines the root path
++# to the standard sources
++
++ifndef SOURCEROOT
++	SOURCEROOT = /usr/src/linux
++endif
++
++# ========================================================================================
++# Set include directories. Make sure the include paths to the Dta1xx and Dtu2xx drivers
++# are correct
++
++DTA1XX_INCLUDE = ../Dta1xx/Include
++DTU2XX_INCLUDE = ../Dtu2xx/Include
++INCLUDEDIR     = $(SOURCEROOT)/include -I./Include -I$(DTA1XX_INCLUDE) -I$(DTU2XX_INCLUDE)
++
++# ========================================================================================
++# Compile flags
++
++CPPFLAGS = -O2 -I$(INCLUDEDIR)
++
++# ========================================================================================
++# TARGET/Source definitions
++
++SRCDIR = ./Source/
++TARGET = DTAPI
++OBJS   = $(TARGET).o
++SRC    = $(SRCDIR)Dtapi.cpp $(SRCDIR)DtDevice.cpp $(SRCDIR)TsInpChannel.cpp \
++         $(SRCDIR)TsOutpChannel.cpp $(SRCDIR)Utility.cpp $(SRCDIR)DeviceVpd.cpp \
++         $(SRCDIR)TsOutpWrite.cpp $(SRCDIR)TsInpRead.cpp
++
++
++# ========================================================================================
++# Make all option
++
++all: $(TARGET).o
++$(TARGET).o: $(SRC:.cpp=.o)
++		$(LD) -r $^ -o $@
++
++# ========================================================================================
++# Clean all option
++
++clean:
++	rm -f $(SRCDIR)*.o $(SRCDIR)*~ $(SRCDIR)core $(SRCDIR).depend
++	rm -f *.o *~ core .depend

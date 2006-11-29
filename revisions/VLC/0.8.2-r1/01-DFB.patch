@@ -1,0 +1,799 @@
+diff -Nurp vlc-0.8.2/configure.ac vlc-0.8.2-clx/configure.ac
+--- vlc-0.8.2/configure.ac	2005-06-25 10:43:16.000000000 -0300
++++ vlc-0.8.2-clx/configure.ac	2005-11-26 10:28:40.000000000 -0200
+@@ -3176,6 +3176,26 @@ then
+ fi
+ 
+ dnl
++dnl  DFB module
++dnl
++AC_ARG_ENABLE(dfb,
++  [  --enable-dfb            DirectFB support (default disabled)])
++if test "${enable_dfb}" = "yes"
++then
++  VLC_ADD_PLUGINS([dfb])
++  VLC_ADD_LDFLAGS([dfb],[-ldirectfb -lfusion -ldirect -lpthread -lz -ldl])
++  VLC_ADD_CPPFLAGS([dfb],[-I/usr/include/directfb -D_REENTRANT])
++  AC_ARG_WITH(dfb,
++    [    --with-dfb=PATH       path to directfb],
++    [ if test "${with_dfb}" != "no" -a -n "${with_dfb}"
++      then
++        VLC_ADD_CPPFLAGS([dfb],[-I${with_dfb}/include/directfb -D_REENTRANT])
++        VLC_ADD_LDFLAGS([dfb],[-L${with_dfb}/lib])
++      fi ])
++
++fi
++
++dnl
+ dnl  GGI module
+ dnl
+ AC_ARG_ENABLE(ggi,
+diff -Nurp vlc-0.8.2/modules/video_output/dfb.c vlc-0.8.2-clx/modules/video_output/dfb.c
+--- vlc-0.8.2/modules/video_output/dfb.c	1969-12-31 21:00:00.000000000 -0300
++++ vlc-0.8.2-clx/modules/video_output/dfb.c	2005-11-26 10:31:06.000000000 -0200
+@@ -0,0 +1,756 @@
++/*****************************************************************************
++ * dfb.c: DirectFB video output display method
++ *****************************************************************************
++ * Copyright (C) 2005 the VideoLAN team
++ *
++ * Authors: Iuri Diniz <iuri@digizap.com.br>
++ *
++ * This code is based in sdl.c and fb.c, thanks for VideoLAN team.
++ * 
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License as published by
++ * the Free Software Foundation; either version 2 of the License, or
++ * (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111, USA.
++ *****************************************************************************/
++
++/**
++ * TODO: 
++ *  - use a window.
++ *  - keyboard binds.
++ */
++/*****************************************************************************
++ * Preamble
++ *****************************************************************************/
++#include <errno.h>                                                 /* ENOMEM */
++#include <stdlib.h>                                                /* free() */
++#include <string.h>                                            /* strerror() */
++#include <stdio.h>                                                /* fopen() */
++#include <unistd.h>                                              /* getpid() */
++
++#include <vlc/vlc.h>
++#include <vlc/vout.h>
++#include <directfb.h>
++#include <assert.h>
++
++
++#define VLC_DFBINFO_FILE "/tmp/.vlc_dfbinfo"
++
++
++/*****************************************************************************
++ * Local prototypes
++ *****************************************************************************/
++static int  Create    ( vlc_object_t * );
++static void Destroy   ( vlc_object_t * );
++
++static int  Init      ( vout_thread_t * );
++static void End       ( vout_thread_t * );
++static int  Manage    ( vout_thread_t * );
++static void Display   ( vout_thread_t *, picture_t * );
++
++static int  OpenDisplay    ( vout_thread_t * );
++static void CloseDisplay   ( vout_thread_t * );
++static void EnableEvents   ( vout_thread_t * );
++static void DisableEvents  ( vout_thread_t * );
++
++struct vout_sys_t
++{
++    IDirectFB             *p_dfb;
++    IDirectFBSurface      *p_primary;
++    IDirectFBWindow       *p_window;
++    IDirectFBDisplayLayer *p_layer;
++    
++    DFBSurfacePixelFormat i_pixel_format;
++    
++    IDirectFBInputDevice* p_keyboard;
++    IDirectFBInputDevice* p_mouse;
++    
++    IDirectFBEventBuffer* p_event_buffer;
++    
++    IDirectFBSurface      *p_frame;
++    picture_t *p_pic;
++    
++    DFBWindowID i_window_id;
++    
++    int i_width;
++    int i_height;
++    
++    byte_t* p_pixels;
++};
++
++/*****************************************************************************
++ * Module descriptor
++ *****************************************************************************/
++vlc_module_begin();
++    set_shortname( "DirectFB" );
++    set_category( CAT_VIDEO );
++    set_subcategory( SUBCAT_VIDEO_VOUT );
++    set_description( _("DirectFB video output http://www.directfb.org/") );
++    set_capability( "video output", 60 );
++    add_shortcut( "dfb" );
++    set_callbacks( Create, Destroy );
++vlc_module_end();
++
++/*****************************************************************************
++ * Module functions
++ *****************************************************************************/
++
++/*****************************************************************************
++ * Create: allocate thread for dfb
++ *****************************************************************************
++ * This function initialize the DirectFB Library.
++ *****************************************************************************/
++static int Create( vlc_object_t *p_this ) 
++{
++    FILE* f;
++    vout_thread_t * p_vout = (vout_thread_t *)p_this;
++    
++    /*printf("Create\n");*/
++    
++    p_vout->pf_init = Init;
++    p_vout->pf_end = End;
++    p_vout->pf_manage = Manage;
++    p_vout->pf_render = NULL;
++    p_vout->pf_display = Display;
++    
++    /* Allocate structure */
++    p_vout->p_sys = malloc( sizeof( vout_sys_t ) );
++    if( p_vout->p_sys == NULL )
++    {
++        msg_Err( p_vout, "out of memory" );
++        return VLC_ENOMEM;
++    }
++    
++    /* Init DirectFB */
++    if (DirectFBInit(NULL,NULL) != DFB_OK) {
++        msg_Err(p_vout, "Cannot init DirectFB");
++        return VLC_EGENERIC;
++    }
++    if( OpenDisplay( p_vout ) ) {
++        msg_Err(p_vout, "Cannot create primary surface");
++        free( p_vout->p_sys );
++        return VLC_EGENERIC;
++    }
++    /* Get the keyboard and mouse */
++    EnableEvents(p_vout);
++    
++    /* Criar um arquivo no /tmp com informacoes sobre o video */
++    
++    f=fopen(VLC_DFBINFO_FILE, "w");
++    if (f != NULL) {
++        fprintf(f, "%-8s %-8s %-8s %-8s\n", "PID", "ID" ,"WIDTH", "HEIGHT");
++        fprintf(f, "%-8d %-8d %-8d %-8d\n", 
++            getpid(),
++            p_vout->p_sys->i_window_id, 
++            p_vout->i_window_width,
++            p_vout->i_window_height);
++        fclose(f);
++    } else {
++        msg_Err(p_vout, "Cannot write to '%s'\n", VLC_DFBINFO_FILE);
++        msg_Err(p_vout, "My window id: %i\n", p_vout->p_sys->i_window_id);
++        msg_Err(p_vout, "Resolution: %i x %i\n", p_vout->i_window_width, p_vout->i_window_height);
++    }
++    
++    return VLC_SUCCESS;
++}
++
++/*****************************************************************************
++ * Init: --- SHORT DESCRIPTION ---
++ *****************************************************************************
++ * Fill VLC output and pixels structure.
++ *****************************************************************************/
++static int Init( vout_thread_t *p_vout )
++{
++    int i_rlength, i_glength, i_blength;
++    int i_roffset, i_goffset, i_boffset;
++    int i_line_pitch;
++    
++    /*IDirectFBSurface     *p_primary = p_vout->p_sys->p_primary;*/
++    IDirectFBSurface     *p_frame   = p_vout->p_sys->p_frame;
++    byte_t* p_pixels;
++    int i_size;
++    
++    int i_index;
++    picture_t *p_pic;
++    
++    /*printf("Init\n");*/
++    
++    I_OUTPUTPICTURES = 0;
++
++    switch( p_vout->p_sys->i_pixel_format )
++    {
++        case DSPF_RGB332: 
++            /* 8 bit RGB (1 byte, red 3@5, green 3@2, blue 2@0) */
++            //i_pixel_pitch = 1;
++            
++            i_rlength = 3;
++            i_roffset = 5;
++            
++            i_glength = 3;
++            i_goffset = 2;
++            
++            i_blength = 2;
++            i_boffset = 0;
++        
++            p_vout->output.i_chroma = VLC_FOURCC('R','G','B','2'); break;
++        case DSPF_RGB16:
++            /* 16 bit RGB (2 byte, red 5@11, green 6@5, blue 5@0) */
++            //i_pixel_pitch = 2;
++            
++            i_rlength = 5;
++            i_roffset = 11;
++            
++            i_glength = 6;
++            i_goffset = 5;
++            
++            i_blength = 5;
++            i_boffset = 0;
++        
++            p_vout->output.i_chroma = VLC_FOURCC('R','V','1','6'); 
++            break;
++        case DSPF_RGB24:
++            /* 24 bit RGB (3 byte, red 8@16, green 8@8, blue 8@0) */
++            //i_pixel_pitch = 3;
++            
++            i_rlength = 8;
++            i_roffset = 16;
++            
++            i_glength = 8;
++            i_goffset = 8;
++            
++            i_blength = 8;
++            i_boffset = 0;
++        
++            p_vout->output.i_chroma = VLC_FOURCC('R','V','2','4'); 
++            break;
++        case DSPF_ARGB:
++        case DSPF_RGB32:
++            /* 24 bit RGB (4 byte, nothing@24, red 8@16, green 8@8, blue 8@0) */
++            //i_pixel_pitch = 4;
++            
++            i_rlength = 8;
++            i_roffset = 16;
++            
++            i_glength = 8;
++            i_goffset = 8;
++            
++            i_blength = 8;
++            i_boffset = 0;
++        
++            p_vout->output.i_chroma = VLC_FOURCC('R','V','3','2'); 
++            break;
++        default:
++            msg_Err( p_vout, "unknown screen depth %i",
++                     p_vout->p_sys->i_pixel_format );
++            return VLC_EGENERIC;
++    }
++    
++    /* Set the RGB masks */
++    p_vout->output.i_rmask = ( (1 << i_rlength) - 1 ) << i_roffset;
++    p_vout->output.i_gmask = ( (1 << i_glength) - 1 ) << i_goffset;
++    p_vout->output.i_bmask = ( (1 << i_blength) - 1 ) << i_boffset;
++    
++    /*assert ( (p_vout->output.i_rmask & p_vout->output.i_gmask & p_vout->output.i_bmask) == 0);*/
++    
++    /* Width and height */
++    p_vout->output.i_width = p_vout->p_sys->i_width;
++    p_vout->output.i_height = p_vout->p_sys->i_height;
++    /* The aspect */
++    p_vout->output.i_aspect = p_vout->p_sys->i_width
++                               * VOUT_ASPECT_FACTOR / p_vout->p_sys->i_height;
++
++    /* Try to initialize 1 buffer */
++    p_pic = NULL;
++
++    /* Find an empty picture slot */
++    for( i_index = 0 ; i_index < VOUT_MAX_PICTURES ; i_index++ )
++    {
++        if( p_vout->p_picture[ i_index ].i_status == FREE_PICTURE )
++        {
++            p_pic = p_vout->p_picture + i_index;
++            break;
++        }
++    }
++
++    /* Allocate the picture */
++    if( p_pic == NULL )
++    {
++        return VLC_EGENERIC;
++    }
++    
++    /* I'm looking for the frame :-)*/
++    
++    /* get the pixels */
++    /* rembember to unlock in the end */
++    if ( p_frame->Lock(p_frame, DSLF_WRITE, (void **) &p_pixels, &i_line_pitch) != DFB_OK ) {
++        
++        return VLC_EGENERIC;
++    }
++    /* alloc */
++    i_size = i_line_pitch * p_vout->p_sys->i_height;
++    //p_vout->p_sys->p_pixels = malloc(i_size);
++    p_vout->p_sys->p_pixels = p_pixels;
++    
++    //if (p_vout->p_sys->p_pixels == NULL) {
++    //    p_primary->Unlock(p_primary);
++    //    return VLC_ENOMEM;
++    //}
++    /* copy pixels */
++    //memcpy(p_vout->p_sys->p_pixels,  p_pixels, i_size);
++    
++    //if ( p_primary->Unlock(p_primary) != DFB_OK ) {
++    //    return VLC_EGENERIC;
++    //}
++    
++    p_pic->p->p_pixels = p_vout->p_sys->p_pixels;
++    p_pic->p->i_pixel_pitch = i_line_pitch / p_vout->p_sys->i_width;
++    p_pic->p->i_lines = p_vout->p_sys->i_height;
++    p_pic->p->i_visible_lines = p_vout->p_sys->i_height;
++
++
++    p_pic->p->i_pitch = i_line_pitch;
++
++
++    p_pic->p->i_visible_pitch = i_line_pitch;
++
++    p_pic->i_planes = 1;
++    
++    p_pic->i_status = DESTROYED_PICTURE;
++    p_pic->i_type   = DIRECT_PICTURE;
++
++    PP_OUTPUTPICTURE[ I_OUTPUTPICTURES ] = p_pic;
++
++    I_OUTPUTPICTURES++;
++    p_vout->p_sys->p_pic = p_pic;
++    
++    return VLC_SUCCESS;
++
++}
++/*****************************************************************************
++ * End: --- SHORT DESCRIPTION ---
++ *****************************************************************************
++ * Clean output and pixel structure of VLC
++ *****************************************************************************/
++static void End( vout_thread_t *p_vout )
++{
++    /*printf("End\n");*/
++    IDirectFBSurface     *p_frame   = p_vout->p_sys->p_frame;
++    p_frame->Unlock(p_frame);
++    
++    //free(p_vout->p_sys->p_pixels);
++}
++
++
++/*****************************************************************************
++ * Create: deallocate thread for dfb
++ *****************************************************************************
++ * This function deinitialize the DirectFB Library.
++ *****************************************************************************/
++static void Destroy( vlc_object_t *p_this )
++{
++    vout_thread_t *p_vout = (vout_thread_t *)p_this;
++    
++    /*printf("Destroy\n");*/
++    DisableEvents( p_vout );
++    CloseDisplay( p_vout );
++    
++    free(p_vout->p_sys);
++}
++/*****************************************************************************
++ * Manage: manage events
++ *****************************************************************************
++ * This function transform the events of DirectFB Library to VLC.
++ *****************************************************************************/
++static int Manage( vout_thread_t *p_vout )
++{
++    IDirectFBEventBuffer *p_event_buffer = p_vout->p_sys->p_event_buffer;
++    IDirectFB *p_dfb = p_vout->p_sys->p_dfb;
++    
++    //printf("Manage\n");
++    //return VLC_SUCCESS;
++    DFBEvent p_event;
++    
++    if (p_event_buffer != NULL && 
++        p_event_buffer->HasEvent(p_event_buffer) == DFB_OK) 
++    {
++        while (p_event_buffer->GetEvent(p_event_buffer, &p_event) == DFB_OK)
++        {
++            if (p_event.clazz & DFEC_INPUT) {
++                /* input event */
++                switch( p_event.input.type ) 
++                {
++                case DIET_KEYPRESS:
++                    switch( p_event.input.key_id ) 
++                    {
++                    case DIKI_Q:
++                    //case DIKI_ESCAPE:
++                        p_vout->p_vlc->b_die = 1;
++                        break;
++                    case DIKI_I:
++                        p_vout->b_info = ! p_vout->b_info;
++                        p_vout->i_changes |= VOUT_INFO_CHANGE;
++                        break;
++                    case DIKI_S:
++                        p_vout->b_scale = ! p_vout->b_scale;
++                        p_vout->i_changes |= VOUT_SCALE_CHANGE;
++                        break;
++                    case DIKI_SPACE:
++                        p_vout->b_interface = ! p_vout->b_interface;
++                        p_vout->i_changes |= VOUT_INTF_CHANGE;
++                        break;
++                    default:
++                        break;
++                    }
++                    break;
++                default:
++                    break;
++                }
++            }
++            if (p_event.clazz & DFEC_WINDOW) {
++                
++                if (p_event.window.type & DWET_SIZE) {
++                    /* Resizing */
++                    byte_t* p_pixels;
++                    int i_line_pitch;
++                    
++                    DFBSurfaceDescription p_sdesc;
++                    
++                    IDirectFBSurface     *p_frame_old   = p_vout->p_sys->p_frame;
++                    IDirectFBSurface     *p_frame_new;
++                    /* do not display nothing yet */
++                    p_vout->p_sys->p_frame = NULL;
++                    
++                    p_sdesc.flags = DSDESC_HEIGHT | DSDESC_WIDTH;
++                    p_sdesc.width = p_event.window.w;
++                    p_sdesc.height = p_event.window.h;
++                    
++                    p_dfb->CreateSurface(p_dfb, &p_sdesc, &p_frame_new);
++                    p_frame_new->Lock(p_frame_new, DSLF_WRITE, (void**) &p_pixels, &i_line_pitch);
++                    
++                    p_vout->p_sys->p_pixels = p_pixels;
++                    
++                    /* unlock p_frame_old */
++                    p_frame_old->Unlock(p_frame_old);
++                    
++                    p_vout->p_sys->p_pic->p->p_pixels = p_vout->p_sys->p_pixels;
++                    
++                    
++                    p_vout->i_changes |= VOUT_SIZE_CHANGE;
++                        
++                    p_vout->i_window_width = p_vout->p_sys->i_width = p_event.window.w;
++                    p_vout->i_window_height = p_vout->p_sys->i_height = p_event.window.h;
++                    p_vout->output.i_aspect = p_vout->p_sys->i_width
++                               * VOUT_ASPECT_FACTOR / p_vout->p_sys->i_height;
++                               
++                    /* release old */
++                    p_frame_old->Release(p_frame_old);
++                    
++                    /* point to new */
++                    p_vout->p_sys->p_frame = p_frame_new;
++                } else if (p_event.window.type & DWET_DESTROYED ||
++                    p_event.window.type & DWET_CLOSE
++                ) {
++                    p_vout->p_vlc->b_die = 1;
++                } 
++            }
++        }
++    }
++    return VLC_SUCCESS;
++}
++/*****************************************************************************
++ * Display: show the frame
++ *****************************************************************************
++ * This function puts the frame on DirectFB window
++ *****************************************************************************/
++static void Display( vout_thread_t *p_vout, picture_t *p_pic )
++{
++    //return;
++    //byte_t* p_pixels;
++    //int i_size;
++    //int i_line_pitch;
++    
++    IDirectFBSurface *p_frame = p_vout->p_sys->p_frame;
++    IDirectFBWindow  *p_window = p_vout->p_sys->p_window;
++    IDirectFBSurface *p_dst;
++    
++    DFBRectangle p_rect;
++    
++    if (p_frame == NULL) {
++        return;
++    }
++    p_rect.x = 0;
++    p_rect.y = 0;
++    p_rect.w = p_vout->p_sys->i_width;
++    p_rect.h = p_vout->p_sys->i_height;
++    
++    p_window->GetSurface(p_window, &p_dst);
++    
++    p_dst->Blit(p_dst, p_frame, &p_rect, 0, 0);
++    p_dst->Flip(p_dst, NULL, 0);
++    p_dst->Release(p_dst);
++    
++    //IDirectFB *p_dfb = p_vout->p_sys->p_dfb;
++    
++    //IDirectFBSurface *p_frame;
++    //DFBSurfaceDescription p_desc;
++    
++    /*printf("Display\n");*/
++    /* Criar superficie do frame */
++    //p_desc.flags = DSDESC_PIXELFORMAT | DSDESC_HEIGHT | DSDESC_WIDTH;
++    //p_desc.width = p_vout->p_sys->i_width;
++    //p_desc.height = p_vout->p_sys->i_height;
++    //p_desc.pixelformat = p_vout->p_sys->i_pixel_format;
++    
++    //if ( p_dfb->CreateSurface(p_dfb, &p_desc, &p_frame) != DFB_OK) {
++    //    return;
++    //}
++    
++    //p_window->GetSurface(p_window, &p_primary);
++    
++    /* get the pixels */
++    //if ( p_primary->Lock(p_primary, DSLF_WRITE, (void **) &p_pixels, &i_line_pitch) != DFB_OK ) {
++    //    
++    //    return;
++    //}
++    //i_size = i_line_pitch * p_vout->p_sys->i_height;
++    /* copy pixels */
++    //memcpy( p_pixels, p_pic->p->p_pixels, i_size);
++    
++    //if ( p_primary->Unlock(p_primary) != DFB_OK ) {
++    //    return;
++    //}
++    
++    //p_primary->SetColor(p_primary, p_pixels[i_size/2], p_pixels[i_size/2 + 1], p_pixels[i_size/2 + 2], 0xFF);
++    //p_primary->FillRectangle(p_primary, 0, 0, p_vout->p_sys->i_width, p_vout->p_sys->i_height);
++    //p_primary->Flip(p_primary, NULL, 0);
++    
++    //p_primary->Flip(p_frame, NULL, 0);
++    //printf("%d %d %d %d\n", p_pixels[i_size/2 - 1], p_pixels[i_size/2], p_pixels[i_size/2 + 1], p_pixels[i_size/2 + 2]);
++    //p_window->SetOpacity(p_window, 0xF0);
++    //p_window->SetStackingClass( p_window, DWSC_UPPER );
++    //p_window->RaiseToTop( p_window );
++    
++    //printf("Flip result: %d\n", p_primary->Flip(p_primary, NULL, 0));
++    //p_primary->Blit(p_primary, p_frame, NULL, 0, 0);
++    //p_frame->Release(p_frame);
++    
++}
++/*****************************************************************************
++ * Local functions
++ *****************************************************************************/
++
++/*****************************************************************************
++ * OpenDisplay: --- SHORT DESCRIPTION --- 
++ *****************************************************************************
++ * --- LONG DESCRIPTION ---
++ *****************************************************************************/
++static int OpenDisplay( vout_thread_t *p_vout )
++{
++    
++    IDirectFB *p_dfb;
++    IDirectFBSurface *p_primary;
++    IDirectFBSurface *p_frame;
++    IDirectFBWindow  *p_window;
++    IDirectFBDisplayLayer *p_layer;
++    
++    DFBDisplayLayerConfig p_config;
++    DFBWindowDescription  p_wdesc;
++    DFBSurfaceDescription p_sdesc;
++    DFBWindowID i_window_id;
++    
++    /*printf("OpenDisplay\n");*/
++    
++    /*dsc.flags = DSDESC_CAPS | DSDESC_HEIGHT | DSDESC_WIDTH;*/
++    /*dsc.flags = DSDESC_CAPS;*/
++    /*dsc.caps  = DSCAPS_PRIMARY | DSCAPS_FLIPPING;*/
++    /*dsc.width = 352;*/
++    /*dsc.height = 240;*/
++    
++    
++    if (DirectFBCreate (&p_dfb) != DFB_OK)
++        return VLC_EGENERIC;
++    
++    p_vout->p_sys->p_dfb = p_dfb;
++    
++    if (p_dfb->GetDisplayLayer(p_dfb, DLID_PRIMARY, &p_layer) != DFB_OK) {
++        return VLC_EGENERIC;
++    }
++    p_vout->p_sys->p_layer = p_layer;
++    if (p_layer->GetConfiguration(p_layer, &p_config) != DFB_OK) {
++        return VLC_EGENERIC;
++    }
++    
++    /* prepare window attributes */
++    p_wdesc.flags = DWDESC_POSX | DWDESC_POSY | DWDESC_WIDTH | DWDESC_HEIGHT | DWDESC_CAPS;
++    //p_desc.caps = DWCAPS_ALPHACHANNEL | DWCAPS_NODECORATION;
++    p_wdesc.caps = DWCAPS_NONE;
++    /* OLD: make a distance of 20 pixels from edges */
++    //p_wdesc.posx = 0;
++    //p_wdesc.posy = 0;
++    //p_wdesc.width = p_config.width;
++    //p_wdesc.height = p_config.height;
++    
++    p_wdesc.posx = p_config.width/2 - p_vout->i_window_width/2;
++    p_wdesc.posy = p_config.height/2 - p_vout->i_window_height/2;
++    p_wdesc.width = p_vout->i_window_width;
++    p_wdesc.height = p_vout->i_window_height;
++
++    
++    /* Create window */
++    if (p_layer->CreateWindow(p_layer, &p_wdesc, &p_window) != DFB_OK) {
++        return VLC_EGENERIC;
++    }
++    p_vout->p_sys->p_window = p_window;
++    
++    /* create a frame with sufficient memory */
++    p_sdesc.flags = DSDESC_HEIGHT | DSDESC_WIDTH;
++    p_sdesc.width = p_wdesc.width;
++    p_sdesc.height = p_wdesc.height;
++    if (p_dfb->CreateSurface(p_dfb, &p_sdesc, &p_frame))
++    {
++        return VLC_EGENERIC;
++    }
++    p_vout->p_sys->p_frame = p_frame;
++    
++    
++    
++    /* others window opts */
++    //if (p_window->SetOptions(p_window, DWOP_ALPHACHANNEL | DWOP_GHOST) != DFB_OK) {
++    //    return VLC_EGENERIC;
++    //}
++    p_window->SetOpacity(p_window, 0xFF);
++    
++    /* Get the window surface and id*/
++    if (p_window->GetID(p_window, &i_window_id) != DFB_OK) {
++        return VLC_EGENERIC;
++    }
++    
++    p_vout->p_sys->i_window_id = i_window_id;
++    
++    if (p_window->GetSurface(p_window, &p_primary) != DFB_OK) {
++        return VLC_EGENERIC;
++    }
++    p_vout->p_sys->p_primary = p_primary;
++    
++    
++    /*if (p_dfb->CreateSurface(p_dfb, &dsc, &p_primary))
++    {
++        
++        return VLC_EGENERIC;
++    }*/
++    /*p_vout->p_sys->p_primary = p_primary;*/
++    
++    p_primary->GetSize(p_primary, &p_vout->p_sys->i_width, &p_vout->p_sys->i_height);
++    p_primary->GetPixelFormat(p_primary, &p_vout->p_sys->i_pixel_format);
++    
++    
++    p_primary->SetColor(p_primary, 0x00, 0x00, 0x00, 0xFF);
++    p_primary->FillRectangle(p_primary, 0, 0, p_vout->p_sys->i_width, p_vout->p_sys->i_height);
++    p_primary->Flip(p_primary, NULL, 0);
++    
++
++    return VLC_SUCCESS;
++}
++
++/*****************************************************************************
++ * CloseDisplay: --- SHORT DESCRIPTION --- 
++ *****************************************************************************
++ * --- LONG DESCRIPTION ---
++ *****************************************************************************/
++static void CloseDisplay( vout_thread_t *p_vout )
++{
++    IDirectFB *p_dfb = p_vout->p_sys->p_dfb;
++    IDirectFBSurface *p_primary = p_vout->p_sys->p_primary;
++    IDirectFBSurface *p_frame = p_vout->p_sys->p_frame;
++    IDirectFBDisplayLayer *p_layer = p_vout->p_sys->p_layer;
++    IDirectFBWindow *p_window = p_vout->p_sys->p_window;
++
++    
++    /*printf("CloseDisplay\n");    */
++    p_primary->Release(p_primary);
++    p_window->Release(p_window);
++    p_frame->Release(p_frame); 
++    p_layer->Release(p_layer);
++    p_dfb->Release(p_dfb);
++}
++/*****************************************************************************
++ * EnableEvents: --- SHORT DESCRIPTION --- 
++ *****************************************************************************
++ * --- LONG DESCRIPTION ---
++ *****************************************************************************/
++static void EnableEvents( vout_thread_t *p_vout ) {
++    IDirectFB *p_dfb = p_vout->p_sys->p_dfb;
++    IDirectFBWindow *p_window = p_vout->p_sys->p_window;
++    IDirectFBInputDevice *p_mouse = NULL;
++    IDirectFBInputDevice *p_keyboard = NULL;
++    IDirectFBEventBuffer *p_event_buffer = NULL;
++    DFBResult res;
++    
++    res = p_window->CreateEventBuffer(p_window, &p_event_buffer);
++    
++    if ( p_dfb->GetInputDevice (p_dfb, DIDID_KEYBOARD, &p_keyboard) == DFB_OK )
++    {
++        if (p_event_buffer == NULL) {
++            p_keyboard->CreateEventBuffer(p_keyboard, &p_event_buffer);
++        } else {
++            p_keyboard->AttachEventBuffer(p_keyboard, p_event_buffer);
++        }
++    }
++    else 
++    {
++        printf("/*Cannot get the keyboard*/\n"); 
++    }
++    
++    if ( p_dfb->GetInputDevice (p_dfb, DIDID_MOUSE, &p_mouse) == DFB_OK) 
++    {
++        if (p_event_buffer == NULL) 
++        {
++            p_mouse->CreateEventBuffer(p_mouse, &p_event_buffer);
++        }
++        else 
++        {
++            p_mouse->AttachEventBuffer(p_mouse, p_event_buffer);
++        }
++    }
++    else
++    {
++        printf("/*Cannot get the mouse*/\n");
++    }
++    
++    
++    
++    p_vout->p_sys->p_keyboard = p_keyboard;
++    p_vout->p_sys->p_mouse = p_mouse;
++    
++    p_vout->p_sys->p_event_buffer = p_event_buffer;
++    
++}
++/*****************************************************************************
++ * ReleaseDevices: --- SHORT DESCRIPTION --- 
++ *****************************************************************************
++ * --- LONG DESCRIPTION ---
++ *****************************************************************************/
++static void DisableEvents ( vout_thread_t *p_vout ) {
++    IDirectFBInputDevice *p_mouse = p_vout->p_sys->p_mouse;
++    IDirectFBInputDevice *p_keyboard = p_vout->p_sys->p_keyboard;
++    IDirectFBEventBuffer *p_event_buffer = p_vout->p_sys->p_event_buffer;
++    
++    if (p_event_buffer != NULL) {
++        p_event_buffer->Release(p_event_buffer);
++    }
++    if ( p_mouse != NULL) {
++        p_mouse->Release(p_mouse);
++    }
++    if ( p_keyboard != NULL) {
++        p_keyboard->Release(p_keyboard);
++    }
++    
++}
+diff -Nurp vlc-0.8.2/modules/video_output/Modules.am vlc-0.8.2-clx/modules/video_output/Modules.am
+--- vlc-0.8.2/modules/video_output/Modules.am	2005-06-25 10:43:09.000000000 -0300
++++ vlc-0.8.2-clx/modules/video_output/Modules.am	2005-11-26 10:29:30.000000000 -0200
+@@ -12,3 +12,5 @@ SOURCES_hd1000v = hd1000v.cpp
+ SOURCES_snapshot = snapshot.c
+ SOURCES_opengl = opengl.c
+ SOURCES_image = image.c
++SOURCES_dfb   = dfb.c
++

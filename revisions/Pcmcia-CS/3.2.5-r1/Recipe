@@ -1,0 +1,29 @@
+# by Carlo Calica and Jason Stubbs
+
+url=$httpSourceforge/pcmcia-cs/pcmcia-cs-3.2.5.tar.gz
+compile_version=1.7.1
+recipe_type=configure
+configure=Configure
+modify_configure=no
+build_target="all"
+configure_options=(
+   "--noprompt"
+   "--target=$target"
+   "--kernel=$goboModules/`uname -r`/build"
+   "--notrust"
+)
+pre_install()
+{
+   ln -sf $target $target/usr
+   ln -sf $target $target/X11R6
+   ln -sf $target/../Settings $target/etc
+   ln -sf $target/../Variable $target/var
+}
+post_install()
+{
+   rm $target/usr
+   rm $target/X11R6
+   rm $target/etc
+   rm $target/var
+   depmod -a
+}

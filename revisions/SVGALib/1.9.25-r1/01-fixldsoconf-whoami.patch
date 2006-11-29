@@ -1,0 +1,9 @@
+--- svgalib-1.9.25/fixldsoconf.orig	2006-08-02 10:39:03.000000000 -0300
++++ svgalib-1.9.25/fixldsoconf	2006-08-02 10:39:27.000000000 -0300
+@@ -1,5 +1,5 @@
+ #!/bin/sh
+-if [ `whoami` != root ] ; then exit 0 ; fi
++if [ $UID != 0 ] ; then exit 0 ; fi
+ if grep -q /usr/local/lib /etc/ld.so.conf
+  then
+   echo > /dev/null

@@ -1,0 +1,10 @@
+#!/bin/sh
+
+case "$1" in
+	[sS]tart)
+		listener &
+		;;
+	[sS]top)
+		killall -9 listener
+		;;
+esac

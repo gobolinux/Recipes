@@ -1,0 +1,12 @@
+compile_version=1.7.1
+url="http://dockapps.org/download.php/id/250/wmmemfree-0.7.tar.bz2"
+file_size=14287
+file_md5=6b478209d907dd2955828e71319af757
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
+pre_build(){
+  sed -i s/'\/share\/man\/man1'/'\/man\/man1'/ Makefile
+}

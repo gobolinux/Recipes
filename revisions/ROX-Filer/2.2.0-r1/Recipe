@@ -1,0 +1,13 @@
+# Recipe for ROX-Filer 2.2.0 by Jonatan Liljedahl <lijon@kymatica.com>
+
+url=$httpSourceforge/rox/rox-2.2.0.tgz
+compile_version=1.7.1
+recipe_type=makefile
+do_build=no
+sandbox_options=(
+    "-c install.sh"
+)
+pre_install() {
+    ROX-Filer/AppRun --compile
+    export ROX_INSTALL_PREFIX=$target
+}

@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for DSSI by ro.ko@mcnon.com, on Wed Oct 13 20:21:54 BRST 2004
+# Recipe for version 0.4 by ro.ko@mcnon.com, on Wed Oct 13 20:21:54 BRST 2004
+compile_version=1.7.1
+url="$httpSourceforge/dssi/dssi-0.4.tar.gz"
+file_size=71940
+file_md5=c30322125d647dd042f0553a1e5e2bbf
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=("PREFIX=$target")

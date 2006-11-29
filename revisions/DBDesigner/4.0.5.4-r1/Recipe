@@ -1,0 +1,43 @@
+# Recipe (MakeRecipe) for DBDesigner by Fernando Santos <kosh.linux at gmail.com>, on Thu Oct 20 05:24:18 BRST 2005
+# Recipe for version 4.0.5.4 by Fernando Santos <kosh.linux at gmail.com>, on Thu Oct 20 05:24:18 BRST 2005
+compile_version=1.7.1
+url="http://213.115.162.124/external/DBDesigner4/DBDesigner4.0.5.4.tar.gz"
+file_size=9339411
+file_md5=3a9bfd9b40fb8b70e24fd2195424cb51
+dir='DBDesigner4'
+recipe_type=manifest
+
+environment=(
+      "app_ld_path=Linuxlib"
+)
+
+pre_patch() {
+    if [ ! -f "$app_ld_path/bplrtl.so.6.9" ]; then
+	cd $app_ld_path
+	ln -s bplrtl.so.6.9.0 bplrtl.so.6.9
+	ln -s dbxres.en.1.0 dbxres.en.1
+	ln -s libmidas.so.1.0 libmidas.so.1
+	ln -s libmysqlclient.so.10.0.0 libmysqlclient.so
+	ln -s libqt.so.2.3.2 libqt.so.2
+	ln -s libqtintf-6.9.0-qt2.3.so libqtintf-6.9-qt2.3.so
+	ln -s libsqlmy23.so.1.0 libsqlmy23.so
+	ln -s libsqlmy23.so libsqlmy.so
+	ln -s libsqlora.so.1.0 libsqlora.so
+	ln -s libDbxSQLite.so.2.8.5 libDbxSQLite.so
+	ln -s liblcms.so.1.0.9 liblcms.so
+	ln -s libpng.so.2.1.0.12 libpng.so.2
+	ln -s libstdc++.so.5.0.0 libstdc++.so.5
+	cd ../
+    fi
+}
+
+pre_link () {
+    cp -R Doc $target/
+    cp -R Examples $target/
+    cp -R Data $target/
+    cp -R Gfx $target/
+    cp DBDesigner4 $target/
+    cp DBDplugin* $target/
+    cp -R $app_ld_path "$target/"
+    cp -R "$recipedir/Shared" "$target/"
+}

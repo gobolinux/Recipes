@@ -1,0 +1,71 @@
+--- /dev/null	2005-07-11 06:02:53.000000000 -0300
++++ scratchbox-1.0.1/tools/scratchbox-base/files/copy_libs-gobolinux.sh	2005-07-13 14:11:13.000000000 -0300
+@@ -0,0 +1,68 @@
++#!/bin/sh
++
++source GoboPath
++
++DESTDIR=$SBOX_DIR/host_shared/lib
++mkdir -p $DESTDIR
++
++GOBO_LIST="GCC/3.4.3           \
++          LibStdC++/3.3.1      \
++	  Linux/Current        \
++          ZLib/Current         \
++          XFS-Utils/Current    \
++          Ncurses/Current      \
++	  PCRE/Current         \
++          Apache/Current       \
++          E2FSProgs/Current    \
++          DB/Current           \
++          Expat/Current        \
++	  Kerberos/Current     \
++	  OpenLdap/Current     \
++	  Neon/Current         \
++          OpenSSL/Current      \
++          LibXML2/Current      \
++	  Gnutls/Current       \
++	  Cyrus-Sasl/Current   \
++	  LibGCrypt/Current    \
++	  LibGPG-Error/Current \
++	  LibTasn1/Current     \
++	  Bzip2/Current        "
++
++# Copy shared libraries
++
++for d in $GOBO_LIST; do
++	for f in $goboPrograms/$d/lib/*.so; do	
++		if [ -L $f ]; then
++			target=`readlink $f`
++			ln -sf `basename $target` $DESTDIR/`basename $f`
++		else
++			install -p $f $DESTDIR/
++		fi
++	done
++done
++
++# Copy static libraries
++
++for d in $GOBO_LIST; do
++	for f in $goboPrograms/$d/lib/*.a; do	
++		if [ -L $f ]; then
++			cp -a $f $DESTDIR/
++		else
++			install -p $f $DESTDIR/
++		fi
++	done
++done
++
++# Copy headers
++
++for d in $GOBO_LIST; do
++	for f in $goboPrograms/$d/include/*; do	
++		if [ ! -d $f ]; then
++			install -D -p $f $SBOX_DIR/host_shared/$f
++		fi
++	done
++done
++
++# Configure ld.so links
++
++/sbin/ldconfig -n $DESTDIR

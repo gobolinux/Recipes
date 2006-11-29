@@ -1,0 +1,19 @@
+# Recipe (MakeRecipe) for Motion by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Thu Feb 9 22:57:18 BRST 2006
+# Recipe for version 3.2.4 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Thu Feb 9 22:57:18 BRST 2006
+compile_version=1.7.1
+url="$httpSourceforge/motion/motion-3.2.4.tar.gz"
+file_size=360850
+file_md5=ce0a4f5cea6c59ebd7b2d12a5f95b07d
+recipe_type=configure
+
+configure_options=(
+    --with-ffmpeg=$goboPrograms/FFmpeg-Motion/Current
+)
+
+make_variables=(
+    LDFLAGS="$LDFLAGS -lavutil"
+)
+
+pre_link() {
+    mv $target/../Settings/motion-dist.conf $target/../Settings/motion.conf
+}

@@ -1,0 +1,14 @@
+diff -Naur old.dvd+rw-tools-6.1/Makefile.m4 new.dvd+rw-tools-6.1/Makefile.m4
+--- old.dvd+rw-tools-6.1/Makefile.m4	2006-01-20 06:08:22.000000000 -0200
++++ new.dvd+rw-tools-6.1/Makefile.m4	2006-07-01 22:21:33.000000000 -0300
+@@ -183,10 +183,6 @@
+ 	install $(minus_o) -m $(bin_mode) $(CHAIN) $(prefix)/bin
+ 	[[ -d $(manprefix)/man1 ]] || mkdir -p $(manprefix)/man1
+ 	install $(minus_o) -m 0644 growisofs.1 $(manprefix)/man1
+-	[[ -f rpl8 ]] && \
+-	  install $(minus_o) -m $(bin_mode) rpl8 $(prefix)/bin
+-	[[ -f btcflash ]] && \
+-	  install $(minus_o) -m $(bin_mode) btcflash $(prefix)/bin
+ ])
+ 
+ # common section

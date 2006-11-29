@@ -1,0 +1,20 @@
+# Recipe for version 2.7.3 by Fernando Santos <kosh.linux at gmail.com>, on Tue Oct 18 09:27:36 BRST 2005
+# Recipe (MakeRecipe) for XFSProgs by ro.ko@mcnon.com, on Tue Oct 12 00:32:49 BRST 2004
+compile_version=1.7.1
+url="ftp://oss.sgi.com/projects/xfs/download/cmd_tars/xfsprogs-2.7.3.src.tar.gz"
+recipe_type=configure
+dir="xfsprogs-2.7.3"
+pre_build() {
+   export DEBUG=-DNDEBUG  # OPTIMIZER=-O
+}
+configure_options=(
+--libexecdir=$target/lib
+--enable-shared=yes
+#--enable-static=no
+#--enable-readline=yes
+#--enable-editline=yes
+)
+install_target="install install-dev"
+pre_link() {
+   ln -sf $target/lib/libhandle.so.1.0.3 $target/lib/libhandle.so
+}

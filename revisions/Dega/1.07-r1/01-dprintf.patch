@@ -1,0 +1,12 @@
+diff -Naur dega-1.07/mast/mast.h dega-1.07-new/mast/mast.h
+--- dega-1.07/mast/mast.h	2001-09-18 11:10:38.000000000 -0300
++++ dega-1.07-new/mast/mast.h	2003-11-20 02:28:24.000000000 -0200
+@@ -19,7 +19,7 @@
+ #endif
+ 
+ // mast.cpp
+-extern int dprintf (char *Format,...);
++/* extern int dprintf (char *Format,...); */
+ extern int MastVer; // Version number of the library
+ 
+ extern unsigned char MastInput[2]; // Joypads

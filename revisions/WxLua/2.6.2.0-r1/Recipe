@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for WxLua by Leandro Motta Barrros, on Fri Mar 31 18:09:40 BRT 2006
+# Recipe for version 2.6.2.0 by Leandro Motta Barrros, on Fri Mar 31 18:09:40 BRT 2006
+compile_version=1.7.1
+url="$httpSourceforge/wxlua/wxlua-2.6.2.0.tar.gz"
+file_size=1081719
+file_md5=a9eec7af38aa486aff72f5c4720525a9
+recipe_type=configure
+dir=wxLua
+configure_options=(
+   --disable-wxbindstc
+)

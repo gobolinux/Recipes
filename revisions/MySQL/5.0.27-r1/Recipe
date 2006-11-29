@@ -1,0 +1,55 @@
+# Recipe for version 5.0.27 by Otto Barnes <otto.barnes@gmail.com>, on Tue Nov 7 05:51:58 EST 2006
+# Recipe (MakeRecipe) for MySQL by Maglan C. Diemer, maglan@univates.br, on Qui Dez 8 20:53:16 BRST 2005
+compile_version=1.7.1
+url="http://mysql.easynet.be/Downloads/MySQL-5.0/mysql-5.0.27.tar.gz"
+recipe_type=configure
+
+override_default_options=yes
+configure_options=(
+    "--prefix=$target"
+    "--sysconfdir=$settings_target/MySQL"
+    "--localstatedir=/Files/MySQL"
+    "--enable-shared"
+    "--enable-thread-safe-client"
+)
+
+
+pre_install() {
+   if ! grep -q mysql $goboSettings/group
+   then
+      Log_Normal "Adding group mysql"
+      groupadd mysql
+   fi
+
+   if ! grep -q "mysql:x:" $goboSettings/passwd
+   then
+      Log_Normal "Adding user mysql"
+      useradd mysql -g mysql -c 'added by Compile for MySQL' -d $target -s $goboExecutables/false
+   fi
+}
+
+pre_link() {
+    # task file
+    mkdir -p $target/Resources/Tasks
+    cp support-files/mysql.server $target/Resources/Tasks/MySQL
+    chmod +x $target/Resources/Tasks/MySQL
+    
+    # settings files
+    mkdir -p $settings_target/MySQL
+    cp support-files/my-*.cnf $settings_target/MySQL
+    ln -s my-medium.cnf $settings_target/MySQL/my.cnf
+}
+
+post_install() {
+    Log_Normal "Installing prepared tables"
+    files_dir=/Files/MySQL
+    mkdir -p $files_dir
+    $target/bin/mysql_install_db
+
+    Log_Normal "Changing ownership of Variable to mysql:mysql"
+    chown -R mysql:mysql $files_dir
+    
+    pushd $target
+    ln -s $files_dir var
+    popd
+}

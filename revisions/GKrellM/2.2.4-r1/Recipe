@@ -1,0 +1,12 @@
+# Recipe by Volker Wieban (buckoven@yaklinux.org)
+
+compile_version=1.7.1
+url="http://web.wt.net/~billw/gkrellm/gkrellm-2.2.4.tar.bz2"
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "INSTALLROOT=$target"
+)
+pre_install() {
+   mkdir -p $target/lib/gkrellm2/plugins
+}

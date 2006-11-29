@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for Quodlibet by Jonatan Liljedahl <lijon@kymatica.com>, on Wed Jan 11 18:23:42 BRST 2006
+# Recipe for version 0.16 by Jonatan Liljedahl <lijon@kymatica.com>, on Wed Jan 11 18:23:42 BRST 2006
+compile_version=1.7.1
+url="http://www.sacredchao.net/~piman/software/quodlibet-0.16.tar.gz"
+file_size=552149
+file_md5=f47cdc1e8f7197a3cd281bd31b406d94
+recipe_type=makefile
+makefile='Makefile'
+do_build=no
+install_variables=(
+	PREFIX=$target
+)
+pre_install() {
+	make extensions
+}

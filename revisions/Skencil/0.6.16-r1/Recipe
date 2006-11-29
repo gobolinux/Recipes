@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for Skencil by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sat Oct 2 22:19:48 BRT 2004
+# Recipe for version 0.6.16 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sat Oct 2 22:19:48 BRT 2004
+compile_version=1.7.1
+url="$httpSourceforge/sketch/skencil-0.6.16.tar.gz"
+file_size=1136249
+file_md5=22db4f78151629df428c387e035fdad2
+recipe_type=manifest
+
+pre_install() {
+	./setup.py configure --with-nls && \
+	./setup.py build
+}
+
+pre_link() {
+	./setup.py install --prefix=$target
+}

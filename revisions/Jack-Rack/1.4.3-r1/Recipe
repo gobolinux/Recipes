@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Jack-Rack by roko, <ro.ko@mcnon.com>, on Wed Nov 17 15:41:51 BRST 2004
+# Recipe for version 1.4.3 by roko, <ro.ko@mcnon.com>, on Wed Nov 17 15:41:51 BRST 2004
+compile_version=1.7.1
+url="http://arb.bash.sh/~rah/software/jack-rack/jack-rack-1.4.3.tar.gz"
+file_size=345917
+file_md5=1880b4e91f5b043802073e865b307f8c
+recipe_type=configure
+configure_options=(
+--disable-desktop-inst
+)

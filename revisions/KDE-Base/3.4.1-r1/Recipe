@@ -1,0 +1,23 @@
+# Recipe for version 3.4.1 by Andre Detsch, on Thu Jun 16 19:02:13 BRT 2005
+# by Maglan C. Diemer , 3.3.2 by roko
+compile_version=1.7.1
+url="ftp://ftp.kde.org/pub/kde/stable/3.4.1/src/kdebase-3.4.1.tar.bz2"
+#url="ftp://ftp.sunet.se/pub/kde/stable/3.4.1/src/kdebase-3.4.1.tar.bz2"
+dir='kdebase-3.4.1'
+recipe_type=configure
+configure_options=(
+		"--disable-debug"
+		"--with-shadow"
+#  "DO_NOT_COMPILE="
+#libkonq applnk doc drkonqi kappfinder kate kcheckpass kcminit  kcontrol  kdcop  kdebugdialog  kdepasswd  kdeprint  kdesu  kdialog  kfind  khelpcenter khotkeys  kicker  kioslave  klipper  kmenuedit  konsole  kpager  kpersonalizer  kreadconfig  kscreensaver  ksmserver  ksplashml  kstart  ksysguard ksystraycmd  ktip  kwin  kxkb  l10n  nsplugins  pics  konqueror  kdesktop kdm
+)
+
+# chmod below is not needed with Scripts >= 2.1.21
+post_install()  {
+	chmod 4755 $target/bin/kcheckpass
+	chmod 2755 $target/bin/kdesud
+
+#	GrepReplace "/Programs/Xorg/.*/" "/Programs/Xorg/Current/" $target/Shared/config/kdm/{kdmrc,README,Xresources,Xservers}
+#	rm -f $target/Shared/config/kdm/*~
+}
+

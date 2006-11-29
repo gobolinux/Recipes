@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for GCML2 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Nov 15 15:39:07 BRST 2004
+# Recipe for version 0.7.1 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Nov 15 15:39:07 BRST 2004
+compile_version=1.7.1
+url="$httpSourceforge/kbuild/gcml2-0.7.1.tar.gz"
+file_size=166119
+file_md5=a2edecc90dc174a843e585edd3e038e9
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(prefix="$target")

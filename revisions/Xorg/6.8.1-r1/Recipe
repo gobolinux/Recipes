@@ -1,0 +1,23 @@
+# Recipe for version 6.8.1 by Hisham Muhammad, on Thu Sep 23 13:29:25 BRT 2004
+# Use the single src package, David Smith (2005-01-01) 
+url="http://www2.x.org/pub/X11R6.8.1/src-single/X11R6.8.1-src.tar.bz2"
+urls=(
+        "http://www2.x.org/pub/X11R6.8.1/src/X11R6.8.1-src1.tar.gz"
+        "http://www2.x.org/pub/X11R6.8.1/src/X11R6.8.1-src2.tar.gz"
+        "http://www2.x.org/pub/X11R6.8.1/src/X11R6.8.1-src3.tar.gz"
+        "http://www2.x.org/pub/X11R6.8.1/src/X11R6.8.1-src4.tar.gz"
+        "http://www2.x.org/pub/X11R6.8.1/src/X11R6.8.1-src5.tar.gz"
+        "http://www2.x.org/pub/X11R6.8.1/src/X11R6.8.1-src6.tar.gz"
+        "http://www2.x.org/pub/X11R6.8.1/src/X11R6.8.1-src7.tar.gz"
+)
+
+
+md5_sum=a9756b1898220b960f3cb1feb77721c3
+compile_version=1.7.1
+recipe_type=makefile
+dir=xc
+build_target="World"
+
+post_install() {
+	make install.man
+}

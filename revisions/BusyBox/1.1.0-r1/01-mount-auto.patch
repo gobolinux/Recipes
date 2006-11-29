@@ -1,0 +1,11 @@
+--- busybox-1.1.0-pre1/util-linux/mount.c.orig	2006-01-16 11:06:16.000000000 -0200
++++ busybox-1.1.0-pre1/util-linux/mount.c	2006-01-16 11:07:48.000000000 -0200
+@@ -313,7 +313,7 @@ singlemount:
+ 			/* If we know the fstype (or don't need to), jump straight
+ 			 * to the actual mount. */
+ 
+-			if(fsType || (flags & (MS_REMOUNT | MS_BIND | MS_MOVE)))
++			if((fsType && strcmp(fsType, "auto")) || (flags & (MS_REMOUNT | MS_BIND | MS_MOVE)))
+ 				goto mount_it_now;
+ 		}
+ 		

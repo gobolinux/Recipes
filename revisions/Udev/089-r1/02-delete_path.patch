@@ -1,0 +1,11 @@
+--- udev-089/udev_utils_file.c.orig	2006-04-07 14:33:29.000000000 -0300
++++ udev-089/udev_utils_file.c	2006-04-10 14:57:39.000000000 -0300
+@@ -79,6 +79,8 @@ int delete_path(const char *path)
+ 		retval = rmdir(p);
+ 		if (errno == ENOENT)
+ 			retval = 0;
++		else if (errno == EBUSY)
++			return 0;
+ 		if (retval) {
+ 			if (errno == ENOTEMPTY)
+ 				return 0;

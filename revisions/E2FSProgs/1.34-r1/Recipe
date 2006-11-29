@@ -1,0 +1,7 @@
+url=$httpSourceforge/e2fsprogs/e2fsprogs-1.34.tar.gz
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+   "--enable-elf-shlibs"
+)
+install_target="install install-libs"

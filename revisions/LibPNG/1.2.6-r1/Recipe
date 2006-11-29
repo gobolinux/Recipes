@@ -1,0 +1,14 @@
+# Recipe for LibPNG 1.2.6 by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+url=$httpSourceforge/libpng/libpng-1.2.6.tar.bz2
+compile_version=1.7.1
+file_size=378644
+file_md5=2518e496ad45c3531285b58016a6be5c
+dir=libpng-1.2.6
+recipe_type=makefile
+makefile=scripts/makefile.linux
+make_variables=(
+   "prefix=$target"
+   ZLIBLIB="$goboLibraries"
+   ZLIBINC="$goboHeaders"
+)
+

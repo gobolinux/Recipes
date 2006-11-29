@@ -1,0 +1,9 @@
+# Recipe for version 0.1.7 by Thomas Queste <tqueste@free.fr>, on Mon Jul 10 21:42:32 CEST 2006
+# Recipe (MakeRecipe) for EmelFM2 by Felix Breuer <felix@fbreuer.de>, on Sun Sep 5 22:17:33 CEST 2004
+compile_version=1.7.1
+url="http://emelfm2.net/rel/emelfm2-0.1.7.tar.gz"
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+	"PREFIX=$target"
+)

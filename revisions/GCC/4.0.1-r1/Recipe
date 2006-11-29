@@ -1,0 +1,30 @@
+# Recipe for version 4.0.1 by Andre Detsch, on Fri Jul 22 16:37:02 BRT 2005
+# by Hisham Muhammad, Guilherme Bedin
+
+url=$ftpGnu/gcc/gcc-4.0.1/gcc-4.0.1.tar.bz2
+
+compile_version=1.7.1
+recipe_type=configure
+needs_build_directory=yes
+configure_options=(
+   "--enable-shared"
+   "--enable-threads=posix"
+   "--enable-__cxa_atexit"
+   "--enable-clocale=gnu"
+   "--enable-languages=c,c++"
+#   "--build=i386-pc-linux-gnu"
+#   "--host=i386-pc-linux-gnu"
+#   "--target=i386-pc-linux-gnu"
+#   "--enable-languages=c,c++,objc"
+)
+pre_link() {
+   cd "$target/bin"
+   ln -s gcc cc
+   cd "$target/lib"
+   ln -s "$target/bin/cpp" .
+   rm -f libiberty.a
+   cd "$goboExecutables"
+   ln -nsf "$target/bin/cc" .
+   cd "$goboLibraries"
+   ln -nsf "$target/lib/cpp" .
+}

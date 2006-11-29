@@ -1,0 +1,13 @@
+compile_version=1.7.1
+urls=(
+  "ftp://ftp.astron.com/pub/tcsh/tcsh-6.13.00.tar.gz"
+  "ftp://ftp.gw.com/pub/unix/tcsh/tcsh-6.13.00.tar.gz"
+  "ftp://ftp.funet.fi/pub/unix/shells/tcsh/tcsh-6.13.00.tar.gz"
+)
+file_size=844755
+file_md5=11c0c9c9148652dc01270c4880d1cc6e
+recipe_type=configure
+
+pre_link() {
+   ln -s tcsh $target/bin/csh
+}

@@ -1,0 +1,19 @@
+#!/bin/sh
+
+source GoboPath
+
+mount -t proc  none $goboStatus
+mount -t sysfs none $goboObjects
+mount -t tmpfs tmpfs $goboDevices
+
+cp -a $goboLibraries/udev/devices/* $goboDevices/
+
+# udevd listens for hotplug events through netlink
+if [ -x "$goboExecutables/udevd" ]
+then
+    $goboExecutables/udevd --daemon
+    echo "" > "$goboStatus/sys/kernel/hotplug"
+else
+    # have udevsend handle hotplug events
+    echo "$goboExecutables/udevsend" > "$goboStatus/sys/kernel/hotplug"
+fi

@@ -1,0 +1,12 @@
+# Recipe for version 1.8.2 by Ozgur Ulukir ozgurulukir@yahoo.com, on Sat Dec 25 23:55:46 EET 2004
+# by Michael Homer
+# 2004.01.28 04:31
+
+url="ftp://ftp.ruby-lang.org/pub/ruby/ruby-1.8.2.tar.gz"
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+ "--disable-frame-address"
+)
+
+description="An object-oriented scripting language"

@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for LibMicro by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Jul 11 11:28:29 BRT 2006
+# Recipe for version 0.3.0 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Jul 11 11:28:29 BRT 2006
+compile_version=1.7.1
+url="http://opensolaris.org/os/community/performance/libmicro/libmicro-0.3.0.tar.gz"
+file_size=49287
+file_md5=3c2ad95bd6e44e4dccae4bb349818038
+dir='libMicro-0.3.0'
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=(
+    PREFIX=$target
+)

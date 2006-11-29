@@ -1,0 +1,15 @@
+diff -ruN unison-2.13.16.orig/Makefile unison-2.13.16/Makefile
+--- unison-2.13.16.orig/Makefile	2006-04-01 23:47:51.000000000 +0200
++++ unison-2.13.16/Makefile	2006-04-01 23:48:53.000000000 +0200
+@@ -74,9 +74,9 @@
+ install: doinstall
+ 
+ doinstall: $(NAME)$(EXEC_EXT)
+-	-mv $(INSTALLDIR)/$(NAME)$(EXEC_EXT) /tmp/$(NAME)-$(shell echo $$$$)
+-	cp $(NAME)$(EXEC_EXT) $(INSTALLDIR)
++	mkdir -p $(INSTALLDIR)
+ 	cp $(NAME)$(EXEC_EXT) $(INSTALLDIR)$(NAME)-$(MAJORVERSION)$(EXEC_EXT)
++	cd $(INSTALLDIR) && ln $(NAME)-$(MAJORVERSION)$(EXEC_EXT) $(NAME)$(EXEC_EXT)
+ 
+ 
+ ######################################################################

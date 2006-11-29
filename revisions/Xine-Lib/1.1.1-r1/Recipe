@@ -1,0 +1,10 @@
+# Recipe for version 1.1.1 by Jonas Karlsson <jonka750@student.liu.se>, on Mon Nov 28 00:36:19 CET 2005
+# Recipe (MakeRecipe) for XineLib by Michael Farrell <michael@xinomorph.org>, on Sun Oct 24 19:29:17 CST 2004
+url="http://optusnet.dl.sourceforge.net/xine/xine-lib-1.1.1.tar.gz"
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+	"--with-xv-path=$goboLibraries"
+	"--with-xvmc-path=$goboLibraries"
+	"--enable-ipv6"
+)

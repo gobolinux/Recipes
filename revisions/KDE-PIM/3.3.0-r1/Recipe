@@ -1,0 +1,9 @@
+# by Maglan C. Diemer && Ander Detsch
+
+url="ftp://ftp.kde.org/pub/kde/stable/3.3/src/kdepim-3.3.0.tar.bz2"
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+)

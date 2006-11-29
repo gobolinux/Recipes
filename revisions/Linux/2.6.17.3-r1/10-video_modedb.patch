@@ -1,0 +1,7 @@
+--- linux-2.6.17.3/drivers/video/modedb.c.orig	2006-07-07 10:31:49.000000000 -0300
++++ linux-2.6.17.3/drivers/video/modedb.c	2006-07-07 10:32:21.000000000 -0300
+@@ -1024,4 +1024,3 @@ EXPORT_SYMBOL(fb_find_best_mode);
+ EXPORT_SYMBOL(fb_find_nearest_mode);
+ EXPORT_SYMBOL(fb_videomode_to_modelist);
+ EXPORT_SYMBOL(fb_find_mode);
+-EXPORT_SYMBOL(fb_destroy_modelist);

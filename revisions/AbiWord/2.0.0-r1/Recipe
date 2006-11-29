@@ -1,0 +1,5 @@
+url=$httpSourceforge/abiword/abiword-2.0.0.tar.bz2
+dir=abiword-2.0.0/abi
+compile_version=1.7.1
+recipe_type=configure
+needs_build_directory=yes

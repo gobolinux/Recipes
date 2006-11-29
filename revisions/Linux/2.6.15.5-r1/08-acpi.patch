@@ -1,0 +1,260 @@
+ Documentation/DocBook/kernel-api.tmpl |    1 
+ Documentation/kernel-parameters.txt   |    4 +++
+ Documentation/pm.txt                  |    2 -
+ MAINTAINERS                           |    2 -
+ drivers/acpi/Kconfig                  |    2 -
+ drivers/acpi/scan.c                   |   27 +++++++++++++---------
+ drivers/acpi/tables.c                 |    4 +--
+ 7 files changed, 26 insertions(+), 16 deletions(-)
+commit f9a204e1de73a7007de66fb289e1d64a7665c9b4
+Author: Borislav Petkov <bbpetkov@yahoo.de>
+Date:   Fri Jan 6 01:31:00 2006 -0500
+
+    [ACPI] remove Kconfig "default y" for laptop drivers
+    
+    Signed-off-by: Borislav Petkov <petkov@uni-muenster.de>
+    Signed-off-by: Andrew Morton <akpm@osdl.org>
+    Signed-off-by: Len Brown <len.brown@intel.com>
+
+commit d758a8fa8ce0566947677f7e70bf70c57ad9445c
+Author: Randy Dunlap <rdunlap@xenotime.net>
+Date:   Fri Jan 6 01:31:00 2006 -0500
+
+    [ACPI] fix kernel-doc warnings in acpi/scan.c
+    
+    Signed-off-by: Randy Dunlap <rdunlap@xenotime.net>
+    Signed-off-by: Andrew Morton <akpm@osdl.org>
+    Signed-off-by: Len Brown <len.brown@intel.com>
+
+commit add5b5ee992e40c9cd8697ea94c223628be162a7
+Merge: 25da0974601fc8096461f3d3f7ca3aab8e79adfb 0aec63e67c69545ca757a73a66f5dcf05fa484bf
+Author: Len Brown <len.brown@intel.com>
+Date:   Sat Jan 7 02:05:40 2006 -0500
+
+    Auto-update from upstream
+
+commit 25da0974601fc8096461f3d3f7ca3aab8e79adfb
+Merge: 036d25f79ddfbc9878da24ef8e468a6d22caa605 d99cf9d679a520d67f81d805b7cb91c68e1847f0
+Author: Len Brown <len.brown@intel.com>
+Date:   Fri Jan 6 16:34:21 2006 -0500
+
+    Auto-update from upstream
+
+commit 036d25f79ddfbc9878da24ef8e468a6d22caa605
+Author: Len Brown <len.brown@intel.com>
+Date:   Fri Jan 6 16:19:26 2006 -0500
+
+    [ACPI] linux-acpi@vger.kernel.org replaces acpi-devel@lists.sourceforge.net
+    
+    Signed-off-by: Len Brown <len.brown@intel.com>
+
+commit d78fef14c2218ba9666687aabc57392c54569048
+Merge: 04348e69e7e78ad69a09b2e1157f628d6c764370 88026842b0a760145aa71d69e74fbc9ec118ca44
+Author: Len Brown <len.brown@intel.com>
+Date:   Tue Jan 3 16:03:07 2006 -0500
+
+    Pull linus into release branch
+
+commit 04348e69e7e78ad69a09b2e1157f628d6c764370
+Author: Len Brown <len.brown@intel.com>
+Date:   Fri Dec 30 02:44:59 2005 -0500
+
+    [ACPI] reduce kernel size: move 5BK .bss to 2.5KB .init.data
+    
+    put __initdata on sdt_entry[], as it is accessed only by __init functions.
+    
+    http://bugzilla.kernel.org/show_bug.cgi?id=1311
+    
+    Signed-off-by: Len Brown <len.brown@intel.com>
+
+commit c1a959d8ef4e343f11c8c0f9a693815b6dc76886
+Merge: 6968e50c2b53805219618203db3d98566dfa1fdd 9e625ff8a37aefcc177b19614ffcffb5bc6eeea1
+Author: Len Brown <len.brown@intel.com>
+Date:   Fri Dec 30 00:35:53 2005 -0500
+
+    Pull linus into release branch
+
+commit 6968e50c2b53805219618203db3d98566dfa1fdd
+Author: Len Brown <len.brown@intel.com>
+Date:   Fri Dec 30 00:32:49 2005 -0500
+
+    [ACPI] linux-acpi@vger.kernel.org replaces acpi-devel@lists.sourceforge.net
+    
+    Signed-off-by: Len Brown <len.brown@intel.com>
+
+commit 0a5296dc34593e08c9e54b60e8f93684efff2f92
+Merge: 41c0d8680f7f24e1abaaeeabc6723277b2e34b81 3603bc8dc5ab33941e6378fe52ea03b7f5561109
+Author: Len Brown <len.brown@intel.com>
+Date:   Wed Dec 28 23:43:17 2005 -0500
+
+    Pull linus into release branch
+
+commit 41c0d8680f7f24e1abaaeeabc6723277b2e34b81
+Author: Len Brown <len.brown@intel.com>
+Date:   Wed Dec 28 12:43:51 2005 -0500
+
+    [ACPI] document processor.nocst parameter
+    
+    Signed-off-by: Len Brown <len.brown@intel.com>
+
+diff --git a/Documentation/DocBook/kernel-api.tmpl b/Documentation/DocBook/kernel-api.tmpl
+index 767433b..3c47a3f 100644
+--- a/Documentation/DocBook/kernel-api.tmpl
++++ b/Documentation/DocBook/kernel-api.tmpl
+@@ -369,6 +369,7 @@ X!Edrivers/acpi/motherboard.c
+ X!Edrivers/acpi/bus.c
+ -->
+ !Edrivers/acpi/scan.c
++!Idrivers/acpi/scan.c
+ <!-- No correct structured comments
+ X!Edrivers/acpi/pci_bind.c
+ -->
+diff --git a/Documentation/kernel-parameters.txt b/Documentation/kernel-parameters.txt
+index a482fde..acb010b 100644
+--- a/Documentation/kernel-parameters.txt
++++ b/Documentation/kernel-parameters.txt
+@@ -1176,6 +1176,10 @@ running once the system is up.
+ 			Limit processor to maximum C-state
+ 			max_cstate=9 overrides any DMI blacklist limit.
+ 
++	processor.nocst	[HW,ACPI]
++			Ignore the _CST method to determine C-states,
++			instead using the legacy FADT method
++
+ 	prompt_ramdisk=	[RAM] List of RAM disks to prompt for floppy disk
+ 			before loading.
+ 			See Documentation/ramdisk.txt.
+diff --git a/Documentation/pm.txt b/Documentation/pm.txt
+index 2ea1149..79c0f32 100644
+--- a/Documentation/pm.txt
++++ b/Documentation/pm.txt
+@@ -218,7 +218,7 @@ proceed in the opposite direction.
+ Q: Who do I contact for additional information about
+    enabling power management for my specific driver/device?
+ 
+-ACPI Development mailing list: acpi-devel@lists.sourceforge.net
++ACPI Development mailing list: linux-acpi@vger.kernel.org
+ 
+ System Interface -- OBSOLETE, DO NOT USE!
+ ----------------*************************
+diff --git a/MAINTAINERS b/MAINTAINERS
+index bce7123..7e78090 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -182,7 +182,7 @@ S:	Supported
+ ACPI
+ P:	Len Brown
+ M:	len.brown@intel.com
+-L:	acpi-devel@lists.sourceforge.net
++L:	linux-acpi@vger.kernel.org
+ W:	http://acpi.sourceforge.net/
+ T:	git kernel.org:/pub/scm/linux/kernel/git/lenb/linux-acpi-2.6.git
+ S:	Maintained
+diff --git a/drivers/acpi/Kconfig b/drivers/acpi/Kconfig
+index fce21c2..6d61945 100644
+--- a/drivers/acpi/Kconfig
++++ b/drivers/acpi/Kconfig
+@@ -168,7 +168,6 @@ config ACPI_NUMA
+ config ACPI_ASUS
+         tristate "ASUS/Medion Laptop Extras"
+ 	depends on X86
+-	default y
+         ---help---
+           This driver provides support for extra features of ACPI-compatible
+           ASUS laptops. As some of Medion laptops are made by ASUS, it may also
+@@ -209,7 +208,6 @@ config ACPI_IBM
+ config ACPI_TOSHIBA
+ 	tristate "Toshiba Laptop Extras"
+ 	depends on X86
+-	default y
+ 	---help---
+ 	  This driver adds support for access to certain system settings
+ 	  on "legacy free" Toshiba laptops.  These laptops can be recognized by
+diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
+index 0745d20..3b26a71 100644
+--- a/drivers/acpi/scan.c
++++ b/drivers/acpi/scan.c
+@@ -475,8 +475,10 @@ static LIST_HEAD(acpi_bus_drivers);
+ static DECLARE_MUTEX(acpi_bus_drivers_lock);
+ 
+ /**
+- * acpi_bus_match 
+- * --------------
++ * acpi_bus_match - match device IDs to driver's supported IDs
++ * @device: the device that we are trying to match to a driver
++ * @driver: driver whose device id table is being checked
++ *
+  * Checks the device's hardware (_HID) or compatible (_CID) ids to see if it
+  * matches the specified driver's criteria.
+  */
+@@ -489,8 +491,10 @@ acpi_bus_match(struct acpi_device *devic
+ }
+ 
+ /**
+- * acpi_bus_driver_init 
+- * --------------------
++ * acpi_bus_driver_init - add a device to a driver
++ * @device: the device to add and initialize
++ * @driver: driver for the device
++ *
+  * Used to initialize a device via its device driver.  Called whenever a 
+  * driver is bound to a device.  Invokes the driver's add() and start() ops.
+  */
+@@ -603,8 +607,9 @@ static int acpi_driver_detach(struct acp
+ }
+ 
+ /**
+- * acpi_bus_register_driver 
+- * ------------------------ 
++ * acpi_bus_register_driver - register a driver with the ACPI bus
++ * @driver: driver being registered
++ *
+  * Registers a driver with the ACPI bus.  Searches the namespace for all
+  * devices that match the driver's criteria and binds.  Returns the
+  * number of devices that were claimed by the driver, or a negative
+@@ -633,8 +638,9 @@ int acpi_bus_register_driver(struct acpi
+ EXPORT_SYMBOL(acpi_bus_register_driver);
+ 
+ /**
+- * acpi_bus_unregister_driver 
+- * --------------------------
++ * acpi_bus_unregister_driver - unregisters a driver with the APIC bus
++ * @driver: driver to unregister
++ *
+  * Unregisters a driver with the ACPI bus.  Searches the namespace for all
+  * devices that match the driver's criteria and unbinds.
+  */
+@@ -660,8 +666,9 @@ int acpi_bus_unregister_driver(struct ac
+ EXPORT_SYMBOL(acpi_bus_unregister_driver);
+ 
+ /**
+- * acpi_bus_find_driver 
+- * --------------------
++ * acpi_bus_find_driver - check if there is a driver installed for the device
++ * @device: device that we are trying to find a supporting driver for
++ *
+  * Parses the list of registered drivers looking for a driver applicable for
+  * the specified device.
+  */
+diff --git a/drivers/acpi/tables.c b/drivers/acpi/tables.c
+index a2bf25b..31d4f3f 100644
+--- a/drivers/acpi/tables.c
++++ b/drivers/acpi/tables.c
+@@ -37,7 +37,7 @@
+ 
+ #define PREFIX			"ACPI: "
+ 
+-#define ACPI_MAX_TABLES		256
++#define ACPI_MAX_TABLES		128
+ 
+ static char *acpi_table_signatures[ACPI_TABLE_COUNT] = {
+ 	[ACPI_TABLE_UNKNOWN] = "????",
+@@ -74,7 +74,7 @@ struct acpi_table_sdt {
+ static unsigned long sdt_pa;	/* Physical Address */
+ static unsigned long sdt_count;	/* Table count */
+ 
+-static struct acpi_table_sdt sdt_entry[ACPI_MAX_TABLES];
++static struct acpi_table_sdt sdt_entry[ACPI_MAX_TABLES] __initdata;
+ 
+ void acpi_table_print(struct acpi_table_header *header, unsigned long phys_addr)
+ {

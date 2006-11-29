@@ -1,0 +1,8 @@
+# by Leandro Motta Barros
+
+url=ftp://sunsite.unc.edu/pub/Linux/libs/graphics/t1lib-5.0.0.tar.gz
+compile_version=1.7.1
+recipe_type=configure
+
+# Check this...
+build_target=without_doc

@@ -1,0 +1,19 @@
+# by Jason Stubbs
+# 2004.01.06 19:27
+
+# by Jason Stubbs
+
+url=http://mirrors.isc.org/pub/postfix/official/postfix-2.0.16.tar.gz
+compile_version=1.7.1
+recipe_type=makefile
+pre_build()
+{
+   make makefiles CCARGS="-DDEF_COMMAND_DIR=\\\"$target/sbin\\\" -DDEF_CONFIG_DIR=\\\"$goboPrograms/$app/Settings/postfix\\\" -DDEF_DAEMON_DIR=\\\"$target/libexec\\\" -DDEF_MAILQ_PATH=\\\"$target/bin/mailq\\\" -DDEF_MANPAGE_DIR=\\\"$target/man\\\" -DDEF_NEWALIAS_PATH=\\\"$target/bin/newaliases\\\" -DDEF_README_DIR=\\\"$target/doc\\\" -DDEF_SENDMAIL_PATH=\\\"$target/sbin/sendmail\\\""
+}
+install_target="upgrade"
+pre_install()
+{
+   mkdir -p $goboPrograms/$app/Settings
+   touch $goboPrograms/$app/Settings/aliases
+   touch $goboPrograms/$app/Settings/aliases.db
+}

@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for Lua by Guilherme Balestieri Bedin (gbedin), on Thu Aug 18 09:03:07 BRT 2005
+# Recipe for version 5.0.2 by Guilherme Balestieri Bedin (gbedin), on Thu Aug 18 09:03:07 BRT 2005
+compile_version=1.7.1
+url="http://www.lua.org/ftp/lua-5.0.2.tar.gz"
+file_size=190442
+file_md5=dea74646b7e5c621fef7174df83c34b1
+recipe_type=makefile
+makefile='Makefile'
+make_variables=("PREFIX=$target")

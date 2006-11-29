@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for SNNS by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sat Oct 9 23:43:25 BRT 2004
+# Recipe for version 4.2 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sat Oct 9 23:43:25 BRT 2004
+compile_version=1.7.1
+url="http://www-ra.informatik.uni-tuebingen.de/downloads/SNNS/SNNSv4.2.tar.gz"
+file_size=2170375
+file_md5=4609dfd61714bfbb0842d4e8e905e584
+recipe_type=configure
+
+configure_options=(
+	"--enable-global"
+)

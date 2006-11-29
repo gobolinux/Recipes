@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for WDM by Jonas Karlsson <jonka750@student.liu.se>, on Tue Apr 5 13:36:54 CEST 2005
+# Recipe for version 1.28 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Apr 5 13:36:54 CEST 2005
+compile_version=1.7.1
+url="http://voins.program.ru/wdm/wdm-1.28.tar.bz2"
+file_size=381522
+file_md5=4da8ffe3af233305786d9b6aab78b838
+recipe_type=configure
+configure_options=(
+    "--with-wdmdir=${target}/../Settings/wdm"
+    "--with-pamdir=${target}/../Settings/pam.d"
+    "--enable-pam"
+    "--with-runlockdir=${target}/../Variable/run/wdm"
+    "--with-fakehome=${target}/../Variable/run/wdm"
+    "--with-logdir=${target}/../Variable/log/wdm"
+)

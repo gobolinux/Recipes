@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Gimp by roko, <ro.ko@mcnon.com>, on Fri Dec 31 19:34:35 BRST 2004
+# Recipe for version 2.2.1 by roko, <ro.ko@mcnon.com>, on Fri Dec 31 19:34:35 BRST 2004
+compile_version=1.7.1
+url="ftp://ftp.gimp.org/pub/gimp/v2.2/gimp-2.2.1.tar.bz2"
+file_size=13857161
+file_md5=a63956f6fa8789368e1d143903c7d6eb
+recipe_type=configure
+configure_options=(
+--enable-python
+)  

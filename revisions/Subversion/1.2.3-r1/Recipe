@@ -1,0 +1,8 @@
+# Recipe for version 1.2.3 by Andre Detsch, on Tue Sep 13 10:01:31 BRT 2005
+# Recipe (MakeRecipe) for Subversion by Jonas Karlsson <jonka750@student.liu.se>, on Wed May 11 07:50:33 CEST 2005
+compile_version=1.7.1
+url="http://subversion.tigris.org/downloads/subversion-1.2.3.tar.bz2"
+recipe_type=configure
+pre_link(){
+ln -s ${target}/HTTPD/modules/* ${goboPrograms}/HTTPD/Current/modules/
+}

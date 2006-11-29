@@ -1,0 +1,23 @@
+--- gawk-3.1.5/awklib/Makefile.in.orig	2006-06-19 00:44:16.000000000 -0300
++++ gawk-3.1.5/awklib/Makefile.in	2006-06-19 00:45:45.000000000 -0300
+@@ -206,7 +206,7 @@ EXTRA_DIST = ChangeLog extract.awk eg st
+ 
+ # Get config.h from the build directory and custom.h from the source directory.
+ AM_CPPFLAGS = -I$(top_builddir) -I$(top_srcdir)
+-pkglibexecdir = $(libexecdir)/awk
++pkglibexecdir = $(libexecdir)
+ bin_SCRIPTS = igawk
+ AUXAWK = passwd.awk group.awk
+ nodist_grcat_SOURCES = grcat.c
+@@ -495,8 +495,10 @@ install-exec-hook: $(AUXAWK)
+ 
+ # pkglibexecdir and pkgdatadir are removed in the top level Makefile's uninstall
+ uninstall-local:
+-	rm -fr $(DESTDIR)$(pkglibexecdir)/* $(DESTDIR)$(pkgdatadir)/*
++	rm -f $(DESTDIR)$(libexecdir)/grcat
++	rm -f $(DESTDIR)$(libexecdir)/pwcat
+ 	rm -f $(DESTDIR)$(bindir)/igawk
++	rm -fr $(DESTDIR)$(datadir)
+ 
+ clean-local:
+ 	rm -f $(AUXAWK) igawk *.exe

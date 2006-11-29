@@ -1,0 +1,9 @@
+# Recipe for version 6.4 by Andre Detsch <detsch@gobolinux.org>, on Thu Nov 9 21:34:58 BRST 2006
+url=$ftpGnu/coreutils/coreutils-6.4.tar.bz2
+recipe_type=configure
+install_target="install install-root"
+needs_safe_linking=yes
+compile_version=1.7.1
+pre_link() {
+   mv $target/bin/install $target/bin/real_install
+}

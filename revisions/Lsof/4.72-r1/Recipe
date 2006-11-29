@@ -1,0 +1,26 @@
+# Recipe (MakeRecipe) for Lsof by David Smith <dsmith@algonet.se>, on Sat Sep 25 22:15:08 CEST 2004
+# Recipe for version 4.72 by David Smith <dsmith@algonet.se>, on Sat Sep 25 22:15:08 CEST 2004
+compile_version=1.7.1
+url="ftp://lsof.itap.purdue.edu/pub/tools/unix/lsof/lsof_4.72.tar.bz2"
+file_size=716577
+file_md5=5cc6edeab12733c69bac8ed4246e25f2
+recipe_type=makefile
+
+pre_build() {
+	# Extract sub-package and create makefile
+	[ -d lsof_4.72_src ] || tar xf lsof_4.72_src.tar
+	cd lsof_4.72_src
+	[ -f Makefile ] || Configure -n linux
+}
+
+# lsof does not implement an install target aside from
+# one telling us to write our own and giving a hint 
+# about how to do it
+do_install=no
+
+pre_link() {
+	# install suid as recommended in the suid distribution
+	# to allow anyone to see all open files
+	install -m 4755 lsof "$target/bin"
+	install -m 444 lsof.8 "$target/man/man8"
+}

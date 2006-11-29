@@ -1,0 +1,18 @@
+# Recipe (MakeRecipe) for GTK-QT-Engine by Maglan C. Diemer, maglan@univates.br, on Qua Ago 31 11:36:53 BRT 2005
+# Recipe for version 0.6 by Maglan C. Diemer, maglan@univates.br, on Qua Ago 31 11:36:53 BRT 2005
+compile_version=1.7.1
+url="http://www.freedesktop.org/~davidsansome/gtk-qt-engine-0.6.tar.bz2"
+file_size=435510
+file_md5=9c02c95a6e8d304b1f2801429759e1c0
+recipe_type=configure
+
+pre_build() {
+   GrepReplace "enginedir = \$(GTK_LIBPREFIX)/gtk-2.0/\$(GTK_VERSION)/engines" "enginedir = @libdir@/gtk-2.0/\$(GTK_VERSION)/engines" src/Makefile.in
+   GrepReplace "themedir = \$(GTK_PREFIX)/share/themes/Qt/gtk-2.0" "themedir = @prefix@/share/themes/Qt/gtk-2.0" src/Makefile.in
+   GrepReplace "appdir = \$(GTK_PREFIX)/share/gtk-qt-engine" "appdir = @prefix@/share/gtk-qt-engine" src/Makefile.in
+
+   GrepReplace "kcmgtkmoduledir = \$(KDE_PREFIX)/lib/kde3/"   "kcmgtkmoduledir = @prefix@/lib/kde3/" kcm_gtk/Makefile.in   
+   GrepReplace "kcmgtkdebiandir = /usr/lib/menu" "kcmgtkdebiandir = @libdir@/menu" kcm_gtk/Makefile.in
+   GrepReplace "kcmgtkxdgdir = /usr/share/applications"  "kcmgtkxdgdir = @prefix@/share/applications" kcm_gtk/Makefile.in
+   GrepReplace "kcmgtkdir = \$(KDE_PREFIX)/share/applnk/Settings/LookNFeel"  "kcmgtkdir = @prefix@/share/applnk/Settings/LookNFeel" kcm_gtk/Makefile.in
+}

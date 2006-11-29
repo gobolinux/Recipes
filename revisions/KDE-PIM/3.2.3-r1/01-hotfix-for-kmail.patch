@@ -1,0 +1,118 @@
+CVS commit by tilladam: 
+
+Backport from head of:
+
+CVS commit by tilladam: 
+
+Don't do an expunge Folder, thereby removing all mails in an imap folder,
+when the deleteMessage method is called on a message that does not have
+a UID, for whatever reason.
+   
+Ouch.
+
+Now we need to find out why the message has no uid.
+
+Ingo, backport, I assume?
+
+
+  M +15 -2     kmfolderimap.cpp   1.163.2.1
+
+
+--- kdepim-3.2.0/kmail/kmfolderimap.cpp    14 Jan 2004 23:05:04 -0000      1.163
++++ kdepim-3.2.0/kmail/kmfolderimap.cpp    4 Feb 2004 08:53:56 -0000
+@@ -1207,7 +1207,16 @@ void KMFolderImap::deleteMessage(KMMessa
+ {
+   KURL url = mAccount->getUrl();
+   KMFolderImap *msg_parent = static_cast<KMFolderImap*>(msg->parent());
+-  url.setPath(msg_parent->imapPath() + ";UID=" + msg->headerField("X-UID"));
++  QString uid = msg->headerField("X-UID");
++  /* If the uid is empty the delete job below will nuke all mail in the
++     folder, so we better safeguard against that. See ::expungeFolder, as
++     to why. :( */
++  if ( uid.isEmpty() ) {
++     kdDebug( 5006 ) << "KMFolderImap::deleteMessage: Attempt to delete "
++                        "an empty UID. Aborting."  << endl;
++     return;
++  }
++  url.setPath(msg_parent->imapPath() + ";UID=" + uid );
+   if ( mAccount->makeConnection() != ImapAccountBase::Connected )
+     return;
+   KIO::SimpleJob *job = KIO::file_delete(url, FALSE);
+@@ -1228,7 +1237,11 @@ void KMFolderImap::deleteMessage(QPtrLis
+   KMFolderImap *msg_parent = static_cast<KMFolderImap*>(msgList.first()->parent());
+   for ( QStringList::Iterator it = sets.begin(); it != sets.end(); ++it )
+   {
+-    url.setPath(msg_parent->imapPath() + ";UID=" + *it);
++    QString uid = *it;
++    // Don't delete with no uid, that nukes the folder. Should not happen, but
++    // better safe than sorry.
++    if ( uid.isEmpty() ) continue;
++    url.setPath(msg_parent->imapPath() + ";UID=" + uid);
+     if ( mAccount->makeConnection() != ImapAccountBase::Connected )
+       return;
+     KIO::SimpleJob *job = KIO::file_delete(url, FALSE);
+CVS commit by strojil: 
+
+Commiting a patch by Ingo Klöcker:
+The attached patch fixes the critical bug #71866.
+
+From http://bugs.kde.org/show_bug.cgi?id=71866#c2:
+"That's a prime example for why it's bad to store the value of an enum
+as a number in a config file. The reason for this bug is a reordering
+of the enum values in the code. This changed the meaning of the value
+which is stored in the config file.
+
+With the patch KMail stores the enum as a string representing the enum
+value. As a consequence all POP filters will be reset to NoAction. But
+there is no other fix possible because it's impossible to find out
+whether the pop filter configuration was saved with KMail 1.6 or with a
+previous version of KMail."
+
+
+  M +24 -3     kmfilter.cpp   1.58.4.1
+
+
+--- kdepim-3.2.0/kmail/kmfilter.cpp	29 Nov 2003 15:46:43 -0000	1.58
++++ kdepim-3.2.0/kmail/kmfilter.cpp	4 Feb 2004 16:16:01 -0000
+@@ -147,9 +147,18 @@ void KMFilter::readConfig(KConfig* confi
+   // that the pattern is purified.
+   mPattern.readConfig(config);
+
+-  if (bPopFilter)
++  if (bPopFilter) {
+     // get the action description...
+-    mAction = (KMPopFilterAction) config->readNumEntry( "action" );
++    QString action = config->readEntry( "action" );
++    if ( action == "down" )
++      mAction = Down;
++    else if ( action == "later" )
++      mAction = Later;
++    else if ( action == "delete" )
++      mAction = Delete;
++    else
++      mAction = NoAction;
++  }
+   else {
+     QStringList sets = config->readListEntry("apply-on");
+     if ( sets.isEmpty() && !config->hasKey("apply-on") ) {
+@@ -210,7 +219,19 @@ void KMFilter::writeConfig(KConfig* conf
+   mPattern.writeConfig(config);
+
+   if (bPopFilter) {
+-    config->writeEntry( "action", mAction );
++    switch ( mAction ) {
++    case Down:
++      config->writeEntry( "action", "down" );
++      break;
++    case Later:
++      config->writeEntry( "action", "later" );
++      break;
++    case Delete:
++      config->writeEntry( "action", "delete" );
++      break;
++    default:
++      config->writeEntry( "action", "" );
++    }
+   } else {
+     QStringList sets;
+     if ( bApplyOnInbound )

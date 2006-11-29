@@ -1,0 +1,249 @@
+--- mpeg4ip-1.2/configure.in.orig	2006-01-05 22:08:52.000000000 -0200
++++ mpeg4ip-1.2/configure.in	2006-01-05 22:09:06.000000000 -0200
+@@ -201,8 +201,8 @@ AC_DEFUN([MY_CHECK_CC_OPT],
+ [
+ save_CFLAG="$CFLAGS"
+ save_CXXFLAG="$CXXFLAGS"
+-CFLAGS="$CFLAGS -Werror $1"
+-CXXFLAGS="$CXXFLAGS -Werror $1"
++CFLAGS="$CFLAGS $1"
++CXXFLAGS="$CXXFLAGS $1"
+    AC_MSG_CHECKING([whether $3 accepts $1])
+    AC_COMPILE_IFELSE(
+ [extern void f(void); void f(void){}],
+@@ -508,7 +508,7 @@ AC_SUBST(SDL_LIB_LIBS)
+ AC_SUBST(SUN_LIBS)
+ 
+ dnl
+-BILLS_CWARNINGS="-Wall -Werror"
++BILLS_CWARNINGS="-Wall"
+ 
+ AM_CONDITIONAL(HAVE_ALIGN_LOOPS, false)
+ MY_CHECK_CC_OPT_F_OR_M(align-loops, ALIGN_LOOPS)
+@@ -522,7 +522,7 @@ MY_CHECK_CC_OPT_SET([-Wmissing-declarati
+ MY_CHECK_CC_OPT_SET([-Wno-char-subscripts], BILLS_CWARNINGS, [c compiler])
+ MY_CHECK_CC_OPT_SET([-Wno-unknown-pragmas],BILLS_CWARNINGS, [c compiler])
+ MY_CHECK_CC_OPT_SET([-Wformat=2],BILLS_CWARNINGS, [c compiler])
+-BILLS_CPPWARNINGS="-Wall -Werror"
++BILLS_CPPWARNINGS="-Wall"
+ AC_LANG_PUSH(C++)
+ MY_CHECK_CC_OPT_SET([-Wmissing-prototypes], BILLS_CPPWARNINGS,[c++ compiler])
+ MY_CHECK_CC_OPT_SET([-Wno-char-subscripts], BILLS_CPPWARNINGS,[c++ compiler])
+--- mpeg4ip-1.2/configure.orig	2006-01-05 22:07:31.000000000 -0200
++++ mpeg4ip-1.2/configure	2006-01-05 22:08:40.000000000 -0200
+@@ -27705,7 +27705,7 @@ SDL_LIB_LIBS="`sdl-config --libs | sed /
+ 
+ 
+ 
+-BILLS_CWARNINGS="-Wall -Werror"
++BILLS_CWARNINGS="-Wall"
+ 
+ 
+ 
+@@ -27722,8 +27722,8 @@ fi
+ 
+ save_CFLAG="$CFLAGS"
+ save_CXXFLAG="$CXXFLAGS"
+-CFLAGS="$CFLAGS -Werror $temp_val"
+-CXXFLAGS="$CXXFLAGS -Werror $temp_val"
++CFLAGS="$CFLAGS $temp_val"
++CXXFLAGS="$CXXFLAGS $temp_val"
+    echo "$as_me:$LINENO: checking whether c compiler accepts $temp_val" >&5
+ echo $ECHO_N "checking whether c compiler accepts $temp_val... $ECHO_C" >&6
+    cat >conftest.$ac_ext <<_ACEOF
+@@ -27784,8 +27784,8 @@ fi
+ 
+ save_CFLAG="$CFLAGS"
+ save_CXXFLAG="$CXXFLAGS"
+-CFLAGS="$CFLAGS -Werror $temp_val"
+-CXXFLAGS="$CXXFLAGS -Werror $temp_val"
++CFLAGS="$CFLAGS $temp_val"
++CXXFLAGS="$CXXFLAGS $temp_val"
+    echo "$as_me:$LINENO: checking whether c compiler accepts $temp_val" >&5
+ echo $ECHO_N "checking whether c compiler accepts $temp_val... $ECHO_C" >&6
+    cat >conftest.$ac_ext <<_ACEOF
+@@ -27873,8 +27873,8 @@ fi
+ 
+ save_CFLAG="$CFLAGS"
+ save_CXXFLAG="$CXXFLAGS"
+-CFLAGS="$CFLAGS -Werror $temp_val"
+-CXXFLAGS="$CXXFLAGS -Werror $temp_val"
++CFLAGS="$CFLAGS $temp_val"
++CXXFLAGS="$CXXFLAGS $temp_val"
+    echo "$as_me:$LINENO: checking whether c compiler accepts $temp_val" >&5
+ echo $ECHO_N "checking whether c compiler accepts $temp_val... $ECHO_C" >&6
+    cat >conftest.$ac_ext <<_ACEOF
+@@ -27935,8 +27935,8 @@ fi
+ 
+ save_CFLAG="$CFLAGS"
+ save_CXXFLAG="$CXXFLAGS"
+-CFLAGS="$CFLAGS -Werror $temp_val"
+-CXXFLAGS="$CXXFLAGS -Werror $temp_val"
++CFLAGS="$CFLAGS $temp_val"
++CXXFLAGS="$CXXFLAGS $temp_val"
+    echo "$as_me:$LINENO: checking whether c compiler accepts $temp_val" >&5
+ echo $ECHO_N "checking whether c compiler accepts $temp_val... $ECHO_C" >&6
+    cat >conftest.$ac_ext <<_ACEOF
+@@ -28024,8 +28024,8 @@ fi
+ 
+ save_CFLAG="$CFLAGS"
+ save_CXXFLAG="$CXXFLAGS"
+-CFLAGS="$CFLAGS -Werror $temp_val"
+-CXXFLAGS="$CXXFLAGS -Werror $temp_val"
++CFLAGS="$CFLAGS $temp_val"
++CXXFLAGS="$CXXFLAGS $temp_val"
+    echo "$as_me:$LINENO: checking whether c compiler accepts $temp_val" >&5
+ echo $ECHO_N "checking whether c compiler accepts $temp_val... $ECHO_C" >&6
+    cat >conftest.$ac_ext <<_ACEOF
+@@ -28086,8 +28086,8 @@ fi
+ 
+ save_CFLAG="$CFLAGS"
+ save_CXXFLAG="$CXXFLAGS"
+-CFLAGS="$CFLAGS -Werror $temp_val"
+-CXXFLAGS="$CXXFLAGS -Werror $temp_val"
++CFLAGS="$CFLAGS $temp_val"
++CXXFLAGS="$CXXFLAGS $temp_val"
+    echo "$as_me:$LINENO: checking whether c compiler accepts $temp_val" >&5
+ echo $ECHO_N "checking whether c compiler accepts $temp_val... $ECHO_C" >&6
+    cat >conftest.$ac_ext <<_ACEOF
+@@ -28165,8 +28165,8 @@ fi
+ 
+ save_CFLAG="$CFLAGS"
+ save_CXXFLAG="$CXXFLAGS"
+-CFLAGS="$CFLAGS -Werror -Wmissing-prototypes"
+-CXXFLAGS="$CXXFLAGS -Werror -Wmissing-prototypes"
++CFLAGS="$CFLAGS -Wmissing-prototypes"
++CXXFLAGS="$CXXFLAGS -Wmissing-prototypes"
+    echo "$as_me:$LINENO: checking whether c compiler accepts -Wmissing-prototypes" >&5
+ echo $ECHO_N "checking whether c compiler accepts -Wmissing-prototypes... $ECHO_C" >&6
+    cat >conftest.$ac_ext <<_ACEOF
+@@ -28217,8 +28217,8 @@ CXXFLAGS="$save_CXXFLAG"
+ 
+ save_CFLAG="$CFLAGS"
+ save_CXXFLAG="$CXXFLAGS"
+-CFLAGS="$CFLAGS -Werror -Wmissing-declarations"
+-CXXFLAGS="$CXXFLAGS -Werror -Wmissing-declarations"
++CFLAGS="$CFLAGS -Wmissing-declarations"
++CXXFLAGS="$CXXFLAGS -Wmissing-declarations"
+    echo "$as_me:$LINENO: checking whether c compiler accepts -Wmissing-declarations" >&5
+ echo $ECHO_N "checking whether c compiler accepts -Wmissing-declarations... $ECHO_C" >&6
+    cat >conftest.$ac_ext <<_ACEOF
+@@ -28269,8 +28269,8 @@ CXXFLAGS="$save_CXXFLAG"
+ 
+ save_CFLAG="$CFLAGS"
+ save_CXXFLAG="$CXXFLAGS"
+-CFLAGS="$CFLAGS -Werror -Wno-char-subscripts"
+-CXXFLAGS="$CXXFLAGS -Werror -Wno-char-subscripts"
++CFLAGS="$CFLAGS -Wno-char-subscripts"
++CXXFLAGS="$CXXFLAGS -Wno-char-subscripts"
+    echo "$as_me:$LINENO: checking whether c compiler accepts -Wno-char-subscripts" >&5
+ echo $ECHO_N "checking whether c compiler accepts -Wno-char-subscripts... $ECHO_C" >&6
+    cat >conftest.$ac_ext <<_ACEOF
+@@ -28321,8 +28321,8 @@ CXXFLAGS="$save_CXXFLAG"
+ 
+ save_CFLAG="$CFLAGS"
+ save_CXXFLAG="$CXXFLAGS"
+-CFLAGS="$CFLAGS -Werror -Wno-unknown-pragmas"
+-CXXFLAGS="$CXXFLAGS -Werror -Wno-unknown-pragmas"
++CFLAGS="$CFLAGS -Wno-unknown-pragmas"
++CXXFLAGS="$CXXFLAGS -Wno-unknown-pragmas"
+    echo "$as_me:$LINENO: checking whether c compiler accepts -Wno-unknown-pragmas" >&5
+ echo $ECHO_N "checking whether c compiler accepts -Wno-unknown-pragmas... $ECHO_C" >&6
+    cat >conftest.$ac_ext <<_ACEOF
+@@ -28373,8 +28373,8 @@ CXXFLAGS="$save_CXXFLAG"
+ 
+ save_CFLAG="$CFLAGS"
+ save_CXXFLAG="$CXXFLAGS"
+-CFLAGS="$CFLAGS -Werror -Wformat=2"
+-CXXFLAGS="$CXXFLAGS -Werror -Wformat=2"
++CFLAGS="$CFLAGS -Wformat=2"
++CXXFLAGS="$CXXFLAGS -Wformat=2"
+    echo "$as_me:$LINENO: checking whether c compiler accepts -Wformat=2" >&5
+ echo $ECHO_N "checking whether c compiler accepts -Wformat=2... $ECHO_C" >&6
+    cat >conftest.$ac_ext <<_ACEOF
+@@ -28421,7 +28421,7 @@ CXXFLAGS="$save_CXXFLAG"
+      BILLS_CWARNINGS="$BILLS_CWARNINGS -Wformat=2"
+    fi
+ 
+-BILLS_CPPWARNINGS="-Wall -Werror"
++BILLS_CPPWARNINGS="-Wall" 
+ ac_ext=cc
+ ac_cpp='$CXXCPP $CPPFLAGS'
+ ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+@@ -28432,8 +28432,8 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
+ 
+ save_CFLAG="$CFLAGS"
+ save_CXXFLAG="$CXXFLAGS"
+-CFLAGS="$CFLAGS -Werror -Wmissing-prototypes"
+-CXXFLAGS="$CXXFLAGS -Werror -Wmissing-prototypes"
++CFLAGS="$CFLAGS  -Wmissing-prototypes"
++CXXFLAGS="$CXXFLAGS  -Wmissing-prototypes"
+    echo "$as_me:$LINENO: checking whether c++ compiler accepts -Wmissing-prototypes" >&5
+ echo $ECHO_N "checking whether c++ compiler accepts -Wmissing-prototypes... $ECHO_C" >&6
+    cat >conftest.$ac_ext <<_ACEOF
+@@ -28484,8 +28484,8 @@ CXXFLAGS="$save_CXXFLAG"
+ 
+ save_CFLAG="$CFLAGS"
+ save_CXXFLAG="$CXXFLAGS"
+-CFLAGS="$CFLAGS -Werror -Wno-char-subscripts"
+-CXXFLAGS="$CXXFLAGS -Werror -Wno-char-subscripts"
++CFLAGS="$CFLAGS  -Wno-char-subscripts"
++CXXFLAGS="$CXXFLAGS  -Wno-char-subscripts"
+    echo "$as_me:$LINENO: checking whether c++ compiler accepts -Wno-char-subscripts" >&5
+ echo $ECHO_N "checking whether c++ compiler accepts -Wno-char-subscripts... $ECHO_C" >&6
+    cat >conftest.$ac_ext <<_ACEOF
+@@ -28536,8 +28536,8 @@ CXXFLAGS="$save_CXXFLAG"
+ 
+ save_CFLAG="$CFLAGS"
+ save_CXXFLAG="$CXXFLAGS"
+-CFLAGS="$CFLAGS -Werror -Woverloaded-virtual"
+-CXXFLAGS="$CXXFLAGS -Werror -Woverloaded-virtual"
++CFLAGS="$CFLAGS  -Woverloaded-virtual"
++CXXFLAGS="$CXXFLAGS  -Woverloaded-virtual"
+    echo "$as_me:$LINENO: checking whether c++ compiler accepts -Woverloaded-virtual" >&5
+ echo $ECHO_N "checking whether c++ compiler accepts -Woverloaded-virtual... $ECHO_C" >&6
+    cat >conftest.$ac_ext <<_ACEOF
+@@ -28588,8 +28588,8 @@ CXXFLAGS="$save_CXXFLAG"
+ 
+ save_CFLAG="$CFLAGS"
+ save_CXXFLAG="$CXXFLAGS"
+-CFLAGS="$CFLAGS -Werror -Wno-unknown-pragmas"
+-CXXFLAGS="$CXXFLAGS -Werror -Wno-unknown-pragmas"
++CFLAGS="$CFLAGS  -Wno-unknown-pragmas"
++CXXFLAGS="$CXXFLAGS  -Wno-unknown-pragmas"
+    echo "$as_me:$LINENO: checking whether c++ compiler accepts -Wno-unknown-pragmas" >&5
+ echo $ECHO_N "checking whether c++ compiler accepts -Wno-unknown-pragmas... $ECHO_C" >&6
+    cat >conftest.$ac_ext <<_ACEOF
+@@ -28640,8 +28640,8 @@ CXXFLAGS="$save_CXXFLAG"
+ 
+ save_CFLAG="$CFLAGS"
+ save_CXXFLAG="$CXXFLAGS"
+-CFLAGS="$CFLAGS -Werror -Wno-deprecated"
+-CXXFLAGS="$CXXFLAGS -Werror -Wno-deprecated"
++CFLAGS="$CFLAGS  -Wno-deprecated"
++CXXFLAGS="$CXXFLAGS  -Wno-deprecated"
+    echo "$as_me:$LINENO: checking whether c++ compiler accepts -Wno-deprecated" >&5
+ echo $ECHO_N "checking whether c++ compiler accepts -Wno-deprecated... $ECHO_C" >&6
+    cat >conftest.$ac_ext <<_ACEOF
+@@ -28692,8 +28692,8 @@ CXXFLAGS="$save_CXXFLAG"
+ 
+ save_CFLAG="$CFLAGS"
+ save_CXXFLAG="$CXXFLAGS"
+-CFLAGS="$CFLAGS -Werror -Wformat=2"
+-CXXFLAGS="$CXXFLAGS -Werror -Wformat=2"
++CFLAGS="$CFLAGS  -Wformat=2"
++CXXFLAGS="$CXXFLAGS  -Wformat=2"
+    echo "$as_me:$LINENO: checking whether c++ compiler accepts -Wformat=2" >&5
+ echo $ECHO_N "checking whether c++ compiler accepts -Wformat=2... $ECHO_C" >&6
+    cat >conftest.$ac_ext <<_ACEOF
+--- mpeg4ip-1.2/lib/rtp/configure.orig	2006-01-05 22:15:52.000000000 -0200
++++ mpeg4ip-1.2/lib/rtp/configure	2006-01-05 22:16:06.000000000 -0200
+@@ -21946,7 +21946,7 @@ fi
+ # GCC-specific warning flags
+ if test "$GCC" = yes
+ then
+-        CFLAGS="$CFLAGS -W -Wall -Wwrite-strings -Wbad-function-cast -Wmissing-prototypes -Wmissing-declarations -Werror"
++        CFLAGS="$CFLAGS -W -Wall -Wwrite-strings -Wbad-function-cast -Wmissing-prototypes -Wmissing-declarations"
+ fi
+ 
+ ###############################################################################

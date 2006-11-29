@@ -1,0 +1,20 @@
+--- 2.6.6-Gobo/Makefile.orig	2004-05-16 18:00:02.000000000 -0300
++++ 2.6.6-Gobo/Makefile	2004-05-16 18:00:52.000000000 -0300
+@@ -1,7 +1,7 @@
+ VERSION = 2
+ PATCHLEVEL = 6
+ SUBLEVEL = 6
+-EXTRAVERSION =
++EXTRAVERSION = -Gobo
+ NAME=Zonked Quokka
+ 
+ # *DOCUMENTATION*
+@@ -479,7 +479,7 @@
+ # makefile but the arguement can be passed to make if needed.
+ #
+ 
+-MODLIB	:= $(INSTALL_MOD_PATH)/lib/modules/$(KERNELRELEASE)
++MODLIB	:= /System/Kernel/Modules/$(KERNELRELEASE)
+ export MODLIB
+ 
+ 

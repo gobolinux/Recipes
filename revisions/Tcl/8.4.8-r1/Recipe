@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for Tcl by Peter Eriksen <s022018@student.dtu.dk>, on Mon Nov 29 21:36:45 CET 2004
+# Recipe for version 8.4.8 by Peter Eriksen <s022018@student.dtu.dk>, on Mon Nov 29 21:36:45 CET 2004
+compile_version=1.7.1
+url="$httpSourceforge/tcl/tcl8.4.8-src.tar.gz"
+file_size=3492731
+file_md5=6d0b3597ffc10223b89fabd86078b8fc
+dir='tcl8.4.8/unix'
+recipe_type=configure

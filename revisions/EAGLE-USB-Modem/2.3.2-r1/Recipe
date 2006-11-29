@@ -1,0 +1,22 @@
+# Recipe (MakeRecipe) for EAGLE-USB-Modem by Kosh <kosh.linux at gmail.com>, on Sat Nov 5 05:47:09 BRST 2005
+# Recipe for version 2.3.2 by Kosh <kosh.linux at gmail.com>, on Sat Nov 5 05:47:09 BRST 2005
+
+compile_version=1.7.1
+url="http://baud123.free.fr/eagle-usb/eagle-usb-2.3/eagle-usb-2.3.2.tar.bz2"
+file_size=930712
+file_md5=91727db818e5170b2d78a99ee51c2d58
+recipe_type=configure
+
+make_variables=(
+    "MODULESDIR=$goboModules/Current/kernel/drivers"
+    "HOTPLUG_SCRIPT_DIR=$target/../Settings/hotplug.d"
+    "GEN_DOC=yes"
+)
+
+sandbox_options=(
+    "--no-sandbox"
+)
+
+pre_build() {
+	mkdir -p $target/../Settings/hotplug.d
+}

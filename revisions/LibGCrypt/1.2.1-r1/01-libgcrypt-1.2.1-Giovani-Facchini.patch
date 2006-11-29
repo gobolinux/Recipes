@@ -1,0 +1,19 @@
+diff -Nur libgcrypt-1.2.1-original/src/global.c libgcrypt-1.2.1/src/global.c
+--- libgcrypt-1.2.1-original/src/global.c	2005-04-14 16:45:58.000000000 -0300
++++ libgcrypt-1.2.1/src/global.c	2005-04-14 16:46:46.000000000 -0300
+@@ -270,11 +270,13 @@
+ 	  }
+         break;
+ 
+-    case GCRYCTL_SET_THREAD_CBS:
++//    case GCRYCTL_SET_THREAD_CBS:
++	case 47:
+       err = ath_install (va_arg (arg_ptr, void *), any_init_done);
+       break;
+ 
+-    case GCRYCTL_FAST_POLL:
++//    case GCRYCTL_FAST_POLL:
++	case 48:
+       /* We need to do make sure that the random pool is really
+          initialized so that the poll fucntion is not a NOP. */
+       _gcry_random_initialize (1);

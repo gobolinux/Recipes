@@ -1,0 +1,34 @@
+# Recipe for version 2.4 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Wed Jun 14 15:59:40 BRT 2006
+# by Guilherme Bedin
+# 02/12/2003
+compile_version=1.7.1
+url=http://ftp.gnu.org/pub/gnu/glibc/glibc-2.4.tar.gz
+recipe_type=configure
+needs_build_directory=yes
+needs_safe_linking=yes
+keep_existing_target=yes
+sandbox_options=("--no-sandbox")
+configure_options=(
+    "--disable-profile"
+    "--enable-add-ons"
+    "--with-tls"
+    "--with-__thread"
+    "--enable-kernel=2.6.0"
+    "--libexecdir=${target}/lib"
+    "--with-headers=`readlink -f $goboPrograms/Linux-Headers/Current/include`"
+)
+
+install_target="install localedata/install-locales"
+
+pre_build() {
+    unset CFLAGS CXXFLAGS LD_LIBRARY_PATH
+
+#    pushd $dir
+#    cp -v nscd/Makefile{,.orig}
+#    sed -e "/nscd_stat.o: sysincludes = # nothing/d" nscd/Makefile.orig > nscd/Makefile
+#    popd
+}
+
+pre_install() {
+   ldconfig -C $target/Resources/Defaults/Settings/ld.so.cache
+}

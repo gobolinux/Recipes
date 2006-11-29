@@ -1,0 +1,13 @@
+Index: linux-2.6.9-rc4-ck1/drivers/block/ll_rw_blk.c
+===================================================================
+--- linux-2.6.9-rc4-ck1.orig/drivers/block/ll_rw_blk.c	2004-10-11 16:19:46.000000000 +1000
++++ linux-2.6.9-rc4-ck1/drivers/block/ll_rw_blk.c	2004-10-11 23:38:03.292170781 +1000
+@@ -100,7 +100,7 @@ static void blk_queue_congestion_thresho
+ 		nr = q->nr_requests;
+ 	q->nr_congestion_on = nr;
+ 
+-	nr = q->nr_requests - (q->nr_requests / 8) - 1;
++	nr = q->nr_requests - (q->nr_requests / 8) - (q->nr_requests/16)- 1;
+ 	if (nr < 1)
+ 		nr = 1;
+ 	q->nr_congestion_off = nr;

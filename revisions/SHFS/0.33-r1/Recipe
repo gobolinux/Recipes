@@ -1,0 +1,19 @@
+# Recipe for SHFS 0.33 by Jonatan Liljedahl <lijon@kymatica.com>
+compile_version=1.7.1
+url="$httpSourceforge/shfs/shfs-0.33.tar.gz"
+file_size=125483
+file_md5=4a934725cc3a7695b0ddf248736c871a
+recipe_type=makefile
+makefile='Makefile'
+
+# slight modification by Hisham Muhammad.
+# a 'kernel_version' variable will be added to Compile.
+KERNEL=`uname -r`
+
+make_variables=(
+    SHFSMOUNT=/bin/shfsmount
+    ROOT=$target
+    MAN_PAGE_DIR=/man/
+    HTML_DOC_DIR=/doc/html/
+    KERNEL_SOURCES=/lib/modules/${KERNEL}/build
+)

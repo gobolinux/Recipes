@@ -1,0 +1,28 @@
+--- wpa_supplicant-0.4.6/Makefile	2005-10-28 05:28:30.000000000 +0200
++++ wpa_supplicant-0.4.6.new/Makefile	2005-11-04 19:59:28.000000000 +0100
+@@ -1,6 +1,7 @@
+ ifndef CC
+ CC=gcc
+ endif
++INSTALLDIR=/usr/local
+ 
+ ifndef CFLAGS
+ CFLAGS = -MMD -O2 -Wall -g
+@@ -30,10 +31,15 @@
+ 	echo CONFIG_DRIVER_HOSTAP=y >> .config
+ 	echo CONFIG_DRIVER_WEXT=y >> .config
+ 	echo CONFIG_WIRELESS_EXTENSION=y >> .config
++	echo CONFIG_DRIVER_NDISWRAPPER=y >> .config
++	echo CONFIG_EAP_PSK=y >> .config
++	echo CONFIG_EAP_TLS=y >> .config
++	echo CONFIG_EAP_MD5=y >> .config
++	echo CONFIG_CTRL_IFACE=y >> .config
+
+ install: all
+-	mkdir -p $(DESTDIR)/usr/local/sbin/
+-	for i in $(ALL); do cp $$i $(DESTDIR)/usr/local/sbin/$$i; done
++	mkdir -p $(DESTDIR)$(INSTALLDIR)/sbin/
++	for i in $(ALL); do cp $$i $(DESTDIR)$(INSTALLDIR)/sbin/$$i; done
+ 
+ OBJS = config.o \
+ 	eloop.o common.o md5.o \

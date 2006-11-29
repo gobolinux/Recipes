@@ -1,0 +1,32 @@
+diff -Naur popa3d-0.6.4.old/params.h popa3d-0.6.4/params.h
+--- popa3d-0.6.4.old/params.h	2003-04-12 09:16:01.000000000 -0500
++++ popa3d-0.6.4/params.h	2004-07-08 18:18:14.000000000 -0500
+@@ -13,7 +13,9 @@
+ /*
+  * Are we going to be a standalone server or start via an inetd clone?
+  */
++#ifndef POP_STANDALONE
+ #define POP_STANDALONE			0
++#endif
+ 
+ #if POP_STANDALONE
+ 
+diff -Naur popa3d-0.6.4.old/standalone.c popa3d-0.6.4/standalone.c
+--- popa3d-0.6.4.old/standalone.c	2003-03-09 13:34:23.000000000 -0600
++++ popa3d-0.6.4/standalone.c	2004-07-08 16:45:54.000000000 -0500
+@@ -139,6 +139,7 @@
+ 	chdir("/");
+ 	setsid();
+ 
++#ifndef NO_DETACH
+ 	switch (fork()) {
+ 	case -1:
+ 		return log_error("fork");
+@@ -149,6 +150,7 @@
+ 	default:
+ 		return 0;
+ 	}
++#endif
+ 
+ 	setsid();
+ 

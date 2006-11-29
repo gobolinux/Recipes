@@ -1,0 +1,3 @@
+# Call HAL for all udev events
+RUN+="/Programs/HAL/Current/libexec/hal.hotplug"
+

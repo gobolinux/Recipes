@@ -1,0 +1,27 @@
+url=ftp://ftp.kernel.org/pub/linux/utils/kernel/hotplug/udev-025.tar.bz2
+compile_version=1.7.1
+recipe_type=makefile
+build_target="all etc/udev/udev.conf"
+build_variables=(
+	"prefix=$target"
+	"etcdir=$target/../Settings"
+	"udevdir=/System/Kernel/Devices"
+)
+install_variables=(
+	"DESTDIR=$target"
+)
+pre_build() {
+   sed -i "s:\/sbin\/udev:$target&:" udevstart.c
+   sed -i "s:\/etc:$target\/..\/Settings:" etc/udev/udev.conf.in
+}
+pre_link() {
+   pushd $target
+   cp -a etc/* ../Settings
+   rm -rf etc
+   rmdir udev
+   mv usr/bin/* bin/
+   mv usr/share/man/man8/* man/man8
+   rm -rf usr
+   ln -sf $target/sbin/udev $target/../Settings/hotplug.d/default/udev.hotplug
+   popd
+}

@@ -1,0 +1,15 @@
+# Samba 3.0.5 Recipe by Gen Wangden <wangden@kalinga.org>
+# by Guilherme Bedin and Carlo J. Calica
+compile_version=1.7.1
+url=http://us1.samba.org/samba/ftp/old-versions/samba-3.0.5.tar.gz
+file_size=15076996
+file_md5=5896ad33676e3c26efaab5dcd897c466
+dir="samba-3.0.5/source"
+recipe_type=configure
+
+configure_options=(
+  "--with-automount"
+  "--with-smbmount"
+  "--with-quotas"
+  "--with-configdir=${target}/Settings"
+)

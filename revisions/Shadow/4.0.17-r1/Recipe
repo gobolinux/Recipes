@@ -1,0 +1,14 @@
+# Recipe for version 4.0.17 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jul 31 01:13:53 BRT 2006
+compile_version=1.7.1
+url=ftp://ftp.pld.org.pl/software/shadow/shadow-4.0.17.tar.bz2
+mirror_url=ftp://ftp.pld.org.pl/software/shadow/old/shadow-4.0.17.tar.bz2
+file_size=1496220
+file_md5=bc5972a195290533b4c0576276056ed9
+recipe_type=configure
+configure_options=(
+	"--enable-shared"
+	"--enable-static"
+	"--without-libpam"
+	"--without-selinux"
+        "--disable-shadowgrp"
+)

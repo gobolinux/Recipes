@@ -1,0 +1,11 @@
+--- a2ps-4.13/lib/path-concat.c.orig	2005-09-12 01:13:34.000000000 -0300
++++ a2ps-4.13/lib/path-concat.c	2005-09-12 01:14:00.000000000 -0300
+@@ -31,8 +31,6 @@
+ #endif
+ #include <sys/types.h>
+ 
+-char *malloc ();
+-
+ #ifndef DIRECTORY_SEPARATOR
+ # define DIRECTORY_SEPARATOR '/'
+ #endif

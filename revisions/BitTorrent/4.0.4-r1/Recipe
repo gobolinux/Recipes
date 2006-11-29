@@ -1,0 +1,8 @@
+# Recipe for version 4.0.4 by Andre Detsch, on Mon Oct 31 16:29:41 BRST 2005
+# Recipe (MakeRecipe) for BitTorrent by Felix Breuer <felix@fbreuer.de>, on Mon Sep 13 22:21:06 CEST 2004
+compile_version=1.7.1
+url="$httpSourceforge/bittorrent/BitTorrent-4.0.4.tar.gz"
+recipe_type=manifest
+pre_link() {
+  python setup.py install --prefix=$target
+}

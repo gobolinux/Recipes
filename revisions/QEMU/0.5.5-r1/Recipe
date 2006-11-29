@@ -1,0 +1,10 @@
+compile_version=1.7.1
+url="http://fabrice.bellard.free.fr/qemu/qemu-0.5.5.tar.gz"
+file_size=749441
+file_md5=7ca68a9c295a063cf7924ae1809a1abb
+recipe_type=makefile
+makefile='Makefile'
+
+pre_build() {
+	./configure --prefix="$target"
+}

@@ -1,0 +1,11 @@
+--- /src/Makefile.in	2006-03-12 20:39:16.000000000 -0600
++++ /src/Makefile.in.new	2006-03-12 20:38:54.000000000 -0600
+@@ -302,7 +302,7 @@
+ desktopdir = $(kde_appsdir)/System/ScreenSavers
+ 
+ debianmenu_DATA = plasma.menu lattice.menu skyrocket.menu helios.menu
+-debianmenudir = /usr/lib/menu
++debianmenudir = @libdir@/menu
+ subdir = src
+ mkinstalldirs = $(SHELL) $(top_srcdir)/admin/mkinstalldirs
+ CONFIG_HEADER = $(top_builddir)/config.h

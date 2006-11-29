@@ -1,0 +1,9 @@
+# Andre Detsch
+#
+url=ftp://alpha.gnu.org/gnu/grub/grub-0.95.tar.gz
+compile_version=1.7.1
+recipe_type=configure
+
+post_install() {
+    cp -f /Programs/Grub/Current/Shared/grub/i386-pc/* /System/Kernel/Boot/grub/
+}

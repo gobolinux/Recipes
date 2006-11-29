@@ -1,0 +1,36 @@
+export CFLAGS="-O2 -march=i686 -fomit-frame-pointer -pipe"
+export CXXFLAGS="-O2 -march=i686 -fomit-frame-pointer -pipe"
+
+# 
+# [06/10/2003] - Guilherme Balestieri Bedin
+#     - hack to gcc found the standard  headers
+#
+# From gcc man:
+#
+#  GCC_EXEC_PREFIX
+#           If GCC_EXEC_PREFIX is set, it specifies a prefix to use in the names of the subprograms executed by
+#           the compiler.  No slash is added when this prefix is combined with the name of a subprogram, but you
+#           can specify a prefix that ends with a slash if you wish.
+#
+#           If GCC_EXEC_PREFIX is not set, GCC will attempt to figure out an appropriate prefix to use based on
+#           the pathname it was invoked with.
+#
+#           If GCC cannot find the subprogram using the specified prefix, it tries looking in the usual places
+#           for the subprogram.
+#
+#           The default value of GCC_EXEC_PREFIX is prefix/lib/gcc-lib/ where prefix is the value of "prefix"
+#           when you ran the configure script.
+#
+#           Other prefixes specified with -B take precedence over this prefix.
+#
+#           This prefix is also used for finding files such as crt0.o that are used for linking.
+#
+#           In addition, the prefix is used in an unusual way in finding the directories to search for header
+#           files.  For each of the standard directories whose name normally begins with /usr/local/lib/gcc-lib
+#           (more precisely, with the value of GCC_INCLUDE_DIR), GCC tries replacing that beginning with the
+#           specified prefix to produce an alternate directory name.  Thus, with -Bfoo/, GCC will search foo/bar
+#           where it would normally search /usr/local/lib/bar.  These alternate directories are searched first;
+#           the standard directories come next.
+#
+#  																							   
+export GCC_EXEC_PREFIX="/Programs/GCC/3.3.2/lib/gcc-lib/"

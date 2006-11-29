@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Crypt-SSLeay by Hisham Muhammad, on Tue Oct 24 15:55:42 BRST 2006
+# Recipe for version 0.51 by Hisham Muhammad, on Tue Oct 24 15:55:42 BRST 2006
+compile_version=1.7.1
+url="http://search.cpan.org/CPAN/authors/id/C/CH/CHAMAS/Crypt-SSLeay-0.51.tar.gz"
+file_size=117555
+file_md5=e276fd3970d573139fe56695a7b747bd
+recipe_type=perl
+perl_options=(
+   --default /usr
+)

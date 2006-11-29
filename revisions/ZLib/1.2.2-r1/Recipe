@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for ZLib by roko, <ro.ko@mcnon.com>, , on Fri Oct 22 21:07:02 BRST 2004
+# Recipe for version 1.2.2 by roko, <ro.ko@mcnon.com>, , on Fri Oct 22 21:07:02 BRST 2004
+compile_version=1.7.1
+url="http://www.zlib.net/zlib-1.2.2.tar.bz2"
+file_size=371728
+file_md5=1b8aab042d40979e456194c468fd72c5
+recipe_type=configure
+configure_options=(
+   "--shared"
+)

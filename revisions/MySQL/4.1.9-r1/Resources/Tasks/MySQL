@@ -1,0 +1,21 @@
+#!/bin/sh
+#------------------------------------------------------
+# Task for MySQL by Volker Wieban
+#------------------------------------------------------
+
+case $1 in
+	[sS]tart)
+		mysqld_safe &
+		;;
+	[sS]top)
+		killall -9 mysqld_safe
+		killall -9 mysqld
+		;;
+	[rR]estart)
+		$0 stop
+		$0 start
+		;;
+	*)
+		echo 'usage: '$0' [Start|Stop|Restart]'
+		;;
+esac	# is ridiculous

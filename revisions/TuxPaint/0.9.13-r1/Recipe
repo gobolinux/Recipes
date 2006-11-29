@@ -1,0 +1,11 @@
+url=$httpSourceforge/tuxpaint/tuxpaint-0.9.13.tar.gz
+#recipe_type=makefile
+makefile=Makefile
+
+# This way of setting the SDL flags doesn't work.
+
+make_variables=(
+   "PREFIX=$target"
+   "SDL_CFLAGS=$(shell sdl-config --cflags) -I/System/Links/Headers/SDL"
+   "SDL_LIBS=$(shell sdl-config --libs) -I/System/Links/Libraries/SDL"
+)

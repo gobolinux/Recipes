@@ -1,0 +1,30 @@
+# Recipe (MakeRecipe) for XPDF by roko, <ro.ko@mcnon.com>, on Fri Dec 10 01:41:17 BRST 2004
+# Recipe for version 3.00 by roko, <ro.ko@mcnon.com>, on Fri Dec 10 01:41:17 BRST 2004
+compile_version=1.7.1
+url="ftp://ftp.foolabs.com/pub/xpdf/xpdf-3.00.tar.gz"
+file_size=534697
+file_md5=95294cef3031dd68e65f331e8750b2c2
+recipe_type=configure
+configure_options=(
+   --with-x
+# --enable-a4-paper     #  use A4 paper size instead of Letter for PostScript output
+# --enable-no-text-select #do not allow text selection
+# --enable-opi          #  include support for OPI comments
+# --enable-multithreaded # include support for multithreading
+# --enable-wordlist      # include support for building word lists
+  --with-freetype2-library=$goboPrograms/FreeType/Current/lib                        #  use freetype2 library (FreeType2 font rasterizer - version 2.0.5+)
+  --with-freetype2-includes=$goboPrograms/FreeType/Current/include/freetype2
+ # --with-Xext-library= #PATH use Xext library (Motif library)
+ # --with-Xext-includes=DIR  set directory for Xext headers
+ # --with-Xp-library=PATH use Xp library (Motif library)
+ # --with-Xp-includes=DIR set directory for Xp headers
+ # --with-Xt-library=PATH use Xt library (Motif library)
+ # --with-Xt-includes=DIR set directory for Xt headers
+    # --with-Xm-library=$goboPrograms/Lesstif/Current/lib/                    #use Xm library (Motif library)
+    # --with-Xm-includes=$goboPrograms/Lesstif/Current/include/         # set directory for Xm headers
+ #--with-Sgm-library=PATH use Sgm library (SGI Motif library)
+ #--with-Sgm-includes=DIR set directory for Sgm headers
+ --with-t1-library=$goboPrograms/T1Lib/Current/lib                #use t1 library (Type 1 font rasterizer)
+ --with-t1-includes=$goboPrograms/T1Lib/Current/include     #DIR set directory for t1 headers
+)
+  

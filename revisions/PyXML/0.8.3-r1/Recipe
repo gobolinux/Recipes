@@ -1,0 +1,16 @@
+compile_version=1.7.1
+url="$httpSourceforge/pyxml/PyXML-0.8.3.tar.gz"
+file_size=729172
+file_md5=7083d950064ce90840d9ed48c818dc85
+
+recipe_type=makefile
+
+pre_build() {
+   cat > $dir/Makefile <<EOF
+build:
+	@python setup.py build
+
+install:
+	@python setup.py install --prefix $target
+EOF
+}

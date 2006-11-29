@@ -1,0 +1,21 @@
+diff -Nur kdebase-3.2.3/kcontrol/fileshare/Makefile.am kdebase-3.2.3-lucasvr/kcontrol/fileshare/Makefile.am
+--- kdebase-3.2.3/kcontrol/fileshare/Makefile.am	2003-09-02 10:53:58.000000000 -0300
++++ kdebase-3.2.3-lucasvr/kcontrol/fileshare/Makefile.am	2004-08-29 21:52:28.000000000 -0300
+@@ -20,4 +20,4 @@
+ install-exec-hook:
+ 	@-rm -f $(DESTDIR)/$(bindir)/filesharelist
+ 	@$(LN_S) fileshareset $(DESTDIR)/$(bindir)/filesharelist
+-	@(chown root $(DESTDIR)/$(bindir)/fileshareset && chmod 4755 $(DESTDIR)/$(bindir)/fileshareset) || echo "Was not able to make fileshareset setuid root"
++	@(chown 0 $(DESTDIR)/$(bindir)/fileshareset && chmod 4755 $(DESTDIR)/$(bindir)/fileshareset) || echo "Was not able to make fileshareset setuid root"
+diff -Nur kdebase-3.2.3/kcontrol/fileshare/Makefile.in kdebase-3.2.3-lucasvr/kcontrol/fileshare/Makefile.in
+--- kdebase-3.2.3/kcontrol/fileshare/Makefile.in	2004-06-02 04:42:07.000000000 -0300
++++ kdebase-3.2.3-lucasvr/kcontrol/fileshare/Makefile.in	2004-08-29 21:57:43.000000000 -0300
+@@ -870,7 +870,7 @@
+ install-exec-hook:
+ 	@-rm -f $(DESTDIR)/$(bindir)/filesharelist
+ 	@$(LN_S) fileshareset $(DESTDIR)/$(bindir)/filesharelist
+-	@(chown root $(DESTDIR)/$(bindir)/fileshareset && chmod 4755 $(DESTDIR)/$(bindir)/fileshareset) || echo "Was not able to make fileshareset setuid root"
++	@(chown 0 $(DESTDIR)/$(bindir)/fileshareset && chmod 4755 $(DESTDIR)/$(bindir)/fileshareset) || echo "Was not able to make fileshareset setuid root"
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.
+ # Otherwise a system limit (for SysV at least) may be exceeded.
+ .NOEXPORT:

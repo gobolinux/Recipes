@@ -1,0 +1,9 @@
+# Recipe for version 2.7.20 by Jonatan Liljedahl <lijon@kymatica.com>, on Tue Dec 6 01:17:24 BRST 2005
+# Recipe (MakeRecipe) for Lilypond by Jonatan Liljedahl <lijon@kymatica.com>, on Sat Apr 9 17:23:57 BRT 2005
+compile_version=1.7.1
+url="http://lilypond.org/download/v2.7/lilypond-2.7.20.tar.gz"
+recipe_type=configure
+makefile=GNUmakefile
+make_variables=(
+  "DOCUMENTATION=no"
+)

@@ -1,0 +1,50 @@
+# $Id: xfce4-session.rc 4690 2004-10-06 14:03:11Z benny $
+#
+# Default xfce4-session configuration file.
+#
+# Copyright (c) 2003-2004 Benedikt Meurer <benny@xfce.org>
+# All rights reserved.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#                                                                              
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#                                                                              
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+# 02111-1307, USA.
+#
+
+
+[General]
+SessionName=Default
+SessionName[de]=Standard
+
+# Disable management of remote clients by default. The user
+# has to explicitly enable this for security reasons.
+DisableTcp=True
+
+
+# This the default session launched by xfce4-session if the
+# user hasn't saved any session yet or creates a new session.
+[Failsafe Session]
+Count=4
+Client0_Command=xfwm4
+Client0_PerScreen=False
+Client1_Command=xfce4-panel
+Client1_PerScreen=True
+Client2_Command=xftaskbar4
+Client2_PerScreen=True
+Client3_Command=xfdesktop
+Client3_PerScreen=False
+
+
+# Default splash screen selection.
+[Splash Screen]
+Engine=mice

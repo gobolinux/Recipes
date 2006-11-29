@@ -1,0 +1,12 @@
+diff -ur aspell-0.60.4-orig/modules/filter/nroff.cpp aspell-0.60.4/modules/filter/nroff.cpp
+--- aspell-0.60.4-orig/modules/filter/nroff.cpp	2005-11-13 01:37:37.000000000 -0500
++++ aspell-0.60.4/modules/filter/nroff.cpp	2005-11-13 01:38:16.000000000 -0500
+@@ -73,7 +73,7 @@
+       return false;
+     }
+     
+-    bool NroffFilter::process_char (FilterChar::Chr c);
++    bool process_char (FilterChar::Chr c);
+       
+   public:
+ 

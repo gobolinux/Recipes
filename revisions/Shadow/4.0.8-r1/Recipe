@@ -1,0 +1,33 @@
+# Recipe for version 4.0.8 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Apr 26 19:16:09 BRT 2005
+compile_version=1.7.1
+url=ftp://ftp.pld.org.pl/software/shadow/shadow-4.0.8.tar.bz2
+file_size=1052612
+file_md5=9965adeec1171e1044a440f4e691ba73
+recipe_type=configure
+
+configure_options=(
+	"--enable-shared"
+	"--enable-static"
+)
+
+pre_build() {
+	aclocal 2> /dev/null
+	automake
+}
+
+pre_install() {
+	# Remove the installation of the groups program and its man page,
+	# as Coreutils provides a better version
+	sed -i 's/groups$(EXEEXT) //' src/Makefile
+	sed -i '/groups/d' man/Makefile
+
+	# Use the more secure MD5 method of password encryption instead of the
+	# default crypt method. Also change the obsolete /var/spool/mail location
+	# to the /var/mail location used currently.
+	sed -e's@#MD5_CRYPT_ENAB.no@MD5_CRYPT_ENAB yes@' \
+	    -e 's@/var/spool/mail@/var/mail@' \
+		etc/login.defs.linux > etc/login.defs.linux_
+	mv etc/login.defs.linux_ etc/login.defs.linux
+	
+	cp etc/{limits,login.access} $target/../Settings
+}

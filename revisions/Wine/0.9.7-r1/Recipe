@@ -1,0 +1,8 @@
+# Recipe for version 0.9.7 by Priscilla Avegliano <priavegliano@gmail.com>, on Wed Feb 8 10:22:30 BRST 2006
+# Recipe (MakeRecipe) for Wine by roko, <ro.ko@mcnon.com>, on Thu Jan 27 22:27:44 CET 2005
+compile_version=1.7.1
+url="$httpSourceforge/wine/wine-0.9.7.tar.bz2"
+recipe_type=configure
+#configure_options=(
+#"--without-curses"
+#)

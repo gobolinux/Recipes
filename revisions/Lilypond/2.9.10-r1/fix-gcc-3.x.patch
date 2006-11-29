@@ -1,0 +1,23 @@
+diff -ruN lilypond-2.8.0.orig/fix-gcc34.sh lilypond-2.8.0/fix-gcc34.sh
+--- lilypond-2.8.0.orig/fix-gcc34.sh	1970-01-01 01:00:00.000000000 +0100
++++ lilypond-2.8.0/fix-gcc34.sh	2006-03-31 00:00:58.000000000 +0200
+@@ -0,0 +1,9 @@
++#!/bin/sh
++
++TMP_FILE=lily/out/tmp-lexer.cc
++OUT_FILE=lily/out/lexer.cc
++
++mkdir -p lily/out
++flex -Cfe -p -p -o$TMP_FILE lily/lexer.ll
++perl -p -e 's/^class istream;/#include \<istream\>\nusing std::istream;/' $TMP_FILE > $OUT_FILE
++rm -f $TMP_FILE
+diff -ruN lilypond-2.8.0.orig/Makefile lilypond-2.8.0/Makefile
+--- lilypond-2.8.0.orig/Makefile	1970-01-01 01:00:00.000000000 +0100
++++ lilypond-2.8.0/Makefile	2006-03-31 00:29:49.000000000 +0200
+@@ -0,0 +1,6 @@
++all:
++	sh ./fix-gcc34.sh
++	$(MAKE) -f GNUmakefile all
++
++install:
++	$(MAKE) -f GNUmakefile install

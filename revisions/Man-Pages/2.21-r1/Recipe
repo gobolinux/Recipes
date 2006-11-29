@@ -1,0 +1,8 @@
+# Recipe for version 2.21 by Andre Detsch, on Tue Jan 31 13:00:15 BRST 2006
+url=ftp://ftp.kernel.org/pub/linux/docs/manpages/man-pages-2.21.tar.bz2
+compile_version=1.7.1
+recipe_type=makefile
+do_build=no
+install_variables=(
+   "MANDIR=$target/man"
+)

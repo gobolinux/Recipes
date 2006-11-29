@@ -1,0 +1,30 @@
+# Recipe (MakeRecipe) for Hplip by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Wed Apr 26 15:08:17 BRT 2006
+# Recipe for version 0.9.10 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Wed Apr 26 15:08:17 BRT 2006
+compile_version=1.7.1
+url="$httpSourceforge/hplip/hplip-0.9.10.tar.gz"
+file_size=9296866
+file_md5=349489b10fb44d1bf105b04ff5352551
+recipe_type=configure
+
+configure_options=(
+	--disable-network-build
+)
+
+make_variables=(
+	CUPS_BACKEND_PATH=$target/lib/cups/backend
+	CUPS_PPD_PATH=$target/share/cups
+	CUPS_FILTER_PATH=$target/lib/cups/filter
+	ICON_PATH=$target/share/applications
+)
+
+pre_build() {
+	if [ ! -f .bootstrapped ]
+	then
+		GrepReplace "setup.py install" \
+					"setup.py install --install-lib=$target/lib/python2.4/site-packages" \
+					Makefile.am
+		echo "Running aclocal..."  && aclocal
+		echo "Running automake..." && automake
+		touch .bootstrapped
+	fi
+}

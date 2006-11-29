@@ -1,0 +1,14 @@
+# Recipe for version 1.4.2 by Andre Detsch, on Thu Jul 28 11:26:31 BRT 2005
+# by Maglan C. Diemer
+compile_version=1.7.1
+url="ftp://ftp.kde.org/pub/kde/stable/3.4.2/src/arts-1.4.2.tar.bz2"
+#url="ftp://ftp.sunet.se/pub/kde/stable/3.4/src/arts-1.4.2.tar.bz2"
+dir='arts-1.4.2'
+recipe_type=configure
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+  "--with-alsa"
+  # "DO_NOT_COMPILE="
+  # mcop flow mcop_mt soundserver artsc examples tests doc gmcop qtmcop x11
+)

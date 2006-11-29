@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Ethereal by David Smith <dsmith@algonet.se>, on Tue Dec 28 10:54:45 CET 2004
+# Recipe for version 0.10.10 by David Smith <dsmith@algonet.se>, on Mon Mar 14 10:05:00 CET 2005
+compile_version=1.7.1
+#url="ftp://ftp.ethereal.com/pub/ethereal/ethereal-0.10.10.tar.bz2"
+url="$httpSourceforge/ethereal/ethereal-0.10.10.tar.bz2"
+file_size=5799231
+file_md5=5addaf1db088a8b51941e4db191b0ab0
+recipe_type=configure
+configure_options=(
+	"--with-ssl"
+)

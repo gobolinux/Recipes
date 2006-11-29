@@ -1,0 +1,12 @@
+diff -Naur automake-1.8.2.orig/aclocal.in automake-1.8.2/aclocal.in
+--- automake-1.8.2.orig/aclocal.in	2004-01-06 20:06:40.000000000 -0200
++++ automake-1.8.2/aclocal.in	2004-02-28 16:55:03.000000000 -0300
+@@ -44,7 +44,7 @@
+ 
+ # Note that this isn't pkgdatadir, but a separate directory.
+ # Note also that the versioned directory is handled later.
+-$acdir = '@datadir@/aclocal';
++$acdir = '/System/Links/Shared/aclocal';
+ $default_acdir = $acdir;
+ # contains a list of directories, one per line, to be added
+ # to the dirlist in addition to $acdir, as if -I had been

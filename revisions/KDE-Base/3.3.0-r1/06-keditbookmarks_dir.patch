@@ -1,0 +1,35 @@
+diff -Naur kdebase-3.3.0/konqueror/keditbookmarks/Makefile.am kdebase-3.3.0.patched/konqueror/keditbookmarks/Makefile.am
+--- kdebase-3.3.0/konqueror/keditbookmarks/Makefile.am	2004-06-22 14:32:52.000000000 -0300
++++ kdebase-3.3.0.patched/konqueror/keditbookmarks/Makefile.am	2004-09-18 00:00:43.000000000 -0300
+@@ -9,7 +9,7 @@
+ dcop_DCOPIDLNG = true
+ keditbookmarks_la_SOURCES = main.cpp listview.cpp toplevel.cpp actionsimpl.cpp commands.cpp importers.cpp dcop.skel dcop.cpp bookmarkiterator.cpp  \
+                             testlink.cpp favicons.cpp updater.cpp exporters.cpp kbookmarknotifier.stub bookmarkinfo.cpp
+-kbookmarknotifier_DIR = $(includedir)
++kbookmarknotifier_DIR = $(kde_includes)
+ keditbookmarks_la_LIBADD  = $(top_builddir)/libkonq/libkonq.la
+ keditbookmarks_la_LDFLAGS = $(all_libraries) -module -avoid-version
+ 
+diff -Naur kdebase-3.3.0/konqueror/keditbookmarks/Makefile.in kdebase-3.3.0.patched/konqueror/keditbookmarks/Makefile.in
+--- kdebase-3.3.0/konqueror/keditbookmarks/Makefile.in	2004-08-16 06:23:53.000000000 -0300
++++ kdebase-3.3.0.patched/konqueror/keditbookmarks/Makefile.in	2004-09-18 00:09:47.000000000 -0300
+@@ -553,7 +553,7 @@
+ libkdeinit_keditbookmarks_la_SOURCES = main.cpp listview.cpp toplevel.cpp actionsimpl.cpp commands.cpp importers.cpp  dcop.cpp bookmarkiterator.cpp  \
+                             testlink.cpp favicons.cpp updater.cpp exporters.cpp  bookmarkinfo.cpp dcop_skel.cpp kbookmarknotifier_stub.cpp
+ 
+-kbookmarknotifier_DIR = $(includedir)
++kbookmarknotifier_DIR = $(kde_includes)
+ #>- keditbookmarks_la_LIBADD = $(top_builddir)/libkonq/libkonq.la
+ #>+ 1
+ keditbookmarks_la_LIBADD = libkdeinit_keditbookmarks.la
+@@ -994,8 +994,8 @@
+ 	KDECONFIG="$(KDECONFIG)" $(DCOPIDLNG) $(srcdir)/dcop.h > dcop.kidl || ( rm -f dcop.kidl ; false )
+ dcop_skel.cpp: dcop.kidl
+ 	$(DCOPIDL2CPP) --c++-suffix cpp --no-signals --no-stub dcop.kidl
+-kbookmarknotifier.kidl: $(includedir)/kbookmarknotifier.h $(DCOP_DEPENDENCIES)
+-	$(DCOPIDL) $(includedir)/kbookmarknotifier.h > kbookmarknotifier.kidl || ( rm -f kbookmarknotifier.kidl ; false )
++kbookmarknotifier.kidl: $(kde_includes)/kbookmarknotifier.h $(DCOP_DEPENDENCIES)
++	$(DCOPIDL) $(kde_includes)/kbookmarknotifier.h > kbookmarknotifier.kidl || ( rm -f kbookmarknotifier.kidl ; false )
+ kbookmarknotifier_stub.h: kbookmarknotifier.kidl
+ 	$(DCOPIDL2CPP) --c++-suffix cpp --no-signals --no-skel kbookmarknotifier.kidl
+ 

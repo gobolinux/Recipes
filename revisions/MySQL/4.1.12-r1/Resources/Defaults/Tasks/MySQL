@@ -1,0 +1,17 @@
+#!/bin/sh
+
+source GoboPath
+
+case "$1" in
+	[sS]tart)
+		mkdir -p /var/run/mysql && chown mysql:mysql /var/run/mysql
+		cd $goboPrograms/MySQL/Variable
+		mysqld_safe --pid-file=/var/run/mysql/dot.pid \
+		            --log-error=/var/log/mysql-`hostname`.err \
+			    --log=/var/log/mysql-`hostname`.access \
+			    --user=mysql &
+		;;
+	[sS]top)
+		killall -9 mysqld mysqld_safe
+		;;
+esac # is ridiculous

@@ -1,0 +1,15 @@
+# Recipe for version 1.0.9 by Nick Matteo, on Wed Sep 21 20:14:05 UTC 2005
+# by Jeremy Vernon
+url="$httpSourceforge/libmng/libmng-1.0.9.tar.gz"
+compile_version=1.7.1
+recipe_type=configure
+
+pre_build() {
+  ln -s makefiles/configure.in .
+  ln -s makefiles/acinclude.m4 .
+  ln -s makefiles/Makefile.am .
+  aclocal
+  libtoolize --automake
+  automake --foreign --add-missing
+  autoconf
+}

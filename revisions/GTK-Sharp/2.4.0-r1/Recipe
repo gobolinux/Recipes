@@ -1,0 +1,10 @@
+# Recipe for version 2.4.0 by Jonas Karlsson <jonka750@student.liu.se>, on Wed Nov 30 02:37:33 CET 2005
+# Recipe (MakeRecipe) for GTK-Sharp by Jonas Karlsson <jonka750@student.liu.se>, on Sat Apr 30 00:14:58 CEST 2005
+compile_version=1.7.1
+url="http://go-mono.com/sources/gtk-sharp-2.0/gtk-sharp-2.4.0.tar.gz"
+recipe_type=configure
+post_install() {
+    if [ -e ${goboPrograms}/Mono ];
+        then ln -s $target/lib/mono/gac/* ${goboPrograms}/Mono/Current/lib/mono/gac/
+    fi
+}

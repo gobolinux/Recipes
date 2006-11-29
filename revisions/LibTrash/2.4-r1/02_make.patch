@@ -1,0 +1,22 @@
+diff -Naur libtrash-2.4/src/Makefile libtrash-2.4-new/src/Makefile
+--- libtrash-2.4/src/Makefile	2004-11-07 19:42:01.000000000 -0200
++++ libtrash-2.4-new/src/Makefile	2005-08-09 11:05:52.000000000 -0300
+@@ -1,8 +1,8 @@
+ CC=gcc
+ CFLAGS=-Wall -W -Wmissing-prototypes -D_REENTRANT
+ 
+-INSTLIBDIR=/usr/local/lib
+-SYSCONFFILE=/etc/libtrash.conf
++INSTLIBDIR?=/usr/local/lib
++SYSCONFFILE?=/etc/libtrash.conf
+ 
+ MAJOR =2
+ VERSION =2.3
+@@ -29,7 +29,6 @@
+ 	TRASH_OFF=YES install libtrash.so.${VERSION} ${INSTLIBDIR}/libtrash.so.${VERSION}
+ 	TRASH_OFF=YES ln -sf libtrash.so.${VERSION} ${INSTLIBDIR}/libtrash.so
+ 	TRASH_OFF=YES install libtrash.conf.sys --mode a=r ${SYSCONFFILE}
+-	ldconfig	
+ 
+ clean:
+ 	rm -f *~

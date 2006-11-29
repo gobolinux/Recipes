@@ -1,0 +1,11 @@
+url=$httpSourceforge/licq-osd/licq_osd_plugin-1.2.7.4.tar.gz
+compile_version=1.7.1
+recipe_type=configure
+
+# A better solution is to make the Licq recipe
+# like XMMS. The correct solution would be to
+# fix the app as to make plugin paths configurable.
+
+post_install() {
+   MergeTree "/Programs/Licq-OSD/Current" "/Programs/Licq/Current"
+}

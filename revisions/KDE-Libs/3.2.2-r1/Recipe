@@ -1,0 +1,13 @@
+url="ftp://ftp.kde.org/pub/kde/stable/3.2/src/kdelibs-3.2.2.tar.bz2"
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+  "--with-alsa"
+  "--enable-fast-malloc=full"
+)
+post_install() {
+  chmod 4755 /Programs/KDE/3.2.2/bin/kpac_dhcp_helper
+  chmod 4755 /Programs/KDE/3.2.2/bin/kgrantpty
+}

@@ -1,0 +1,22 @@
+--- rlocate-0.5.1.old/src/Makefile.in	2006-05-07 15:51:50.000000000 +0200
++++ rlocate-0.5.1/src/Makefile.in	2006-07-31 21:42:54.000000000 +0200
+@@ -570,7 +567,7 @@
+ @CRON_TRUE@	chmod 0755 $(DESTDIR)/etc/cron.daily/$(rlocate)
+ @CRON_FALSE@	sed \
+ @CRON_FALSE@	-e "s,@UPDATEDB@,$(bindir)/$(updatedb)," \
+-@CRON_FALSE@	$(srcdir)/install-cron.sh.in > $(srcdir)/install-cron.sh
++@CRON_FALSE@	$(srcdir)/../install-cron.sh.in > $(srcdir)/install-cron.sh
+ @CRON_FALSE@	chmod 0755 $(srcdir)/install-cron.sh
+ @CRON_FALSE@	./install-cron.sh
+ 
+--- rlocate-0.5.1.old/src/Makefile.am	2006-05-07 15:51:50.000000000 +0200
++++ rlocate-0.5.1/src/Makefile.am	2006-07-31 21:43:03.000000000 +0200
+@@ -47,7 +44,7 @@
+ else
+ 	sed \
+ 	-e "s,@UPDATEDB@,$(bindir)/$(updatedb)," \
+-	$(srcdir)/install-cron.sh.in > $(srcdir)/install-cron.sh
++	$(srcdir)/../install-cron.sh.in > $(srcdir)/install-cron.sh
+ 	chmod 0755 $(srcdir)/install-cron.sh
+ 	./install-cron.sh
+ 	

@@ -1,0 +1,19 @@
+--- multipath-tools-0.4.2/kpartx/Makefile.orig	2005-02-19 14:40:10.000000000 -0200
++++ multipath-tools-0.4.2/kpartx/Makefile	2005-02-19 14:43:12.000000000 -0200
+@@ -7,13 +7,14 @@
+ include ../Makefile.inc
+ 
+ ifeq ($(strip $(BUILD)),klibc)
+-	CFLAGS = ${REQFLAGS} ${OPTFLAGS} -I$(libdmdir) -I. -I$(multipathdir)
++	CFLAGS = ${REQFLAGS} ${OPTFLAGS} -I$(libdmdir) -I. -I$(multipathdir) \
++		 -I$(KERNEL_BUILD)/include
+ 	OBJS = bsd.o dos.o kpartx.o solaris.o unixware.o gpt.o crc32.o \
+ 	       lopart.o xstrncpy.o \
+ 	       $(MULTIPATHLIB)-$(BUILD).a $(DMLIB)-$(BUILD).a
+ else
+ 	CFLAGS = -pipe -g -Wall -Wunused -Wstrict-prototypes -I. \
+-		 -I$(multipathdir)
++		 -I$(multipathdir) -I$(KERNEL_BUILD)/include
+ 	LDFLAGS = -ldevmapper
+ 	OBJS = bsd.o dos.o kpartx.o solaris.o unixware.o \
+ 	       gpt.o crc32.o lopart.o xstrncpy.o $(MULTIPATHLIB)-$(BUILD).a

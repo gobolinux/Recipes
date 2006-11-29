@@ -1,0 +1,21 @@
+# Recipe for version 0.4.8 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Feb 25 16:40:16 CET 2006
+# Recipe (MakeRecipe) for WPA_Supplicant by Jonas Karlsson <jonka750@student.liu.se>, on Sun Jul 24 09:52:31 CEST 2005
+compile_version=1.7.1
+url="http://hostap.epitest.fi/releases/wpa_supplicant-0.4.8.tar.gz"
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=(
+    "DESTDIR=$target"
+    "INSTALLDIR="
+)
+pre_build(){
+    make mkconfig
+}
+pre_install(){
+    make wpa_gui
+}
+
+pre_link(){
+    cp wpa_gui/wpa_gui $target/sbin
+    }

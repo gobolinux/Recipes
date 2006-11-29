@@ -1,0 +1,12 @@
+# Recipe for version 3.4.0 by Andre Detsch, on Tue Mar 29 12:39:51 BRT 2005
+
+url="ftp://ftp.kde.org/pub/kde/stable/3.4/src/kdegraphics-3.4.0.tar.bz2"
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+#  "DO_NOT_COMPILE="
+#kamera kcoloredit kdvi kfax kfaxview kfile-plugins kgamma kghostview kiconedit kmrml kolourpaint kooka 
+#kpdf kpovmodeler kruler ksnapshot ksvg kuickshow kview kvieshell libkscan
+)

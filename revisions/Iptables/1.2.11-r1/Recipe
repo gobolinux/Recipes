@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for Iptables by  Ozgur Ulukir, on Mon Dec 20 23:37:07 EET 2004
+# Recipe for version 1.2.11 by  Ozgur Ulukir, on Mon Dec 20 23:37:07 EET 2004
+compile_version=1.7.1
+url="http://www.netfilter.org/files/iptables-1.2.11.tar.bz2"
+file_size=156988
+file_md5=0a5f5f226e41ce408a895bec995e8c05
+recipe_type=makefile
+
+make_variables=(
+        "BINDIR=$target/bin"
+        "LIBDIR=$target/lib"
+        "MANDIR=$target/man"
+)
+

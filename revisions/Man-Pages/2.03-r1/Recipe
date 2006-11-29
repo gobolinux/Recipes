@@ -1,0 +1,8 @@
+# Recipe for version 2.03 by Andre Detsch, on Thu Jun 9 18:29:35 BRT 2005
+url=ftp://ftp.kernel.org/pub/linux/docs/manpages/man-pages-2.03.tar.bz2
+compile_version=1.7.1
+recipe_type=makefile
+do_build=no
+install_variables=(
+   "MANDIR=$target/man"
+)

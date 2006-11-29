@@ -1,0 +1,124 @@
+diff -Nur kdebase-3.3.2/kdesu/kdesu/kdesu.cpp kdebase-3.3.2-lucasvr/kdesu/kdesu/kdesu.cpp
+--- kdebase-3.3.2/kdesu/kdesu/kdesu.cpp	2004-06-22 14:32:48.000000000 -0300
++++ kdebase-3.3.2-lucasvr/kdesu/kdesu/kdesu.cpp	2004-08-30 23:32:04.000000000 -0300
+@@ -13,6 +13,7 @@
+ #include <pwd.h>
+ #include <stdlib.h>
+ 
++#include <sys/types.h>
+ #include <sys/time.h>
+ #include <sys/resource.h>
+ #if defined(HAVE_SYS_WAIT_H)
+@@ -84,6 +85,15 @@
+ 
+ static int startApp();
+ 
++const char *superuser_name()
++{
++    const char *root_str = "root";
++    struct passwd *entry = getpwuid(0);
++    if (! entry)
++        return root_str;
++    return entry->pw_name;
++}
++
+ int main(int argc, char *argv[])
+ {
+     // FIXME: this can be considered a poor man's solution, as it's not
+@@ -204,7 +214,7 @@
+     if ((priority > 50) || (scheduler != SuProcess::SchedNormal))
+     {
+         change_uid = true;
+-        auth_user = "root";
++        auth_user = superuser_name();
+     }
+ 
+     // Get command
+diff -Nur kdebase-3.3.2/kdesu/kdesu/sudlg.cpp kdebase-3.3.2-lucasvr/kdesu/kdesu/sudlg.cpp
+--- kdebase-3.3.2/kdesu/kdesu/sudlg.cpp	2004-05-22 17:26:47.000000000 -0300
++++ kdebase-3.3.2-lucasvr/kdesu/kdesu/sudlg.cpp	2004-08-30 23:39:52.000000000 -0300
+@@ -7,19 +7,23 @@
+ #include <qstring.h>
+ #include <klocale.h>
+ #include <kmessagebox.h>
++#include <pwd.h>
++#include <sys/types.h>
+ 
+ #include <kdesu/su.h>
+ #include "sudlg.h"
+ 
++const char *superuser_name();
+ 
+ KDEsuDialog::KDEsuDialog(QCString user, QCString auth_user, bool enableKeep, const QString& icon)
+     : KPasswordDialog(Password, enableKeep, User1, icon)
+ {
+     m_User = auth_user;
++    const char *sys_user = superuser_name();
+     setCaption(i18n("Run as %1").arg(user));
+ 
+     QString prompt;
+-    if (m_User == "root")
++    if (m_User == sys_user)
+ 	prompt = i18n("The action you requested needs root privileges. "
+ 		"Please enter root's password below or click "
+ 		"Ignore to continue with your current privileges.");
+diff -Nur kdebase-3.3.2/kdesu/kdesud/handler.cpp kdebase-3.3.2-lucasvr/kdesu/kdesud/handler.cpp
+--- kdebase-3.3.2/kdesu/kdesud/handler.cpp	2004-05-22 17:26:47.000000000 -0300
++++ kdebase-3.3.2-lucasvr/kdesu/kdesud/handler.cpp	2004-08-30 23:44:33.000000000 -0300
+@@ -13,6 +13,7 @@
+ #include <signal.h>
+ #include <errno.h>
+ #include <string.h>
++#include <pwd.h>
+ 
+ #include <sys/types.h>
+ #include <sys/socket.h>
+@@ -34,6 +35,15 @@
+ extern Repository *repo;
+ void kdesud_cleanup();
+ 
++const char *superuser_name()
++{
++    const char *root_str = "root";
++    struct passwd *entry = getpwuid(0);
++    if (! entry)
++       return root_str;
++    return entry->pw_name;
++}
++
+ ConnectionHandler::ConnectionHandler(int fd)
+         : SocketSecurity(fd), m_exitCode(0), m_hasExitCode(false), m_needExitCode(false), m_pid(0)
+ {
+@@ -252,7 +262,7 @@
+ 
+         QCString auth_user;
+         if ((m_Scheduler != SuProcess::SchedNormal) || (m_Priority > 50))
+-            auth_user = "root";
++            auth_user = superuser_name();
+         else
+             auth_user = user;
+         key = makeKey(2, m_Host, auth_user, command);
+diff -Nur kdebase-3.3.2/kdesu/kdesud/Makefile.am kdebase-3.3.2-lucasvr/kdesu/kdesud/Makefile.am
+--- kdebase-3.3.2/kdesu/kdesud/Makefile.am	2002-07-01 08:13:01.000000000 -0300
++++ kdebase-3.3.2-lucasvr/kdesu/kdesud/Makefile.am	2004-08-30 23:45:54.000000000 -0300
+@@ -21,7 +21,7 @@
+ 	@echo "********************************************************"
+ 
+ install-exec-hook: 
+-	@(chown root:@nogroup@ $(DESTDIR)$(bindir)/kdesud && chmod 2755  $(DESTDIR)$(bindir)/kdesud) \
++	@(chown 0:@nogroup@ $(DESTDIR)$(bindir)/kdesud && chmod 2755  $(DESTDIR)$(bindir)/kdesud) \
+ 	|| echo "Error: Could not install kdesud as setgid nogroup!!\n" \
+ 	"The password caching feature is disabled."
+ 
+diff -Nur kdebase-3.3.2/kdesu/kdesud/Makefile.in kdebase-3.3.2-lucasvr/kdesu/kdesud/Makefile.in
+--- kdebase-3.3.2/kdesu/kdesud/Makefile.in	2004-08-16 06:23:23.000000000 -0300
++++ kdebase-3.3.2-lucasvr/kdesu/kdesud/Makefile.in	2004-08-30 23:45:59.000000000 -0300
+@@ -836,7 +836,7 @@
+ 	@echo "********************************************************"
+ 
+ install-exec-hook: 
+-	@(chown root:@nogroup@ $(DESTDIR)$(bindir)/kdesud && chmod 2755  $(DESTDIR)$(bindir)/kdesud) \
++	@(chown 0:@nogroup@ $(DESTDIR)$(bindir)/kdesud && chmod 2755  $(DESTDIR)$(bindir)/kdesud) \
+ 	|| echo "Error: Could not install kdesud as setgid nogroup!!\n" \
+ 	"The password caching feature is disabled."
+ 

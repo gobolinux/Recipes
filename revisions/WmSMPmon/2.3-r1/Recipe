@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for WmSMPmon by Jonas Karlsson <jonka750@student.liu.se>, on Tue Jul 19 14:35:50 CEST 2005
+# Recipe for version 2.3 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Jul 19 14:35:50 CEST 2005
+compile_version=1.7.1
+url="http://goupilfr.org/arch/wmSMPmon-2.3.tar.gz"
+file_size=16413
+file_md5=dff3e04b55ce696f86b7eecd8dec39f4
+dir='wmSMPmon-2.x/wmSMPmon'
+recipe_type=makefile
+make_variables=(
+PREFIX=$target
+)

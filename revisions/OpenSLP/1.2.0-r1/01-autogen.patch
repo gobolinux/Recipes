@@ -1,0 +1,19 @@
+--- openslp-1.2.0-org/autogen.sh	2003-02-12 22:56:14.000000000 +0100
++++ openslp-1.2.0/autogen.sh	2005-03-29 19:51:03.000000000 +0200
+@@ -39,14 +39,14 @@
+ 
+ aclocal $ACLOCAL_FLAGS
+ echo "alocal done"
++libtoolize
++echo "libtoolize done"
+ autoheader
+ echo "autoheader done"
+ autoconf
+ echo "autoconf done"
+ automake --add-missing $am_opt
+ echo "automake done"
+-libtoolize
+-echo "libtoolize done"
+ cd $ORIGDIR
+ 
+ echo 

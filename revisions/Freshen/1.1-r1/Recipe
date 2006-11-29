@@ -1,0 +1,21 @@
+# Recipe for version 1.1 by Michael Homer
+url="http://gobo.wotfun.com/Freshen-1.1.tar.bz2"
+compile_version=1.7.1
+recipe_type=manifest
+description="Checks for updated software in the recipes system"
+
+pre_install() {
+ mv -f bin/Freshen bin/Freshen.old
+ sed -e 's:<INSTALLDIR>:'$target':' bin/Freshen.old > bin/Freshen
+ chmod 755 bin/Freshen
+}
+
+manifest=(
+"bin/Freshen:/bin/"
+"lib/merge.rb:/lib/"
+"lib/program.rb:/lib/"
+"lib/progressbar.rb:/lib/"
+"lib/recipes.rb:/lib/"
+"lib/version.rb:/lib/"
+"lib/screen.rb:/lib/"
+)

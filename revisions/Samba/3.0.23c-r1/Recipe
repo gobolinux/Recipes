@@ -1,0 +1,31 @@
+# Recipe for version 3.0.23c by Jonas Karlsson <jonka750@student.liu.se>, on Fri Sep 29 13:54:13 CEST 2006
+# Recipe (MakeRecipe) for Samba by roko, <ro.ko@mcnon.com>, on Sun Dec 26 11:04:52 BRST 2004
+compile_version=1.7.1
+url="ftp://se.samba.org/pub/samba/samba-3.0.23c.tar.gz"
+file_size=17690045
+file_md5=9e06d5e10f4ae84f7fafad75d1b4184c
+recipe_type=configure
+dir="samba-3.0.23c/source"
+
+configure_options=(
+  "--with-smbwrapper"
+  "--with-libsmbclient"
+  "--with-automount"
+  "--with-smbmount"
+  "--with-quotas"
+  "--with-acl-support"    		# Include ACL support (default=no)
+  "--with-configdir=${settings_target}"
+)
+
+install_variables=(
+   DESTDIR=${target}
+)
+
+pre_link() {
+  mkdir -p ${target}/doc
+  cp -Rv ../examples ${target}/doc 
+  mkdir -p ${settings_target}
+  cp -v  ../examples/smb.conf.default ${settings_target}
+  ln -s ${target}/bin/smbmount ${target}/sbin/mount.smbfs
+  ln -s ${target}/lib/libsmbclient.so ${target}/lib/libsmbclient.so.0
+}

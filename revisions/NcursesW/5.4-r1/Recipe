@@ -1,0 +1,32 @@
+# Recipe for version 5.4 by Andreas Koehler, on Fri Aug 5 17:06:23 CEST 2005
+compile_version=1.7.1
+urls=(
+   $ftpGnu/ncurses/ncurses-5.4.tar.gz
+   ftp://invisible-island.net/ncurses/5.4/ncurses-5.4-20050319-patch.sh.bz2
+)
+unpack_files=inside_first
+recipe_type=configure
+needs_safe_linking=yes
+configure_options=(
+   "--with-shared"
+   "--without-debug"
+   "--with-termlib"
+   "--with-gpm"
+   "--enable-rpath"
+   "--enable-termcap"
+   "--enable-symlinks"
+   "--enable-widec"
+   "--with-terminfo-dirs=/Programs/Ncurses/Current/Shared/terminfo"
+   "--with-default-terminfo-dir=/Programs/Ncurses/Current/Shared/terminfo"
+)
+pre_build() {
+   bunzip ncurses-5.4-20050319-patch.sh.bz2
+   sh ncurses-5.4-20050319-patch.sh
+}
+install_target=install.libs
+post_install() {
+   chmod 755 $target/lib/*.5.4
+   chmod 644 $target/lib/libncurses++w.a
+#   ln -nfs $target/include/ncursesw/* $target/include
+#   ln -nfs $target/include/ncursesw/* $goboHeaders
+}

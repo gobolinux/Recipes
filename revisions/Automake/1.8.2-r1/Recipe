@@ -1,0 +1,6 @@
+url=$ftpGnu/automake/automake-1.8.2.tar.gz
+compile_version=1.7.1
+recipe_type=configure
+pre_install() {
+   ln -s $target/Shared/automake-1.7 $target/Shared/automake
+}

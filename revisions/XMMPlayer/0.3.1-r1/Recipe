@@ -1,0 +1,6 @@
+url=http://thegraveyard.org/files/xmmplayer-0.3.1.tar.bz2
+compile_version=1.7.1
+recipe_type=configure
+post_install() {
+   ln -nsf $target/lib/xmms/Input/* $goboPrograms/XMMS/Current/lib/xmms/Input
+}

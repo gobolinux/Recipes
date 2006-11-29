@@ -1,0 +1,20 @@
+diff -ur pmount-0.9.3-orig/Makefile pmount-0.9.3/Makefile
+--- pmount-0.9.3-orig/Makefile	2005-06-27 06:16:23.000000000 -0700
++++ pmount-0.9.3/Makefile	2005-10-04 19:35:24.000000000 -0700
+@@ -4,6 +4,7 @@
+ HAL_LDFLAGS=$(shell pkg-config hal --libs)
+ VERSION=$(shell head -n 1 CHANGES)
+ PREFIX?=/usr/local
++SYSCONF?=/etc
+ 
+ pmount_OBJ = pmount.o policy.o utils.o fs.o luks.o
+ pumount_OBJ = pumount.o policy.o utils.o luks.o
+@@ -30,7 +31,7 @@
+ 	install -o root -g root -m 644 -D ./pmount.1 $(DESTDIR)/$(PREFIX)/share/man/man1/pmount.1
+ 	install -o root -g root -m 644 -D ./pumount.1 $(DESTDIR)/$(PREFIX)/share/man/man1/pumount.1
+ 	install -o root -g root -m 644 -D ./pmount-hal.1 $(DESTDIR)/$(PREFIX)/share/man/man1/pmount-hal.1
+-	install -o root -g root -m 644 -D ./pmount.allow $(DESTDIR)/etc/pmount.allow
++	install -o 0 -g 0 -m 644 -D ./pmount.allow $(DESTDIR)/$(SYSCONF)/pmount.allow
+ 
+ uninstall: uninstall-mo
+ 	rm -f $(DESTDIR)/$(PREFIX)/bin/pmount $(DESTDIR)/$(PREFIX)/bin/pumount $(DESTDIR)/$(PREFIX)/bin/pmount-hal

@@ -1,0 +1,24 @@
+# Recipe for version 2.5.3 by Hisham Muhammad, on Sun Nov 7 02:51:33 BRST 2004
+# Recipe for WxGTK 2.5.3 by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.7.1
+url="$httpSourceforge/wxwindows/wxGTK-2.5.3.tar.bz2"
+recipe_type=configure
+
+configure_options=(
+	"--enable-calendar"
+	"--enable-controls"
+	"--enable-gtk2"
+	"--enable-intl"
+	"--enable-log"
+	"--enable-loggui"
+	"--enable-logwin"
+	"--enable-logdialog"
+	"--enable-plugins"
+	"--enable-stattext"
+	"--enable-sysoptions"
+	"--enable-stl"
+	"--enable-textdlg"
+	"--enable-unicode"
+	"--with-opengl"
+	"--with-sdl"
+)

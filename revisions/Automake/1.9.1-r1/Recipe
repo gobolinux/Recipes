@@ -1,0 +1,7 @@
+# Recipe for version 1.9.1 by Andre Detsch
+url=$ftpGnu/automake/automake-1.9.1.tar.gz
+compile_version=1.7.1
+recipe_type=configure
+pre_install() {
+   ln -s $target/Shared/automake-1.9 $target/Shared/automake
+}

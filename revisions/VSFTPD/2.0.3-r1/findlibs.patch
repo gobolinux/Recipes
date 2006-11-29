@@ -1,0 +1,11 @@
+--- vsftpd-2.0.3/vsf_findlibs.sh	2004-07-02 18:48:24.000000000 +0200
++++ vsftpd-2.0.3.old/vsf_findlibs.sh	2005-07-14 20:13:02.000000000 +0200
+@@ -57,7 +57,7 @@
+ locate_library /usr/lib/libsendfile.so && echo "-lsendfile";
+ 
+ # OpenSSL
+-if find_func SSL_library_init ssl.o; then
++if find_func SSL_library_init /lib/libssl.so; then
+   echo "-lssl -lcrypto";
+ fi
+ 

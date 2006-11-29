@@ -1,0 +1,17 @@
+# Recipe for version 2.4.3 by Andre Detsch <detsch@gobolinux.org>, on Sat Jun 17 18:06:24 BRT 2006
+compile_version=1.7.1
+url=http://python.org/ftp/python/2.4.3/Python-2.4.3.tar.bz2
+recipe_type=configure
+configure_options=(
+  "--enable-shared"
+  "--with-cxx=no"
+)
+
+#environment=(
+#    "PYTHONOPTIMIZE=1"
+#)
+
+post_install() {
+    echo "$goboLibraries/python2.4/site-packages/" >  $target/lib/python2.4/site-packages/gobolinux.pth 
+    echo "$goboLibraries/python2.3/site-packages/" >> $target/lib/python2.4/site-packages/gobolinux.pth 
+}

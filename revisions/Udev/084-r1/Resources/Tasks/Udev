@@ -1,0 +1,38 @@
+#!/bin/sh
+
+source GoboPath
+
+function make_extra_nodes() {
+    ln -s $goboStatus/self/fd   $goboDevices/fd
+    ln -s $goboStatus/self/fd/0 $goboDevices/stdin
+    ln -s $goboStatus/self/fd/1 $goboDevices/stdout
+    ln -s $goboStatus/self/fd/2 $goboDevices/stderr
+    ln -s $goboStatus/kcore     $goboDevices/core
+    mkdir $goboDevices/pts
+    mkdir $goboDevices/shm
+    mknod $goboDevices/initctl p
+    [ ! -c $goboDevices/tty1 ] && mknod $goboDevices/tty1 c 4 1
+    [ ! -c $goboDevices/tty2 ] && mknod $goboDevices/tty2 c 4 2
+    [ ! -c $goboDevices/tty3 ] && mknod $goboDevices/tty3 c 4 3
+    [ ! -c $goboDevices/tty4 ] && mknod $goboDevices/tty4 c 4 4
+    [ ! -c $goboDevices/tty5 ] && mknod $goboDevices/tty5 c 4 5
+}
+
+mount -t proc  none $goboStatus
+mount -t sysfs none $goboObjects
+mount -n -t tmpfs tmpfs $goboDevices
+
+# udevd listens for hotplug events through netlink
+if [ -x "$goboExecutables/udevd" ]
+then
+    $goboExecutables/udevd --daemon
+    echo "" > "$goboStatus/sys/kernel/hotplug"
+else
+    # have udevsend handle hotplug events
+    echo "$goboExecutables/udevsend" > "$goboStatus/sys/kernel/hotplug"
+fi
+
+
+make_extra_nodes
+mount $goboDevices/pts
+mount $goboDevices/shm

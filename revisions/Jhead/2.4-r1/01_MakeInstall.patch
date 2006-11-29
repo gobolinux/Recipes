@@ -1,0 +1,14 @@
+diff -Naur jhead-2.4-vanilla/makefile jhead-2.4-patched/makefile
+--- jhead-2.4-vanilla/makefile	2005-06-10 10:39:56.000000000 -0300
++++ jhead-2.4-patched/makefile	2005-07-03 19:18:15.000000000 -0300
+@@ -13,3 +13,10 @@
+ 
+ jhead: $(objs) jhead.h
+ 	${CC} -o jhead $(objs) -lm
++
++# 'install' target added by Leandro Motta Barros, for GoboLinux 'Compile'
++DESTDIR=/Programs/Jhead/2.4/
++install:
++	cp jhead $(DESTDIR)/bin
++	cp jhead.1.gz $(DESTDIR)/man/man1
++	cp readme.txt usage.html changes.txt $(DESTDIR)/doc

@@ -1,0 +1,12 @@
+# by Giusepe Casagrande
+
+url=ftp://ftp.mozilla.org/pub/mozilla.org/mozilla/releases/mozilla1.5/src/mozilla-source-1.5.tar.bz2
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+	 "--enable-crypto"
+	 "--disable-tests"
+	 "--disable-debug"
+	 "--enable-strip"
+	 "--with-pthreads"
+)

@@ -1,0 +1,10 @@
+compile_version=1.7.1
+url="http://home.san.rr.com/johninsd/pub/linux/lilo/lilo-22.5.9.tar.gz"
+file_size=415378
+file_md5=d5b561190cbe0968d50e09e0031edb79
+recipe_type=makefile
+makefile='Makefile'
+
+sandbox_options=(
+        "--no-sandbox"
+)

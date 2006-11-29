@@ -1,0 +1,20 @@
+# Recipe (MakeRecipe) for INN by Hisham Muhammad, on Thu Sep 16 22:18:38 BRT 2004
+# Recipe for version 2.4.1 by Hisham Muhammad, on Thu Sep 16 22:18:38 BRT 2004
+compile_version=1.7.1
+url="ftp://ftp.isc.org/isc/inn/inn-2.4.1.tar.gz"
+file_size=1849845
+file_md5=bec635b6e70188071fdb539cd374f2ba
+recipe_type=configure
+configure_options=(
+   "--without-sendmail"
+)
+# No files are written outside of $target.
+# The sandbox is disabled because the makefiles
+# need to chown/chgrp many files.
+sandbox_options=(
+   "--no-sandbox"
+)
+pre_install() {
+   groupadd news
+   useradd -g news -d $target news
+}

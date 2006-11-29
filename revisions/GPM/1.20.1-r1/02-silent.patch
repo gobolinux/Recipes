@@ -1,0 +1,29 @@
+Submitted By: Alexander E. Patrakov semzx at newmail.ru
+Date: 2003-10-03
+Initial Package Version: 1.20.1
+Origin: http://archives.linuxfromscratch.org/mail-archives/blfs-dev/2003-May/002916.html
+Description: Don't output debug messages on screen.
+diff -ur gpm-1.20.1.orig/src/lib/report-lib.c gpm-1.20.1/src/lib/report-lib.c
+--- gpm-1.20.1.orig/src/lib/report-lib.c	2002-12-25 03:57:16.000000000 +0500
++++ gpm-1.20.1/src/lib/report-lib.c	2003-05-09 20:09:25.000000000 +0600
+@@ -28,6 +28,8 @@
+ {
+    char *string = NULL;
+    va_list ap;
++   if (stat != GPM_STAT_OOPS)
++      return;
+    va_start(ap,text);
+ 
+    switch(stat) {
+diff -ur gpm-1.20.1.orig/src/report.c gpm-1.20.1/src/report.c
+--- gpm-1.20.1.orig/src/report.c	2002-12-25 03:57:16.000000000 +0500
++++ gpm-1.20.1/src/report.c	2003-05-09 20:10:46.000000000 +0600
+@@ -73,6 +73,8 @@
+    FILE *console = NULL;
+    va_list ap;
+ 
++   if (stat <= GPM_STAT_INFO)
++      return;
+    va_start(ap,text);
+ 
+    switch(option.run_status) {

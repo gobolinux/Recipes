@@ -1,0 +1,2 @@
+[Description] libtrash is a shared library which implements a trash can on GNU/Linux. When preloaded, it intercepts calls to a series of GNU libc functions and, instead of permanently destroying files, moves them to a "trash can".
+[Homepage] http://www.m-arriaga.net/software/libtrash/

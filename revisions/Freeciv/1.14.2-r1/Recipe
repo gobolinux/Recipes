@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Freeciv by Michael Schmoeller, on Wed Oct 20 00:16:46 BRST 2004
+# Recipe for version 1.14.2 by Michael Schmoeller, on Wed Oct 20 00:16:46 BRST 2004
+compile_version=1.7.1
+url="ftp://ftp.freeciv.org/freeciv/stable/freeciv-1.14.2.tar.bz2"
+file_size=5866635
+file_md5=280770591c8f87ac542dcd50702da205
+recipe_type=configure
+configure_options=( 
+	"--with-gtk-prefix=/Programs/GTK+/Current"
+)

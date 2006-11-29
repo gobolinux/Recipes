@@ -1,0 +1,30 @@
+
+
+
+---
+
+ linux-2.6-npiggin/mm/vmscan.c |    2 +-
+ 1 files changed, 1 insertion(+), 1 deletion(-)
+
+diff -puN mm/memory.c~vm-pages_scanned-active_list mm/memory.c
+diff -puN mm/vmscan.c~vm-pages_scanned-active_list mm/vmscan.c
+--- linux-2.6/mm/vmscan.c~vm-pages_scanned-active_list	2004-10-24 12:56:25.000000000 +1000
++++ linux-2.6-npiggin/mm/vmscan.c	2004-10-24 12:57:14.000000000 +1000
+@@ -574,7 +574,6 @@ static void shrink_cache(struct zone *zo
+ 			nr_taken++;
+ 		}
+ 		zone->nr_inactive -= nr_taken;
+-		zone->pages_scanned += nr_taken;
+ 		spin_unlock_irq(&zone->lru_lock);
+ 
+ 		if (nr_taken == 0)
+@@ -675,6 +674,7 @@ refill_inactive_zone(struct zone *zone, 
+ 		}
+ 		pgscanned++;
+ 	}
++	zone->pages_scanned += pgscanned;
+ 	zone->nr_active -= pgmoved;
+ 	spin_unlock_irq(&zone->lru_lock);
+ 
+
+_

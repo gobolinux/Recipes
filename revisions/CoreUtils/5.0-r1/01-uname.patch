@@ -1,0 +1,29 @@
+diff -urN coreutils-5.0.old/src/uname.c coreutils-5.0/src/uname.c
+--- coreutils-5.0.old/src/uname.c	2002-12-06 15:40:55.000000000 +0000
++++ coreutils-5.0/src/uname.c	2003-04-30 22:28:16.000000000 +0100
+@@ -240,13 +240,19 @@
+   if (toprint & PRINT_PROCESSOR)
+     {
+       char const *element = unknown;
+-#if HAVE_SYSINFO && defined SI_ARCHITECTURE
+-      {
+-	static char processor[257];
+-	if (0 <= sysinfo (SI_ARCHITECTURE, processor, sizeof processor))
+-	  element = processor;
++      char processor[BUFSIZ]="unknown";
++      FILE *ffd;
++      char temp_string[BUFSIZ];
++
++      if ((ffd=fopen("/proc/cpuinfo", "r") )!=NULL) {
++              while ( fscanf(ffd, "%s :", temp_string) != EOF)
++                      if (!(strcmp(temp_string, "vendor_id"))) {
++                                      fscanf(ffd, "%s", processor);
++                                      break;
++                      }
++              fclose(ffd);
+       }
+-#endif
++      element = processor;
+ #ifdef UNAME_PROCESSOR
+       if (element == unknown)
+ 	{

@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for IPW2200 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Feb 25 14:33:05 CET 2006
+# Recipe for version 1.1.0 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Feb 25 14:33:05 CET 2006
+compile_version=1.7.1
+url="$httpSourceforge/ipw2200/ipw2200-1.1.0.tgz"
+file_size=127128
+file_md5=be5b9815994e54c463ffd795ddd527e6
+recipe_type=makefile
+makefile='Makefile'
+sandbox_options=('--no-sandbox')

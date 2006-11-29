@@ -1,0 +1,44 @@
+# ----------------------------------------------------------
+# Recipe for Mod_PHP, the Apache PHP Module Version 5.0.1
+# by Volker Wieban <buckoven@yaklinux.org>
+# 2005-02-07
+# ----------------------------------------------------------
+
+### Compile Version
+compile_version=1.7.1
+
+### Download Section
+url="http://www.php.net/get/php-5.0.1.tar.bz2/from/us3.php.net/mirror"
+mirror_urls=(
+	"http://www.php.net/get/php-5.0.1.tar.bz2/from/us2.php.net/mirror"
+	"http://www.php.net/get/php-5.0.1.tar.bz2/from/us4.php.net/mirror"
+)
+
+### File Information
+file="php-5.0.1.tar.bz2"
+
+configure_options=(
+#	"--with-apxs"			# build Apache 1.x module
+	"--with-apxs2"			# build Apache 2.x module (experimental)
+	"--disable-cli"			# disable building CLI version of PHP
+	"--disable-pear"		# disable building of PEAR
+	"--enable-force-cgi-redirect"	# Enable security check for internal server redirects
+	"--enable-discard-path"		# with this enabled the PHP CGI binary can safely be placed
+					# outside of the web tree and people will not be able to
+					# circumvent .htaccess security
+	"--enable-magic-quotes"
+	"--with-libxml-dir"
+	"--with-openssl"
+	"--with-zlib"
+	"--with-bz2"
+	"--enable-ftp"
+	"--with-gd"
+	"--with-mysql"
+)
+
+sandbox_options=(
+    "--no-sandbox"			# needed to let Apache copy the Module
+)
+
+### Compilation Variables
+recipe_type=configure

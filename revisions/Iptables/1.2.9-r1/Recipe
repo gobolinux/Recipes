@@ -1,0 +1,18 @@
+#
+# Guilherme Balesteiri Bedin (gbedin)
+#
+# 14/04/2004
+#
+
+url="http://www.netfilter.org/files/iptables-1.2.9.tar.bz2"
+file_size=186808
+file_md5=8299db6ffbe98496d7f57dbb00f17e7d
+
+compile_version=1.7.1
+recipe_type=makefile
+
+make_variables=(
+	"BINDIR=/Programs/Iptables/1.2.9/bin" 
+	"LIBDIR=/Programs/Iptables/1.2.9/lib" 
+	"MANDIR=/Programs/Iptables/1.2.9/man"
+)

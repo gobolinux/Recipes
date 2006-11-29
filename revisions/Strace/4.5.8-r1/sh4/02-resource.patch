@@ -1,0 +1,32 @@
+--- strace-4.5.8/resource.c.orig	2006-02-17 17:28:41.000000000 -0200
++++ strace-4.5.8/resource.c	2006-02-17 17:36:21.000000000 -0200
+@@ -475,11 +475,19 @@ static const struct xlat quotacmds[] = {
+ 	{ Q_QUOTAOFF,	"Q_QUOTAOFF"	},
+ 	{ Q_GETQUOTA,	"Q_GETQUOTA"	},
+ 	{ Q_SETQUOTA,	"Q_SETQUOTA"	},
++#ifdef Q_SETUSE
+ 	{ Q_SETUSE,	"Q_SETUSE"	},
++#endif
+ 	{ Q_SYNC,	"Q_SYNC"	},
++#ifdef Q_SETQLIM
+ 	{ Q_SETQLIM,	"Q_SETQLIM"	},
++#endif
++#ifdef Q_GETSTATS
+ 	{ Q_GETSTATS,	"Q_GETSTATS"	},
++#endif
++#ifdef Q_RSQUASH
+ 	{ Q_RSQUASH,	"Q_RSQUASH"	},
++#endif
+ 	{ NEW_CMD(0x1), "Q_SYNC"        },
+ 	{ NEW_CMD(0x2), "Q_QUOTAON"     },
+ 	{ NEW_CMD(0x3), "Q_QUOTAOFF"    },
+@@ -537,7 +545,9 @@ struct tcb *tcp;
+                         tprintf("{");
+ 			tprintf("%u, ", dq.dqb_bhardlimit);
+ 			tprintf("%u, ", dq.dqb_bsoftlimit);
++#if 0
+ 			tprintf("%u, ", dq.dqb_curblocks);
++#endif
+ 			tprintf("%u, ", dq.dqb_ihardlimit);
+ 			tprintf("%u, ", dq.dqb_isoftlimit);
+ 			tprintf("%u, ", dq.dqb_curinodes);

@@ -1,0 +1,19 @@
+url="$httpSourceforge/espgs/espgs-7.07.1-source.tar.bz2"
+file_size=5400198
+file_md5=d30bf5c09f2c7caa8291f6305cf03044
+dir='espgs-7.07.1'
+compile_version=1.7.1
+recipe_type=configure
+
+configure_options=(
+	"--enable-cups"
+	"--with-drivers=ALL"
+	"--with-fontpath=/Files/Fonts/Ghostscript"
+	"--with-gimp-print"
+	"--with-omni"
+)
+
+pre_build() {
+	cd $dir
+	autoconf
+}

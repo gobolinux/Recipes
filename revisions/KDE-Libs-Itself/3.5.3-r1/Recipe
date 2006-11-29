@@ -1,0 +1,29 @@
+# Recipe for version 3.5.3 by Rui Andrada <shingonoide at gmail>, on Sat Jun 3 00:20:21 BRT 2006
+# by Maglan C. Diemer && Andre Detsch, 3.3.2 by roko
+
+compile_version=1.7.1
+url="ftp://ftp.oregonstate.edu/pub/kde/stable/3.5.3/src/kdelibs-3.5.3.tar.bz2"
+recipe_type=configure
+dir='kdelibs-3.5.3'
+
+configure_options=(
+	"--disable-debug"
+	"--disable-dependency-tracking"
+	"--disable-warnings"
+	"--with-alsa"
+	"--enable-fast-malloc=no"
+	"--with-distribution"
+	"--enable-dnotify"
+	"--enable-inotify"
+#  "DO_NOT_COMPILE="
+#  dcop libltdl kdefx  kdecore  kdeui  kdesu  kjs  kwallet  kio arts kab  kconf_update  kdoctools  kimgio  kioslave  knewstuff
+# kparts  kresources   ksmartcard  kstyles  kutils  libkmid  libscreensaver  licenses  mimetypes  pics  doc  kcert  interfaces  kinit # kdeprint  kac  kspell2  kmdi  khtml  kate  kdewidgets
+)
+
+# chmod below is not needed with Scripts >= 2.1.21
+post_install() {
+	chmod 4755 $target/bin/fileshareset
+	chmod 4755 $target/bin/kpac_dhcp_helper
+	chmod 4755 $target/bin/kgrantpty
+}
+

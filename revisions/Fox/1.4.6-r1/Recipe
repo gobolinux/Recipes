@@ -1,0 +1,9 @@
+# Recipe for version 1.4.6 by roko, <ro.ko@mcnon.com>, on Tue Mar 8 01:54:23 CET 2005
+compile_version=1.7.1
+url="http://www.fox-toolkit.org/ftp/fox-1.4.6.tar.gz"
+recipe_type=configure
+configure_options=(
+ --with-xft         #     enable Xft support
+# --with-xcursor    #     compile with Xcursor support
+ --with-opengl=yes  #     choices are yes, no
+ )

@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for BitTorrent by Felix Breuer <felix@fbreuer.de>, on Mon Sep 13 22:21:06 CEST 2004
+# Recipe for version 3.4.2 by Felix Breuer <felix@fbreuer.de>, on Mon Sep 13 22:21:06 CEST 2004
+compile_version=1.7.1
+url="$httpSourceforge/bittorrent/BitTorrent-3.4.2.tar.gz"
+file_size=198026
+file_md5=b854f25a33289565bcaeaded04955c1a
+recipe_type=manifest
+pre_link() {
+  python setup.py install --prefix=$target
+}

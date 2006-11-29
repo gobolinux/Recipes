@@ -1,0 +1,17 @@
+# by Hisham Muhammad
+# sequencer support by Giusepe Casagrande
+# cards VIA 82XX chipset by Maglan C. Diemer
+
+# Warning:
+# Assumes /etc/init.d and /etc/rc.d don't exist.
+# Will fail otherwise.
+
+url=ftp://ftp.alsa-project.org/pub/driver/alsa-driver-1.0.5.tar.bz2
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+   "--with-moddir=$target/lib/modules/`uname -r`/misc"
+   "--with-cards=all"
+   "--with-sequencer=yes"
+   "--with-cards=all"
+)

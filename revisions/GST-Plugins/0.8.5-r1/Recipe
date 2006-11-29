@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for GST-Plugins by roko, <ro.ko@mcnon.com>, on Thu Nov 18 00:57:54 BRST 2004
+# Recipe for version 0.8.5 by roko, <ro.ko@mcnon.com>, on Thu Nov 18 00:57:54 BRST 2004
+compile_version=1.7.1
+url="http://ftp.gnome.org/pub/GNOME/sources/gst-plugins/0.8/gst-plugins-0.8.5.tar.bz2"
+file_size=2059359
+file_md5=d325394902b07fa335741f3d93160e4a
+recipe_type=configure
+configure_options=(
+--enable-libmmx
+)

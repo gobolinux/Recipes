@@ -1,0 +1,18 @@
+# by Jeremy Vernon
+
+urls=(
+   "http://ftp.xemacs.org/pub/xemacs/current/xemacs-21.4.14.tar.bz2"
+   "http://ftp.xemacs.org/pub/xemacs/packages/xemacs-base-1.87-pkg.tar.gz"
+   "http://ftp.xemacs.org/pub/xemacs/packages/efs-1.32-pkg.tar.gz"
+)
+compile_version=1.7.1
+recipe_type=configure
+symlink_options=(
+   "--no-strip"
+)
+pre_link() {
+   mkdir $target/lib/xemacs-packages
+   cd $target/lib/xemacs-packages
+   tar -xzvf $compileArchivesDir/xemacs-base-1.87-pkg.tar.gz 
+   tar -xzvf $compileArchivesDir/efs-1.32-pkg.tar.gz
+}

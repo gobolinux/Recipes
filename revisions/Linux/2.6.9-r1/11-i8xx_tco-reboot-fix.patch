@@ -1,0 +1,11 @@
+--- linux.vanilla-2.6.9/drivers/char/watchdog/i8xx_tco.c	2004-10-20 22:32:28.000000000 +0100
++++ linux-2.6.9/drivers/char/watchdog/i8xx_tco.c	2004-10-21 22:39:49.704002152 +0100
+@@ -465,7 +465,7 @@
+ 		goto unreg_notifier;
+ 	}
+ 
+-	tco_timer_keepalive ();
++	tco_timer_stop ();
+ 
+ 	printk (KERN_INFO PFX "initialized (0x%04x). heartbeat=%d sec (nowayout=%d)\n",
+ 		TCOBASE, heartbeat, nowayout);

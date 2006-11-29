@@ -1,0 +1,5 @@
+[Name] potrace
+[Summary] Transforms bitmaps into vector graphics.
+[License] GNU General Public License (GPL)
+[Description] potrace is a utility for tracing a bitmap (that is, transforming a bitmap into a smooth, scalable image). The input is a portable bitmap (PBM), and the default output is an encapsulated PostScript file (EPS). A typical use is to create EPS files from scanned data, such as company or university logos, handwritten notes, etc. The resulting image is not "jaggy" like a bitmap, but smooth. It can then be rendered at any resolution.
+[Homepage] http://potrace.sourceforge.net/

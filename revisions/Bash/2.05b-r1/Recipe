@@ -1,0 +1,7 @@
+url=$ftpGnu/bash/bash-2.05b.tar.gz
+needs_safe_linking=yes
+compile_version=1.7.1
+recipe_type=configure
+pre_install() {
+   ln -nfs bash $target/sh
+}

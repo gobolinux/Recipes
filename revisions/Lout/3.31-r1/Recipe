@@ -1,0 +1,23 @@
+# Recipe (MakeRecipe) for Lout by Jonatan Liljedahl <lijon@kymatica.com>, on Tue Sep 20 00:52:04 BRT 2005
+# Recipe for version 3.31 by Jonatan Liljedahl <lijon@kymatica.com>, on Tue Sep 20 00:52:04 BRT 2005
+compile_version=1.7.1
+url="ftp://ftp.cs.usyd.edu.au/jeff/lout/lout-3.31.tar.gz"
+file_size=1987038
+file_md5=8cc03412d5c26c208811877b89ad3174
+recipe_type=makefile
+makefile='makefile'
+make_variables=(
+    BINDIR=$target/bin
+    LIBDIR=$target/lib/lout
+    DOCDIR=$target/doc/lout
+    MANDIR=$target/man/man1
+)
+install_target="install installman installdoc"
+#pre_install() {
+#    rmdir $target/lib
+#    rmdir $target/doc
+#}
+#pre_link() {
+#    make installman
+#    make installdoc
+#}

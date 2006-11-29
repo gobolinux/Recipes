@@ -1,0 +1,11 @@
+# Recipe for Flac 1.1.0 by Maglan C. Diemer, maglan@univates.br
+compile_version=1.7.1
+url="$httpSourceforge/flac/flac-1.1.0.tar.gz"
+file_size=1201861
+file_md5=19b456a27b5fcf502c76cc33f33e1490
+recipe_type=configure
+
+configure_options=(
+	"--with-xmms-prefix=$target"
+	"--with-id3lib=$target"
+)

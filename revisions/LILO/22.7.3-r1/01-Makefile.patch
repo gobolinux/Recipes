@@ -1,0 +1,35 @@
+--- lilo-22.7.3/Makefile	2006-08-12 00:20:08.000000000 -0300
++++ lilo-22.7.3-fabio.m/Makefile	2006-09-03 20:48:39.000000000 -0300
+@@ -76,8 +76,7 @@
+ #	elif [ -f /usr/bin/manpath ]; then \
+ #  manpath | sed "s/:.*//"; else echo /usr/man; fi`
+ #
+-MAN_DIR=`if [ -f /usr/bin/manpath ]; then \
+-	manpath | sed "s/:.*//"; else echo /usr/man; fi`
++MAN_DIR=/Programs/LILO/Current/man
+ 
+ # set the compiler optimization level
+ 
+@@ -88,10 +87,10 @@
+ #  Do not modify anything below this point
+ #
+ 
+-SBIN_DIR=/sbin
+-CFG_DIR=/etc
+-BOOT_DIR=/boot
+-USRSBIN_DIR=/usr/sbin
++SBIN_DIR=/Programs/LILO/Current/sbin
++CFG_DIR=/Programs/LILO/Settings
++BOOT_DIR=/System/Kernel/Boot
++USRSBIN_DIR=/Programs/LILO/Current/sbin
+ BUILTIN=1
+ 
+ PCONFIG=$(KVER) $(HDM) $(LILO) `( if [ -r $$ROOT/etc/lilo.defines ]; then \
+@@ -136,6 +135,7 @@
+ 
+ .SUFFIXES:	.img .b .com .S .s
+ 
++makeall: all
+ 
+ #
+ #  make help

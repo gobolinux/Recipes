@@ -1,0 +1,16 @@
+# by Maglan C. Diemer, 3.3.2 by roko
+# Recipe for version 3.4.0 by David Smith <dsmith@algonet.se>, on Fri Apr  1 07:44:12 CEST 2005
+url="ftp://ftp.kde.org/pub/kde/stable/3.4/src/kdemultimedia-3.4.0.tar.bz2"
+#url="ftp://ftp.sunet.se/pub/kde/stable/3.4/src/kdemultimedia-3.4.0.tar.bz2"
+compile_version=1.7.1
+recipe_type=configure
+file_size=5581865
+file_md5=4e42790bbea7c4ac0c436da3c7c664ac
+configure_options=(
+  "--with-gnu-ld"
+  "--disable-debug"
+  "--disable-dependency-tracking"
+  "--with-arts-alsa"
+#  "DO_NOT_COMPILE=kaboodle"
+  #akode arts audiofile_artsplugin doc juk kaboodle kappfinder-data kfile-plugins kmid kmix libkcddb mpeglib mpg123_artsplugin oggvorbis_artsplugin xine_artsplugin krec noatun kscd kioslave kaudiocreator mpeglib_artsplug
+)

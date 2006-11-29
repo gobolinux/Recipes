@@ -1,0 +1,17 @@
+# Recipe (MakeRecipe) for GKrellM-Flynn by Volker Wieban <buckoven@gobolinux.de>, on Fri Sep 3 18:24:16 BRT 2004
+# Recipe for version 0.8 by Volker Wieban <buckoven@gobolinux.de>, on Fri Sep 3 18:24:16 BRT 2004
+compile_version=1.7.1
+url="http://horus.comlab.uni-rostock.de/flynn/gkrellflynn-0.8.tar.gz"
+file_size=26722
+file_md5=19eabecbe7f95e7246012a7be4dff60d
+recipe_type=makefile
+makefile='Makefile'
+build_variables='gkrellm2'
+pre_link() {
+	mkdir -p $target/plugins
+	cp gkrellflynn.so $target/plugins/
+	chmod 644 $target/plugins/gkrellflynn.so
+}
+post_install() {
+	ln -sf $target/plugins/gkrellflynn.so $goboPrograms/GKrellM/Current/lib/gkrellm2/plugins/gkrellflynn.so
+}

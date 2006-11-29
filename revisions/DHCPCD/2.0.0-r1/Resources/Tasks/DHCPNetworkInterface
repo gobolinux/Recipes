@@ -1,0 +1,27 @@
+#!/bin/sh
+
+#
+# DHCP support for NetworkInterface
+# Intended to be called by the Network task, not directly by the user.
+# Hacked by Guilherme Bedin, Hisham Muhammad and many others - 26/07/2003,2004...
+#
+
+interface="$2"
+
+# For command-line convenience
+[ "$3" ] && DHCPTimeout="$3"
+
+[ "$DHCPTimeout" ] || DHCPTimeout=5
+
+#
+# Ensures that no client daemon is treating this interface
+#
+if ps -C dhcpcd >& /dev/null
+then dhcpcd -k -t "$DHCPTimeout" "$interface"
+fi
+
+case "$1" in
+   [Ss]tart)
+      dhcpcd -t "$DHCPTimeout" "$interface"
+      ;;
+esac

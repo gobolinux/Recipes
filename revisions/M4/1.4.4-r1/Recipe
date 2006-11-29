@@ -1,0 +1,10 @@
+# Recipe for version 1.4.4 by Andre Detsch, on Fri Feb 3 12:59:05 BRST 2006
+url=$ftpGnu/m4/m4-1.4.4.tar.gz
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+   "--enable-changeword"
+)
+pre_build() {
+   autoconf
+}

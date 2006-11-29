@@ -1,0 +1,13 @@
+# by Maglan C. Diemer 3.3.2 by roko
+# Security patch added by david <dsmith@algonet.se>, 2005-01-06
+
+url="ftp://ftp.kde.org/pub/kde/stable/3.3.2/src/kdegraphics-3.3.2.tar.bz2"
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+#  "DO_NOT_COMPILE="
+#kamera kcoloredit kdvi kfax kfaxview kfile-plugins kgamma kghostview kiconedit kmrml kolourpaint kooka 
+#kpdf kpovmodeler kruler ksnapshot ksvg kuickshow kview kvieshell libkscan
+)

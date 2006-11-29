@@ -1,0 +1,8 @@
+# Recipe for version 1.0alpha3 by Hisham Muhammad, on Fri Sep 10 22:32:19 BRT 2004
+# by Jeremy Vernon
+url="http://www.theora.org/files/libtheora-1.0alpha3.tar.gz"
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+   "--enable-shared"
+)

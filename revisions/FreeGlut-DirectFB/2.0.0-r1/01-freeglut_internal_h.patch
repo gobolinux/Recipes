@@ -1,0 +1,11 @@
+--- freeglut-directfb/src/freeglut_internal.h.orig	2004-11-23 13:05:03.000000000 -0200
++++ freeglut-directfb/src/freeglut_internal.h	2004-11-23 13:05:21.000000000 -0200
+@@ -43,7 +43,7 @@
+ #   define  TARGET_HOST_UNIX_X11    0
+ #   define  TARGET_HOST_WIN32       0
+ #include <directfb.h>
+-#include <directfbgl.h>
++#include <directfb/directfbgl.h>
+ #elif !defined(_WIN32)
+ #   define  TARGET_HOST_UNIX_DIRECTFB 0
+ #   define  TARGET_HOST_UNIX_X11    1

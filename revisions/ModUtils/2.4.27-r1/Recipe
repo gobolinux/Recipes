@@ -1,0 +1,16 @@
+url=ftp://ftp.kernel.org/pub/linux/utils/kernel/modutils/v2.4/modutils-2.4.27.tar.bz2
+compile_version=1.7.1
+recipe_type=configure
+
+configure_options=(
+		"--with-moddir=/System/Kernel/Modules"
+)
+
+post_install() {
+    cd "$target"/sbin
+    for i in ./* 
+    do 
+	ln -s "`basename $i`" "`basename $i`".old 
+    done
+    cd -
+}

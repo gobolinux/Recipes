@@ -1,0 +1,13 @@
+# by Maglan C. Diemer
+
+url="ftp://ftp.kde.org/pub/kde/stable/3.3.2/src/arts-1.3.2.tar.bz2"
+dir="arts-1.3.2"
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+  "--with-alsa"
+ # "DO_NOT_COMPILE="
+ # mcop flow mcop_mt soundserver artsc examples tests doc gmcop qtmcop x11
+ )

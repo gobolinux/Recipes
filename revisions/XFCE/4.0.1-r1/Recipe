@@ -1,0 +1,24 @@
+# by Guilherme Bedin
+
+compile_version=1.7.1
+recipe_type=meta
+
+include=(
+    "LibXFCE4Util--4.0.1"
+    "LibXfcegui4--4.0.1"    
+    "LibXFCE4MCS--4.0.1"
+    "XFCE-MCS-Manager--4.0.1"
+    "GTK-XFCE-Engine--2.1.7"
+    "XFCE-Utils--4.0.1"
+    "XFCE4-Panel--4.0.1"
+    "XFCE4-Iconbox--4.0.1"
+    "XFCE4-Mixer--4.0.1"
+    "XFCE4-Systray--4.0.1"
+    "XFCE4-Themes--4.0.0"
+    "XFCE4-Toys--4.0.1"
+    "XFCE4-Trigger-Launcher--4.0.1"
+    "XFFM--4.0.1"
+    "Xfprint--4.0.1"
+    "XFWM4--4.0.1"
+    "XFWM4-Themes--4.0.0"
+)

@@ -1,0 +1,14 @@
+--- linux-2.6.15/fs/devfs/base.c	2006-01-03 01:21:10.000000000 -0200
++++ linux-2.6.15-lucasvr/fs/devfs/base.c	2006-01-08 22:49:12.000000000 -0200
+@@ -2826,9 +2826,9 @@ void __init mount_devfs_fs(void)
+ 
+ 	if (!(boot_options & OPTION_MOUNT))
+ 		return;
+-	err = do_mount("none", "/dev", "devfs", 0, NULL);
++	err = do_mount("none", "/System/Kernel/Devices", "devfs", 0, NULL);
+ 	if (err == 0)
+-		printk(KERN_INFO "Mounted devfs on /dev\n");
++		printk(KERN_INFO "Mounted devfs on /System/Kernel/Devices\n");
+ 	else
+ 		PRINTK("(): unable to mount devfs, err: %d\n", err);
+ }				/*  End Function mount_devfs_fs  */

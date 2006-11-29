@@ -1,0 +1,31 @@
+# Recipe (MakeRecipe) for Clamav by roko, <ro.ko@mcnon.com>, on Sun Dec 5 22:30:18 BRST 2004
+# Recipe for version 0.80 by roko, <ro.ko@mcnon.com>, on Sun Dec 5 22:30:18 BRST 2004
+compile_version=1.7.1
+url="$httpSourceforge/clamav/clamav-0.80.tar.gz"
+file_size=2679434
+file_md5=59bf21e169a35d7e9c27a34435f9b870
+recipe_type=configure
+configure_options=(
+	#--enable-milter
+	--datadir=$target/../Variable/clamav
+)
+pre_build() {
+	Log_Normal "Check if user and group clamav exist, add if necessary !!"
+	grep clamav $goboSettings/group || groupadd clamav &&
+	grep clamav $goboSettings/passwd || useradd clamav -s /bin/false -d $target/.. -g clamav
+}
+
+pre_link() {
+	mkdir -p $target/../Variable/clamav
+	mv $target/Shared/clamav/*.cvd $target/../Variable/clamav/
+	chown -R clamav $target/../Variable/clamav 
+	GrepReplace "Example" "#Example" $target/../Settings/clamd.conf
+	GrepReplace "#User clamav" "User clamav" $target/../Settings/clamd.conf
+	GrepReplace "LocalSocket /tmp/clamd" "LocalSocket /System/Variable/tmp/clamd" $target/../Settings/clamd.conf
+	GrepReplace "#LogFile /tmp/clamd.log" "LogFile /Programs/Clamav/Variable/clamav/clamd.log" $target/../Settings/clamd.conf
+	GrepReplace "#DatabaseDirectory /var/lib/clamav" "DatabaseDirectory /Programs/Clamav/Variable/clamav" $target/../Settings/clamd.conf
+	GrepReplace "Example" "#Example" $target/../Settings/freshclam.conf
+	GrepReplace "#DatabaseDirectory /var/lib/clamav" "DatabaseDirectory /Programs/Clamav/Variable/clamav" $target/../Settings/freshclam.conf
+	GrepReplace "#UpdateLogFile /var/log/freshclam.log" "UpdateLogFile /Programs/Clamav/Variable/clamav/freshclam.logs" $target/../Settings/freshclam.conf
+ }
+#for databasemirrors look here: http://www.clamav.net/mirrors.html

@@ -1,0 +1,26 @@
+# Recipe for version 2.12p by  Ozgur Ulukir, on Thu Dec 23 20:14:50 EET 2004
+
+url=http://www.kernel.org/pub/linux/utils/util-linux/util-linux-2.12p.tar.bz2
+compile_version=1.7.1
+recipe_type=configure
+needs_safe_linking=yes
+make_variables=(
+   "HAVE_KILL=yes"
+   "HAVE_SLN=yes"
+   "ETC_DIR=$target/../Settings"
+   "SBIN_DIR=$target/sbin"
+   "USRSBIN_DIR=$target/sbin"
+   "USRLIB_DIR=$target/lib"
+   "USRBIN_DIR=$target/bin"
+   "USRSHAREMISC_DIR=$target/share/misc"
+   "LOCALE_DIR=$target/share/locale"
+   "BIN_DIR=$target/bin"
+   "VAR_PATH=$target/../Variable"
+   "LOG_DIR=$target/../Variable/log"
+   "MAN_DIR=$target/man"
+   "INFO_DIR=$target/info"
+)
+pre_link() {
+   chmod +s "$target/bin/mount"
+   chmod +s "$target/bin/umount"
+}

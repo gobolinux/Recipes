@@ -1,0 +1,19 @@
+# Recipe for version 1.5.5 by Andre Detsch <detsch@gobolinux.org>, on Wed Nov 8 16:43:57 BRST 2006
+# by Maglan C. Diemer
+# Version 1.4.92 by Kosh <kosh.linux at gmail.com>, on Tue Oct 18 11:44:03 BRST 2005
+
+compile_version=1.7.1
+url="ftp://ftp.oregonstate.edu/pub/kde/stable/3.5.5/src/arts-1.5.5.tar.bz2"
+dir='arts-1.5.5'
+recipe_type=configure
+keep_existing_target=yes
+configure_options=(
+    "--disable-debug"
+    "--disable-dependency-tracking"
+    "--with-alsa"
+    "--disable-libsuffix"
+    # "DO_NOT_COMPILE="mcop flow mcop_mt soundserver artsc examples tests doc gmcop qtmcop x11"
+)
+symlink_options=(
+    "--conflict overwrite"
+)

@@ -1,0 +1,23 @@
+# Recipe for version 3.0.14a by Jonas Karlsson <jonka750@student.liu.se>, on Fri Apr 22 09:32:35 CEST 2005
+# Recipe (MakeRecipe) for Samba by roko, <ro.ko@mcnon.com>, on Sun Dec 26 11:04:52 BRST 2004
+compile_version=1.7.1
+url="http://us2.samba.org/samba/ftp/samba-3.0.14a.tar.gz"
+recipe_type=configure
+dir="samba-3.0.14a/source"
+configure_options=(
+  "--with-smbwrapper"
+  "--with-libsmbclient"
+  "--with-automount"
+  "--with-smbmount"
+  "--with-quotas"
+  "--with-acl-support"    		# Include ACL support (default=no)
+  "--with-configdir=$target/../Settings"
+)
+
+pre_link() {
+  mkdir -p $target/doc
+  cp -Rv ../examples $target/doc 
+  mkdir -p $target/../Settings
+  cp -v  ../examples/smb.conf.default $target/../Settings
+  ln -s $target/bin/smbmount $target/sbin/mount.smbfs
+}

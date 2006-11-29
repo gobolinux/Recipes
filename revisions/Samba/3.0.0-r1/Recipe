@@ -1,0 +1,15 @@
+# by Guilherme Bedin and Carlo J. Calica
+
+url=http://us1.samba.org/samba/ftp/samba-3.0.0.tar.bz2
+dir="samba-3.0.0/source"
+compile_version=1.7.1
+recipe_type=configure
+
+configure_options=(
+  "--with-automount"
+  "--with-smbmount"
+  "--with-quotas"
+  "--with-configdir=/etc"
+)
+
+    

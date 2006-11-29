@@ -1,0 +1,15 @@
+# Recipe for PyAO 0.81 by Jonatan Liljedahl <lijon@kymatica.com>
+compile_version=1.7.1
+url="http://www.vorbis.com/files/1.0.1/unix/py/pyao-0.81.tar.gz"
+recipe_type=manifest
+pre_install() {
+	cat > Setup << _EOF_
+ao_libs = ao
+ao_lib_dir = /System/Links/Libraries
+ao_include_dir = /System/Links/Headers
+_EOF_
+	python setup.py build
+}
+pre_link() {
+	python setup.py install --prefix $target
+}

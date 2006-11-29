@@ -1,0 +1,15 @@
+# Vim 6.2 Recipe by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+url=ftp://ftp.vim.org/pub/vim/unix/vim-6.2.tar.bz2
+file_size=3269791
+file_md5=c49d360bbd069d00e2a57804f2a123d9
+dir=vim62/src
+compile_version=1.7.1
+recipe_type=configure
+
+configure_options=(
+	"--prefix=$target"
+	"--enable-xim"
+	"--with-x"
+	"--enable-gui=auto"
+)
+	  

@@ -1,0 +1,8 @@
+# Recipe for version 1.36 by Andre Detsch, on Mon Mar 7 20:26:25 BRT 2005
+url=$httpSourceforge/e2fsprogs/e2fsprogs-1.36.tar.gz
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+   "--enable-elf-shlibs"
+)
+install_target="install install-libs"

@@ -1,0 +1,21 @@
+# Recipe for version 6.8.1 by Hisham Muhammad, on Thu Sep 23 13:29:25 BRT 2004 => detsch, URL updates (25/11/2004) 
+# Recipe for version 6.8.2 by David Smith (2005-03-09) 
+#url="http://www2.x.org/pub/X11R6.8.1/src-single/X11R6.8.1-src.tar.bz2"
+url="http://ftp.sunet.se/pub/X11/ftp.x.org/X11R6.8.2/src-single/X11R6.8.2-src.tar.bz2"
+file_md5=8131cd7ea1e4566e6e05c438a93fcfe1
+compile_version=1.7.1
+recipe_type=makefile
+dir=xc
+build_target="World"
+
+post_install() {
+	make install.man
+
+	Log_Normal "=================================================="
+	Log_Normal ""
+	Log_Normal "Note: X.Org man pages are installed but not symlinked"
+	Log_Normal "      by default. To make them available, just run"
+	Log_Normal "      SymlinkProgram Xorg again."
+	Log_Normal ""
+	Log_Normal "=================================================="
+}

@@ -1,0 +1,30 @@
+url=ftp://ftp5.mplayerhq.hu/mplayer/releases/MPlayer-1.0pre5.tar.bz2
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+   "--enable-gui"
+   "--with-win32libdir=/Files/Codecs/Win32"
+   "--with-codecsdir=/Files/Codecs/MPlayer"
+   "--enable-largefiles"
+   "--enable-linux-devfs"
+   "--language=all"
+)
+
+pre_build() {
+   # This will install several codecs in /Files/Codecs/MPlayer
+   wget ftp://ftp5.mplayerhq.hu/mplayer/releases/codecs/essential-20040704.tar.bz2
+   mkdir -p /Files/Codecs/MPlayer
+   aunpack -X/tmp essential-20040704.tar.bz2
+   mv -f /tmp/essential-20040704/* /Files/Codecs/MPlayer
+}
+
+pre_install() {
+#   wget http://www1.mplayerhq.hu/MPlayer/Skin/OSX-Mod-1.0.tar.bz2
+#   aunpack OSX-Mod-1.0.tar.bz2
+#   skindir=$target/Shared/mplayer/Skin
+#   mkdir -p $skindir
+#   mv OSX-Mod $skindir/default
+
+   fontdir=$target/Shared/mplayer/font
+   ln -nsf /Files/Fonts/TrueType/Vera.ttf $fontdir/subfont.ttf
+}

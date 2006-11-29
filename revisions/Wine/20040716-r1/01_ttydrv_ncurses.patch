@@ -1,0 +1,25 @@
+diff -Naur wine-20040716/dlls/ttydrv/ttydrv.h wine-20040716-patched/dlls/ttydrv/ttydrv.h
+--- wine-20040716/dlls/ttydrv/ttydrv.h	2004-03-03 22:42:57.000000000 -0300
++++ wine-20040716-patched/dlls/ttydrv/ttydrv.h	2004-07-27 13:54:06.000000000 -0300
+@@ -42,17 +42,21 @@
+ 
+ struct tagBITMAPOBJ;
+ 
++/*
+ #if defined(HAVE_LIBCURSES) || defined(HAVE_LIBNCURSES)
+ #define WINE_CURSES
+ #endif
++*/
+ 
+ /**************************************************************************
+  * TTY GDI driver
+  */
+ 
++/*
+ #ifndef WINE_CURSES
+ typedef struct { int dummy; } WINDOW;
+ #endif
++*/
+ 
+ typedef struct {
+   HDC hdc;

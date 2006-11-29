@@ -1,0 +1,15 @@
+# Recipe for version 3.0 by Andre Detsch, on Thu Aug 26 20:30:11 BRT 2004
+url=$ftpGnu/bash/bash-3.0.tar.gz
+needs_safe_linking=yes
+compile_version=1.7.1
+recipe_type=configure
+
+configure_options=(
+   "--with-installed-readline"
+)
+
+pre_install() {
+   cd $target/bin
+   ln -nfs bash sh
+   cd -
+}

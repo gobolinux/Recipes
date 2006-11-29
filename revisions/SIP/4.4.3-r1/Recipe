@@ -1,0 +1,13 @@
+# Recipe for version 4.4.3 by Thomas Queste <tqueste@free.fr>, on Thu May 25 19:43:18 CEST 2006
+# on Sat Apr 16 13:31:22 CEST 2005
+
+compile_version=1.7.1
+url="http://www.riverbankcomputing.com/Downloads/sip4/sip-4.4.3.tar.gz"
+
+recipe_type=makefile
+pre_build() {
+   PrepareProgram -t SIP 4.4.3
+   mkdir -p $target/include/python2.4
+   mkdir -p $target/lib/python2.4/site-packages/
+   python configure.py -b $target/bin -e $target/include -d $target/lib/python2.4/site-packages/
+}

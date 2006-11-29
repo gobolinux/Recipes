@@ -1,0 +1,19 @@
+url=$ftpGnu/ncurses/ncurses-5.3.tar.gz
+compile_version=1.7.1
+recipe_type=configure
+needs_safe_linking=yes
+configure_options=(
+   "--with-shared"
+   "--without-debug"
+   "--with-termlib"
+   "--with-gpm"
+   "--enable-rpath"
+   "--enable-termcap"
+   "--enable-symlinks"
+)
+post_install() {
+   chmod 755 $target/lib/*.5.3
+   chmod 644 $target/lib/libncurses++.a
+   ln -nfs $target/include/ncurses/* $target/include
+   ln -nfs $target/include/ncurses/* $goboHeaders
+}

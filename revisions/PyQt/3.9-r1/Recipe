@@ -1,0 +1,12 @@
+# by Andre Detsch
+
+url=http://www.river-bank.demon.co.uk/download/PyQt/PyQt-x11-gpl-3.9.tar.gz
+compile_version=1.7.1
+recipe_type=makefile
+pre_build() {
+   PrepareProgram -t PyQt 3.9
+   mkdir -p $target/include/python2.3
+   mkdir -p $target/Shared/sip
+   mkdir -p $target/lib/python2.3/site-packages/
+   echo yes | python build.py -b $target/bin -d $target/lib/python2.3/site-packages/ -v $target/Shared/sip
+}

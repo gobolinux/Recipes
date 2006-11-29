@@ -1,0 +1,8 @@
+# Recipe for version 1.0alpha5 by Nick Matteo, on Wed Sep 21 20:10:50 UTC 2005
+# by Jeremy Vernon
+url="http://downloads.xiph.org/releases/theora/libtheora-1.0alpha5.tar.gz"
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+   "--enable-shared"
+)

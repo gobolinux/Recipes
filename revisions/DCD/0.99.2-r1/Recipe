@@ -1,0 +1,10 @@
+compile_version=1.7.1
+url="$httpSourceforge/dcdplayer/dcd-0.99.2.tar.gz"
+file_size=49749
+file_md5=94d8e5bdcd1961998d4c3bd80155e5d7
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+   "NETWOR=0"
+)

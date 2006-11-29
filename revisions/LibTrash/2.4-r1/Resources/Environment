@@ -1,0 +1,6 @@
+alias trash_on='export TRASH_OFF=YES'
+alias trash_off='export TRASH_OFF=NO'
+
+export TRASH_OFF=NO
+export LD_PRELOAD=$LD_PRELOAD:/System/Links/Libraries/libtrash.so
+
