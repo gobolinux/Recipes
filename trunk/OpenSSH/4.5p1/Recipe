@@ -5,6 +5,7 @@ url="ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-4.5p1.tar.gz"
 file_size=965925
 file_md5=6468c339886f78e8a149b88f695839dd
 recipe_type=configure
+install_target=install-nokeys
 configure_options=(
    "--sysconfdir=$settings_target/ssh"
 )
@@ -31,3 +32,21 @@ pre_build() {
    fi
 }
 
+pre_link() {
+   # Generate host-keys if not present
+   if [ ! -f ${settings_target}/ssh/ssh_host_key ]
+   then
+      ${target}/bin/ssh-keygen -t rsa1 -b 1024 -f ${target_settings}/ssh/ssh_host_key -N ''
+      chmod 600 ${settings_target}/ssh/ssh_host_key
+   fi
+   if [ ! -f ${settings_target}/ssh/ssh_host_dsa_key ]
+   then
+      ${target}/bin/ssh-keygen -d -f ${settings_target}/ssh/ssh_host_dsa_key -N ''
+      chmod 600 ${settings_target}/ssh/ssh_host_dsa_key
+   fi
+   if [ ! -f ${settings_target}/ssh/ssh_host_rsa_key ]
+   then
+      ${target}/bin/ssh-keygen -t rsa -f ${settings_target}/ssh/ssh_host_rsa_key -N ''
+      chmod 600 ${settings_target}/ssh/ssh_host_rsa_key
+   fi
+}

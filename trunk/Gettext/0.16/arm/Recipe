@@ -1,0 +1,7 @@
+configure_options=(
+    --cache-file=arm_cache.conf
+)
+
+pre_build() {
+    cp $archsubdir/arm_cache.conf ./gettext-tools
+}

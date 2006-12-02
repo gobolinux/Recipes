@@ -1,0 +1,8 @@
+# Recipe for version 2.4.3 by Kosh <kosh.linux at gmail.com, on Thu Nov 23 20:41:14 BRST 2006
+compile_version=1.7.1
+url="http://www.cmake.org/files/v2.4/cmake-2.4.3.tar.gz"
+recipe_type=configure
+
+configure_options=(
+	--prefix=$target
+)

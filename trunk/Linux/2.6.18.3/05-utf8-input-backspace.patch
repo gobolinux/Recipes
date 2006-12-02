@@ -1,0 +1,11 @@
+--- linux-2.6.18.3.orig/drivers/char/tty_io.c	2006-11-19 01:28:22.000000000 -0200
++++ linux-2.6.18.3/drivers/char/tty_io.c	2006-11-28 22:38:51.000000000 -0200
+@@ -110,7 +110,7 @@
+ #define CHECK_TTY_COUNT 1
+ 
+ struct termios tty_std_termios = {	/* for the benefit of tty drivers  */
+-	.c_iflag = ICRNL | IXON,
++	.c_iflag = ICRNL | IXON | IUTF8,
+ 	.c_oflag = OPOST | ONLCR,
+ 	.c_cflag = B38400 | CS8 | CREAD | HUPCL,
+ 	.c_lflag = ISIG | ICANON | ECHO | ECHOE | ECHOK |
