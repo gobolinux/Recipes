@@ -1,0 +1,9 @@
+# Recipe for version 4.8a by Andre Detsch <detsch@gobolinux.org>, on Mon Nov 20 16:59:21 BRST 2006
+url=$ftpGnu/texinfo/texinfo-4.8a.tar.bz2
+recipe_type=configure
+install_variables=(
+   "TEXMF=$target/Shared/texmf"
+)
+dir=texinfo-4.8
+install_target="install install-tex"
+compile_version=1.7.1

@@ -1,0 +1,52 @@
+# Recipe for version 4.5p1 by Jonas Karlsson <jonka750@student.liu.se>, on Wed Nov 8 23:49:31 CET 2006
+# Recipe for OpenSSH by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.7.1
+url="ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-4.5p1.tar.gz"
+file_size=965925
+file_md5=6468c339886f78e8a149b88f695839dd
+recipe_type=configure
+install_target=install-nokeys
+configure_options=(
+   "--sysconfdir=$settings_target/ssh"
+)
+
+pre_build() {
+   if ! [ -d $goboVariable/empty ]
+   then 
+   	mkdir $goboVariable/empty
+   	chmod 755 $goboVariable/empty
+   fi
+
+   chown 0:sys $goboVariable/empty
+
+   if ! grep -q sshd $goboSettings/group
+   then
+      Log_Normal "Adding group sshd"
+      groupadd sshd
+   fi
+
+   if ! grep -q "sshd:x:" $goboSettings/passwd
+   then
+      Log_Normal "Adding user sshd"
+      useradd -g sshd -c 'sshd privsep' -d $goboVariable/empty -s $goboExecutables/false sshd
+   fi
+}
+
+pre_link() {
+   # Generate host-keys if not present
+   if [ ! -f ${settings_target}/ssh/ssh_host_key ]
+   then
+      ${target}/bin/ssh-keygen -t rsa1 -b 1024 -f ${target_settings}/ssh/ssh_host_key -N ''
+      chmod 600 ${settings_target}/ssh/ssh_host_key
+   fi
+   if [ ! -f ${settings_target}/ssh/ssh_host_dsa_key ]
+   then
+      ${target}/bin/ssh-keygen -d -f ${settings_target}/ssh/ssh_host_dsa_key -N ''
+      chmod 600 ${settings_target}/ssh/ssh_host_dsa_key
+   fi
+   if [ ! -f ${settings_target}/ssh/ssh_host_rsa_key ]
+   then
+      ${target}/bin/ssh-keygen -t rsa -f ${settings_target}/ssh/ssh_host_rsa_key -N ''
+      chmod 600 ${settings_target}/ssh/ssh_host_rsa_key
+   fi
+}

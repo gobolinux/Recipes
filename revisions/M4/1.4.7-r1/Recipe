@@ -1,0 +1,9 @@
+# Recipe for version 1.4.7 by Andre Detsch <detsch@gobolinux.org>, on Mon Nov 20 16:59:12 BRST 2006
+url=$ftpGnu/m4/m4-1.4.7.tar.gz
+recipe_type=configure
+configure_options=(
+   "--enable-changeword"
+)
+pre_build() {
+   autoconf
+}

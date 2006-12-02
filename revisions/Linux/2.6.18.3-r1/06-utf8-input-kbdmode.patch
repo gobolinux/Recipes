@@ -1,0 +1,39 @@
+--- linux-2.6.18.3.orig/drivers/char/keyboard.c	2006-11-19 01:28:22.000000000 -0200
++++ linux-2.6.18.3/drivers/char/keyboard.c	2006-11-28 22:40:03.000000000 -0200
+@@ -1370,7 +1370,7 @@ int __init kbd_init(void)
+ 		kbd_table[i].lockstate = KBD_DEFLOCK;
+ 		kbd_table[i].slockstate = 0;
+ 		kbd_table[i].modeflags = KBD_DEFMODE;
+-		kbd_table[i].kbdmode = VC_XLATE;
++		kbd_table[i].kbdmode = VC_UNICODE;
+ 	}
+ 
+ 	input_register_handler(&kbd_handler);
+--- linux-2.6.18.3.orig/drivers/char/sysrq.c	2006-11-26 21:17:26.000000000 -0200
++++ linux-2.6.18.3/drivers/char/sysrq.c	2006-11-28 22:39:35.000000000 -0200
+@@ -82,12 +82,12 @@ static void sysrq_handle_unraw(int key, 
+ 	struct kbd_struct *kbd = &kbd_table[fg_console];
+ 
+ 	if (kbd)
+-		kbd->kbdmode = VC_XLATE;
++		kbd->kbdmode = VC_UNICODE;
+ }
+ static struct sysrq_key_op sysrq_unraw_op = {
+ 	.handler	= sysrq_handle_unraw,
+ 	.help_msg	= "unRaw",
+-	.action_msg	= "Keyboard mode set to XLATE",
++	.action_msg	= "Keyboard mode set to UNICODE",
+ 	.enable_mask	= SYSRQ_ENABLE_KEYBOARD,
+ };
+ #else
+--- linux-2.6.18.3.orig/drivers/char/vt_ioctl.c	2006-11-19 01:28:22.000000000 -0200
++++ linux-2.6.18.3/drivers/char/vt_ioctl.c	2006-11-28 22:39:35.000000000 -0200
+@@ -1057,7 +1057,7 @@ int vt_waitactive(int vt)
+ void reset_vc(struct vc_data *vc)
+ {
+ 	vc->vc_mode = KD_TEXT;
+-	kbd_table[vc->vc_num].kbdmode = VC_XLATE;
++	kbd_table[vc->vc_num].kbdmode = VC_UNICODE;
+ 	vc->vt_mode.mode = VT_AUTO;
+ 	vc->vt_mode.waitv = 0;
+ 	vc->vt_mode.relsig = 0;

@@ -1,0 +1,598 @@
+diff -Naur linux-2.6.14-rc4.orig/drivers/char/consolemap.c linux-2.6.14-rc4/drivers/char/consolemap.c
+--- linux-2.6.14-rc4.orig/drivers/char/consolemap.c	2005-10-11 03:19:19.000000000 +0200
++++ linux-2.6.14-rc4/drivers/char/consolemap.c	2005-10-20 12:00:00.000000000 +0200
+@@ -632,8 +632,10 @@
+ 		ucs = 0xfffd;		/* U+FFFD: REPLACEMENT CHARACTER */
+ 	else if (ucs < 0x20 || ucs >= 0xfffe)
+ 		return -1;		/* Not a printable character */
+-	else if (ucs == 0xfeff || (ucs >= 0x200a && ucs <= 0x200f))
+-		return -2;			/* Zero-width space */
++//	These are handled in vt.c since their wcwidth() is 0,
++//	except for 0x200a which shouldn't be handled here originally.
++//	else if (ucs == 0xfeff || (ucs >= 0x200a && ucs <= 0x200f))
++//		return -2;			/* Zero-width space */
+ 	/*
+ 	 * UNI_DIRECT_BASE indicates the start of the region in the User Zone
+ 	 * which always has a 1:1 mapping to the currently loaded font.  The
+diff -Naur linux-2.6.14-rc4.orig/drivers/char/vt.c linux-2.6.14-rc4/drivers/char/vt.c
+--- linux-2.6.14-rc4.orig/drivers/char/vt.c	2005-10-11 03:19:19.000000000 +0200
++++ linux-2.6.14-rc4/drivers/char/vt.c	2005-10-20 12:00:00.000000000 +0200
+@@ -1909,6 +1909,375 @@
+ char con_buf[CON_BUF_SIZE];
+ DECLARE_MUTEX(con_buf_sem);
+ 
++/* Emulate the return values of wcwidth() of glibc 2.3.5 with an UTF-8 locale,
++   but return 1 instead of -1 for unknown characters.
++ */
++static int wcwidth(int ucs) {
++	if (ucs <= 0x0000) return 0;
++	if (ucs <= 0x02FF) return 1;
++	if (ucs <= 0x034F) return 0;
++	if (ucs <= 0x035F) return 1;
++	if (ucs <= 0x036F) return 0;
++	if (ucs <= 0x0482) return 1;
++	if (ucs <= 0x0486) return 0;
++	if (ucs <= 0x0487) return 1;
++	if (ucs <= 0x0489) return 0;
++	if (ucs <= 0x0590) return 1;
++	if (ucs <= 0x05A1) return 0;
++	if (ucs <= 0x05A2) return 1;
++	if (ucs <= 0x05B9) return 0;
++	if (ucs <= 0x05BA) return 1;
++	if (ucs <= 0x05BD) return 0;
++	if (ucs <= 0x05BE) return 1;
++	if (ucs <= 0x05BF) return 0;
++	if (ucs <= 0x05C0) return 1;
++	if (ucs <= 0x05C2) return 0;
++	if (ucs <= 0x05C3) return 1;
++	if (ucs <= 0x05C4) return 0;
++	if (ucs <= 0x064A) return 1;
++	if (ucs <= 0x0655) return 0;
++	if (ucs <= 0x066F) return 1;
++	if (ucs <= 0x0670) return 0;
++	if (ucs <= 0x06D5) return 1;
++	if (ucs <= 0x06E4) return 0;
++	if (ucs <= 0x06E6) return 1;
++	if (ucs <= 0x06E8) return 0;
++	if (ucs <= 0x06E9) return 1;
++	if (ucs <= 0x06ED) return 0;
++	if (ucs <= 0x070E) return 1;
++	if (ucs <= 0x070F) return 0;
++	if (ucs <= 0x0710) return 1;
++	if (ucs <= 0x0711) return 0;
++	if (ucs <= 0x072F) return 1;
++	if (ucs <= 0x074A) return 0;
++	if (ucs <= 0x07A5) return 1;
++	if (ucs <= 0x07B0) return 0;
++	if (ucs <= 0x0900) return 1;
++	if (ucs <= 0x0902) return 0;
++	if (ucs <= 0x093B) return 1;
++	if (ucs <= 0x093C) return 0;
++	if (ucs <= 0x0940) return 1;
++	if (ucs <= 0x0948) return 0;
++	if (ucs <= 0x094C) return 1;
++	if (ucs <= 0x094D) return 0;
++	if (ucs <= 0x0950) return 1;
++	if (ucs <= 0x0954) return 0;
++	if (ucs <= 0x0961) return 1;
++	if (ucs <= 0x0963) return 0;
++	if (ucs <= 0x0980) return 1;
++	if (ucs <= 0x0981) return 0;
++	if (ucs <= 0x09BB) return 1;
++	if (ucs <= 0x09BC) return 0;
++	if (ucs <= 0x09C0) return 1;
++	if (ucs <= 0x09C4) return 0;
++	if (ucs <= 0x09CC) return 1;
++	if (ucs <= 0x09CD) return 0;
++	if (ucs <= 0x09E1) return 1;
++	if (ucs <= 0x09E3) return 0;
++	if (ucs <= 0x0A01) return 1;
++	if (ucs <= 0x0A02) return 0;
++	if (ucs <= 0x0A3B) return 1;
++	if (ucs <= 0x0A3C) return 0;
++	if (ucs <= 0x0A40) return 1;
++	if (ucs <= 0x0A42) return 0;
++	if (ucs <= 0x0A46) return 1;
++	if (ucs <= 0x0A48) return 0;
++	if (ucs <= 0x0A4A) return 1;
++	if (ucs <= 0x0A4D) return 0;
++	if (ucs <= 0x0A6F) return 1;
++	if (ucs <= 0x0A71) return 0;
++	if (ucs <= 0x0A80) return 1;
++	if (ucs <= 0x0A82) return 0;
++	if (ucs <= 0x0ABB) return 1;
++	if (ucs <= 0x0ABC) return 0;
++	if (ucs <= 0x0AC0) return 1;
++	if (ucs <= 0x0AC5) return 0;
++	if (ucs <= 0x0AC6) return 1;
++	if (ucs <= 0x0AC8) return 0;
++	if (ucs <= 0x0ACC) return 1;
++	if (ucs <= 0x0ACD) return 0;
++	if (ucs <= 0x0B00) return 1;
++	if (ucs <= 0x0B01) return 0;
++	if (ucs <= 0x0B3B) return 1;
++	if (ucs <= 0x0B3C) return 0;
++	if (ucs <= 0x0B3E) return 1;
++	if (ucs <= 0x0B3F) return 0;
++	if (ucs <= 0x0B40) return 1;
++	if (ucs <= 0x0B43) return 0;
++	if (ucs <= 0x0B4C) return 1;
++	if (ucs <= 0x0B4D) return 0;
++	if (ucs <= 0x0B55) return 1;
++	if (ucs <= 0x0B56) return 0;
++	if (ucs <= 0x0B81) return 1;
++	if (ucs <= 0x0B82) return 0;
++	if (ucs <= 0x0BBF) return 1;
++	if (ucs <= 0x0BC0) return 0;
++	if (ucs <= 0x0BCC) return 1;
++	if (ucs <= 0x0BCD) return 0;
++	if (ucs <= 0x0C3D) return 1;
++	if (ucs <= 0x0C40) return 0;
++	if (ucs <= 0x0C45) return 1;
++	if (ucs <= 0x0C48) return 0;
++	if (ucs <= 0x0C49) return 1;
++	if (ucs <= 0x0C4D) return 0;
++	if (ucs <= 0x0C54) return 1;
++	if (ucs <= 0x0C56) return 0;
++	if (ucs <= 0x0CBE) return 1;
++	if (ucs <= 0x0CBF) return 0;
++	if (ucs <= 0x0CC5) return 1;
++	if (ucs <= 0x0CC6) return 0;
++	if (ucs <= 0x0CCB) return 1;
++	if (ucs <= 0x0CCD) return 0;
++	if (ucs <= 0x0D40) return 1;
++	if (ucs <= 0x0D43) return 0;
++	if (ucs <= 0x0D4C) return 1;
++	if (ucs <= 0x0D4D) return 0;
++	if (ucs <= 0x0DC9) return 1;
++	if (ucs <= 0x0DCA) return 0;
++	if (ucs <= 0x0DD1) return 1;
++	if (ucs <= 0x0DD4) return 0;
++	if (ucs <= 0x0DD5) return 1;
++	if (ucs <= 0x0DD6) return 0;
++	if (ucs <= 0x0E30) return 1;
++	if (ucs <= 0x0E31) return 0;
++	if (ucs <= 0x0E33) return 1;
++	if (ucs <= 0x0E3A) return 0;
++	if (ucs <= 0x0E46) return 1;
++	if (ucs <= 0x0E4E) return 0;
++	if (ucs <= 0x0EB0) return 1;
++	if (ucs <= 0x0EB1) return 0;
++	if (ucs <= 0x0EB3) return 1;
++	if (ucs <= 0x0EB9) return 0;
++	if (ucs <= 0x0EBA) return 1;
++	if (ucs <= 0x0EBC) return 0;
++	if (ucs <= 0x0EC7) return 1;
++	if (ucs <= 0x0ECD) return 0;
++	if (ucs <= 0x0F17) return 1;
++	if (ucs <= 0x0F19) return 0;
++	if (ucs <= 0x0F34) return 1;
++	if (ucs <= 0x0F35) return 0;
++	if (ucs <= 0x0F36) return 1;
++	if (ucs <= 0x0F37) return 0;
++	if (ucs <= 0x0F38) return 1;
++	if (ucs <= 0x0F39) return 0;
++	if (ucs <= 0x0F70) return 1;
++	if (ucs <= 0x0F7E) return 0;
++	if (ucs <= 0x0F7F) return 1;
++	if (ucs <= 0x0F84) return 0;
++	if (ucs <= 0x0F85) return 1;
++	if (ucs <= 0x0F87) return 0;
++	if (ucs <= 0x0F8F) return 1;
++	if (ucs <= 0x0F97) return 0;
++	if (ucs <= 0x0F98) return 1;
++	if (ucs <= 0x0FBC) return 0;
++	if (ucs <= 0x0FC5) return 1;
++	if (ucs <= 0x0FC6) return 0;
++	if (ucs <= 0x102C) return 1;
++	if (ucs <= 0x1030) return 0;
++	if (ucs <= 0x1031) return 1;
++	if (ucs <= 0x1032) return 0;
++	if (ucs <= 0x1035) return 1;
++	if (ucs <= 0x1037) return 0;
++	if (ucs <= 0x1038) return 1;
++	if (ucs <= 0x1039) return 0;
++	if (ucs <= 0x1057) return 1;
++	if (ucs <= 0x1059) return 0;
++	if (ucs <= 0x10FF) return 1;
++	if (ucs <= 0x1159) return 2;
++	if (ucs <= 0x115E) return 1;
++	if (ucs <= 0x115F) return 2;
++	if (ucs <= 0x11A2) return 0;
++	if (ucs <= 0x11A7) return 1;
++	if (ucs <= 0x11F9) return 0;
++	if (ucs <= 0x1711) return 1;
++	if (ucs <= 0x1714) return 0;
++	if (ucs <= 0x1731) return 1;
++	if (ucs <= 0x1734) return 0;
++	if (ucs <= 0x1751) return 1;
++	if (ucs <= 0x1753) return 0;
++	if (ucs <= 0x1771) return 1;
++	if (ucs <= 0x1773) return 0;
++	if (ucs <= 0x17B6) return 1;
++	if (ucs <= 0x17BD) return 0;
++	if (ucs <= 0x17C5) return 1;
++	if (ucs <= 0x17C6) return 0;
++	if (ucs <= 0x17C8) return 1;
++	if (ucs <= 0x17D3) return 0;
++	if (ucs <= 0x180A) return 1;
++	if (ucs <= 0x180E) return 0;
++	if (ucs <= 0x18A8) return 1;
++	if (ucs <= 0x18A9) return 0;
++	if (ucs <= 0x200A) return 1;
++	if (ucs <= 0x200F) return 0;
++	if (ucs <= 0x2029) return 1;
++	if (ucs <= 0x202E) return 0;
++	if (ucs <= 0x205F) return 1;
++	if (ucs <= 0x2063) return 0;
++	if (ucs <= 0x2069) return 1;
++	if (ucs <= 0x206F) return 0;
++	if (ucs <= 0x20CF) return 1;
++	if (ucs <= 0x20EA) return 0;
++	if (ucs <= 0x2328) return 1;
++	if (ucs <= 0x232A) return 2;
++	if (ucs <= 0x2E7F) return 1;
++	if (ucs <= 0x2E99) return 2;
++	if (ucs <= 0x2E9A) return 1;
++	if (ucs <= 0x2EF3) return 2;
++	if (ucs <= 0x2EFF) return 1;
++	if (ucs <= 0x2FD5) return 2;
++	if (ucs <= 0x2FEF) return 1;
++	if (ucs <= 0x2FFB) return 2;
++	if (ucs <= 0x2FFF) return 1;
++	if (ucs <= 0x3029) return 2;
++	if (ucs <= 0x302F) return 0;
++	if (ucs <= 0x303E) return 2;
++	if (ucs <= 0x3040) return 1;
++	if (ucs <= 0x3096) return 2;
++	if (ucs <= 0x3098) return 1;
++	if (ucs <= 0x309A) return 0;
++	if (ucs <= 0x30FF) return 2;
++	if (ucs <= 0x3104) return 1;
++	if (ucs <= 0x312C) return 2;
++	if (ucs <= 0x3130) return 1;
++	if (ucs <= 0x318E) return 2;
++	if (ucs <= 0x318F) return 1;
++	if (ucs <= 0x31B7) return 2;
++	if (ucs <= 0x31EF) return 1;
++	if (ucs <= 0x321C) return 2;
++	if (ucs <= 0x321F) return 1;
++	if (ucs <= 0x3243) return 2;
++	if (ucs <= 0x3250) return 1;
++	if (ucs <= 0x327B) return 2;
++	if (ucs <= 0x327E) return 1;
++	if (ucs <= 0x32CB) return 2;
++	if (ucs <= 0x32CF) return 1;
++	if (ucs <= 0x32FE) return 2;
++	if (ucs <= 0x32FF) return 1;
++	if (ucs <= 0x3376) return 2;
++	if (ucs <= 0x337A) return 1;
++	if (ucs <= 0x33DD) return 2;
++	if (ucs <= 0x33DF) return 1;
++	if (ucs <= 0x33FE) return 2;
++	if (ucs <= 0x33FF) return 1;
++	if (ucs <= 0x4DB5) return 2;
++	if (ucs <= 0x4DFF) return 1;
++	if (ucs <= 0x9FA5) return 2;
++	if (ucs <= 0x9FFF) return 1;
++	if (ucs <= 0xA48C) return 2;
++	if (ucs <= 0xA48F) return 1;
++	if (ucs <= 0xA4C6) return 2;
++	if (ucs <= 0xABFF) return 1;
++	if (ucs <= 0xD7A3) return 2;
++	if (ucs <= 0xF8EF) return 1;
++	if (ucs <= 0xF8FF) return 0;
++	if (ucs <= 0xFA2D) return 2;
++	if (ucs <= 0xFA2F) return 1;
++	if (ucs <= 0xFA6A) return 2;
++	if (ucs <= 0xFB1D) return 1;
++	if (ucs <= 0xFB1E) return 0;
++	if (ucs <= 0xFDFF) return 1;
++	if (ucs <= 0xFE0F) return 0;
++	if (ucs <= 0xFE1F) return 1;
++	if (ucs <= 0xFE23) return 0;
++	if (ucs <= 0xFE2F) return 1;
++	if (ucs <= 0xFE46) return 2;
++	if (ucs <= 0xFE48) return 1;
++	if (ucs <= 0xFE52) return 2;
++	if (ucs <= 0xFE53) return 1;
++	if (ucs <= 0xFE66) return 2;
++	if (ucs <= 0xFE67) return 1;
++	if (ucs <= 0xFE6B) return 2;
++	if (ucs <= 0xFEFE) return 1;
++	if (ucs <= 0xFEFF) return 0;
++	if (ucs <= 0xFF00) return 1;
++	if (ucs <= 0xFF60) return 2;
++	if (ucs <= 0xFFDF) return 1;
++	if (ucs <= 0xFFE6) return 2;
++	if (ucs <= 0xFFF8) return 1;
++	if (ucs <= 0xFFFB) return 0;
++	if (ucs <= 0x1D166) return 1;
++	if (ucs <= 0x1D169) return 0;
++	if (ucs <= 0x1D172) return 1;
++	if (ucs <= 0x1D182) return 0;
++	if (ucs <= 0x1D184) return 1;
++	if (ucs <= 0x1D18B) return 0;
++	if (ucs <= 0x1D1A9) return 1;
++	if (ucs <= 0x1D1AD) return 0;
++	if (ucs <= 0x1FFFF) return 1;
++	if (ucs <= 0x2A6D6) return 2;
++	if (ucs <= 0x2F7FF) return 1;
++	if (ucs <= 0x2FA1D) return 2;
++	if (ucs <= 0xE0000) return 1;
++	if (ucs <= 0xE0001) return 0;
++	if (ucs <= 0xE001F) return 1;
++	if (ucs <= 0xE007F) return 0;
++	return 1;
++}
++
++static void do_con_write_replacement(struct vc_data *vc) {
++/* this is basically a cut&paste of some parts of do_con_write() */
++#ifdef VT_BUF_VRAM_ONLY
++#define FLUSH do { } while(0);
++#else
++#define FLUSH if (draw_x >= 0) { \
++	vc->vc_sw->con_putcs(vc, (u16 *)draw_from, (u16 *)draw_to - (u16 *)draw_from, vc->vc_y, draw_x); \
++	draw_x = -1; \
++	}
++#endif
++	int tc;
++	int inverse = 0;
++	unsigned char vc_attr;
++	int draw_x = -1;
++	unsigned long draw_from = 0, draw_to = 0;
++	u16 himask;
++
++	himask = vc->vc_hi_font_mask;
++
++	tc = conv_uni_to_pc(vc, 0xfffd);
++	if (tc == -4 || tc == -3) {
++		tc = '?';
++		inverse = 1;
++	}
++
++	if (!inverse) {
++		vc_attr = vc->vc_attr;
++	} else {
++		if (!vc->vc_can_do_color) {
++			vc_attr = (vc->vc_attr) ^ 0x08;
++		} else if (vc->vc_hi_font_mask == 0x100) {
++			vc_attr = ((vc->vc_attr) & 0x11) | (((vc->vc_attr) & 0xe0) >> 4) | (((vc->vc_attr) & 0x0e) << 4);
++		} else {
++			vc_attr = ((vc->vc_attr) & 0x88) | (((vc->vc_attr) & 0x70) >> 4) | (((vc->vc_attr) & 0x07) << 4);
++		}
++	}
++
++	if (vc->vc_need_wrap || vc->vc_decim)
++		FLUSH
++	if (vc->vc_need_wrap) {
++		cr(vc);
++		lf(vc);
++	}
++	if (vc->vc_decim)
++		insert_char(vc, 1);
++	scr_writew(himask ?
++		     ((vc_attr << 8) & ~himask) + ((tc & 0x100) ? himask : 0) + (tc & 0xff) :
++		     (vc_attr << 8) + tc,
++		   (u16 *) vc->vc_pos);
++	if (DO_UPDATE(vc) && draw_x < 0) {
++		draw_x = vc->vc_x;
++		draw_from = vc->vc_pos;
++	}
++	if (vc->vc_x == vc->vc_cols - 1) {
++		vc->vc_need_wrap = vc->vc_decawm;
++		draw_to = vc->vc_pos + 2;
++	} else {
++		vc->vc_x++;
++		draw_to = (vc->vc_pos += 2);
++	}
++	FLUSH
++#undef FLUSH
++}
++
+ /* acquires console_sem */
+ static int do_con_write(struct tty_struct *tty, const unsigned char *buf, int count)
+ {
+@@ -1925,6 +2294,9 @@
+ 	unsigned int currcons;
+ 	unsigned long draw_from = 0, draw_to = 0;
+ 	struct vc_data *vc;
++	unsigned char vc_attr;
++	int inverse;
++	int width;
+ 	u16 himask, charmask;
+ 	const unsigned char *orig_buf = NULL;
+ 	int orig_count;
+@@ -1987,37 +2359,76 @@
+ 		buf++;
+ 		n++;
+ 		count--;
++		inverse = 0;
+ 
+ 		/* Do no translation at all in control states */
+ 		if (vc->vc_state != ESnormal) {
+ 			tc = c;
+ 		} else if (vc->vc_utf) {
+ 		    /* Combine UTF-8 into Unicode */
+-		    /* Incomplete characters silently ignored */
+-		    if(c > 0x7f) {
+-			if (vc->vc_utf_count > 0 && (c & 0xc0) == 0x80) {
++		    if ((vc->vc_utf_count & 7) > 0 && (c & 0xc0) != 0x80) {
++			/* Continuation byte expected, different byte received.
++			   Print a replacement symbol substituting the previous bytes,
++			   set initial state and keep on processing the new byte */
++			do_con_write_replacement(vc);
++			vc->vc_utf_count = 0;
++		    }
++		    if (c > 0xfd) {
++			/* 254 and 255 are always invalid */
++			do_con_write_replacement(vc);
++			vc->vc_utf_count = 0;
++			continue;
++		    } else if (c > 0x7f) {
++			if ((vc->vc_utf_count & 7) == 0 && (c & 0xc0) == 0x80) {
++				/* Continuation byte cannot start a new sequence */
++				do_con_write_replacement(vc);
++				continue;
++			}
++			if ((vc->vc_utf_count & 7) > 0 && (c & 0xc0) == 0x80) {
++				/* Process a continuation byte */
+ 				vc->vc_utf_char = (vc->vc_utf_char << 6) | (c & 0x3f);
+ 				vc->vc_utf_count--;
+-				if (vc->vc_utf_count == 0)
++				if ((vc->vc_utf_count & 7) == 0) {
++				    if (vc->vc_utf_char <= 0x0000007f ||
++					(vc->vc_utf_char >= 0x00000080 && vc->vc_utf_char <= 0x000007ff && vc->vc_utf_count != (1 << 3)) ||
++					(vc->vc_utf_char >= 0x00000800 && vc->vc_utf_char <= 0x0000ffff && vc->vc_utf_count != (2 << 3)) ||
++					(vc->vc_utf_char >= 0x00010000 && vc->vc_utf_char <= 0x001fffff && vc->vc_utf_count != (3 << 3)) ||
++					(vc->vc_utf_char >= 0x00200000 && vc->vc_utf_char <= 0x03ffffff && vc->vc_utf_count != (4 << 3)) ||
++					(vc->vc_utf_char >= 0x04000000 && vc->vc_utf_char <= 0x7fffffff && vc->vc_utf_count != (5 << 3)) ||
++					vc->vc_utf_char > 0x7fffffff) {
++					/* Overlong sequence caught */
++					do_con_write_replacement(vc);
++					vc->vc_utf_count = 0;
++					continue;
++				    }
++				    vc->vc_utf_count = 0;
+ 				    tc = c = vc->vc_utf_char;
++				    if ((c >= 0xd800 && c <= 0xdfff) || /* UTF-16 surrogates */
++				      c == 0xfffe || c == 0xffff) /* invalid characters */ {
++					do_con_write_replacement(vc);
++					continue;
++				    }
++				}
+ 				else continue;
+ 			} else {
++				/* Process an initial byte */
+ 				if ((c & 0xe0) == 0xc0) {
+-				    vc->vc_utf_count = 1;
++				    vc->vc_utf_count = 1 + (1 << 3);
+ 				    vc->vc_utf_char = (c & 0x1f);
+ 				} else if ((c & 0xf0) == 0xe0) {
+-				    vc->vc_utf_count = 2;
++				    vc->vc_utf_count = 2 + (2 << 3);
+ 				    vc->vc_utf_char = (c & 0x0f);
+ 				} else if ((c & 0xf8) == 0xf0) {
+-				    vc->vc_utf_count = 3;
++				    vc->vc_utf_count = 3 + (3 << 3);
+ 				    vc->vc_utf_char = (c & 0x07);
+ 				} else if ((c & 0xfc) == 0xf8) {
+-				    vc->vc_utf_count = 4;
++				    vc->vc_utf_count = 4 + (4 << 3);
+ 				    vc->vc_utf_char = (c & 0x03);
+ 				} else if ((c & 0xfe) == 0xfc) {
+-				    vc->vc_utf_count = 5;
++				    vc->vc_utf_count = 5 + (5 << 3);
+ 				    vc->vc_utf_char = (c & 0x01);
+ 				} else
++				/* This cannot happen since the 254 and 255 cases are already filtered out */
+ 				    vc->vc_utf_count = 0;
+ 				continue;
+ 			      }
+@@ -2049,22 +2460,46 @@
+ 			/* Now try to find out how to display it */
+ 			tc = conv_uni_to_pc(vc, tc);
+ 			if ( tc == -4 ) {
++                                inverse = 1;
+                                 /* If we got -4 (not found) then see if we have
+                                    defined a replacement character (U+FFFD) */
+-                                tc = conv_uni_to_pc(vc, 0xfffd);
+-
+-				/* One reason for the -4 can be that we just
+-				   did a clear_unimap();
+-				   try at least to show something. */
+-				if (tc == -4)
+-				     tc = c;
++                                /* No! The replacement character denotes an
++                                   invalid UTF-8 sequence, not a valid Unicode
++                                   character missing from our font. Use a
++                                   different symbol here, let's say, an
++                                   inverse dot. The only exception is U+FFFD
++                                   itself if it is not present in the font. */
++                                tc = (c == 0xfffd ? '?' : '.');
+                         } else if ( tc == -3 ) {
++                                inverse = 1;
+                                 /* Bad hash table -- hope for the best */
+-                                tc = c;
++                                tc = (c == 0xfffd ? '?' : '.');
+                         }
+ 			if (tc & ~charmask)
+                                 continue; /* Conversion failed */
+ 
++			/* Always print exactly as many character cells as
++			   wcwidth() tells. The first one is the character
++			   if it is found in the font, or an inverse question
++			   mark or inverse dot otherwise. Subsequent characters
++			   are spaces, keeping the previous normal or inverse
++			   state. */
++			width = wcwidth(c);
++			while (width--) {
++
++			if (!inverse) {
++				vc_attr = vc->vc_attr;
++			} else {
++				/* invert vc_attr, based on invert_screen() */
++				if (!vc->vc_can_do_color) {
++					vc_attr = (vc->vc_attr) ^ 0x08;
++				} else if (vc->vc_hi_font_mask == 0x100) {
++					vc_attr = ((vc->vc_attr) & 0x11) | (((vc->vc_attr) & 0xe0) >> 4) | (((vc->vc_attr) & 0x0e) << 4);
++				} else {
++					vc_attr = ((vc->vc_attr) & 0x88) | (((vc->vc_attr) & 0x70) >> 4) | (((vc->vc_attr) & 0x07) << 4);
++				}
++			}
++
+ 			if (vc->vc_need_wrap || vc->vc_decim)
+ 				FLUSH
+ 			if (vc->vc_need_wrap) {
+@@ -2074,8 +2509,8 @@
+ 			if (vc->vc_decim)
+ 				insert_char(vc, 1);
+ 			scr_writew(himask ?
+-				     ((vc->vc_attr << 8) & ~himask) + ((tc & 0x100) ? himask : 0) + (tc & 0xff) :
+-				     (vc->vc_attr << 8) + tc,
++				     ((vc_attr << 8) & ~himask) + ((tc & 0x100) ? himask : 0) + (tc & 0xff) :
++				     (vc_attr << 8) + tc,
+ 				   (u16 *) vc->vc_pos);
+ 			if (DO_UPDATE(vc) && draw_x < 0) {
+ 				draw_x = vc->vc_x;
+@@ -2088,6 +2523,10 @@
+ 				vc->vc_x++;
+ 				draw_to = (vc->vc_pos += 2);
+ 			}
++			tc = conv_uni_to_pc(vc, ' '); /* print a space in the 2nd column */
++			if (tc < 0) tc = ' ';
++
++			} /* while (width--) */
+ 			continue;
+ 		}
+ 		FLUSH
+diff -Naur linux-2.6.14-rc4.orig/drivers/char/_wcwidth.c linux-2.6.14-rc4/drivers/char/_wcwidth.c
+--- linux-2.6.14-rc4.orig/drivers/char/_wcwidth.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-2.6.14-rc4/drivers/char/_wcwidth.c	2005-10-20 12:00:00.000000000 +0200
+@@ -0,0 +1,26 @@
++/* This utility was used to generate the kernel unicode wcwidth patch */
++
++#define _GNU_SOURCE
++#include <stdio.h>
++#include <wchar.h>
++#include <locale.h>
++
++int main (int argc, char *argv[])
++{
++	int i;
++	int w, prevw;
++	setlocale(LC_ALL, "en_US.UTF-8");
++	w = wcwidth(0);
++	printf("static int wcwidth(int ucs) {\n");
++	for (i = 1; i <= 0x1fffff; i++) {
++		prevw = w;
++		w = wcwidth(i);
++		if (w == -1) w = 1;
++		if (w != prevw) {
++			printf("\tif (ucs <= 0x%04X) return %d;\n", i-1, prevw);
++		}
++	}
++	printf("\treturn %d;\n", w);
++	printf("}\n");
++	return 0;
++}

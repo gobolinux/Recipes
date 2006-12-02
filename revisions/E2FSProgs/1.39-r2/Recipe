@@ -1,0 +1,9 @@
+# Recipe for version 1.39 by Andre Detsch <detsch@gobolinux.org>, on Sat Jun 17 16:34:38 BRT 2006
+url=$httpSourceforge/e2fsprogs/e2fsprogs-1.39.tar.gz
+recipe_type=configure
+needs_safe_linking=yes
+compile_version=1.7.1
+configure_options=(
+   "--enable-elf-shlibs"
+)
+install_target="install install-libs"

@@ -1,0 +1,14 @@
+# Recipe for version 2.17 by Andre Detsch <detsch@gobolinux.org>, on Mon Nov 20 16:57:59 BRST 2006
+url=$ftpGnu/binutils/binutils-2.17.tar.bz2
+needs_build_directory=yes
+needs_safe_linking=yes
+recipe_type=configure
+configure_options=(
+   "--enable-shared"
+)
+make_variables=(
+   "tooldir=$target"
+)
+pre_install() {
+   cp include/libiberty.h $target/include
+}

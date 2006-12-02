@@ -1,0 +1,11 @@
+# Recipe for version 1.1.7 by Andre Detsch <detsch@gobolinux.org>, on Mon Nov 27 17:31:32 BRST 2006
+# Recipe (MakeRecipe) for GraphicsMagick by roko, <ro.ko@mcnon.com>, on Wed Feb 2 16:01:02 CET 2005
+compile_version=1.7.1
+url="$httpSourceforge/graphicsmagick/GraphicsMagick-1.1.7.tar.bz2"
+recipe_type=configure
+configure_options=(
+#--enable-shared      # enable-shared requires the option --without-perl ( it tries to write into the perl folder)
+#--without-perl 
+--with-modules
+--with-gs-font-dir=/Files/Fonts/Ghostscript
+)
