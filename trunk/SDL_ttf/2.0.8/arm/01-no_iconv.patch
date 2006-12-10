@@ -1,0 +1,20 @@
+--- SDL_ttf-2.0.6/showfont.c.orig	2006-08-21 03:04:07.000000000 -0300
++++ SDL_ttf-2.0.6/showfont.c	2006-08-21 03:05:41.000000000 -0300
+@@ -28,7 +28,7 @@
+ #include <stdio.h>
+ #include <string.h>
+ 
+-#ifdef HAVE_ICONV
++#ifdef PLEASE_USE_ICONV
+ #include <iconv.h>
+ #endif
+ 
+@@ -250,7 +250,7 @@ int main(int argc, char *argv[])
+ 		{
+ 			Uint16 unicode_text[BUFSIZ];
+ 			int index;
+-#ifdef HAVE_ICONV
++#ifdef PLEASE_USE_ICONV
+ 			/* Use iconv to convert the message into utf-16.
+ 			 * "char" and "" are aliases for the local 8-bit encoding */
+ 			iconv_t cd;
