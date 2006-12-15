@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for BeginAgain by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Jun 14 19:18:14 BRT 2005
+# Recipe for version 1.1 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Jun 14 19:18:14 BRT 2005
+compile_version=1.8.0
+url="http://www.openbios.info/bin/kernel-1.1.tar.bz2"
+file_size=63402
+file_md5=268f9c3d5be479dfac4cf147d15f673a
+recipe_type=makefile
+makefile='Makefile'
+do_install=no
+
+dir="kernel-1.1"
+
+
