@@ -1,0 +1,7 @@
+# by Julio Biason
+
+url="http://ftp.br.debian.org/debian/pool/main/a/apmd/apmd_3.2.2.orig.tar.gz"
+compile_version=1.8.0
+recipe_type=makefile
+dir="apmd-3.2.2.orig"
+make_variables="PREFIX=$target"
