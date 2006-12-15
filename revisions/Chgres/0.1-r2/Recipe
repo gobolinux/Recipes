@@ -1,0 +1,6 @@
+url=http://hpwww.ec-lyon.fr/~vincent/chgres-0.1.tar.gz
+compile_version=1.8.0
+recipe_type=makefile
+make_variables=(
+   "prefix=$target"
+)
