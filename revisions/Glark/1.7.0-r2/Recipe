@@ -1,0 +1,15 @@
+# Recipe by Bill Burdick, Mobile Reasoning, July 13 2004
+
+compile_version=1.8.0
+url="$httpSourceforge/glark/glark-1.7.0.tar.gz"
+file_size=29326
+file_md5=c5bcd6346550b35fbf34992a701ee0d5
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+)
+pre_link() {
+	mkdir -p $target/man/man1
+	cp glark.1 $target/man/man1
+}
