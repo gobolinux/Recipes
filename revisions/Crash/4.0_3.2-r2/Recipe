@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Crash by Andre Detsch <detsch@gobolinux.org>, on Tue Sep 5 15:20:36 BRT 2006
+# Recipe for version 4.0_3.2 by Andre Detsch <detsch@gobolinux.org>, on Tue Sep 5 15:20:36 BRT 2006
+compile_version=1.8.0
+url="http://people.redhat.com/~anderson/crash-4.0-3.2.tar.gz"
+file_size=17578590
+file_md5=b36693fc74e10821bc7acac7499cd2b1
+recipe_type=makefile
+makefile='Makefile'
+
+pre_build() {
+   GrepReplace '${DESTDIR}/usr/' "$target/" Makefile
+}
