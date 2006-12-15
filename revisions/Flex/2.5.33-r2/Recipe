@@ -1,0 +1,8 @@
+# Recipe for version 2.5.33 by Andre Detsch <detsch@gobolinux.org>, on Mon Nov 20 16:58:04 BRST 2006
+# Recipe (MakeRecipe) for Flex by Andreas Koehler, on Fri Aug 12 13:57:22 CEST 2005
+compile_version=1.8.0
+url="$httpSourceforge/flex/flex-2.5.33.tar.bz2"
+recipe_type=configure
+pre_build() {
+   touch doc/flex.1
+}
