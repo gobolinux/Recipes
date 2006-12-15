@@ -1,0 +1,168 @@
+diff -Nur elfutils-0.84/lib/Makefile.am elfutils-0.84-lucasvr/lib/Makefile.am
+--- elfutils-0.84/lib/Makefile.am	2002-11-30 02:30:32.000000000 -0200
++++ elfutils-0.84-lucasvr/lib/Makefile.am	2004-08-18 00:11:50.000000000 -0300
+@@ -14,7 +14,7 @@
+ ## 3001 King Ranch Road, Ukiah, CA 95482.
+ ##
+ DEFS = -D_GNU_SOURCE -DHAVE_CONFIG_H
+-AM_CFLAGS = -Wall -Werror
++AM_CFLAGS = -Wall 
+ INCLUDES = -I$(srcdir)/../libelf -I..
+ 
+ noinst_LIBRARIES = libeu.a
+diff -Nur elfutils-0.84/lib/Makefile.in elfutils-0.84-lucasvr/lib/Makefile.in
+--- elfutils-0.84/lib/Makefile.in	2003-07-11 20:15:28.000000000 -0300
++++ elfutils-0.84-lucasvr/lib/Makefile.in	2004-08-18 00:12:43.000000000 -0300
+@@ -130,7 +130,7 @@
+ sharedstatedir = @sharedstatedir@
+ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
+-AM_CFLAGS = -Wall -Werror
++AM_CFLAGS = -Wall 
+ INCLUDES = -I$(srcdir)/../libelf -I..
+ 
+ noinst_LIBRARIES = libeu.a
+diff -Nur elfutils-0.84/libasm/Makefile.am elfutils-0.84-lucasvr/libasm/Makefile.am
+--- elfutils-0.84/libasm/Makefile.am	2002-11-29 22:44:53.000000000 -0200
++++ elfutils-0.84-lucasvr/libasm/Makefile.am	2004-08-18 00:11:50.000000000 -0300
+@@ -14,7 +14,7 @@
+ ## 3001 King Ranch Road, Ukiah, CA 95482.
+ ##
+ DEFS = -D_GNU_SOURCE -DHAVE_CONFIG_H
+-AM_CFLAGS = -Wall -Werror
++AM_CFLAGS = -Wall 
+ INCLUDES = -I. -I$(srcdir) -I.. -I$(top_srcdir)/libelf -I$(top_srcdir)/libebl \
+ 	   -I$(top_srcdir)/lib
+ GCC_INCLUDE = -I$(shell $(CC) -print-file-name=include)
+diff -Nur elfutils-0.84/libasm/Makefile.in elfutils-0.84-lucasvr/libasm/Makefile.in
+--- elfutils-0.84/libasm/Makefile.in	2003-07-11 20:16:47.000000000 -0300
++++ elfutils-0.84-lucasvr/libasm/Makefile.in	2004-08-18 00:12:43.000000000 -0300
+@@ -130,7 +130,7 @@
+ sharedstatedir = @sharedstatedir@
+ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
+-AM_CFLAGS = -Wall -Werror
++AM_CFLAGS = -Wall 
+ INCLUDES = -I. -I$(srcdir) -I.. -I$(top_srcdir)/libelf -I$(top_srcdir)/libebl \
+ 	   -I$(top_srcdir)/lib
+ 
+diff -Nur elfutils-0.84/libdw/Makefile.am elfutils-0.84-lucasvr/libdw/Makefile.am
+--- elfutils-0.84/libdw/Makefile.am	2003-05-22 06:00:21.000000000 -0300
++++ elfutils-0.84-lucasvr/libdw/Makefile.am	2004-08-18 00:11:50.000000000 -0300
+@@ -17,7 +17,7 @@
+ ## Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ ##
+ DEFS = -D_GNU_SOURCE -DHAVE_CONFIG_H
+-AM_CFLAGS = -Wall -Werror -Wshadow
++AM_CFLAGS = -Wall  -Wshadow
+ INCLUDES = -I. -I$(srcdir) -I$(srcdir)/../libelf -I.. -I$(srcdir)/../lib
+ VERSION = 1
+ 
+diff -Nur elfutils-0.84/libdw/Makefile.in elfutils-0.84-lucasvr/libdw/Makefile.in
+--- elfutils-0.84/libdw/Makefile.in	2003-07-11 20:16:33.000000000 -0300
++++ elfutils-0.84-lucasvr/libdw/Makefile.in	2004-08-18 00:12:43.000000000 -0300
+@@ -130,7 +130,7 @@
+ sharedstatedir = @sharedstatedir@
+ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
+-AM_CFLAGS = -Wall -Werror -Wshadow
++AM_CFLAGS = -Wall  -Wshadow
+ INCLUDES = -I. -I$(srcdir) -I$(srcdir)/../libelf -I.. -I$(srcdir)/../lib
+ 
+ lib_LIBRARIES = libdw.a
+diff -Nur elfutils-0.84/libdwarf/Makefile.am elfutils-0.84-lucasvr/libdwarf/Makefile.am
+--- elfutils-0.84/libdwarf/Makefile.am	2003-05-18 05:01:21.000000000 -0300
++++ elfutils-0.84-lucasvr/libdwarf/Makefile.am	2004-08-18 00:11:50.000000000 -0300
+@@ -14,7 +14,7 @@
+ ## 3001 King Ranch Road, Ukiah, CA 95482.
+ ##
+ DEFS = -D_GNU_SOURCE -DHAVE_CONFIG_H -DDWARF_DEBUG
+-AM_CFLAGS = -Wall -Werror
++AM_CFLAGS = -Wall 
+ INCLUDES = -I. -I$(srcdir) -I$(srcdir)/../libelf -I.. -I$(srcdir)/../lib
+ VERSION = 1
+ 
+diff -Nur elfutils-0.84/libdwarf/Makefile.in elfutils-0.84-lucasvr/libdwarf/Makefile.in
+--- elfutils-0.84/libdwarf/Makefile.in	2003-07-11 20:16:10.000000000 -0300
++++ elfutils-0.84-lucasvr/libdwarf/Makefile.in	2004-08-18 00:12:43.000000000 -0300
+@@ -130,7 +130,7 @@
+ sharedstatedir = @sharedstatedir@
+ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
+-AM_CFLAGS = -Wall -Werror
++AM_CFLAGS = -Wall 
+ INCLUDES = -I. -I$(srcdir) -I$(srcdir)/../libelf -I.. -I$(srcdir)/../lib
+ 
+ lib_LIBRARIES = libdwarf.a
+diff -Nur elfutils-0.84/libebl/Makefile.am elfutils-0.84-lucasvr/libebl/Makefile.am
+--- elfutils-0.84/libebl/Makefile.am	2003-07-11 17:02:30.000000000 -0300
++++ elfutils-0.84-lucasvr/libebl/Makefile.am	2004-08-18 00:11:50.000000000 -0300
+@@ -14,7 +14,7 @@
+ ## 3001 King Ranch Road, Ukiah, CA 95482.
+ ##
+ DEFS = -D_GNU_SOURCE -DHAVE_CONFIG_H -Wall
+-AM_CFLAGS = -Wall -Werror -DOBJDIR=\"$(shell pwd)\"
++AM_CFLAGS = -Wall  -DOBJDIR=\"$(shell pwd)\"
+ INCLUDES = -I$(srcdir) -I$(top_srcdir)/libelf -I$(top_srcdir)/lib -I..
+ VERSION = 1
+ PACKAGE_VERSION = @PACKAGE_VERSION@
+diff -Nur elfutils-0.84/libebl/Makefile.in elfutils-0.84-lucasvr/libebl/Makefile.in
+--- elfutils-0.84/libebl/Makefile.in	2003-07-11 20:16:01.000000000 -0300
++++ elfutils-0.84-lucasvr/libebl/Makefile.in	2004-08-18 00:12:43.000000000 -0300
+@@ -130,7 +130,7 @@
+ sharedstatedir = @sharedstatedir@
+ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
+-AM_CFLAGS = -Wall -Werror -DOBJDIR=\"$(shell pwd)\"
++AM_CFLAGS = -Wall  -DOBJDIR=\"$(shell pwd)\"
+ INCLUDES = -I$(srcdir) -I$(top_srcdir)/libelf -I$(top_srcdir)/lib -I..
+ 
+ lib_LIBRARIES = libebl.a
+diff -Nur elfutils-0.84/libelf/Makefile.am elfutils-0.84-lucasvr/libelf/Makefile.am
+--- elfutils-0.84/libelf/Makefile.am	2003-05-18 05:00:04.000000000 -0300
++++ elfutils-0.84-lucasvr/libelf/Makefile.am	2004-08-18 00:11:50.000000000 -0300
+@@ -14,7 +14,7 @@
+ ## 3001 King Ranch Road, Ukiah, CA 95482.
+ ##
+ DEFS = -D_GNU_SOURCE -DHAVE_CONFIG_H
+-AM_CFLAGS = -Wall -Werror
++AM_CFLAGS = -Wall 
+ INCLUDES = -I$(srcdir) -I$(top_srcdir)/lib -I..
+ GCC_INCLUDE = -I$(shell $(CC) -print-file-name=include)
+ VERSION = 1
+diff -Nur elfutils-0.84/libelf/Makefile.in elfutils-0.84-lucasvr/libelf/Makefile.in
+--- elfutils-0.84/libelf/Makefile.in	2003-07-11 20:15:31.000000000 -0300
++++ elfutils-0.84-lucasvr/libelf/Makefile.in	2004-08-18 00:12:43.000000000 -0300
+@@ -130,7 +130,7 @@
+ sharedstatedir = @sharedstatedir@
+ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
+-AM_CFLAGS = -Wall -Werror
++AM_CFLAGS = -Wall 
+ INCLUDES = -I$(srcdir) -I$(top_srcdir)/lib -I..
+ GCC_INCLUDE = -I$(shell $(CC) -print-file-name=include)
+ 
+diff -Nur elfutils-0.84/tests/Makefile.am elfutils-0.84-lucasvr/tests/Makefile.am
+--- elfutils-0.84/tests/Makefile.am	2003-07-10 21:29:01.000000000 -0300
++++ elfutils-0.84-lucasvr/tests/Makefile.am	2004-08-18 00:11:50.000000000 -0300
+@@ -14,7 +14,7 @@
+ ## 3001 King Ranch Road, Ukiah, CA 95482.
+ ##
+ DEFS = -DHAVE_CONFIG_H -D_GNU_SOURCE
+-AM_CFLAGS = -Wall -Werror
++AM_CFLAGS = -Wall 
+ AM_LDFLAGS = -Wl,-rpath,\$$ORIGIN/../libasm:\$$ORIGIN/../libdwarf:\$$ORIGIN/../libdw:\$$ORIGIN/../libebl:\$$ORIGIN/../libelf
+ INCLUDES = -I$(top_srcdir)/libasm -I$(top_srcdir)/libdwarf \
+ 	   -I$(top_srcdir)/libdw \
+diff -Nur elfutils-0.84/tests/Makefile.in elfutils-0.84-lucasvr/tests/Makefile.in
+--- elfutils-0.84/tests/Makefile.in	2003-07-11 20:17:22.000000000 -0300
++++ elfutils-0.84-lucasvr/tests/Makefile.in	2004-08-18 00:12:43.000000000 -0300
+@@ -130,7 +130,7 @@
+ sharedstatedir = @sharedstatedir@
+ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
+-AM_CFLAGS = -Wall -Werror
++AM_CFLAGS = -Wall 
+ AM_LDFLAGS = -Wl,-rpath,\$$ORIGIN/../libasm:\$$ORIGIN/../libdwarf:\$$ORIGIN/../libdw:\$$ORIGIN/../libebl:\$$ORIGIN/../libelf
+ INCLUDES = -I$(top_srcdir)/libasm -I$(top_srcdir)/libdwarf \
+ 	   -I$(top_srcdir)/libdw \
