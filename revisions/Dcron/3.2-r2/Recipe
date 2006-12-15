@@ -1,0 +1,29 @@
+# Recipe for version 3.2 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Sep 29 12:22:58 CEST 2006
+# Recipe (MakeRecipe) for Dcron by Jonas Karlsson <jonka750@student.liu.se>, on Mon Apr 11 09:44:21 CEST 2005
+compile_version=1.8.0
+url="http://apollo.backplane.com/FreeSrc/dcron32.tgz"
+file_size=22184
+file_md5=c2c816deb389b4bfb00761f26afe3efd
+recipe_type=makefile
+makefile='Makefile'
+dir='dcron'
+
+make_variables=(
+   "DESTDIR=$target"
+)
+
+pre_build(){
+if ! grep -q cron $goboSettings/group
+then
+    Log_Normal "Adding group cron"
+    groupadd cron
+fi
+}
+
+pre_link(){
+if [ ! -d ${variable_target}/spool/cron/crontabs ]
+then
+    mkdir -p ${variable_target}/spool/cron/crontabs
+    echo -e "# MIN HOUR DAY MONTH DAYOFWEEK   COMMAND\n" >> ${variable_target}/spool/cron/crontabs/${USER}
+fi
+}
