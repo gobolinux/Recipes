@@ -1,0 +1,10 @@
+# Recipe for version 2.3.95 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon May 15 21:29:54 BRT 2006
+# Recipe (MakeRecipe) for Fontconfig by Michael Farrell <michael@xinomorph.org>, on Sat Oct 23 14:31:12 BRST 2004
+compile_version=1.8.0
+url="http://www.fontconfig.org/release/fontconfig-2.3.95.tar.gz"
+recipe_type=configure
+configure_options=(
+    "--with-default-fonts=/Files/Fonts"
+)
+
+sandbox_options=("--no-sandbox")
