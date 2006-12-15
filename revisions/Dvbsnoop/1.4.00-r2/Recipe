@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for DVBSnoop by Priscilla Avegliano <priavegliano@gmail.com>, on Wed Feb 15 15:40:11 BRST 2006
+# Recipe for version 0.4.3.1 by Priscilla Avegliano <priavegliano@gmail.com>, on Wed Feb 15 15:40:11 BRST 2006
+compile_version=1.8.0
+url="$httpSourceforge/dvbsnoop/dvbsnoop-1.4.00.tar.gz"
+file_size=299687
+file_md5=e98d06c92ee1bf8dec1b756c3d5bf916
+recipe_type=configure
+
+pre_build() {
+    export CFLAGS="-I$goboModules/Current/build/include"
+}
