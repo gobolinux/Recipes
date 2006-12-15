@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for GDBM by Laurent Pelecq (laurent.pelecq at soleil.org), on dim avr 16 00:27:12 CEST 2006
+# Recipe for version 1.8.3 by Laurent Pelecq (laurent.pelecq at soleil.org), on dim avr 16 00:27:12 CEST 2006
+compile_version=1.8.0
+url="ftp://ftp.gnu.org/pub/gnu/gdbm/gdbm-1.8.3.tar.gz"
+file_size=228695
+file_md5=1d1b1d5c0245b1c00aff92da751e9aa1
+recipe_type=configure
+make_variables=(
+    "BINOWN=0"
+    "BINGRP=0"
+)
+
