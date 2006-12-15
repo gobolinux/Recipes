@@ -1,0 +1,96 @@
+--- DtRecord/DtRecord.cpp.orig	2006-01-17 16:49:08.000000000 -0200
++++ DtRecord/DtRecord.cpp	2006-01-17 16:49:17.000000000 -0200
+@@ -38,6 +38,9 @@
+ //-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- Includes -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+ 
+ #include <stdio.h>
++#include <sys/types.h>
++#include <sys/stat.h>
++#include <fcntl.h>
+ #include "DTAPI.h"
+ 
+ #ifdef WIN32
+@@ -80,7 +83,7 @@ bool	AttachToDevice(DtDevice& rDvc, TsIn
+ void	LogMessage(char* szMessage);
+ void	LogMessageAlways(char* szMessage);
+ void	SetLastError(char* szError);
+-FILE*	OpenRecFile();
++int  	OpenRecFile();
+ bool	IsNumber(char* szNumber);
+ 
+ //-.-.-.-.-.-.-.-.-.-.-.-.-.- Data declaration and definition -.-.-.-.-.-.-.-.-.-.-.-.-.-.
+@@ -144,7 +147,8 @@ const char c_szHelpCmdOptId[]	    = "?";
+ int main(int argc, char* argv[])
+ {
+ 	int iRetValue(0);
+-	FILE* pRecFile = NULL;
++	int pRecFile;
++    int brokenPipe = 0;
+ 
+ 	try
+ 	{
+@@ -184,7 +188,7 @@ int main(int argc, char* argv[])
+ 		if ( !AttachToDevice(theDvc, theInput) ) { throw iRetValue; }
+ 
+ 		//-.-.-.-.-.-.-.-.-.-.-.-.-.-.- Open the record file -.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+-		if ( NULL == (pRecFile = OpenRecFile()) ) { throw iRetValue; }
++		if ( (pRecFile = OpenRecFile() ) < 0 ) { throw iRetValue; }
+ 		
+ 		//-.-.-.-.-.-.-.-.-.-.-.-.-.-.- Final initialisation -.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+ 		
+@@ -269,12 +273,20 @@ int main(int argc, char* argv[])
+ 				
+ 				// Write the received data to file
+ 				unsigned long  ulNumberOfBytesWritten;
+-				ulNumberOfBytesWritten = fwrite(pBuffer, sizeof(char), nStore, pRecFile);
+-				if ( ulNumberOfBytesWritten != nStore) {
++				ulNumberOfBytesWritten = write(pRecFile, pBuffer, sizeof(char) * nStore);
++				if ( ulNumberOfBytesWritten < 0) {
++					/* broken pipe, just continue */
++					if (! brokenPipe)
++						fprintf(stderr, "error writing to output\n");
++					brokenPipe = 1;
++					continue;
++				} else if ( ulNumberOfBytesWritten != nStore) {
++					brokenPipe = 0;
+ 					SetLastError(ERR_WRITE_TO_FILE);
+ 					throw iRetValue;
+ 				} else {
+ 					// update number of bytes stored
++					brokenPipe = 0;
+ 					nStoredBytes += __int64(ulNumberOfBytesWritten);
+ 				}
+ 			}
+@@ -308,8 +320,8 @@ int main(int argc, char* argv[])
+ 
+ 	//.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.- Final Cleanup -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+ 
+-	if ( NULL != pRecFile ) {
+-		fclose(pRecFile);
++	if ( pRecFile > 0 ) {
++		close(pRecFile);
+ 	}
+ 	delete g_szRecFile;
+ 
+@@ -908,17 +920,17 @@ bool AttachToDevice(DtDevice& rDvc, TsIn
+ 
+ //+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+ OpenRecFile +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+ //
+-FILE* OpenRecFile()
++int OpenRecFile()
+ {
+ 	char szTemp[256];
+ 
+ 	// Open the file for writing
+-	FILE* pFile = fopen(g_szRecFile, "wb");
++	int pFile = open(g_szRecFile, O_WRONLY);
+ 
+-	if ( NULL == pFile) {
++	if (pFile < 0) {
+ 		sprintf(szTemp, ERR_COULD_NOT_OPEN_FILE, g_szRecFile);
+ 		SetLastError(szTemp);
+-		return NULL;
++		return -1;
+ 	} else {
+ 		return pFile;
+ 	}
