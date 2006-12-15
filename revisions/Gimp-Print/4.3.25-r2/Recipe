@@ -1,0 +1,10 @@
+# by Jonatan Liljedahl
+url=$httpSourceforge/gimp-print/gimp-print-4.3.25.tar.bz2
+compile_version=1.8.0
+recipe_type=configure
+install_variables=(
+    "gimp_plug_indir=$target/lib/gimp/1.2/plug-ins"
+    "cups_conf_serverbin=$target/lib/cups"
+    "cups_conf_datadir=$target/share/cups"
+    "cups_conf_serverroot=$target/../Settings/cups"
+)
