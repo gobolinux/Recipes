@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Fbset by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sun Dec 5 10:11:12 BRST 2004
+# Recipe for version 2.1 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sun Dec 5 10:11:13 BRST 2004
+compile_version=1.8.0
+url="http://users.telenet.be/geertu/Linux/fbdev/fbset-2.1.tar.gz"
+recipe_type=makefile
+makefile='Makefile'
+sandbox_options=("--no-sandbox")
+
+make_variables=(
+	"SYSCONFDIR=$goboPrograms/$appname/Settings"
+	"PREFIX=$goboPrograms/$appname/$versionnumber"
+)
