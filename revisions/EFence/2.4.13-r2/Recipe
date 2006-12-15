@@ -1,0 +1,10 @@
+compile_version=1.8.0
+url="http://www.pf-lug.de/projekte/haya/efence_2_4_13.tar.gz"
+file_size=60243
+file_md5=0b35c601c962e2818f7afa1892167bb5
+dir='efence'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+)
