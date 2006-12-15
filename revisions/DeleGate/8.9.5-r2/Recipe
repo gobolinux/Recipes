@@ -1,0 +1,22 @@
+# Recipe by Bill Burdick, Mobile Reasoning, July 13 2004
+
+compile_version=1.8.0
+url="http://www.delegate.org/anonftp/DeleGate/delegate8.9.5.tar.bz2"
+file_size=977960
+file_md5=54319079fc723b54010db9f7f2af5356
+recipe_type=makefile
+makefile='Makefile'
+dir=delegate8.9.5
+do_install=no
+create_dirs_first=yes
+
+pre_install() {
+	shared_dir=$target/Shared/delegate/$versionnumber
+	mkdir $target/bin
+	cp src/delegated $target/bin
+	mkdir -p $shared_dir/subin
+	cp subin/{dgpam,dgchroot,dgbind} $shared_dir/subin
+	mkdir $target/doc
+	cp doc/*.htm $target/doc
+	cp -a $recipedir/Shared $target
+}
