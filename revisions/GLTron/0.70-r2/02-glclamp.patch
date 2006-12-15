@@ -1,0 +1,14 @@
+diff -Naur gltron-0.70-orig/src/game/globals.c gltron-0.70/src/game/globals.c
+--- gltron-0.70-orig/src/game/globals.c	2003-12-05 10:45:38.000000000 -0200
++++ gltron-0.70/src/game/globals.c	2005-01-13 16:41:57.000000000 -0200
+@@ -98,8 +98,10 @@
+ int n_textures = 11;
+ 
+ #ifndef GL_VERSION_1_2
++#ifndef GL_CLAMP_TO_EDGE
+ #  define GL_CLAMP_TO_EDGE GL_CLAMP
+ #endif
++#endif
+ 
+ TextureInfo textures[] = {
+   { 1, "gltron_floor", GL_DONT_CARE, GL_REPEAT, GL_REPEAT, TEX_FLOOR, 64 },
