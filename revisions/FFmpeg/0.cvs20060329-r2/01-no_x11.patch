@@ -1,0 +1,11 @@
+--- ffmpeg-0.4.9-pre1/ffplay.c.orig	2006-01-06 14:46:36.000000000 -0200
++++ ffmpeg-0.4.9-pre1/ffplay.c	2006-01-06 14:46:44.000000000 -0200
+@@ -28,7 +28,7 @@
+ #undef main /* We don't want SDL to override our main() */
+ #endif
+ 
+-#if defined(__linux__)
++#if 0
+ #define HAVE_X11
+ #endif
+ 
