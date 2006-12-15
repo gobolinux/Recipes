@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Fbida by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sun Mar 13 14:20:59 BRT 2005
+# Recipe for version 2.03 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sun Mar 13 14:20:59 BRT 2005
+compile_version=1.8.0
+url="http://dl.bytesex.org/releases/fbida/fbida-2.03.tar.gz"
+file_size=205955
+file_md5=8fd76661686a38a7bcd251b7aadc73eb
+recipe_type=makefile
+makefile=GNUmakefile
+
+make_variables=("prefix=$target" "RESDIR=$target/../Settings/X11")
