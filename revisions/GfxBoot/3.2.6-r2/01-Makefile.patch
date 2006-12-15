@@ -1,0 +1,16 @@
+--- gfxboot-3.2.6/Makefile.old	2006-09-09 02:14:33.000000000 -0300
++++ gfxboot-3.2.6/Makefile	2006-09-09 02:38:19.000000000 -0300
+@@ -45,10 +45,10 @@
+ 	as --32 -ahlsn=jpeg.lst -o $@ $<
+ 
+ install: all
+-	install -d -m 755 $(DESTDIR)/usr/sbin $(DESTDIR)/usr/share/gfxboot
+-	install -m 755 mkbootmsg getx11font help2txt $(DESTDIR)/usr/sbin
++	install -d -m 755 $(DESTDIR)/sbin $(DESTDIR)/share/gfxboot
++	install -m 755 mkbootmsg getx11font help2txt $(DESTDIR)/sbin
+ #	install -m 644 $(LIBFILES) $(DESTDIR)/usr/share/gfxboot
+-	cp -a themes $(DESTDIR)/usr/share/gfxboot
++	cp -a themes $(DESTDIR)/share/gfxboot
+ 
+ clean: themes doc
+ 	@rm -f mkbootmsg bincode getx11font addblack bincode.h bin2c *.lst *.map vocabulary.inc vocabulary.h *.o *~
