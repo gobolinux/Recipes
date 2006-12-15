@@ -1,0 +1,37 @@
+diff -Naur e2fsprogs-1.39/misc/Makefile.in e2fsprogs-1.39-new/misc/Makefile.in
+--- e2fsprogs-1.39/misc/Makefile.in	2006-03-27 02:58:10.000000000 -0300
++++ e2fsprogs-1.39-new/misc/Makefile.in	2006-06-17 16:44:33.000000000 -0300
+@@ -228,7 +228,7 @@
+ 		$(DESTDIR)$(root_sbindir) $(DESTDIR)$(bindir) \
+ 		$(DESTDIR)$(man1dir) $(DESTDIR)$(man8dir) \
+ 		$(DESTDIR)$(man1dir) $(DESTDIR)$(man5dir) \
+-		$(DESTDIR)$(libdir) $(DESTDIR)/etc
++		$(DESTDIR)$(libdir) $(DESTDIR)$(root_sysconfdir)
+ 
+ install: all $(SMANPAGES) $(UMANPAGES) installdirs
+ 	@for i in $(SPROGS); do \
+@@ -288,10 +288,10 @@
+ 		echo "	INSTALL_DATA $(man5dir)/$$i"; \
+ 		$(INSTALL_DATA) $$i $(DESTDIR)$(man5dir)/$$i; \
+ 	done
+-	@if ! test -f $(DESTDIR)/etc/mke2fs.conf; then \
+-		echo "	INSTALL_DATA /etc/mke2fs.conf"; \
++	@if ! test -f $(DESTDIR)$(root_sysconfdir)/mke2fs.conf; then \
++		echo "	INSTALL_DATA $(root_sysconfdir)/mke2fs.conf"; \
+ 		$(INSTALL_DATA) $(srcdir)/mke2fs.conf \
+-			$(DESTDIR)/etc/mke2fs.conf; \
++			$(DESTDIR)$(root_sysconfdir)/mke2fs.conf; \
+ 	fi
+ 
+ install-strip: install
+@@ -336,8 +336,8 @@
+ 	for i in $(FMANPAGES); do \
+ 		$(RM) -f $(DESTDIR)$(man5dir)/$$i; \
+ 	done
+-	if cmp -s $(srcdir)/mke2fs.conf $(DESTDIR)/etc/mke2fs.conf; then \
+-		$(RM) $(DESTDIR)/etc/mke2fs.conf; \
++	if cmp -s $(srcdir)/mke2fs.conf $(DESTDIR)$(root_sysconfdir)/mke2fs.conf; then \
++		$(RM) $(DESTDIR)$(root_sysconfdir)/mke2fs.conf; \
+ 	fi
+ 
+ clean:
