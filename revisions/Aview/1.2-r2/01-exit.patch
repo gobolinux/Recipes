@@ -1,0 +1,12 @@
+diff -Naur aview-1.2/main.c aview-1.2-new/main.c
+--- aview-1.2/main.c	1997-09-16 09:00:38.000000000 -0300
++++ aview-1.2-new/main.c	2003-11-07 19:55:42.000000000 -0200
+@@ -16,7 +16,7 @@
+ 	exit(-1);
+     context = aa_autoinit(&aa_defparams);
+     if (context == NULL)
+-	exit();
++	exit(0);
+     aa_autoinitkbd(context,0);
+     aa_hidecursor(context);
+     main_loop();

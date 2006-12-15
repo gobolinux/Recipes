@@ -1,0 +1,18 @@
+diff -Naur aview-1.2/flip.c aview-1.2-old/flip.c
+--- aview-1.2/flip.c	2003-11-07 19:58:52.000000000 -0200
++++ aview-1.2-old/flip.c	2003-11-07 19:58:40.000000000 -0200
+@@ -7,11 +7,13 @@
+ 
+ #include <stdlib.h>
+ #include <stdio.h>
++/*
+ #ifdef __GNUC__
+ #ifdef __i386__
+-#include "sstring.h"	/* noticeably faster*/
++#include "sstring.h"	/* noticeably faster* /
+ #endif
+ #endif
++*/
+ #include <time.h>
+ #include <aalib.h>
+ 
