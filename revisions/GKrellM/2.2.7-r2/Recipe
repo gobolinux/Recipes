@@ -1,0 +1,13 @@
+# Recipe for version 2.2.7 by Guilherme Balestieri Bedin (gbedin), on Wed Aug 10 15:56:55 BRT 2005
+# Recipe by Volker Wieban (buckoven@yaklinux.org)
+
+compile_version=1.8.0
+url="http://members.dslextreme.com/users/billw/gkrellm/gkrellm-2.2.7.tar.bz2"
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "INSTALLROOT=$target"
+)
+pre_install() {
+   mkdir -p $target/lib/gkrellm2/plugins
+}
