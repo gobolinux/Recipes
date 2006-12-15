@@ -1,0 +1,15 @@
+# Recipe for version 0.96.0626 by Lucas C. Villa Real, on Tue Nov 7 09:13:11 BRST 2006
+# by Leandro Motta Barros
+
+# There is one little thing to check in this Recipe before considering
+# it a very good one: In 'Resources/Environment' file I set the
+# 'ESDL_PATH' varible. I'm not sure, but I think this is only used to
+# compile Wings3D. Anyway, I can't imagine any other project using
+# ESDL apart of Wings3D...
+compile_version=1.8.0
+url=$httpSourceforge/esdl/esdl-0.96.0626.src.tar.gz
+dir=esdl-0.96.0626
+recipe_type=makefile
+install_variables=(
+   "INSTALLDIR=$target/lib/esdl"
+)
