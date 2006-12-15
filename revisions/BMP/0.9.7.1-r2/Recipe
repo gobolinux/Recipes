@@ -1,0 +1,11 @@
+# Recipe for version 0.9.7.1 by Jonas Karlsson <jonka750@student.liu.se>, on Sun Oct 30 23:02:12 CET 2005
+# Recipe for BMP 0.9.6 by Jonatan Liljedahl <lijon@kymatica.com>
+compile_version=1.8.0
+url="$httpSourceforge/beepmp/bmp-0.9.7.1.tar.gz"
+recipe_type=configure
+configure_options=(
+"--with-dev-dsp=/System/Kernel/Devices/dsp"
+"--with-dev-mixer=/System/Kernel/Devices/mixer"
+"--with-cdda-device=/System/Kernel/Devices/cdrom"
+"--enable-simd"
+)
