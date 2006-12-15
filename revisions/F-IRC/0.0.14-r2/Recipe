@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for F-IRC by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sun Mar 6 16:11:14 BRT 2005
+# Recipe for version 0.0.14 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sun Mar 6 16:11:14 BRT 2005
+compile_version=1.8.0
+url="http://www.vanheusden.com/fi/fi-0.0.14.tgz"
+file_size=35560
+file_md5=2132ccd48b8beee30fe2b5c8c4a55dda
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=(
+	"DESTDIR=$target"
+	"SYSCONFDIR=$target/../Settings"
+)
