@@ -1,0 +1,1583 @@
+diff --exclude='*~' --exclude='.*' -I '$Id:' -urN Eterm-0.9.3.orig/src/command.c Eterm-0.9.3/src/command.c
+--- Eterm-0.9.3.orig/src/command.c	2005-05-13 00:49:10.000000000 -0400
++++ Eterm-0.9.3/src/command.c	2005-05-13 00:49:29.000000000 -0400
+@@ -3002,9 +3002,9 @@
+     Xfd = XConnectionNumber(Xdisplay);
+     D_CMD(("Xfd = %d\n", Xfd));
+     cmdbuf_ptr = cmdbuf_endp = cmdbuf_base;
+-    AT_LEAST((int) num_fds, Xfd + 1);
++    AT_LEAST(num_fds, Xfd + 1);
+     if (pipe_fd >= 0) {
+-        AT_LEAST((int) num_fds, pipe_fd + 1);
++        AT_LEAST(num_fds, pipe_fd + 1);
+     }
+     if ((cmd_fd = command_func(argv)) < 0) {
+         print_error("Unable to run sub-command.\n");
+@@ -3469,7 +3469,7 @@
+             register unsigned char *str;
+ 
+             D_CMD(("Command buffer contains %d characters.\n", cmdbuf_endp - cmdbuf_ptr));
+-            D_VT(("\n%s\n\n", safe_print_string(cmdbuf_ptr - 1, cmdbuf_endp - cmdbuf_ptr + 1)));
++            D_VT(("\n%s\n\n", safe_print_string((char *)cmdbuf_ptr - 1, cmdbuf_endp - cmdbuf_ptr + 1)));
+ 
+             /*
+              * point to the start of the string,
+diff --exclude='*~' --exclude='.*' -I '$Id:' -urN Eterm-0.9.3.orig/src/events.c Eterm-0.9.3/src/events.c
+--- Eterm-0.9.3.orig/src/events.c	2005-05-13 00:49:10.000000000 -0400
++++ Eterm-0.9.3/src/events.c	2005-05-13 00:49:29.000000000 -0400
+@@ -701,11 +701,11 @@
+                       } else if (action_check_modifiers(MOD_SHIFT, ev->xbutton.state)) {
+                           scr_page(UP, 1);
+                       } else if (action_check_modifiers(MOD_ALT, ev->xbutton.state)) {
+-                          tt_write("\033[5~", 4);
++                          tt_write((unsigned char *)"\033[5~", 4);
+                       } else if (action_check_modifiers((MOD_ALT | MOD_SHIFT), ev->xbutton.state)) {
+-                          tt_write("\033[A", 3);
++                          tt_write((unsigned char *)"\033[A", 3);
+                       } else if (action_check_modifiers((MOD_ALT | MOD_CTRL), ev->xbutton.state)) {
+-                          tt_write("\033[5~\033[5~\033[5~\033[5~\033[5~", 20);
++                          tt_write((unsigned char *)"\033[5~\033[5~\033[5~\033[5~\033[5~", 20);
+                       } else {
+                           scr_page(UP, TermWin.nrow - CONTEXT_LINES);
+                       }
+@@ -717,11 +717,11 @@
+                       } else if (action_check_modifiers(MOD_SHIFT, ev->xbutton.state)) {
+                           scr_page(DN, 1);
+                       } else if (action_check_modifiers(MOD_ALT, ev->xbutton.state)) {
+-                          tt_write("\033[6~", 4);
++                          tt_write((unsigned char *)"\033[6~", 4);
+                       } else if (action_check_modifiers((MOD_ALT | MOD_SHIFT), ev->xbutton.state)) {
+-                          tt_write("\033[B", 3);
++                          tt_write((unsigned char *)"\033[B", 3);
+                       } else if (action_check_modifiers((MOD_ALT | MOD_CTRL), ev->xbutton.state)) {
+-                          tt_write("\033[6~\033[6~\033[6~\033[6~\033[6~", 20);
++                          tt_write((unsigned char *)"\033[6~\033[6~\033[6~\033[6~\033[6~", 20);
+                       } else {
+                           scr_page(DN, TermWin.nrow - CONTEXT_LINES);
+                       }
+diff --exclude='*~' --exclude='.*' -I '$Id:' -urN Eterm-0.9.3.orig/src/font.c Eterm-0.9.3/src/font.c
+--- Eterm-0.9.3.orig/src/font.c	2005-05-13 00:49:10.000000000 -0400
++++ Eterm-0.9.3/src/font.c	2005-05-13 00:49:29.000000000 -0400
+@@ -736,7 +736,7 @@
+ 
+     ASSERT_RVAL(line != NULL, 0);
+ 
+-    n = num_words(line);
++    n = num_words((spif_charptr_t)line);
+ 
+     if (!BEG_STRCASECMP(line, "none")) {
+         MEMSET(&fshadow, 0, sizeof(fontshadow_t));
+@@ -744,7 +744,7 @@
+         if (n != 2) {
+             return 0;
+         }
+-        color = get_word(2, line);
++        color = (char *)get_word(2, (spif_charptr_t)line);
+         p = get_color_by_name(color, "black");
+         FREE(color);
+         for (which = 0; which < 4; which++) {
+@@ -753,10 +753,10 @@
+     } else if (!BEG_STRCASECMP(line, "shadow")) {
+         if (n == 2) {
+             which = SHADOW_BOTTOM_RIGHT;
+-            color = get_word(2, line);
++            color = (char *)get_word(2, (spif_charptr_t)line);
+         } else if (n == 3) {
+-            color = get_word(3, line);
+-            corner = get_pword(2, line);
++            color = (char *)get_word(3, (spif_charptr_t)line);
++            corner = (char *)get_pword(2, (spif_charptr_t)line);
+             which = get_corner(corner);
+             if (which >= 4) {
+                 return 0;
+@@ -770,12 +770,12 @@
+         if (n != 3) {
+             return 0;
+         }
+-        color = get_word(2, line);
++        color = (char *)get_word(2, (spif_charptr_t)line);
+         p = get_color_by_name(color, "black");
+         set_shadow_color_by_pixel(SHADOW_BOTTOM_RIGHT, p);
+         FREE(color);
+ 
+-        color = get_word(3, line);
++        color = (char *)get_word(3, (spif_charptr_t)line);
+         p = get_color_by_name(color, "white");
+         set_shadow_color_by_pixel(SHADOW_TOP_LEFT, p);
+         FREE(color);
+@@ -783,12 +783,12 @@
+         if (n != 3) {
+             return 0;
+         }
+-        color = get_word(2, line);
++        color = (char *)get_word(2, (spif_charptr_t)line);
+         p = get_color_by_name(color, "black");
+         set_shadow_color_by_pixel(SHADOW_TOP_LEFT, p);
+         FREE(color);
+ 
+-        color = get_word(3, line);
++        color = (char *)get_word(3, (spif_charptr_t)line);
+         p = get_color_by_name(color, "white");
+         set_shadow_color_by_pixel(SHADOW_BOTTOM_RIGHT, p);
+         FREE(color);
+@@ -799,11 +799,11 @@
+             which = get_corner(line);
+             if (which >= 4) {
+                 which = i;
+-                color = get_word(1, line);
+-                line = get_pword(2, line);
++                color = (char *)get_word(1, (spif_charptr_t)line);
++                line = (char *)get_pword(2, (spif_charptr_t)line);
+             } else {
+-                color = get_word(2, line);
+-                line = get_pword(3, line);
++                color = (char *)get_word(2, (spif_charptr_t)line);
++                line = (char *)get_pword(3, (spif_charptr_t)line);
+             }
+             set_shadow_color_by_name(which, color);
+             FREE(color);
+diff --exclude='*~' --exclude='.*' -I '$Id:' -urN Eterm-0.9.3.orig/src/misc.c Eterm-0.9.3/src/misc.c
+--- Eterm-0.9.3.orig/src/misc.c	2005-05-13 00:49:10.000000000 -0400
++++ Eterm-0.9.3/src/misc.c	2005-05-13 00:56:00.000000000 -0400
+@@ -80,7 +80,7 @@
+ 
+     if (str && *str) {
+ 
+-        chomp(str);
++        chomp((spif_charptr_t)str);
+         n = strlen(str);
+ 
+         if (!n) {
+@@ -316,7 +316,7 @@
+     register unsigned char *out, *outp, *in;
+     register unsigned long i;
+ 
+-    D_CMD(("buff == %8p \"%s\", cnt == %lu\n", buff, safe_print_string(buff, cnt), cnt));
++    D_CMD(("buff == %8p \"%s\", cnt == %lu\n", buff, safe_print_string((char *)buff, cnt), cnt));
+     outp = out = (unsigned char *) MALLOC(cnt * 2);
+     for (i = 0, in = buff; i < cnt; i++) {
+         if (*in == '\n') {
+@@ -327,7 +327,7 @@
+     i = (unsigned long) (out - outp);
+     memcpy(buff, outp, i);
+     FREE(outp);
+-    D_CMD(("buff == %8p \"%s\", i == %lu\n", buff, safe_print_string(buff, i), i));
++    D_CMD(("buff == %8p \"%s\", i == %lu\n", buff, safe_print_string((char *)buff, i), i));
+     return i;
+ }
+ 
+diff --exclude='*~' --exclude='.*' -I '$Id:' -urN Eterm-0.9.3.orig/src/options.c Eterm-0.9.3/src/options.c
+--- Eterm-0.9.3.orig/src/options.c	2005-05-13 00:49:10.000000000 -0400
++++ Eterm-0.9.3/src/options.c	2005-05-13 02:07:55.000000000 -0400
+@@ -794,7 +794,7 @@
+ static void
+ handle_attribute(char *val_ptr)
+ {
+-    conf_parse_line(NULL, val_ptr);
++    conf_parse_line(NULL, (spif_charptr_t)val_ptr);
+ }
+ 
+ /* The config file parsers.  Each function handles a given context. */
+@@ -805,39 +805,39 @@
+         return NULL;
+     }
+     if (!BEG_STRCASECMP(buff, "foreground ")) {
+-        RESET_AND_ASSIGN(rs_color[fgColor], get_word(2, buff));
++        RESET_AND_ASSIGN(rs_color[fgColor], (char *)get_word(2, (spif_charptr_t)buff));
+     } else if (!BEG_STRCASECMP(buff, "background ")) {
+-        RESET_AND_ASSIGN(rs_color[bgColor], get_word(2, buff));
++        RESET_AND_ASSIGN(rs_color[bgColor], (char *)get_word(2, (spif_charptr_t)buff));
+ 
+     } else if (!BEG_STRCASECMP(buff, "cursor ")) {
+ 
+ #ifndef NO_CURSORCOLOR
+-        RESET_AND_ASSIGN(rs_color[cursorColor], get_word(2, buff));
++        RESET_AND_ASSIGN(rs_color[cursorColor], (char *)get_word(2, (spif_charptr_t)buff));
+ #else
+         print_warning("Support for the cursor attribute was not compiled in, ignoring\n");
+ #endif
+ 
+     } else if (!BEG_STRCASECMP(buff, "cursor_text ")) {
+ #ifndef NO_CURSORCOLOR
+-        RESET_AND_ASSIGN(rs_color[cursorColor2], get_word(2, buff));
++        RESET_AND_ASSIGN(rs_color[cursorColor2], (char *)get_word(2, (spif_charptr_t)buff));
+ #else
+         print_warning("Support for the cursor_text attribute was not compiled in, ignoring\n");
+ #endif
+ 
+     } else if (!BEG_STRCASECMP(buff, "pointer ")) {
+-        RESET_AND_ASSIGN(rs_color[pointerColor], get_word(2, buff));
++        RESET_AND_ASSIGN(rs_color[pointerColor], (char *)get_word(2, (spif_charptr_t)buff));
+ 
+ #ifdef ESCREEN
+     } else if (!BEG_STRCASECMP(buff, "es_current ")) {
+-        RESET_AND_ASSIGN(rs_color[ES_COLOR_CURRENT], get_word(2, buff));
++        RESET_AND_ASSIGN(rs_color[ES_COLOR_CURRENT], (char *)get_word(2, (spif_charptr_t)buff));
+ 
+     } else if (!BEG_STRCASECMP(buff, "es_active ")) {
+-        RESET_AND_ASSIGN(rs_color[ES_COLOR_ACTIVE], get_word(2, buff));
++        RESET_AND_ASSIGN(rs_color[ES_COLOR_ACTIVE], (char *)get_word(2, (spif_charptr_t)buff));
+ #endif
+ 
+     } else if (!BEG_STRCASECMP(buff, "video ")) {
+ 
+-        char *tmp = get_pword(2, buff);
++        char *tmp = (char *)get_pword(2, (spif_charptr_t)buff);
+ 
+         if (!BEG_STRCASECMP(tmp, "reverse")) {
+             BITFIELD_SET(vt_options, VT_OPTIONS_REVERSE_VIDEO);
+@@ -850,14 +850,14 @@
+         char *tmp = 0, *r1, *g1, *b1;
+         unsigned int n, r, g, b, index = 0;
+ 
+-        n = num_words(buff);
++        n = num_words((spif_charptr_t)buff);
+         if (n < 3) {
+             print_error("Parse error in file %s, line %lu:  Invalid parameter list \"%s\" for \n"
+                         "attribute color", file_peek_path(), file_peek_line(), NONULL(tmp));
+             return NULL;
+         }
+-        tmp = get_pword(2, buff);
+-        r1 = get_pword(3, buff);
++        tmp = (char *)get_pword(2, (spif_charptr_t)buff);
++        r1 = (char *)get_pword(3, (spif_charptr_t)buff);
+         if (!isdigit(*r1)) {
+             if (isdigit(*tmp)) {
+                 n = strtoul(tmp, (char **) NULL, 0);
+@@ -866,25 +866,25 @@
+                 } else if (n >= 8 && n <= 15) {
+                     index = minBright + n - 8;
+                 }
+-                RESET_AND_ASSIGN(rs_color[index], get_word(1, r1));
++                RESET_AND_ASSIGN(rs_color[index], (char *)get_word(1, (spif_charptr_t)r1));
+                 return NULL;
+             } else {
+                 if (!BEG_STRCASECMP(tmp, "bd ")) {
+ #ifndef NO_BOLDUNDERLINE
+-                    RESET_AND_ASSIGN(rs_color[colorBD], get_word(1, r1));
++                    RESET_AND_ASSIGN(rs_color[colorBD], (char *)get_word(1, (spif_charptr_t)r1));
+ #else
+                     print_warning("Support for the color bd attribute was not compiled in, ignoring\n");
+ #endif
+                     return NULL;
+                 } else if (!BEG_STRCASECMP(tmp, "ul ")) {
+ #ifndef NO_BOLDUNDERLINE
+-                    RESET_AND_ASSIGN(rs_color[colorUL], get_word(1, r1));
++                    RESET_AND_ASSIGN(rs_color[colorUL], (char *)get_word(1, (spif_charptr_t)r1));
+ #else
+                     print_warning("Support for the color ul attribute was not compiled in, ignoring\n");
+ #endif
+                     return NULL;
+                 } else {
+-                    tmp = get_word(1, tmp);
++                    tmp = (char *)get_word(1, (spif_charptr_t)tmp);
+                     print_error("Parse error in file %s, line %lu:  Invalid color index \"%s\"\n",
+                                 file_peek_path(), file_peek_line(), NONULL(tmp));
+                     FREE(tmp);
+@@ -896,8 +896,8 @@
+                         "attribute color", file_peek_path(), file_peek_line(), NONULL(tmp));
+             return NULL;
+         }
+-        g1 = get_pword(4, buff);
+-        b1 = get_pword(5, buff);
++        g1 = (char *)get_pword(4, (spif_charptr_t)buff);
++        b1 = (char *)get_pword(5, (spif_charptr_t)buff);
+         if (isdigit(*tmp)) {
+             n = strtoul(tmp, (char **) NULL, 0);
+             r = strtoul(r1, (char **) NULL, 0);
+@@ -938,7 +938,7 @@
+ #endif
+ 
+         } else {
+-            tmp = get_word(1, tmp);
++            tmp = (char *)get_word(1, (spif_charptr_t)tmp);
+             print_error("Parse error in file %s, line %lu:  Invalid color index \"%s\"\n", file_peek_path(), file_peek_line(), NONULL(tmp));
+             FREE(tmp);
+         }
+@@ -956,38 +956,38 @@
+         return NULL;
+     }
+     if (!BEG_STRCASECMP(buff, "geometry ")) {
+-        RESET_AND_ASSIGN(rs_geometry, get_word(2, buff));
++        RESET_AND_ASSIGN(rs_geometry, (char *)get_word(2, (spif_charptr_t)buff));
+ 
+     } else if (!BEG_STRCASECMP(buff, "title ")) {
+-        RESET_AND_ASSIGN(rs_title, get_word(2, buff));
++        RESET_AND_ASSIGN(rs_title, (char *)get_word(2, (spif_charptr_t)buff));
+ 
+     } else if (!BEG_STRCASECMP(buff, "name ")) {
+-        RESET_AND_ASSIGN(rs_name, get_word(2, buff));
++        RESET_AND_ASSIGN(rs_name, (char *)get_word(2, (spif_charptr_t)buff));
+ 
+     } else if (!BEG_STRCASECMP(buff, "iconname ")) {
+-        RESET_AND_ASSIGN(rs_iconName, get_word(2, buff));
++        RESET_AND_ASSIGN(rs_iconName, (char *)get_word(2, (spif_charptr_t)buff));
+ 
+     } else if (!BEG_STRCASECMP(buff, "desktop ")) {
+         rs_desktop = (int) strtol(buff, (char **) NULL, 0);
+ 
+     } else if (!BEG_STRCASECMP(buff, "scrollbar_type ")) {
+-        RESET_AND_ASSIGN(rs_scrollbar_type, get_word(2, buff));
++        RESET_AND_ASSIGN(rs_scrollbar_type, (char *)get_word(2, (spif_charptr_t)buff));
+ 
+     } else if (!BEG_STRCASECMP(buff, "scrollbar_width ")) {
+-        rs_scrollbar_width = strtoul(get_pword(2, buff), (char **) NULL, 0);
++        rs_scrollbar_width = strtoul((char *)get_pword(2, (spif_charptr_t)buff), (char **) NULL, 0);
+ 
+     } else if (!BEG_STRCASECMP(buff, "font ")) {
+ 
+-        char *tmp = get_pword(2, buff);
++        char *tmp = (char *)get_pword(2, (spif_charptr_t)buff);
+         unsigned long n;
+ 
+         if (!BEG_STRCASECMP(tmp, "fx ") || !BEG_STRCASECMP(tmp, "effect")) {
+-            if (parse_font_fx(get_pword(2, tmp)) != 1) {
++            if (parse_font_fx((char *)get_pword(2, (spif_charptr_t)tmp)) != 1) {
+                 print_error("Parse error in file %s, line %lu:  Syntax error in font effects specification\n",
+                             file_peek_path(), file_peek_line());
+             }
+         } else if (!BEG_STRCASECMP(tmp, "prop")) {
+-            tmp = get_pword(2, tmp);
++            tmp = (char *)get_pword(2, (spif_charptr_t)tmp);
+             if (BOOL_OPT_ISTRUE(tmp)) {
+                 BITFIELD_SET(vt_options, VT_OPTIONS_PROPORTIONAL);
+             } else if (BOOL_OPT_ISFALSE(tmp)) {
+@@ -999,22 +999,22 @@
+         } else if (isdigit(*tmp)) {
+             n = strtoul(tmp, (char **) NULL, 0);
+             if (n <= 255) {
+-                eterm_font_add(&etfonts, get_pword(2, tmp), n);
++                eterm_font_add(&etfonts, (char *)get_pword(2, (spif_charptr_t)tmp), n);
+             } else {
+                 print_error("Parse error in file %s, line %lu:  Invalid font index %d\n", file_peek_path(), file_peek_line(), n);
+             }
+         } else if (!BEG_STRCASECMP(tmp, "bold ")) {
+ #ifndef NO_BOLDFONT
+-            RESET_AND_ASSIGN(rs_boldFont, get_word(2, tmp));
++            RESET_AND_ASSIGN(rs_boldFont, (char *)get_word(2, (spif_charptr_t)tmp));
+ #else
+             print_warning("Support for the bold font attribute was not compiled in, ignoring\n");
+ #endif
+ 
+         } else if (!BEG_STRCASECMP(tmp, "default ")) {
+-            def_font_idx = strtoul(get_pword(2, tmp), (char **) NULL, 0);
++            def_font_idx = strtoul((char *)get_pword(2, (spif_charptr_t)tmp), (char **) NULL, 0);
+ 
+         } else {
+-            tmp = get_word(1, tmp);
++            tmp = (char *)get_word(1, (spif_charptr_t)tmp);
+             print_error("Parse error in file %s, line %lu:  Invalid font index \"%s\"\n", file_peek_path(), file_peek_line(), NONULL(tmp));
+             FREE(tmp);
+         }
+@@ -1035,7 +1035,7 @@
+     if ((*buff == CONF_BEGIN_CHAR) || (*buff == CONF_END_CHAR)) {
+         return NULL;
+     }
+-    if (!(tmp = get_pword(2, buff))) {
++    if (!(tmp = (char *)get_pword(2, (spif_charptr_t)buff))) {
+         print_error("Parse error in file %s, line %lu:  Missing boolean value in context toggles\n", file_peek_path(), file_peek_line());
+         return NULL;
+     }
+@@ -1276,7 +1276,7 @@
+     }
+     if (!BEG_STRCASECMP(buff, "smallfont_key ")) {
+ #if defined (HOTKEY_CTRL) || defined (HOTKEY_META)
+-        RESET_AND_ASSIGN(rs_smallfont_key, get_word(2, buff));
++        RESET_AND_ASSIGN(rs_smallfont_key, (char *)get_word(2, (spif_charptr_t)buff));
+         TO_KEYSYM(&ks_smallfont, rs_smallfont_key);
+ #else
+         print_warning("Support for the smallfont_key attribute was not compiled in, ignoring\n");
+@@ -1284,7 +1284,7 @@
+ 
+     } else if (!BEG_STRCASECMP(buff, "bigfont_key ")) {
+ #if defined (HOTKEY_CTRL) || defined (HOTKEY_META)
+-        RESET_AND_ASSIGN(rs_bigfont_key, get_word(2, buff));
++        RESET_AND_ASSIGN(rs_bigfont_key, (char *)get_word(2, (spif_charptr_t)buff));
+         TO_KEYSYM(&ks_bigfont, rs_bigfont_key);
+ #else
+         print_warning("Support for the bigfont_key attribute was not compiled in, ignoring\n");
+@@ -1306,11 +1306,11 @@
+                             file_peek_path(), file_peek_line(), sym + 0xff00);
+                 return NULL;
+             }
+-            s = get_word(3, buff);
++            s = (char *)get_word(3, (spif_charptr_t)buff);
+             str = (char *) MALLOC(strlen(s) + 2);
+             strcpy(str, s);
+             FREE(s);
+-            chomp(str);
++            chomp((spif_charptr_t)str);
+             len = parse_escaped_string(str);
+             if (len > 255)
+                 len = 255;      /* We can only handle lengths that will fit in a char */
+@@ -1328,7 +1328,7 @@
+ #endif
+ 
+     } else if (!BEG_STRCASECMP(buff, "meta_mod ")) {
+-        char *tmp = get_pword(2, buff);
++        char *tmp = (char *)get_pword(2, (spif_charptr_t)buff);
+ 
+         if (!tmp) {
+             print_error("Parse error in file %s, line %lu:  Missing modifier value for attribute meta_mod\n",
+@@ -1338,7 +1338,7 @@
+         rs_meta_mod = (unsigned int) strtoul(tmp, (char **) NULL, 0);
+ 
+     } else if (!BEG_STRCASECMP(buff, "alt_mod ")) {
+-        char *tmp = get_pword(2, buff);
++        char *tmp = (char *)get_pword(2, (spif_charptr_t)buff);
+ 
+         if (!tmp) {
+             print_error("Parse error in file %s, line %lu:  Missing modifier value for attribute alt_mod\n",
+@@ -1348,7 +1348,7 @@
+         rs_alt_mod = (unsigned int) strtoul(tmp, (char **) NULL, 0);
+ 
+     } else if (!BEG_STRCASECMP(buff, "numlock_mod ")) {
+-        char *tmp = get_pword(2, buff);
++        char *tmp = (char *)get_pword(2, (spif_charptr_t)buff);
+ 
+         if (!tmp) {
+             print_error("Parse error in file %s, line %lu:  Missing modifier value for attribute numlock_mod\n",
+@@ -1390,7 +1390,7 @@
+ 
+     } else if (!BEG_STRCASECMP(buff, "app_keypad ")) {
+ 
+-        char *tmp = get_pword(2, buff);
++        char *tmp = (char *)get_pword(2, (spif_charptr_t)buff);
+ 
+         if (!tmp) {
+             print_error("Parse error in file %s, line %lu:  Missing boolean value for attribute app_keypad\n",
+@@ -1409,7 +1409,7 @@
+ 
+     } else if (!BEG_STRCASECMP(buff, "app_cursor ")) {
+ 
+-        char *tmp = get_pword(2, buff);
++        char *tmp = (char *)get_pword(2, (spif_charptr_t)buff);
+ 
+         if (!tmp) {
+             print_error("Parse error in file %s, line %lu:  Missing boolean value for attribute app_cursor\n",
+@@ -1441,55 +1441,55 @@
+     }
+     if (!BEG_STRCASECMP(buff, "print_pipe ")) {
+ #ifdef PRINTPIPE
+-        RESET_AND_ASSIGN(rs_print_pipe, get_word(2, buff));
++        RESET_AND_ASSIGN(rs_print_pipe, (char *)get_word(2, (spif_charptr_t)buff));
+ #else
+         print_warning("Support for the print_pipe attribute was not compiled in, ignoring\n");
+ #endif
+ 
+     } else if (!BEG_STRCASECMP(buff, "save_lines ")) {
+-        rs_saveLines = strtol(get_pword(2, buff), (char **) NULL, 0);
++        rs_saveLines = strtol((char *)get_pword(2, (spif_charptr_t)buff), (char **) NULL, 0);
+ 
+     } else if (!BEG_STRCASECMP(buff, "min_anchor_size ")) {
+-        rs_min_anchor_size = strtol(get_pword(2, buff), (char **) NULL, 0);
++        rs_min_anchor_size = strtol((char *)get_pword(2, (spif_charptr_t)buff), (char **) NULL, 0);
+ 
+     } else if (!BEG_STRCASECMP(buff, "border_width ")) {
+ #ifdef BORDER_WIDTH_OPTION
+-        TermWin.internalBorder = (short) strtol(get_pword(2, buff), (char **) NULL, 0);
++        TermWin.internalBorder = (short) strtol((char *)get_pword(2, (spif_charptr_t)buff), (char **) NULL, 0);
+ #else
+         print_warning("Support for the border_width attribute was not compiled in, ignoring\n");
+ #endif
+ 
+     } else if (!BEG_STRCASECMP(buff, "line_space ")) {
+-        rs_line_space = strtol(get_pword(2, buff), (char **) NULL, 0);
++        rs_line_space = strtol((char *)get_pword(2, (spif_charptr_t)buff), (char **) NULL, 0);
+ 
+     } else if (!BEG_STRCASECMP(buff, "finished_title ")) {
+-        RESET_AND_ASSIGN(rs_finished_title, get_word(2, buff));
++        RESET_AND_ASSIGN(rs_finished_title, (char *)get_word(2, (spif_charptr_t)buff));
+ 
+     } else if (!BEG_STRCASECMP(buff, "finished_text ")) {
+-        RESET_AND_ASSIGN(rs_finished_text, get_word(2, buff));
++        RESET_AND_ASSIGN(rs_finished_text, (char *)get_word(2, (spif_charptr_t)buff));
+ 
+     } else if (!BEG_STRCASECMP(buff, "term_name ")) {
+-        RESET_AND_ASSIGN(rs_term_name, get_word(2, buff));
++        RESET_AND_ASSIGN(rs_term_name, (char *)get_word(2, (spif_charptr_t)buff));
+ 
+     } else if (!BEG_STRCASECMP(buff, "debug ")) {
+-        DEBUG_LEVEL = (unsigned int) strtoul(get_pword(2, buff), (char **) NULL, 0);
++        DEBUG_LEVEL = (unsigned int) strtoul((char *)get_pword(2, (spif_charptr_t)buff), (char **) NULL, 0);
+ 
+     } else if (!BEG_STRCASECMP(buff, "exec ")) {
+ 
+         register unsigned short k, n;
+ 
+-        RESET_AND_ASSIGN(rs_exec_args, (char **) MALLOC(sizeof(char *) * ((n = num_words(get_pword(2, buff))) + 1)));
++        RESET_AND_ASSIGN(rs_exec_args, (char **) MALLOC(sizeof(char *) * ((n = num_words(get_pword(2, (spif_charptr_t)buff))) + 1)));
+ 
+         for (k = 0; k < n; k++) {
+-            rs_exec_args[k] = get_word(k + 2, buff);
++            rs_exec_args[k] = (char *)get_word(k + 2, (spif_charptr_t)buff);
+             D_OPTIONS(("rs_exec_args[%d] == %s\n", k, rs_exec_args[k]));
+         }
+         rs_exec_args[n] = (char *) NULL;
+ 
+     } else if (!BEG_STRCASECMP(buff, "cut_chars ")) {
+ #ifdef CUTCHAR_OPTION
+-        RESET_AND_ASSIGN(rs_cutchars, get_word(2, buff));
+-        chomp(rs_cutchars);
++        RESET_AND_ASSIGN(rs_cutchars, (char *)get_word(2, (spif_charptr_t)buff));
++        chomp((spif_charptr_t)rs_cutchars);
+ #else
+         print_warning("Support for the cut_chars attribute was not compiled in, ignoring\n");
+ #endif
+@@ -1510,24 +1510,24 @@
+ 
+     if (!BEG_STRCASECMP(buff, "icon ")) {
+ #ifdef PIXMAP_SUPPORT
+-        RESET_AND_ASSIGN(rs_icon, get_word(2, buff));
++        RESET_AND_ASSIGN(rs_icon, (char *)get_word(2, (spif_charptr_t)buff));
+ #else
+         print_warning("Pixmap support was not compiled in, ignoring \"icon\" attribute\n");
+ #endif
+ 
+     } else if (!BEG_STRCASECMP(buff, "cache")) {
+ #ifdef PIXMAP_SUPPORT
+-        rs_cache_size = strtoul(get_pword(2, buff), (char **) NULL, 0);
++        rs_cache_size = strtoul((char *)get_pword(2, (spif_charptr_t)buff), (char **) NULL, 0);
+ #else
+         print_warning("Pixmap support was not compiled in, ignoring \"cache\" attribute\n");
+ #endif
+ 
+     } else if (!BEG_STRCASECMP(buff, "path ")) {
+-        RESET_AND_ASSIGN(rs_path, get_word(2, buff));
++        RESET_AND_ASSIGN(rs_path, (char *)get_word(2, (spif_charptr_t)buff));
+ 
+     } else if (!BEG_STRCASECMP(buff, "anim ")) {
+ #ifdef BACKGROUND_CYCLING_SUPPORT
+-        char *tmp = get_pword(2, buff);
++        char *tmp = (char *)get_pword(2, (spif_charptr_t)buff);
+ 
+         if (tmp) {
+             rs_anim_pixmap_list = STRDUP(tmp);
+@@ -1568,7 +1568,7 @@
+     }
+     idx = *((int *) state);
+     if (!BEG_STRCASECMP(buff, "type ")) {
+-        char *type = get_pword(2, buff);
++        char *type = (char *)get_pword(2, (spif_charptr_t)buff);
+ 
+         if (!type) {
+             print_error("Parse error in file %s, line %lu:  Missing image type\n", file_peek_path(), file_peek_line());
+@@ -1611,8 +1611,8 @@
+         *((int *) state) = idx;
+ 
+     } else if (!BEG_STRCASECMP(buff, "mode ")) {
+-        char *mode = get_pword(2, buff);
+-        char *allow_list = get_pword(4, buff);
++        char *mode = (char *)get_pword(2, (spif_charptr_t)buff);
++        char *allow_list = (char *)get_pword(4, (spif_charptr_t)buff);
+ 
+         if (!CHECK_VALID_INDEX(idx)) {
+             print_error("Parse error in file %s, line %lu:  Encountered \"mode\" with no image type defined\n", file_peek_path(),
+@@ -1655,7 +1655,7 @@
+             }
+         }
+     } else if (!BEG_STRCASECMP(buff, "state ")) {
+-        char *state = get_pword(2, buff), new = 0;
++        char *state = (char *)get_pword(2, (spif_charptr_t)buff), new = 0;
+ 
+         if (!state) {
+             print_error("Parse error in file %s, line %lu:  Missing state\n", file_peek_path(), file_peek_line());
+@@ -1702,7 +1702,8 @@
+             MEMSET(images[idx].current->iml, 0, sizeof(imlib_t));
+         }
+     } else if (!BEG_STRCASECMP(buff, "color ")) {
+-        char *fg = get_word(2, buff), *bg = get_word(3, buff);
++        char *fg = (char *)get_word(2, (spif_charptr_t)buff),
++	     *bg = (char *)get_word(3, (spif_charptr_t)buff);
+ 
+         if (!CHECK_VALID_INDEX(idx)) {
+             print_error("Parse error in file %s, line %lu:  Encountered \"color\" with no image type defined\n", file_peek_path(),
+@@ -1734,7 +1735,7 @@
+ 
+     } else if (!BEG_STRCASECMP(buff, "file ")) {
+ #ifdef PIXMAP_SUPPORT
+-        char *filename = get_pword(2, buff);
++        char *filename = (char *)get_pword(2, (spif_charptr_t)buff);
+ 
+         if (!CHECK_VALID_INDEX(idx)) {
+             print_error("Parse error in file %s, line %lu:  Encountered \"file\" with no image type defined\n", file_peek_path(),
+@@ -1758,7 +1759,7 @@
+ 
+     } else if (!BEG_STRCASECMP(buff, "geom ")) {
+ #ifdef PIXMAP_SUPPORT
+-        char *geom = get_pword(2, buff);
++        char *geom = (char *)get_pword(2, (spif_charptr_t)buff);
+ 
+         if (!CHECK_VALID_INDEX(idx)) {
+             print_error("Parse error in file %s, line %lu:  Encountered \"geom\" with no image type defined\n", file_peek_path(),
+@@ -1779,8 +1780,8 @@
+ 
+     } else if (!BEG_STRCASECMP(buff, "cmod ") || !BEG_STRCASECMP(buff, "colormod ")) {
+ #ifdef PIXMAP_SUPPORT
+-        char *color = get_pword(2, buff);
+-        char *mods = get_pword(3, buff);
++        char *color = (char *)get_pword(2, (spif_charptr_t)buff);
++        char *mods = (char *)get_pword(3, (spif_charptr_t)buff);
+         unsigned char n;
+         imlib_t *iml = images[idx].current->iml;
+ 
+@@ -1802,7 +1803,7 @@
+             print_error("Parse error in file %s, line %lu:  Missing modifier(s)\n", file_peek_path(), file_peek_line());
+             return NULL;
+         }
+-        n = num_words(mods);
++        n = num_words((spif_charptr_t)mods);
+ 
+         if (!BEG_STRCASECMP(color, "image ")) {
+             if (iml->mod) {
+@@ -1811,10 +1812,10 @@
+             iml->mod = create_colormod();
+             iml->mod->brightness = (int) strtol(mods, (char **) NULL, 0);
+             if (n > 1) {
+-                iml->mod->contrast = (int) strtol(get_pword(2, mods), (char **) NULL, 0);
++                iml->mod->contrast = (int) strtol((char *)get_pword(2, (spif_charptr_t)mods), (char **) NULL, 0);
+             }
+             if (n > 2) {
+-                iml->mod->gamma = (int) strtol(get_pword(3, mods), (char **) NULL, 0);
++                iml->mod->gamma = (int) strtol((char *)get_pword(3, (spif_charptr_t)mods), (char **) NULL, 0);
+             }
+             update_cmod(iml->mod);
+         } else if (!BEG_STRCASECMP(color, "red ")) {
+@@ -1824,10 +1825,10 @@
+             iml->rmod = create_colormod();
+             iml->rmod->brightness = (int) strtol(mods, (char **) NULL, 0);
+             if (n > 1) {
+-                iml->rmod->contrast = (int) strtol(get_pword(2, mods), (char **) NULL, 0);
++                iml->rmod->contrast = (int) strtol((char *)get_pword(2, (spif_charptr_t)mods), (char **) NULL, 0);
+             }
+             if (n > 2) {
+-                iml->rmod->gamma = (int) strtol(get_pword(3, mods), (char **) NULL, 0);
++                iml->rmod->gamma = (int) strtol((char *)get_pword(3, (spif_charptr_t)mods), (char **) NULL, 0);
+             }
+             update_cmod(iml->rmod);
+         } else if (!BEG_STRCASECMP(color, "green ")) {
+@@ -1837,10 +1838,10 @@
+             iml->gmod = create_colormod();
+             iml->gmod->brightness = (int) strtol(mods, (char **) NULL, 0);
+             if (n > 1) {
+-                iml->gmod->contrast = (int) strtol(get_pword(2, mods), (char **) NULL, 0);
++                iml->gmod->contrast = (int) strtol((char *)get_pword(2, (spif_charptr_t)mods), (char **) NULL, 0);
+             }
+             if (n > 2) {
+-                iml->gmod->gamma = (int) strtol(get_pword(3, mods), (char **) NULL, 0);
++                iml->gmod->gamma = (int) strtol((char *)get_pword(3, (spif_charptr_t)mods), (char **) NULL, 0);
+             }
+             update_cmod(iml->gmod);
+         } else if (!BEG_STRCASECMP(color, "blue ")) {
+@@ -1850,10 +1851,10 @@
+             iml->bmod = create_colormod();
+             iml->bmod->brightness = (int) strtol(mods, (char **) NULL, 0);
+             if (n > 1) {
+-                iml->bmod->contrast = (int) strtol(get_pword(2, mods), (char **) NULL, 0);
++                iml->bmod->contrast = (int) strtol((char *)get_pword(2, (spif_charptr_t)mods), (char **) NULL, 0);
+             }
+             if (n > 2) {
+-                iml->bmod->gamma = (int) strtol(get_pword(3, mods), (char **) NULL, 0);
++                iml->bmod->gamma = (int) strtol((char *)get_pword(3, (spif_charptr_t)mods), (char **) NULL, 0);
+             }
+             update_cmod(iml->bmod);
+         } else {
+@@ -1869,17 +1870,17 @@
+                         file_peek_line());
+             return NULL;
+         }
+-        if (num_words(buff + 7) < 4) {
++        if (num_words((spif_charptr_t)buff + 7) < 4) {
+             print_error("Parse error in file %s, line %lu:  Invalid parameter list for attribute \"border\"\n", file_peek_path(),
+                         file_peek_line());
+             return NULL;
+         }
+         RESET_AND_ASSIGN(images[idx].current->iml->border, (Imlib_Border *) MALLOC(sizeof(Imlib_Border)));
+ 
+-        images[idx].current->iml->border->left = (unsigned short) strtoul(get_pword(2, buff), (char **) NULL, 0);
+-        images[idx].current->iml->border->right = (unsigned short) strtoul(get_pword(3, buff), (char **) NULL, 0);
+-        images[idx].current->iml->border->top = (unsigned short) strtoul(get_pword(4, buff), (char **) NULL, 0);
+-        images[idx].current->iml->border->bottom = (unsigned short) strtoul(get_pword(5, buff), (char **) NULL, 0);
++        images[idx].current->iml->border->left = (unsigned short) strtoul((char *)get_pword(2, (spif_charptr_t)buff), (char **) NULL, 0);
++        images[idx].current->iml->border->right = (unsigned short) strtoul((char *)get_pword(3, (spif_charptr_t)buff), (char **) NULL, 0);
++        images[idx].current->iml->border->top = (unsigned short) strtoul((char *)get_pword(4, (spif_charptr_t)buff), (char **) NULL, 0);
++        images[idx].current->iml->border->bottom = (unsigned short) strtoul((char *)get_pword(5, (spif_charptr_t)buff), (char **) NULL, 0);
+ 
+         if ((images[idx].current->iml->border->left == 0) && (images[idx].current->iml->border->right == 0)
+             && (images[idx].current->iml->border->top == 0) && (images[idx].current->iml->border->bottom == 0)) {
+@@ -1897,7 +1898,7 @@
+                         file_peek_line());
+             return NULL;
+         }
+-        if (num_words(buff + 6) < 5) {
++        if (num_words((spif_charptr_t)buff + 6) < 5) {
+             print_error("Parse error in file %s, line %lu:  Invalid parameter list for attribute \"bevel\"\n", file_peek_path(),
+                         file_peek_line());
+             return NULL;
+@@ -1909,15 +1910,15 @@
+         images[idx].current->iml->bevel = (bevel_t *) MALLOC(sizeof(bevel_t));
+         images[idx].current->iml->bevel->edges = (Imlib_Border *) MALLOC(sizeof(Imlib_Border));
+ 
+-        if (!BEG_STRCASECMP(get_pword(2, buff), "down")) {
++        if (!BEG_STRCASECMP((char *)get_pword(2, (spif_charptr_t)buff), "down")) {
+             images[idx].current->iml->bevel->up = 0;
+         } else {
+             images[idx].current->iml->bevel->up = 1;
+         }
+-        images[idx].current->iml->bevel->edges->left = (unsigned short) strtoul(get_pword(3, buff), (char **) NULL, 0);
+-        images[idx].current->iml->bevel->edges->right = (unsigned short) strtoul(get_pword(4, buff), (char **) NULL, 0);
+-        images[idx].current->iml->bevel->edges->top = (unsigned short) strtoul(get_pword(5, buff), (char **) NULL, 0);
+-        images[idx].current->iml->bevel->edges->bottom = (unsigned short) strtoul(get_pword(6, buff), (char **) NULL, 0);
++        images[idx].current->iml->bevel->edges->left = (unsigned short) strtoul((char *)get_pword(3, (spif_charptr_t)buff), (char **) NULL, 0);
++        images[idx].current->iml->bevel->edges->right = (unsigned short) strtoul((char *)get_pword(4, (spif_charptr_t)buff), (char **) NULL, 0);
++        images[idx].current->iml->bevel->edges->top = (unsigned short) strtoul((char *)get_pword(5, (spif_charptr_t)buff), (char **) NULL, 0);
++        images[idx].current->iml->bevel->edges->bottom = (unsigned short) strtoul((char *)get_pword(6, (spif_charptr_t)buff), (char **) NULL, 0);
+ 
+         if ((images[idx].current->iml->bevel->edges->left == 0) && (images[idx].current->iml->bevel->edges->right == 0)
+             && (images[idx].current->iml->bevel->edges->top == 0) && (images[idx].current->iml->bevel->edges->bottom == 0)) {
+@@ -1937,17 +1938,17 @@
+                         file_peek_line());
+             return NULL;
+         }
+-        if (num_words(buff + 8) < 4) {
++        if (num_words((spif_charptr_t)buff + 8) < 4) {
+             print_error("Parse error in file %s, line %lu:  Invalid parameter list for attribute \"padding\"\n", file_peek_path(),
+                         file_peek_line());
+             return NULL;
+         }
+         RESET_AND_ASSIGN(images[idx].current->iml->pad, (Imlib_Border *) MALLOC(sizeof(Imlib_Border)));
+ 
+-        images[idx].current->iml->pad->left = (unsigned short) strtoul(get_pword(2, buff), (char **) NULL, 0);
+-        images[idx].current->iml->pad->right = (unsigned short) strtoul(get_pword(3, buff), (char **) NULL, 0);
+-        images[idx].current->iml->pad->top = (unsigned short) strtoul(get_pword(4, buff), (char **) NULL, 0);
+-        images[idx].current->iml->pad->bottom = (unsigned short) strtoul(get_pword(5, buff), (char **) NULL, 0);
++        images[idx].current->iml->pad->left = (unsigned short) strtoul((char *)get_pword(2, (spif_charptr_t)buff), (char **) NULL, 0);
++        images[idx].current->iml->pad->right = (unsigned short) strtoul((char *)get_pword(3, (spif_charptr_t)buff), (char **) NULL, 0);
++        images[idx].current->iml->pad->top = (unsigned short) strtoul((char *)get_pword(4, (spif_charptr_t)buff), (char **) NULL, 0);
++        images[idx].current->iml->pad->bottom = (unsigned short) strtoul((char *)get_pword(5, (spif_charptr_t)buff), (char **) NULL, 0);
+ 
+         if ((images[idx].current->iml->pad->left == 0) && (images[idx].current->iml->pad->right == 0)
+             && (images[idx].current->iml->pad->top == 0) && (images[idx].current->iml->pad->bottom == 0)) {
+@@ -1975,7 +1976,7 @@
+     }
+ 
+     if (!BEG_STRCASECMP(buff, "bind ")) {
+-        for (i = 2; (str = get_word(i, buff)) && strcasecmp(str, "to"); i++) {
++        for (i = 2; (str = (char *)get_word(i, (spif_charptr_t)buff)) && strcasecmp(str, "to"); i++) {
+             if (!BEG_STRCASECMP(str, "anymod")) {
+                 mod = MOD_ANY;
+             } else if (!BEG_STRCASECMP(str, "ctrl")) {
+@@ -2017,24 +2018,24 @@
+             return NULL;
+         }
+         i++;
+-        str = get_pword(i, buff);
++        str = (char *)get_pword(i, (spif_charptr_t)buff);
+         if (!BEG_STRCASECMP(str, "string")) {
+-            str = get_word(i + 1, buff);
++            str = (char *)get_word(i + 1, (spif_charptr_t)buff);
+             action_add(mod, button, keysym, ACTION_STRING, (void *) str);
+             FREE(str);
+         } else if (!BEG_STRCASECMP(str, "echo")) {
+-            str = get_word(i + 1, buff);
++            str = (char *)get_word(i + 1, (spif_charptr_t)buff);
+             action_add(mod, button, keysym, ACTION_ECHO, (void *) str);
+             FREE(str);
+         } else if (!BEG_STRCASECMP(str, "menu")) {
+             menu_t *menu;
+ 
+-            str = get_word(i + 1, buff);
++            str = (char *)get_word(i + 1, (spif_charptr_t)buff);
+             menu = find_menu_by_title(menu_list, str);
+             action_add(mod, button, keysym, ACTION_MENU, (void *) menu);
+             FREE(str);
+         } else if (!BEG_STRCASECMP(str, "script")) {
+-            str = get_word(i + 1, buff);
++            str = (char *)get_word(i + 1, (spif_charptr_t)buff);
+             action_add(mod, button, keysym, ACTION_SCRIPT, (void *) str);
+             FREE(str);
+         } else {
+@@ -2057,7 +2058,7 @@
+     menu_t *menu;
+ 
+     if (*buff == CONF_BEGIN_CHAR) {
+-        char *title = get_pword(2, buff + 6);
++        char *title = (char *)get_pword(2, (spif_charptr_t)buff + 6);
+ 
+         menu = menu_create(title);
+         return ((void *) menu);
+@@ -2077,13 +2078,13 @@
+         return NULL;
+     }
+     if (!BEG_STRCASECMP(buff, "title ")) {
+-        char *title = get_word(2, buff);
++        char *title = (char *)get_word(2, (spif_charptr_t)buff);
+ 
+         menu_set_title(menu, title);
+         FREE(title);
+ 
+     } else if (!BEG_STRCASECMP(buff, "font ")) {
+-        char *name = get_word(2, buff);
++        char *name = (char *)get_word(2, (spif_charptr_t)buff);
+ 
+         if (!name) {
+             print_error("Parse error in file %s, line %lu:  Missing font name.\n", file_peek_path(), file_peek_line());
+@@ -2131,7 +2132,7 @@
+         return ((void *) menu);
+     }
+     if (!BEG_STRCASECMP(buff, "text ")) {
+-        char *text = get_word(2, buff);
++        char *text = (char *)get_word(2, (spif_charptr_t)buff);
+ 
+         if (!text) {
+             print_error("Parse error in file %s, line %lu:  Missing menuitem text.\n", file_peek_path(), file_peek_line());
+@@ -2141,7 +2142,7 @@
+         FREE(text);
+ 
+     } else if (!BEG_STRCASECMP(buff, "rtext ")) {
+-        char *rtext = get_word(2, buff);
++        char *rtext = (char *)get_word(2, (spif_charptr_t)buff);
+ 
+         if (!rtext) {
+             print_error("Parse error in file %s, line %lu:  Missing menuitem right-justified text.\n", file_peek_path(), file_peek_line());
+@@ -2153,8 +2154,8 @@
+     } else if (!BEG_STRCASECMP(buff, "icon ")) {
+ 
+     } else if (!BEG_STRCASECMP(buff, "action ")) {
+-        char *type = get_pword(2, buff);
+-        char *action = get_word(3, buff);
++        char *type = (char *)get_pword(2, (spif_charptr_t)buff);
++        char *action = (char *)get_word(3, (spif_charptr_t)buff);
+ 
+         if (!BEG_STRCASECMP(type, "submenu ")) {
+             menuitem_set_action(curitem, MENUITEM_SUBMENU, action);
+@@ -2200,13 +2201,13 @@
+         return NULL;
+     }
+     if (!BEG_STRCASECMP(buff, "font ")) {
+-        char *font = get_word(2, buff);
++        char *font = (char *)get_word(2, (spif_charptr_t)buff);
+ 
+         bbar_set_font(bbar, font);
+         FREE(font);
+ 
+     } else if (!BEG_STRCASECMP(buff, "dock ")) {
+-        char *where = get_pword(2, buff);
++        char *where = (char *)get_pword(2, (spif_charptr_t)buff);
+ 
+         if (!where) {
+             print_error("Parse error in file %s, line %lu:  Attribute dock requires a parameter\n", file_peek_path(), file_peek_line());
+@@ -2222,7 +2223,7 @@
+         }
+ 
+     } else if (!BEG_STRCASECMP(buff, "visible ")) {
+-        char *tmp = get_pword(2, buff);
++        char *tmp = (char *)get_pword(2, (spif_charptr_t)buff);
+ 
+         if (BOOL_OPT_ISTRUE(tmp)) {
+             bbar_set_visible(bbar, 1);
+@@ -2234,7 +2235,7 @@
+         }
+ 
+     } else if (!BEG_STRCASECMP(buff, "button ") || !BEG_STRCASECMP(buff, "rbutton ")) {
+-        char *text = get_pword(2, buff);
++        char *text = (char *)get_pword(2, (spif_charptr_t)buff);
+         char *icon = strcasestr(buff, "icon ");
+         char *action = strcasestr(buff, "action ");
+         button_t *button;
+@@ -2242,7 +2243,7 @@
+         if (text == icon) {
+             text = NULL;
+         } else {
+-            text = get_word(2, buff);
++            text = (char *)get_word(2, (spif_charptr_t)buff);
+         }
+         if (!text && !icon) {
+             print_error("Parse error in file %s, line %lu:  Missing button specifications\n", file_peek_path(), file_peek_line());
+@@ -2253,7 +2254,7 @@
+         if (icon) {
+             simage_t *simg;
+ 
+-            icon = get_word(2, icon);
++            icon = (char *)get_word(2, (spif_charptr_t)icon);
+             simg = create_simage();
+             if (load_image(icon, simg)) {
+                 button_set_icon(button, simg);
+@@ -2263,9 +2264,9 @@
+             FREE(icon);
+         }
+         if (action) {
+-            char *type = get_pword(2, action);
++            char *type = (char *)get_pword(2, (spif_charptr_t)action);
+ 
+-            action = get_word(2, type);
++            action = (char *)get_word(2, (spif_charptr_t)type);
+             if (!BEG_STRCASECMP(type, "menu ")) {
+                 button_set_action(button, ACTION_MENU, action);
+             } else if (!BEG_STRCASECMP(type, "string ")) {
+@@ -2306,9 +2307,9 @@
+         return NULL;
+     }
+     if (!BEG_STRCASECMP(buff, "input_method ")) {
+-        RESET_AND_ASSIGN(rs_input_method, get_word(2, buff));
++        RESET_AND_ASSIGN(rs_input_method, (char *)get_word(2, (spif_charptr_t)buff));
+     } else if (!BEG_STRCASECMP(buff, "preedit_type ")) {
+-        RESET_AND_ASSIGN(rs_preedit_type, get_word(2, buff));
++        RESET_AND_ASSIGN(rs_preedit_type, (char *)get_word(2, (spif_charptr_t)buff));
+     } else {
+         print_error("Parse error in file %s, line %lu:  Attribute \"%s\" is not valid within context xim\n",
+                     file_peek_path(), file_peek_line(), buff);
+@@ -2329,7 +2330,7 @@
+         return NULL;
+     }
+     if (!BEG_STRCASECMP(buff, "encoding ")) {
+-        RESET_AND_ASSIGN(rs_multichar_encoding, get_word(2, buff));
++        RESET_AND_ASSIGN(rs_multichar_encoding, (char *)get_word(2, (spif_charptr_t)buff));
+         if (rs_multichar_encoding != NULL) {
+             if (BEG_STRCASECMP(rs_multichar_encoding, "eucj")
+                 && BEG_STRCASECMP(rs_multichar_encoding, "sjis")
+@@ -2349,10 +2350,10 @@
+         }
+     } else if (!BEG_STRCASECMP(buff, "font ")) {
+ 
+-        char *tmp = get_pword(2, buff);
++        char *tmp = (char *)get_pword(2, (spif_charptr_t)buff);
+         unsigned long n;
+ 
+-        if (num_words(buff) != 3) {
++        if (num_words((spif_charptr_t)buff) != 3) {
+             print_error("Parse error in file %s, line %lu:  Invalid parameter list \"%s\" for attribute font\n",
+                         file_peek_path(), file_peek_line(), NONULL(tmp));
+             return NULL;
+@@ -2360,12 +2361,12 @@
+         if (isdigit(*tmp)) {
+             n = strtoul(tmp, (char **) NULL, 0);
+             if (n <= 255) {
+-                eterm_font_add(&etmfonts, get_pword(2, tmp), n);
++                eterm_font_add(&etmfonts, (char *)get_pword(2, (spif_charptr_t)tmp), n);
+             } else {
+                 print_error("Parse error in file %s, line %lu:  Invalid font index %d\n", file_peek_path(), file_peek_line(), n);
+             }
+         } else {
+-            tmp = get_word(1, tmp);
++            tmp = (char *)get_word(1, (spif_charptr_t)tmp);
+             print_error("Parse error in file %s, line %lu:  Invalid font index \"%s\"\n", file_peek_path(), file_peek_line(), NONULL(tmp));
+             FREE(tmp);
+         }
+@@ -2442,22 +2443,22 @@
+         } else {
+             snprintf(path, sizeof(path), CONFIG_SEARCH_PATH);
+         }
+-        shell_expand(path);
++        shell_expand((spif_charptr_t)path);
+     }
+     if (fallback & PARSE_TRY_USER_THEME) {
+-        if (theme && *theme && (ret = conf_parse(conf_name, *theme, path)) != NULL) {
++        if (theme && *theme && (ret = (char *)conf_parse((spif_charptr_t)conf_name, (spif_charptr_t)*theme, (spif_charptr_t)path)) != NULL) {
+             return ret;
+         }
+     }
+     if (fallback & PARSE_TRY_DEFAULT_THEME) {
+         RESET_AND_ASSIGN(*theme, STRDUP(PACKAGE));
+-        if ((ret = conf_parse(conf_name, *theme, path)) != NULL) {
++        if ((ret = (char *)conf_parse((spif_charptr_t)conf_name, (spif_charptr_t)*theme, (spif_charptr_t)path)) != NULL) {
+             return ret;
+         }
+     }
+     if (fallback & PARSE_TRY_NO_THEME) {
+         RESET_AND_ASSIGN(*theme, NULL);
+-        return (conf_parse(conf_name, *theme, path));
++        return ((char *)conf_parse((spif_charptr_t)conf_name, (spif_charptr_t)*theme, (spif_charptr_t)path));
+     }
+     return NULL;
+ }
+@@ -2534,20 +2535,20 @@
+     conf_init_subsystem();
+ 
+     /* Register Eterm's context parsers. */
+-    conf_register_context("color", parse_color);
+-    conf_register_context("attributes", parse_attributes);
+-    conf_register_context("toggles", parse_toggles);
+-    conf_register_context("keyboard", parse_keyboard);
+-    conf_register_context("misc", parse_misc);
+-    conf_register_context("imageclasses", parse_imageclasses);
+-    conf_register_context("image", parse_image);
+-    conf_register_context("actions", parse_actions);
+-    conf_register_context("menu", parse_menu);
+-    conf_register_context("menuitem", parse_menuitem);
+-    conf_register_context("button_bar", parse_bbar);
+-    conf_register_context("xim", parse_xim);
+-    conf_register_context("multichar", parse_multichar);
+-    conf_register_context("escreen", parse_escreen);
++    conf_register_context((spif_charptr_t)"color", (ctx_handler_t)parse_color);
++    conf_register_context((spif_charptr_t)"attributes", (ctx_handler_t)parse_attributes);
++    conf_register_context((spif_charptr_t)"toggles", (ctx_handler_t)parse_toggles);
++    conf_register_context((spif_charptr_t)"keyboard", (ctx_handler_t)parse_keyboard);
++    conf_register_context((spif_charptr_t)"misc", (ctx_handler_t)parse_misc);
++    conf_register_context((spif_charptr_t)"imageclasses", (ctx_handler_t)parse_imageclasses);
++    conf_register_context((spif_charptr_t)"image", (ctx_handler_t)parse_image);
++    conf_register_context((spif_charptr_t)"actions", (ctx_handler_t)parse_actions);
++    conf_register_context((spif_charptr_t)"menu", (ctx_handler_t)parse_menu);
++    conf_register_context((spif_charptr_t)"menuitem", (ctx_handler_t)parse_menuitem);
++    conf_register_context((spif_charptr_t)"button_bar", (ctx_handler_t)parse_bbar);
++    conf_register_context((spif_charptr_t)"xim", (ctx_handler_t)parse_xim);
++    conf_register_context((spif_charptr_t)"multichar", (ctx_handler_t)parse_multichar);
++    conf_register_context((spif_charptr_t)"escreen", (ctx_handler_t)parse_escreen);
+ }
+ 
+ /* Sync up options with our internal data after parsing options and configs */
+@@ -2872,7 +2873,7 @@
+         FREE(rs_tint);
+     }
+     if (rs_cmod_image) {
+-        unsigned char n = num_words(rs_cmod_image);
++        unsigned char n = num_words((spif_charptr_t)rs_cmod_image);
+         imlib_t *iml = images[image_bg].norm->iml;
+ 
+         if (iml->mod) {
+@@ -2881,17 +2882,17 @@
+         iml->mod = create_colormod();
+         iml->mod->brightness = (int) strtol(rs_cmod_image, (char **) NULL, 0);
+         if (n > 1) {
+-            iml->mod->contrast = (int) strtol(get_pword(2, rs_cmod_image), (char **) NULL, 0);
++            iml->mod->contrast = (int) strtol((char *)get_pword(2, (spif_charptr_t)rs_cmod_image), (char **) NULL, 0);
+         }
+         if (n > 2) {
+-            iml->mod->gamma = (int) strtol(get_pword(3, rs_cmod_image), (char **) NULL, 0);
++            iml->mod->gamma = (int) strtol((char *)get_pword(3, (spif_charptr_t)rs_cmod_image), (char **) NULL, 0);
+         }
+         D_PIXMAP(("From image cmod string %s to brightness %d, contrast %d, and gamma %d\n", rs_cmod_image,
+                   iml->mod->brightness, iml->mod->contrast, iml->mod->gamma));
+         FREE(rs_cmod_image);
+     }
+     if (rs_cmod_red) {
+-        unsigned char n = num_words(rs_cmod_red);
++        unsigned char n = num_words((spif_charptr_t)rs_cmod_red);
+         imlib_t *iml = images[image_bg].norm->iml;
+ 
+         if (iml->rmod) {
+@@ -2900,10 +2901,10 @@
+         iml->rmod = create_colormod();
+         iml->rmod->brightness = (int) strtol(rs_cmod_red, (char **) NULL, 0);
+         if (n > 1) {
+-            iml->rmod->contrast = (int) strtol(get_pword(2, rs_cmod_red), (char **) NULL, 0);
++            iml->rmod->contrast = (int) strtol((char *)get_pword(2, (spif_charptr_t)rs_cmod_red), (char **) NULL, 0);
+         }
+         if (n > 2) {
+-            iml->rmod->gamma = (int) strtol(get_pword(3, rs_cmod_red), (char **) NULL, 0);
++            iml->rmod->gamma = (int) strtol((char *)get_pword(3, (spif_charptr_t)rs_cmod_red), (char **) NULL, 0);
+         }
+         D_PIXMAP(("From red cmod string %s to brightness %d, contrast %d, and gamma %d\n", rs_cmod_red,
+                   iml->rmod->brightness, iml->rmod->contrast, iml->rmod->gamma));
+@@ -2911,7 +2912,7 @@
+         update_cmod(iml->rmod);
+     }
+     if (rs_cmod_green) {
+-        unsigned char n = num_words(rs_cmod_green);
++        unsigned char n = num_words((spif_charptr_t)rs_cmod_green);
+         imlib_t *iml = images[image_bg].norm->iml;
+ 
+         if (iml->gmod) {
+@@ -2920,10 +2921,10 @@
+         iml->gmod = create_colormod();
+         iml->gmod->brightness = (int) strtol(rs_cmod_green, (char **) NULL, 0);
+         if (n > 1) {
+-            iml->gmod->contrast = (int) strtol(get_pword(2, rs_cmod_green), (char **) NULL, 0);
++            iml->gmod->contrast = (int) strtol((char *)get_pword(2, (spif_charptr_t)rs_cmod_green), (char **) NULL, 0);
+         }
+         if (n > 2) {
+-            iml->gmod->gamma = (int) strtol(get_pword(3, rs_cmod_green), (char **) NULL, 0);
++            iml->gmod->gamma = (int) strtol((char *)get_pword(3, (spif_charptr_t)rs_cmod_green), (char **) NULL, 0);
+         }
+         D_PIXMAP(("From green cmod string %s to brightness %d, contrast %d, and gamma %d\n", rs_cmod_green,
+                   iml->gmod->brightness, iml->gmod->contrast, iml->gmod->gamma));
+@@ -2931,7 +2932,7 @@
+         update_cmod(iml->gmod);
+     }
+     if (rs_cmod_blue) {
+-        unsigned char n = num_words(rs_cmod_blue);
++        unsigned char n = num_words((spif_charptr_t)rs_cmod_blue);
+         imlib_t *iml = images[image_bg].norm->iml;
+ 
+         if (iml->bmod) {
+@@ -2940,10 +2941,10 @@
+         iml->bmod = create_colormod();
+         iml->bmod->brightness = (int) strtol(rs_cmod_blue, (char **) NULL, 0);
+         if (n > 1) {
+-            iml->bmod->contrast = (int) strtol(get_pword(2, rs_cmod_blue), (char **) NULL, 0);
++            iml->bmod->contrast = (int) strtol((char *)get_pword(2, (spif_charptr_t)rs_cmod_blue), (char **) NULL, 0);
+         }
+         if (n > 2) {
+-            iml->bmod->gamma = (int) strtol(get_pword(3, rs_cmod_blue), (char **) NULL, 0);
++            iml->bmod->gamma = (int) strtol((char *)get_pword(3, (spif_charptr_t)rs_cmod_blue), (char **) NULL, 0);
+         }
+         D_PIXMAP(("From blue cmod string %s to brightness %d, contrast %d, and gamma %d\n", rs_cmod_blue,
+                   iml->bmod->brightness, iml->bmod->contrast, iml->bmod->gamma));
+@@ -2997,28 +2998,28 @@
+             unsigned long w, h;
+             int count;
+ 
+-            count = num_words(rs_anim_pixmap_list) - 1;	/* -1 for the delay */
++            count = num_words((spif_charptr_t)rs_anim_pixmap_list) - 1;	/* -1 for the delay */
+             rs_anim_pixmaps = (char **) MALLOC(sizeof(char *) * (count + 1));
+ 
+             for (i = 0; i < count; i++) {
+-                temp = get_word(i + 2, rs_anim_pixmap_list);	/* +2 rather than +1 to account for the delay */
++                temp = (char *)get_word(i + 2, (spif_charptr_t)rs_anim_pixmap_list);	/* +2 rather than +1 to account for the delay */
+                 if (temp == NULL)
+                     break;
+-                if (num_words(temp) != 3) {
+-                    if (num_words(temp) == 1) {
++                if (num_words((spif_charptr_t)temp) != 3) {
++                    if (num_words((spif_charptr_t)temp) == 1) {
+                         rs_anim_pixmaps[i] = temp;
+                     }
+                 } else {
+-                    w1 = get_pword(1, temp);
+-                    h1 = get_pword(2, temp);
++                    w1 = (char *)get_pword(1, (spif_charptr_t)temp);
++                    h1 = (char *)get_pword(2, (spif_charptr_t)temp);
+                     w = strtol(w1, (char **) NULL, 0);
+                     h = strtol(h1, (char **) NULL, 0);
+                     if (w || h) {
+-                        rs_anim_pixmaps[i] = get_word(3, temp);
++                        rs_anim_pixmaps[i] = (char *)get_word(3, (spif_charptr_t)temp);
+                         rs_anim_pixmaps[i] = (char *) REALLOC(rs_anim_pixmaps[i], strlen(rs_anim_pixmaps[i]) + 9);
+                         strcat(rs_anim_pixmaps[i], "@100x100");
+                     } else {
+-                        rs_anim_pixmaps[i] = get_word(3, temp);
++                        rs_anim_pixmaps[i] = (char *)get_word(3, (spif_charptr_t)temp);
+                         rs_anim_pixmaps[i] = (char *) REALLOC(rs_anim_pixmaps[i], strlen(rs_anim_pixmaps[i]) + 5);
+                         strcat(rs_anim_pixmaps[i], "@0x0");
+                     }
+diff --exclude='*~' --exclude='.*' -I '$Id:' -urN Eterm-0.9.3.orig/src/pixmap.c Eterm-0.9.3/src/pixmap.c
+--- Eterm-0.9.3.orig/src/pixmap.c	2005-05-13 00:49:10.000000000 -0400
++++ Eterm-0.9.3/src/pixmap.c	2005-05-13 00:58:24.000000000 -0400
+@@ -824,7 +824,7 @@
+                         FREE(reply);
+                     } else {
+                         pmap = (Pixmap) strtoul(reply, (char **) NULL, 0);
+-                        mask = (Pixmap) strtoul(get_pword(2, reply), (char **) NULL, 0);
++                        mask = (Pixmap) strtoul((char *)get_pword(2, (spif_charptr_t)reply), (char **) NULL, 0);
+                         FREE(reply);
+                         enl_ipc_sync();
+                         if (pmap) {
+@@ -1053,7 +1053,7 @@
+                         Pixmap pmap, mask;
+ 
+                         pmap = (Pixmap) strtoul(reply, (char **) NULL, 0);
+-                        mask = (Pixmap) strtoul(get_pword(2, reply), (char **) NULL, 0);
++                        mask = (Pixmap) strtoul((char *)get_pword(2, (spif_charptr_t)reply), (char **) NULL, 0);
+                         FREE(reply);
+                         enl_ipc_sync();
+                         if (pmap) {
+diff --exclude='*~' --exclude='.*' -I '$Id:' -urN Eterm-0.9.3.orig/src/screen.c Eterm-0.9.3/src/screen.c
+--- Eterm-0.9.3.orig/src/screen.c	2005-05-13 00:49:10.000000000 -0400
++++ Eterm-0.9.3/src/screen.c	2005-05-13 02:20:08.000000000 -0400
+@@ -1783,7 +1783,7 @@
+                     }
+                     col--;
+                     if (buffer[0] & 0x80)
+-                        multichar_decode(buffer, len);
++                        multichar_decode((unsigned char *)buffer, len);
+                     wlen = len / 2;
+                 } else {
+                     if ((rend & RS_multiMask) == RS_multi1) {
+@@ -2188,7 +2188,7 @@
+     for (row = 0; row < rows; row++) {
+         if (screen.text[row]) {
+             c = screen.text[row];
+-            for (s = strstr(c, str); s; s = strstr(s + 1, str)) {
++            for (s = strstr((char *)c, str); s; s = strstr(s + 1, str)) {
+                 unsigned long j;
+ 
+                 col = (long) s - (long) c;
+@@ -2203,11 +2203,11 @@
+                     lrow = row;
+                 }
+             }
+-            for (s = screen.text[row] + cols - len + 1, k = len - 1; k; s++, k--) {
++            for (s = (char *)screen.text[row] + cols - len + 1, k = len - 1; k; s++, k--) {
+                 unsigned long j;
+ 
+                 if ((row < rows - 1) && !strncasecmp(s, str, k) && screen.text[row + 1]
+-                    && !strncasecmp(screen.text[row + 1], str + k, len - k)) {
++                    && !strncasecmp((char *)screen.text[row + 1], str + k, len - k)) {
+                     col = (long) s - (long) c;
+                     for (i = &(screen.rend[row][cols - k]), j = 0; j < k; i++, j++) {
+                         (*i & RS_RVid) ? (*i &= ~RS_RVid) : (*i |= RS_RVid);
+@@ -2305,7 +2305,7 @@
+     buff = MALLOC(cols + 1);
+     for (row = 0; row < rows; row++) {
+         if (screen.text[row]) {
+-            for (src = screen.text[row], dest = buff, col = 0; col < cols; col++)
++            for (src = (char *)screen.text[row], dest = buff, col = 0; col < cols; col++)
+                 *dest++ = *src++;
+             *dest++ = '\n';
+             *dest = 0;
+@@ -2376,7 +2376,7 @@
+ selection_write(unsigned char *data, size_t len)
+ {
+     size_t num;
+-    unsigned char *p, *cr = "\r";
++    unsigned char *p, *cr = (unsigned char *)"\r";
+ 
+     D_SELECT(("Writing %lu characters of selection data to tty.\n", len));
+     D_SELECT(("\n%s\n\n", safe_print_string((char *) data, len)));
+@@ -2453,7 +2453,7 @@
+                 D_SELECT(("Got string list 0x%08x with %d strings.\n", cl, size));
+                 for (i = 0; i < size; i++) {
+                     if (cl[i]) {
+-                        selection_write(cl[i], strlen(cl[i]));
++                        selection_write((unsigned char *)cl[i], strlen(cl[i]));
+                     }
+                 }
+                 XFreeStringList(cl);
+@@ -2480,7 +2480,7 @@
+         }
+     } else {
+         D_SELECT(("Copying selection to cut buffer %d\n", (int) sel));
+-        XChangeProperty(Xdisplay, Xroot, sel, XA_STRING, 8, PropModeReplace, str, len);
++        XChangeProperty(Xdisplay, Xroot, sel, XA_STRING, 8, PropModeReplace, (unsigned char *)str, len);
+     }
+ }
+ 
+@@ -2488,7 +2488,7 @@
+ void
+ selection_copy(Atom sel)
+ {
+-    selection_copy_string(sel, selection.text, selection.len);
++    selection_copy_string(sel, (char *)selection.text, selection.len);
+ }
+ 
+ /* Paste the specified selection from the specified buffer. */
+@@ -3265,7 +3265,7 @@
+         XTextProperty xtextp;
+         char *l[1];
+ 
+-        *l = selection.text;
++        *l = (char *)selection.text;
+         xtextp.value = NULL;
+         xtextp.nitems = 0;
+         if (XmbTextListToTextProperty(Xdisplay, l, 1, XCompoundTextStyle, &xtextp) == Success) {
+diff --exclude='*~' --exclude='.*' -I '$Id:' -urN Eterm-0.9.3.orig/src/script.c Eterm-0.9.3/src/script.c
+--- Eterm-0.9.3.orig/src/script.c	2005-05-13 00:49:10.000000000 -0400
++++ Eterm-0.9.3/src/script.c	2005-05-13 02:13:21.000000000 -0400
+@@ -191,7 +191,7 @@
+     char **tmp;
+ 
+     for (tmp = params; tmp && *tmp; tmp++) {
+-        tt_write(*tmp, strlen(*tmp));
++        tt_write((unsigned char *)*tmp, strlen(*tmp));
+     }
+ }
+ 
+@@ -214,7 +214,7 @@
+         if (isdigit(params[0][0]) || (params[0][0] == '-' && isdigit(params[0][1]))) {
+             code = (unsigned char) atoi(params[0]);
+         } else {
+-            tmp = join(" ", params);
++            tmp = (char *)join((spif_charptr_t)" ", (spif_charptr_t *)params);
+             printf("Exiting:  %s\n", tmp);
+             FREE(tmp);
+         }
+@@ -411,7 +411,7 @@
+     char *tmp;
+ 
+     if (params && *params) {
+-        tmp = join(" ", params);
++        tmp = (char *)join((spif_charptr_t)" ", (spif_charptr_t *)params);
+         system_no_wait(tmp);
+         FREE(tmp);
+     } else {
+@@ -431,7 +431,7 @@
+     char **tmp;
+ 
+     for (tmp = params; tmp && *tmp; tmp++) {
+-        cmd_write(*tmp, strlen(*tmp));
++        cmd_write((unsigned char *)*tmp, strlen(*tmp));
+     }
+ }
+ 
+@@ -448,7 +448,7 @@
+     int ret;
+ 
+     if (params && *params) {
+-        tmp = join(" ", params);
++        tmp = (char *)join((spif_charptr_t)" ", (spif_charptr_t *)params);
+     } else {
+         tmp = NULL;
+     }
+@@ -474,7 +474,7 @@
+     char *tmp;
+ 
+     if (params && *params) {
+-        tmp = join(" ", params);
++        tmp = (char *)join((spif_charptr_t)" ", (spif_charptr_t *)params);
+         scr_refresh(DEFAULT_REFRESH);
+         menu_dialog(NULL, tmp, 1, NULL, NULL);
+         FREE(tmp);
+@@ -739,7 +739,7 @@
+ 
+     D_SCRIPT(("Parsing:  \"%s\"\n", s));
+ 
+-    token_list = split(";", s);
++    token_list = (char **)split((spif_charptr_t)";", (spif_charptr_t)s);
+     if (token_list == NULL) {
+         D_SCRIPT(("No tokens found; ignoring script.\n"));
+         return;
+@@ -747,7 +747,7 @@
+ 
+     for (i = 0; token_list[i]; i++) {
+         pstr = token_list[i];
+-        chomp(pstr);
++        chomp((spif_charptr_t)pstr);
+         if (!(*pstr)) {
+             continue;
+         }
+@@ -778,7 +778,7 @@
+                 free_array((void **) token_list, 0);
+                 return;
+             }
+-            param_list = split(", \t", params);
++            param_list = (char **)split((spif_charptr_t)", \t", (spif_charptr_t)params);
+         } else {
+             param_list = NULL;
+         }
+diff --exclude='*~' --exclude='.*' -I '$Id:' -urN Eterm-0.9.3.orig/src/term.c Eterm-0.9.3/src/term.c
+--- Eterm-0.9.3.orig/src/term.c	2005-05-13 00:49:10.000000000 -0400
++++ Eterm-0.9.3/src/term.c	2005-05-13 02:31:13.000000000 -0400
+@@ -233,20 +233,20 @@
+         /* Lookup the string equivalent in terms of the XIM input context. */
+         len = XmbLookupString(xim_input_context, &ev->xkey, (char *) kbuf, sizeof(short_buf), &keysym, &status_return);
+         D_TTY(("XmbLookupString() gave us len %d, keysym \"%s\" (0x%04x), and buffer \"%s\" based on the XIM input context %010p\n",
+-               len, XKeysymToString(keysym), keysym, safe_print_string(kbuf, len), xim_input_context));
++               len, XKeysymToString(keysym), keysym, safe_print_string((char *)kbuf, len), xim_input_context));
+         /* Whoops, it's too long.  Allocate a new buffer and repeat the call. */
+         if (status_return == XBufferOverflow) {
+             kbuf = (unsigned char *) MALLOC(len + 1);
+             kbuf_alloced = 1;
+             len = XmbLookupString(xim_input_context, &ev->xkey, (char *) kbuf, len, &keysym, &status_return);
+             D_TTY(("XmbLookupString() gave us len %d, keysym \"%s\" (0x%04x), and buffer \"%s\" based on the XIM input context %010p\n",
+-                   len, XKeysymToString(keysym), keysym, safe_print_string(kbuf, len), xim_input_context));
++                   len, XKeysymToString(keysym), keysym, safe_print_string((char *)kbuf, len), xim_input_context));
+         }
+         valid_keysym = (status_return == XLookupKeySym) || (status_return == XLookupBoth);
+     } else {
+         /* No XIM input context.  Do it the normal way. */
+         len = XLookupString(&ev->xkey, (char *) kbuf, sizeof(short_buf), &keysym, NULL);
+-        D_TTY(("XLookupString() gave us len %d, keysym \"%s\" (0x%04x), and buffer \"%s\"\n", len, XKeysymToString(keysym), keysym, safe_print_string(kbuf, len)));
++        D_TTY(("XLookupString() gave us len %d, keysym \"%s\" (0x%04x), and buffer \"%s\"\n", len, XKeysymToString(keysym), keysym, safe_print_string((char *)kbuf, len)));
+         valid_keysym = 1;
+     }
+ #else /* USE_XIM */
+@@ -478,7 +478,7 @@
+                   case XK_ISO_Left_Tab:
+                       if (shft) {
+                           len = 3;
+-                          strcpy(kbuf, "\033[Z");
++                          strcpy((char *)kbuf, "\033[Z");
+                       }
+                       break;
+ 
+@@ -487,14 +487,14 @@
+                       /* allow shift to override */
+                       if ((PrivateModes & PrivMode_aplKP) ? !shft : shft) {
+                           len = 3;
+-                          strcpy(kbuf, "\033Ow");
++                          strcpy((char *)kbuf, "\033Ow");
+                           break;
+                       }
+                       /* -> else FALL THROUGH */
+ #endif
+ 
+                   case XK_Home:
+-                      len = strlen(strcpy(kbuf, KS_HOME));
++                      len = strlen(strcpy((char *)kbuf, KS_HOME));
+                       break;
+ 
+ #ifdef XK_KP_Left
+@@ -504,7 +504,7 @@
+                   case XK_KP_Down:     /* \033Or or standard cursor key */
+                       if ((PrivateModes & PrivMode_aplKP) ? !shft : shft) {
+                           len = 3;
+-                          strcpy(kbuf, "\033OZ");       /* The Z is replaced by t, x, v, or r */
++                          strcpy((char *)kbuf, "\033OZ");       /* The Z is replaced by t, x, v, or r */
+                           kbuf[2] = ("txvr"[keysym - XK_KP_Left]);
+                           break;
+                       } else {
+@@ -517,7 +517,7 @@
+                   case XK_Right:       /* "\033[C" */
+                   case XK_Down:        /* "\033[B" */
+                       len = 3;
+-                      strcpy(kbuf, "\033[@");
++                      strcpy((char *)kbuf, "\033[@");
+                       kbuf[2] = ("DACB"[keysym - XK_Left]);
+                       if (PrivateModes & PrivMode_aplCUR) {
+                           kbuf[1] = 'O';
+@@ -544,28 +544,28 @@
+                       /* allow shift to override */
+                       if ((PrivateModes & PrivMode_aplKP) ? !shft : shft) {
+                           len = 3;
+-                          strcpy(kbuf, "\033Oy");
++                          strcpy((char *)kbuf, "\033Oy");
+                           break;
+                       }
+                       /* -> else FALL THROUGH */
+ # endif /* XK_KP_Prior */
+                   case XK_Prior:
+                       len = 4;
+-                      strcpy(kbuf, "\033[5~");
++                      strcpy((char *)kbuf, "\033[5~");
+                       break;
+ # ifdef XK_KP_Next
+                   case XK_KP_Next:
+                       /* allow shift to override */
+                       if ((PrivateModes & PrivMode_aplKP) ? !shft : shft) {
+                           len = 3;
+-                          strcpy(kbuf, "\033Os");
++                          strcpy((char *)kbuf, "\033Os");
+                           break;
+                       }
+                       /* -> else FALL THROUGH */
+ # endif /* XK_KP_Next */
+                   case XK_Next:
+                       len = 4;
+-                      strcpy(kbuf, "\033[6~");
++                      strcpy((char *)kbuf, "\033[6~");
+                       break;
+ #endif /* UNSHIFTED_SCROLLKEYS */
+ 
+@@ -575,18 +575,18 @@
+                       /* allow shift to override */
+                       if ((PrivateModes & PrivMode_aplKP) ? !shft : shft) {
+                           len = 3;
+-                          strcpy(kbuf, "\033Oq");
++                          strcpy((char *)kbuf, "\033Oq");
+                           break;
+                       }
+                       /* -> else FALL THROUGH */
+ #endif /* XK_KP_End */
+                   case XK_End:
+-                      len = strlen(strcpy(kbuf, KS_END));
++                      len = strlen(strcpy((char *)kbuf, KS_END));
+                       break;
+ 
+                   case XK_Select:
+                       len = 4;
+-                      strcpy(kbuf, "\033[4~");
++                      strcpy((char *)kbuf, "\033[4~");
+                       break;
+ 
+ #ifdef DXK_Remove
+@@ -594,33 +594,33 @@
+ #endif
+                   case XK_Execute:
+                       len = 4;
+-                      strcpy(kbuf, "\033[3~");
++                      strcpy((char *)kbuf, "\033[3~");
+                       break;
+ 
+ #ifdef XK_KP_Insert
+                   case XK_KP_Insert:
+                       if ((PrivateModes & PrivMode_aplKP) ? !shft : shft) {
+                           len = 3;
+-                          strcpy(kbuf, "\033Op");
++                          strcpy((char *)kbuf, "\033Op");
+                           break;
+                       }
+ #endif
+                   case XK_Insert:
+                       len = 4;
+-                      strcpy(kbuf, "\033[2~");
++                      strcpy((char *)kbuf, "\033[2~");
+                       break;
+ 
+ #ifdef XK_KP_Delete
+                   case XK_KP_Delete:
+                       if ((PrivateModes & PrivMode_aplKP) ? !shft : shft) {
+                           len = 3;
+-                          strcpy(kbuf, "\033On");
++                          strcpy((char *)kbuf, "\033On");
+                           break;
+                       }
+ #endif
+                   case XK_Delete:
+ #ifdef KS_DELETE
+-                      len = strlen(strcpy(kbuf, KS_DELETE));
++                      len = strlen(strcpy((char *)kbuf, KS_DELETE));
+ #ifdef MULTI_CHARSET
+                       if ((BITFIELD_IS_SET(eterm_options, ETERM_OPTIONS_MBYTE_CURSOR)) && scr_multi1()) {
+                           memmove(kbuf + len, kbuf, len);
+@@ -632,22 +632,22 @@
+ 
+                   case XK_Menu:
+                       len = 5;
+-                      strcpy(kbuf, "\033[29~");
++                      strcpy((char *)kbuf, "\033[29~");
+                       break;
+                   case XK_Find:
+                       len = 4;
+-                      strcpy(kbuf, "\033[1~");
++                      strcpy((char *)kbuf, "\033[1~");
+                       break;
+                   case XK_Help:
+                       len = 5;
+-                      strcpy(kbuf, "\033[28~");
++                      strcpy((char *)kbuf, "\033[28~");
+                       break;
+ 
+                   case XK_KP_Enter:
+                       /* allow shift to override */
+                       if ((PrivateModes & PrivMode_aplKP) ? !shft : shft) {
+                           len = 3;
+-                          strcpy(kbuf, "\033OM");
++                          strcpy((char *)kbuf, "\033OM");
+                       } else {
+                           len = 1;
+                           kbuf[0] = '\r';
+@@ -657,7 +657,7 @@
+ #ifdef XK_KP_Begin
+                   case XK_KP_Begin:
+                       len = 3;
+-                      strcpy(kbuf, "\033Ou");
++                      strcpy((char *)kbuf, "\033Ou");
+                       break;
+ #endif /* XK_KP_Begin */
+ 
+@@ -666,7 +666,7 @@
+                   case XK_KP_F3:       /* "\033OR" */
+                   case XK_KP_F4:       /* "\033OS" */
+                       len = 3;
+-                      strcpy(kbuf, "\033OP");
++                      strcpy((char *)kbuf, "\033OP");
+                       kbuf[2] += (keysym - XK_KP_F1);
+                       break;
+ 
+@@ -689,7 +689,7 @@
+                       /* allow shift to override */
+                       if ((PrivateModes & PrivMode_aplKP) ? !shft : shft) {
+                           len = 3;
+-                          strcpy(kbuf, "\033Oj");
++                          strcpy((char *)kbuf, "\033Oj");
+                           kbuf[2] += (keysym - XK_KP_Multiply);
+                       } else {
+                           len = 1;
+@@ -814,7 +814,7 @@
+ 
+         tt_write(&ch, 1);
+     }
+-    D_TTY(("After handling:  len %d, keysym \"%s\" (0x%04x), and buffer \"%s\"\n", len, XKeysymToString(keysym), keysym, safe_print_string(kbuf, len)));
++    D_TTY(("After handling:  len %d, keysym \"%s\" (0x%04x), and buffer \"%s\"\n", len, XKeysymToString(keysym), keysym, safe_print_string((char *)kbuf, len)));
+     tt_write(kbuf, len);        /* Send the resulting string to the child process */
+ 
+     LK_RET();
+@@ -1259,7 +1259,7 @@
+         for (i = 1; i < 7; i++) {
+             string[i] = cmd_getc();
+         }
+-        set_window_color(idx, string);
++        set_window_color(idx, (char *)string);
+         return;
+     } else if (ch == ';') {
+         unsigned long n = 0;
