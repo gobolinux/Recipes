@@ -1,0 +1,14 @@
+# Recipe for version 1.0.3 by Andre Detsch, on Mon Mar 7 20:26:29 BRT 2005
+url=http://www.bzip.org/1.0.3/bzip2-1.0.3.tar.gz
+compile_version=1.8.0
+recipe_type=makefile
+install_variables=(
+   "PREFIX=$target"
+)
+pre_build() {
+   make -f Makefile-libbz2_so
+}
+pre_link() {
+   cp -a libbz2.so* $target/lib
+   ln -nfs $target/lib/libbz2.so.1.0.3 $target/lib/libbz2.so.1
+}
