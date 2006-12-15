@@ -1,0 +1,17 @@
+# Recipe for version 2.5.3 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Fri Aug 18 11:36:06 BRT 2006
+# Recipe (MakeRecipe) for Fuse by roko, <ro.ko@mcnon.com>, on Wed Mar 23 22:07:09 CET 2005
+compile_version=1.8.0
+url="$httpSourceforge/fuse/fuse-2.5.3.tar.gz"
+recipe_type=configure
+
+configure_options=(
+    MOUNT_FUSE_PATH=${target}/sbin
+    UDEV_RULES_PATH=${target}/../Settings/udev/rules.d
+    --disable-kernel-module
+    --enable-lib
+    --enable-util
+)
+
+post_install() {
+    udevstart 2> /dev/null
+}
