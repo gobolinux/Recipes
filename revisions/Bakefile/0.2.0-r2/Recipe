@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for Bakefile by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Fri Aug 11 15:02:36 BRT 2006
+# Recipe for version 0.2.0 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Fri Aug 11 15:02:36 BRT 2006
+compile_version=1.8.0
+url="$httpSourceforge/bakefile/bakefile-0.2.0.tar.gz"
+file_size=608921
+file_md5=204ea8d5b1709ad33a20a90290df9157
+recipe_type=configure
+
+environment=(
+    PYTHON_PATH_AT_GOBOPROGRAMS="$goboPrograms/Python/Current"
+)
+
+pre_build() {
+    [ ! -f .bootstrapped ] && autoconf && touch .bootstrapped
+}
