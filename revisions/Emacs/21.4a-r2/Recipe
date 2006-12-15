@@ -1,0 +1,22 @@
+# Recipe for version 21.4 by roko, <ro.ko@mcnon.com>, on Mon Mar 7 12:52:46 CET 2005
+# by Leandro Motta Barros
+# Revised for version 21.4a by Jonas Karlsson <jonka750@student.liu.se>, on Mon Apr 5 23:05 CET 2005
+
+url=$ftpGnu/emacs/emacs-21.4a.tar.gz
+compile_version=1.8.0
+recipe_type=configure
+dir=emacs-21.4
+
+# Remove source Emacs Lisp files. Be carefull not to remove .el files
+# that don't have a corresponding .elc file.
+# I don't know if this step is working right (does it work for regular
+# (non-gobo) users?).
+post_install() {
+   pushd $target
+   find . -name "*.el" | while read fileName; do
+                            if [ -e "${fileName}c" ]; then
+                               rm "$fileName"
+                            fi
+                         done
+   popd
+}
