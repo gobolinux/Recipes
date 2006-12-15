@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Firestarter by Guilherme Balestieri Bedin (gbedin), on Thu Sep 8 09:14:18 BRT 2005
+# Recipe for version 1.0.3 by Guilherme Balestieri Bedin (gbedin), on Thu Sep 8 09:14:18 BRT 2005
+compile_version=1.8.0
+url="$httpSourceforge/firestarter/firestarter-1.0.3.tar.gz"
+file_size=1201170
+file_md5=f46860a9e16dac4b693bd05f16370b03
+recipe_type=configure
+
+pre_install() {
+	make install-data-local
+}
