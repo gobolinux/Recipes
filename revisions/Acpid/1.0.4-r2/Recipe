@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Acpid by Jonas Karlsson <jonka750@student.liu.se>, on Sat May 14 09:17:12 CEST 2005
+# Recipe for version 1.0.4 by Jonas Karlsson <jonka750@student.liu.se>, on Sat May 14 09:17:12 CEST 2005
+compile_version=1.8.0
+url="$httpSourceforge/acpid/acpid-1.0.4.tar.gz"
+file_size=23416
+file_md5=3aff94e92186e99ed5fd6dcee2db7c74
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+"INSTPREFIX=${target}"
+)
