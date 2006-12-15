@@ -1,0 +1,17 @@
+# Recipe (MakeRecipe) for Fluxbox-Styles-Fluxmod by Volker Wieban <buckoven@gobolinux.de>, on Son Sep 12 21:07:43 BRT 2004
+compile_version=1.8.0
+url="http://ikaro.dk/e107_files/downloads/fluxbox-styles-fluxmod-20042410.tar.bz2"
+dir='.fluxbox'
+recipe_type=manifest
+
+pre_link() {
+	mkdir -p $target/styles
+	cp -R * $target/styles
+}
+
+post_install() {
+        for USERDIR in /Users/*; do
+                [ -e $USERDIR/.fluxbox/styles ] && ln -sf $target/styles $USERDIR/.fluxbox/styles
+        done
+}
+
