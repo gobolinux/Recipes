@@ -1,0 +1,19 @@
+# by Michael Homer
+# 2004.01.28 02:44
+
+url="$httpSourceforge/armagetron/armagetron-0.2.6.0.tar.bz2"
+compile_version=1.8.0
+recipe_type=configure
+configure_options=(
+	"--enable-etc=no"
+)
+
+pre_build() {
+ # this is to stop it trying to make $target/games/armagetron directory and
+ # forking forever on the install
+ tmpfile=`mktemp`
+ mv batch/install.in $tmpfile
+ sed -e 's:/games/armagetron:/Shared:' \
+ -e 's:install -m 755 -d $:#do nothing:' \
+ $tmpfile > batch/install.in
+}
