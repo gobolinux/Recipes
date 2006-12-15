@@ -1,0 +1,11 @@
+url=http://www.megaloman.com/~hany/_data/hd2u/hd2u-0.9.0.tgz
+compile_version=1.8.0
+recipe_type=configure
+pre_install() {
+   ln -nfs $target/bin/dos2unix unix2dos
+   ln -nfs $target/bin/dos2unix mac2unix
+   ln -nfs $target/bin/dos2unix unix2mac
+   ln -nfs $target/bin/dos2unix unix2mac
+   ln -nfs $target/bin/dos2unix dos2mac
+   ln -nfs $target/bin/dos2unix mac2dos
+}
