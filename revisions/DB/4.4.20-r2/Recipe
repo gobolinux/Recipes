@@ -1,0 +1,16 @@
+# Recipe for version 4.4.20 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Jan 17 05:05:21 CET 2006
+# Recipe (MakeRecipe) for DB by roko, <ro.ko@mcnon.com>, on Wed Feb 2 15:29:24 CET 2005
+compile_version=1.8.0
+url="ftp://ftp.sleepycat.com/releases/db-4.4.20.tar.gz"
+file_size=7952742
+file_md5=d84dff288a19186b136b0daf7067ade3
+recipe_type=configure
+dir=db-4.4.20/build_unix
+configure=../dist/configure
+configure_options=(
+#   --enable-cxx       #     Build C++ API.
+#   --enable-java      #     Build Java API.
+#   --enable-rpc       #     Build RPC client/server.
+#   --enable-tcl       #     Build Tcl API.
+#   --enable-test      #     Configure to run the test suite.
+)
