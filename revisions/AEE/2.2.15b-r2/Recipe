@@ -1,0 +1,7 @@
+url=mahon.cwx.net/sources/aee-2.2.15b.tar.gz
+compile_version=1.8.0
+recipe_type=makefile
+pre_install() {
+   cp install-sh install-sh.old
+   sed "s,/usr/local,$target,g" install-sh.old > install-sh
+}
