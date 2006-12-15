@@ -1,5 +1,5 @@
 url=$ftpGnu/patch/patch-2.5.4.tar.gz
-compile_version=1.7.1
+compile_version=1.8.0
 recipe_type=configure
 pre_build() {
    export CPPFLAGS="$CPPFLAGS -D_GNU_SOURCE"

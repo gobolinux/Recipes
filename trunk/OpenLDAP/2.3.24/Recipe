@@ -1,6 +1,6 @@
 # Recipe for version 2.3.24 by Andre Detsch <detsch@gobolinux.org>, on Sat Jun 24 11:02:48 BRT 2006
 # Recipe for OpenLdap by Maglan C. Diemer, maglan@univates.br
-compile_version=1.7.1
+compile_version=1.8.0
 url="ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/openldap-2.3.24.tgz"
 recipe_type=configure
 pre_install() {

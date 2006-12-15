@@ -1,6 +1,6 @@
 # Recipe for version 5.8.8 by Andre Detsch <detsch@gobolinux.org>, on Sat Jun 17 18:12:08 BRT 2006
 url=http://www.perl.com/CPAN/src/perl-5.8.8.tar.gz
-compile_version=1.7.1
+compile_version=1.8.0
 recipe_type=makefile
 pre_build() {
 	# Configure options to consider:

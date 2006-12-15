@@ -2,7 +2,7 @@
 # by Jason Stubbs
 
 url="http://www.xinetd.org/xinetd-2.3.14.tar.gz"
-compile_version=1.7.1
+compile_version=1.8.0
 recipe_type=configure
 symlink_options=(
   "--conflict overwrite"

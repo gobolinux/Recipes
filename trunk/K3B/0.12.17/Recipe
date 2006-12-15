@@ -8,6 +8,6 @@ pre_build() {
 	sleep 3
 }
 
-compile_version=1.7.1
+compile_version=1.8.0
 url="$httpSourceforge/k3b/k3b-0.12.17.tar.bz2"
 recipe_type=configure

@@ -1,5 +1,5 @@
 url=$httpSourceforge/librep/librep-0.17.tar.gz
-compile_version=1.7.1
+compile_version=1.8.0
 recipe_type=configure
 configure_options=(
    "--libexecdir=$target/share/libexec"

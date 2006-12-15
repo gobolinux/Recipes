@@ -1,5 +1,5 @@
 url=$ftpGnu/ed/ed-0.2.tar.gz
-compile_version=1.7.1
+compile_version=1.8.0
 recipe_type=configure
 pre_build() {
    chmod +w configure

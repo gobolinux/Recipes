@@ -2,7 +2,7 @@
 # 02/12/2003
 
 url=$ftpGnu/gcc/gcc-3.4.0/gcc-3.4.0.tar.bz2
-compile_version=1.7.1
+compile_version=1.8.0
 recipe_type=configure
 needs_build_directory=yes
 configure_options=(

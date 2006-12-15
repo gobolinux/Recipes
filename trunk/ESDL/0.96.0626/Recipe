@@ -6,7 +6,7 @@
 # 'ESDL_PATH' varible. I'm not sure, but I think this is only used to
 # compile Wings3D. Anyway, I can't imagine any other project using
 # ESDL apart of Wings3D...
-compile_version=1.7.1
+compile_version=1.8.0
 url=$httpSourceforge/esdl/esdl-0.96.0626.src.tar.gz
 dir=esdl-0.96.0626
 recipe_type=makefile

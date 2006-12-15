@@ -1,6 +1,6 @@
 # Recipe for version 7.1 by Andre Detsch <detsch@gobolinux.org>, on Wed Jun 21 11:50:55 BRT 2006
 recipe_type=meta
-compile_version=1.7.1
+compile_version=1.8.0
 pre_link() {
     pushd $target/bin >& /dev/null
     chmod +s X*

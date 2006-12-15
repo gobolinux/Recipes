@@ -3,7 +3,7 @@
 
 url="http://smarden.org/runit/runit-0.12.1.tar.gz"
 dir='admin/runit-0.12.1'
-compile_version=1.7.1
+compile_version=1.8.0
 recipe_type=manifest
 pre_install() {
    package/compile

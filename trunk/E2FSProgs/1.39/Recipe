@@ -2,7 +2,7 @@
 url=$httpSourceforge/e2fsprogs/e2fsprogs-1.39.tar.gz
 recipe_type=configure
 needs_safe_linking=yes
-compile_version=1.7.1
+compile_version=1.8.0
 configure_options=(
    "--enable-elf-shlibs"
 )

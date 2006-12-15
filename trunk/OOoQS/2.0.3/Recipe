@@ -1,5 +1,5 @@
 url=http://download.berlios.de/segfaultskde/oooqs-2.0.3.tar.gz
-compile_version=1.7.1
+compile_version=1.8.0
 recipe_type=configure
 install_variables=(
    "autostartdir=$target/share/autostart"

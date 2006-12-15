@@ -4,7 +4,7 @@
 
 url='ftp://ftp.berlios.de/pub/cdrecord/alpha/cdrtools-2.01.01a11.tar.bz2'
 dir='cdrtools-2.01.01'
-compile_version=1.7.1
+compile_version=1.8.0
 recipe_type=makefile
 
 pre_build() {

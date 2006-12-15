@@ -4,7 +4,7 @@
 # 2.2.8 by roko
 
 url="ftp://ftp.acat.se/official/postfix-2.3.2.tar.gz"
-compile_version=1.7.1
+compile_version=1.8.0
 recipe_type=makefile
 install_target="upgrade" # makes the installscript accept the defaults (given below)
 

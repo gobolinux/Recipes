@@ -4,7 +4,7 @@
 # note: requires GCC <4 to build.
 #
 url=ftp://alpha.gnu.org/gnu/grub/grub-0.97.tar.gz
-compile_version=1.7.1
+compile_version=1.8.0
 recipe_type=configure
 
 post_install() {

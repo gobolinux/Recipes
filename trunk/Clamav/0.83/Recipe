@@ -1,6 +1,6 @@
 # Recipe for version 0.83 by roko, <ro.ko@mcnon.com>, on Thu Mar 24 04:10:03 CET 2005
 # Recipe (MakeRecipe) for Clamav by roko, <ro.ko@mcnon.com>, on Sun Dec 5 22:30:18 BRST 2004
-compile_version=1.7.1
+compile_version=1.8.0
 url="$httpSourceforge/clamav/clamav-0.83.tar.gz"
 recipe_type=configure
 configure_options=(

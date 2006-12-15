@@ -5,7 +5,7 @@ urls=(
    "http://ftp.xemacs.org/pub/xemacs/packages/xemacs-base-1.87-pkg.tar.gz"
    "http://ftp.xemacs.org/pub/xemacs/packages/efs-1.32-pkg.tar.gz"
 )
-compile_version=1.7.1
+compile_version=1.8.0
 recipe_type=configure
 symlink_options=(
    "--no-strip"

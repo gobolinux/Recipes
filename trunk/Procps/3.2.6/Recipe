@@ -1,6 +1,6 @@
 # Recipe for version 3.2.6 by Andre Detsch, on Tue Jan 31 13:48:54 BRST 2006
 url=http://procps.sourceforge.net/procps-3.2.6.tar.gz
-compile_version=1.7.1
+compile_version=1.8.0
 recipe_type=makefile
 install_variables=(
    "DESTDIR=$target/"

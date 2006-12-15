@@ -1,6 +1,6 @@
 # Recipe for version 1.10 by Andre Detsch <detsch@gobolinux.org>, on Sat Oct 28 01:20:45 BRST 2006
 url=$ftpGnu/automake/automake-1.10.tar.gz
-compile_version=1.7.1
+compile_version=1.8.0
 recipe_type=configure
 pre_install() {
    pushd $target/Shared

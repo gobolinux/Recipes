@@ -1,6 +1,6 @@
 # Recipe for version 2.86 by Kosh <kosh.linux at gmail.com>, on Sat Nov 5 08:21:45 BRST 2005
 url="ftp://ftp.cistron.nl/pub/people/miquels/sysvinit/sysvinit-2.86.tar.gz"
-compile_version=1.7.1
+compile_version=1.8.0
 recipe_type=makefile
 build_target="-C src"
 install_target="-C src install"

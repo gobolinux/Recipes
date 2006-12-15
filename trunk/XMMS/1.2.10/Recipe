@@ -1,5 +1,5 @@
 url=http://www.xmms.org/files/1.2.x/xmms-1.2.10.tar.bz2
-compile_version=1.7.1
+compile_version=1.8.0
 recipe_type=configure
 pre_install() {
    mkdir -p $target/lib/xmms-default

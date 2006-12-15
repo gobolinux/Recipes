@@ -1,7 +1,7 @@
 # Recipe for version 1.19.2 by Andre Detsch <detsch@gobolinux.org>, on Sun Jun 18 10:17:09 BRT 2006
 # Revised by Hisham Muhammad based on tip by MJ Ray
 url=$ftpGnu/groff/groff-1.19.2.tar.gz
-compile_version=1.7.1
+compile_version=1.8.0
 recipe_type=configure
 configure_options=(
    "--with-appresdir=$target/lib/X11/app-defaults"

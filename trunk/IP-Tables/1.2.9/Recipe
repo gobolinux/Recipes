@@ -2,7 +2,7 @@
 # 2004.01.28 02:44
 
 url=http://www.netfilter.org/files/iptables-1.2.9.tar.bz2
-compile_version=1.7.1
+compile_version=1.8.0
 recipe_type=makefile
 make_variables=(
     "BINDIR=$target/bin"

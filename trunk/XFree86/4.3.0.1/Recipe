@@ -5,7 +5,7 @@ urls=(
    "ftp://ftp.xfree86.org/pub/XFree86/4.3.0/source/X430src-4.tgz"
    "ftp://ftp.xfree86.org/pub/XFree86/4.3.0/source/X430src-5.tgz"
 )
-compile_version=1.7.1
+compile_version=1.8.0
 recipe_type=makefile
 dir=xc
 build_variables="WORLDOPTS= World"
