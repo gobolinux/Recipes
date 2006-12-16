@@ -1,0 +1,6 @@
+url=http://www.fourmilab.ch/speakfree/unix/download/7.6/speak_freely-7.6a.tar.gz
+compile_version=1.8.0
+recipe_type=makefile
+make_variables=(
+   "INSTDIR=$target"
+)
