@@ -1,0 +1,9 @@
+url=$httpSourceforge/rep-gtk/rep-gtk-0.18.tar.gz
+compile_version=1.8.0
+recipe_type=configure
+configure_options=(
+   "--libexecdir=$target/share/libexec"
+)
+install_variables=(
+   "installdir=$target/share/libexec/rep/0.17/i686-pc-linux-gnu"
+)
