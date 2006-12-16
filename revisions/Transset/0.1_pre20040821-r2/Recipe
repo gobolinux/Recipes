@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for Transset by Hisham Muhammad, on Fri Sep 10 20:02:36 BRT 2004
+# Recipe for version 0.1_pre20040821 by Hisham Muhammad, on Fri Sep 10 20:02:36 BRT 2004
+compile_version=1.8.0
+url="http://text.mirror.ac.uk/mirror/www.ibiblio.org/distfiles/transset-0.1_pre20040821.tar.bz2"
+file_size=7035
+file_md5=d6b9606ae2e41f021ded1ce0d3393984
+dir='transset'
+recipe_type=makefile
+makefile='Makefile'
+do_install=no
+pre_install() {
+   cp transset $target/bin
+   cp transset $target/doc
+}
