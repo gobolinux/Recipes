@@ -1,0 +1,6 @@
+# Recipe for version 2.0.4 by Nick Matteo, on Wed Sep 21 17:13:16 EDT 2005
+url="ftp://space.mit.edu/pub/davis/slang/v2.0/slang-2.0.4.tar.bz2"
+compile_version=1.8.0
+recipe_type=configure
+
+install_target="install install-elf"
