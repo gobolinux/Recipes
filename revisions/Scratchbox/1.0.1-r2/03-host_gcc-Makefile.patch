@@ -1,0 +1,16 @@
+--- scratchbox-1.0.1/compilers/host_gcc/Makefile.orig	2005-07-14 11:47:44.000000000 -0300
++++ scratchbox-1.0.1/compilers/host_gcc/Makefile	2005-07-14 11:57:14.000000000 -0300
+@@ -50,10 +50,9 @@ extract-$(BINNAME)_$(BINVERSION).orig.ta
+ 	$(MAKECOOKIE)
+ 
+ post-extract:
+-	cd $(WORKDIR) && dpkg-source -x $(GCCNAME)_$(GCCVERSION)-$(GCCPATCH).dsc
+-	$(MAKE) -C $(GCCSRC) -f debian/rules unpack
+-
+-	cd $(WORKDIR) && dpkg-source -x $(BINNAME)_$(BINVERSION)-$(BINPATCH).dsc
++	cd $(WORKDIR)
++	aunpack $(GCCNAME)_$(GCCVERSION).orig.tar.gz 
++	$(MAKE) -C $(GCCSRC)
+ 	$(MAKECOOKIE)
+ 
+ pre-patch:

@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Scratchbox by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jul 11 11:37:18 BRT 2005
+# Recipe for version 1.0.1 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jul 11 11:37:18 BRT 2005
+compile_version=1.8.0
+url="http://www.scratchbox.org/download/files/sbox-releases/1.0/src/scratchbox-1.0.1-src.tar.gz"
+file_size=310765
+file_md5=a421114d263e41315feba20f25b66720
+dir='scratchbox-1.0.1'
+recipe_type=manifest
+
+pre_install() {
+	./build 
+}
