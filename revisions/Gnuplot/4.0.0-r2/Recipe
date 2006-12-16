@@ -1,0 +1,10 @@
+# Recipe for Gnuplot 4.0.0 by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.8.0
+url="$httpSourceforge/gnuplot/gnuplot-4.0.0.tar.gz"
+file_size=2160918
+file_md5=66258443d9f93cc4f46b147dac33e63a
+recipe_type=configure
+
+configure_options=(
+    "--enable-history-file"
+)
