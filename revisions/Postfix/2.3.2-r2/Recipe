@@ -1,0 +1,24 @@
+# Recipe for version 2.3.2 by Jonas Karlsson <jonka750@student.liu.se>, on Sun Aug 6 22:40:59 CEST 2006
+# by Jason Stubbs
+# 2004.01.06 19:27
+# 2.2.8 by roko
+
+url="ftp://ftp.acat.se/official/postfix-2.3.2.tar.gz"
+compile_version=1.8.0
+recipe_type=makefile
+install_target="upgrade" # makes the installscript accept the defaults (given below)
+
+pre_build()
+{
+  grep postfix $goboSettings/group  || groupadd -g 32 postfix
+  grep postdrop $goboSettings/group || groupadd -g 33 postdrop
+  grep postfix $goboSettings/passwd || useradd postfix -c "Postfix Daemon User" -s /bin/false -d /dev/null -g postfix -u 32
+  chown -v postfix:postfix ${goboVariable}/mail
+  make makefiles CCARGS="-DDEF_COMMAND_DIR=\\\"${target}/sbin\\\" -DDEF_CONFIG_DIR=\\\"${settings_target}/postfix\\\" -DDEF_DAEMON_DIR=\\\"$target/lib/postfix\\\" -DDEF_MAILQ_PATH=\\\"$target/bin/mailq\\\" -DDEF_MANPAGE_DIR=\\\"$target/man\\\" -DDEF_NEWALIAS_PATH=\\\"$target/bin/newaliases\\\" -DDEF_QUEUE_DIR=\\\"${variable_target}/spool/postfix\\\" -DDEF_README_DIR=\\\"$target/doc\\\" -DDEF_SENDMAIL_PATH=\\\"$target/sbin/sendmail\\\"  -DUSE_TLS -I/usr/include/openssl" AUXLIBS="-L/usr/lib -lssl -lcrypto"
+}
+
+post_install()
+{
+  GrepReplace "#alias_database = hash:/etc/aliases" "alias_database = hash:$settings_target/postfix/aliases" ${settings_target}/postfix/main.cf
+}
+
