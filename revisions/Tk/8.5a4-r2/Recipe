@@ -1,0 +1,12 @@
+# Recipe for version 8.5a4 by Hisham Muhammad <lode@gobolinux.org>, on Wed Jul 12 18:49:11 BRT 2006
+compile_version=1.8.0
+url="$httpSourceforge/tcl/tk8.5a4-src.tar.gz"
+dir='tk8.5a4/unix'
+recipe_type=configure
+configure_options=(
+   --with-tcl=$tcl_path/lib
+   --enable-xft
+)
+pre_link() {
+   ln -nfs ${target}/bin/wish8.5 ${target}/bin/wish
+}
