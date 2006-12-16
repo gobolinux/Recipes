@@ -1,0 +1,9 @@
+# Recipe for version 5.1.0 by Andre Detsch <detsch@gobolinux.org>, on Fri Jun 23 19:57:21 BRT 2006
+# by Leandro Motta Barros
+
+url=ftp://sunsite.unc.edu/pub/Linux/libs/graphics/t1lib-5.1.0.tar.gz
+compile_version=1.8.0
+recipe_type=configure
+
+# Check this...
+build_target=without_doc
