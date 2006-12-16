@@ -1,0 +1,20 @@
+--- neverball-1.4.0/Makefile	2004-09-08 17:31:40.000000000 -0300
++++ neverball-1.4.0/Makefile.new	2006-02-25 13:04:26.000000000 -0300
+@@ -11,7 +11,7 @@
+ 
+ #------------------------------------------------------------------------------
+ 
+-CFLAGS= -Wall -O3 -ansi $(shell sdl-config --cflags)
++CFLAGS= -Wall -O3 -ansi $(shell sdl-config --cflags) -I/usr/include/SDL
+ #CFLAGS= -Wall -g -ansi $(shell sdl-config --cflags)
+ #CFLAGS= -Wall -pg -ansi $(shell sdl-config --cflags)
+ 
+@@ -84,7 +84,7 @@
+ PUTT_DEPS= $(PUTT_OBJS:.o=.d)
+ MAPC_DEPS= $(MAPC_OBJS:.o=.d)
+ 
+-LIBS= $(X11_PATH) $(SDL_LIBS) -lSDL_image -lSDL_ttf -lSDL_mixer $(FT2_LIBS) $(OGL_LIBS)
++LIBS=-L/usr/lib $(X11_PATH) $(SDL_LIBS) -lSDL_image -lSDL_ttf -lSDL_mixer $(FT2_LIBS) $(OGL_LIBS)
+ 
+ SOLS= \
+ 	data/map-rlk/easy.sol     \
