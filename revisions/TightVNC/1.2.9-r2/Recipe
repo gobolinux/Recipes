@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for TightVNC by Michael Farrell <michael@xinomorph.org>, on Sat Oct 30 06:31:03 CST 2004
+# Recipe for version 1.2.9 by Michael Farrell <michael@xinomorph.org>, on Sat Oct 30 06:31:03 CST 2004
+compile_version=1.8.0
+url="ftp://localhost/distfiles/tightvnc-1.2.9_unixsrc.tar.bz2"
+file_size=1738256
+file_md5=f804b26c098625e3a2675a0aa7709e31
+dir='vnc_unixsrc'
+recipe_type=xmkmf
