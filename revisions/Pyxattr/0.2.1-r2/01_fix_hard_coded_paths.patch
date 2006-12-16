@@ -1,0 +1,11 @@
+diff -Naur pyxattr-0.2.1/setup.py pyxattr-0.2.1-new/setup.py
+--- pyxattr-0.2.1/setup.py	2006-02-11 18:02:00.000000000 -0200
++++ pyxattr-0.2.1-new/setup.py	2006-03-07 09:27:13.000000000 -0300
+@@ -17,6 +17,6 @@
+       url="http://pyxattr.sourceforge.net",
+       license="GPL",
+       ext_modules=[Extension("xattr", ["xattr.c"], libraries=["attr"])],
+-      data_files=[("/usr/share/doc/pyxattr-%s" % version,
++      data_files=[("doc/pyxattr-%s" % version,
+                   ["README", "NEWS", "xattr.html", "xattr.txt"])]
+       )
