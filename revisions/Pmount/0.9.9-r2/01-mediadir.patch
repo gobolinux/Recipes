@@ -1,0 +1,36 @@
+diff -Naur ./src-original/pmount-hal.c ./src/pmount-hal.c
+--- ./src-original/pmount-hal.c	2006-03-03 13:29:00.000000000 -0300
++++ ./src/pmount-hal.c	2006-04-16 19:41:01.000000000 -0300
+@@ -90,7 +90,7 @@
+ void get_free_label( const char* label, char* result, size_t result_size )
+ {
+     char mntpt[PATH_MAX];
+-    snprintf( mntpt, sizeof(mntpt), "/media/%s", label );
++    snprintf( mntpt, sizeof(mntpt), MEDIADIR "/%s", label );
+     int n;
+ 
+     if( valid_mntpt( mntpt ) ) {
+@@ -100,7 +100,7 @@
+     }
+ 
+     for( n = 1; n > 0; ++n ) {
+-        snprintf( mntpt, sizeof(mntpt), "/media/%s-%i", label, n );
++        snprintf( mntpt, sizeof(mntpt), MEDIADIR "/%s-%i", label, n );
+         if( valid_mntpt( mntpt ) ) {
+             snprintf( result, result_size, "%s-%i", label, n );
+             return;
+diff -Naur ./src-original/policy.h ./src/policy.h
+--- ./src/policy.h.old  2006-04-16 19:54:19.000000000 -0300
++++ ./src/policy.h      2006-04-16 19:54:35.000000000 -0300
+@@ -14,8 +14,8 @@
+ #include <stdlib.h> /* for size_t */
+ 
+ #define MAX_LABEL_SIZE 255
+-#define MEDIADIR "/media/"
+-#define DEVDIR "/dev/"
++#define MEDIADIR "/Mount/Media/"
++#define DEVDIR "/System/Kernel/Devices/"
+ #define LOCKDIR "/var/lock/pmount/"
+ #define WHITELIST "/etc/pmount.allow"
+ 
+
