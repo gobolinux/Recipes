@@ -1,0 +1,16 @@
+# Recipe for version 3.2.2 by Carlo J. Calica <ccalica@gmail.com>, on Tue Feb 7 13:27:17 PST 2006
+# Recipe for Module-Init-Tools 3.2-pre9 by Lucas Correia Villa Real
+compile_version=1.8.0
+url="http://www.kernel.org/pub/linux/utils/kernel/module-init-tools/module-init-tools-3.2.2.tar.bz2"
+recipe_type=configure
+
+configure_options=(
+	"--with-moddir=$goboModules"
+)
+build_variables=(
+        "DOCBOOKTOMAN=''"
+)
+
+pre_build(){
+touch modprobe.conf.5
+}
