@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for XFdesktop by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:28:04 CEST 2006
+# Recipe for version 4.3.90.1 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:28:04 CEST 2006
+compile_version=1.8.0
+url="http://www.xfce.org/archive/xfce-4.3.90.1/src/xfdesktop-4.3.90.1.tar.bz2"
+file_size=2964106
+file_md5=2d01a1e8542710605e681d5a8db31bcf
+recipe_type=configure
+configure_options=(
+    '--enable-thunar-vfs'
+    '--enable-thunarx'
+    '--enable-exo'
+)
