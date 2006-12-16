@@ -1,0 +1,12 @@
+#!/bin/sh
+
+source GoboPath
+[ -f $goboEnvironment/YP-Tools--2.8 ] && source $goboEnvironment/YP-Tools--2.8
+
+case "$1" in
+	[sS]tart)
+		ypdomainname $DOMAINNAME
+		;;
+	[sS]top)
+		;;
+esac
