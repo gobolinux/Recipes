@@ -1,0 +1,12 @@
+diff -Naur mplayerplug-in-old/Makefile.in mplayerplug-in/Makefile.in
+--- mplayerplug-in-old/Makefile.in	2003-11-16 02:40:13.000000000 -0200
++++ mplayerplug-in/Makefile.in	2003-12-03 00:35:09.000000000 -0200
+@@ -17,7 +17,7 @@
+ CFLAGS= @CFLAGS@ -DXP_UNIX -Iinclude -fPIC
+ LDFLAGS= @LIBS@
+ OBJ= mplayerplug-in.o support.o stubs.o ui.o
+-INSTALL = @INSTALL@ -d
++INSTALL = @INSTALL@
+ SHAREDTARGET=mplayerplug-in.so
+ 
+ default all: $(SHAREDTARGET)
