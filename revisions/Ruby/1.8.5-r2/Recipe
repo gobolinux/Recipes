@@ -1,0 +1,10 @@
+# Recipe for version 1.8.5 by Andre Detsch <detsch@gobolinux.org>, on Thu Nov 9 23:23:07 BRST 2006
+# by Michael Homer
+# 2004.01.28 04:31
+compile_version=1.8.0
+url="ftp://ftp.ruby-lang.org/pub/ruby/ruby-1.8.5.tar.gz"
+recipe_type=configure
+
+configure_options=(
+ "--disable-frame-address"
+)
