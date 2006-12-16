@@ -1,0 +1,28 @@
+# Recipe (MakeRecipe) for G-System by Rui Andrada <shingonoide at gmail>, on Thu Nov 24 07:50:08 BRST 2005
+# Recipe for version 0.5.1 by Rui Andrada <shingonoide at gmail>, on Thu Nov 24 07:50:08 BRST 2005
+compile_version=1.8.0
+url="ftp://ftp.g-system.at/pub/gsystem/releases/development/0.5.1/G-System-0.5.1.tar.bz2"
+file_size=414373
+file_md5=74a5173cdf267f71218c935e24469135
+recipe_type=manifest
+environment=(
+      "G_PREFIX=$target"
+)
+
+pre_patch () {
+    GrepReplace "share" "Shared" ./scripts/makeinstall
+}
+
+pre_install () {
+    Log_Normal "Compiling..."
+    ./scripts/compile > ./build/compile.log 2>&1
+# builds the documentation
+    #./scripts/makedocs -a all  
+# builds the API Reference
+    #./scripts/makedocs api     
+}
+
+pre_link () {
+    Log_Normal "Installing G-System into $G_PREFIX"
+    ./scripts/makeinstall > ./build/makeinstall.log 2>&1
+}
