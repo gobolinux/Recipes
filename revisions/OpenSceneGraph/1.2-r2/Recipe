@@ -1,0 +1,9 @@
+# Recipe for version 1.2 by Leandro Motta Barrros, on Mon Oct 26 18:00:11 BRT 2006
+# Recipe (MakeRecipe) for OpenSceneGraph by Fabio Mierlo, on Thu Feb 17 23:19:03 BRST 2005
+compile_version=1.8.0
+recipe_type=meta
+include=(
+	"OpenSceneGraph-OpenThreads--1.2"
+	"OpenSceneGraph-Producer--1.2"
+	"OpenSceneGraph-Base--1.2"
+)
