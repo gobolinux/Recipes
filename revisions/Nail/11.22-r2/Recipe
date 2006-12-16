@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for Nail by roko, <ro.ko@mcnon.com>, on Sun Mar 20 19:50:17 CET 2005
+# Recipe for version 11.22 by roko, <ro.ko@mcnon.com>, on Sun Mar 20 19:50:17 CET 2005
+compile_version=1.8.0
+url="$httpSourceforge/nail/nail-11.22.tar.bz2"
+file_size=264568
+file_md5=caad4c4cd02c7fbf0d9e7fec50ff3b21
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+ # "DESTDIR=$target"
+   "PREFIX=$target"
+   "SYSCONFDIR=$target/../Settings" 
+   "UCBINSTALL=$goboExecutables/install"
+   "SENDMAIL=$goboExecutables/sendmail"
+   "MAILSPOOL=$goboVariable/mail/"
+)
