@@ -1,0 +1,8 @@
+# Recipe for version 0.49 by Jonas Karlsson <jonka750@student.liu.se>, on Mon Nov 28 12:17:42 CET 2005
+# Recipe (MakeRecipe) for ISO-Codes by Guilherme Balestieri Bedin (gbedin), on Fri Sep 2 15:29:13 BRT 2005
+compile_version=1.8.0
+url="http://ftp.debian.org/debian/pool/main/i/iso-codes/iso-codes_0.49.orig.tar.gz"
+dir='iso-codes-0.49'
+autogen_before_configure=yes
+recipe_type=configure
+
