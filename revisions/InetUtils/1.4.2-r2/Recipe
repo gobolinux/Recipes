@@ -1,0 +1,9 @@
+url=$ftpGnu/inetutils/inetutils-1.4.2.tar.gz
+compile_version=1.8.0
+recipe_type=configure
+configure_options=(
+   "--disable-syslogd"
+   "--disable-logger"
+   "--disable-whois"
+   "--disable-servers"
+)
