@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Krusader by Andre Detsch, on Thu Sep 8 10:48:32 BRT 2005
+# Recipe for version 1.60.0 by Andre Detsch, on Thu Sep 8 10:48:32 BRT 2005
+compile_version=1.8.0
+environment=(
+   "KDEDIR=$KDEDIRS"
+)
+url="$httpSourceforge/krusader/krusader-1.60.0.tar.gz"
+file_size=3216697
+file_md5=95f7900799bbd2810e6ac06fbf628536
+recipe_type=configure
