@@ -1,0 +1,12 @@
+compile_version=1.8.0
+url="http://lilypond.org/download/v2.9/lilypond-2.9.10.tar.gz"
+recipe_type=configure
+makefile=Makefile
+
+make_variables=(
+  "DOCUMENTATION=no"
+)
+
+configure_options=(
+  "--with-ncsb-dir=/Files/Fonts/Ghostscript"
+)
