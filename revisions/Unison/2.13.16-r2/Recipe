@@ -1,0 +1,13 @@
+# Recipe for version 2.13.16 by Laurent Pelecq (laurent.pelecq at soleil.org), on sam avr 1 23:43:43 CEST 2006
+# Recipe (MakeRecipe) for Unison by Laurent Pelecq (laurent.pelecq at soleil.org), on sam avr 1 23:02:11 CEST 2006
+compile_version=1.8.0
+url="http://www.cis.upenn.edu/~bcpierce/unison/download/releases/stable/unison-2.13.16.tar.gz"
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+    "INSTALLDIR=$target/bin/"
+#    "UISTYLE=text"
+    "CFLAGS="
+    "OCAMLLIBDIR=$goboLibraries/ocaml"
+)
+
