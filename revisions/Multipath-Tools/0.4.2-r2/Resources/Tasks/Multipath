@@ -1,0 +1,14 @@
+#!/bin/sh
+
+source GoboPath
+
+PIDFILE=$goboPrograms/Multipath-Tools/Variable/run/multipathd.pid
+
+case "$1" in
+  [sS]tart)
+	$goboExecutables/multipathd
+	;;
+  [sS]top)
+	[ -f $PIDFILE ] && kill `cat $PIDFILE`
+	;;
+esac
