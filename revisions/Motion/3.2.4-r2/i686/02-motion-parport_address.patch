@@ -1,0 +1,212 @@
+diff -Nurp motion-3.2.4-orig/Makefile motion-3.2.4/Makefile
+--- motion-3.2.4-orig/Makefile	2006-02-09 23:20:19.000000000 -0200
++++ motion-3.2.4/Makefile	2006-05-31 04:17:35.000000000 -0300
+@@ -33,7 +33,7 @@ examplesdir = $(docdir)/examples
+ CFLAGS       =  -O2 -march=i686 -fomit-frame-pointer -pipe -DHAVE_FFMPEG -I/usr/include/ffmpeg -DTYPE_32BIT="int" -DHAVE_BSWAP   -march=pentium3 -mfpmath=sse -msse  -mmmx -Wall -DVERSION=\"$(VERSION)\" -D_REENTRANT \
+ 	       -Dsysconfdir=\"$(sysconfdir)\"
+ LDFLAGS      =   -L/usr/lib
+-LIBS         = -lm  -lpthread -ljpeg -L/usr/lib -lavformat -lavcodec -lm -lz 
++LIBS         = -lm  -lpthread -ljpeg -L/usr/lib -lavformat -lavcodec -lm -lz -linfra
+ VIDEO_OBJ    = video.o
+ OBJ          = motion.o conf.o draw.o $(VIDEO_OBJ) netcam.o \
+ 	       netcam_ftp.o netcam_jpeg.o netcam_wget.o track.o \
+diff -Nurp motion-3.2.4-orig/Makefile.in motion-3.2.4/Makefile.in
+--- motion-3.2.4-orig/Makefile.in	2005-10-09 09:25:16.000000000 -0300
++++ motion-3.2.4/Makefile.in	2006-05-31 04:15:47.000000000 -0300
+@@ -33,7 +33,7 @@ examplesdir = $(docdir)/examples
+ CFLAGS       = @CFLAGS@ -Wall -DVERSION=\"$(VERSION)\" -D_REENTRANT \
+ 	       -Dsysconfdir=\"$(sysconfdir)\"
+ LDFLAGS      = @LDFLAGS@
+-LIBS         = @LIBS@ 
++LIBS         = @LIBS@ -linfra
+ VIDEO_OBJ    = @VIDEO@
+ OBJ          = motion.o conf.o draw.o $(VIDEO_OBJ) netcam.o \
+ 	       netcam_ftp.o netcam_jpeg.o netcam_wget.o track.o \
+diff -Nurp motion-3.2.4-orig/conf.c motion-3.2.4/conf.c
+--- motion-3.2.4-orig/conf.c	2006-05-31 03:47:47.000000000 -0300
++++ motion-3.2.4/conf.c	2006-06-07 22:46:21.000000000 -0300
+@@ -136,6 +136,7 @@ struct config conf_template = {
+ 	despeckle:             NULL,
+ 	minimum_motion_frames: 1,
+ 	sms_send_command:      NULL,
++	parport_address:       0x378,
+ 	// debug_parameter:       0
+ };
+ 
+@@ -498,6 +499,13 @@ config_param config_params[] = {
+ 	copy_string,
+ 	print_string
+ 	},
++	{
++	"parport_address",
++	"# Parallel port address (default: 0x378)\n",
++	CONF_OFFSET(parport_address),
++	copy_hex_string,
++	print_string
++	},
+ 
+ 	{
+ 	"output_normal",
+@@ -1505,12 +1513,51 @@ void malloc_strings (struct context * cn
+ 	}
+ }
+ 
++int axtoi(const char *const_hexstr)
++{
++	int n = 0;         // position in string
++	int m = 0;         // position in digit[] to shift
++	int count;         // loop index
++	int intvalue = 0;  // integer value of hex string
++	int digit[5];      // hold values to convert
++	char *hexstr = (char *) const_hexstr;
++
++	if ((strlen(hexstr) > 2) && (hexstr[1] == 'x' || hexstr[1] == 'X'))
++		hexstr += 2;
++	
++	while (n < 4) {
++		if (hexstr[n]=='\0')
++			break;
++		if (hexstr[n] > 0x29 && hexstr[n] < 0x40 ) //if 0 to 9
++			digit[n] = hexstr[n] & 0x0f;            //convert to int
++		else if (hexstr[n] >='a' && hexstr[n] <= 'f') //if a to f
++			digit[n] = (hexstr[n] & 0x0f) + 9;      //convert to int
++		else if (hexstr[n] >='A' && hexstr[n] <= 'F') //if A to F
++			digit[n] = (hexstr[n] & 0x0f) + 9;      //convert to int
++		else break;
++		n++;
++	}
++	count = n;
++	m = n - 1;
++	n = 0;
++	while (n < count) {
++		// digit[n] is value of hex digit at position n
++		// (m << 2) is the number of positions to shift
++		// OR the bits into return value
++		intvalue = intvalue | (digit[n] << (m << 2));
++		m--;   // adjust the position to set
++		n++;   // next digit to process
++	}
++	return intvalue;
++}
++
+ /************************************************************************
+  * copy functions
+  *
+  *   copy_bool   - convert a bool representation to int
+  *   copy_int    - convert a string to int
+  *   copy_string - just a string copy
++ *   copy_hex_string - convert a hex value contained in a string to int
+  *
+  * @param str     - A char *, pointing to a string representation of the
+  *                  value.
+@@ -1600,6 +1647,27 @@ struct context **copy_string(struct cont
+ 	return cnt;
+ }
+ 
++/* copy_hex_string assigns a new int to a config option specified as a hex value.
++ */
++struct context **copy_hex_string(struct context **cnt, const char *str, int val_ptr)
++{
++	int i;
++	void *tmp;
++
++	i=-1;
++	while(cnt[++i]) {
++
++		tmp = (char *)cnt[i]+val_ptr;
++		*((int *)tmp) = axtoi(str);
++
++		/* set the option on all threads if setting the option
++		 * for thread 0; otherwise just set that one thread's option
++		 */
++		if (cnt[0]->threadnr)
++			return cnt;
++	}
++	return cnt;
++}
+ 
+ /* mystrcpy is used to assign string type fields (e.g. config options)
+  * In a way so that we the memory is malloc'ed to fit the string.
+diff -Nurp motion-3.2.4-orig/conf.h motion-3.2.4/conf.h
+--- motion-3.2.4-orig/conf.h	2006-05-31 03:47:47.000000000 -0300
++++ motion-3.2.4/conf.h	2006-06-07 22:49:04.000000000 -0300
+@@ -118,6 +118,7 @@ struct config {
+ 	const char *despeckle;
+ 	int minimum_motion_frames;
+ 	const char *sms_send_command;
++	int parport_address;
+ 	// int debug_parameter;
+ 	int argc;
+ 	char **argv;
+@@ -151,5 +152,6 @@ void malloc_strings (struct context *);
+ char *mystrdup(const char *);
+ char *mystrcpy(char *, const char *);
+ struct context **copy_string(struct context **, const char *, int);
++struct context **copy_hex_string(struct context **, const char *, int);
+ 
+ #endif /* _INCLUDE_CONF_H */
+diff -Nurp motion-3.2.4-orig/motion.c motion-3.2.4/motion.c
+--- motion-3.2.4-orig/motion.c	2006-05-31 03:47:47.000000000 -0300
++++ motion-3.2.4/motion.c	2006-06-07 22:41:34.000000000 -0300
+@@ -22,6 +22,8 @@
+ #include "picture.h"
+ #include "rotate.h"
+ 
++#include "infra.h"
++
+ /**
+  * tls_key_threadnr
+  * 
+@@ -616,6 +618,17 @@ static void motion_init(struct context *
+ 
+ 	/* Prevent first few frames from triggering motion... */
+ 	cnt->moved = 8;
++
++	/* Initialize the infra red motion sensors associated with this camera */
++	cnt->ir_motion_sensors_nr = 1;
++	cnt->ir_motion_sensor = mymalloc(sizeof(int) * cnt->ir_motion_sensors_nr);
++	
++	for (i=0; i<cnt->ir_motion_sensors_nr; ++i) {
++		/* TODO: not scalable */
++		cnt->ir_motion_sensor[i] = 0;
++		
++		infra_configure(cnt->conf.parport_address);
++	}
+ }
+ 
+ /**
+@@ -1097,6 +1110,20 @@ static void *motion_loop(void *arg)
+ 		} else if (((diff >= cnt->conf.gap) && cnt->conf.gap > 0)) {
+ 			send_sms = 1;
+ 		}
++
++		/* Check the infra-red motion detection devices */
++		if (infra_detected_movement(cnt->conf.parport_address)) {
++			/* send a sms */
++			event(cnt, EVENT_SMS, NULL, NULL, NULL, cnt->currenttime_tm);
++			
++			/* tell motion to start recording the next frames */
++			if (!detecting_motion)
++				detecting_motion = 1;
++			detecting_motion++;
++
++			motion_detected(cnt, 0, cnt->video_dev, newimg);
++		}
++		
+ 		
+ 		/* If motion has been detected we take action and start saving
+ 		 * pictures and movies etc by calling motion_detected().
+diff -Nurp motion-3.2.4-orig/motion.h motion-3.2.4/motion.h
+--- motion-3.2.4-orig/motion.h	2005-10-29 03:50:20.000000000 -0200
++++ motion-3.2.4/motion.h	2006-05-31 04:09:51.000000000 -0300
+@@ -323,6 +323,10 @@ struct context {
+ 	char motionfilename[PATH_MAX];
+ 	char timelapsefilename[PATH_MAX];
+ #endif
++
++	/* infra-red motion sensors */
++	int ir_motion_sensors_nr;
++	int *ir_motion_sensor;
+ };
+ 
+ extern pthread_mutex_t global_lock;
