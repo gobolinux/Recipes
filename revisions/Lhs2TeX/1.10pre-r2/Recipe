@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for Lhs2TeX by Peter Eriksen <s022018@student.dtu.dk>, on Thu Oct 28 18:37:54 CEST 2004
+# Recipe for version 1.10pre by Peter Eriksen <s022018@student.dtu.dk>, on Thu Oct 28 18:37:54 CEST 2004
+compile_version=1.8.0
+url="http://www.cs.uu.nl/~andres/lhs2tex/lhs2tex-1.10pre.tar.bz2"
+file_size=525904
+file_md5=4fb875cdc0ba8daacc18b97f76aab4bf
+recipe_type=configure
+configure_options=("--disable-polytable")
