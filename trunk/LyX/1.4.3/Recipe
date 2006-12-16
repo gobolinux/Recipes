@@ -1,9 +1,8 @@
 # Recipe for version 1.4.3 by Andre Detsch <detsch@gobolinux.org>, on Mon Nov 27 00:16:25 BRST 2006
 # by Guilherme Bedin
-
 url=ftp://ftp.lyx.org/pub/lyx/stable/lyx-1.4.3.tar.bz2
 recipe_type=configure
-
+compile_version=1.8.0
 configure_options=(
   "--with-frontend=qt"
 )
