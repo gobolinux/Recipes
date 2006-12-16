@@ -1,0 +1,19 @@
+# Recipe for PyVorbis 1.3 by Jonatan Liljedahl <lijon@kymatica.com>
+url="http://www.vorbis.com/files/1.0.1/unix/py/pyvorbis-1.3.tar.gz"
+# recipe_type=manifest
+compile_version=1.8.0
+recipe_type=python
+pre_build() {
+	cat > Setup << _EOF_
+ogg_libs = ogg
+vorbis_libs = vorbis vorbisfile vorbisenc
+vorbis_include_dir = $goboHeaders
+ogg_lib_dir = $goboLibraries
+ogg_include_dir = $goboHeaders
+vorbis_lib_dir = $goboLibraries
+_EOF_
+#	python setup.py build
+}
+#pre_link() {
+#	python setup.py install --prefix $target
+#}
