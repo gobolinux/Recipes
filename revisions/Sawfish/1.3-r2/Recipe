@@ -1,0 +1,9 @@
+url=$httpSourceforge/sawmill/sawfish-1.3.tar.gz
+compile_version=1.8.0
+recipe_type=configure
+configure_options=(
+   "--without-esd"
+)
+install_variables=(
+   "installrepexecdir=$target/share/libexec/rep/i686-linux-gnu"
+)
