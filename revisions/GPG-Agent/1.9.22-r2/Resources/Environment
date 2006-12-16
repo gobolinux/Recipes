@@ -1,0 +1,6 @@
+if [ ! `pidof gpg-agent` ]
+then
+    gpg-agent --daemon -s --write-env-file ~/.gnupg/gpg-agent.env
+fi
+
+source ~/.gnupg/gpg-agent.env
