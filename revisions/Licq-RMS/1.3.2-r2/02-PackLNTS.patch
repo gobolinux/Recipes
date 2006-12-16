@@ -1,0 +1,12 @@
+diff -Nur licq-1.3.2/include/licq_buffer.h licq-1.3.2-fabio.m/include/licq_buffer.h
+--- licq-1.3.2/include/licq_buffer.h	2004-02-04 15:00:20.000000000 -0200
++++ licq-1.3.2-fabio.m/include/licq_buffer.h	2006-09-05 01:13:26.000000000 -0300
+@@ -62,7 +62,7 @@
+ 
+    char *Pack(CBuffer *);
+    char *Pack(const char *data, int size);
+-   char *CBuffer::PackLNTS(const char *);
++   char *PackLNTS(const char *);
+    char *PackString(const char *data, unsigned short max = 0);
+    char *PackUnsignedShort(unsigned short data);
+    char *PackUnsignedLong(unsigned long data);
