@@ -1,0 +1,11 @@
+--- sharutils-4.2.1/po/nl.po.orig	2004-07-27 23:31:25.000000000 -0300
++++ sharutils-4.2.1/po/nl.po	2004-07-27 23:31:50.000000000 -0300
+@@ -448,7 +448,7 @@
+ 
+ #: src/shar.c:2121
+ msgid "Created %d files\n"
+-msgstr "%d bestand(en) aangemaakt"
++msgstr "%d bestand(en) aangemaakt\n"
+ 
+ #: src/unshar.c:158
+ msgid "Found no shell commands in %s"
