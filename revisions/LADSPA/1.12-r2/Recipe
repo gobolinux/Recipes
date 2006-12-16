@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for LADSPA by Hisham Muhammad, on Wed Sep 15 01:09:37 BRT 2004
+# Recipe for version 1.12 by Hisham Muhammad, on Wed Sep 15 01:09:37 BRT 2004
+compile_version=1.8.0
+url="http://www.ladspa.org/download/ladspa_sdk_1.12.tgz"
+file_size=71165
+file_md5=dbd63dd701d80b152943073c84565c14
+dir='ladspa_sdk/src'
+recipe_type=makefile
+makefile=makefile
+make_variables=(
+   "INSTALL_PLUGINS_DIR=$target/lib/ladspa"
+   "INSTALL_INCLUDE_DIR=$target/include"
+   "INSTALL_BINARY_DIR=$target/bin"
+)
