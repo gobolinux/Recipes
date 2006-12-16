@@ -1,0 +1,16 @@
+--- svgalib-1.9.25/src/vga_helper.c.orig	2006-08-02 09:33:05.000000000 -0300
++++ svgalib-1.9.25/src/vga_helper.c	2006-08-02 09:35:40.000000000 -0300
+@@ -7,7 +7,13 @@ void __svgalib_port_rep_outb(unsigned ch
+ {
+   if(__svgalib_nohelper)
+   {
++#if defined(__arm__)
++    int i;
++    for (i=0; i<strlen(string); ++i)
++      outb(string[i], port);
++#else
+     outsb(port, string, length);
++#endif
+   }
+   else
+   {

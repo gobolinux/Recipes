@@ -1,0 +1,5 @@
+make_variables=(
+    ${make_variables[@]}
+    KDIR=$goboModules/Current/build
+    MODDIR=$goboModules
+)
