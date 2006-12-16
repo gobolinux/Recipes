@@ -1,0 +1,16 @@
+# Recipe for version 3.0 by Andre Detsch <detsch@gobolinux.org>, on Mon Jun 19 00:33:53 BRT 2006
+# Recipe for Squashfs-Tools by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.8.0
+url="$httpSourceforge/squashfs/squashfs3.0.tar.gz"
+recipe_type=makefile
+dir="squashfs3.0/squashfs-tools"
+
+do_install=no
+
+pre_build() {
+	export PREFIX="$target"
+}
+
+pre_link() {
+        cp  mksquashfs $target/bin/
+}
