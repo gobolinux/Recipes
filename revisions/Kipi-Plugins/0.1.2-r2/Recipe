@@ -1,0 +1,9 @@
+# Recipe for version 0.1.2 by Andre Detsch <detsch@gobolinux.org>, on Mon Nov 27 00:22:39 BRST 2006
+# Recipe (MakeRecipe) for Kipi-Plugins by Andre Detsch, on Mon May 2 17:14:58 BRT 2005
+compile_version=1.8.0
+url="$httpSourceforge/kipi/kipi-plugins-0.1.2.tar.bz2"
+recipe_type=configure
+
+pre_build() {
+    mv doc doc-nocompile
+}
