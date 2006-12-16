@@ -1,0 +1,24 @@
+--- libmpeg3-1.5.4/Makefile.orig	2004-11-23 01:38:25.000000000 -0200
++++ libmpeg3-1.5.4/Makefile	2004-11-23 01:42:28.000000000 -0200
+@@ -4,6 +4,10 @@
+ USE_CSS = 1
+ A52DIR := $(shell expr a52dec* )
+ 
++ifeq ("$(PREFIX)", "")
++PREFIX=/usr
++endif
++
+ 
+ 
+ ifeq ($(origin CFLAGS), environment)
+@@ -179,7 +183,9 @@
+ 		-ldl
+ 
+ install: 
+-	cp $(UTILS) /usr/bin
++	cp $(UTILS) $(PREFIX)/bin
++	cp $(OUTPUT) $(PREFIX)/lib
++	cp libmpeg3.h mpeg3private.h $(PREFIX)/include
+ 
+ clean:
+ 	rm -rf $(OBJDIR)
