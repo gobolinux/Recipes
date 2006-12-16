@@ -1,0 +1,7 @@
+# Recipe for version 6.6 by Harald Klimach, on Thu Feb 9 00:14:21 CET 2006
+# by Jeremy Vernon
+
+url="ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-6.6.tar.bz2"
+compile_version=1.8.0
+recipe_type=configure
+needs_safe_linking=yes
