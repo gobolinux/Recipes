@@ -1,0 +1,60 @@
+
+#!/bin/sh
+
+[ -x /sbin/ifconfig ] || exit 0
+
+# The location of various iptables and other shell programs
+#
+#   If your Linux distribution came with a copy of iptables, most
+#   likely it is located in /sbin.  If you manually compiled
+#   iptables, the default location is in /usr/local/sbin
+#
+# ** Please use the "whereis iptables" command to figure out
+# ** where your copy is and change the path below to reflect
+# ** your setup
+#
+IPTABLES=/sbin/iptables
+
+
+# See how we were called.
+case "$1" in
+  start)
+    $(dirname $0)/rc.firewall-up
+    ;;
+
+  stop)
+    echo -e "\nFlushing firewall and setting default policies to DROP\n"
+    $IPTABLES -P INPUT DROP
+    $IPTABLES -F INPUT
+    $IPTABLES -P OUTPUT DROP
+    $IPTABLES -F OUTPUT
+    $IPTABLES -P FORWARD DROP
+    $IPTABLES -F FORWARD
+    $IPTABLES -F -t nat
+
+    # Delete all User-specified chains
+    $IPTABLES -X
+    #
+    # Reset all IPTABLES counters
+    $IPTABLES -Z
+    ;;
+
+  restart)
+        $0 stop
+        $0 start
+        ;;
+
+  status)
+        $IPTABLES -L
+        ;;
+
+  mlist)
+    cat /proc/net/ip_conntrack
+    ;;
+
+  *)
+        echo "Usage: firewall-2.4 {start|stop|status|mlist}"
+        exit 1
+esac
+
+exit 0
