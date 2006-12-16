@@ -1,0 +1,11 @@
+# Recipe for version 0.8.8 by roko, <ro.ko@mcnon.com>, on Mon Mar 28 01:34:51 CEST 2005
+# Recipe (MakeRecipe) for GST-Plugins by roko, <ro.ko@mcnon.com>, on Sun Dec 26 00:58:22 BRST 2004
+compile_version=1.8.0
+url="http://gstreamer.freedesktop.org/src/gst-plugins/gst-plugins-0.8.8.tar.bz2"
+recipe_type=configure
+configure_options=( 
+ --disable-gconftool   #       disable GConf schemas
+ --disable-schemas-install  #   Disable the schemas installation
+ --disable-gconf            #  disable GConf libraries
+ --enable-xine   
+ )
