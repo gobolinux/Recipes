@@ -1,0 +1,17 @@
+# GPM 1.20.1 Recipe by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.8.0
+url="ftp://arcana.linux.it/pub/gpm/gpm-1.20.1.tar.bz2"
+file_size=565014
+file_md5=2c63e827d755527950d9d13fe3d87692
+recipe_type=configure
+needs_safe_linking=yes
+
+make_variables=(
+    LDFLAGS="$LDFLAGS -lm"
+)
+
+pre_link() {
+	pushd "$target/lib"
+	ln -sf libgpm.so.1.19.0 libgpm.so.1
+	popd
+}

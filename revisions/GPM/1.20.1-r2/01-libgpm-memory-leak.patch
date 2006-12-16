@@ -1,0 +1,11 @@
+--- gpm-1.20.1/src/lib/liblow.c	2003-09-19 00:19:15.000000000 -0500
++++ gpm/src/lib/liblow.c	2003-10-02 01:10:19.000000000 -0500
+@@ -273,6 +273,8 @@
+             gpm_report(GPM_PR_ERR,GPM_MESS_DOUBLE_S,tty,strerror(errno));
+             goto err;
+          }
++
++      if (flag > 0) free(tty);
+    }
+ 
+    new->info=*conn;
