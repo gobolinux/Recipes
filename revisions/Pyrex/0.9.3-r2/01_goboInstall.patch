@@ -1,0 +1,12 @@
+diff -Naur Pyrex-0.9.3/GoboMake Pyrex-0.9.3-new/GoboMake
+--- Pyrex-0.9.3/GoboMake	1969-12-31 21:00:00.000000000 -0300
++++ Pyrex-0.9.3-new/GoboMake	2005-08-17 12:10:02.000000000 -0300
+@@ -0,0 +1,8 @@
++build:
++	make -f Makefile
++
++install:
++	PYDIR=$(shell echo $(PYTHONPATH) | sed "s@${goboLibraries}@@")
++	mkdir -p $(PREFIX)/lib/$(PYDIR)
++	cp -r * $(PREFIX)/lib/$(PYDIR)
++	cp -r bin $(PREFIX)/
