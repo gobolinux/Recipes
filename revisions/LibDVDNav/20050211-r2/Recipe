@@ -1,0 +1,6 @@
+# Recipe for version 20050211 by Hisham Muhammad <lode@gobolinux.org>, on Sun Apr 2 19:03:39 BRT 2006
+# Recipe (MakeRecipe) for LibDvdnav by Jonas Karlsson <jonka750@student.liu.se>, on Wed May 11 11:18:24 CEST 2005
+compile_version=1.8.0
+url="http://downloads.videolan.org/pub/videolan/vlc/0.8.4a/contrib/libdvdnav-20050211.tar.bz2"
+recipe_type=configure
+autogen_before_configure=yes
