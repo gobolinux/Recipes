@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for Mod_FastCGI by Hisham Muhammad, on Tue Oct 10 19:21:52 BRST 2006
+# Recipe for version 2.4.2 by Hisham Muhammad, on Tue Oct 10 19:21:52 BRST 2006
+compile_version=1.8.0
+url="http://fastcgi.com/dist/mod_fastcgi-2.4.2.tar.gz"
+file_size=98295
+file_md5=e994414304b535cb99e10b7d1cad1d1e
+recipe_type=makefile
+makefile=Makefile.AP2
+install_target=install-modules
+make_variables=(
+   top_dir="$httpd_path"
+   libexecdir="$target/lib/httpd/modules"
+)
+pre_install() {
+   mkdir -p $target/lib/httpd/modules
+}
