@@ -1,0 +1,12 @@
+diff -Puar hal-0.5.4-orig/fdi/policy/10osvendor/10-storage-policy.fdi hal-0.5.4/fdi/policy/10osvendor/10-storage-policy.fdi
+--- hal-0.5.4-orig/fdi/policy/10osvendor/10-storage-policy.fdi	2005-05-23 07:06:27.000000000 -0700
++++ hal-0.5.4/fdi/policy/10osvendor/10-storage-policy.fdi	2005-10-12 15:55:25.000000000 -0700
+@@ -5,7 +5,7 @@
+   <!-- Default policies merged onto computer root object  -->
+   <device>
+     <match key="info.udi" string="/org/freedesktop/Hal/devices/computer">
+-      <merge key="storage.policy.default.mount_root" type="string">/media</merge>
++      <merge key="storage.policy.default.mount_root" type="string">/Mount/Media</merge>
+       <merge key="storage.policy.default.use_managed_keyword" type="bool">true</merge>
+       <merge key="storage.policy.default.managed_keyword.primary" type="string">managed</merge>
+       <merge key="storage.policy.default.managed_keyword.secondary" type="string">kudzu</merge>

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Assert this dir
+mkdir -p /Mount/Media
+
+/bin/hald --daemon=yes --retain-privileges
+
