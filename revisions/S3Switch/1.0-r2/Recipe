@@ -1,0 +1,20 @@
+url="http://www.probo.com/timr/s3ssrc.zip"
+file_size=8854
+file_md5=1328b070343ac79c5ed4c613a1113754
+dir="s3ssrc"
+compile_version=1.8.0
+recipe_type=makefile
+
+install_variables=(
+   "PREFIX=$target"
+)
+
+pre_build() {
+
+cat <<EOF >>Makefile
+
+install:
+	cp s3switch \$(PREFIX)/bin
+
+EOF
+}
