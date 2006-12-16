@@ -1,0 +1,8 @@
+# Recipe for Procmail 3.22 by Rafael G. Jeffman
+compile_version=1.8.0
+url="ftp://ftp.procmail.net/pub/procmail/procmail-3.22.tar.gz"
+file_size=226817
+file_md5=1678ea99b973eb77eda4ecf6acae53f1
+recipe_type=makefile
+makefile='Makefile'
+make_variables=("BASENAME=$target")
