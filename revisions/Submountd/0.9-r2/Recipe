@@ -1,0 +1,9 @@
+# Recipe for Submountd by Jonas Karlsson <jonka750@student.liu.se>
+# 2005-04-10
+# Recipe for version 0.9
+compile_version=1.8.0
+url="$httpSourceforge/submount/submount-0.9.tar.gz"
+file_size=75476
+file_md5=f6abac328dbfb265eff18561065575c6
+recipe_type=configure
+dir=submount-0.9/submountd-0.9
