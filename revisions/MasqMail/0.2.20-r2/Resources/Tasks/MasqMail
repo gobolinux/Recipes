@@ -1,0 +1,10 @@
+#!/bin/sh
+
+case "$1" in
+[Ss]tart)
+  /Programs/MasqMail/Current/sbin/masqmail -bd -q10m
+  ;;
+[Ss]top)
+  killall masqmail
+  ;;
+esac # is funny
