@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for RCS by Lucas Correia Villa Real, on Wed Jun 21 17:16:48 BRT 2006
+# Recipe for version 5.7 by Lucas Correia Villa Real, on Wed Jun 21 17:16:48 BRT 2006
+compile_version=1.8.0
+url="http://www.cs.purdue.edu/homes/trinkle/RCS/rcs-5.7.tar.Z"
+file_size=410971
+file_md5=423282f0edb353296d9f3498ab683abf
+dir='rcs-5.7'
+recipe_type=configure
+
+pre_build() {
+    autoconf
+}

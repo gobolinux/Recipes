@@ -1,0 +1,13 @@
+--- rcs-5.7/src/conf.sh.orig	2006-06-21 17:01:27.000000000 -0300
++++ rcs-5.7/src/conf.sh	2006-06-21 17:01:54.000000000 -0300
+@@ -77,10 +77,6 @@ $ech >&3 "$0: testing permissions $dots"
+ rm -f a.d &&
+ date >a.d &&
+ chmod 0 a.d &&
+-{ test -w a.d || cp /dev/null a.d 2>/dev/null; } && {
+-	echo >&3 "$n$0: This command should not be run with superuser permissions."
+-	exit 1
+-}
+ echo >&3 OK
+ rm -f a.d || exit
+ 
