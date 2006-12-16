@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for PWC by Jonas Karlsson <jonka750@student.liu.se>, on Thu Mar 2 11:51:52 CET 2006
+# Recipe for version 10.0.11 by Jonas Karlsson <jonka750@student.liu.se>, on Thu Mar 2 11:51:52 CET 2006
+compile_version=1.8.0
+url="http://www.saillard.org/linux/pwc/files/pwc-10.0.11.tar.bz2"
+file_size=46946
+file_md5=964481277c334e1cbfba9f832efce07e
+recipe_type=makefile
+makefile='Makefile'
+sandbox_options=(
+    '--no-sandbox'
+)
