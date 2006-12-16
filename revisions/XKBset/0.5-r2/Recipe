@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for XKBset by Hisham Muhammad <lode@gobolinux.org>, on Sun Aug 21 17:36:58 BRT 2005
+# Recipe for version 0.5 by Hisham Muhammad <lode@gobolinux.org>, on Sun Aug 21 17:36:58 BRT 2005
+compile_version=1.8.0
+url="http://www.math.missouri.edu/~stephen/software/xkbset/xkbset-0.5.tar.gz"
+file_size=13933
+file_md5=282c416a76a237fa84a7b513c9d7b2cf
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "X11PREFIX=$target"
+   "X11BASE=/System/Links/Libraries"
+)
