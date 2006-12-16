@@ -1,0 +1,25 @@
+--- p7zip_4.43.old/install.sh	2006-11-04 23:37:11.000000000 -0500
++++ p7zip_4.43/install.sh	2006-11-04 23:39:43.000000000 -0500
+@@ -1,7 +1,7 @@
+ #! /bin/sh
+ 
+ # global install
++DEST_HOME=@%Compile_target%@
+-DEST_HOME=/usr/local
+ # for testing 
+ # DEST_HOME=${HOME}/INSTALL/usr/local
+ DEST_BIN=${DEST_HOME}/bin
+
+--- p7zip_4.43.old/makefile	2006-11-04 23:37:11.000000000 -0500
++++ p7zip_4.43/makefile	2006-11-04 23:40:58.000000000 -0500
+@@ -1,7 +1,7 @@
+ 
++DEST_BIN=@%Compile_target%@/bin
++DEST_SHARE=@%Compile_target%@/lib/p7zip
++DEST_MAN=@%Compile_target%@/man
+-DEST_BIN=/usr/local/bin
+-DEST_SHARE=/usr/local/lib/p7zip
+-DEST_MAN=/usr/local/man
+ 
+ .PHONY: default all all2 7za sfx 7z 7zr common clean tar_bin depend test test_7z test_7zr
+ 

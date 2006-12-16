@@ -1,0 +1,11 @@
+# Recipe for version 4.43 by Otto Barnes <otto.barnes@gmail.com, on Sat Nov 4 23:34:14 EST 2006
+# Recipe (MakeRecipe) for P7Zip by Hisham Muhammad, on Sat Jan 15 19:12:47 BRST 2005
+compile_version=1.8.0
+url="http://superb-east.dl.sourceforge.net/sourceforge/p7zip/p7zip_4.43_src_all.tar.bz2"
+dir='p7zip_4.43'
+recipe_type=makefile
+makefile='makefile'
+sandbox_options=(
+    "--no-sandbox"
+)
+
