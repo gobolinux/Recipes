@@ -1,0 +1,9 @@
+# Recipe for version 2.14.1 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Apr 14 20:13:31 CEST 2006
+# Recipe (MakeRecipe) for LibGnome by Rafael Guterres Jeffman (rafasgj), on Thu Sep 8 13:06:36 BRT 2005
+compile_version=1.8.0
+url="ftp://ftp.gnome.org/pub/gnome/sources/libgnome/2.14/libgnome-2.14.1.tar.bz2"
+recipe_type=configure
+
+sandbox_options=(
+    --add-allowed ${gconf_settings_path}/gconf/gconf.xml.defaults
+)
