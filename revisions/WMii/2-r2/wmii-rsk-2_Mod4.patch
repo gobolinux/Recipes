@@ -1,0 +1,24 @@
+--- wmii-2-old/base/client.c	2005-07-31 00:14:00.000000000 +0200
++++ wmii-2/base/client.c	2005-09-19 13:49:22.477239248 +0200
+@@ -65,8 +65,8 @@
+     XMapWindow(dpy, c->win);
+     XSelectInput(dpy, c->win, CLIENT_MASK);
+     set_client_state(c, NormalState);
+-    grab_client(c, Mod1Mask, Button1);
+-    grab_client(c, Mod1Mask, Button3);
++    grab_client(c, Mod4Mask, Button1);
++    grab_client(c, Mod4Mask, Button3);
+ }
+ 
+ void
+--- wmii-2-old/base/event.c	2005-09-19 14:15:25.268658840 +0200
++++ wmii-2/base/event.c	2005-09-19 14:16:04.006769752 +0200
+@@ -99,7 +99,7 @@
+     if((c = win_to_client(ev->window))) {
+         if(c->frame) {
+             ev->state &= valid_mask;
+-            if(ev->state & Mod1Mask) {
++            if(ev->state & Mod4Mask) {
+                 if(!is_managed_frame(c->frame))
+                     XRaiseWindow(dpy, c->frame->win);
+                 switch (ev->button) {
