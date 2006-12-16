@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for Mtail by Andre Detsch <detsch@gobolinux.org>, on Sat Jun 17 18:33:48 BRT 2006
+# Recipe for version 1.1.1 by Andre Detsch <detsch@gobolinux.org>, on Sat Jun 17 18:33:48 BRT 2006
+compile_version=1.8.0
+url="http://freshmeat.net/redir/mtail/12905/url_tgz/mtail-1.1.1.tgz"
+file_size=9124
+file_md5=166ccd3bfea04fdc81940b256d7d6f18
+recipe_type=manifest
+manifest=( 
+   mtail:bin
+   CHANGES:doc
+   mtailrc.sample:doc
+#   LICENSE:doc
+#   README:doc 
+)
