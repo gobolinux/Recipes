@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Prelink by Hisham Muhammad, on Mon Sep 13 20:56:36 BRT 2004
+# Recipe for version 20040520 by Hisham Muhammad, on Mon Sep 13 20:56:36 BRT 2004
+compile_version=1.8.0
+url="ftp://people.redhat.com/jakub/prelink/prelink-20040520.tar.bz2"
+file_size=902279
+file_md5=581cdcac535e230b410dc1f253c40aad
+dir='prelink'
+recipe_type=configure
+pre_install() {
+   find $goboPrograms -name "lib" -maxdepth 4 > $target/../Settings/prelink.conf
+   find $goboPrograms -name "bin" -maxdepth 4 >> $target/../Settings/prelink.conf
+}
