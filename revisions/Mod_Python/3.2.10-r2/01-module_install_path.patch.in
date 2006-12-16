@@ -1,0 +1,12 @@
+diff -Naur mod_python-3.2.10.clean/Makefile.in mod_python-3.2.10/Makefile.in
+--- mod_python-3.2.10.clean/Makefile.in	2006-09-14 21:28:02.000000000 +0200
++++ mod_python-3.2.10/Makefile.in	2006-09-14 21:30:37.000000000 +0200
+@@ -16,7 +16,7 @@
+  #
+ 
+ @SET_MAKE@
+-LIBEXECDIR=@LIBEXECDIR@
++LIBEXECDIR=@%Compile_target%@/lib/httpd/modules
+ AP_SRC=@AP_SRC@
+ AP_SRC_OWN=@AP_SRC_OWN@
+ AP_SRC_GRP=@AP_SRC_GRP@
