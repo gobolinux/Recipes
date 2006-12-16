@@ -1,0 +1,12 @@
+# Recipe for version 0.10 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Aug 23 15:21:36 BRT 2006
+# Recipe (MakeRecipe) for GoboHide by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Dec 20 00:20:22 BRST 2004
+compile_version=1.8.0
+url="http://gobolinux.org/download/gobohide/GoboHide-0.11.tar.bz2"
+file_size=6011
+file_md5=5ea0117503d9749f88ba3aecb783bdb4
+recipe_type=makefile
+
+make_variables=(
+    "PREFIX=$target"
+    "SYSCONFDIR=$settings_target"
+)
