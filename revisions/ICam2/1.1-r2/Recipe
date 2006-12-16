@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for ICam2 by roko, <ro.ko@mcnon.com>, on Mon Mar 14 03:38:42 CET 2005
+# Recipe for version 1.1 by roko, <ro.ko@mcnon.com>, on Mon Mar 14 03:38:42 CET 2005
+compile_version=1.8.0
+url="$httpSourceforge/icam2/iCam2-1.1.tar.gz"
+file_size=68814
+file_md5=47b6f09b53de3fb6aa47cdec975852d0
+recipe_type=configure
+configure_options=(
+#--enable-xwindows    #    Enable iCam2 X11 display windows
+#--enable-mpeg           #    Enable MPEG time-lapse recording
+#--enable-curl             #    Enable use of libcurl for file transfer
+)
+pre_link() { 
+cp -v proto-icam2rc $target/doc
+}
