@@ -1,0 +1,30 @@
+# Recipe for version 0.8.4a by Laurent Pelecq (laurent.pelecq at soleil.org), on jeu mai 18 00:04:18 CEST 2006
+# Recipe (MakeRecipe) for VLC by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sat Nov 26 10:25:00 BRST 2005
+compile_version=1.8.0
+url="http://downloads.videolan.org/pub/videolan/vlc/0.8.4a/vlc-0.8.4a.tar.bz2"
+recipe_type=configure
+
+configure_options=(
+    --disable-hal
+    --enable-dfb
+    --enable-dvbpsi
+    --enable-dv
+    --enable-dvdread
+    --enable-dvdnav
+    --enable-v4l
+    --disable-gnomevfs
+    --enable-ffmpeg
+    --disable-libmpeg2
+    --disable-wxwidgets
+    --disable-skins2
+    --enable-flac
+    --enable-theora
+    --enable-aa
+    --enable-alsa
+#  --enable-wxwidgets      wxWidgets support (default enabled)
+    --enable-xosd
+)
+
+pre_build() {
+    [ ! -f .bootstrapped ] && echo "Running bootstrap..." && ./bootstrap
+}
