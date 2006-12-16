@@ -1,0 +1,13 @@
+# Recipe for version 1.1 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Aug 15 14:47:58 BRT 2005
+# Recipe (MakeRecipe) for Listener by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jul 4 09:24:35 BRT 2005
+compile_version=1.8.0
+url="http://cscience.org/~lucasvr/projects/Listener-1.1.tar.bz2"
+file_size=7550
+file_md5=03db0865e97f6cc76ed575d419403ccd
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "DESTDIR=$target"
+   "DEVDIR=$goboDevices"
+   "SYSCONFDIR=$target/../Settings"
+)
