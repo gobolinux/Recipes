@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for TLA by Jonas Karlsson <jonka750@student.liu.se>, on Mon Jul 18 16:04:34 CEST 2005
+# Recipe for version 1.3.3 by Jonas Karlsson <jonka750@student.liu.se>, on Mon Jul 18 16:04:34 CEST 2005
+compile_version=1.8.0
+url="ftp://ftp.gnu.org/pub/gnu/gnu-arch/tla-1.3.3.tar.gz"
+file_size=4202834
+file_md5=61d5dea41e071f78a8319401ee07ab0b
+recipe_type=configure
+dir=tla-1.3.3/src/
+needs_build_directory=yes
