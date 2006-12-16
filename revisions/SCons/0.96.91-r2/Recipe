@@ -1,0 +1,13 @@
+# Recipe for version 0.96.91 by Jonas Karlsson <jonka750@student.liu.se>, on Wed Mar 8 09:21:17 CET 2006
+# Recipe by Felix Breuer <felix@fbreuer.de> 13.09.2004
+url="$httpSourceforge/scons/scons-0.96.91.tar.gz"
+compile_version=1.8.0
+recipe_type=python
+do_build=no
+
+#pre_build(){
+#    chown -R fibo:fibo .
+#    export SCONS_LIB_DIR=`pwd`/src/engine
+#    python src/script/scons.py build/scons
+#}
+
