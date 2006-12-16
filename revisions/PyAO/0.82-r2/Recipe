@@ -1,0 +1,16 @@
+# Recipe for version 0.82 by Rafael Guterres Jeffman, on Fri Nov 10 13:15:22 BRST 2006
+# Recipe for PyAO 0.82 by Jonatan Liljedahl <lijon@kymatica.com>
+compile_version=1.8.0
+url="http://www.andrewchatham.com/pyogg/download/pyao-0.82.tar.gz"
+recipe_type=manifest
+pre_install() {
+	cat > Setup << _EOF_
+ao_libs = ao
+ao_lib_dir = $goboLibraries
+ao_include_dir = $goboHeaders
+_EOF_
+	python setup.py build
+}
+pre_link() {
+	python setup.py install --prefix $target
+}
