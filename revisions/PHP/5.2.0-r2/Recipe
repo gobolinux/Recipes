@@ -1,0 +1,26 @@
+# Recipe for version 5.2.0 by Otto Barnes <otto.barnes@gmail.com>, on Tue Nov 7 06:00:31 EST 2006
+### PHP 5.2.0
+# GoboLinux Recipe created by Taeber Rapczak <taeber@rapczak.com>
+# June 14, 2004
+
+### Compile Version
+compile_version=1.8.0
+
+### Download Section
+url="http://www.php.net/distributions/php-5.2.0.tar.bz2"
+mirror_urls=(
+	"http://www.php.net/get/php-5.2.0.tar.bz2/from/us2.php.net/mirror"
+	"http://www.php.net/get/php-5.2.0.tar.bz2/from/us4.php.net/mirror"
+)
+
+### File Information
+file="php-5.2.0.tar.bz2"
+
+### Compilation Variables
+recipe_type=configure
+
+configure_options=(
+--with-openssl
+--with-ldap
+--with-mysql
+)
