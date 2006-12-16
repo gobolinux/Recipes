@@ -1,0 +1,16 @@
+# Recipe for version 5.5 by Andre Detsch, on Tue Jan 31 10:31:30 BRST 2006
+compile_version=1.8.0
+urls=(
+   $ftpGnu/ncurses/ncurses-5.5.tar.gz
+)
+file_size=2314030
+file_md5=e73c1ac10b4bfc46db43b2ddfd6244ef
+recipe_type=configure
+needs_safe_linking=yes
+
+post_install() {
+   chmod 755 $target/lib/*.5.5
+   chmod 644 $target/lib/libncurses++.a
+   ln -nfs $target/include/ncurses/* $target/include
+   ln -nfs $target/include/ncurses/* $goboHeaders
+}

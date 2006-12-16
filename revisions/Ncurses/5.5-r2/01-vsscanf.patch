@@ -1,0 +1,33 @@
+diff -urN ncurses-5.3/c++/cursesw.cc ncurses-5.3.new/c++/cursesw.cc
+--- ncurses-5.3/c++/cursesw.cc	2002-07-06 16:47:52.000000000 +0100
++++ ncurses-5.3.new/c++/cursesw.cc	2003-04-28 18:19:03.000000000 +0100
+@@ -64,12 +64,10 @@
+ 	if (::vsscanf(buf, fmt, args) != -1)
+ 	    result = OK;
+ #elif USE_STRSTREAM_VSCAN	/* powerpc, os390 */
+-	strstreambuf ss(buf, sizeof(buf));
+-	if (ss.vscan(fmt, args) != -1)
++	if (::vsscanf(buf, fmt, args) != -1)
+ 	    result = OK;
+ #elif USE_STRSTREAM_VSCAN_CAST	/* pre-gcc 3.0 */
+-	strstreambuf ss(buf, sizeof(buf));
+-	if (ss.vscan(fmt, (_IO_va_list)args) != -1)
++	if (::vsscanf(buf, fmt, (_IO_va_list)args) != -1)
+ 	    result = OK;
+ #endif
+ 	va_end(args);
+@@ -92,12 +90,10 @@
+ 	    if (::vsscanf(buf, fmt, args) != -1)
+ 		result = OK;
+ #elif USE_STRSTREAM_VSCAN	/* powerpc, os390 */
+-	    strstreambuf ss(buf, sizeof(buf));
+-	    if (ss.vscan(fmt, args) != -1)
++	    if (::vsscanf(buf, fmt, args) != -1)
+ 		result = OK;
+ #elif USE_STRSTREAM_VSCAN_CAST	/* pre-gcc 3.0 */
+-	    strstreambuf ss(buf, sizeof(buf));
+-	    if (ss.vscan(fmt, (_IO_va_list)args) != -1)
++	    if (::vsscanf(buf, fmt, (_IO_va_list)args) != -1)
+ 		result = OK;
+ #endif
+ 	    va_end(args);
