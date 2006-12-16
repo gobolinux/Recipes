@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for LibTrash by Guilherme Balestieri Bedin (gbedin), on Tue Aug 9 09:50:56 BRT 2005
+# Recipe for version libtrash-latest by Guilherme Balestieri Bedin (gbedin), on Tue Aug 9 09:50:56 BRT 2005
+# Recipe for version 2.4 by Rotem Zach, on Mon Oct 7 14:16:34 IST 2005
+compile_version=1.8.0
+url="http://pages.stern.nyu.edu/~marriaga/software/libtrash/libtrash-2.4.tgz"
+mirror_url="http://pages.stern.nyu.edu/~marriaga/software/libtrash/libtrash-latest.tgz"
+file_size=90634
+file_md5=c335bf506cfe2433d16df71dc29acfc3
+dir='libtrash-2.4'
+recipe_type=makefile
+makefile='Makefile'
+install_variables=("INSTLIBDIR=$target/lib" "SYSCONFFILE=$target/../Settings/libtrash.conf")
