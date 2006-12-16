@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for KSymoops by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Fri Dec 10 00:20:58 BRST 2004
+# Recipe for version 2.4.9 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Fri Dec 10 00:20:58 BRST 2004
+compile_version=1.8.0
+url="http://www.kernel.org/pub/linux/utils/kernel/ksymoops/v2.4/ksymoops-2.4.9.tar.gz"
+file_size=65770
+file_md5=ed828814fdef8dc985d82b8acb915ae2
+recipe_type=makefile
+makefile='Makefile'
