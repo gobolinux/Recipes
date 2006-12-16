@@ -1,0 +1,5 @@
+# Recipe for version 1.4 by Jonas Karlsson <jonka750@student.liu.se>, on Sun Jan 15 14:06:00 CET 2006
+# Recipe (MakeRecipe) for SSHFS by Jonas Karlsson <jonka750@student.liu.se>, on Thu Nov 24 17:00:40 CET 2005
+compile_version=1.8.0
+url="$httpSourceforge/fuse/sshfs-fuse-1.4.tar.gz"
+recipe_type=configure
