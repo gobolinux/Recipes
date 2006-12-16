@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Laptop-Mode by Jonatan Liljedahl <lijon@kymatica.com>, on Tue Apr 18 00:55:48 BRT 2006
+# Recipe for version 0.31 by Jonatan Liljedahl <lijon@kymatica.com>, on Tue Apr 18 00:55:48 BRT 2006
+compile_version=1.8.0
+url="http://www.xs4all.nl/~bsamwel/laptop_mode/tools/downloads/laptop-mode-tools_1.31.tar.gz"
+file_size=86554
+file_md5=a332179ae046292b232234eb444b2122
+dir='laptop-mode-tools-1.31'
+recipe_type=manifest
+pre_link() {
+	PREFIX=$target ./install.sh
+}
