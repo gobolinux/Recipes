@@ -1,0 +1,10 @@
+compile_version=1.8.0
+url="http://www.no-ip.com/client/linux/noip-duc-linux.tar.gz"
+file_size=71210
+file_md5=8eb89e31dd2c1fbbf91862efe67c99fd
+dir='noip-2.1.1'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
