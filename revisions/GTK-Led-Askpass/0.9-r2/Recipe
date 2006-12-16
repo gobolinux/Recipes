@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for GTK-Led-Askpass by Jonatan Liljedahl <lijon@kymatica.com>, on Mon Mar 14 22:55:23 BRT 2005
+# Recipe for version 0.9 by Jonatan Liljedahl <lijon@kymatica.com>, on Mon Mar 14 22:55:23 BRT 2005
+compile_version=1.8.0
+url="http://muse.19inch.net/~daf/gtk-led-askpass/gtk-led-askpass-0.9.tar.gz"
+file_size=11695
+file_md5=d4c37e42462a4bf0abff2e84b94f0e56
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
