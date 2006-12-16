@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for ID3 by roko, <ro.ko@mcnon.com>, on Fri Jan 14 20:21:48 BRST 2005
+# Recipe for version 0.74 by roko, <ro.ko@mcnon.com>, on Fri Jan 14 20:21:48 BRST 2005
+compile_version=1.8.0
+url="http://home.wanadoo.nl/squell/files/id3-0.74.tar.gz"
+file_size=35518
+file_md5=ccc70e4e5e2d0e61cfcd35cc48e0fbd4
+recipe_type=makefile
+makefile='makefile'
+make_variables=(
+   "prefix=$target"
+)
