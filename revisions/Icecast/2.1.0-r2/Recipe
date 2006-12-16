@@ -1,0 +1,21 @@
+# Recipe (MakeRecipe) for Icecast by roko, <ro.ko@mcnon.com>, on Thu Dec 9 18:25:52 BRST 2004
+# Recipe for version 2.1.0 by roko, <ro.ko@mcnon.com>, on Thu Dec 9 18:25:52 BRST 2004
+compile_version=1.8.0
+url="http://downloads.us.xiph.org/releases/icecast/icecast-2.1.0.tar.gz"
+file_size=684382
+file_md5=f6a63f036fdfbe415cd64d7ee8afc043
+recipe_type=configure
+configure_options=(
+ --disable-yp     #       disable YP directory support
+)
+pre_link () {
+mkdir -p $goboPrograms/Icecast/Variable/log/icecast 
+touch $goboPrograms/Icecast/Variable/log/icecast/error.log
+touch $goboPrograms/Icecast/Variable/log/icecast/access.log
+}
+post_install () {
+chown -R nobody $goboPrograms/Icecast/Variable/log/icecast
+}
+
+# enable changeowner in icecast.xml, groupadd nogroup , change port (8000 doesn't work here)
+# start with StartTask Icecast start
