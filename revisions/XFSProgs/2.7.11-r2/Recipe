@@ -1,0 +1,24 @@
+# Recipe for version 2.7.11 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jun 19 02:17:02 BRT 2006
+# Recipe (MakeRecipe) for XFSProgs by ro.ko@mcnon.com, on Tue Oct 12 00:32:49 BRST 2004
+compile_version=1.8.0
+url="ftp://oss.sgi.com/projects/xfs/download/cmd_tars/xfsprogs-2.7.11.src.tar.gz"
+recipe_type=configure
+dir="xfsprogs-2.7.11"
+install_target="install install-dev"
+
+sandbox_options=("--no-sandbox")
+
+configure_options=(
+    --libexecdir=$target/lib
+    --enable-shared=yes
+)
+
+pre_build() {
+   export DEBUG=-DNDEBUG  # OPTIMIZER=-O
+}
+
+pre_link() {
+   pushd $target/lib
+   ln -nfs libhandle.so.1.0.3 libhandle.so
+   popd
+}
