@@ -1,0 +1,7 @@
+# Recipe for version 1.2.0 by Jonas Karlsson <jonka750@student.liu.se>, on Thu Dec 1 22:42:50 CET 2005
+# Recipe (MakeRecipe) for WV by Roko <ro.ko@mcnon.com>, on Thu Sep 30 21:46:16 BRT 2004
+compile_version=1.8.0
+url="$httpSourceforge/wvware/wv-1.2.0.tar.gz"
+recipe_type=configure
+autogen_before_configure=yes
+makefile=GNUmakefile
