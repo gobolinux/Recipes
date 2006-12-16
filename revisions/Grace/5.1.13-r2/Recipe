@@ -1,0 +1,10 @@
+# by Leandro Motta Barros
+
+url=ftp://plasma-gate.weizmann.ac.il/pub/grace/src/grace-5.1.13.tar.gz
+compile_version=1.8.0
+recipe_type=configure
+
+# Without this, Grace is installed in $target/grace. Duh.
+install_variables=(
+   "GRACE_HOME=$target"
+)
