@@ -1,0 +1,6 @@
+# Recipe for version 1.2.1 by Maglan C. Diemer, maglan@univates.br, on Seg Dez 5 14:30:51 BRST 2005
+# Recipe (MakeRecipe) for OpenSLP by David Smith <dsmith@algonet.se>, on tis mar 29 19:34:43 CEST 2005
+compile_version=1.8.0
+url="$httpSourceforge/openslp/openslp-1.2.1.tar.gz"
+recipe_type=configure
+autogen_before_configure=yes
