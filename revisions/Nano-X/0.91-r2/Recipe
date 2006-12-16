@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Nano-X by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Fri Aug 26 15:35:09 BRT 2005
+# Recipe for version 0.91 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Fri Aug 26 15:35:09 BRT 2005
+compile_version=1.8.0
+url=ftp://microwindows.censoft.com/pub/microwindows/microwindows-src-0.91.tar.gz
+file_size=1865967
+file_md5=901e912cf3975f6460a9bb4325557645
+recipe_type=makefile
+dir="microwindows-0.91/src"
+
+make_variables=("INSTALL_PREFIX=$target")

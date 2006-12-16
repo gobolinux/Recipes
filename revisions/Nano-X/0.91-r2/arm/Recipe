@@ -1,0 +1,9 @@
+pre_build() {
+	cp -f $archsubdir/config $dir/config
+	GrepReplace "\$(crossCompiler)" "$crossCompiler" $dir/config
+	GrepReplace "\$(crossPrefixDir)/\$(goboLibraries)" "$crossPrefixDir/$goboLibraries" $dir/config
+	GrepReplace "\$(crossPrefixDir)/\$(goboHeaders)" "$crossPrefixDir/$goboHeaders" $dir/config
+
+    unset C_INCLUDE_PATH
+    LDFLAGS="$LDFLAGS -lXau"
+}
