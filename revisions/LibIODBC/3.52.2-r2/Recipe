@@ -1,0 +1,8 @@
+# Recipe for version 3.52.2 by roko, <ro.ko@mcnon.com>, on Mon Feb 21 20:37:16 CET 2005
+# Recipe (MakeRecipe) for LibIODBC by roko, <ro.ko@mcnon.com>, on Sat Jan 29 01:59:09 CET 2005
+compile_version=1.8.0
+url="libiodbc-3.52.2.tar.gz"
+recipe_type=configure
+configure_options=(
+--with-iodbc-inidir=/System/Settings
+)
