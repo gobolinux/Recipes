@@ -1,0 +1,15 @@
+# Recipe for version 0.8.4 by Rafael Guterres Jeffman (rafasgj), on Thu Sep 15 11:18:36 BRT 2005
+compile_version=1.8.0
+url="$httpSourceforge/pyxml/PyXML-0.8.4.tar.gz"
+
+recipe_type=makefile
+
+pre_build() {
+   cat > $dir/Makefile <<EOF
+build:
+	@python setup.py build
+
+install:
+	@python setup.py install --prefix $target
+EOF
+}
