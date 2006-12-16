@@ -1,0 +1,50 @@
+diff -Naur rlocate-0.4.1/doc/rlocate.html rlocate-0.4.1.new/doc/rlocate.html
+--- rlocate-0.4.1/doc/rlocate.html	2006-01-19 10:04:52.000000000 +0100
++++ rlocate-0.4.1.new/doc/rlocate.html	2006-01-19 19:10:20.000000000 +0100
+@@ -223,10 +223,10 @@
+ permissions of the rlocate and rlocated binaries. To do this execute 
+ the following commands.</p>
+ <pre>
+-        chown root:rlocate /usr/local/bin/rlocate
++        chown 0:rlocate /usr/local/bin/rlocate
+         chmod 2755 /usr/local/bin/rlocate
+         
+-        chown root:root /usr/local/sbin/rlocated 
++        chown 0:0 /usr/local/sbin/rlocated 
+         chmod 0755 /usr/local/bin/rlocated</pre>
+ <p>4. To make rlocate more convenient to use, you can symlink 'rlocate' to 
+ 'locate'.</p>
+@@ -246,7 +246,7 @@
+         mkdir -p /usr/local/var/rlocate</pre>
+ <p>Now just give it the right ownership:</p>
+ <pre>
+-        chown root:rlocate /usr/local/var/rlocate</pre>
++        chown 0:rlocate /usr/local/var/rlocate</pre>
+ <p>7. Then you have to load rlocate.ko module from rlocate-module directory. 
+ You can copy it to:</p>
+ <pre>
+diff -Naur rlocate-0.4.1/doc/rlocate.pod rlocate-0.4.1.new/doc/rlocate.pod
+--- rlocate-0.4.1/doc/rlocate.pod	2006-01-19 10:04:52.000000000 +0100
++++ rlocate-0.4.1.new/doc/rlocate.pod	2006-01-19 19:10:20.000000000 +0100
+@@ -194,10 +194,10 @@
+ permissions of the rlocate and rlocated binaries. To do this execute 
+ the following commands.
+ 
+-        chown root:rlocate /usr/local/bin/rlocate
++        chown 0:rlocate /usr/local/bin/rlocate
+         chmod 2755 /usr/local/bin/rlocate
+         
+-        chown root:root /usr/local/sbin/rlocated 
++        chown 0:0 /usr/local/sbin/rlocated 
+         chmod 0755 /usr/local/bin/rlocated
+ 
+ 4. To make rlocate more convenient to use, you can symlink 'rlocate' to 
+@@ -223,7 +223,7 @@
+ 
+ Now just give it the right ownership:
+ 
+-        chown root:rlocate /usr/local/var/rlocate
++        chown 0:rlocate /usr/local/var/rlocate
+ 
+ 7. Then you have to load rlocate.ko module from rlocate-module directory. 
+ You can copy it to:
