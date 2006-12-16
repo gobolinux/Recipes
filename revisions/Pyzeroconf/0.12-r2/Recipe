@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for Pyzeroconf by Rafael Guterres Jeffman (rafasgj), on Tue Nov 1 10:44:05 BRST 2005
+# Recipe for version 0.12 by Rafael Guterres Jeffman (rafasgj), on Tue Nov 1 10:44:05 BRST 2005
+compile_version=1.8.0
+url="$httpSourceforge/pyzeroconf/pyzeroconf-0.12.tgz"
+file_size=22111
+file_md5=e7180e9440d961c6aba5056fdd7997f0
+recipe_type=manifest
+pre_link() {
+	pydir=`python -V 2>&1 | cut -d" " -f2 | cut -d. -f 1-2`
+	installdir="${target}/lib/python${pydir}/site-packages"
+	mkdir -p "${installdir}"
+	cp Zeroconf.py "${installdir}"
+}
