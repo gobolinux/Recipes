@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for SOAPpy by Rafael Guterres Jeffman (rafasgj), on Mon Oct 31 17:13:32 BRST 2005
+# Recipe for version 0.12.0 by Rafael Guterres Jeffman (rafasgj), on Mon Oct 31 17:13:32 BRST 2005
+compile_version=1.8.0
+url="$httpSourceforge/pywebsvcs/SOAPpy-0.12.0.tar.gz"
+file_size=176199
+file_md5=d0d29f9b6fb27bfadc69b64a36321e20
+recipe_type=manifest
+pre_link() {
+	python setup.py install --prefix=$target
+}
+
