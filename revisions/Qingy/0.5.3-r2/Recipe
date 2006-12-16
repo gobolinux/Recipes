@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Qingy by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Mar 7 04:16:56 BRT 2005
+# Recipe for version 0.5.3 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Mar 7 04:16:56 BRT 2005
+compile_version=1.8.0
+url="$httpSourceforge/qingy/qingy-0.5.3.tar.bz2"
+file_size=534976
+file_md5=65cfa963a3147b399f88a4e52db089fd
+recipe_type=configure
+
+configure_options=(
+	"--with-pamdir=$target/../Settings/pam.d"
+)
