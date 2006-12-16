@@ -1,0 +1,13 @@
+# Recipe for version 0.12.17 by Andre Detsch <detsch@gobolinux.org>, on Thu Nov 9 22:38:59 BRST 2006
+# To succesfully compile K3B you must use Qt 3.3.X and not Qt 4.X
+
+pre_build() {
+	echo "**"
+	echo "**Plase note that you must compile K3B against Qt 3.3.X and not Qt 4.x**"
+	echo "**"
+	sleep 3
+}
+
+compile_version=1.8.0
+url="$httpSourceforge/k3b/k3b-0.12.17.tar.bz2"
+recipe_type=configure
