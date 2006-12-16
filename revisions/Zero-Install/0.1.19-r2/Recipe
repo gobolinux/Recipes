@@ -1,0 +1,10 @@
+# by Carlo Calica
+# 2004.01.07 13:56
+
+url=$httpSourceforge/zero-install/zero-install-0.1.19.tar.gz
+compile_version=1.8.0
+recipe_type=configure
+configure_options=(
+  "--with-user=zeroinst"
+)
+needs_build_directory=yes
