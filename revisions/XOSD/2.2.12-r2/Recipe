@@ -1,0 +1,7 @@
+# Recipe for version 2.2.12 by Guilherme Balestieri Bedin (gbedin), on Thu Aug 11 11:39:05 BRT 2005
+url=http://www.ignavus.net/xosd-2.2.12.tar.gz
+compile_version=1.8.0
+recipe_type=configure
+configure_options=(
+   "--with-plugindir=$target/lib/xmms/General"
+)
