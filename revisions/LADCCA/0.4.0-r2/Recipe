@@ -1,0 +1,6 @@
+url='http://pkl.net/~node/software/ladcca-0.4.0.tar.gz'
+compile_version=1.8.0
+recipe_type=configure
+configure_options=(
+   "--disable-serv-inst"
+)
