@@ -1,0 +1,12 @@
+# Recipe for version 2.0 by Andreas Koehler, on Son Sep 18 04:30:19 CEST 2005
+# Recipe (MakeRecipe) for QIV by Volker Wieban <buckoven@gobolinux.de>, on Sat Sep 25 17:46:50 BRT 2004
+compile_version=1.8.0
+url="http://www.klografx.net/qiv/download/qiv-2.0-src.tgz"
+file_size=76561
+file_md5=165d0c2f264718821f94732196b7f9e1
+dir='qiv-2.0'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
