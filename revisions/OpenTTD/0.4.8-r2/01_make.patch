@@ -1,0 +1,28 @@
+--- openttd-0.4.8/Makefile	2006-08-12 09:38:43.000000000 -0300
++++ openttd-0.4.8-new/Makefile	2006-09-24 22:45:21.000000000 -0300
+@@ -819,7 +819,7 @@
+ 	$(Q)cp -R $(TTD)                      "/t/openttd-$(RELEASE)-morphos/"
+ 	$(Q)cp data/*                         "/t/openttd-$(RELEASE)-morphos/data/"
+ 	$(Q)cp lang/*.lng                     "/t/openttd-$(RELEASE)-morphos/lang/"
+-	$(Q)cp scenario/*                     "/t/openttd-$(RELEASE)-morphos/scenario/"
++#	$(Q)cp scenario/*                     "/t/openttd-$(RELEASE)-morphos/scenario/"
+ 	$(Q)cp readme.txt                     "/t/openttd-$(RELEASE)-morphos/docs/ReadMe"
+ 	$(Q)cp docs/console.txt               "/t/openttd-$(RELEASE)-morphos/docs/Console"
+ 	$(Q)cp COPYING                        "/t/openttd-$(RELEASE)-morphos/docs/"
+@@ -903,11 +903,11 @@
+ 	install -m 644 data/opntitle.dat $(DATA_DIR_INSTALL)/data
+ 	install -m 644 media/openttd.64.png $(ICON_DIR_INSTALL)
+ 	install -m 644 media/openttd.32.xpm $(ICON_DIR_INSTALL)
+-ifndef USE_HOMEDIR
+-	cp scenario/* $(PERSONAL_DIR)/scenario/
+-else
+-	cp scenario/* $(DATA_DIR_INSTALL)/scenario/
+-endif
++#ifndef USE_HOMEDIR
++#	cp scenario/* $(PERSONAL_DIR)/scenario/
++#else
++#	cp scenario/* $(DATA_DIR_INSTALL)/scenario/
++#endif
+ else	#MorphOS
+ install:
+ 	$(error make install is not supported on MorphOS)
