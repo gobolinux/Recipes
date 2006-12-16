@@ -1,0 +1,15 @@
+--- pcmcia-cs-3.2.8/etc/install-etc.orig	2005-02-25 12:49:24.000000000 -0300
++++ pcmcia-cs-3.2.8/etc/install-etc	2005-02-25 12:51:50.000000000 -0300
+@@ -138,12 +138,6 @@
+     fi
+ }
+ 
+-if [ "$SYSV_INIT" = "y" ] ; then
+-    install_sysv
+-else
+-    install_bsd
+-fi
+-
+ install_clients
+ install_depmod
+ 

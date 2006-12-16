@@ -1,0 +1,35 @@
+# Recipe for version 3.2.8 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Fri Feb 25 03:22:17 BRT 2005
+# by Carlo Calica and Jason Stubbs
+
+url=$httpSourceforge/pcmcia-cs/pcmcia-cs-3.2.8.tar.gz
+file_size=1271846
+file_md5=0d6d65be8896eff081aee996049afaa5
+compile_version=1.8.0
+recipe_type=configure
+configure=Configure
+build_target="all"
+
+make_variables=(
+   "MANDIR=$target/man"
+   "RCDIR=/../Settings"
+   "ETC=$target/../Settings/pcmcia"
+   "CONF=$target/../Settings/"
+)
+
+configure_options=(
+   "--noprompt"
+   "--target=$target"
+   "--kernel=$goboModules/`uname -r`/build"
+   "--moddir=$goboModules/`uname -r`/misc"
+   "--notrust"
+   "--cardbus"
+   "--srctree"
+   "--apm"
+   "--nox11"
+)
+
+post_install()
+{
+   mkdir -p $target/../Variable/lib/pcmcia
+   rm -rf $target/{etc,var} $target/../Settings/{etc,rc.d}
+}
