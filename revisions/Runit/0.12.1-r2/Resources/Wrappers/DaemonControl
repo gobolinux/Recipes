@@ -1,0 +1,28 @@
+#!/bin/sh
+
+service=$1;
+command=$2;
+
+. ScriptFunctions
+Import GoboLinux
+Import File
+
+cd $goboDaemons
+
+if [ "$0" = "DaemonUp" ]
+then
+  command="up"
+fi
+
+if [ "$0" = "DaemonDown" ]
+then
+  command="down"
+fi
+
+if Is_Directory "$service"
+then
+  /Programs/Runit/Current/sbin/runsvctrl $command $service
+else
+  DaemonList
+fi
+
