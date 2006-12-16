@@ -1,0 +1,5 @@
+[Name]  libsigc++
+[Summary]  The Typesafe Callback Framework for C++
+[Description]  This library implements a full callback system for use in widget libraries, abstract interfaces, and general programming. Originally part of the Gtk-- widget set, libsigc++ is now a separate library that provides more general use. It is the most complete library of its kind with the ability to connect an abstract callback to a class method, function, or unction object. It contains adapter classes for connecting dissimilar callbacks and has an ease of use unmatched by other C++ callback libraries. This package only contains the dynamic libraries. You also need the libsigc++-devel package to compile or develop applications that use this library.
+[License]  LGPL
+[Homepage]  http://libsigc.sourceforge.net/
