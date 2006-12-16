@@ -1,0 +1,8 @@
+# Recipe for version 4.1.5 by Andre Detsch <detsch@gobolinux.org>, on Sat Jun 17 17:27:51 BRT 2006
+# by Michael Homer
+# 2004.01.28 04:31
+
+url=$ftpGnu/sed/sed-4.1.5.tar.gz
+compile_version=1.8.0
+recipe_type=configure
+needs_safe_linking=yes
