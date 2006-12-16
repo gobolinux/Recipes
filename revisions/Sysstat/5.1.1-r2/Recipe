@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Sysstat by ro.ko@mcnon.com, on Tue Oct 12 01:40:28 BRST 2004
+# Recipe for version 5.1.1 by ro.ko@mcnon.com, on Tue Oct 12 01:40:28 BRST 2004
+compile_version=1.8.0
+url="ftp://ibiblio.org/pub/linux/system/status/sysstat-5.1.1.tar.bz2"
+file_size=104471
+file_md5=84cce7c5c1c30fa2ab0b030083a3823b
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
