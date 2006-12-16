@@ -1,0 +1,17 @@
+compile_version=1.8.0
+url="http://download.plt-scheme.org/bundles/208/plt/plt-208-src-unix.tgz"
+mirror_urls=(
+"http://www.cs.utah.edu/plt/download/208/plt/plt-208-src-unix.tgz"
+"ftp://ftp.pasteur.fr/pub/computing/Scheme/plt-scheme/208/plt/plt-208-src-unix.tgz"
+"ftp://archive.informatik.uni-tuebingen.de/unix/language/plt/208/plt/plt-208-src-unix.tgz"
+"ftp://infogroep.be/pub/plt/bundles/208/plt/plt-208-src-unix.tgz"
+"ftp://morpheus.wish.com.mx/pub/plt/208/plt/plt-208-src-unix.tgz"
+)
+file_size=10486916
+file_md5=0036e215d9402f7755b23cc875090f9e
+dir='plt/src'
+recipe_type=configure
+pre_build(){
+cd src && ./configure --prefix=$target --srcdir=plt/src
+}
+
