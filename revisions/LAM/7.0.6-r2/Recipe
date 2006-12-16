@@ -1,0 +1,11 @@
+compile_version=1.8.0
+url="http://www.lam-mpi.org/download/files/lam-7.0.6.tar.bz2"
+file_size=5752257
+file_md5=4037133e564648bd7815e36f3f017d8b
+recipe_type=configure
+
+configure_options=(
+	"--with-threads=posix"
+	"--without-fc"
+	"--without-romio"
+)
