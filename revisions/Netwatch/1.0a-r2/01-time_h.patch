@@ -1,0 +1,11 @@
+diff -Nur netwatch-1.0a/netwatch.c netwatch-1.0a-fabio.m/netwatch.c
+--- netwatch-1.0a/netwatch.c	2001-02-26 00:27:07.000000000 -0300
++++ netwatch-1.0a-fabio.m/netwatch.c	2006-07-23 15:06:25.000000000 -0300
+@@ -143,6 +143,7 @@
+ #include "curs.h"
+ #include "netresolv.h"
+ #include "netwatch.h"
++#include <time.h>
+ 
+ extern int errno;
+ 
