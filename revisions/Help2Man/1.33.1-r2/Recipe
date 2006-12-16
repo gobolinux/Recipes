@@ -1,0 +1,9 @@
+url="http://ftp.gnu.org/gnu/help2man/help2man_1.33.1.tar.gz"
+file_size=75293
+file_md5='4fd9c94cda2572735790e22e7fce3928'
+dir='help2man-1.33.1'
+compile_version=1.8.0
+recipe_type=configure
+make_variables=(
+   "LINGUAS="
+)
