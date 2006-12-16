@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for PornView by Michael Farrell <michael@xinomorph.org>, on Fri Oct 29 14:39:09 CST 2004
+# Recipe for version 0.2pre1 by Michael Farrell <michael@xinomorph.org>, on Fri Oct 29 14:39:09 CST 2004
+compile_version=1.8.0
+url="http://ftp.debian.org/debian/pool/main/p/pornview/pornview_0.2pre1.orig.tar.gz"
+file_size=608864
+file_md5=339fde6d7ff0cc1053abe951601373e6
+dir='pornview-0.2.0pre1'
+recipe_type=configure
+configure_options=(
+	"--with-gtk2" # Enable GTK+2 Support
+)
