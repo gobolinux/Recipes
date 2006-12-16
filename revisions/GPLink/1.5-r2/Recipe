@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for GPLink by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sat Nov 13 21:16:31 BRST 2004
+# Recipe for version 1.5 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sat Nov 13 21:16:31 BRST 2004
+compile_version=1.8.0
+url="http://dexy.mine.nu/gp32/gplink/gplink-1.5.tar.gz"
+file_size=256794
+file_md5=2a7d87a68a9541fc03038b43d80ee0c3
+recipe_type=makefile
+dir="gplink-1.5/src"
+
+pre_install() {
+	cp gplink $target/bin
+}
