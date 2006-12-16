@@ -1,0 +1,14 @@
+# Recipe by Bill Burdick, Mobile Reasoning, July 13 2004
+
+compile_version=1.8.0
+url="http://www.openwall.com/popa3d/popa3d-0.6.4.tar.gz"
+file_size=31881
+file_md5=21d4876c4d85b92d323e46d2e8f12e11
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+   "LIBS=-lcrypt"
+   "CFLAGS=-Wall -O3 -fomit-frame-pointer -DNO_DETACH -DPOP_STANDALONE=1"
+)
+#   "DESTDIR="
