@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for PyX by Felix Breuer <felix@fbreuer.de>, on Mon Sep 13 21:55:44 CEST 2004
+# Recipe for version 0.6.3 by Felix Breuer <felix@fbreuer.de>, on Mon Sep 13 21:55:44 CEST 2004
+compile_version=1.8.0
+url="$httpSourceforge/pyx/PyX-0.6.3.tar.gz"
+file_size=1323242
+file_md5=ff3427b4deb265c448da8aec8cbd7e77
+recipe_type=manifest
+pre_link() {
+  python setup.py install --prefix=$target
+}
