@@ -1,0 +1,15 @@
+urls=(
+   "ftp://ftp.xfree86.org/pub/XFree86/4.3.0/source/X430src-1.tgz"
+   "ftp://ftp.xfree86.org/pub/XFree86/4.3.0/source/X430src-2.tgz"
+   "ftp://ftp.xfree86.org/pub/XFree86/4.3.0/source/X430src-3.tgz"
+   "ftp://ftp.xfree86.org/pub/XFree86/4.3.0/source/X430src-4.tgz"
+   "ftp://ftp.xfree86.org/pub/XFree86/4.3.0/source/X430src-5.tgz"
+)
+compile_version=1.8.0
+recipe_type=makefile
+dir=xc
+build_variables="WORLDOPTS= World"
+pre_link() {
+SandboxInstall -f Makefile -t install.man XFree86 4.3.0.1
+}
+#SandboxInstall  $sandboxopts -f $makefile -t "$installmerged" "$1" "$2"

@@ -1,0 +1,39 @@
+--- xc/config/cf/X11.tmpl	2003-12-30 07:04:02.000000000 -0600
++++ xc.config.cf.X11.tmpl	2004-01-01 07:19:25.000000000 -0600
+@@ -705,19 +705,19 @@
+ 	 * for low memory footprint
+ 	 */
+ #if BuildLowMem
+-#define DefaultFontPath $(FONTDIR)/misc/,$(FONTDIR)/75dpi/,$(FONTDIR)/100dpi/
++#define DefaultFontPath $(FONTDIR)/Misc/,$(FONTDIR)/75dpi/,$(FONTDIR)/100dpi/
+ #else
+ #if PrimaryScreenResolution < 88		/* (75 + 100) / 2 */
+ #if BuildCIDFonts
+-#define DefaultFontPath $(FONTDIR)/misc/,$(FONTDIR)/Speedo/,$(FONTDIR)/Type1/,$(FONTDIR)/CID/,$(FONTDIR)/75dpi/,$(FONTDIR)/100dpi/
++#define DefaultFontPath $(FONTDIR)/Misc/,$(FONTDIR)/Speedo/,$(FONTDIR)/Type1/,$(FONTDIR)/CID/,$(FONTDIR)/75dpi/,$(FONTDIR)/100dpi/
+ #else
+-#define DefaultFontPath $(FONTDIR)/misc/,$(FONTDIR)/Speedo/,$(FONTDIR)/Type1/,$(FONTDIR)/75dpi/,$(FONTDIR)/100dpi/
++#define DefaultFontPath $(FONTDIR)/Misc/,$(FONTDIR)/Speedo/,$(FONTDIR)/Type1/,$(FONTDIR)/75dpi/,$(FONTDIR)/100dpi/
+ #endif
+ #else
+ #if BuildCIDFonts
+-#define DefaultFontPath $(FONTDIR)/misc/,$(FONTDIR)/Speedo/,$(FONTDIR)/Type1/,$(FONTDIR)/CID/,$(FONTDIR)/100dpi/,$(FONTDIR)/75dpi/
++#define DefaultFontPath $(FONTDIR)/Misc/,$(FONTDIR)/Speedo/,$(FONTDIR)/Type1/,$(FONTDIR)/CID/,$(FONTDIR)/100dpi/,$(FONTDIR)/75dpi/
+ #else
+-#define DefaultFontPath $(FONTDIR)/misc/,$(FONTDIR)/Speedo/,$(FONTDIR)/Type1/,$(FONTDIR)/100dpi/,$(FONTDIR)/75dpi/
++#define DefaultFontPath $(FONTDIR)/Misc/,$(FONTDIR)/Speedo/,$(FONTDIR)/Type1/,$(FONTDIR)/100dpi/,$(FONTDIR)/75dpi/
+ #endif
+ #endif
+ #endif
+@@ -729,9 +729,9 @@
+          */
+ #if BuildLowMem
+ #if PrimaryScreenResolution < 88                /* (75 + 100) / 2 */
+-#define DefaultFSFontPath $(FONTDIR)/misc/,$(FONTDIR)/Speedo/,$(FONTDIR)/Type1/,$(FONTDIR)/CID/,$(FONTDIR)/75dpi/,$(FONTDIR)/100dpi/
++#define DefaultFSFontPath $(FONTDIR)/Misc/,$(FONTDIR)/Speedo/,$(FONTDIR)/Type1/,$(FONTDIR)/CID/,$(FONTDIR)/75dpi/,$(FONTDIR)/100dpi/
+ #else
+-#define DefaultFSFontPath $(FONTDIR)/misc/,$(FONTDIR)/Speedo/,$(FONTDIR)/Type1/,$(FONTDIR)/CID/,$(FONTDIR)/100dpi/,$(FONTDIR)/75dpi/
++#define DefaultFSFontPath $(FONTDIR)/Misc/,$(FONTDIR)/Speedo/,$(FONTDIR)/Type1/,$(FONTDIR)/CID/,$(FONTDIR)/100dpi/,$(FONTDIR)/75dpi/
+ #endif
+ #else
+ #define DefaultFSFontPath DefaultFontPath
