@@ -1,0 +1,22 @@
+# Recipe for version 2.3.14 by Kosh <kosh.linux at gmail.com>, on Wed Nov 2 11:29:53 BRST 2005
+# by Jason Stubbs
+
+url="http://www.xinetd.org/xinetd-2.3.14.tar.gz"
+compile_version=1.8.0
+recipe_type=configure
+symlink_options=(
+  "--conflict overwrite"
+)
+pre_link(){
+  cp xinetd/sample.conf $target/../Settings
+  mkdir $target/../Settings/init.d
+  cp contrib/xinetd $target/../Settings/init.d
+  chmod 755 $target/../Settings/init.d/xinetd
+  mkdir $target/../Settings/xinetd.d
+  cp contrib/xinetd.d/* $target/../Settings/xinetd.d/
+  cp contrib/xinetd.conf $target/../Settings/
+}
+post_install(){
+    echo "Please remember to add xinetd to apropriate /System/Settings/BootScripts"
+    echo "if you want to start xinet at boot."
+}
