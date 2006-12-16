@@ -1,0 +1,10 @@
+--- siag-3.6.0/Makefile.in.orig	2005-10-30 18:09:17.000000000 -0200
++++ siag-3.6.0/Makefile.in	2005-10-30 18:09:22.000000000 -0200
+@@ -96,7 +96,6 @@ SUBDIRS = \
+ 	xcommon \
+ 	siag \
+ 	xsiag \
+-	tsiag \
+ 	pw \
+ 	xpw \
+ 	egon \

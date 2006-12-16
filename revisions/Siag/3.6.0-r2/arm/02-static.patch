@@ -1,0 +1,11 @@
+--- siag-3.6.0/xegon/xegon.h.orig	2006-05-16 20:32:29.000000000 -0300
++++ siag-3.6.0/xegon/xegon.h	2006-05-16 20:32:48.000000000 -0300
+@@ -23,8 +23,6 @@ typedef struct {
+         Boolean play;
+ } AppData;
+ 
+-extern AppData app_data;
+-
+ /* Each list has a frame, a title, a viewport and a list */
+ typedef struct egon_ui {
+ 	Widget viewport,       /* really a rudegrid */
