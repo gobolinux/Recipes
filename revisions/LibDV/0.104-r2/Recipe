@@ -1,0 +1,8 @@
+# Recipe for version 0.104 by Maglan C. Diemer, maglan@univates.br, on Seg Ago 22 10:17:10 BRT 2005
+# Recipe (MakeRecipe) for LibDV by ro.ko@mcnon.com, on Sat Oct 16 01:59:34 BRST 2004
+compile_version=1.8.0
+url="$httpSourceforge/libdv/libdv-0.104.tar.gz"
+recipe_type=configure
+configure_options=(
+	"--enable-sdl"  
+)
