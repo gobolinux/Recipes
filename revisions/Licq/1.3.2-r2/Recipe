@@ -1,0 +1,13 @@
+# Recipe for version 1.3.2 by Andre Detsch, on Thu Oct 27 19:20:08 BRST 2005
+compile_version=1.8.0
+recipe_type=meta
+include=(
+   "Licq-Base--1.3.2"
+   "Licq-KDE-GUI--1.3.2"
+   "Licq-Console--1.3.2"
+   "Licq-Auto-Reply--1.3.2"
+#   "Licq-Email--1.3.2"
+   "Licq-Msn--1.3.2"
+#   "Licq-Osd--1.3.2"
+   "Licq-Rms--1.3.2"
+)
