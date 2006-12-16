@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for Imaging by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sat Oct 2 22:30:03 BRT 2004
+# Recipe for version 1.1.5a5 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sat Oct 2 22:30:03 BRT 2004
+compile_version=1.8.0
+url="http://effbot.org/downloads/Imaging-1.1.5a5.tar.gz"
+file_size=385895
+file_md5=18005308c00fb0259e7bc5852bcf499f
+recipe_type=manifest
+
+pre_install() {
+	python setup.py build_ext -i && \
+	python selftest.py && \
+	python setup.py install && \
+	cp libImaging/*.h $goboPrograms/Python/Current/include/python2.3
+}
