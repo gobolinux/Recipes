@@ -1,0 +1,13 @@
+url='http://home.no.net/munsuun/tuxpuck/files/tuxpuck-0.8.2.tar.gz'
+compile_version=1.8.0
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "DESTDIR=$target"
+)
+pre_install() {
+   ln -s $target $target/usr 
+}
+post_install() {
+   rm $target/usr
+}
