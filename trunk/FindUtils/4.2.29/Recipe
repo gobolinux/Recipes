@@ -4,5 +4,5 @@ compile_version=1.8.0
 url="ftp://ftp.gnu.org/gnu/findutils/findutils-4.2.29.tar.gz"
 recipe_type=configure
 pre_link() {
-    mkdir $goboPrograms/FindUtils/Variable
+    mkdir $variable_target
 }
