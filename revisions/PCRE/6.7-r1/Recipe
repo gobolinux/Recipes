@@ -1,0 +1,7 @@
+# Recipe for version 6.7 by Andre Detsch <detsch@gobolinux.org>, on Sat Dec 16 23:15:23 BRST 2006
+# by Jeremy Vernon
+
+url="ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-6.7.tar.bz2"
+compile_version=1.8.0
+recipe_type=configure
+needs_safe_linking=yes
