@@ -1,0 +1,13 @@
+# Recipe for version 3.5.5 by Andre Detsch <detsch@gobolinux.org>, on Sun Dec 17 20:52:21 BRST 2006
+# by Maglan C. Diemer 3.4.3 by roko
+
+url="ftp://ftp.oregonstate.edu/pub/kde/stable/3.5.5/src/kdegames-3.5.5.tar.bz2"
+compile_version=CVS
+recipe_type=configure
+configure_options=(
+   "--disable-debug"
+   "--disable-dependency-tracking"
+   "--disable-libsuffix"
+   "DO_NOT_COMPILE=ktuberling"
+   # atlantik doc kasteroids katomic kbackgammon kbattleship kblackbox kbounce kenolaba kfouleggs kgoldrunner kjumbingcube klickety klines kmahjongg kimes kolf konquest kpat kpoker kreversi ksame kshisen ksmiletris ksnake ksokoban kspaceduel ktron ktuberling kwin4lskat
+)
