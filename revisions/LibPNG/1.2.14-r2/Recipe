@@ -1,0 +1,10 @@
+# Recipe for version 1.2.14 by Lucas C. Villa Real, on Wed Dec 20 16:07:45 BRST 2006
+url=$httpSourceforge/libpng/libpng-1.2.14.tar.bz2
+compile_version=1.8.0
+recipe_type=configure
+
+pre_link() {
+    Quiet pushd $target/include
+    ln -s libpng12 libpng
+    Quiet popd
+}
