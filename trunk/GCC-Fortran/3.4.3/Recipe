@@ -16,5 +16,5 @@ configure_options=(
 pre_link() {
    cd "$target/lib"
    rm -f libiberty.a
-   ln -s /Programs/GCC/Current/lib/* .
+   ln -s $gcc_path/lib/* .
 }
