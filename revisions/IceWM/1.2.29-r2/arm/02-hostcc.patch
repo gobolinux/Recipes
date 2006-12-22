@@ -1,0 +1,55 @@
+--- icewm-1.2.29/src/Makefile.in.orig	2006-12-21 00:04:16.000000000 -0200
++++ icewm-1.2.29/src/Makefile.in	2006-12-21 00:07:11.000000000 -0200
+@@ -11,7 +11,9 @@ DOCDIR = @DOCDIR@
+ ################################################################################
+ 
+ CXX =           @CXX@
++HOSTCXX =       @HOSTCXX@
+ LD =            @CXX_LINK@
++HOSTLD =        @HOSTCXX_LINK@
+ EXEEXT =        @EXEEXT@
+ 
+ DEBUG =         @DEBUG@
+@@ -206,11 +208,19 @@ clean:
+ %.o: %.cc
+ 	@echo "  CXX   " $@
+ 	@$(CXX) $(CXXFLAGS) $(GCCDEP) -c $<
+-	
+-genpref $(BINARIES):
++
++$(BINARIES):
+ 	@echo "  LD    " $@
+ 	@$(LD) -o $@$(EXEEXT) $($@_OBJS) $(LFLAGS) $($@_LFLAGS) $(LIBS) $($@_LIBS)
+ 
++genpref.o: genpref.cc
++	@echo "  HOSTCXX   " $@
++	@$(HOSTCXX) $(CXXFLAGS) $(GCCDEP) -c $<
++	
++genpref:
++	@echo "  HOSTLD    " $@
++	@$(HOSTLD) -o $@$(EXEEXT) $($@_OBJS)
++
+ ################################################################################
+ 
+ gnome.o: gnome.cc
+--- icewm-1.2.29/configure.in.orig	2006-12-21 00:17:53.000000000 -0200
++++ icewm-1.2.29/configure.in	2006-12-21 00:20:11.000000000 -0200
+@@ -77,6 +77,18 @@ fi
+ 
+ AC_SUBST(CXX_LINK)
+ 
++if test x"$HOSTCXX" = x; then
++  HOSTCXX=$CXX
++fi
++
++AC_SUBST(HOSTCXX)
++
++if test x"$HOSTCXX_LINK" = x; then
++  HOSTCXX_LINK=$CXX
++fi
++
++AC_SUBST(HOSTCXX_LINK)
++
+ #this test is broken, because AC_TRY_LINK calls g++
+ #AC_MSG_CHECKING([if we need our own C++ allocation operators])
+ #AC_TRY_LINK([ void icewm_alloc() {

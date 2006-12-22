@@ -1,0 +1,7 @@
+configure_options=(
+   ${configure_options[@]}
+   "--enable-shaped-decorations"
+   "--with-imlib"
+   "--with-icesound"
+)
+
