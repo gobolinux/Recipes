@@ -1,0 +1,5 @@
+configure_options=(
+    ${configure_options[@]}
+    "--with-cpu=i686"
+    "--enable-add-ons"
+)
