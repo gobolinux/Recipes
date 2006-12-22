@@ -1,0 +1,21 @@
+# Recipe for version 2.3.6 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Nov 29 23:00:49 BRST 2005
+# by Guilherme Bedin
+# 02/12/2003
+compile_version=1.8.0
+urls=(
+	http://ftp.gnu.org/pub/gnu/glibc/glibc-2.3.6.tar.gz
+	http://ftp.gnu.org/gnu/glibc/glibc-linuxthreads-2.3.6.tar.bz2
+)
+files=(
+	glibc-2.3.6.tar.gz
+	glibc-linuxthreads-2.3.6.tar.bz2
+)
+unpack_files=inside_first
+
+recipe_type=configure
+
+needs_build_directory=yes
+needs_safe_linking=yes
+
+install_target="install localedata/install-locales"
+make_variables=("CFLAGS=" "CXXFLAGS=")
