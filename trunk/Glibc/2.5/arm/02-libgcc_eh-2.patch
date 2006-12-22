@@ -1,0 +1,125 @@
+Submitted By: Joe Ciccone <jciccone@linuxfromscratch.org>
+Date: 2006-11-09
+Initial Package Version: 2.5
+Origin: Joe Ciccone
+Upstream Status: Unknown
+Description: Checks to see if libgcc_eh has been provided by gcc. If it has
+             the glibc will attempt to link to it.
+
+diff -Naur glibc-2.5.orig/Makeconfig glibc-2.5/Makeconfig
+--- glibc-2.5.orig/Makeconfig	2006-11-09 11:40:14.000000000 -0500
++++ glibc-2.5/Makeconfig	2006-11-09 11:40:31.000000000 -0500
+@@ -526,12 +526,20 @@
+   libunwind = -lunwind
+ endif
+ ifneq ($(have-as-needed),yes)
++ifneq ($(have-cc-with-libgcc_eh),yes)
++ libgcc_eh := $(libunwind)
++else
+  libgcc_eh := -lgcc_eh $(libunwind)
++endif
+ else
+  libgcc_eh := -Wl,--as-needed -lgcc_s$(libgcc_s_suffix) $(libunwind) -Wl,--no-as-needed
+ endif
+ gnulib := -lgcc $(libgcc_eh)
+-static-gnulib := -lgcc -lgcc_eh $(libunwind)
++ifneq ($(have-cc-with-libgcc_eh),yes)
++ static-gnulib := -lgcc $(libunwind)
++else
++ static-gnulib := -lgcc -lgcc_eh $(libunwind)
++endif
+ libc.so-gnulib := -lgcc
+ endif
+ ifeq ($(elf),yes)
+diff -Naur glibc-2.5.orig/config.make.in glibc-2.5/config.make.in
+--- glibc-2.5.orig/config.make.in	2006-11-09 11:40:14.000000000 -0500
++++ glibc-2.5/config.make.in	2006-11-09 11:40:31.000000000 -0500
+@@ -63,6 +63,7 @@
+ have-libaudit = @have_libaudit@
+ have-libcap = @have_libcap@
+ have-cc-with-libunwind = @libc_cv_cc_with_libunwind@
++have-cc-with-libgcc_eh = @libc_cv_cc_with_libgcc_eh@
+ fno-unit-at-a-time = @fno_unit_at_a_time@
+ bind-now = @bindnow@
+ have-hash-style = @libc_cv_hashstyle@
+diff -Naur glibc-2.5.orig/configure glibc-2.5/configure
+--- glibc-2.5.orig/configure	2006-11-09 11:40:14.000000000 -0500
++++ glibc-2.5/configure	2006-11-09 11:41:03.000000000 -0500
+@@ -313,7 +313,7 @@
+ # include <unistd.h>
+ #endif"
+ 
+-ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS with_fp with_cvs enable_check_abi oldest_abi bindnow force_install all_warnings build build_cpu build_vendor build_os host host_cpu host_vendor host_os subdirs add_ons add_on_subdirs base_machine submachine sysnames sysdeps_add_ons INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA LN_S CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC OBJEXT BUILD_CC cross_compiling CPP CXX CXXFLAGS ac_ct_CXX AR OBJDUMP RANLIB ac_ct_RANLIB MIG AS LD PWD_P MAKE MSGFMT MAKEINFO SED AUTOCONF SYSINCLUDES CXX_SYSINCLUDES libc_cv_gcc_static_libgcc BASH libc_cv_have_bash2 KSH libc_cv_have_ksh AWK PERL INSTALL_INFO BISON VERSIONING libc_cv_asm_protected_directive libc_cv_cc_with_libunwind libc_cv_z_nodelete libc_cv_z_nodlopen libc_cv_z_initfirst libc_cv_z_relro libc_cv_Bgroup libc_cv_libgcc_s_suffix libc_cv_as_needed ASFLAGS_config libc_cv_z_combreloc libc_cv_z_execstack libc_cv_fpie libc_cv_hashstyle fno_unit_at_a_time libc_cv_ssp libc_cv_have_initfini no_whole_archive exceptions LIBGD have_libaudit have_libcap have_selinux EGREP sizeof_long_double libc_cv_gcc_unwind_find_fde uname_sysname uname_release uname_version old_glibc_headers libc_cv_slibdir libc_cv_localedir libc_cv_sysconfdir libc_cv_rootsbindir libc_cv_forced_unwind use_ldconfig ldd_rewrite_script elf xcoff static shared pic_default profile omitfp bounded static_nss nopic_initfini DEFINES mach_interface_list VERSION RELEASE LIBOBJS LTLIBOBJS'
++ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS with_fp with_cvs enable_check_abi oldest_abi bindnow force_install all_warnings build build_cpu build_vendor build_os host host_cpu host_vendor host_os subdirs add_ons add_on_subdirs base_machine submachine sysnames sysdeps_add_ons INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA LN_S CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC OBJEXT BUILD_CC cross_compiling CPP CXX CXXFLAGS ac_ct_CXX AR OBJDUMP RANLIB ac_ct_RANLIB MIG AS LD PWD_P MAKE MSGFMT MAKEINFO SED AUTOCONF SYSINCLUDES CXX_SYSINCLUDES libc_cv_gcc_static_libgcc BASH libc_cv_have_bash2 KSH libc_cv_have_ksh AWK PERL INSTALL_INFO BISON VERSIONING libc_cv_asm_protected_directive libc_cv_cc_with_libunwind libc_cv_cc_with_libgcc_eh libc_cv_z_nodelete libc_cv_z_nodlopen libc_cv_z_initfirst libc_cv_z_relro libc_cv_Bgroup libc_cv_libgcc_s_suffix libc_cv_as_needed ASFLAGS_config libc_cv_z_combreloc libc_cv_z_execstack libc_cv_fpie libc_cv_hashstyle fno_unit_at_a_time libc_cv_ssp libc_cv_have_initfini no_whole_archive exceptions LIBGD have_libaudit have_libcap have_selinux EGREP sizeof_long_double libc_cv_gcc_unwind_find_fde uname_sysname uname_release uname_version old_glibc_headers libc_cv_slibdir libc_cv_localedir libc_cv_sysconfdir libc_cv_rootsbindir libc_cv_forced_unwind use_ldconfig ldd_rewrite_script elf xcoff static shared pic_default profile omitfp bounded static_nss nopic_initfini DEFINES mach_interface_list VERSION RELEASE LIBOBJS LTLIBOBJS'
+ ac_subst_files=''
+ 
+ # Initialize some variables set by options.
+@@ -5552,6 +5552,33 @@
+ 
+   fi
+ 
++  { echo "$as_me:$LINENO: checking whether to link against libgcc_eh" >&5
++echo $ECHO_N "checking whether to link against libgcc_eh... $ECHO_C" >&6; }
++if test "${libc_cv_cc_with_libgcc_eh+set}" = set; then
++  echo $ECHO_N "(cached) $ECHO_C" >&6
++else
++
++    cat > conftest.c <<EOF
++int main (void) { return 0; }
++EOF
++    if ${CC-cc} $CFLAGS $CPPFLAGS $LDFLAGS -static -o conftest \
++       conftest.c -v 2>&1 >/dev/null | grep -q " -lgcc_eh "; then
++      libc_cv_cc_with_libgcc_eh=yes
++    else
++      libc_cv_cc_with_libgcc_eh=no
++    fi
++    rm -f conftest*
++fi
++{ echo "$as_me:$LINENO: result: $libc_cv_cc_with_libgcc_eh" >&5
++echo "${ECHO_T}$libc_cv_cc_with_libgcc_eh" >&6; }
++
++  if test $libc_cv_cc_with_libgcc_eh = yes; then
++    cat >>confdefs.h <<\_ACEOF
++#define HAVE_CC_WITH_LIBGCC_EH 1
++_ACEOF
++
++  fi
++
+   echo "$as_me:$LINENO: checking for -z nodelete option" >&5
+ echo $ECHO_N "checking for -z nodelete option... $ECHO_C" >&6
+ if test "${libc_cv_z_nodelete+set}" = set; then
+@@ -8512,6 +8539,7 @@
+ s,@VERSIONING@,$VERSIONING,;t t
+ s,@libc_cv_asm_protected_directive@,$libc_cv_asm_protected_directive,;t t
+ s,@libc_cv_cc_with_libunwind@,$libc_cv_cc_with_libunwind,;t t
++s,@libc_cv_cc_with_libgcc_eh@,$libc_cv_cc_with_libgcc_eh,;t t
+ s,@libc_cv_z_nodelete@,$libc_cv_z_nodelete,;t t
+ s,@libc_cv_z_nodlopen@,$libc_cv_z_nodlopen,;t t
+ s,@libc_cv_z_initfirst@,$libc_cv_z_initfirst,;t t
+diff -Naur glibc-2.5.orig/configure.in glibc-2.5/configure.in
+--- glibc-2.5.orig/configure.in	2006-11-09 11:40:15.000000000 -0500
++++ glibc-2.5/configure.in	2006-11-09 11:40:31.000000000 -0500
+@@ -1391,6 +1391,23 @@
+     AC_DEFINE(HAVE_CC_WITH_LIBUNWIND)
+   fi
+ 
++  AC_CACHE_CHECK(whether to link against libgcc_eh,
++                 libc_cv_cc_with_libgcc_eh, [
++    cat > conftest.c <<EOF
++int main (void) { return 0; }
++EOF
++    if ${CC-cc} $CFLAGS $CPPFLAGS $LDFLAGS -static -o conftest \
++       conftest.c -v 2>&1 >/dev/null | grep -q " -lgcc_eh "; then
++      libc_cv_cc_with_libgcc_eh=yes
++    else
++      libc_cv_cc_with_libgcc_eh=no
++    fi
++    rm -f conftest*])
++  AC_SUBST(libc_cv_cc_with_libgcc_eh)
++  if test $libc_cv_cc_with_libgcc_eh = yes; then
++    AC_DEFINE(HAVE_CC_WITH_LIBGCC_EH)
++  fi
++
+   AC_CACHE_CHECK(for -z nodelete option,
+ 		 libc_cv_z_nodelete, [dnl
+   cat > conftest.c <<EOF
