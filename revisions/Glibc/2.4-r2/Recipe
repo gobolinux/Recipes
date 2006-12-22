@@ -1,0 +1,31 @@
+# Recipe for version 2.4 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Wed Jun 14 15:59:40 BRT 2006
+# by Guilherme Bedin
+# 02/12/2003
+compile_version=1.8.0
+urls=(
+    http://ftp.gnu.org/pub/gnu/glibc/glibc-2.4.tar.gz
+    http://ftp.gnu.org/gnu/glibc/glibc-ports-2.4.tar.bz2
+)
+unpack_files=inside_first
+
+recipe_type=configure
+needs_build_directory=yes
+needs_safe_linking=yes
+keep_existing_target=yes
+sandbox_options=("--no-sandbox")
+
+configure_options=(
+    "--disable-profile"
+    "--with-tls"
+    "--with-__thread"
+    "--enable-kernel=2.6.7"
+    "--libexecdir=${target}/lib"
+    "--with-headers=${linux_headers_path}/include"
+)
+
+install_target="install localedata/install-locales"
+
+pre_build() {
+    unset CFLAGS CXXFLAGS LD_LIBRARY_PATH
+    [ ! -z "$cross_prefix_dir" ] && echo "install_root=$cross_prefix_dir" > configparms
+}

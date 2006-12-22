@@ -1,0 +1,11 @@
+configure_options=(
+	${configure_options[@]}
+	"--without-fp"
+	"--with-abi=aapcs-linux"
+	"--libexecdir=${target}/lib"
+	"--enable-add-ons=nptl,ports"
+)
+
+pre_patch() {
+	ln -nfs $compileSourcesDir/glibc-2.4/glibc-ports-2.4 $compileSourcesDir/glibc-2.4/ports
+}
