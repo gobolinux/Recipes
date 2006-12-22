@@ -1,0 +1,16 @@
+configure_options=(
+	"--disable-profile"
+	"--enable-add-ons=nptl"
+	"--with-tls"
+	"--libexecdir=${target}/lib"
+	"--with-headers=`readlink -f $goboPrograms/Linux-Libc-Headers/Current/include`"
+)
+
+pre_build() {
+	unset CXXFLAGS LD_LIBRARY_PATH
+    export CFLAGS="-D__OPTIMIZE__"
+}
+
+pre_install() {
+	[ -d ../glibc-2.3.6/linuxthreads ] && make -C ../glibc-2.3.6/linuxthreads/man
+}
