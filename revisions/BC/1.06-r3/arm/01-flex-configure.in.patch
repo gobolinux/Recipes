@@ -1,0 +1,11 @@
+--- bc-1.06/configure.in.orig	2006-12-18 00:23:26.000000000 -0200
++++ bc-1.06/configure.in	2006-12-18 00:23:48.000000000 -0200
+@@ -68,7 +68,7 @@ AC_ARG_WITH(readline,[  --with-readline 
+ ])
+ 
+ if test "$LEX" = "flex" ; then
+- LEX="flex -I8"
++ LEX="flex -I -8"
+ else
+  if test "$bcrl" = "y" ; then
+   AC_MSG_WARN(readline works only with flex.)
