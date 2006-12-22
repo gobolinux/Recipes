@@ -1,0 +1,10 @@
+# Recipe for version 2.1pre26 by Lucas C. Villa Real, on Wed Dec 20 16:01:58 BRST 2006
+# Recipe (MakeRecipe) for Links by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Nov 23 18:09:18 BRST 2004
+compile_version=1.8.0
+url="http://links.twibright.com/download/links-2.1pre26.tar.bz2"
+recipe_type=configure
+
+pre_build() {
+    # the shipped configure doesn't recognize parameters such as CC
+    echo "Running autoconf..." && autoconf
+}
