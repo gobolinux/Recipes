@@ -1,0 +1,13 @@
+make_variables=(
+    EXTRA_CFLAGS="-nostdinc"
+)
+
+pre_build() {
+    crosscompiler="$cross_toolchain_dir/bin/$cross_compiler"
+    [ ! -f .config ] && cp "$archsubdir"/dot-config .config
+
+    GrepReplace "PREFIX=.*" "PREFIX=\"$target\"" .config
+    GrepReplace "# USING_CROSS_COMPILER is not set" "USING_CROSS_COMPILER=y" .config
+    make menuconfig
+    GrepReplace "CROSS_COMPILER_PREFIX=.*" "CROSS_COMPILER_PREFIX=\"$crosscompiler\"" .config
+}
