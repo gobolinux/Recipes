@@ -1,0 +1,65 @@
+--- busybox-1.1.3/modutils/Config.in.orig	2006-05-27 12:16:03.000000000 -0300
++++ busybox-1.1.3/modutils/Config.in	2006-05-27 13:21:39.000000000 -0300
+@@ -106,6 +106,22 @@ config CONFIG_FEATURE_MODPROBE_MULTIPLE_
+ 	  Saying Y here is not a bad idea if you're not that short
+ 	  on storage capacity.
+ 
++config USING_ALTERNATIVE_MODDIR
++	bool "Are your kernel modules stored outside the standard directory?"
++	default n
++	depends on CONFIG_MODPROBE
++	help
++	  Choose 'Y' if you want modprobe to look for modules on a directory
++	  other than the default /lib/modules. If unsure choose 'N'.
++
++config MODPROBE_MODDIR
++	string "Kernel modules directory"
++	default "/System/Kernel/Modules"
++	depends on USING_ALTERNATIVE_MODDIR
++	help
++	  Allows one to specify where the kernel modules are stored, if they
++	  aren't inside the standard /lib/modules hierarchy.
++
+ comment "Options common to multiple modutils"
+ 	depends on CONFIG_INSMOD || CONFIG_RMMOD || CONFIG_MODPROBE || CONFIG_LSMOD
+ 
+--- busybox-1.1.3/modutils/modprobe.c.orig	2006-05-27 13:22:53.000000000 -0300
++++ busybox-1.1.3/modutils/modprobe.c	2006-05-27 13:44:22.000000000 -0300
+@@ -265,6 +265,10 @@ static char *parse_command_string( char 
+ #define parse_command_string(src, dst)	(0)
+ #endif /* ENABLE_FEATURE_MODPROBE_MULTIPLE_OPTIONS */
+ 
++#ifndef MODPROBE_MODDIR
++#define MODPROBE_MODDIR "/lib/modules"
++#endif
++
+ /*
+  * This function builds a list of dependency rules from /lib/modules/`uname -r\modules.dep.
+  * It then fills every modules and aliases with their  default options, found by parsing
+@@ -289,16 +293,20 @@ static struct dep_t *build_dep ( void )
+ 		k_version = un.release[2] - '0';
+ 	}
+ 
+-	filename = bb_xasprintf("/lib/modules/%s/modules.dep", un.release );
+-
+-	if (( fd = open ( filename, O_RDONLY )) < 0 ) {
++	filename = bb_xasprintf("%s/%s/modules.dep", MODPROBE_MODDIR, un.release );
++	fd = open ( filename, O_RDONLY );
++	if (ENABLE_FEATURE_CLEAN_UP) free(filename);
+ 
++	if ( fd < 0 ) {
+ 		/* Ok, that didn't work.  Fall back to looking in /lib/modules */
+-		if (( fd = open ( "/lib/modules/modules.dep", O_RDONLY )) < 0 ) {
++		
++		filename = bb_xasprintf("%s/modules.dep", MODPROBE_MODDIR );
++		fd = open ( filename, O_RDONLY );
++		if (ENABLE_FEATURE_CLEAN_UP) free(filename);
++
++		if ( fd < 0 )
+ 			return 0;
+-		}
+ 	}
+-	free(filename);
+ 
+ 	while ( reads ( fd, buffer, sizeof( buffer ))) {
+ 		int l = bb_strlen ( buffer );
