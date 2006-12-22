@@ -1,0 +1,23 @@
+# Recipe for version 3.6.0 by Lucas C. Villa Real, on Wed Dec 13 18:06:03 BRST 2006
+# Recipe (MakeRecipe) for ATLAS by Lucas C. Villa Real, on Wed Dec 13 16:11:19 BRST 2006
+compile_version=1.8.0
+url="$httpSourceforge/math-atlas/atlas3.6.0.tar.bz2"
+dir='ATLAS'
+recipe_type=makefile
+
+make_variables=(
+    arch=Linux-`uname -m`
+)
+
+pre_build() {
+    make xconfig
+    echo -e "160\ny\ny\ny\nLinux-`uname -m`\n\ny\n" | ./xconfig
+}
+
+pre_link() {
+    arch="Linux-`uname -m`"
+    cp $dir/bin/$arch/xatlas_tee $dir/bin/$arch/xatlas_waitfile $target/bin
+    cp $dir/lib/$arch/*.a $target/lib
+    cp $dir/include/$arch/*.h $target/include
+    ln -s libcblas.a $target/lib/libblas.a
+}
