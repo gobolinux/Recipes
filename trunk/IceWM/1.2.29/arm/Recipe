@@ -1,0 +1,19 @@
+configure_options=(
+   ${configure_options[@]}
+   --disable-shaped-decorations
+   --disable-xinerama
+   --disable-xrandr
+   --disable-x86-asm
+   --enable-lite
+)
+
+environment=(
+	LIBS="-lXau -lXdmcp -lexpat"
+	HOSTCXX="$HOSTCXX"
+	HOSTCXX_LINK="$HOSTCXX"
+	CXXFLAGS=
+)
+
+pre_build() {
+	echo "Running autoconf..." && autoconf
+}

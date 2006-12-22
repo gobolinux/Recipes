@@ -4,11 +4,9 @@ url="$httpSourceforge/icewm/icewm-1.2.21.tar.gz"
 recipe_type=configure
 
 configure_options=(
-   "--enable-shaped-decorations"
    "--enable-gradients"
    "--enable-antialiasing"
    "--enable-corefonts"
-   "--with-imlib"
-   "--with-icesound"
+   "--disable-i18n"
 )
 
