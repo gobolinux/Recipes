@@ -1,0 +1,21 @@
+# Recipe for version 3.2.5 by Lucas C. Villa Real, on Wed Nov 22 00:12:02 BRST 2006
+# Recipe (MakeRecipe) for FFmpeg-Motion by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Thu Feb 9 23:01:25 BRST 2006
+compile_version=1.8.0
+url="$httpSourceforge/motion/ffmpeg-cvs-20060306-certified-with-motion-3.2.5.tar.gz"
+dir='ffmpeg'
+recipe_type=configure
+
+configure_options=(
+	--enable-shared
+	--enable-pthreads
+	--enable-gpl
+    --disable-ffplay
+)
+
+pre_link() {
+    pushd $target/lib > /dev/null
+    ln -s libavcodec-CVS.so  libavcodec.so.49
+    ln -s libavformat-CVS.so libavformat.so.49
+    ln -s libavutil-CVS.so   libavutil.so.49
+    popd > /dev/null
+}
