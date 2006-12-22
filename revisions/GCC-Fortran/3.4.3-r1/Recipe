@@ -1,0 +1,21 @@
+# Recipe for version 3.4.3 by Lucas C. Villa Real, on Wed Dec 13 15:38:49 BRST 2006
+# by Guilherme Bedin
+# 02/12/2003
+
+url=$ftpGnu/gcc/gcc-3.4.3/gcc-3.4.3.tar.bz2
+compile_version=1.8.0
+recipe_type=configure
+needs_build_directory=yes
+configure_options=(
+   "--enable-shared"
+   "--enable-threads=posix"
+   "--enable-__cxa_atexit"
+   "--enable-clocale=gnu"
+   "--enable-languages=f77"
+)
+
+pre_link() {
+   cd "$target/lib"
+   rm -f libiberty.a
+   ln -s $gcc_path/lib/* .
+}
