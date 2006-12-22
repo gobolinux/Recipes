@@ -1,0 +1,26 @@
+# Recipe for version 3.4.3 by Hisham Muhammad, on Sun Nov 7 01:23:23 BRST 2004
+# by Hisham Muhammad, Guilherme Bedin
+
+url=$ftpGnu/gcc/gcc-3.4.5/gcc-3.4.5.tar.bz2
+
+recipe_type=configure
+needs_build_directory=yes
+configure_options=(
+   "--enable-shared"
+   "--enable-threads=posix"
+   "--enable-__cxa_atexit"
+   "--enable-clocale=gnu"
+   "--enable-languages=c,c++"
+#   "--enable-languages=c,c++,objc"
+)
+pre_link() {
+   cd "$target/bin"
+   ln -s gcc cc
+   cd "$target/lib"
+   ln -s "$target/bin/cpp" .
+   rm -f libiberty.a
+   cd "$goboExecutables"
+   ln -nsf "$target/bin/cc" .
+   cd "$goboLibraries"
+   ln -nsf "$target/lib/cpp" .
+}
