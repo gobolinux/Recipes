@@ -9,3 +9,7 @@ configure_options=(
 #   "--target=i386-pc-linux-gnu"
 #   "--enable-languages=c,c++,objc"
 )
+
+environment=(
+	AR=${cross_compiler}ar
+)
