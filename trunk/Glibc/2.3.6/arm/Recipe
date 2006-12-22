@@ -2,6 +2,7 @@ configure_options=(
 	"--disable-profile"
 	"--enable-add-ons=linuxthreads"
 	"--without-tls"
+	"--without-fp"
 	"--libexecdir=${target}/lib"
 	"--with-headers=$cross_kernel_dir/include"
 #	"--with-headers=$goboPrograms/Linux-Libc-Headers/Current/include"
@@ -18,14 +19,9 @@ pre_install() {
 
 post_install() {
 	[ ! "$cross_compiling" ] && return
-
-    cp -f $recipedir/sys_kd.h $target/include/sys
-		
-    if [ "$cross_libc_libdir" = "" ]
-	then
-		Log_Error "cross_libc_libdir not specified on Cross-$ARCH.conf"
-		exit 1
-	fi
+    [ "$cross_libc_libdir" = "" ] && Die "cross_libc_libdir not specified on Cross-$ARCH.conf"
+    
+	cp -f $recipedir/sys_kd.h $target/include/sys
 	
 	#
 	# Create a fresh ld.so.conf file
@@ -58,13 +54,11 @@ post_install() {
 	#
 	# fix "ld: cannot find /System/ARM/Programs/Glibc/2.3.6/lib/libc.so.6 inside /System/CrossCompilers/..."
 	#
-	pushd "$cross_toolchain_dir" >& /dev/null
-	for i in *
-	do
-		[ ! -d $i ] && continue
-		pushd $i >& /dev/null
-		ln -s /System .
-		popd >& /dev/null
-	done
-	popd >& /dev/null
+	local prefix=`echo "$cross_prefix_dir" | sed 's,^/,,g'`
+	dir=$prefix/Programs/Glibc/2.3.6
+	mkdir -p "$cross_toolchain_dir/$dir"
+
+	local subdir=`echo $cross_compiler | sed 's,-$,,g'`
+	local orig="$cross_gcc_libdir/$subdir"
+	ln -s "$orig" "$cross_toolchain_dir/$dir"
 }

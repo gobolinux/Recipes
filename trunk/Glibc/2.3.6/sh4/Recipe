@@ -68,13 +68,11 @@ post_install() {
 	#
 	# fix "ld: cannot find /System/SH4/Programs/Glibc/2.3.6/lib/libc.so.6 inside /System/CrossCompilers/..."
 	#
-	pushd "$cross_toolchain_dir" >& /dev/null
-	for i in *
-	do
-		[ ! -d $i ] && continue
-		pushd $i >& /dev/null
-		ln -s /System .
-		popd >& /dev/null
-	done
-	popd >& /dev/null
+	local prefix=`echo "$cross_prefix_dir" | sed 's,^/,,g'`
+	dir=$prefix/Programs/Glibc/2.3.6
+	mkdir -p "$cross_toolchain_dir/$dir"
+
+	local subdir=`echo $cross_compiler | sed 's,-$,,g'`
+	local orig="$cross_gcc_libdir/$subdir"
+	ln -s "$orig" "$cross_toolchain_dir/$dir"
 }
