@@ -12,7 +12,7 @@ recipe_type=configure
 needs_build_directory=yes
 needs_safe_linking=yes
 keep_existing_target=yes
-sandbox_options="--no-sandbox"
+sandbox_options=("--no-sandbox")
 
 configure_options=(
     "--disable-profile"
