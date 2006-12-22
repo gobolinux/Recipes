@@ -20,7 +20,7 @@ configure_options=(
     "--with-__thread"
     "--enable-kernel=2.6.7"
     "--libexecdir=${target}/lib"
-    "--with-headers=$goboPrograms/Linux-Headers/Current/include"
+    "--with-headers=${linux_headers_path}/include"
 )
 
 install_target="install localedata/install-locales"
