@@ -1,0 +1,78 @@
+configure_options=(
+	"--disable-profile"
+	"--enable-add-ons=linuxthreads"
+	"--without-tls"
+	"--libexecdir=${target}/lib"
+	"--with-headers=$cross_kernel_dir/include"
+#	"--with-headers=$goboPrograms/Linux-Libc-Headers/Current/include"
+)
+
+pre_build() {
+	unset CXXFLAGS LD_LIBRARY_PATH
+    export CFLAGS="-D__OPTIMIZE__"
+ 
+    cp $archsubdir/sh4_configparms $dir/configparms
+    cp $archsubdir/sh4_configparms $builddir/configparms
+}
+
+pre_link() {
+	mkdir -p $target/include/stdlib
+	cp $dir/stdlib/gmp.h $target/include/stdlib
+	cp $dir/include/gmp.h $target/include
+	cp $archsubdir/gmp-mparam.h $target/include
+}
+
+pre_install() {
+	[ -d ../glibc-2.3.6/linuxthreads ] && make -C ../glibc-2.3.6/linuxthreads/man
+}
+
+post_install() {
+	[ ! "$cross_compiling" ] && return
+
+    cp -f $archsubdir/sys_kd.h $target/include/sys
+		
+    if [ "$cross_libc_libdir" = "" ]
+	then
+		Log_Error "cross_libc_libdir not specified on Cross-$ARCH.conf"
+		exit 1
+	fi
+	
+	#
+	# Create a fresh ld.so.conf file
+	#
+	mkdir -p $settings_target && echo "$goboLibraries" > $settings_target/ld.so.conf
+	
+	#
+    # remove any previous libc backup 
+	#
+    [ -d "$cross_libc_libdir/backup_files" ] && rm -Rf "$cross_libc_libdir"/backup_files/*
+
+    mkdir -p "$cross_libc_libdir"/backup_files
+	pushd "$target/lib" >& /dev/null
+	
+	#
+    # fix a possibly broken libpthread.so
+	#
+    GrepReplace "/lib/ " "/lib/libpthread_nonshared.a " libpthread.so
+    
+	#
+	# replace cross-compiler's libc by the generated one
+	#
+	for i in *
+	do
+		[ -e "$cross_libc_libdir/$i" ] && mv "$cross_libc_libdir/$i" "$cross_libc_libdir/backup_files"
+		cp -a "$i" "$cross_libc_libdir"
+	done    
+	popd >& /dev/null
+
+	#
+	# fix "ld: cannot find /System/SH4/Programs/Glibc/2.3.6/lib/libc.so.6 inside /System/CrossCompilers/..."
+	#
+	local prefix=`echo "$cross_prefix_dir" | sed 's,^/,,g'`
+	dir=$prefix/Programs/Glibc/2.3.6
+	mkdir -p "$cross_toolchain_dir/$dir"
+
+	local subdir=`echo $cross_compiler | sed 's,-$,,g'`
+	local orig="$cross_gcc_libdir/$subdir"
+	ln -s "$orig" "$cross_toolchain_dir/$dir"
+}
