@@ -6,6 +6,10 @@ file_size=607939
 file_md5=1c8f3b247c38fb16c3c2170df9fc102a
 recipe_type=configure
 
-pre_link() {
-	mkdir $target/../Settings
+configure_options=(
+    --enable-lock-dir=$goboVariable/lock
+)
+
+post_install() {
+	mkdir -p $settings_target
 }
