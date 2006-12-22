@@ -2,6 +2,7 @@
 # by Hisham Muhammad, Guilherme Bedin
 
 url=$ftpGnu/gcc/gcc-3.4.5/gcc-3.4.5.tar.bz2
+compile_version=1.8.0
 
 recipe_type=configure
 needs_build_directory=yes
