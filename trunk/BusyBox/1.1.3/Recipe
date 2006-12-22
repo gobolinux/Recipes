@@ -12,6 +12,6 @@ sandbox_options=(
 pre_link() {
 	cp .config $target/Resources/config
 	gzip $target/Resources/config
-	touch $target/../Settings/busybox.conf
+	touch $settings_target/busybox.conf
     cp $recipedir/Resources/mdev_wrapper $target/bin
 }
