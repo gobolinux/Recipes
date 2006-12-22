@@ -1,0 +1,24 @@
+# Recipe (MakeRecipe) for LAPACK by Lucas C. Villa Real, on Wed Dec 13 16:44:44 BRST 2006
+# Recipe for version 3.1.0 by Lucas C. Villa Real, on Wed Dec 13 16:44:44 BRST 2006
+compile_version=1.8.0
+url="http://www.netlib.org/lapack/lapack-3.1.0.tgz"
+file_size=10299236
+file_md5=d75d849fd034cf49c188931a4ab42e87
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=(
+    PREFIX=$target
+)
+
+pre_build() {
+    mv make.inc.example make.inc
+}
+
+pre_link() {
+    Quiet pushd $target/lib
+    ln -s lapack_LINUX.a libflapack.a
+    ln -s lapack_LINUX.a liblapack.a
+    ln -s blas_LINUX.a libfblas.a
+    Quiet popd
+}
