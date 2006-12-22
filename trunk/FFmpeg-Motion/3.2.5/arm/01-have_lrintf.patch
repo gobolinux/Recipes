@@ -1,0 +1,11 @@
+--- ffmpeg/configure.orig	2006-07-10 23:42:34.000000000 -0300
++++ ffmpeg/configure	2006-07-10 23:42:37.000000000 -0300
+@@ -986,7 +986,7 @@ cat > $TMPC << EOF
+ int main( void ) { return (lrintf(3.999f) > 0)?0:1; }
+ EOF
+ 
+-have_lrintf="no"
++have_lrintf="yes"
+ if $cc $CFLAGS $LDFLAGS $extralibs -o $TMPE $TMPC 2> /dev/null ; then
+   have_lrintf="yes"
+   # allanc@chickenandporn.com: cannot execute cross-compiled
