@@ -29,7 +29,7 @@ pre_install() {
 post_install() {
 	[ ! "$cross_compiling" ] && return
 
-    cp -f $recipedir/sys_kd.h $target/include/sys
+    cp -f $archsubdir/sys_kd.h $target/include/sys
 		
     if [ "$cross_libc_libdir" = "" ]
 	then
@@ -40,7 +40,7 @@ post_install() {
 	#
 	# Create a fresh ld.so.conf file
 	#
-	mkdir -p $target/../Settings && echo "$goboLibraries" > $target/../Settings/ld.so.conf
+	mkdir -p $settings_target && echo "$goboLibraries" > $settings_target/ld.so.conf
 	
 	#
     # remove any previous libc backup 

@@ -21,12 +21,12 @@ post_install() {
 	[ ! "$cross_compiling" ] && return
     [ "$cross_libc_libdir" = "" ] && Die "cross_libc_libdir not specified on Cross-$ARCH.conf"
     
-	cp -f $recipedir/sys_kd.h $target/include/sys
+	cp -f $archsubdir/sys_kd.h $target/include/sys
 	
 	#
 	# Create a fresh ld.so.conf file
 	#
-	mkdir -p $target/../Settings && echo "$goboLibraries" > $target/../Settings/ld.so.conf
+	mkdir -p $settings_target && echo "$goboLibraries" > $settings_target/ld.so.conf
 
 	#
     # remove previous backups of glibc
