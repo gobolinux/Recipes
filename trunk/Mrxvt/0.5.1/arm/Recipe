@@ -13,6 +13,10 @@ configure_options=(
   --enable-xft
 )
 
+environment=(
+    LIBS="-lXdmcp -lXau -lexpat -lICE"
+)
+
 pre_link() {
 	pushd $target/bin >& /dev/null
 	ln -s mrxvt xterm
