@@ -1,0 +1,8 @@
+# Recipe for version 0.1.12 by Lucas Correia Villa Real, on Thu Jun 22 10:00:31 BRT 2006
+url=$httpSourceforge/libusb/libusb-0.1.12.tar.gz
+compile_version=1.8.0
+recipe_type=configure
+
+pre_link() {
+    cp usbi.h $target/include
+}
