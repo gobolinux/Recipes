@@ -1,0 +1,16 @@
+# Recipe for version 3.8.2 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Apr 4 16:29:25 CEST 2006
+
+url=ftp://ftp.remotesensing.org/pub/libtiff/tiff-3.8.2.tar.gz
+compile_version=1.8.0
+recipe_type=configure
+
+environment=(
+   LD_LIBRARY_PATH=
+)
+
+pre_install() {
+   GrepReplace "/System/Links/Manuals" "$target/man" man/Makefile
+   GrepReplace "/System/Links/Manuals" "$target/man" man/lib/Makefile
+   GrepReplace "/System/Links/Manuals" "$target/man" man/apps/Makefile
+}
+
