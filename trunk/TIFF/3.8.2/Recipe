@@ -2,7 +2,7 @@
 
 url=ftp://ftp.remotesensing.org/pub/libtiff/tiff-3.8.2.tar.gz
 compile_version=1.8.0
-recipe_type=configure
+is_compileprogram=yes
 
 make_options=(
    LD_LIBRARY_PATH=
