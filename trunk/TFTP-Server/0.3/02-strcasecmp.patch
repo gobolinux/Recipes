@@ -1,0 +1,38 @@
+--- tftpserver/tftpserver.cpp.orig	2006-07-20 00:00:31.000000000 -0300
++++ tftpserver/tftpserver.cpp	2006-07-20 00:06:32.000000000 -0300
+@@ -828,31 +828,30 @@ void initialize()
+ 		{
+ 			char name[256];
+ 			strncpy(name, iniStrPtr, 255);
+-			myLower(name);
+ 			char *value = strchr(name, '=');
+ 			if (value != NULL)
+ 			{
+ 				*value = 0;
+ 				value++;
+-				if (!strcmp(name, "home"))
++				if (!strcasecmp(name, "home"))
+ 				{
+ 					strcpy(homeDir, value);
+ 					if (homeDir[strlen(homeDir) - 1] != '/')
+ 						strcat(homeDir, "/");
+ 				}
+-				else if (!strcmp(name, "blksize"))
++				else if (!strcasecmp(name, "blksize"))
+ 				{
+ 					blksize = atol(value);
+ 					if (blksize < 512 || blksize > MAX_BLOCK_SIZE)
+ 						blksize = MAX_BLOCK_SIZE;
+ 				}
+-				else if (!strcmp(name, "interval"))
++				else if (!strcasecmp(name, "interval"))
+ 				{
+ 					interval = atol(value);
+ 					if (interval < 1 || interval > 100)
+ 						interval = 3;
+ 				}
+-				else if (!strcmp(name, "timeout"))
++				else if (!strcasecmp(name, "timeout"))
+ 				{
+ 					timeout = atol(value);
+ 					if (timeout < 1 || timeout > 1800)
