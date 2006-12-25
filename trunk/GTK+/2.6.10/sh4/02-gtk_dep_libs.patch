@@ -1,0 +1,11 @@
+--- gtk+-2.6.8/configure.orig	2006-08-31 02:06:43.000000000 -0300
++++ gtk+-2.6.8/configure	2006-08-31 02:06:40.000000000 -0300
+@@ -28031,6 +28031,8 @@ else
+   fi
+ 
+   # It would also be nice to do this for all -L options, not just this one.
++  X_LIBS="$X_LIBS -lX11 -lXrender -lXft -lXau -lXdmcp -lexpat -lfreetype -lz `pkg-config fontconfig --libs`"
++  LIBS="$LIBS -lX11 -lXrender -lXft -lXau -lXdmcp -lexpat -lfreetype -lz `pkg-config fontconfig --libs`"
+   if test -n "$x_libraries"; then
+     X_LIBS="$X_LIBS -L$x_libraries"
+     # For Solaris; some versions of Sun CC require a space after -R and
