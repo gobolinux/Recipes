@@ -1,0 +1,8 @@
+# Recipe for version 2.4.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Aug 17 11:34:20 BRT 2006
+# Recipe (MakeRecipe) for PPP by Andreas Koehler, on Thu Aug 11 23:57:09 CEST 2005
+compile_version=1.8.0
+url="ftp://ftp.samba.org/pub/ppp/ppp-2.4.4.tar.gz"
+recipe_type=configure
+install_variables=(
+   "MANDIR=${target}/man/man8"
+)
