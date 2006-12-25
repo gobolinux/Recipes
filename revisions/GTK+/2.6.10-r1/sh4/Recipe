@@ -1,0 +1,9 @@
+configure_options=(
+    --enable-debug=no
+    --disable-largefile
+    --disable-shadowfb
+    --disable-fbmanager
+    --with-xinput=no
+    --without-libtiff
+    --with-gdktarget=x11
+)
