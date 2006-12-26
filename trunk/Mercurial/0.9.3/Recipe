@@ -5,7 +5,7 @@ file_size=530289
 file_md5=5e39fed853e5669cbac32b77a67bb6dd
 build_script="setup.py"
 recipe_type=python
-install_variables=(
+environment=(
   "PYTHONPATH=$target/lib/python"   
 )
 
