@@ -4,7 +4,7 @@ url="http://www.selenic.com/mercurial/release/mercurial-0.9.3.tar.gz"
 file_size=530289
 file_md5=5e39fed853e5669cbac32b77a67bb6dd
 build_script="setup.py"
-is_python=yes
+recipe_type=python
 install_variables=(
   "PYTHONPATH=$target/lib/python"   
 )
