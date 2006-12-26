@@ -1,0 +1,19 @@
+# Recipe for version 1.0rc2 by Andy Feldman <nereusren@gmail.com>, on Fri Dec 22 12:23:18 CST 2006
+# To succesfully compile K3B you must use Qt 3.3.X and not Qt 4.X
+
+pre_build() {
+	echo "**"
+	echo "**Plase note that you must compile K3B against Qt 3.3.X and not Qt 4.x**"
+	echo "**"
+	sleep 3
+}
+
+compile_version=1.8.0
+url="$httpSourceforge/k3b/k3b-1.0rc2.tar.bz2"
+file_size=3840401
+file_md5=558e60fefe41860e8f016fdcbdb22d65
+recipe_type=configure
+
+configure_options=(
+"--enable-libsuffix=none"
+)
