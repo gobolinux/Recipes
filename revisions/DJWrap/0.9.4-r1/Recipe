@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for DJWrap by Lucas C. Villa Real, on Tue Dec 26 07:23:23 BRST 2006
+# Recipe for version 0.9.4 by Lucas C. Villa Real, on Tue Dec 26 07:23:23 BRST 2006
+compile_version=1.8.0
+url="$httpSourceforge/djwrap/djwrap-0.9.4.tar.bz2"
+file_size=71341
+file_md5=879317c5b9855c777f943cdce191cc3e
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
