@@ -4,14 +4,15 @@ compile_version=1.8.0
 url="ftp://ftp.oregonstate.edu/pub/kde/stable/3.5.5/src/kdebase-3.5.5.tar.bz2"
 dir='kdebase-3.5.5'
 recipe_type=configure
-
 create_dirs_first=yes
+
 pre_build() {
   ln -sf $goboPrograms/KDE-Libs/3.5.5/include/kbookmarknotifier.h $target/include/kbookmarknotifier.h
 }
 
 post_install() {
   rm -f $target/include/kbookmarknotifier.h
+  GrepReplace "/Xorg/\([0-9].[0-9].[0-9]\)/" "/Xorg/Current/" $target/Shared/config/kdm
 }
 
 configure_options=(
