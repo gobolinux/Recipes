@@ -1,0 +1,6 @@
+# Recipe for version 6.3.5 by Rafael Guterres Jeffman, on Thu Dec 28 09:15:34 BRST 2006
+# by Jason Stubbs
+compile_version=1.8.0
+url="http://download.berlios.de/fetchmail/fetchmail-6.3.5.tar.bz2"
+recipe_type=configure
+configure_options=("--with-ssl")
