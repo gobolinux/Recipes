@@ -7,12 +7,12 @@ recipe_type=configure
 create_dirs_first=yes
 
 pre_build() {
-  ln -sf $goboPrograms/KDE-Libs/3.5.5/include/kbookmarknotifier.h $target/include/kbookmarknotifier.h
+  ln -sf ${KDE-Libs_path}/3.5.5/include/kbookmarknotifier.h $target/include/kbookmarknotifier.h
 }
 
 post_install() {
   rm -f $target/include/kbookmarknotifier.h
-  GrepReplace "/Xorg/\([0-9].[0-9].[0-9]\)/" "/Xorg/Current/" $target/Shared/config/kdm
+  GrepReplace "/Xorg/\([0-9].[0-9].[0-9]\)/" "/Xorg/Current/" $target/Shared/config/kdm/kdmrc
 }
 
 configure_options=(
