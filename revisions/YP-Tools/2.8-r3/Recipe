@@ -1,0 +1,23 @@
+# Recipe (MakeRecipe) for YP-Tools by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Apr 26 11:56:56 BRT 2005
+# Recipe for version 2.8 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Apr 26 11:56:56 BRT 2005
+compile_version=1.8.0
+url="ftp://ftp.kernel.org/pub/linux/utils/net/NIS/yp-tools-2.8.tar.bz2"
+mirror_url="ftp://ftp.kernel.org/pub/linux/utils/net/NIS/OLD/yp-tools/yp-tools-2.8.tar.bz2"
+file_size=159738
+file_md5=4a6792c367a3e01e4af7b07f449039e9
+recipe_type=configure
+
+make_variables=(
+	MKINSTALLDIRS=mkinstalldirs
+)
+
+pre_build() {
+	aclocal
+	autoconf
+	automake -a
+}
+
+pre_link() {
+	mkdir -p $settings_target
+	cp etc/nsswitch.conf $settings_target
+}
