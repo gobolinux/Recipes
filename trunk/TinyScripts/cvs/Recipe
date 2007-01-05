@@ -6,3 +6,4 @@ cvs_module=tools/TinyScripts
 cvs_checkout_options="-d TinyScripts"
 dir="TinyScripts"
 recipe_type=makefile
+create_dirs_first=yes
