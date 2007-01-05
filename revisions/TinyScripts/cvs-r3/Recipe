@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for TinyScripts by Lucas C. Villa Real, on Fri Jan 5 00:22:30 BRST 2007
+# Recipe for version cvs by Lucas C. Villa Real, on Fri Jan 5 00:22:30 BRST 2007
+compile_version=1.8.0
+cvs=:pserver:anonymous:@cvs.savannah.nongnu.org:/sources/goboscripts
+cvs_module=tools/TinyScripts
+cvs_checkout_options="-d TinyScripts"
+dir="TinyScripts"
+recipe_type=makefile
+create_dirs_first=yes
+
+make_variables=(
+    PREFIX=$target
+)
