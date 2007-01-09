@@ -1,5 +1,4 @@
 configure_options=(
-    "--cache-file=arm_cache.conf"
     "--with-int10=x86emu"
 	"--enable-malloc0returnsnull=no"
 	"--disable-builddocs"
@@ -11,16 +10,10 @@ configure_options=(
 )
 
 pre_build() {
-    if [ "$cross_compiling" ]
-    then
-        cp $archsubdir/arm_cache.conf $dir
-
-        pushd $dir/miext/damage >& /dev/null
-        [ ! -a cw.h ] && ln -s ../cw/cw.h .
-        popd >& /dev/null
-
-        GrepReplace "LIBS = @LIBS@" "LIBS = @LIBS@ -lcw" $dir/hw/xnest/Makefile.in
-    fi
+    Quiet pushd $dir/miext/damage
+    [ ! -a cw.h ] && ln -s ../cw/cw.h .
+    Quiet popd
+    GrepReplace "LIBS = @LIBS@" "LIBS = @LIBS@ -lcw" $dir/hw/xnest/Makefile.in
 
 	if [ ! -f .bootstrapped ]
 	then
@@ -29,6 +22,6 @@ pre_build() {
 }
 
 pre_link() {
-    mkdir -p $target/../Settings/X11
-    cp $archsubdir/xorg.conf.default $target/../Settings/X11/xorg.conf
+    mkdir -p $target/Resources/Defaults/Settings/X11
+    cp $archsubdir/xorg.conf.default $target/Resources/Defaults/Settings/X11/xorg.conf
 }
