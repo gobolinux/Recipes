@@ -6,6 +6,10 @@ recipe_type=configure
 file_size=6834364
 file_md5=34aaac35a8326eba1c8076ee9e93fb6c
 
+configure_options=(
+   --with-ssl
+)
+
 make_variables=(
    swig_pydir=${target}/lib/python2-4/site-packages/libsvn
    swig_pydir_extras=${target}/lib/python2-4/site-packages/svn
