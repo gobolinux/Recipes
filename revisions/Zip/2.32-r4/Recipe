@@ -1,0 +1,12 @@
+# Recipe for version 2.32 by Fabio Mierlo, on Sun Sep 3 15:26:05 BRT 2006
+# by Jeremy Vernon
+
+url="ftp://ctan.math.utah.edu/tex-archive/tools/zip/info-zip/src/zip232.tar.gz"
+compile_version=1.8.0
+recipe_type=makefile
+dir=zip-2.32
+makefile=unix/Makefile
+build_target=generic_gcc
+install_variables=(
+   "prefix=$target"
+)
