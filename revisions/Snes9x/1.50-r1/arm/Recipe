@@ -1,0 +1,10 @@
+configure_options=(
+	--with-excessive-opt
+	--without-joystick
+	--with-zlib
+	--with-x
+)
+
+pre_build() {
+	echo "Running autoconf..." && autoconf
+}
