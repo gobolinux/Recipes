@@ -1,0 +1,210 @@
+--- gqmpeg-0.91.1/src/io_mpg123.c.orig	2007-01-20 17:01:41.000000000 -0200
++++ gqmpeg-0.91.1/src/io_mpg123.c	2007-01-20 17:04:56.000000000 -0200
+@@ -9,6 +9,8 @@
+  * This software comes with no warranty of any kind, use at your own risk!
+  */
+ 
++/* this allows us to use madplay as a backend to gqmpeg (lucasvr) */
++#define USE_MADPLAY 1
+ 
+ #include "gqmpeg.h"
+ #include "io_mpg123.h"
+@@ -25,7 +27,11 @@
+    input / output interface to mpg123
+    ----------------------------------------------------------*/
+ 
++#ifdef USE_MADPLAY
++#define MPG123_BINARY "madplay"
++#else
+ #define MPG123_BINARY "mpg123"
++#endif
+ 
+ #define MPG123_VER_0_59O 0	/* versions 0.59o and 0.59p */
+ #define MPG123_VER_0_59Q 1	/* version 0.59q */
+@@ -396,7 +402,45 @@ static gint parse_frame_info(gchar *text
+ 	return TRUE;
+ }
+ 
+-static void handle_warnings(gchar *text)
++static void handle_madplay_warnings(gchar *text)
++{
++	if (!text || strcmp(text, "") == 0) return;
++	/* misc output */
++	if (strstr(text, "kbps,")) return;
++	if (strstr(text, "Junk at t")) return;
++	if (strstr(text, "Directory:")) return;
++	if (strstr(text, "Layer")) return;
++	/* normal message output */
++	if (strstr(text, "MPEG Audio")) return;
++	/* ID3 tags */
++	if (strstr(text, "Title:")) return;
++	if (strstr(text, "Artist:")) return;
++	if (strstr(text, "Album:")) return;
++	if (strstr(text, "Track:")) return;
++	if (strstr(text, "Genre:")) return;
++	if (strstr(text, "Comment:")) return;
++
++	/* mpg123 0.59s-pre */
++	if (strncmp(text, "Found new ID3 Header", 20) == 0) return;
++
++	/* ignore lines that begin with an escape sequence (0.59r) */
++	if (text[0] == 27 && text[1] == ']') return;
++
++	printf(_("Warning, unrecognized madplay output:\"%s\"\n"), text);
++
++	if (debug_mode)
++		{
++		gchar *ptr = text;
++		while (*ptr != '\0')
++			{
++			printf("[%d]", *ptr);
++			ptr++;
++			}
++		printf("\n");
++		}
++}
++
++static void handle_mpg123_warnings(gchar *text)
+ {
+ 	if (!text || strcmp(text, "") == 0) return;
+ 	/* normal message output */
+@@ -511,7 +555,11 @@ static gint parse_pipe_buffer(gchar *tex
+ 	if (!parse_header_info(text))
+ 		{
+ 		/* Unknown output, print it, it may be relevent */
+-		handle_warnings(text);
++#ifdef USE_MADPLAY
++		handle_madplay_warnings(text);
++#else
++		handle_mpg123_warnings(text);
++#endif
+ 		}
+ 
+ 	return 2;
+@@ -687,6 +735,7 @@ static gint start_playing_file(SongData 
+ 	cmd_ptr[cmd_cnt] = cmd_arguments[cmd_cnt];
+ 	cmd_cnt++;
+ 
++#ifndef USE_MADPLAY
+ 	strncpy(cmd_arguments[cmd_cnt], "-k", cmd_max);
+ 	cmd_ptr[cmd_cnt] = cmd_arguments[cmd_cnt];
+ 	cmd_cnt++;
+@@ -703,9 +752,15 @@ static gint start_playing_file(SongData 
+ 		cmd_ptr[cmd_cnt] = cmd_arguments[cmd_cnt];
+ 		cmd_cnt++;
+ 		}
++#endif
+ 
+ 	if (mpg123_downsample != MPG123_DOWNSAMPLE_AUTO)
+ 		{
++#ifdef USE_MADPLAY
++			strncpy(cmd_arguments[cmd_cnt], "--downsample", cmd_max);
++			cmd_ptr[cmd_cnt] = cmd_arguments[cmd_cnt];
++			cmd_cnt++;
++#else
+ 		if (mpg123_downsample == MPG123_DOWNSAMPLE_22)
+ 			{
+ 			strncpy(cmd_arguments[cmd_cnt], "-2", cmd_max);
+@@ -724,6 +779,7 @@ static gint start_playing_file(SongData 
+ 			cmd_ptr[cmd_cnt] = cmd_arguments[cmd_cnt];
+ 			cmd_cnt++;
+ 			}
++#endif /* !USE_MADPLAY */
+ 		}
+ 
+ 	if (mpg123_mono)
+@@ -733,6 +789,7 @@ static gint start_playing_file(SongData 
+ 		cmd_cnt++;
+ 		}
+ 
++#ifndef USE_MADPLAY
+ 	if (mpg123_8bit)
+ 		{
+ 		strncpy(cmd_arguments[cmd_cnt], "--8bit", cmd_max);
+@@ -771,6 +828,7 @@ static gint start_playing_file(SongData 
+ 
+ 		if (mpg123_to_raw)
+ 			{
++			strncpy(cmd_arguments[cmd_cnt], "--output=raw:", cmd_max);
+ 			strncpy(cmd_arguments[cmd_cnt], "--cdr", cmd_max);
+ 			cmd_ptr[cmd_cnt] = cmd_arguments[cmd_cnt];
+ 			cmd_cnt++;
+@@ -822,6 +880,7 @@ static gint start_playing_file(SongData 
+ 			}
+ 		g_strfreev(vector);
+ 		}
++#endif /* !USE_MADPLAY */
+ 
+ 	if (mpg123_extra_is_http(sd))
+ 		{
+@@ -1306,7 +1365,11 @@ void mpg123_init(void)
+ 
+ 	imd = g_new0(IO_ModuleData, 1);
+ 
++#ifdef USE_MADPLAY
++	imd->title = "madplay";
++#else
+ 	imd->title = "mpg123";
++#endif
+ 	imd->description = _("mp3 player");
+ 
+ 	if (mpg123_enabled)
+--- gqmpeg-0.91.1/src/io_mpg123_cfg.c.orig	2007-01-20 17:01:45.000000000 -0200
++++ gqmpeg-0.91.1/src/io_mpg123_cfg.c	2007-01-20 17:01:48.000000000 -0200
+@@ -9,6 +9,8 @@
+  * This software comes with no warranty of any kind, use at your own risk!
+  */
+ 
++/* this allows us to use madplay as a backend to gqmpeg (lucasvr) */
++#define USE_MADPLAY 1
+ 
+ #include "gqmpeg.h"
+ #include "io_mpg123.h"
+@@ -256,6 +258,7 @@ GtkWidget *mpg123_config_init(void)
+ 	gtk_box_pack_start(GTK_BOX(mpg123_vbox), hbox, FALSE, FALSE, 0);
+ 	gtk_widget_show(hbox);
+ 
++#ifndef USE_MADPLAY
+ 	button = checkbox_new(_("Enable output buffer of size(Kbytes):"),
+ 		 mpg123_buffer_enable, &c_mpg123_buffer_enable);
+ 	gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, FALSE, 0);
+@@ -266,6 +269,7 @@ GtkWidget *mpg123_config_init(void)
+ 	mpg123_buffer_spinbutton = gtk_spin_button_new (mpg123_buffer_adjustment, (float)8, 0);
+ 	gtk_box_pack_start(GTK_BOX(hbox), mpg123_buffer_spinbutton, FALSE, FALSE, 0);
+ 	gtk_widget_show(mpg123_buffer_spinbutton);
++#endif /* !USE_MADPLAY */
+ 
+ 	/* downsampling */
+ 
+@@ -300,6 +304,7 @@ GtkWidget *mpg123_config_init(void)
+ 	gtk_box_pack_start(GTK_BOX(vbox1), button, FALSE, FALSE, 0);
+ 	gtk_widget_show(button);
+ 
++#ifndef USE_MADPLAY
+ 	button = gtk_radio_button_new_with_label(gtk_radio_button_get_group(GTK_RADIO_BUTTON(radiobutton)),
+ 						 _("11Khz (4:1)"));
+ 	if (c_mpg123_downsample == MPG123_DOWNSAMPLE_11)
+@@ -331,6 +336,7 @@ GtkWidget *mpg123_config_init(void)
+ 	mpg123_sample_spinbutton = gtk_spin_button_new (mpg123_sample_adjustment, (float)8, 0);
+ 	gtk_box_pack_start(GTK_BOX(hbox), mpg123_sample_spinbutton, FALSE, FALSE, 0);
+ 	gtk_widget_show(mpg123_sample_spinbutton);
++#endif /* !USE_MADPLAY */
+ 
+ 	button = checkbox_new(_("Mix both channels into mono output"),
+ 		 mpg123_mono, &c_mpg123_mono);
+@@ -346,6 +352,7 @@ GtkWidget *mpg123_config_init(void)
+ 	gtk_box_pack_start(GTK_BOX(mpg123_vbox), hbox, FALSE, FALSE, 0);
+ 	gtk_widget_show(hbox);
+ 
++#ifndef USE_MADPLAY
+ 	button = checkbox_new(_("Specific output device:"),
+ 		 mpg123_device_enable, &c_mpg123_device_enable);
+ 	gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, FALSE, 0);
+@@ -426,6 +433,7 @@ GtkWidget *mpg123_config_init(void)
+ 	gtk_container_set_border_width(GTK_CONTAINER(hbox), 5);
+ 	gtk_box_pack_start(GTK_BOX(mpg123_vbox), hbox, FALSE, FALSE, 0);
+ 	gtk_widget_show(hbox);
++#endif /* !USE_MADPLAY */
+ 
+ 	label = gtk_label_new(_("User options:"));
+ 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
