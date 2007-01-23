@@ -1,0 +1,13 @@
+environment=(
+	HOST_CC="$HOSTCC"
+	HOST_CXX="$HOSTCXX"
+	HOST_CFLAGS="$HOSTCFLAGS"
+	HOST_CXXFLAGS="$HOSTCFLAGS"
+	HOST_LDFLAGS="$HOSTLDFLAGS"
+)
+
+pre_build() {
+	if [ ! -f .bootstrapped ]
+	then echo "Running autoconf..." && autoconf
+	fi
+}
