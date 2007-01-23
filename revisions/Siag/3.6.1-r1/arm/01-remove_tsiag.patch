@@ -1,0 +1,11 @@
+--- siag-3.6.1/Makefile.in.orig	2007-01-11 02:04:03.000000000 -0200
++++ siag-3.6.1/Makefile.in	2007-01-11 02:04:15.000000000 -0200
+@@ -83,7 +83,7 @@ RANLIB = @RANLIB@
+ VERSION = @VERSION@
+ docdir = @docdir@
+ 
+-SUBDIRS =  	cole 	stocks 	siod 	common 	xcommon 	siag 	xsiag 	tsiag 	pw 	xpw 	egon 	xegon 	plugins 	xed 	xfiler 	o3read 	gvu
++SUBDIRS =  	cole 	stocks 	siod 	common 	xcommon 	siag 	xsiag 		pw 	xpw 	egon 	xegon 	plugins 	xed 	xfiler 	o3read 	gvu
+ 
+ 
+ DIST_SUBDIRS = $(SUBDIRS)
