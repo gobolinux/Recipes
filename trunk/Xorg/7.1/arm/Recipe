@@ -42,7 +42,7 @@ include=(
 # Xorg-Lib
 #################################################
 	xtrans--1.0.0
-#	libFS--1.0.0
+	libFS--1.0.0
 	libICE--1.0.1
 	libSM--1.0.1
 	libXau--1.0.1
@@ -51,7 +51,7 @@ include=(
 	libXext--1.0.1
 #	libXScrnSaver--1.1.0
 	libXt--1.0.2
-#	libXTrap--1.0.0
+	libXTrap--1.0.0
 	libXmu--1.0.1
 	libXpm--3.5.5
 #	libXp--1.0.0
@@ -64,16 +64,16 @@ include=(
 #	libXevie--1.0.1
 	libfontenc--1.0.2
 	libXfont--1.1.0
-#	libXfontcache--1.0.2
+	libXfontcache--1.0.2
 	libXft--2.1.8.2
 	libXi--1.0.1
 #	libXinerama--1.0.1
 #	libXprintUtil--1.0.1
 #	libXprintAppUtil--1.0.1
 #	libXrandr--1.1.1
-#	libXres--1.0.1
+	libXres--1.0.1
 #	libXtst--1.0.1
-#	libXv--1.0.1
+	libXv--1.0.1
 #	libXvMC--1.0.2
 #	libXxf86dga--1.0.1
 	libXxf86misc--1.0.1
@@ -142,7 +142,7 @@ include=(
 #   xcursor-themes--1.0.1 # depends on xcursorgen
 #	xdbedizzy--1.0.1
 #	xditview--1.0.1
-#	xdm--1.0.4
+	xdm--1.0.4
 #	xdpyinfo--1.0.1
 ##    xdriinfo--1.0.1 # can't find gl. may require mesa.
 	### xedit--1.0.2 # build error
@@ -164,7 +164,7 @@ include=(
 #	xkbprint--1.0.1
 #	xkbutils--1.0.1
 	xkbdata--1.0.1 # depends on xkbcomp
-#	xkill--1.0.1
+	xkill--1.0.1
 #	xload--1.0.1
 #	xlogo--1.0.1
 #	xlsatoms--1.0.1
@@ -174,7 +174,7 @@ include=(
 #	xman--1.0.2
 #	xmessage--1.0.1
 #	xmh--1.0.1
-#	xmodmap--1.0.1
+	xmodmap--1.0.1
 #	xmore--1.0.1
 	### xphelloworld--1.0.1 # xaw8
 #	xplsprinters--1.0.1
@@ -185,7 +185,7 @@ include=(
 #	xrdb--1.0.2
 #	xrefresh--1.0.2
 #	xrx--1.0.1
-#	xset--1.0.2
+	xset--1.0.2
 #	xsetmode--1.0.0
 #	xsetpointer--1.0.0
 #	xsetroot--1.0.1
