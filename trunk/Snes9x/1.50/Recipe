@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Snes9x by Lucas C. Villa Real, on Thu Jan 18 00:23:01 BRST 2007
+# Recipe for version 1.50 by Lucas C. Villa Real, on Thu Jan 18 00:23:01 BRST 2007
+compile_version=1.8.0
+url="http://files.ipherswipsite.com/snes9x/snes9x-1.5-src.tar.bz2"
+recipe_type=configure
+do_install=no
+
+pre_install() {
+    cp snes9x $target/bin
+    mkdir -p $target/Resources/Defaults/Settings/snes9x
+    cp doc/snes9x.conf.default $target/Resources/Defaults/Settings/snes9x/snes9x.conf
+}
