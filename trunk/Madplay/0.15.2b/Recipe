@@ -1,8 +1,10 @@
 # author: Guilherme Balestieri Bedin (gbedin)
-
-
 compile_version=1.8.0
 url="ftp://ftp.mars.org/pub/mpeg/madplay-0.15.2b.tar.gz"
 file_size=590929
 file_md5=6814b47ceaa99880c754c5195aa1aac1
 recipe_type=configure
+
+pre_link() {
+    rm -f $target/bin/*.1
+}
