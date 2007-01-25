@@ -1,0 +1,26 @@
+--- gawk-3.1.5/io.c	2005-07-26 21:07:43.000000000 +0300
++++ io.c 2005-08-12 13:10:28.239852344 +0300
+@@ -2480,9 +2480,12 @@
+ {
+ 	struct stat sbuf;
+ 	struct open_hook *oh;
++	int iop_malloced = FALSE;
+ 
+-	if (iop == NULL)
++	if (iop == NULL) {
+ 		emalloc(iop, IOBUF *, sizeof(IOBUF), "iop_alloc");
++		iop_malloced = TRUE;
++	}
+ 	memset(iop, '\0', sizeof(IOBUF));
+ 	iop->flag = 0;
+ 	iop->fd = fd;
+@@ -2495,7 +2498,8 @@
+ 	}
+ 
+ 	if (iop->fd == INVALID_HANDLE) {
+-		free(iop);
++		if (iop_malloced)
++			free(iop);
+ 		return NULL;
+ 	}
+ 	if (isatty(iop->fd))
