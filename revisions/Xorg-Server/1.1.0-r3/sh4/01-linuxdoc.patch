@@ -1,0 +1,11 @@
+--- xorg-server-1.0.1/configure.ac.orig	2006-03-16 16:19:01.000000000 -0300
++++ xorg-server-1.0.1/configure.ac	2006-03-16 16:19:14.000000000 -0300
+@@ -452,7 +452,7 @@ AM_CONDITIONAL(BUILDDOCS, test "x$BUILDD
+ 
+ dnl Only build sgml docs when linuxdoc is available and
+ dnl def.ents has been installed
+-XORG_CHECK_LINUXDOC
++dnl XORG_CHECK_LINUXDOC
+ 
+ dnl Handle installing libxf86config
+ AM_CONDITIONAL(INSTALL_LIBXF86CONFIG, [test "x$INSTALL_LIBXF86CONFIG" = xyes])

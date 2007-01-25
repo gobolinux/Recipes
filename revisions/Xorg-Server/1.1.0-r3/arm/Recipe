@@ -1,0 +1,23 @@
+configure_options=(
+    "--cache-file=arm_cache.conf"
+    "--with-int10=x86emu"
+	"--enable-malloc0returnsnull=no"
+	"--disable-builddocs"
+	"--disable-dri"
+	"--disable-xnest"
+	"--disable-xwin"
+	"--disable-dmx"
+#   "--enable-composite"
+)
+
+pre_build() {
+    pushd $dir/miext/damage >& /dev/null
+    [ ! -a cw.h ] && ln -s ../cw/cw.h .
+    popd >& /dev/null
+    GrepReplace "LIBS = @LIBS@" "LIBS = @LIBS@ -lcw" $dir/hw/xnest/Makefile.in
+
+	if [ ! -f .bootstrapped ]
+	then
+		echo "Running autoconf..." && autoconf && touch .bootstrapped
+	fi
+}
