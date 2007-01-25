@@ -1,9 +1,9 @@
 # Recipe (MakeRecipe) for Pentagram by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Aug 21 01:39:34 BRT 2006
 # Recipe for version svn by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Aug 21 01:39:34 BRT 2006
 compile_version=1.8.0
-svn=https://svn.sourceforge.net/svnroot/pentagram
+svn=https://svn.sourceforge.net/svnroot/pentagram/pentagram/trunk/
 recipe_type=configure
-dir='pentagram-svn/pentagram/trunk'
+dir='pentagram'
 
 environment=(
     SDL_CFLAGS="-I$goboHeaders -I$goboHeaders/SDL"
