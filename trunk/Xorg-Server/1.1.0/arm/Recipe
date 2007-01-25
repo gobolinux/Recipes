@@ -1,4 +1,5 @@
 configure_options=(
+    "--cache-file=arm_cache.conf"
     "--with-int10=x86emu"
 	"--enable-malloc0returnsnull=no"
 	"--disable-builddocs"
@@ -10,18 +11,13 @@ configure_options=(
 )
 
 pre_build() {
-    Quiet pushd $dir/miext/damage
+    pushd $dir/miext/damage >& /dev/null
     [ ! -a cw.h ] && ln -s ../cw/cw.h .
-    Quiet popd
+    popd >& /dev/null
     GrepReplace "LIBS = @LIBS@" "LIBS = @LIBS@ -lcw" $dir/hw/xnest/Makefile.in
 
 	if [ ! -f .bootstrapped ]
 	then
 		echo "Running autoconf..." && autoconf && touch .bootstrapped
 	fi
-}
-
-pre_link() {
-    mkdir -p $target/Resources/Defaults/Settings/X11
-    cp $archsubdir/xorg.conf.default $target/Resources/Defaults/Settings/X11/xorg.conf
 }

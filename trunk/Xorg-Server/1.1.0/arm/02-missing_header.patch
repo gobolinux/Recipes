@@ -1,0 +1,10 @@
+--- xorg-server-X11R7.1-1.1.0/hw/xfree86/os-support/linux/lnx_agp.c.orig	2007-01-19 10:28:22.000000000 -0200
++++ xorg-server-X11R7.1-1.1.0/hw/xfree86/os-support/linux/lnx_agp.c	2007-01-19 10:30:37.000000000 -0200
+@@ -20,6 +20,7 @@
+ #include "xf86OSpriv.h"
+ 
+ #if defined(linux)
++#include <asm/types.h>
+ #include <asm/ioctl.h>
+ #include <linux/agpgart.h>
+ #elif defined(__FreeBSD__) || defined(__FreeBSD_kernel__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__DragonFly__)
