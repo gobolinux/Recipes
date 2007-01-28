@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for PolyglotMan by Lucas C. Villa Real, on Sun Jan 28 12:10:41 BRST 2007
+# Recipe for version 3.2 by Lucas C. Villa Real, on Sun Jan 28 12:10:41 BRST 2007
+compile_version=1.8.0
+url="$httpSourceforge/polyglotman/rman-3.2.tar.gz"
+file_size=79397
+file_md5=6d1d67641c6d042595a96a62340d3cc6
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=(
+    BINDIR=$target/bin
+    MANDIR=$target/man/man1
+)
