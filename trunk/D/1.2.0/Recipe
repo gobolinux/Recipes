@@ -1,0 +1,13 @@
+# Recipe for version 1.2.0 by Mike Hughes
+compile_version=1.8.0
+url="http://mirror.anl.gov/pub/cygwin/release/d/d-1.2.0-1-src.tar.bz2"
+file_size=157077
+file_md5=03049c73eb42ed5a79dd4d321f3fc87e
+recipe_type=configure
+unpack_files=files_in_root
+pre_patch() {
+	rm -rf d-1.2.0-1.patch
+	rm -rf d-1.2.0-1.sh
+	aunpack d-1.2.0.tar.bz2
+	cd d-1.2.0
+}
