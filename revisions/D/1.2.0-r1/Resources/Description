@@ -1,0 +1,14 @@
+[Name] d
+[Summary] A directory lister that emits an optimized version of ls's --format=long output.
+[License] GNU General Public License (GPL)
+[Description]
+d is an alternative to `ls''s long format output.  The difference isthat d's output is optimized to maximize the amount of space for thefile's name on the right side of the line.  d's output adds somewherefrom 12 to 22 characters for the filename by "squeezing" the output onthe left.
+
+d's output is different from `ls' in several ways.  First, the inodeis not printed. Second, the first character of the access permissionssequence is not printed.  Instead, that information is color coded intothe filename itself or a symbol is used with the name.  For example, a'/' is always appended to a directory so you can recognize directorieseven without colorized output.  A '-' is prepended to pipes and a '='is prepended to sockets, in addition to being able colorize these filetypes.  Third, the user/group ownership names are squeezed together andonly a minimum amount of space is reserved for them based on the sizeof the longest name used.  d is especially useful if you use short usernames on your system.  Finally, the file size is converted to a short
+human-readable format with a kilobyte, megabyte, or gigabyte indicator(`K', `M', `G'), similar to the human-readable option for `ls', and isthen squeezed as well.
+
+d has the essential command line options like options to sort the output for example.  The only onesnot like any option for `ls' is the `--dirs-first' option which alwaysprints subdirectories ahead of files (ala Midnight Commander's display),and `--tree' and `--tree-ascii' which print output in a tree format
+similar to the `tree' command.
+
+d has a configuration file where all options, including how tocolorize things, is made available in a fairly easy to read format.Users can have their own configuration file which overrides the systemfile.
+
