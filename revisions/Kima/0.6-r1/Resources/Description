@@ -1,0 +1,27 @@
+[Name] Kima
+[Summary] This applet monitors various temperature, frequency and fan sources in your kicker panel.
+[License] GNU General Public License (GPL)
+[Description]This applet monitors various temperature, frequency and fan sources in your kicker panel.Make sure you have enabled a supported kernel module.
+Features:
+=========
+supported thermal sources:
+- the Linux ACPI Thermal Zone driver. The corresponding kernel module is called thermal.
+- the thermal sources of the Linux ACPI driver for the IBM ThinkPad laptops. The corresponding kernel module is called ibm-acpi.
+- the IBM Hard Drive Active Protection System (HDAPS) driver. The corresponding kernel module is called hdaps.
+- the Omnibook Configuration Tools & Patches. The corresponding kernel module is called omnibook.
+- the iBook G4 CPU and GPU thermal zones. It may work on other Apple machines as well (please let me know).
+- the thermal sensors available through hwmon (I2C, lm_sensors, ...).
+- the CPU thermal sensor of the i8k kernel driver for Dell Inspiron and Latitude notebooks.
+- the GPU thermal sensors of nvidia-settings (provided by the nVidia GPU card driver tools)
+
+supported frequency sources:
+- the Linux kernel /proc/cpuinfo interface
+- the Linux kernel cpufreq subsystem
+
+supported fan sources:
+- the fan sensors available through hwmon (I2C, lm_sensors, ...).
+- the fan sources of the Linux ACPI driver for the IBM ThinkPad laptops. The corresponding kernel module is called ibm-acpi.
+- the fan sources of the i8k kernel driver for Dell Inspiron and Latitude notebooks.
+
+cpufreqd control module to switch cpufreqd profiles via cpufreqd remote interface
+[Homepage] http://www.elliptique.net/~ken/kima/

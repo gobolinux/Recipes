@@ -1,0 +1,10 @@
+# Recipe for version 0.6 by Mike Hughes
+compile_version=1.8.0
+url="http://www.elliptique.net/~ken/kima/kima-0.6.tar.gz"
+file_size=947685
+file_md5=89cbd51ca15a053c70fb14f5aa8892ee
+recipe_type=configure
+
+configure_options=(
+"--enable-libsuffix=none"
+)
