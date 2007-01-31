@@ -1,0 +1,1415 @@
+diff -Nurp gqmpeg-0.91.1.orig/src/display_flyby.c gqmpeg-0.91.1/src/display_flyby.c
+--- gqmpeg-0.91.1.orig/src/display_flyby.c	2004-03-13 07:08:53.000000000 -0300
++++ gqmpeg-0.91.1/src/display_flyby.c	2007-01-20 16:39:46.000000000 -0200
+@@ -592,8 +592,6 @@ static void display_flyby_set_state(FlyB
+ 			break;
+ 		}
+ 
+-	if (debug_mode) printf("flyby state change: %d from %d, delay %d\n", state, fb->state, delay);
+-
+ 	fb->state = state;
+ 
+ 	if (delay > 0)
+diff -Nurp gqmpeg-0.91.1.orig/src/filelist.c gqmpeg-0.91.1/src/filelist.c
+--- gqmpeg-0.91.1.orig/src/filelist.c	2004-03-15 21:17:34.000000000 -0300
++++ gqmpeg-0.91.1/src/filelist.c	2007-01-20 16:39:49.000000000 -0200
+@@ -274,14 +274,12 @@ gchar *dirlist_get_path(gint n)
+ 
+ void filelist_refresh(void)
+ {
+-	if (debug_mode) printf("reading dir: %s\n", current_path);
+ 	filelist_read(current_path);
+ 	playlist_window_filelist_update();
+ }
+ 
+ void change_to_path(const gchar *path)
+ {
+-	if (debug_mode) printf("attempt change dir to: %s\n", path);
+ 	if (!isdir(path)) return;
+ 
+ 	g_free(current_path);
+diff -Nurp gqmpeg-0.91.1.orig/src/io_mpg123.c gqmpeg-0.91.1/src/io_mpg123.c
+--- gqmpeg-0.91.1.orig/src/io_mpg123.c	2007-01-20 16:31:46.000000000 -0200
++++ gqmpeg-0.91.1/src/io_mpg123.c	2007-01-20 16:42:02.000000000 -0200
+@@ -122,15 +122,11 @@ static gint parse_header_info(gchar *tex
+ 	max = buf + sizeof(buf) - 1;
+ 	end = text + strlen(text);
+ 
+-	if (debug_mode > 2) printf("mpg123 header: ");
+-
+ 	ptr = text;
+ 
+ 	/* Version line */
+ 	if (strncmp(text, "Version", 7) == 0 && text[7] != '\0')
+ 		{
+-		if (debug_mode > 2) printf("Version\n");
+-
+ 		ptr += 8;
+ 		ptr2 = buf;
+ 		while (*ptr != ' ' && *ptr != '\0')
+@@ -160,7 +156,7 @@ static gint parse_header_info(gchar *tex
+ 			{
+ 			static gint warning_done = FALSE;
+ 			mpg123_version = MPG123_VER_0_59O;
+-			if (debug_mode || !warning_done)
++			if (!warning_done)
+ 				{
+ 				printf(_("mpg123 version prior to 0.59o found!\n"));
+ 				printf(_("assuming 0.59o compatible\n"));
+@@ -172,7 +168,7 @@ static gint parse_header_info(gchar *tex
+ 			{
+ 			static gint warning_done = FALSE;
+ 			mpg123_version = MPG123_VER_UNKNOWN;
+-			if (debug_mode || !warning_done)
++			if (!warning_done)
+ 				{
+ 				printf(_("unknown version of mpg123, assuming %s compatible\n"), MPG123_VER_STRING);
+ 				printf(_("(GQmpeg requires mpg123 0.59o or later)\n"));
+@@ -180,7 +176,6 @@ static gint parse_header_info(gchar *tex
+ 				}
+ 			warning_done = TRUE;
+ 			}
+-		if (debug_mode) printf(_("mpg123 version detected: %d\n"), mpg123_version);
+ 
+ 		return TRUE;
+ 		}
+@@ -188,8 +183,6 @@ static gint parse_header_info(gchar *tex
+ 	/* MPEG, layer, freq, mode line */
+ 	if (strncmp(text, "MPEG", 4) == 0)
+ 		{
+-		if (debug_mode > 2) printf("MPEG\n");
+-
+ 		ptr += 4;
+ 		ptr2 = buf;
+ 		while (*ptr != 'L' && *ptr != '\0')
+@@ -261,8 +254,6 @@ static gint parse_header_info(gchar *tex
+ 	/* Channels  line */
+ 	if (strncmp(text, "Channels:", 9) == 0)
+ 		{
+-		if (debug_mode > 2) printf ("Channels\n");
+-
+ 		ptr += 9;
+ 		input_channels = parse_till_char(&ptr, ',');
+ 
+@@ -272,8 +263,6 @@ static gint parse_header_info(gchar *tex
+ 	/* Bitrate line */
+ 	if (strncmp(text, "Bitrate:", 8) == 0)
+ 		{
+-		if (debug_mode > 2) printf("Bitrate\n");
+-
+ 		ptr += 8;
+ 		input_bitrate = parse_till_char(&ptr, 'K');
+ 
+@@ -283,8 +272,6 @@ static gint parse_header_info(gchar *tex
+ 	/* Audio output line */
+ 	if (strncmp(text, "Audio:", 6) == 0)
+ 		{
+-		if (debug_mode > 2) printf("Audio\n");
+-
+ 		ptr += 6;
+ 		/* output_conversion = (ignored) */
+ 		parse_till_char(&ptr, ',');
+@@ -330,8 +317,6 @@ static gint parse_header_info(gchar *tex
+ 		return TRUE;
+ 		}
+ 
+-	if (debug_mode > 2) printf("not parsed\n");
+-
+ 	return FALSE;
+ }
+ 
+@@ -351,8 +336,6 @@ static gint parse_frame_info(gchar *text
+ 
+ 	if (strncmp(text, "Frame", 5) != 0 || text[6] == '\0') return FALSE;
+ 
+-	if (debug_mode > 2) printf("Frame\n");
+-
+ 	ptr = text + 6;
+ 
+ 	frame_cnt = parse_till_char(&ptr, '[');
+@@ -421,17 +404,6 @@ static void handle_madplay_warnings(gcha
+ 	if (text[0] == 27 && text[1] == ']') return;
+ 
+ 	printf(_("Warning, unrecognized madplay output:\"%s\"\n"), text);
+-
+-	if (debug_mode)
+-		{
+-		gchar *ptr = text;
+-		while (*ptr != '\0')
+-			{
+-			printf("[%d]", *ptr);
+-			ptr++;
+-			}
+-		printf("\n");
+-		}
+ }
+ 
+ static void handle_mpg123_warnings(gchar *text)
+@@ -466,17 +438,6 @@ static void handle_mpg123_warnings(gchar
+ 	if (text[0] == 27 && text[1] == ']') return;
+ 
+ 	printf(_("Warning, unrecognized mpg123 output:\"%s\"\n"), text);
+-
+-	if (debug_mode)
+-		{
+-		gchar *ptr = text;
+-		while (*ptr != '\0')
+-			{
+-			printf("[%d]", *ptr);
+-			ptr++;
+-			}
+-		printf("\n");
+-		}
+ }
+ 
+ static void pipe_reader_shutdown(void)
+@@ -495,7 +456,6 @@ static void stop_data(void)
+ {
+ 	pipe_reader_shutdown();
+ 	pid = 0;
+-	if (debug_mode) printf("mpg123 closed\n");
+ }
+ 
+ static void song_finished(void)
+@@ -511,8 +471,6 @@ static void song_finished(void)
+    on anything else (including header info) */
+ static gint parse_pipe_buffer(gchar *text)
+ {
+-	if (debug_mode > 1) printf("mpg123 output:\"%s\"\n", text);
+-
+ 	if (parse_frame_info(text)) return 1;
+ 
+ 	/* check for end of song (mpg123 reports a line starting
+@@ -629,8 +587,6 @@ static gboolean mpg123_pipe_read_cb(GIOC
+ 
+ 	r = read(mpg123_pipe[0], buf, sizeof(buf));
+ 
+-	if (debug_mode > 2) printf("mpg123 read input %d bytes\n", r);
+-
+ 	if (r == -1)
+ 		{
+ 		handle_read_error();
+@@ -902,8 +858,6 @@ static gint start_playing_file(SongData 
+ 		return FALSE;
+ 		}
+ 
+-	if (debug_mode) printf("opening: %s\n", sd->path);
+-
+ 	/* Create the child process. */
+ 	frk_pid = fork ();
+ 	if (frk_pid == (pid_t) 0)
+@@ -935,8 +889,6 @@ static gint start_playing_file(SongData 
+ 		mpg123_pipe[1] = -1;
+ 		}
+ 
+-	if (debug_mode) printf("mpg123 pid = %d\n", pid);
+-
+ 	mpg123_input_read_reset();
+ 	channel = g_io_channel_unix_new(mpg123_pipe[0]);
+ 	mpg123_pipe_read_id = g_io_add_watch_full(channel, G_PRIORITY_DEFAULT, G_IO_IN,
+@@ -956,13 +908,10 @@ static void stop_playing_file(void)
+ 
+ 	if (pid <= 0) return;
+ 
+-	if (debug_mode) printf("sending SIGTERM to pid = -%d\n", pid);
+-
+ 	/* kill the entire mpg123 group to work around mpg123 buffer bug */
+ 	if (kill(-pid, SIGINT) ==-1)
+ 		{
+ 		/* eek!, maybe mpg123 is still in startup, so wait, try again */
+-		if (debug_mode) printf("waiting 1 sec to try again: pid = -%d\n", pid);
+ 		sleep(1);
+ 		if (kill(-pid, SIGINT) == -1)
+ 			{
+@@ -970,14 +919,11 @@ static void stop_playing_file(void)
+ 			}
+ 		}
+ 
+-	if (debug_mode) printf("first waitpid = %d\n", (int)pid);
+ 	t = waitpid (pid, NULL, WNOHANG);
+ 	if (t != pid && t != -1)
+ 		{
+-		if (debug_mode) printf("second waitpid, 1st returned: %d\n", t);
+ 		/* this one WILL HANG, so if someone sent a SIGSTOP to mpg123... */
+ 		waitpid (pid, NULL, 0);
+-		if (debug_mode) printf("second waitpid done.\n");
+ 		}
+ 
+ 	stop_data();
+@@ -1239,7 +1185,6 @@ static gint mpg123_start(SongData *sd, g
+ {
+ 	gint ret;
+ 
+-	if (debug_mode) printf("play started at %d\n", position);
+ 	current_sd = sd;
+ 
+ 	if (mpg123_extra_is_http(sd))
+@@ -1258,7 +1203,6 @@ static gint mpg123_start(SongData *sd, g
+ 
+ static gint mpg123_stop(SongData *sd)
+ {
+-	if (debug_mode) printf("play stopped\n");
+ 	if (sd != current_sd)
+ 		{
+ 		printf(_("io_mpg123.c warning: attempt to stop playback of non matching file\n"));
+@@ -1271,7 +1215,6 @@ static gint mpg123_stop(SongData *sd)
+ 
+ static gint mpg123_pause(SongData *sd)
+ {
+-	if (debug_mode) printf("play paused at %d\n", seconds);
+ 	if (sd != current_sd)
+ 		{
+ 		printf(_("io_mpg123.c warning: attempt to pause playback of non matching file\n"));
+@@ -1290,7 +1233,6 @@ static gint mpg123_continue(SongData *sd
+ {
+ 	gint ret;
+ 
+-	if (debug_mode) printf("play restarted at %d\n", seconds);
+ 	if (sd != current_sd)
+ 		{
+ 		printf(_("io_mpg123.c warning: attempt to continue playback of non matching file\n"));
+@@ -1307,7 +1249,6 @@ static gint mpg123_continue(SongData *sd
+ 
+ static gint mpg123_seek(SongData *sd, gint position)
+ {
+-	if (debug_mode) printf("play seeking to %d\n", position);
+ 	if (sd != current_sd)
+ 		{
+ 		printf(_("io_mpg123.c warning: attempt to seek in non matching file\n"));
+diff -Nurp gqmpeg-0.91.1.orig/src/io_ogg123.c gqmpeg-0.91.1/src/io_ogg123.c
+--- gqmpeg-0.91.1.orig/src/io_ogg123.c	2004-04-03 07:11:08.000000000 -0300
++++ gqmpeg-0.91.1/src/io_ogg123.c	2007-01-20 16:42:18.000000000 -0200
+@@ -64,8 +64,6 @@ static gint ogg123_pipe_open(char *ogg_a
+ 		return FALSE;
+ 		}
+ 
+-	if (debug_mode) printf("ogg123_pipe_open: %s\n", ogg_argv[0]);
+-
+ 	/* Create the child process. */
+ 	frk_pid = fork ();
+ 	if (frk_pid == (pid_t) 0)
+@@ -97,8 +95,6 @@ static gint ogg123_pipe_open(char *ogg_a
+ 		ogg_pipe[1] = -1;
+ 		}
+ 
+-	if (debug_mode) printf("ogg123_pipe_open pid = %d\n", *ogg_child);
+-
+ 	return TRUE;
+ }
+ 
+@@ -261,8 +257,6 @@ OGGInfo *ogg123_info_get(const gchar *pa
+ 		const gchar *value;
+ 		value = info_line_value(buf);
+ 
+-		if (debug_mode) printf("value is [%s]\n", value);
+-
+ 		if (info_line_key_test(buf, "Warning") || info_line_key_test(buf, "Error"))
+ 			{
+ 			info->pass_integrity = FALSE;
+@@ -709,8 +703,6 @@ static void parse_bitrate(const gchar *t
+ 
+ static gint ogg123_input_parse(const gchar *buffer)
+ {
+-	if (debug_mode > 1) printf("ogg123 output:\"%s\"\n", buffer);
+-
+ /* Note: different releases have different output formats...
+  *
+  * 1.0 rc1 and rc2:
+@@ -1034,7 +1026,6 @@ static gint ogg123_start(SongData *sd, g
+ {
+ 	gint ret;
+ 
+-	if (debug_mode) printf("io_ogg123.c: play started at %d\n", position);
+ 	ogg123_current_sd = sd;
+ 
+ 	ret = ogg123_child_run(sd, position);
+@@ -1046,7 +1037,6 @@ static gint ogg123_start(SongData *sd, g
+ 
+ static gint ogg123_stop(SongData *sd)
+ {
+-	if (debug_mode) printf("io_ogg123.c: play stopped\n");
+ 	if (sd != ogg123_current_sd)
+ 		{
+ 		printf("io_ogg123.c warning: attempt to stop playback of non matching file\n");
+@@ -1060,7 +1050,6 @@ static gint ogg123_stop(SongData *sd)
+ 
+ static gint ogg123_pause(SongData *sd)
+ {
+-	if (debug_mode) printf("io_ogg123.c: play paused at %d\n", seconds);
+ 	if (sd != ogg123_current_sd)
+ 		{
+ 		printf("io_ogg123.c warning: attempt to pause playback of non matching file\n");
+@@ -1076,7 +1065,6 @@ static gint ogg123_continue(SongData *sd
+ {
+ 	gint ret;
+ 
+-	if (debug_mode) printf("io_ogg123.c: play restarted at %d\n", seconds);
+ 	if (sd != ogg123_current_sd)
+ 		{
+ 		printf("io_ogg123.c warning: attempt to continue playback of non matching file\n");
+@@ -1090,7 +1078,6 @@ static gint ogg123_continue(SongData *sd
+ 
+ static gint ogg123_seek(SongData *sd, gint position)
+ {
+-	if (debug_mode) printf("io_ogg123.c: play seeking to %d\n", position);
+ 	if (sd != ogg123_current_sd)
+ 		{
+ 		printf("io_ogg123.c warning: attempt to seek in non matching file\n");
+@@ -1129,8 +1116,6 @@ void ogg123_init(void)
+ 	gchar *mod_desc = "OGG file";
+ 	gint id;
+ 
+-	if (debug_mode) printf("ogg123 module initing...\n");
+-
+ 	ogg123_enabled = file_in_path(OGG123_BINARY);
+ 	if (!ogg123_enabled)
+ 		{
+diff -Nurp gqmpeg-0.91.1.orig/src/io_radio.c gqmpeg-0.91.1/src/io_radio.c
+--- gqmpeg-0.91.1.orig/src/io_radio.c	2004-03-13 08:19:47.000000000 -0300
++++ gqmpeg-0.91.1/src/io_radio.c	2007-01-20 16:42:28.000000000 -0200
+@@ -417,8 +417,6 @@ gint radio_test(gint recheck)
+ 	if (checked && !recheck) return found;
+ 	checked = TRUE;
+ 
+-	if (debug_mode) printf("Checking for radio tuner...\n");
+-
+ 	found = radio_real_test();
+ 
+ 	if (!found) printf(_("radio player module disabled. (failed check)\n"));
+@@ -527,8 +525,6 @@ static double radio_path_to_freq(const g
+ 	ptr = path;
+ 	ptr += 6;
+ 
+-	if (debug_mode) printf("io_radio.c: %s parses to %f\n", path, (double)strtod(ptr, NULL));
+-
+ 	return (double)strtod(ptr, NULL);
+ }
+ 
+@@ -863,7 +859,6 @@ static gint radio_start(SongData *sd, gi
+ {
+ 	gint ret;
+ 
+-	if (debug_mode) printf("io_radio.c: sound started\n");
+ 	radio_current_sd = sd;
+ 
+ 	ret = radio_startup(sd);
+@@ -876,7 +871,6 @@ static gint radio_stop(SongData *sd)
+ {
+ 	gint ret;
+ 
+-	if (debug_mode) printf("io_radio.c: play stopped\n");
+ 	if (sd != radio_current_sd)
+ 		{
+ 		printf("io_radio.c warning: attempt to stop playback of non matching id\n");
+@@ -893,7 +887,6 @@ static gint radio_pause(SongData *sd)
+ {
+ 	gint ret = FALSE;
+ 
+-	if (debug_mode) printf("io_radio.c: sound muted\n");
+ 	if (sd != radio_current_sd)
+ 		{
+ 		printf("io_radio.c warning: attempt to pause playback of non matching id\n");
+@@ -909,7 +902,6 @@ static gint radio_continue(SongData *sd)
+ {
+ 	gint ret = FALSE;
+ 
+-	if (debug_mode) printf("io_radio.c: sound unmuted\n");
+ 	if (sd != radio_current_sd)
+ 		{
+ 		printf("io_radio.c warning: attempt to continue playback of non matching id\n");
+@@ -943,8 +935,6 @@ void radio_init(void)
+ 	IO_ModuleData *imd;
+ 	gint id;
+ 
+-	if (debug_mode) printf("radio module initing...\n");
+-
+ 	if (!radio_device) radio_device = g_strdup(RADIO_DEVICE);
+ 
+ 	imd = g_new0(IO_ModuleData, 1);
+diff -Nurp gqmpeg-0.91.1.orig/src/io_xmp.c gqmpeg-0.91.1/src/io_xmp.c
+--- gqmpeg-0.91.1.orig/src/io_xmp.c	2004-04-02 12:06:27.000000000 -0300
++++ gqmpeg-0.91.1/src/io_xmp.c	2007-01-20 16:42:40.000000000 -0200
+@@ -272,8 +272,6 @@ static gint xmp_input_parse(gchar *buffe
+ 	/* make it look like a real string, so things are easier */
+ 	buffer[length] = '\0';
+ 
+-	if (debug_mode > 1) printf("xmp output:\"%s\"\n", buffer);
+-
+ 	if (strncmp(buffer, "Tempo[", 6) == 0)
+ 		{
+ 		gchar *ptr;
+@@ -546,8 +544,6 @@ static gint xmp_child_run(SongData *sd, 
+                 return FALSE;
+                 }
+ 
+-        if (debug_mode) printf("opening: %s\n", sd->path);
+-
+ 	/* Create the child process. */
+ 	frk_pid = fork ();
+ 	if (frk_pid == (pid_t) 0)
+@@ -588,8 +584,6 @@ static gint xmp_child_run(SongData *sd, 
+ 		fcntl(xmp_pipe_i[1], F_SETFL, O_NONBLOCK);
+ 		}
+ 
+-	if (debug_mode) printf("xmp pid = %d\n", xmp_child_pid);
+-
+ 	xmp_input_read_reset();
+ 
+ 	channel = g_io_channel_unix_new(xmp_pipe_i[0]);
+@@ -928,7 +922,6 @@ static gint xmp_start(SongData *sd, gint
+ {
+ 	gint ret;
+ 
+-	if (debug_mode) printf("io_xmp.c: play started at %d\n", position);
+ 	xmp_current_sd = sd;
+ 
+ 	ret = xmp_action_start(sd, position);
+@@ -940,7 +933,6 @@ static gint xmp_start(SongData *sd, gint
+ 
+ static gint xmp_stop(SongData *sd)
+ {
+-	if (debug_mode) printf("play stopped\n");
+ 	if (sd != xmp_current_sd)
+ 		{
+ 		printf("io_xmp.c warning: attempt to stop playback of non matching file\n");
+@@ -954,7 +946,6 @@ static gint xmp_stop(SongData *sd)
+ 
+ static gint xmp_pause(SongData *sd)
+ {
+-	if (debug_mode) printf("io_xmp.c: play paused at %d\n", seconds);
+ 	if (sd != xmp_current_sd)
+ 		{
+ 		printf("io_xmp.c warning: attempt to pause playback of non matching file\n");
+@@ -970,7 +961,6 @@ static gint xmp_continue(SongData *sd)
+ {
+ 	gint ret;
+ 
+-	if (debug_mode) printf("io_xmp.c: play restarted at %d\n", seconds);
+ 	if (sd != xmp_current_sd)
+ 		{
+ 		printf("io_xmp.c warning: attempt to continue playback of non matching file\n");
+@@ -986,7 +976,6 @@ static gint xmp_seek(SongData *sd, gint 
+ {
+ 	gint ret;
+ 
+-	if (debug_mode) printf("io_xmp.c: play seeking to %d\n", position);
+ 	if (sd != xmp_current_sd)
+ 		{
+ 		printf("io_xmp.c warning: attempt to seek in non matching file\n");
+@@ -1013,8 +1002,6 @@ void xmp_init(void)
+ 	gchar *mod_desc = "MOD file";
+ 	gint id;
+ 
+-	if (debug_mode) printf("xmp module initing...\n");
+-
+ 	xmp_enabled = file_in_path(XMP_BINARY);
+ 	if (!xmp_enabled)
+ 		{
+diff -Nurp gqmpeg-0.91.1.orig/src/ipc.c gqmpeg-0.91.1/src/ipc.c
+--- gqmpeg-0.91.1.orig/src/ipc.c	2004-04-02 11:52:05.000000000 -0300
++++ gqmpeg-0.91.1/src/ipc.c	2007-01-20 16:42:49.000000000 -0200
+@@ -168,7 +168,6 @@ static gboolean ipc_read_data(GIOChannel
+ 
+ 	while (fgets(i_buf, 1024, ipc_file_id))
+ 		{
+-		if (debug_mode) printf("data_read_from_ipc\n");
+ 		if (!strncmp(i_buf, "play_file", 9) && strlen(i_buf) > 10)
+ 			{
+ 			gchar *buf = quoted_value(i_buf + 10);
+@@ -406,7 +405,6 @@ void ipc_on(void)
+                            NULL);
+ #endif
+ 
+-	if (debug_mode) printf("ipc_on\n");
+ }
+ 
+ void ipc_off(void)
+@@ -443,7 +441,6 @@ void ipc_off(void)
+ 		pid_lock_file_destroy();
+ 		}
+ 
+-	if (debug_mode) printf("ipc_off\n");
+ }
+ 
+ gint ipc_another_process_active(void)
+@@ -497,8 +494,6 @@ static void ipc_status_remove_by_data(Ip
+ {
+ 	if (!isd) return;
+ 
+-	if (debug_mode) printf("Removing for ipc status key=%s path=%s\n", isd->key, isd->path);
+-
+ 	subscribed_apps = g_list_remove(subscribed_apps, isd);
+ 	if (isd->fd != -1) close(isd->fd);
+ 	g_free(isd->key);
+@@ -714,8 +709,6 @@ gint ipc_status_register(gchar *key, gch
+ {
+ 	IpcStatData *isd;
+ 
+-	if (debug_mode) printf("Registering for ipc status key=%s path=%s\n", key, path);
+-
+ 	if (!key || !path) return FALSE;
+ 
+ 	if (ipc_status_find_by_key(key) != NULL)
+diff -Nurp gqmpeg-0.91.1.orig/src/main.c gqmpeg-0.91.1/src/main.c
+--- gqmpeg-0.91.1.orig/src/main.c	2004-04-03 05:07:46.000000000 -0300
++++ gqmpeg-0.91.1/src/main.c	2007-01-20 16:43:48.000000000 -0200
+@@ -431,8 +431,6 @@ static gint update_condition(gpointer da
+ 		{
+ 		static int old_seconds;
+ 
+-		if (debug_mode) putchar('u');
+-
+ 		/* display */
+ 		if (update_counter > 15)
+ 			{
+@@ -505,7 +503,6 @@ static gint update_condition(gpointer da
+ 
+ 			change_count--;
+ 			display_set_time(change_count / 8 + 1, 0, TRUE);
+-			if (debug_mode) printf("delay %d\n", change_count);
+ 			change_blink++;
+ 			if (change_blink < 4)
+ 				{
+@@ -521,7 +518,6 @@ static gint update_condition(gpointer da
+ 
+ 	if (status == status_chk)
+ 		{
+-		if (debug_mode) putchar('c');
+ 		return TRUE;
+ 		}
+ 	if (status == STATUS_PLAY)
+@@ -606,7 +602,6 @@ static gint send_if_ipc_match(gchar *sho
+ 			if (tried_once) return TRUE;
+ 			tried_once = TRUE;
+ 			exec_cmd = g_strdup("gqmpeg");
+-			command_add_option(&exec_cmd , "--debug", debug_mode);
+ 			command_add_option(&exec_cmd , "--dock", (dock_mode && !startup_dockwm) );
+ 			command_add_option(&exec_cmd , "--dockwm", startup_dockwm);
+ 			if (startup_skin_file)
+@@ -616,7 +611,6 @@ static gint send_if_ipc_match(gchar *sho
+ 				g_free(buf);
+ 				}
+ 			command_add_option(&exec_cmd , "--blank &", TRUE);
+-			if (debug_mode) printf("[%s]\n", exec_cmd);
+ 			if (system(exec_cmd) == -1)
+ 				{
+ 				printf(_("execing gqmpeg failed\n"));
+@@ -875,11 +869,7 @@ static gchar *determine_skin_path(gchar 
+ 			}
+ 		}
+ 
+-	if (path)
+-		{
+-		if (debug_mode) printf (_("Using skin: %s\n"), path);
+-		}
+-	else
++	if (!path)
+ 		{
+ 		printf (_("Skin not found: %s\n"), file);
+ 		}
+@@ -1089,11 +1079,6 @@ int main (int argc, char *argv[])
+ 						}
+ 					}
+ 				}
+-			else if (strcmp(argv[i],"--debug") == 0)
+-				{
+-				debug_mode++;
+-				printf("debugging enabled (level %d)\n", debug_mode);
+-				}
+ 			else if (strcmp(argv[i],"--blank") == 0)
+ 				{
+ 				blank_startup = TRUE;
+@@ -1272,7 +1257,6 @@ int main (int argc, char *argv[])
+ 				    initial_playlist_position > -1 &&
+ 				    initial_playlist_position < playlist_get_count() )
+ 					{
+-					if (debug_mode) printf("Restoring song number %d\n", initial_playlist_position);
+ 					current_song_set(initial_playlist_position, NULL);
+ 					}
+ 				}
+diff -Nurp gqmpeg-0.91.1.orig/src/mixer.c gqmpeg-0.91.1/src/mixer.c
+--- gqmpeg-0.91.1.orig/src/mixer.c	2002-09-10 11:16:26.000000000 -0300
++++ gqmpeg-0.91.1/src/mixer.c	2007-01-20 16:44:31.000000000 -0200
+@@ -139,9 +139,6 @@ void mixer_init(gint init_device_id)
+ 			device->recordable = (rec_mask & (1<<i));
+ 			device_list = g_list_append(device_list, device);
+ 
+-			if (debug_mode) printf("Mixer device added to list: %d, %s, %d, %d\n",
+-					device->device_id, device->device_name, device->stereo, device->recordable);
+-
+ 			if (init_device_id == i) current_device = device;
+ 			}
+ 		}
+@@ -204,8 +201,6 @@ static void mixer_set_vol(DeviceData *de
+ 		}
+ 
+ 	close(mf);
+-
+-	if (debug_mode) printf("volume set to %d,%d\n", l, r);
+ }
+ 
+ static gint mixer_get_vol(DeviceData *device)
+@@ -253,8 +248,6 @@ static gint mixer_get_vol(DeviceData *de
+ 		current_bal = 50 - (float)(l - r) / l * 50;
+ 		}
+ 
+-	if (debug_mode) printf("volume is %d,%d\n", l, r);
+-
+ 	if (l > r)
+ 		{
+ 		return l;
+@@ -335,9 +328,6 @@ void mixer_init(gint init_device_id)
+           perror("AUDIO_MIXER_READ");
+       }
+ 
+-      if (debug_mode) printf("Mixer device added to list: %d, %s, %d\n",
+-                             device->device_id, device->device_name,
+-                             device->stereo);
+       if (init_device_id == i) current_device = device;
+     }
+   }
+@@ -394,8 +384,6 @@ static void mixer_set_vol(DeviceData *de
+     m->un.value.level[0] = vol * AUDIO_MAX_GAIN / 100;
+   }
+   /* from AUDIO_MIN_GAIN (0) to AUDIO_MAX_GAIN (255) */
+-
+-  if (debug_mode) printf("volume set to %d (%d)\n", vol, current_bal);
+ }
+ 
+ static gint mixer_get_vol(DeviceData *device)
+@@ -487,9 +475,6 @@ void mixer_init(gint init_device_id)
+     device->recordable = 0;
+     device_list = g_list_append(device_list, device);
+     
+-    if (debug_mode) printf("Mixer device added to list: %d, %s, %d\n",
+-			   device->device_id, device->device_name,
+-			   device->stereo);   
+     if (init_device_id == i) current_device = device;
+   }
+   
+@@ -542,9 +527,6 @@ static void mixer_set_vol(DeviceData *de
+       close(afd);
+       return;
+     }
+-    if (debug_mode) {
+-      printf("volume set to %d (%d)\n", vol, current_bal);
+-    }
+   }
+   close(afd);
+   
+@@ -934,13 +916,6 @@ void mixer_init(gint init_device_id)
+ 
+ 		device_list = g_list_append(device_list, device);
+ 
+-		if (debug_mode)
+-			{
+-			printf("Mixer device added to list: %d, %s, %d, %d\n",
+-			       device->device_id, device->device_name,
+-			       device->stereo, device->recordable);
+-			}
+-
+ 		if (init_device_id == i) current_device = device;
+ 		}
+ 
+@@ -987,11 +962,6 @@ static void mixer_set_vol(DeviceData *de
+ 
+ 	waveOutSetVolume(device->device_id, new_vol);
+ 
+-	if (debug_mode)
+-		{
+-		printf("volume set to %3d (0x%04x, 0x%04x = 0x%08x)\n",
+-		       vol, l, r, new_vol);
+-		}
+ }
+ 
+ static gint mixer_get_vol(DeviceData *device)
+@@ -1021,11 +991,6 @@ static gint mixer_get_vol(DeviceData *de
+ 		current_bal = 50 - (float)(l - r) / l * 50;
+ 		}
+ 
+-	if (debug_mode)
+-		{
+-		printf("volume is (0x%08x = 0x%04x, 0x%04x)\n", *vol_p, l, r);
+-		}
+-
+ 	mmeFreeMem((char *)vol_p);
+ 
+ 	if (l > r)
+@@ -1080,9 +1045,6 @@ void mixer_init(gint init_device_id)
+   device_list = g_list_append(device_list, device);
+ 
+     
+-  if (debug_mode) printf("Mixer device added to list: %d, %s, %d\n",
+-                          device->device_id, device->device_name,
+-                          device->stereo);   
+   current_device = device;
+   
+   current_vol = mixer_get_vol(current_device);
+@@ -1292,8 +1254,6 @@ void set_balance(gint bal)
+ 
+ 	current_bal = bal;
+ 	
+-	if (debug_mode) printf("balance set to %d\n", bal);
+-
+ 	mixer_set_vol(current_device, current_vol);
+ }
+ 
+diff -Nurp gqmpeg-0.91.1.orig/src/mpg_tagutil.c gqmpeg-0.91.1/src/mpg_tagutil.c
+--- gqmpeg-0.91.1.orig/src/mpg_tagutil.c	2004-03-15 21:55:01.000000000 -0300
++++ gqmpeg-0.91.1/src/mpg_tagutil.c	2007-01-20 16:44:34.000000000 -0200
+@@ -248,8 +248,6 @@ gint set_id3_tag(const gchar *path, cons
+ 
+ 	buf[127] = genre;
+ 
+-	if (debug_mode)printf("Tagline:[%s] g = %d\n", buf, genre);
+-
+ 	if (fwrite(buf, sizeof(gchar), 128, f) < 128)
+ 		{
+ 		printf(_("could not write tag to file: %s\n"), path);
+diff -Nurp gqmpeg-0.91.1.orig/src/players.c gqmpeg-0.91.1/src/players.c
+--- gqmpeg-0.91.1.orig/src/players.c	2004-03-13 07:11:39.000000000 -0300
++++ gqmpeg-0.91.1/src/players.c	2007-01-20 16:45:48.000000000 -0200
+@@ -391,8 +391,6 @@ static void playback_queue_free(void)
+ {
+ 	if (!pb_queue) return;
+ 
+-	if (debug_mode) printf("cmd: unqueued: %d\n", pb_queue->cmd);
+-
+ 	g_free(pb_queue);
+ 	pb_queue = NULL;
+ }
+@@ -415,8 +413,6 @@ static gint playback_queue_command(Playe
+ 	pb_queue->sd = sd;
+ 	pb_queue->pos = pos;
+ 
+-	if (debug_mode) printf("cmd: queued: %d\n", cmd);
+-
+ 	return TRUE;
+ }
+ 
+@@ -426,10 +422,7 @@ static void playback_queue_do(void)
+ 		{
+ 		if (pb_queue->sd == sd_pending || pb_queue->sd == current_song_get_data())
+ 			{
+-			if (!exec_command(pb_queue->cmd, pb_queue->sd, pb_queue->pos, TRUE))
+-				{
+-				if (debug_mode) printf("cmd: queued command failed: %d\n", pb_queue->cmd);
+-				}
++			exec_command(pb_queue->cmd, pb_queue->sd, pb_queue->pos, TRUE);
+ 			}
+ 
+ 		playback_queue_free();
+@@ -462,7 +455,6 @@ static gint exec_success(gint success)
+ 		return TRUE;
+ 		}
+ 
+-	if (debug_mode) printf("cmd: req for: %d FAILED!\n", cmd_pending);
+ 	cmd_pending = EXEC_NONE;
+ 	return FALSE;
+ }
+@@ -486,7 +478,6 @@ static gint exec_command(PlayerCommand c
+ 			else if (status == STATUS_STOP || status == STATUS_NEXT)
+ 				{
+ 				cmd_pending = cmd;
+-				if (debug_mode) printf("cmd: req for: %d\n", cmd_pending);
+ 				ret = exec_success(playback_start(sd, pos));
+ 				}
+ 			else 
+@@ -500,7 +491,6 @@ static gint exec_command(PlayerCommand c
+ 				ret = FALSE;
+ 				}
+ 			cmd_pending = cmd;
+-			if (debug_mode) printf("cmd: req for: %d\n", cmd_pending);
+ 			ret = exec_success(playback_pause(sd));
+ 			break;
+ 		case EXEC_CONTINUE:
+@@ -509,14 +499,12 @@ static gint exec_command(PlayerCommand c
+ 				ret = FALSE;
+ 				}
+ 			cmd_pending = cmd;
+-			if (debug_mode) printf("cmd: req for: %d\n", cmd_pending);
+ 			ret = exec_success(playback_continue(sd));
+ 			break;
+ 		case EXEC_STOP:
+ 			if (status == STATUS_PLAY || status == STATUS_PAUSE)
+ 				{
+ 				cmd_pending = cmd;
+-				if (debug_mode) printf("cmd: req for: %d\n", cmd_pending);
+ 				ret = exec_success(playback_stop(sd));
+ 				}
+ 			else if (status == STATUS_NEXT)
+@@ -534,7 +522,6 @@ static gint exec_command(PlayerCommand c
+ 			if (status == STATUS_PAUSE || status == STATUS_PLAY)
+ 				{
+ 				cmd_pending = cmd;
+-				if (debug_mode) printf("cmd: req for: %d\n", cmd_pending);
+ 				ret = exec_success(playback_seek(sd, pos));
+ 				}
+ 			else
+@@ -557,10 +544,8 @@ void playback_done_command(PlayerCommand
+ 	if (cmd_pending == cmd)
+ 		{
+ 		cmd_pending = EXEC_NONE;
+-		if (debug_mode) printf("cmd: got ack for: %d\n", cmd);
+ 		if (err)
+ 			{
+-			if (debug_mode) printf("cmd: command ack with error: %d (queue emptied)\n", cmd);
+ 			playback_queue_free();
+ 			status = STATUS_STOP;
+ 			sd_pending = NULL;
+@@ -598,19 +583,10 @@ void playback_done_command(PlayerCommand
+ 		status = STATUS_NEXT;
+ 		sd_pending = NULL;
+ 		}
+-	else if (cmd == EXEC_NEXT)
+-		{
+-		if (debug_mode) printf("cmd: ignore next ack, while expecting: %d\n", cmd_pending);
+-		}
+-	else
+-		{
+-		if (debug_mode) printf("cmd: unexpected ack: %d, expecting: %d\n", cmd, cmd_pending);
+-		}
+ }
+ 
+ gint playback_exec_command(PlayerCommand cmd, SongData *sd, gint pos)
+ {
+-	if (debug_mode) printf("cmd: exec cmd=%d stat=%d\n", cmd, status);
+ 	return exec_command(cmd, sd, pos, FALSE);
+ }
+ 
+diff -Nurp gqmpeg-0.91.1.orig/src/playlist-window.c gqmpeg-0.91.1/src/playlist-window.c
+--- gqmpeg-0.91.1.orig/src/playlist-window.c	2004-04-03 07:32:11.000000000 -0300
++++ gqmpeg-0.91.1/src/playlist-window.c	2007-01-20 16:46:05.000000000 -0200
+@@ -2042,8 +2042,6 @@ static void playlist_window_playlist_get
+ 		gtk_tree_path_free(tpath);
+ 		}
+ 
+-	if (debug_mode) printf("drop on %d\n", row);
+-
+ 	switch (info)
+ 		{
+ 		case TARGET_URI_LIST:
+diff -Nurp gqmpeg-0.91.1.orig/src/playlist.c gqmpeg-0.91.1/src/playlist.c
+--- gqmpeg-0.91.1.orig/src/playlist.c	2004-04-03 05:05:25.000000000 -0300
++++ gqmpeg-0.91.1/src/playlist.c	2007-01-20 16:46:02.000000000 -0200
+@@ -204,8 +204,6 @@ void shuffle_list_create(gint start_with
+ 		shuffle_list_destroy();
+ 		}
+ 
+-	if (debug_mode) printf("Shuffling:");
+-
+ 	if (playlist_count == 0) return;
+ 		
+ 	for (i=0; i < playlist_count; i++)
+@@ -219,7 +217,6 @@ void shuffle_list_create(gint start_with
+ 		{
+ 		node = g_list_nth(playlist, current_song_get_number());
+ 		shuffle_list = g_list_prepend(shuffle_list, node->data);
+-		if (debug_mode) printf("%d ", current_song_get_number());
+ 		}
+ 	else if (playlist_get_count() > 1 && current_song_get_number() >= 0 && current_song_get_number() < playlist_get_count())
+ 		{
+@@ -231,7 +228,6 @@ void shuffle_list_create(gint start_with
+ 
+ 		p = (float)rand() / RAND_MAX * g_list_length(work);
+ 		node = g_list_nth(work, p);
+-		if (debug_mode) printf("%d ", g_list_index(playlist, node->data));
+ 		shuffle_list = g_list_prepend(shuffle_list, node->data);
+ 
+ 		/* and put current song back in*/
+@@ -244,18 +240,15 @@ void shuffle_list_create(gint start_with
+ 		{
+ 		gint p =  (float)rand() / RAND_MAX * g_list_length(work);
+ 		node = g_list_nth(work, p);
+-		if (debug_mode) printf("%d ",g_list_index(playlist, node->data));
+ 		shuffle_list = g_list_prepend(shuffle_list, node->data);
+ 		work = g_list_remove(work, node->data);
+ 		}
+ 	shuffle_list = g_list_reverse(shuffle_list);
+ 
+-	if (debug_mode) printf ("\n");
+ }
+ 
+ void shuffle_list_destroy(void)
+ {
+-	if (debug_mode) printf("Clearing shuffle list\n");
+ 	if (!shuffle_list) return;
+ 	g_list_free(shuffle_list);
+ 	shuffle_list = NULL;
+@@ -374,8 +367,6 @@ static gint playlist_load_line(FILE *f)
+ 	gchar s_buf[1024];
+ 	gchar *s_buf_ptr;
+ 
+-	if (debug_mode) putchar('.');
+-
+ 	if (f && fgets(s_buf, 1024, f))
+ 		{
+ 		if (*s_buf=='#')
+@@ -475,8 +466,6 @@ static gint playlist_load_line(FILE *f)
+ 
+ static void playlist_load_finish(gint background)
+ {
+-	if (debug_mode) printf("playlist finish\n");
+-
+ 	if (!playlist_load_append)
+ 		{
+ 		gint playlist_song;
+@@ -505,8 +494,6 @@ static void playlist_load_finish(gint ba
+ 
+ static void playlist_load_end(void)
+ {
+-	if (debug_mode) printf("playlist end\n");
+-
+ 	display_thaw();
+ 	display_set_loading(FALSE);
+ 	display_set_song_count(playlist_count);
+@@ -671,7 +658,6 @@ gint playlist_load_start(const gchar *fn
+ 				{
+ 				playlist_load_idle_id = gtk_idle_add(playlist_load_idle_cb, NULL);
+ 				}
+-			if (debug_mode) printf("playlist start\n");
+ 
+ 			display_set_song_count(playlist_count);
+ 
+diff -Nurp gqmpeg-0.91.1.orig/src/skin_compat.c gqmpeg-0.91.1/src/skin_compat.c
+--- gqmpeg-0.91.1.orig/src/skin_compat.c	2004-03-15 21:43:56.000000000 -0300
++++ gqmpeg-0.91.1/src/skin_compat.c	2007-01-20 16:46:10.000000000 -0200
+@@ -546,7 +546,6 @@ SkinData *skin_parse_v1(const gchar *ski
+ 	if (!f)
+ 		{
+ 		/* no file has been created yet */
+-		if (debug_mode) printf("Unable to open skin data file: %s\n", datafile);
+ 		return NULL;
+ 		}
+ 
+diff -Nurp gqmpeg-0.91.1.orig/src/ui2_dial.c gqmpeg-0.91.1/src/ui2_dial.c
+--- gqmpeg-0.91.1.orig/src/ui2_dial.c	2004-04-02 11:22:26.000000000 -0300
++++ gqmpeg-0.91.1/src/ui2_dial.c	2007-01-20 16:46:16.000000000 -0200
+@@ -163,8 +163,6 @@ DialData *dial_new(GdkPixbuf *pb, gint x
+ 	dial->increment = (float)max_radius * PI / 360.0;
+ 	dial->increment = floor(dial->increment * 1000.0) / 1000.0;
+ 
+-	if (debug_mode) printf("dial increment: %f (r = %d)\n", dial->increment, max_radius);
+-
+ 	dial->pb_normal = gdk_pixbuf_new(GDK_COLORSPACE_RGB, TRUE, 8, dial->handle_width, dial->handle_height);
+ 	pixbuf_copy_area(dial->overlay, 0, 0,
+ 			 dial->pb_normal, 0, 0, dial->handle_width, dial->handle_height, TRUE);
+@@ -507,8 +505,6 @@ static gfloat dial_angle_calc(DialData *
+ 
+ 	if (a < 0) a += 360.0;
+ 
+-	if (debug_mode) printf("dial calc angle: %f\n", a);
+-
+ 	return ((gfloat)a);
+ }
+ 
+@@ -554,8 +550,6 @@ static gfloat dial_position_calc(DialDat
+ 	if (pos < 0.0) pos = 0.0;
+ 	if (pos > 1.0) pos = 1.0;
+ 
+-	if (debug_mode) printf("dial calc pos: %f (%f)\n", pos, angle);
+-
+ 	return (pos);
+ }
+ 
+@@ -588,8 +582,6 @@ static gint dial_hit_test(DialData *dial
+ 
+ 	v = pixbuf_pixel_is_visible(pb, hx, hy);
+ 
+-	if (debug_mode) printf("dial calcs to %d , %d (%d)\n", hx, hy, v);
+-
+ 	return v;
+ }
+ 
+diff -Nurp gqmpeg-0.91.1.orig/src/ui2_display.c gqmpeg-0.91.1/src/ui2_display.c
+--- gqmpeg-0.91.1.orig/src/ui2_display.c	2004-04-02 11:22:26.000000000 -0300
++++ gqmpeg-0.91.1/src/ui2_display.c	2007-01-20 16:46:26.000000000 -0200
+@@ -65,8 +65,6 @@ void ui_display_render_area(UIData *ui, 
+ 			}
+ 		}
+ 
+-	if (debug_mode) printf("render: %d, %d (%d x %d)\n", x, y, w, h);
+-
+ 	gdk_pixbuf_render_to_drawable(pixbuf, pixmap,
+ 				      ui->display->style->fg_gc[GTK_WIDGET_STATE(ui->display)],
+ 				      x, y, x, y, w, h,
+@@ -282,8 +280,6 @@ static void ui_display_move(GtkWidget *w
+ {
+ 	UIData *ui = data;
+ 
+-	if (debug_mode) printf("move event\n");
+-
+ 	if (ui->root_win_idle == -1 &&
+ 	    (ui->skin->transparent || slik_transparency_force))
+ 		{
+@@ -775,8 +771,6 @@ static gint ui_display_pressed(GtkWidget
+ 	gint y = (gint)event->y;
+ 	GList *work;
+ 
+-	if (debug_mode) printf("pressed:%d x %d, %d\n", x, y, event->button);
+-
+ 	if (!ui->skin) return FALSE;
+ 
+ 	/* edit uis have no window, and we only want button 1 to work on them */
+@@ -805,7 +799,6 @@ static gint ui_display_pressed(GtkWidget
+ 		if (ui_widget_press(ui, work->data, x, y))
+ 			{
+ 			ui->active_widget = work->data;
+-			if (debug_mode) printf("pressed widget: \"%s\" (%d)\n", ui->active_widget->key, ui->active_widget->type);
+ 
+ 			if ((slik_focus_enable || ui->focus_enable) &&
+ 			    ui_widget_can_focus(ui->active_widget))
+@@ -848,8 +841,6 @@ static gint ui_display_released(GtkWidge
+ 	gint x = (gint)event->x;
+ 	gint y = (gint)event->y;
+ 
+-	if (debug_mode) printf("released:%d x %d, %d\n", x, y, event->button);
+-
+ 	if (!ui->skin) return FALSE;
+ 	if (!ui->in_press && !ui->active_widget) return FALSE;
+ 
+@@ -857,7 +848,6 @@ static gint ui_display_released(GtkWidge
+ 
+ 	if (ui->active_widget)
+ 		{
+-		if (debug_mode) printf("releasing widget: \"%s\" (%d)\n", ui->active_widget->key, ui->active_widget->type);
+ 		ui_widget_release(ui, ui->active_widget, x, y);
+ 		ui->active_widget = NULL;
+ 		}
+diff -Nurp gqmpeg-0.91.1.orig/src/ui2_editor.c gqmpeg-0.91.1/src/ui2_editor.c
+--- gqmpeg-0.91.1.orig/src/ui2_editor.c	2004-04-05 14:33:40.000000000 -0300
++++ gqmpeg-0.91.1/src/ui2_editor.c	2007-01-20 16:46:42.000000000 -0200
+@@ -999,8 +999,6 @@ gchar *ui_edit_copy_unique_file(const gc
+ 
+ 		if (new)
+ 			{
+-			if (debug_mode) printf("Save file is %s\n", new);
+-
+ 			if (!pixbuf_to_file_as_png(pb, new))
+ 				{
+ 				printf("Failed to write png \"%s\"\n", new);
+@@ -2671,8 +2669,6 @@ static gint ui_edit_import_skin_keys(Edi
+ 	GList *work;
+ 	gchar *dir;
+ 
+-	if (debug_mode) printf("Editor parsing skin \"%s\"...\n", path);
+-
+ 	dir = remove_level_from_path(path);
+ 	skin = skin_parse(dir, path, TRUE);
+ 	g_free(dir);
+@@ -3333,8 +3329,6 @@ static gint edit_pressed(GtkWidget *w, G
+ 
+ 	if (ed->ui->active_widget) return FALSE;
+ 
+-	if (debug_mode) printf("pressed:%d x %d\n", x, y);
+-
+ 	if (event->button != 2 && event->button != 3) return FALSE;
+ 
+ 	old_wd = ed->active_widget;
+@@ -3378,7 +3372,6 @@ static gint edit_released(GtkWidget *w, 
+ 	if (ed->active_widget)
+ 		{
+ 		ui_edit_widget_draw_highlight(ed->ui, ed->active_widget, TRUE);
+-		if (debug_mode) printf("edit releasing widget: \"%s\" (%d)\n", ed->active_widget->key, ed->active_widget->type);
+ 		}
+ 
+ 	ed->in_press = FALSE;
+@@ -3673,8 +3666,6 @@ static void ui_edit_copy_registry(UIData
+ 				rd->callbacks = g_memdup(srd->callbacks, srd->callbacks_l);
+ 				rd->callbacks_l = srd->callbacks_l;
+ 				}
+-			if (debug_mode) printf("copying callbackdata for \"%s\", size = %d\n", rd->key, rd->callbacks_l);
+-
+ 			ui->register_list = g_list_prepend(ui->register_list, rd);
+ 			}
+ 
+diff -Nurp gqmpeg-0.91.1.orig/src/ui2_list.c gqmpeg-0.91.1/src/ui2_list.c
+--- gqmpeg-0.91.1.orig/src/ui2_list.c	2004-04-03 05:13:27.000000000 -0300
++++ gqmpeg-0.91.1/src/ui2_list.c	2007-01-20 16:46:45.000000000 -0200
+@@ -451,7 +451,6 @@ static void list_sync(ListData *ld)
+ 			}
+ 		if (w >= area) c = area - s;
+ 		ld->column_real_widths[p] = c;
+-		if (debug_mode) printf("column %d with width of %d (%d)\n", p, c, ld->column_widths[p]);
+ 		}
+ 
+ 	/* vertical centering offsets */
+diff -Nurp gqmpeg-0.91.1.orig/src/ui2_main.c gqmpeg-0.91.1/src/ui2_main.c
+--- gqmpeg-0.91.1.orig/src/ui2_main.c	2004-04-02 11:22:26.000000000 -0300
++++ gqmpeg-0.91.1/src/ui2_main.c	2007-01-20 16:39:12.000000000 -0200
+@@ -55,7 +55,6 @@ gint slik_colorshift_on = FALSE;
+ gint slik_transparency_force = FALSE;
+ gint slik_transparency_force_a = 192;
+ 
+-gint debug_mode = FALSE;
+ gint debug_skin = FALSE;
+ 
+ /* list of all windows created with ui_new() */
+@@ -156,8 +155,6 @@ static void ui_skin_toggle_click_cb(Butt
+ 
+ 	mode_key = ui_widget_get_data_by_widget(ui, button);
+ 
+-	if (debug_mode) printf("Setting skin mode key = \"%s\"\n", mode_key);
+-
+ 	ui_skin_mode_set(ui, mode_key);
+ }
+ 
+@@ -186,8 +183,6 @@ static void ui_skin_expand_click_cb(Butt
+ 		ui = ui->edit;
+ 		}
+ 
+-	if (debug_mode) printf("Skin expand data = \"%s\"\n", text);
+-
+ 	if (text && sscanf(text, "%i %i", &w, &h) == 2)
+ 		{
+ 		SkinData *skin = ui->skin;
+@@ -221,8 +216,6 @@ UIData *ui_spawn_child(UIData *parent, c
+ 
+ 	if (parent->parent) parent = parent->parent;
+ 
+-	if (debug_mode) printf("ui2_main.c: opening skin \"%s\"for addition as \"%s\"\n", (mode_key) ? mode_key : "default", key);
+-
+ 	if (parent->skin_path)
+ 		{
+ 		gchar *datafile;
+@@ -296,8 +289,6 @@ static void ui_skin_open_click_cb(Button
+ 
+ 	if (!ui_mode_unique(ui, mode_key)) return;
+ 
+-	if (debug_mode) printf("ui2_main.c: opening skin \"%s\"for addition\n", mode_key);
+-
+ 	child = ui_spawn_child(ui, mode_key, NULL, mode_key);
+ 	if (child)
+ 		{
+@@ -311,8 +302,6 @@ static void ui_skin_close_click_cb(Butto
+ 
+ 	if (!ui->parent) return;
+ 
+-	if (debug_mode) printf("ui2_main.c: closing skin \"%s\"\n", ui->skin_mode_key);
+-
+ 	ui_close(ui);
+ }
+ 
+@@ -347,8 +336,6 @@ static void ui_skin_sticky_click_cb(Butt
+ 
+ 	if (!ui->window) return;
+ 
+-	if (debug_mode) printf("setting sticky state to %d\n", !ui->sticky);
+-
+ 	if (ui->sticky)
+ 		{
+ 		gtk_window_unstick(GTK_WINDOW(ui->window));
+@@ -371,8 +358,6 @@ static gboolean ui_window_state_cb(GtkWi
+ 		{
+ 		ui->sticky = (event->new_window_state & GDK_WINDOW_STATE_STICKY);
+ 		ui_skin_sticky_update(ui);
+-
+-		if (debug_mode) printf("sticky changed: %d\n", ui->sticky);
+ 		}
+ 
+ 	return FALSE;
+@@ -487,7 +472,6 @@ static void ui_hide_cb(GtkWidget *widget
+ 
+ 	if (ui_geometry_get(ui, &x, &y, &w, &h))
+ 		{
+-		if (debug_mode) printf("hidden \"%s\"\n", ui->key);
+ 		ui_state_set(filename_from_path(ui->skin_path), ui->skin_mode_key, x, y, w, h);
+ 		}
+ }
+@@ -496,8 +480,6 @@ static void ui_destroy_cb(GtkWidget *wid
+ {
+ 	UIData *ui = data;
+ 
+-	if (debug_mode) printf("UI destroyed \"%s\"\n", ui->key);
+-
+ 	ui->destroyed = TRUE;
+ 	ui_free(ui);
+ }
+@@ -1039,8 +1021,6 @@ void ui_skin_set(UIData *ui, SkinData *s
+ 				if (y < 0 - skin->height) y = 0;
+ 				if (y > gdk_screen_height()) y = gdk_screen_height() - skin->height;
+ 
+-				if (debug_mode) printf("setting window position %d, %d\n", x, y);
+-
+ 				gtk_window_move(GTK_WINDOW(ui->window), x, y);
+ 				}
+ 			
+@@ -1263,8 +1243,6 @@ void ui_group_set_child(UIData *parent, 
+ 
+ 	child->parent = parent;
+ 	parent->children = g_list_append(parent->children, child);
+-
+-	if (debug_mode) printf("setting %s as a child of %s\n", child->skin_mode_key, parent->skin_mode_key);
+ }
+ 
+ void ui_group_unset_child(UIData *child)
+@@ -1276,8 +1254,6 @@ void ui_group_unset_child(UIData *child)
+ 	parent = child->parent;
+ 	parent->children = g_list_remove(parent->children, child);
+ 	child->parent = NULL;
+-
+-	if (debug_mode) printf("removed %s as a child of %s\n", child->skin_mode_key, parent->skin_mode_key);
+ }
+ 
+ UIData *ui_group_get_parent(UIData *ui)
+@@ -1311,15 +1287,6 @@ static void slik_about_toggle_cb(GtkWidg
+ {
+ 	gint *val = data;
+ 	*val = GTK_TOGGLE_BUTTON(button)->active;
+-
+-	if (val == &debug_mode)
+-		{
+-		printf("Debug set: %d\n", debug_mode);
+-		}
+-	else if (val == &debug_skin)
+-		{
+-		printf("Skin coordinates set: %d\n", debug_skin);
+-		}
+ }
+ 
+ static void ui_slik_about(void)
+@@ -1382,14 +1349,6 @@ static void ui_slik_about(void)
+ 
+ 	button = gtk_toggle_button_new();
+ 	gtk_widget_set_size_request(button, 8, 8);
+-	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), debug_mode);
+-	g_signal_connect(G_OBJECT(button), "toggled",
+-			 G_CALLBACK(slik_about_toggle_cb), &debug_mode);
+-	gtk_box_pack_end(GTK_BOX(hbox), button, FALSE, FALSE, 4);
+-	gtk_widget_show(button);
+-
+-	button = gtk_toggle_button_new();
+-	gtk_widget_set_size_request(button, 8, 8);
+ 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), debug_skin);
+ 	g_signal_connect(G_OBJECT(button), "toggled",
+ 			 G_CALLBACK(slik_about_toggle_cb), &debug_skin);
+diff -Nurp gqmpeg-0.91.1.orig/src/ui2_menu.c gqmpeg-0.91.1/src/ui2_menu.c
+--- gqmpeg-0.91.1.orig/src/ui2_menu.c	2004-04-02 11:22:26.000000000 -0300
++++ gqmpeg-0.91.1/src/ui2_menu.c	2007-01-20 16:36:20.000000000 -0200
+@@ -229,7 +229,6 @@ static MenuItemData *ui_menu_item_add_re
+ 
+ 	if (parent)
+ 		{
+-		if (debug_mode) printf("menu %s is submenu of %s\n", mi->text, parent->text);
+ 		parent->children = g_list_append(parent->children, mi);
+ 		}
+ 	else
+diff -Nurp gqmpeg-0.91.1.orig/src/ui2_parse.c gqmpeg-0.91.1/src/ui2_parse.c
+--- gqmpeg-0.91.1.orig/src/ui2_parse.c	2004-04-02 11:22:40.000000000 -0300
++++ gqmpeg-0.91.1/src/ui2_parse.c	2007-01-20 16:36:11.000000000 -0200
+@@ -405,7 +405,6 @@ SkinData *skin_parse(const gchar *skin_d
+ 
+ /* GQmpeg change end */
+ 
+-		if (debug_mode) printf("Unable to open skin data file: %s\n", datafile);
+ 		return NULL;
+ 		}
+ 
+@@ -432,7 +431,6 @@ SkinData *skin_parse(const gchar *skin_d
+ 
+ 		if (!section && strncmp(buf, "Background:", 11) == 0)
+ 			{
+-			if (debug_mode) printf("Skin \"%s\" is a version 1 skin\n", skin_dir);
+ 			skin_free(s);
+ 			fclose(f);
+ 			return skin_parse_v1(skin_dir, datafile, edit);
+@@ -486,7 +484,6 @@ SkinData *skin_parse(const gchar *skin_d
+ 			}
+ 		else
+ 			{
+-			if (debug_mode) printf("unknown data in %s file: \"%s\"\n", datafile, buf);
+ 			fail++;
+ 			}
+ 		if (fail > 8)
+diff -Nurp gqmpeg-0.91.1.orig/src/ui2_skin.c gqmpeg-0.91.1/src/ui2_skin.c
+--- gqmpeg-0.91.1.orig/src/ui2_skin.c	2004-04-02 11:22:26.000000000 -0300
++++ gqmpeg-0.91.1/src/ui2_skin.c	2007-01-20 16:35:58.000000000 -0200
+@@ -136,7 +136,6 @@ WidgetData *skin_register_widget(SkinDat
+ 		printf("Attempt to register skin widget with NULL key!\n");
+ 		return NULL;
+ 		}
+-	if (debug_mode) printf("skin registering widget \"%s\" (%d)\n", key, type);
+ 	wd = ui_widget_new(key, text_id, type, widget);
+ 	skin->widget_list = g_list_append(skin->widget_list, wd);
+ 
+diff -Nurp gqmpeg-0.91.1.orig/src/ui2_text.c gqmpeg-0.91.1/src/ui2_text.c
+--- gqmpeg-0.91.1.orig/src/ui2_text.c	2004-04-06 03:44:07.000000000 -0300
++++ gqmpeg-0.91.1/src/ui2_text.c	2007-01-20 16:35:52.000000000 -0200
+@@ -157,12 +157,6 @@ static gint x_font_convert_points_by_dpi
+ 
+ 		g_object_get(settings, "gtk-xft-dpi", &int_dpi, NULL);
+ 		dpi = int_dpi / PANGO_SCALE;
+-
+-		if (debug_mode && !debugged)
+-			{
+-			printf("pango is using a dpi of %d\n", dpi);
+-			debugged = TRUE;
+-			}
+ 		}
+ 
+ 	if (dpi < 25)
+@@ -269,11 +263,6 @@ static gchar *x_font_convert_to_pango_st
+ 	result = str->str;
+ 	g_string_free(str, FALSE);
+ 
+-	if (debug_mode)
+-		{
+-		printf("Pango font description \"%s\"\n   auto converted from \"%s\"\n", result, description);
+-		}
+-
+ 	return result;
+ }
+ 
+diff -Nurp gqmpeg-0.91.1.orig/src/ui2_typedefs.h gqmpeg-0.91.1/src/ui2_typedefs.h
+--- gqmpeg-0.91.1.orig/src/ui2_typedefs.h	2004-04-07 09:50:31.000000000 -0300
++++ gqmpeg-0.91.1/src/ui2_typedefs.h	2007-01-20 16:35:37.000000000 -0200
+@@ -364,7 +364,6 @@ extern gint slik_colorshift_on;
+ extern gint slik_transparency_force;
+ extern gint slik_transparency_force_a;
+ 
+-extern gint debug_mode;
+ extern gint debug_skin;
+ 
+ 
+diff -Nurp gqmpeg-0.91.1.orig/src/ui2_util.c gqmpeg-0.91.1/src/ui2_util.c
+--- gqmpeg-0.91.1.orig/src/ui2_util.c	2004-04-02 11:22:26.000000000 -0300
++++ gqmpeg-0.91.1/src/ui2_util.c	2007-01-20 16:35:25.000000000 -0200
+@@ -325,8 +325,6 @@ gint util_pixbuf_fill_from_root_window(G
+ 	gdkvisual = gdk_drawable_get_visual(rootwindow);
+ 	if (gdkvisual != gdk_visual_get_system()) return TRUE;
+ 
+-	if (debug_mode) printf("root window capture: %d, %d (%d x %d) to %d, %d\n", screen_x, screen_y, w, h, x, y);
+-
+ 	if (!get_all)
+ 		{
+ 		/*
+@@ -657,8 +655,6 @@ void ui_state_set(const gchar *skin_name
+ {
+ 	WindowStateData *ws;
+ 
+-	if (debug_mode) printf("set: %s %s\n", skin_name, window_id);
+-
+ 	ws = ui_state_get_window(skin_name, window_id);
+ 	if (!ws) return;
+ 
+@@ -673,8 +669,6 @@ gint ui_state_get(const gchar *skin_name
+ 	StateData *sd;
+ 	WindowStateData *ws;
+ 
+-	if (debug_mode) printf("get: %s %s\n", skin_name, window_id);
+-
+ 	sd = ui_state_find_skin(skin_name);
+ 	if (!sd) return FALSE;
+ 
+diff -Nurp gqmpeg-0.91.1.orig/src/window.c gqmpeg-0.91.1/src/window.c
+--- gqmpeg-0.91.1.orig/src/window.c	2004-03-16 02:42:30.000000000 -0300
++++ gqmpeg-0.91.1/src/window.c	2007-01-20 16:35:12.000000000 -0200
+@@ -52,8 +52,6 @@ static gint key_pressed(GtkWidget *widge
+ 		last_time = event->time;
+ 		}
+ 
+-	if (debug_mode) printf("key pressed: %d\n", event->keyval);
+-
+ 	if (event->state & GDK_CONTROL_MASK)
+ 		{
+ 		ret = TRUE;
