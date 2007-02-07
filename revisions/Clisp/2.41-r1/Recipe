@@ -1,0 +1,19 @@
+# Recipe (MakeRecipe) for Clisp by Aitor Pérez Iturri, on sáb ene 27 13:35:28 CET 2007
+# Recipe for version 2.41a by Aitor Pérez Iturri, on sáb ene 27 13:35:28 CET 2007
+compile_version=1.8.2
+url="http://ftp.gnu.org/pub/gnu/clisp/release/2.41/clisp-2.41a.tar.bz2"
+file_size=8319471
+file_md5=3a7a00e82ebeeb72a75a032f84c36c6c
+dir='clisp-2.41'
+recipe_type=configure
+do_build=no
+do_install=no
+configure_options=(
+	"--with-dynamic-modules"
+	"--mandir=${target}/man"
+	"--docdir=${target}/doc"
+)
+pre_install() {
+	./configure --install
+}
+
