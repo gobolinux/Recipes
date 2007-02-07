@@ -1,0 +1,14 @@
+# Recipe for version 1.1.5 by Lucas C. Villa Real, on Sun Feb 4 15:12:44 BRST 2007
+# Recipe (MakeRecipe) for Unionfs by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Fri Mar 4 20:13:33 BRT 2005
+compile_version=1.8.2
+url="ftp://ftp.fsl.cs.sunysb.edu/pub/unionfs/unionfs-1.x/unionfs-1.1.5.tar.gz"
+file_size=153220
+file_md5=8f3bc81887ec6c9b4e103f320c7c42b3
+recipe_type=makefile
+makefile='Makefile'
+build_target="unionctl uniondbg unionimap"
+install_target="install-utils"
+
+make_variables=(
+   "PREFIX=$target"
+)
