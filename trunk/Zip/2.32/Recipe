@@ -1,7 +1,9 @@
 # Recipe for version 2.32 by Fabio Mierlo, on Sun Sep 3 15:26:05 BRT 2006
 # by Jeremy Vernon
 url="ftp://sunsite.icm.edu.pl/pub/unix/archiving/info-zip/src/zip232.tar.gz"
-compile_version=1.8.1
+file_size=807180
+file_md5=8a4da4460386e324debe97f3b7fe4d96
+compile_version=1.8.2
 recipe_type=makefile
 makefile=unix/Makefile
 build_target=generic_gcc
