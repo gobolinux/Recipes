@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for FunionFS by Lucas C. Villa Real, on Thu Feb 8 00:54:50 BRST 2007
+# Recipe for version 0.4.2 by Lucas C. Villa Real, on Thu Feb 8 00:54:50 BRST 2007
+compile_version=1.8.2
+url="http://funionfs.apiou.org/file/funionfs-0.4.2.tar.gz"
+file_size=853921
+file_md5=d099f05fb198625a3ed4dfe61554d7ce
+recipe_type=configure
+
+configure_options=(
+    --mandir=$target/man
+)
