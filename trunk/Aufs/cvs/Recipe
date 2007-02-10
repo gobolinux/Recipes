@@ -1,0 +1,30 @@
+# Recipe (MakeRecipe) for Aufs by Lucas C. Villa Real, on Wed Feb 7 20:13:53 BRST 2007
+# Recipe for version cvs by Lucas C. Villa Real, on Wed Feb 7 20:13:53 BRST 2007
+compile_version=1.8.2
+cvs=:pserver:anonymous:@aufs.cvs.sourceforge.net:/cvsroot/aufs
+cvs_module=aufs
+recipe_type=makefile
+makefile=local.mk
+do_install=no
+
+make_variables=(
+    KDIR="$goboModules/`uname -r`/build"
+)
+
+pre_build() {
+    GrepReplace "^#CONFIG_AUFS_HINOTIFY = y" "CONFIG_AUFS_HINOTIFY = y" local.mk
+    GrepReplace "^CONFIG_AUFS_DEBUG = y" "#CONFIG_AUFS_DEBUG = y" local.mk
+}
+
+pre_install() {
+    mkdir -p $goboModules/`uname -r`/misc
+    cp -f aufs.ko $goboModules/`uname -r`/misc
+    Quiet pushd util
+    install -m 500 -p mount.aufs umount.aufs auplink aulchown $target/sbin
+    cp aufs.5 $target/man/man5
+    Quiet popd
+}
+
+unmanaged_files=(
+    $goboModules/`uname -r`/misc/aufs.ko
+)
