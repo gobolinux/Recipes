@@ -1,0 +1,11 @@
+# Recipe for version 1.4.4 by Lucas C. Villa Real, on Sun Feb 11 20:29:23 BRST 2007
+# Recipe (MakeRecipe) for Git by Jonas Karlsson <jonka750@student.liu.se>, on Sat Apr 15 18:45:06 CEST 2006
+compile_version=1.8.2
+url="http://www.kernel.org/pub/software/scm/git/git-1.4.4.tar.bz2"
+file_size=886549
+file_md5=3bf19bd4c5746c5dc74f19cf167f4eb1
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+)
