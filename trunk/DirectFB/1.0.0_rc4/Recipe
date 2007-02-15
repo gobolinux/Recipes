@@ -1,0 +1,9 @@
+# Recipe for version 1.0.0_rc4 by Lucas C. Villa Real, on Mon Feb 12 14:57:46 GMT 2007
+# Recipe (MakeRecipe) for DirectFB by roko, <ro.ko@mcnon.com>, on Wed Oct 27 01:25:07 BRST 2004
+compile_version=1.8.2
+url="http://directfb.org/downloads/Core/DirectFB-1.0.0-rc4.tar.gz"
+recipe_type=configure
+configure_options=(
+"--with-gfxdrivers=radeon,nvidia"
+"--enable-multi"
+)
