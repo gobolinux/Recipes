@@ -1,0 +1,19 @@
+# Recipe (MakeRecipe) for Faac by roko, <ro.ko@mcnon.com>, , on Mon Oct 25 01:08:43 BRST 2004
+# Recipe for version 1.24 by roko, <ro.ko@mcnon.com>, , on Mon Oct 25 01:08:43 BRST 2004
+compile_version=1.8.2
+url="$httpSourceforge/faac/faac-1.25.tar.gz"
+file_size=386608
+file_md5=75eaffd18ee072eaca52ae2d622bb1db
+recipe_type=configure
+dir="faac"
+
+pre_build() {
+    # remove lines terminated with ^M
+    find . | while read i
+    do
+        [ ! -d "$i" ] && cat $i | sed 's/\cM//' > $i.tmp && mv $i.tmp $i
+    done
+
+    chmod +x bootstrap
+    ./bootstrap
+}
