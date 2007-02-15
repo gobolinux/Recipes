@@ -1,0 +1,21 @@
+# Recipe (MakeRecipe) for Linux-Fusion by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Nov 22 01:25:21 BRST 2004
+# Recipe for version CVS by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Nov 22 01:25:21 BRST 2004
+compile_version=1.8.2
+cvs=:pserver:anonymous:@cvs.directfb.org:/cvs/directfb
+cvs_module=linux-fusion
+recipe_type=makefile
+makefile='Makefile'
+
+unmanaged_files=(
+    $goboModules
+)
+
+pre_install() {
+    GrepReplace "\$(DESTDIR)/usr/include" "\$(PREFIX)/include" Makefile
+}
+
+pre_link() {
+    pushd linux
+    cp -r include $target
+    popd
+}
