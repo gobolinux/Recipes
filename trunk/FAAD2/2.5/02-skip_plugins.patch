@@ -1,0 +1,32 @@
+--- faad2/configure.in.orig	2007-02-14 13:43:17.000000000 +0000
++++ faad2/configure.in	2007-02-14 13:43:49.000000000 +0000
+@@ -116,8 +116,9 @@ fi
+ 
+ if test x$WITHBMP = xyes; then
+   AC_DEFINE([HAVE_BMP], 1, [User wants beep media player plugin built])
+-  AM_CONDITIONAL([HAVE_XMMS], true)
+   AM_CONDITIONAL([HAVE_BMP], true)
++else
++  AM_CONDITIONAL([HAVE_BMP], false)
+ fi
+ 
+ if test x$WITHDRM = xyes; then
+@@ -128,10 +129,6 @@ fi
+ AC_CONFIG_FILES(libfaad/Makefile)
+ AC_CONFIG_FILES(common/Makefile)
+ AC_CONFIG_FILES(common/mp4ff/Makefile)
+-AC_CONFIG_FILES(plugins/Makefile)
+-AC_CONFIG_FILES(plugins/xmms/Makefile)
+-AC_CONFIG_FILES(plugins/xmms/src/Makefile)
+-AC_CONFIG_FILES(plugins/mpeg4ip/Makefile)
+ AC_CONFIG_FILES(faad2.spec)
+ AC_CONFIG_FILES(frontend/Makefile)
+ AC_CONFIG_FILES(Makefile)
+--- faad2/Makefile.am.orig	2007-02-14 13:49:34.000000000 +0000
++++ faad2/Makefile.am	2007-02-14 13:49:40.000000000 +0000
+@@ -1,4 +1,4 @@
+-SUBDIRS = libfaad common frontend plugins
++SUBDIRS = libfaad common frontend
+ 
+ EXTRA_DIST = faad2.spec
+ 
