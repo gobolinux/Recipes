@@ -1,0 +1,21 @@
+# Recipe (MakeRecipe) for FFmpeg by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 16:03:06 BRT 2005
+compile_version=1.8.2
+svn="svn://svn.mplayerhq.hu/ffmpeg/trunk"
+recipe_type=configure
+dir='ffmpeg'
+
+configure_options=(
+#    "--enable-theora"
+#    "--enable-a52"
+#    "--enable-swscaler"
+    "--enable-libfaac"
+    "--enable-libfaad"
+    "--enable-libogg"
+    "--enable-libvorbis"
+    "--enable-libmp3lame"
+    "--enable-pp"
+    "--enable-gpl" 
+    "--enable-shared"
+    "--enable-pthreads"
+    "--enable-x11grab"
+)
