@@ -1,0 +1,13 @@
+make_variables=(
+	PREFIX=$target
+	ARCH=$kernelArch
+    LD=${crossCompiler}ld
+	V=1
+)
+
+pre_build() {
+	kernel_dir=`readlink -f $goboModules/Current`
+	kernel_version=`basename "$kernel_dir"`
+	GrepReplace "/lib/modules/\$(shell uname -r)" "$goboModules/Current" Makefile
+	GrepReplace "depmod -ae^" "depmod -ae $kernel_version" Makefile
+}

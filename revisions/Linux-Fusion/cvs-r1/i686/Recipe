@@ -1,0 +1,8 @@
+make_variables=(
+	PREFIX=$target
+)
+
+pre_build() {
+	GrepReplace "/lib/modules/" "$goboModules/" Makefile
+	GrepReplace "depmod -ae^" "depmod -ae `uname -r`" Makefile
+}
