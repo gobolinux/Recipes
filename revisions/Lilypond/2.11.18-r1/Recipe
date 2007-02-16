@@ -1,0 +1,12 @@
+compile_version=1.8.2
+url="http://download.linuxaudio.org/lilypond/sources/v2.11/lilypond-2.11.18.tar.gz"
+recipe_type=configure
+makefile=Makefile
+
+make_variables=(
+  "DOCUMENTATION=no"
+)
+
+configure_options=(
+  "--with-ncsb-dir=/Files/Fonts/Ghostscript"
+)
