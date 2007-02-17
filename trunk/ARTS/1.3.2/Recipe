@@ -1,8 +1,8 @@
 # by Maglan C. Diemer
 
-url="ftp://ftp.kde.org/pub/kde/stable/3.3.2/src/arts-1.3.2.tar.bz2"
+url="ftp://ftp.oregonstate.edu/pub/kde/Attic/3.3.2/src/arts-1.3.2.tar.bz2"
 dir="arts-1.3.2"
-compile_version=1.7.1
+compile_version=1.8.2
 recipe_type=configure
 configure_options=(
   "--disable-debug"
