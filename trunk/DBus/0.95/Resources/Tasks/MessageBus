@@ -7,17 +7,17 @@
 #               and other messages. See http://www.freedesktop.org/software/dbus/
 #
 # processname: dbus-daemon
-# pidfile: /Programs/Dbus/Variable/run/dbus/pid
+# pidfile: /Programs/DBus/Variable/run/dbus/pid
 #
 
 # Sanity checks.
-[ -x /Programs/Dbus/0.95/bin/dbus-daemon ] || exit 0
+#[ -x /Programs/DBus/0.95/bin/dbus-daemon ] || exit 0
 mkdir -p /System/Variable/run/dbus/
 
 # so we can rearrange this easily
 RETVAL=0
 
-dbus-daemon --system
+/bin/dbus-daemon --system
 RETVAL=$?
-
+sleep 2
 exit $RETVAL
