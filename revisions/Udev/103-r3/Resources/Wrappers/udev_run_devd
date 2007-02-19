@@ -1,0 +1,4 @@
+#!/bin/sh
+
+exec /lib/udev/udev_run_devd $*
+
