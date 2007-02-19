@@ -34,9 +34,9 @@ SUBSYSTEM=="block", GROUP="disk"
 
 # cdrom symlinks and other good cdrom naming
 BUS=="ide",	KERNEL=="hd[a-z]", ACTION=="add", IMPORT="/sbin/cdrom_id --export $tempnode"
-BUS=="scsi",	KERNEL="sr[0-9]*", ACTION=="add", IMPORT="/sbin/cdrom_id --export $tempnode"
-BUS=="scsi",	KERNEL="scd[a-z]", ACTION=="add", IMPORT="/sbin/cdrom_id --export $tempnode"
-BUS=="scsi",	KERNEL="sg[0-9]*", ACTION=="add", DRIVER=="sr", GROUP="cdrom"
+BUS=="scsi",	KERNEL=="sr[0-9]*", ACTION=="add", IMPORT="/sbin/cdrom_id --export $tempnode"
+BUS=="scsi",	KERNEL=="scd[a-z]", ACTION=="add", IMPORT="/sbin/cdrom_id --export $tempnode"
+BUS=="scsi",	KERNEL=="sg[0-9]*", ACTION=="add", DRIVER=="sr", GROUP="cdrom"
 ENV{ID_CDROM}=="?*",		SYMLINK+="cdrom%e", GROUP="cdrom"
 ENV{ID_CDROM_CD_RW}=="?*",	SYMLINK+="cdrw%e"
 ENV{ID_CDROM_DVD}=="?*",	SYMLINK+="dvd%e"
@@ -256,10 +256,6 @@ KERNEL=="tpm*",	NAME="%k", OWNER="tss", GROUP="tss", MODE="0600"
 ACTION!="add",		GOTO="persistent_end"
 SUBSYSTEM!="block",	GOTO="persistent_end"
 KERNEL=="ram*|loop*|fd*|nbd*",	GOTO="persistent_end"
-
-# skip accessing removable ide devices, cause the ide drivers are horrible broken
-BUS=="ide", SYSFS{removable}="1", GOTO="no_volume_id"
-BUS=="ide", SYSFS{../removable}="1", GOTO="no_volume_id"
 
 # persistent disk device links /dev/disk/
 KERNEL=="hd*[!0-9]", IMPORT="/sbin/ata_id --export $tempnode"
