@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for HAL by Carlo J. Calica <ccalica@gmail.com>, on Sat Oct 1 21:36:06 PDT 2005
+compile_version=1.8.2
+url="http://freedesktop.org/~david/dist/hal-0.5.8.1.tar.gz"
+recipe_type=configure
+configure_options=(
+#    "--enable-fstab-sync"
+    "--disable-policy-kit"
+    "--disable-docbook-docs"
+)
