@@ -1,0 +1,16 @@
+--- asciidoc-8.1.0_orig/install.sh	2006-10-21 09:21:11.000000000 +0200
++++ asciidoc-8.1.0/install.sh	2007-02-19 11:13:19.000000000 +0100
+@@ -5,9 +5,10 @@
+ # Documented in INSTALL file.
+ #
+ 
+-BINDIR=/usr/local/bin
+-MANDIR=/usr/local/man
+-CONFDIR=/etc/asciidoc
++PREFIX=@%Compile_target%@
++BINDIR=${PREFIX}/bin
++MANDIR=${PREFIX}/man
++CONFDIR=${PREFIX}/Resources/Defaults/Settings/asciidoc
+ 
+ if [ `basename $0` == uninstall.sh ]; then
+     rm $BINDIR/asciidoc
