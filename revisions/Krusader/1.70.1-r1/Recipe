@@ -1,0 +1,8 @@
+# Recipe for version 1.70.1 by Andrei Zinca, on Fri Feb 16 10:20:55 EET 2007
+# Recipe (MakeRecipe) for Krusader by Andre Detsch, on Thu Sep 8 10:48:32 BRT 2005
+compile_version=1.8.2
+environment=(
+   "KDEDIR=$KDEDIRS"
+)
+url="$httpSourceforge/krusader/krusader-1.70.1.tar.gz"
+recipe_type=configure
