@@ -13,11 +13,12 @@
 # Sanity checks.
 #[ -x /Programs/DBus/0.95/bin/dbus-daemon ] || exit 0
 mkdir -p /System/Variable/run/dbus/
+rm /System/Variable/run/dbus/pid > /dev/null
 
 # so we can rearrange this easily
 RETVAL=0
 
 /bin/dbus-daemon --system
 RETVAL=$?
-sleep 2
+#sleep 2
 exit $RETVAL
