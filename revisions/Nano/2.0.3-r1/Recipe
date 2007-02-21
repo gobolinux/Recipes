@@ -1,0 +1,17 @@
+# Recipe for version 2.0.3 by Andre Detsch <detsch@gobolinux.org>, on Wed Feb 21 18:48:11 BRT 2007
+# Recipe (MakeRecipe) for Nano by Laurent Pelecq (laurent.pelecq at soleil.org), on dim mar 26 15:32:24 CEST 2006
+compile_version=1.8.2
+url="http://www.nano-editor.org/dist/v2.0/nano-2.0.3.tar.gz"
+recipe_type=configure
+
+docs=(
+  "doc/nanorc.sample"
+)
+
+configure_options=(
+#  "--with-slang"
+  "--enable-color"
+  "--enable-multibuffer"
+  "--enable-nanorc"
+#  "--enable-utf8"
+)
