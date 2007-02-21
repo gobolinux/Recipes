@@ -1,0 +1,8 @@
+# Recipe for version 0.4 by Andre Detsch <detsch@gobolinux.org>, on Wed Feb 21 18:43:17 BRT 2007
+url=$ftpGnu/ed/ed-0.4.tar.bz2
+compile_version=1.8.2
+recipe_type=configure
+pre_build() {
+   chmod +w configure
+   autoconf
+}
