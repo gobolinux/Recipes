@@ -1,0 +1,18 @@
+# Recipe for version 4.1.2 by Lucas C. Villa Real, on Wed Feb 21 18:44:18 BRT 2007
+# by Hisham Muhammad, Guilherme Bedin
+url=$ftpGnu/gcc/gcc-4.1.2/gcc-4.1.2.tar.bz2
+compile_version=1.8.2
+recipe_type=configure
+needs_build_directory=yes
+
+pre_link() {
+   cd "$target/bin"
+   ln -s gcc cc
+   cd "$target/lib"
+   ln -s "$target/bin/cpp" .
+   rm -f libiberty.a
+   cd "$goboExecutables"
+   ln -nsf "$target/bin/cc" .
+   cd "$goboLibraries"
+   ln -nsf "$target/lib/cpp" .
+}

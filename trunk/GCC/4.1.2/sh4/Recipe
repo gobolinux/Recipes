@@ -1,0 +1,8 @@
+configure_options=(
+   "--enable-shared"
+   "--enable-threads=posix"
+   "--enable-__cxa_atexit"
+   "--enable-clocale=gnu"
+   "--enable-languages=c,c++"
+   "--with-multilib-list=m4,m4-nofpu"
+)
