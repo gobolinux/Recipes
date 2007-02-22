@@ -1,0 +1,11 @@
+--- ncurses-5.5/misc/Makefile.in.orig	2006-08-17 11:18:16.000000000 -0300
++++ ncurses-5.5/misc/Makefile.in	2006-08-17 11:19:20.000000000 -0300
+@@ -62,7 +62,7 @@ HOSTCC		= @BUILD_CC@
+ 
+ tabsetdir	= $(datadir)/tabset
+ ticdir		= @TERMINFO@
+-source		= @TERMINFO_SRC@
++source		= terminfo.src
+ 
+ INSTALL		= @INSTALL@
+ INSTALL_DATA	= @INSTALL_DATA@

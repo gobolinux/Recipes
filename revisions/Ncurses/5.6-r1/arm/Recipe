@@ -1,0 +1,25 @@
+configure_options=(
+   --with-shared
+#  --with-termlib
+   --without-gpm
+   --without-debug
+   --without-ada
+   --enable-rpath
+#  --enable-termcap
+   --enable-symlinks
+   --enable-overwrite
+   --enable-database
+   --disable-big-core
+   --host=$cross_configure_host
+   --build=$cross_configure_build
+   --with-build-cc="$HOSTCC"
+   --with-build-cpp="$HOSTCPP"
+   --with-build-cflags="$HOSTCFLAGS"
+   --with-build-cppflags="$HOSTCFLAGS"
+   --with-build-ldflags="$HOSTLDFAGS"
+   --with-build-libs="$HOSTLDFLAGS"
+)
+
+make_variables=(
+   C_INCLUDE_PATH=
+)
