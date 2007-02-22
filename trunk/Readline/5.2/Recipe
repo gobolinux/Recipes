@@ -1,0 +1,9 @@
+# Recipe for version 5.2 by Lucas C. Villa Real, on Thu Feb 22 01:30:25 BRT 2007
+# Recipe (MakeRecipe) for Readline by Peter Eriksen <s022018@student.dtu.dk>, on Thu Nov 4 19:52:54 CET 2004
+compile_version=1.8.2
+urls=(
+    "$ftpGnu/readline/readline-5.2.tar.gz"
+    # "$ftpGnu/readline/readline-doc-5.0.tar.gz"
+)
+recipe_type=configure
+# unpack_files=inside_first
