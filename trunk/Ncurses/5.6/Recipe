@@ -1,0 +1,14 @@
+# Recipe for version 5.6 by Lucas C. Villa Real, on Thu Feb 22 00:30:21 BRT 2007
+compile_version=1.8.2
+urls=(
+   $ftpGnu/ncurses/ncurses-5.6.tar.gz
+)
+recipe_type=configure
+needs_safe_linking=yes
+
+post_install() {
+   chmod 755 $target/lib/*.5.6
+   chmod 644 $target/lib/libncurses++.a
+   ln -nfs $target/include/ncurses/* $target/include
+   ln -nfs $target/include/ncurses/* $goboHeaders
+}
