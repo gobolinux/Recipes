@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for NTFS-3G by Lucas C. Villa Real, on Thu Feb 22 02:10:40 BRT 2007
+# Recipe for version 1.0 by Lucas C. Villa Real, on Thu Feb 22 02:10:40 BRT 2007
+compile_version=1.8.2
+url="http://www.ntfs-3g.org/ntfs-3g-1.0.tgz"
+file_size=562452
+file_md5=873a8de662849d129fc7c475ad3f5447
+recipe_type=configure
+
+make_variables=(
+    DESTDIR=$target
+)
