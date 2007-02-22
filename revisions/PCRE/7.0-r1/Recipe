@@ -1,0 +1,7 @@
+# Recipe for version 7.0 by Lucas C. Villa Real, on Thu Feb 22 01:29:14 BRT 2007
+# by Jeremy Vernon
+
+url="ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-7.0.tar.bz2"
+compile_version=1.8.2
+recipe_type=configure
+needs_safe_linking=yes
