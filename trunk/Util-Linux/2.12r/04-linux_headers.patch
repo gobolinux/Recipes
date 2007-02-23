@@ -1,0 +1,45 @@
+diff -Nurp util-linux-2.12r.orig/fdisk/llseek.c util-linux-2.12r/fdisk/llseek.c
+--- util-linux-2.12r.orig/fdisk/llseek.c	2003-07-13 18:13:33.000000000 -0300
++++ util-linux-2.12r/fdisk/llseek.c	2007-02-22 22:22:09.000000000 -0300
+@@ -31,11 +31,21 @@ static int _llseek (unsigned int, unsign
+ 
+ #ifdef __NR__llseek
+ 
++#ifdef _syscall5
++
+ static _syscall5(int,_llseek,unsigned int,fd,unsigned long,offset_high,
+ 		 unsigned long, offset_low,long long *,result,
+ 		 unsigned int, origin)
+ 
+ #else
++static int _llseek (unsigned int fd, unsigned long oh,
++		 unsigned long ol, long long *result,
++		 unsigned int origin) {
++	return syscall (__NR__llseek, fd, oh, ol, result, origin);
++}
++#endif /* _syscall5 */
++
++#else
+ 
+ /* no __NR__llseek on compilation machine - might give it explicitly */
+ static int _llseek (unsigned int fd, unsigned long oh,
+diff -Nurp util-linux-2.12r.orig/fdisk/sfdisk.c util-linux-2.12r/fdisk/sfdisk.c
+--- util-linux-2.12r.orig/fdisk/sfdisk.c	2005-01-04 20:31:57.000000000 -0200
++++ util-linux-2.12r/fdisk/sfdisk.c	2007-02-22 22:22:57.000000000 -0300
+@@ -177,9 +177,16 @@ fatal(char *s, ...) {
+ #endif
+ 
+ #ifndef use_lseek
++#ifdef _syscall5
+ static __attribute__used
+ _syscall5(int,  _llseek,  unsigned int,  fd, ulong, hi, ulong, lo,
+        loff_t *, res, unsigned int, wh);
++#else
++int _llseek (unsigned int fd, ulong hi, ulong lo,
++       loff_t *res, unsigned int wh) {
++       return syscall (__NR__llseek, fd, hi, lo, res, wh);
++}
++#endif /* _syscall5 */
+ #endif
+ 
+ static int

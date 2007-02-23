@@ -1,0 +1,49 @@
+Submitted By: Robert Connolly <robert at linuxfromscratch dot org> (ashes)
+Date: 2005-03-08
+Initial Package Version: 2.12q
+Origin: Based on:
+http://ftp.belnet.be/linux/gentoo-portage/sys-apps/util-linux/files/\
+        util-linux-2.12b-pic.patch
+Upstream Status: Submitted
+Description: This is needed for Grsec. http://www..grsecurity.net/
+Util linux doesn't build with position independence without this patch.
+
+Also see:
+http://www.linuxfromscratch.org/hlfs/
+
+diff -Naur util-linux-2.12q.orig/fdisk/llseek.c util-linux-2.12q/fdisk/llseek.c
+--- util-linux-2.12q.orig/fdisk/llseek.c	2003-07-13 21:13:33.000000000 +0000
++++ util-linux-2.12q/fdisk/llseek.c	2005-03-08 22:07:24.980010824 +0000
+@@ -19,7 +19,7 @@
+ 
+ #else	/* HAVE_LLSEEK */
+ 
+-#if defined(__alpha__) || defined(__ia64__) || defined(__s390x__)
++#if (defined(__PIC__) || (__pic__) || (__alpha__) || (__ia64__) || (__s390x__)|| (__hppa__))
+ 
+ #define my_llseek lseek
+ 
+diff -Naur util-linux-2.12q.orig/fdisk/sfdisk.c util-linux-2.12q/fdisk/sfdisk.c
+--- util-linux-2.12q.orig/fdisk/sfdisk.c	2005-01-04 22:31:57.000000000 +0000
++++ util-linux-2.12q/fdisk/sfdisk.c	2005-03-08 22:09:42.121162200 +0000
+@@ -172,7 +172,7 @@
+  * Note: we use 512-byte sectors here, irrespective of the hardware ss.
+  */
+ #undef use_lseek
+-#if defined (__alpha__) || defined (__ia64__) || defined (__x86_64__) || defined (__s390x__)
++#if (defined(__PIC__) || (__pic__) || (__alpha__) || (__ia64__) || (__x86_64__) || (__s390x__))
+ #define use_lseek
+ #endif
+ 
+diff -Naur util-linux-2.12q.orig/partx/partx.c util-linux-2.12q/partx/partx.c
+--- util-linux-2.12q.orig/partx/partx.c	2004-08-23 20:13:27.000000000 +0000
++++ util-linux-2.12q/partx/partx.c	2005-03-08 22:11:32.108441592 +0000
+@@ -333,7 +333,7 @@
+ /*
+  * sseek: seek to specified sector
+  */
+-#if !defined (__alpha__) && !defined (__ia64__) && !defined (__s390x__) && !defined(__x86_64__)
++#if !(defined(__PIC__) || (__pic__) || (__alpha__) || (__ia64__) || (__s390x__) || (__x86_64__))
+ #define NEED__llseek
+ #endif
+ 
