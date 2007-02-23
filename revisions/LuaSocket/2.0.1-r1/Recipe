@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for LuaSocket by Lucas C. Villa Real, on Thu Feb 22 16:20:28 BRT 2007
+# Recipe for version 2.0.1 by Lucas C. Villa Real, on Thu Feb 22 16:20:28 BRT 2007
+compile_version=1.8.2
+url="http://luaforge.net/frs/download.php/1589/luasocket-2.0.1.tar.gz"
+file_size=117529
+file_md5=9ca22fd9f9413b54802d3d40b38c4e5c
+recipe_type=makefile
+makefile='makefile'
+
+make_variables=(
+    INSTALL_TOP_SHARE=$target/share/lua/5.1
+    INSTALL_TOP_LIB=$target/lib/lua/5.1
+)
