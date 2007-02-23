@@ -1,0 +1,11 @@
+# Recipe for version 7.16.1 by Lucas C. Villa Real, on Sun Feb 11 20:56:44 BRST 2007
+compile_version=1.8.2
+url="http://curl.oc1.mirrors.redwire.net/download/curl-7.16.1.tar.bz2"
+file_size=1592074
+file_md5=acdab0b0467c55e10ed02d2afed80575
+recipe_type=configure
+
+configure_options=(
+    --disable-debug
+    --disable-verbose
+)
