@@ -1,5 +1,11 @@
 #!/bin/sh
 
+source GoboPath
+source ${goboSettings}/BootOptions
+if [ -r "${goboSettings}/NetworkOptions" ]; then
+   source ${goboSettings}/NetworkOptions 2> /dev/null
+fi
+
 #
 # DHCP support for NetworkInterface
 # Intended to be called by the Network task, not directly by the user.
@@ -19,13 +25,14 @@ interface="$2"
 if [ -f "/var/run/dhcpcd-${interface}.pid" ]
    then
       DHCPCDPID=`cat "/var/run/dhcpcd-${interface}.pid"`
-      ps u -p $DHCPCDPID | grep "dhcpcd.*${interface}" > /dev/null 2>&1 && kill -TERM $DHCPCDPID
-      rm -rf "/var/run/dhcpcd-${interface}.pid" /dev/null
+      #ps u -p $DHCPCDPID | grep "dhcpcd.*${interface}" > /dev/null 2>&1 && kill -TERM $DHCPCDPID
+      cat /proc/${DHCPCDPID}/cmdline | grep "dhcpcd.*${interface}" > /dev/null 2>&1 && kill -TERM $DHCPCDPID
+      rm -rf "/var/run/dhcpcd-${interface}.pid" >/dev/null
 fi
 
 case "$1" in
    [Ss]tart)
-      dhcpcd -t "$DHCPTimeout" "$interface"
+      dhcpcd -h "$HostName" -t "$DHCPTimeout" "$interface"
       ;;
    [Ss]top)
         # Stop action is always executed above
