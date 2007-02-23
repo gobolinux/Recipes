@@ -4,3 +4,8 @@ url="http://curl.oc1.mirrors.redwire.net/download/curl-7.16.1.tar.bz2"
 file_size=1592074
 file_md5=acdab0b0467c55e10ed02d2afed80575
 recipe_type=configure
+
+configure_options=(
+    --disable-debug
+    --disable-verbose
+)
