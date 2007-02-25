@@ -1,0 +1,21 @@
+diff -uri strace-4.5.14/system.c strace-4.5.14-fixed/system.c
+--- strace-4.5.14/system.c	2006-01-12 22:21:06.000000000 +0100
++++ strace-4.5.14-fixed/system.c	2006-10-17 00:26:42.000000000 +0200
+@@ -78,6 +78,7 @@
+ #endif
+ 
+ #include <linux/sysctl.h>
++#include <linux/version.h>
+ 
+ static const struct xlat mount_flags[] = {
+ 	{ MS_MGC_VAL,	"MS_MGC_VAL"	},
+@@ -1578,7 +1579,9 @@
+ 	{ CTL_KERN, "CTL_KERN" },
+ 	{ CTL_VM, "CTL_VM" },
+ 	{ CTL_NET, "CTL_NET" },
++#if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,18)
+ 	{ CTL_PROC, "CTL_PROC" },
++#endif
+ 	{ CTL_FS, "CTL_FS" },
+ 	{ CTL_DEBUG, "CTL_DEBUG" },
+ 	{ CTL_DEV, "CTL_DEV" },
