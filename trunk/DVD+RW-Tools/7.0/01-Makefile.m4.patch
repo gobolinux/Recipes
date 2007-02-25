@@ -1,0 +1,10 @@
+--- dvd+rw-tools-5.21.4.10.8/Makefile.m4.orig	2004-10-31 14:11:25.000000000 +1030
++++ dvd+rw-tools-5.21.4.10.8/Makefile.m4	2004-10-31 14:11:16.000000000 +1030
+@@ -151,5 +151,5 @@
+ LINK.o=$(LINK.cc)
+ 
+-prefix?=/usr/local
++prefix?=/Programs/DVD+RW-Tools/Current/
+-manprefix?=$(shell case $(prefix) in (*/usr/?*) echo $(prefix)/man ;; (*) echo $(prefix)/share/man ;; esac)
++manprefix?=/Programs/DVD+RW-Tools/Current/man/
+ 

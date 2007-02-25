@@ -1,0 +1,11 @@
+# Recipe for version 7.0 by Lucas C. Villa Real, on Sun Feb 25 16:38:46 BRT 2007
+# Recipe (MakeRecipe) for DVD+RW-Tools by Michael Farrell <michael@xinomorph.org>, on Sun Oct 31 13:52:23 CST 2004
+compile_version=1.8.2
+url="http://fy.chalmers.se/~appro/linux/DVD+RW/tools/dvd+rw-tools-7.0.tar.gz"
+file_size=131259
+file_md5=2eb9c2a6b1e6bc7c4d72d3b5ece34ceb
+recipe_type=makefile
+makefile='Makefile'
+sandbox_options=(
+    "--no-sandbox"
+)
