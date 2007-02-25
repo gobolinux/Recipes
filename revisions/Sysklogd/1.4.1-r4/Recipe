@@ -1,0 +1,7 @@
+url=http://www.ibiblio.org/pub/Linux/system/daemons/sysklogd-1.4.1.tar.gz
+compile_version=1.8.2
+recipe_type=makefile
+make_variables=(
+   "BINDIR=$target/bin"
+   "MANDIR=$target/man"
+)
