@@ -1,0 +1,11 @@
+--- strace-4.5.14/strace.c.orig	2007-02-25 14:45:39.000000000 -0300
++++ strace-4.5.14/strace.c	2007-02-25 14:46:40.000000000 -0300
+@@ -2251,7 +2251,7 @@ Process %d attached (waiting for parent)
+ 			if (!cflag
+ 			    && (qual_flags[WSTOPSIG(status)] & QUAL_SIGNAL)) {
+ 				unsigned long addr = 0, pc = 0;
+-#ifdef PT_GETSIGINFO
++#if defined(PT_GETSIGINFO) && defined(IA64)
+ #				define PSR_RI	41
+ 				struct siginfo si;
+ 				unsigned long psr;
