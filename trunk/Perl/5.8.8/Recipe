@@ -1,14 +1,14 @@
 # Recipe for version 5.8.8 by Andre Detsch <detsch@gobolinux.org>, on Sat Jun 17 18:12:08 BRT 2006
 url=http://www.perl.com/CPAN/src/perl-5.8.8.tar.gz
-compile_version=1.8.0
+compile_version=1.8.2
 recipe_type=makefile
 pre_build() {
 	# Configure options to consider:
 	# -Duseshrplib useful for embeding perl (ie mod_perl)
 	# a DBM would be useful (dbm_opem() for binding hashes to files) would add a dependency
 	# -Dlibspath
-	sh Configure -de -Dcc=gcc -Dprefix=$target -Dotherlibdirs=/System/Links/Libraries/perl5:/System/Links/Libraries/perl5/site_perl -Dlibpth=/System/Links/Libraries |tee /tmp/perl-config.log
+	sh Configure -de -Dcc=gcc -Dprefix=$target -Dotherlibdirs=$goboLibraries/perl5:$goboLibraries/perl5/site_perl -Dlibpth=$goboLibraries |tee /tmp/perl-config.log
 }
 pre_install() {
-	make test | tee /tmp/perl-test.log
+	make test | tee $goboTemp/perl-test.log
 }
