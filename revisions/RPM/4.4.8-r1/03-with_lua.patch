@@ -1,0 +1,12 @@
+--- rpm-4.4.8/lib/poptALL.c.orig	2007-02-27 02:44:29.000000000 -0300
++++ rpm-4.4.8/lib/poptALL.c	2007-02-27 02:44:53.000000000 -0300
+@@ -483,7 +483,9 @@ rpmcliFini(poptContext optCon)
+     rpmFreeMacros(NULL);
+ /*@i@*/	rpmFreeMacros(rpmCLIMacroContext);
+     rpmFreeRpmrc();
++#ifdef WITH_LUA
+     (void) rpmluaFree(NULL);
++#endif
+     rpmFreeFilesystems();
+ /*@i@*/	urlFreeCache();
+     rpmlogClose();
