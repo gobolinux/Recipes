@@ -8,4 +8,11 @@ recipe_type=configure
 
 configure_options=(
     --without-python
+    --enable-debug    # needed to disable broken optimizations
 )
+
+pre_link() {
+    Quiet pushd $target/include
+    ln -s beecrypt/* .
+    Quiet popd
+}
