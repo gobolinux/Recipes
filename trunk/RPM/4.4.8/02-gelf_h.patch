@@ -1,0 +1,18 @@
+--- rpm-4.4.8/lib/rpmds.c.orig	2007-02-27 02:01:51.000000000 -0300
++++ rpm-4.4.8/lib/rpmds.c	2007-02-27 02:10:29.000000000 -0300
+@@ -28,6 +28,7 @@
+ # define _(Text) Text
+ #endif /* gettext _() fixup */
+ #endif
++#endif /* HAVE_GELF_H */
+ 
+ #if !defined(DT_GNU_HASH)
+ #define	DT_GNU_HASH	0x6ffffef5
+@@ -3169,7 +3170,6 @@ static GElf_Vernaux *gelf_getvernaux(Elf
+ #endif
+ 
+ #endif /* HAVE_LIBELF && !HAVE_GELF_GETVERNAUX */
+-#endif /* HAVE_GELF_H */
+ 
+ 
+ #define	_RLD_SEARCH_PATH	"/lib:/usr/lib"
