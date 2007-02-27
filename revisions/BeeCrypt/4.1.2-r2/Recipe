@@ -1,0 +1,18 @@
+# Recipe (MakeRecipe) for BeeCrypt by Lucas C. Villa Real, on Mon Feb 26 01:25:37 BRT 2007
+# Recipe for version 4.1.2 by Lucas C. Villa Real, on Mon Feb 26 01:25:37 BRT 2007
+compile_version=1.8.2
+url="$httpSourceforge/beecrypt/beecrypt-4.1.2.tar.gz"
+file_size=774280
+file_md5=820d26437843ab0a6a8a5151a73a657c
+recipe_type=configure
+
+configure_options=(
+    --without-python
+    --enable-debug    # needed to disable broken optimizations
+)
+
+pre_link() {
+    Quiet pushd $target/include
+    ln -s beecrypt/* .
+    Quiet popd
+}
