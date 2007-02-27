@@ -1,0 +1,33 @@
+diff -Naur ./oldsrc/pmount-hal.c ./src/pmount-hal.c
+--- ./oldsrc/pmount-hal.c	2006-08-15 22:31:02.000000000 +0200
++++ ./src/pmount-hal.c	2007-02-18 17:09:46.000000000 +0100
+@@ -91,7 +91,7 @@
+ void get_free_label( const char* label, char* result, size_t result_size )
+ {
+     char mntpt[PATH_MAX];
+-    snprintf( mntpt, sizeof(mntpt), "/media/%s", label );
++    snprintf( mntpt, sizeof(mntpt), "/Mount/Media/%s", label );
+     int n;
+ 
+     if( valid_mntpt( mntpt ) ) {
+@@ -101,7 +101,7 @@
+     }
+ 
+     for( n = 1; n > 0; ++n ) {
+-        snprintf( mntpt, sizeof(mntpt), "/media/%s-%i", label, n );
++        snprintf( mntpt, sizeof(mntpt), "/Mount/Media/%s-%i", label, n );
+         if( valid_mntpt( mntpt ) ) {
+             snprintf( result, result_size, "%s-%i", label, n );
+             return;
+diff -Naur ./oldsrc/policy.h ./src/policy.h
+--- ./oldsrc/policy.h	2006-08-08 11:31:59.000000000 +0200
++++ ./src/policy.h	2007-02-18 17:08:27.000000000 +0100
+@@ -15,7 +15,7 @@
+ #include <stdlib.h> /* for size_t */
+ 
+ #define MAX_LABEL_SIZE 255
+-#define DEVDIR "/dev/"
++#define DEVDIR "/System/Kernel/Devices"
+ 
+ #define MEDIA_STRING_SIZE MAX_LABEL_SIZE + sizeof( MEDIADIR )
+ 
