@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for CuteCom by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Feb 15 15:34:00 BRST 2005
+# Recipe for version 0.13.1 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Feb 15 15:34:00 BRST 2005
+compile_version=1.8.2
+url="http://cutecom.sourceforge.net/cutecom-0.13.1.tar.gz"
+file_size=20309
+file_md5=dc1c75f9b55993b9d9426e17c11915a1
+recipe_type=makefile
+
+pre_build() {
+	GrepReplace "/usr/local/bin" "$target/bin" cutecom.pro
+	GrepReplace "\-\-expandvars" "\-\-expandvars | cut -d\"/\" -f5-"  cutecom.pro
+	GrepReplace "desktop.path=" "desktop.path=$target/" cutecom.pro
+	./configure
+}
