@@ -1,0 +1,12 @@
+# Recipe for version 1.2.16 by Lucas C. Villa Real, on Tue Feb 27 23:59:39 BRT 2007
+url=$httpSourceforge/libpng/libpng-1.2.16.tar.bz2
+file_size=624085
+file_md5=7a1ca4f49bcffdec60d50f48460642bd
+compile_version=1.8.2
+recipe_type=configure
+
+pre_link() {
+    Quiet pushd $target/include
+    ln -s libpng12 libpng
+    Quiet popd
+}
