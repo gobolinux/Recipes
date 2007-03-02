@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Aspell-sv by Jonas Karlsson <jonka750@student.liu.se>, on Tue Feb 27 23:25:16 CET 2007
+# Recipe for version 0.51 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Feb 27 23:25:16 CET 2007
+compile_version=1.8.2
+url="$ftpGnu/aspell/dict/sv/aspell-sv-0.51-0.tar.bz2"
+file_size=93942
+file_md5=d180c781f8986ea0f65b6b18f02a494e
+recipe_type=configure
+install_variables=(
+   dictdir="$target/lib/aspell"
+   datadir="$target/lib/aspell"
+)
