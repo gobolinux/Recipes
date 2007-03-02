@@ -1,0 +1,23 @@
+# Recipe for version 1.7.1 by Lucas C. Villa Real, on Mon Feb 26 13:41:46 GMT 2007
+# Recipe (MakeRecipe) for Hplip by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Wed Apr 26 15:08:17 BRT 2006
+compile_version=1.8.2
+url="$httpSourceforge/hplip/hplip-1.7.1.tar.gz"
+recipe_type=configure
+
+configure_options=(
+    --disable-network-build
+)
+
+make_variables=(
+    CUPS_BACKEND_PATH=$target/lib/cups/backend
+    CUPS_PPD_PATH=$target/share/cups
+    CUPS_FILTER_PATH=$target/lib/cups/filter
+    ICON_PATH=$target/share/applications
+)
+
+pre_link() {
+    # CUPS expects to find files under share/cups/model
+    mkdir -p $target/share/cups/model
+    mv $target/share/cups/foomatic-ppds/HP/* $target/share/cups/model
+    rmdir -p $target/share/cups/foomatic-ppds
+}
