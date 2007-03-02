@@ -1,0 +1,10 @@
+alias trash_off='export TRASH_OFF=YES'
+alias trash_on='export TRASH_OFF=NO'
+
+export TRASH_OFF=YES
+export LD_PRELOAD=$LD_PRELOAD:/System/Links/Libraries/libtrash.so
+
+alias Compile='LD_PRELOAD="" Compile'
+alias InstallPackage='LD_PRELOAD="" InstallPackage'
+alias SymlinkProgram='LD_PRELOAD="" SymlinkProgram'
+
