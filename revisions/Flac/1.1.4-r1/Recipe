@@ -1,0 +1,12 @@
+# Recipe for version 1.1.4 by Lucas C. Villa Real, on Thu Mar 1 17:05:48 BRT 2007
+# Recipe for Flac 1.1.4 by Maglan C. Diemer, maglan@univates.br
+compile_version=1.8.2
+url="$httpSourceforge/flac/flac-1.1.4.tar.gz"
+file_size=1866308
+file_md5=3958cbd5b6ed8c14966792538e44223b
+recipe_type=configure
+
+configure_options=(
+	"--with-xmms-prefix=$target"
+	"--with-id3lib=$target"
+)
