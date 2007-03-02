@@ -1,0 +1,11 @@
+--- a2ps-4.13/contrib/Makefile.in.orig	2007-02-27 18:32:45.000000000 +0000
++++ a2ps-4.13/contrib/Makefile.in	2007-02-27 18:32:48.000000000 +0000
+@@ -154,7 +154,7 @@ lispdir = @lispdir@
+ #
+ 
+ 
+-SUBDIRS = sample emacs
++SUBDIRS = sample
+ 
+ bin_SCRIPTS = card fixps pdiff psmandup psset texi2dvi4a2ps
+ bin_PROGRAMS = fixnt
