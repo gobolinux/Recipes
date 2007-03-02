@@ -2,7 +2,12 @@
 compile_version=1.8.2
 url="http://pages.stern.nyu.edu/~marriaga/software/libtrash/libtrash-2.6.tgz"
 mirror_url="http://pages.stern.nyu.edu/~marriaga/software/libtrash/libtrash-latest.tgz"
+file_size=94964
+file_md5=0c81112bbc37047ab90800f4429788f3
 dir='libtrash-2.6'
 recipe_type=makefile
 makefile='Makefile'
-install_variables=("INSTLIBDIR=$target/lib" "SYSCONFFILE=$settings_target/libtrash.conf")
+install_variables=(
+   "INSTLIBDIR=$target/lib"
+   "SYSCONFFILE=$settings_target/libtrash.conf"
+)
