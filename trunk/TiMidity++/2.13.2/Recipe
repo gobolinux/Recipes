@@ -1,0 +1,17 @@
+# Recipe for version 2.13.2 by Benjamin Bruheim, on Sat Feb 17 01:49:55 CET 2007
+# Recipe by Bill Burdick, Mobile Reasoning, July 13 2004
+
+compile_version=1.8.2
+url="$httpSourceforge/timidity/TiMidity++-2.13.2.tar.bz2"
+recipe_type=configure
+configure_options=(
+	--datadir=$settings_target/timidity
+	--with-default-path=$settings_target/timidity
+	--enable-audio=alsa,jack,oss,vorbis
+	--enable-dynamic
+	--enable-spectogram
+	--enable-ncurses
+	--enable-gtk
+	--enable-alsaseq
+	--enable-server
+)

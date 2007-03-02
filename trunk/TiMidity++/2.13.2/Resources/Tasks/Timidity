@@ -1,0 +1,38 @@
+#!/bin/sh
+#
+# Initscript for TiMidity++
+#
+# Copyright (c) 2004 by Henrique M. Holschuh <hmh@debian.org>
+# Edited a lot by Benjamin Bruheim for Gobo
+# 
+# Distributed under the GPL version 2
+#
+
+DAEMON=/usr/bin/timidity
+DESC="TiMidity++ ALSA midi emulation"
+PIDFILE=/var/run/timidity.pid
+PARAMS="-iAD -B2,8 -Os1l -s 44100"
+
+case "$1" in
+start)
+[ -d /proc/asound ] || {
+   echo "ALSA is not active, cannot start $DESC"
+   exit 0
+}
+
+$DAEMON $PARAMS > /dev/null
+exit 0
+;;
+stop)
+kill -0 `cat $PIDFILE`
+;;
+restart|force-reload)
+$0 stop
+exec $0 start
+;;
+*)
+echo "Usage: $0 {start|stop|restart|force-reload}" >&2
+exit 1
+esac
+
+exit 0
