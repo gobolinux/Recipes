@@ -1,0 +1,45 @@
+# Recipe for version 1.2.8 by Lucas C. Villa Real, on Fri Feb 23 17:21:03 GMT 2007
+compile_version=1.8.2
+url=ftp://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub/cups/1.2.8/cups-1.2.8-source.tar.bz2
+file_size=3632509
+file_md5=d2cc0604113d5300b7b3e823b660d04a
+dir='cups-1.2.8'
+recipe_type=configure
+
+configure_options=(
+	"--with-rcdir=$target"
+	"--with-doc=$target/doc"
+	"--with-fontpath=/Files/Fonts/Ghostscript"
+	"--with-cups-user=0"
+	"--with-cups-group=sys"
+	"--with-python"
+        "--enable-threads"
+        "--enable-libpaper"
+)
+
+make_variables=(
+    SERVERBIN=$target/Shared/cups
+)
+
+unmanaged_files=(
+    $goboVariable/log/cups
+    $goboVariable/run/cups/certs
+    $goboVariable/cache/cups
+    $goboVariable/spool/cups/tmp
+)
+
+pre_link() {
+    Quiet pushd $target/lib
+    ln -s ../share/cups .
+    Quiet popd
+}
+
+post_install() {
+	Log_Normal "=================================================="
+	Log_Normal ""
+	Log_Normal "Note: when upgrading from CUPS 1.2.20 you may need"
+	Log_Normal "      to recreate your printers because of changes"
+	Log_Normal "      in the ppd uri format for usb printers."
+	Log_Normal ""
+	Log_Normal "=================================================="
+}
