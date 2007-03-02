@@ -1,0 +1,12 @@
+# Recipe for version 0.9.30 by Benjamin Bruheim, on Mon Feb 12 19:18:09 CET 2007
+# Recipe (MakeRecipe) for Wine by roko, <ro.ko@mcnon.com>, on Thu Jan 27 22:27:44 CET 2005
+compile_version=1.8.2
+url="http://ibiblio.org/pub/linux/system/emulators/wine/wine-0.9.30.tar.bz2"
+dir='wine-0.9.30'
+recipe_type=configure
+#configure_options=(
+#"--without-curses"
+#)
+
+# when compiling fails, uncomment the configure_options. Older wine versions needed this option. 
+# It worked for me without this option, But I don't know if it's because of changes in this wine vesion or because I use a recompiled ncurses.  
