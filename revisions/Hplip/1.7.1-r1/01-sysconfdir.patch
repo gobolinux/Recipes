@@ -1,0 +1,61 @@
+--- hplip-1.7.1/Makefile.in.orig	2007-02-26 14:00:38.000000000 +0000
++++ hplip-1.7.1/Makefile.in	2007-02-26 14:02:03.000000000 +0000
+@@ -2576,18 +2576,18 @@ install-exec-hook: 
+ #
+ #       If scanner build, install sane backend.
+ 	if [ "$(scan_build)" = "yes" ]; then \
+-	   $(mkinstalldirs) $(DESTDIR)/etc/sane.d; \
+-	   if [ ! -f $(DESTDIR)/etc/sane.d/dll.conf ]; then \
+-	      touch $(DESTDIR)/etc/sane.d/dll.conf; \
++	   $(mkinstalldirs) $(DESTDIR)/$(sysconfdir)/sane.d; \
++	   if [ ! -f $(DESTDIR)/$(sysconfdir)/sane.d/dll.conf ]; then \
++	      touch $(DESTDIR)/$(sysconfdir)/sane.d/dll.conf; \
+ 	   fi; \
+ 	   $(mkinstalldirs) $(DESTDIR)$(sanedir); \
+ 	   ln -sf ../$(SOLONG) $(DESTDIR)$(sanedir)/$(SONOVER); \
+ 	   ln -sf ../$(SOLONG) $(DESTDIR)$(sanedir)/$(SOSHORT); \
+ 	   ln -sf ../$(SOLONG) $(DESTDIR)$(sanedir)/$(SOLONG); \
+-	   if [ -f $(DESTDIR)/etc/sane.d/dll.conf ]; then \
+-	      if ! grep ^hpaio $(DESTDIR)/etc/sane.d/dll.conf >/dev/null 2>/dev/null ; then \
+-	         echo "Adding hpaio entry to /etc/sane.d/dll.conf." ; \
+-	         echo hpaio >>$(DESTDIR)/etc/sane.d/dll.conf ; \
++	   if [ -f $(DESTDIR)/$(sysconfdir)/sane.d/dll.conf ]; then \
++	      if ! grep ^hpaio $(DESTDIR)/$(sysconfdir)/sane.d/dll.conf >/dev/null 2>/dev/null ; then \
++	         echo "Adding hpaio entry to /$(sysconfdir)/sane.d/dll.conf." ; \
++	         echo hpaio >>$(DESTDIR)/$(sysconfdir)/sane.d/dll.conf ; \
+ 	      fi \
+ 	   fi \
+ 	fi
+@@ -2669,8 +2669,8 @@ install-data-hook: install-pcardext inst
+ 	echo -e "internal-tag=$(PACKAGE_BUGREPORT)" >> $(DESTDIR)$(hplipdir)/$(PACKAGE).conf
+ #
+ #       Install hpiod.conf. 
+-	$(mkinstalldirs) $(DESTDIR)/etc/hp
+-	$(INSTALL_DATA) $(DESTDIR)$(hplipdir)/$(PACKAGE).conf $(DESTDIR)/etc/hp
++	$(mkinstalldirs) $(DESTDIR)/$(sysconfdir)/hp
++	$(INSTALL_DATA) $(DESTDIR)$(hplipdir)/$(PACKAGE).conf $(DESTDIR)/$(sysconfdir)/hp
+ #
+ #       Create hpiod start/stop script from hpiod.sh in destdir.
+ 	sed 's:HPIODDIR=:HPIODDIR=$(sbindir):' < $(DESTDIR)$(hplipdir)/$(PACKAGE).sh > $(DESTDIR)$(hplipdir)/$(PACKAGE).tmp; \
+@@ -2678,8 +2678,8 @@ install-data-hook: install-pcardext inst
+ 	rm -f $(DESTDIR)$(hplipdir)/$(PACKAGE).tmp
+ #
+ #       Install hpiod start/stop script.
+-	$(mkinstalldirs) $(DESTDIR)/etc/init.d
+-	$(INSTALL_SCRIPT) $(DESTDIR)$(hplipdir)/$(PACKAGE) $(DESTDIR)/etc/init.d
++	$(mkinstalldirs) $(DESTDIR)/$(sysconfdir)/init.d
++	$(INSTALL_SCRIPT) $(DESTDIR)$(hplipdir)/$(PACKAGE) $(DESTDIR)/$(sysconfdir)/init.d
+ #
+ #       Run chkconfig/install_initd if DESTDIR="". 
+ 	if [ "$(DESTDIR)" = "" ]; then \
+@@ -2719,8 +2719,8 @@ uninstall-hook:
+ 	done
+ #
+ #       Remove hplip.conf and hplip start/stop script.
+-	rm -f $(DESTDIR)/etc/hp/$(PACKAGE).conf
+-	rm -f $(DESTDIR)/etc/init.d/$(PACKAGE)
++	rm -f $(DESTDIR)/$(sysconfdir)/hp/$(PACKAGE).conf
++	rm -f $(DESTDIR)/$(sysconfdir)/init.d/$(PACKAGE)
+ #
+ #       Remove fax support.
+ 	rm -f $(DESTDIR)$(hpfaxdir)/hpfax 
