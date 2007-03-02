@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for SeaMonkey by Jan Tomka, on Wed Feb 28 10:28:12 CET 2007
+# Recipe for version 1.1.1 by Jan Tomka, on Wed Feb 28 10:28:12 CET 2007
+compile_version=1.8.2
+url="http://releases.mozilla.org/pub/mozilla.org/seamonkey/releases/1.1.1/seamonkey-1.1.1.source.tar.bz2"
+file_size=34995363
+file_md5=4409ad62738d403719a62d00c0276e08
+dir='mozilla'
+recipe_type=configure
+configure_options=( "--enable-application=suite" )
