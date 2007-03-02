@@ -1,0 +1,15 @@
+--- espgs-8.15.3/pstoraster/cups.mak.orig	2007-02-27 12:23:09.000000000 +0000
++++ espgs-8.15.3/pstoraster/cups.mak	2007-02-27 12:27:17.000000000 +0000
+@@ -24,9 +24,9 @@
+ 
+ cups_=	$(GLOBJ)gdevcups.$(OBJ)
+ 
+-CUPSSERVER= $(install_prefix)`cups-config --serverbin`
+-CUPSCONFIG= $(install_prefix)`cups-config --serverroot`
+-CUPSDATA= $(install_prefix)`cups-config --datadir`
++CUPSSERVER= $(datadir)/cups
++CUPSCONFIG= $(sysconfdir)/cups
++CUPSDATA= $(datadir)/cups
+ 
+ $(DD)cups.dev:	$(cups_) $(GLD)page.dev
+ 	$(ADDMOD) $(DD)cups -lib cupsimage -lib cups
