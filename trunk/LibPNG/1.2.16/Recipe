@@ -6,7 +6,6 @@ compile_version=1.8.2
 recipe_type=configure
 
 pre_link() {
-    Quiet pushd $target/include
-    ln -s libpng12 libpng
-    Quiet popd
+    ln -sf libpng12 $target/include/libpng
+    ln -sf libpng.so $target/lib/libpng.so.0
 }
