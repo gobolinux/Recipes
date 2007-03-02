@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for Gutenprint by Lucas C. Villa Real, on Fri Feb 23 17:17:16 GMT 2007
+# Recipe for version 5.0.0 by Lucas C. Villa Real, on Fri Feb 23 17:17:16 GMT 2007
+compile_version=1.8.2
+url="$httpSourceforge/gimp-print/gutenprint-5.0.0.tar.bz2"
+file_size=4612717
+file_md5=ede8acbd1e94c9d4fd366fb37e335bfb
+recipe_type=configure
+
+install_variables=(
+    cups_conf_datadir="$target/share/cups"
+    cups_conf_serverbin="$target/share/cups"
+    cups_conf_serverroot="$settings_target"
+    gimp_plug_indir="$target/lib/gimp/1.2/plug-ins"
+    gimp2_plug_indir="$target/lib/gimp/2.0/plug-ins"
+)
