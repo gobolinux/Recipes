@@ -1,0 +1,21 @@
+# Recipe (MakeRecipe) for Foomatic-DB by Lucas C. Villa Real, on Mon Feb 26 14:50:06 GMT 2007
+# Recipe for version 3.0_Devel by Lucas C. Villa Real, on Mon Feb 26 14:50:06 GMT 2007
+compile_version=1.8.2
+url="http://www.linuxprinting.org/download/foomatic/foomatic-db-3.0-current.tar.gz"
+uncompress=no
+dir='foomatic-db-3.0-current'
+recipe_type=configure
+part_of=Foomatic
+
+install_variables=(
+    CUPS_PPDS=$target/Shared
+    LIBDIR=$target/Shared/foomatic
+)
+
+pre_build() {
+    # this is the only way to handle tarballs with unstable dirnames after uncompressed
+    tar zxf foomatic-db-3.0-current.tar.gz
+    mv foomatic-db-*/* .
+    rmdir * 2> /dev/null
+    rm -f foomatic-db-3.0-current.tar.gz
+}
