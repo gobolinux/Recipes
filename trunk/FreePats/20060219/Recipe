@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for FreePats by Benjamin Bruheim, on Wed Feb 28 22:50:44 CET 2007
+# Recipe for version 20060219 by Benjamin Bruheim, on Wed Feb 28 22:50:44 CET 2007
+compile_version=1.8.2
+url="http://freepats.opensrc.org/freepats-20060219.tar.bz2"
+file_size=25791733
+file_md5=b947806304bc559a644a2c06deda8404
+dir='freepats'
+recipe_type=manifest
+manifest=(
+   "Drum_000:Shared/freepats/Drum_000"
+   "Tone_000:Shared/freepats/Tone_000"
+   "crude.cfg:Shared/freepats"
+   "freepats.cfg:Shared/freepats"
+   )
