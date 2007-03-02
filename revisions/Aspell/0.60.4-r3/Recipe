@@ -1,0 +1,10 @@
+# Recipe for version 0.60.4 rev 3 by Jonas Karlsson, on Web Feb 28 13:28:10 CET 2007
+compile_version=1.8.2
+url="$ftpGnu/aspell/aspell-0.60.4.tar.gz"
+file_size=1676825
+file_md5=4f1737e726d66476b9c7388831305510
+recipe_type=configure
+configure_options=(
+   "--enable-pkgdatadir=${target}/lib/aspell"
+   "--enable-pkglibdir=${target}/lib/aspell"
+)
