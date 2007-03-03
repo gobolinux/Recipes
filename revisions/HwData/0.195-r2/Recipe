@@ -1,0 +1,27 @@
+# Recipe (MakeRecipe) for HwData by Lucas C. Villa Real, on Mon Feb 26 00:39:49 BRT 2007
+# Recipe for version 0.195 by Lucas C. Villa Real, on Mon Feb 26 00:39:49 BRT 2007
+compile_version=1.8.2
+url="http://download.fedora.redhat.com/pub/fedora/linux/core/development/source/SRPMS/hwdata-0.195-1.src.rpm"
+mirror_url="http://ftp.idilis.ro/mirrors/fedora/core/development/source/SRPMS/hwdata-0.195-1.src.rpm"
+file_size=279633
+file_md5=899576e8cf7626773131f50f2010840a
+uncompress=no
+dir='hwdata-0.195'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+    "prefix=$target"
+    "sysconfdir=$settings_target"
+)
+
+pre_build() {
+    # Little and ugly trick to handle source RPMs.
+    cd $dir
+    aunpack hwdata-0.195-1.src.rpm
+    mv */* .
+    rmdir * 2> /dev/null
+    rm -f *.spec *.rpm
+    tar zxf hwdata-0.195.tar.gz
+    mv */* .
+    rmdir * 2> /dev/null
+}
