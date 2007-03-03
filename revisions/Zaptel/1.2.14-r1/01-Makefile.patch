@@ -1,0 +1,80 @@
+--- zaptel-1.2.14_orig/Makefile	2007-02-05 22:54:40.000000000 +0100
++++ zaptel-1.2.14/Makefile	2007-03-02 17:51:46.000000000 +0100
+@@ -34,7 +34,7 @@
+ endif
+ 
+ ifeq ($(BUILDVER),linux26)
+-  ifneq (,$(wildcard $(INSTALL_PREFIX)/etc/udev/rules.d))
++  ifneq (,$(wildcard /etc/udev/rules.d))
+     DYNFS=yes
+     UDEVRULES=yes
+   endif
+@@ -110,9 +110,9 @@
+ 
+ KFLAGS+=-DSTANDALONE_ZAPATA
+ KMAKE:= $(MAKE) -C $(KSRC) SUBDIRS=$(PWD)
+-KMAKE_INST:= $(KMAKE) INSTALL_MOD_PATH=$(INSTALL_PREFIX) INSTALL_MOD_DIR=misc modules_install
++KMAKE_INST:= $(KMAKE) INSTALL_MOD_DIR=misc modules_install
+ 
+-CONFIG_FILE:=$(INSTALL_PREFIX)/etc/zaptel.conf
++CONFIG_FILE:=$(INSTALL_PREFIX)/Resources/Defaults/Settings/zaptel.conf
+ CFLAGS+=-DZAPTEL_CONFIG=\"$(CONFIG_FILE)\"
+ 
+ ifeq ($(BUILDVER),linux24)
+@@ -328,7 +328,8 @@
+ 	done
+ else # DYNFS
+   ifdef UDEVRULES
+-	build_tools/genudevrules > $(INSTALL_PREFIX)/etc/udev/rules.d/zaptel.rules
++	mkdir -p $(INSTALL_PREFIX)/Resources/Defaults/Settings/udev/rules.d
++	build_tools/genudevrules > $(INSTALL_PREFIX)/Resources/Defaults/Settings/udev/rules.d/zaptel.rules
+   else # !UDEVRULES
+ 	@echo "**** Dynamic filesystem detected -- not creating device nodes"
+   endif
+@@ -366,19 +367,21 @@
+ 		rm -f $(INSTALL_PREFIX)/lib/modules/$(KVERS)/misc/wcfxsusb.o; \
+ 	fi; \
+ 	rm -f $(INSTALL_PREFIX)/lib/modules/$(KVERS)/misc/wcfxs.o
+-	install -D -m 755 $(LIBTONEZONE_SO) $(INSTALL_PREFIX)/usr/lib/$(LIBTONEZONE_SO).$(LIBTONEZONE_SO_MAJOR_VER).$(LIBTONEZONE_SO_MINOR_VER)
++	install -D -m 755 $(LIBTONEZONE_SO) $(INSTALL_PREFIX)/lib/$(LIBTONEZONE_SO).$(LIBTONEZONE_SO_MAJOR_VER).$(LIBTONEZONE_SO_MINOR_VER)
+ 	[ `id -u` = 0 ] && /sbin/ldconfig || :
+-	rm -f $(INSTALL_PREFIX)/usr/lib/$(LIBTONEZONE_SO)
++	rm -f $(INSTALL_PREFIX)/lib/$(LIBTONEZONE_SO)
+ 	ln -sf $(LIBTONEZONE_SO).$(LIBTONEZONE_SO_MAJOR_VER).$(LIBTONEZONE_SO_MINOR_VER) \
+-		$(INSTALL_PREFIX)/usr/lib/$(LIBTONEZONE_SO).$(LIBTONEZONE_SO_MAJOR_VER)
++		$(INSTALL_PREFIX)/lib/$(LIBTONEZONE_SO).$(LIBTONEZONE_SO_MAJOR_VER)
+ 	ln -sf $(LIBTONEZONE_SO).$(LIBTONEZONE_SO_MAJOR_VER).$(LIBTONEZONE_SO_MINOR_VER) \
+-		$(INSTALL_PREFIX)/usr/lib/$(LIBTONEZONE_SO)
++		$(INSTALL_PREFIX)/lib/$(LIBTONEZONE_SO)
+ 	if [ -x /usr/sbin/sestatus ] && (/usr/sbin/sestatus | grep "SELinux status:" | grep -q "enabled") ; then /sbin/restorecon -v $(INSTALL_PREFIX)/usr/lib/$(LIBTONEZONE_SO); fi
+-	install -D -m 644 zaptel.h $(INSTALL_PREFIX)/usr/include/linux/zaptel.h
+-	install -D -m 644 torisa.h $(INSTALL_PREFIX)/usr/include/linux/torisa.h
+-	install -D -m 644 tonezone.h $(INSTALL_PREFIX)/usr/include/tonezone.h
+-	install -m 644 doc/ztcfg.8 $(INSTALL_PREFIX)/usr/share/man/man8
+-	install -m 644 doc/zttool.8 $(INSTALL_PREFIX)/usr/share/man/man8
++	mkdir -p $(INSTALL_PREFIX)/include/linux/
++	install -D -m 644 zaptel.h $(INSTALL_PREFIX)/include/linux/zaptel.h
++	install -D -m 644 torisa.h $(INSTALL_PREFIX)/include/linux/torisa.h
++	install -D -m 644 tonezone.h $(INSTALL_PREFIX)/include/tonezone.h
++	mkdir -p $(INSTALL_PREFIX)/man/man8/
++	install -m 644 doc/ztcfg.8 $(INSTALL_PREFIX)/man/man8
++	install -m 644 doc/zttool.8 $(INSTALL_PREFIX)/man/man8
+ 	[ `id -u` = 0 ] && /sbin/depmod -a $(KVERS) || :
+ 	[ -f $(CONFIG_FILE) ] || install -D -m 644 zaptel.conf.sample $(CONFIG_FILE)
+ 	build_tools/genmodconf $(BUILDVER) "$(INSTALL_PREFIX)" "$(filter-out zaptel ztdummy zttranscode wctc4xxp,$(MODULES)) $(MODULE_ALIASES)"
+@@ -390,11 +393,11 @@
+ 
+ firmware:
+ ifeq ($(HOTPLUG_FIRMWARE),yes)
+-	if [ -d $(INSTALL_PREFIX)/usr/lib/hotplug/firmware ]; then \
+-		install -m 644 wct4xxp/*.ima $(INSTALL_PREFIX)/usr/lib/hotplug/firmware; \
+-		install -m 644 wctc4xxp/*.bin $(INSTALL_PREFIX)/usr/lib/hotplug/firmware; \
++	if [ -d $(goboLibraries)/hotplug/firmware ]; then \
++		install -m 644 wct4xxp/*.ima $(INSTALL_PREFIX)/lib/hotplug/firmware; \
++		install -m 644 wctc4xxp/*.bin $(INSTALL_PREFIX)/lib/hotplug/firmware; \
+ 	fi
+-	if [ -d $(INSTALL_PREFIX)/lib/firmware ]; then \
++	if [ -d $(goboLibraries)/lib/firmware ]; then \
+ 		install -m 644 wct4xxp/*.ima $(INSTALL_PREFIX)/lib/firmware; \
+ 		install -m 644 wctc4xxp/*.bin $(INSTALL_PREFIX)/lib/firmware; \
+ 	fi
