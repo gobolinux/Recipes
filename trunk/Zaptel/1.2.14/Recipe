@@ -1,0 +1,18 @@
+# Recipe (MakeRecipe) for Zaptel by Aitor Pérez Iturri, on lun feb 26 21:42:55 CET 2007
+# Recipe for version 1.2.14 by Aitor Pérez Iturri, on lun feb 26 21:42:55 CET 2007
+compile_version=1.8.2
+url="http://ftp.digium.com/pub/zaptel/zaptel-1.2.14.tar.gz"
+mirror_url="http://ftp.digium.com/pub/zaptel/releases/zaptel-1.2.14.tar.gz"
+file_size=3014268
+file_md5=50c9b2176bb40b86266cc90374c6c589
+recipe_type=makefile
+makefile='Makefile'
+
+environment=(
+	INSTALL_PREFIX=$target
+	DESTDIR=$target
+)
+
+unmanaged_files=(
+	$goboModules
+)
