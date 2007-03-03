@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for SMSTools by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jul 1 03:32:19 BRT 2006
+# Recipe for version 2.2.3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jul 1 03:32:19 BRT 2006
+compile_version=1.8.0
+url="http://www.meinemullemaus.de/software/smstools/packages/smstools-2.2.3.tar.gz"
+file_size=168429
+file_md5=5afd8059452a3e8ee793b71b7c639c33
+dir='smstools'
+recipe_type=makefile
+makefile='Makefile'
