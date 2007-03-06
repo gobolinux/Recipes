@@ -1,8 +1,8 @@
 url=http://ftp.gnu.org/gnu/aspell/dict/pt/aspell-pt-0.50-2.tar.bz2
-compile_version=1.8.0
+compile_version=1.8.2
 recipe_type=configure
 install_variables=(
    "dictdir=$target/lib/aspell"
-   "datadir=$target/share/aspell"
+   "datadir=$target/lib/aspell"
 )
 
