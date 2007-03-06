@@ -3,6 +3,6 @@ compile_version=1.8.2
 recipe_type=configure
 install_variables=(
    "dictdir=$target/lib/aspell"
-   "datadir=$target/share/aspell"
+   "datadir=$target/lib/aspell"
 )
 
