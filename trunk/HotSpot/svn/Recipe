@@ -1,0 +1,32 @@
+# Recipe (MakeRecipe) for HotSpot by Lucas C. Villa Real, on Sun Feb 11 12:23:50 BRST 2007
+# Recipe for version svn by Lucas C. Villa Real, on Sun Feb 11 12:23:50 BRST 2007
+compile_version=1.8.2
+svn="https://openjdk.dev.java.net/svn/openjdk/hotspot/trunk"
+svn_username=guest
+svn_password=
+dir=hotspot
+recipe_type=makefile
+do_install=no
+
+make_variables=(
+    ALT_BOOTDIR=/
+    JAVA_HOME=$hotspot_path
+    ALT_JDK_IMPORT_PATH=$hotspot_path
+    FULL_VERSION="hotspot-`date +%Y%m%d`"
+)
+
+environment=(
+    ${make_variables[@]}
+)
+
+pre_build() {
+    # Little hack to preserve svn dir, while ensuring that 'make' cmd
+    # is run inside 'make' subdir.
+    cd make
+}
+
+pre_install() {
+    # HotSpot's Makefile doesn't have an install target, so here we go
+    cd $dir
+    cp -a build/linux/jdk-linux-i586/* $target
+}
