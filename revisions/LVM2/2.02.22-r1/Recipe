@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for LVM2 by Aitor Pérez Iturri, on dom mar 4 14:05:20 CET 2007
+# Recipe for version 2.02.22 by Aitor Pérez Iturri, on dom mar 4 14:05:20 CET 2007
+compile_version=1.8.2
+url="ftp://sources.redhat.com/pub/lvm2/LVM2.2.02.22.tgz"
+file_size=509240
+file_md5=2dd9dad43bde244a4ff0e406b5cfb8c5
+recipe_type=configure
+configure_options=(
+	"--disable-realtime"
+)
