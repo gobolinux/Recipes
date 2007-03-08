@@ -37,10 +37,10 @@ BUS=="ide",	KERNEL=="hd[a-z]", ACTION=="add", IMPORT="/sbin/cdrom_id --export $t
 BUS=="scsi",	KERNEL=="sr[0-9]*", ACTION=="add", IMPORT="/sbin/cdrom_id --export $tempnode"
 BUS=="scsi",	KERNEL=="scd[a-z]", ACTION=="add", IMPORT="/sbin/cdrom_id --export $tempnode"
 BUS=="scsi",	KERNEL=="sg[0-9]*", ACTION=="add", DRIVER=="sr", GROUP="cdrom"
-ENV{ID_CDROM}=="?*",		SYMLINK+="cdrom%e", GROUP="cdrom", MODE="0666"
-ENV{ID_CDROM_CD_RW}=="?*",	SYMLINK+="cdrw%e", GROUP="cdrecord", MODE="0666"
-ENV{ID_CDROM_DVD}=="?*",	SYMLINK+="dvd%e", GROUP="cdrecord", MODE="0666"
-ENV{ID_CDROM_DVD_R}=="?*",	SYMLINK+="dvdrw%e", GROUP="cdrecord", MODE="0666"
+ENV{ID_CDROM}=="?*",		SYMLINK+="cdrom%e", GROUP="cdrom", MODE="0664"
+ENV{ID_CDROM_CD_RW}=="?*",	SYMLINK+="cdrw%e", GROUP="cdrecord", MODE="0664"
+ENV{ID_CDROM_DVD}=="?*",	SYMLINK+="dvd%e", GROUP="cdrecord", MODE="0664"
+ENV{ID_CDROM_DVD_R}=="?*",	SYMLINK+="dvdrw%e", GROUP="cdrecord", MODE="0664"
 
 # disk devices
 KERNEL=="sd*",		NAME="%k", GROUP="disk"
@@ -238,8 +238,8 @@ KERNEL=="kbd",		NAME="%k", MODE="0664"
 KERNEL=="sonypi",	NAME="%k", MODE="0666"
 
 # packet devices
-KERNEL=="pktcdvd",		NAME="pktcdvd/control", GROUP="cdrecord", MODE="0660"
-KERNEL=="pktcdvd[0-9]*",	NAME="pktcdvd/pktcdvd%n", GROUP="cdrecord", MODE="0660"
+KERNEL=="pktcdvd",		NAME="pktcdvd/control", GROUP="cdrecord", MODE="0664"
+KERNEL=="pktcdvd[0-9]*",	NAME="pktcdvd/pktcdvd%n", GROUP="cdrecord", MODE="0664"
 
 # infiniband devices
 KERNEL=="umad*",	NAME="infiniband/%k"
