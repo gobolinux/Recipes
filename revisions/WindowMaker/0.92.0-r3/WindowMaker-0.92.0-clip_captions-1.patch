@@ -1,0 +1,294 @@
+Submitted By: Oliver Brakmann <obrakmann AT gmx DOT net>
+Date: 2004-10-27
+Initial Package Version: Windowmaker 0.92.0
+Origin: http://www.jmknoble.net/WindowMaker/patches/#clip-captions
+        Adjusted for 0.92.0 by Oliver Brakmann <obrakmann AT gmx DOT net>
+Description: Aesthetical change to the Windowmaker clip. The workspace number
+             is now in the lower right corner, the workspace name in the upper
+             left. The workspace name will be truncated using an ellipsis if
+             it is too long. Fixes inconsistent popup 'balloon'. The clip now
+             uses the same balloon as other appicons/miniwindows/etc.
+ 
+diff -Naur WindowMaker-0.92.0-orig/src/balloon.c WindowMaker-0.92.0/src/balloon.c
+--- WindowMaker-0.92.0-orig/src/balloon.c	2004-10-26 18:34:28.000000000 +0200
++++ WindowMaker-0.92.0/src/balloon.c	2004-10-26 21:04:20.000000000 +0200
+@@ -528,6 +528,30 @@
+ 
+ 
+ 
++#ifdef PRETTY_CLIP_CAPTIONS
++static void
++clipIconBalloon(WObjDescriptor *object)
++{
++    WAppIcon *aicon = (WAppIcon*)object->parent;
++    WScreen *scr = aicon->icon->core->screen_ptr;
++    int workspace = scr->current_workspace;
++
++    scr->balloon->text = wstrdup(scr->workspaces[workspace]->name);
++    scr->balloon->h = aicon->icon->core->height;
++    scr->balloon->objectWindow = aicon->icon->core->window;
++    if (scr->balloon->prevType != 0) {
++	XUnmapWindow(dpy, scr->balloon->window);
++	showBalloon(scr);
++    } else {
++	scr->balloon->timer = WMAddTimerHandler(BALLOON_DELAY,
++						(WMCallback*)showBalloon, scr);
++    }
++    scr->flags.clip_balloon_mapped = 1;
++}
++#endif /* PRETTY_CLIP_CAPTIONS */
++
++
++
+ void
+ wBalloonInitialize(WScreen *scr)
+ {
+@@ -574,6 +598,10 @@
+         wfree(scr->balloon->text);
+     scr->balloon->text = NULL;
+ 
++#ifdef PRETTY_CLIP_CAPTIONS
++    scr->flags.clip_balloon_mapped = 0;
++#endif
++    
+     if (!object) {
+         wBalloonHide(scr);
+         balloon->ignoreTimer = 0;
+@@ -587,8 +615,15 @@
+         break;
+ 
+     case WCLASS_DOCK_ICON:
++#ifndef PRETTY_CLIP_CAPTIONS
+         if (object->parent != scr->clip_icon
+             && wPreferences.appicon_balloon)
++#else
++        if (wPreferences.appicon_balloon)
++          if (object->parent == scr->clip_icon)
++            clipIconBalloon(object);
++          else
++#endif
+             appiconBalloon(object);
+         else
+             wBalloonHide(scr);
+@@ -612,6 +647,21 @@
+ 
+ 
+ 
++#ifdef PRETTY_CLIP_CAPTIONS
++void wBalloonChangeText(WScreen *scr, char *text)
++{
++   if (scr->balloon->text) {
++       wfree(scr->balloon->text);
++   }
++   scr->balloon->text = wstrdup(text);
++   if (scr->balloon->mapped) {
++       showBalloon(scr);
++   }
++}
++#endif /* PRETTY_CLIP_CAPTIONS */
++
++
++
+ void
+ wBalloonHide(WScreen *scr)
+ {
+@@ -623,6 +673,9 @@
+             WMDeleteTimerHandler(scr->balloon->timer);
+             scr->balloon->timer = NULL;
+         }
++#ifdef PRETTY_CLIP_CAPTIONS
++        scr->flags.clip_balloon_mapped = 0;
++#endif
+         scr->balloon->prevType = 0;
+     }
+ }
+diff -Naur WindowMaker-0.92.0-orig/src/balloon.h WindowMaker-0.92.0/src/balloon.h
+--- WindowMaker-0.92.0-orig/src/balloon.h	2004-10-26 18:34:28.000000000 +0200
++++ WindowMaker-0.92.0/src/balloon.h	2004-10-26 20:50:53.000000000 +0200
+@@ -26,6 +26,10 @@
+ 
+ void wBalloonEnteredObject(WScreen *scr, WObjDescriptor *object);
+ 
++#ifdef PRETTY_CLIP_CAPTIONS
++void wBalloonChangeText(WScreen *scr, char *text);
++#endif
++
+ void wBalloonHide(WScreen *scr);
+ 
+ #endif
+diff -Naur WindowMaker-0.92.0-orig/src/dock.c WindowMaker-0.92.0/src/dock.c
+--- WindowMaker-0.92.0-orig/src/dock.c	2004-10-26 18:34:28.000000000 +0200
++++ WindowMaker-0.92.0/src/dock.c	2004-10-26 21:16:34.000000000 +0200
+@@ -136,7 +136,9 @@
+ static void clipAutoLower(void *cdata);
+ static void clipAutoRaise(void *cdata);
+ 
++#ifndef PRETTY_CLIP_CAPTIONS
+ static void showClipBalloon(WDock *dock, int workspace);
++#endif /* PRETTY_CLIP_CAPTIONS */
+ 
+ 
+ 
+@@ -1265,6 +1267,10 @@
+ }
+ 
+ 
++#ifdef PRETTY_CLIP_CAPTIONS
++#define CLIP_CAPTION_SPACE_X	(4)
++#define CLIP_CAPTION_SPACE_Y	(3)
++#endif /* PRETTY_CLIP_CAPTIONS */
+ void
+ wClipIconPaint(WAppIcon *aicon)
+ {
+@@ -1275,6 +1281,9 @@
+     int length, nlength;
+     char *ws_name, ws_number[10];
+     int ty, tx;
++#ifdef PRETTY_CLIP_CAPTIONS
++    char *shrunk_ws_name;
++#endif /* PRETTY_CLIP_CAPTIONS */
+ 
+     wIconPaint(aicon->icon);
+ 
+@@ -1289,6 +1298,7 @@
+     else
+         color = scr->clip_title_color[CLIP_COLLAPSED];
+ 
++#ifndef PRETTY_CLIP_CAPTIONS
+     ty = ICON_SIZE - WMFontHeight(scr->clip_title_font) - 3;
+ 
+     tx = CLIP_BUTTON_SIZE*ICON_SIZE/64;
+@@ -1297,14 +1307,35 @@
+                  ty, ws_name, length);
+     /*WMDrawString(scr->wmscreen, win, color, scr->clip_title_font, 4,
+      2, ws_name, length);*/
+-
++#else /* PRETTY_CLIP_CAPTIONS */
++    tx = CLIP_CAPTION_SPACE_X;
++    ty = CLIP_CAPTION_SPACE_Y;
++    shrunk_ws_name = ShrinkString(scr->clip_title_font, ws_name, ICON_SIZE -
++                                 (CLIP_BUTTON_SIZE * ICON_SIZE/64));
++    length = strlen(shrunk_ws_name);
++    WMDrawString(scr->wmscreen, win, color, scr->clip_title_font, tx,
++                ty, shrunk_ws_name, length);
++    wfree(shrunk_ws_name);
++#endif /* PRETTY_CLIP_CAPTIONS */
++    wfree(ws_name);
++ 
++#ifndef PRETTY_CLIP_CAPTIONS
+     tx = (ICON_SIZE/2 - WMWidthOfString(scr->clip_title_font, ws_number,
+                                         nlength))/2;
+ 
+     WMDrawString(scr->wmscreen, win, color, scr->clip_title_font, tx,
+                  2, ws_number, nlength);
+-
+-    wfree(ws_name);
++#else /* PRETTY_CLIP_CAPTIONS */
++    tx = (ICON_SIZE - 
++        WMWidthOfString(scr->clip_title_font, ws_number, nlength) -
++        CLIP_CAPTION_SPACE_X);
++
++    ty = (ICON_SIZE - WMFontHeight(scr->clip_title_font) -
++        CLIP_CAPTION_SPACE_Y - 1);
++
++    WMDrawString(scr->wmscreen, win, color, scr->clip_title_font, tx, 
++              ty, ws_number, nlength);
++#endif /* PRETTY_CLIP_CAPTIONS */
+ 
+     if (aicon->launching) {
+         XFillRectangle(dpy, aicon->icon->core->window, scr->stipple_gc,
+@@ -1313,6 +1344,10 @@
+     paintClipButtons(aicon, aicon->dock->lclip_button_pushed,
+                      aicon->dock->rclip_button_pushed);
+ }
++#ifdef PRETTY_CLIP_CAPTIONS
++#undef CLIP_CAPTION_SPACE_X
++#undef CLIP_CAPTION_SPACE_Y
++#endif /* PRETTY_CLIP_CAPTIONS */
+ 
+ 
+ static void
+@@ -3291,7 +3326,11 @@
+             wDockShowIcons(scr->workspaces[workspace]->clip);
+         }
+         if (scr->flags.clip_balloon_mapped)
++#ifdef PRETTY_CLIP_CAPTIONS
++            wBalloonChangeText(scr, scr->workspaces[workspace]->name);
++#else /* !PRETTY_CLIP_CAPTIONS */
+             showClipBalloon(scr->clip_icon->dock, workspace);
++#endif /* PRETTY_CLIP_CAPTIONS */
+     }
+ }
+ 
+@@ -4090,10 +4129,12 @@
+         }
+     }
+ 
++#ifndef PRETTY_CLIP_CAPTIONS
+     if (dock->type == WM_CLIP && scr->flags.clip_balloon_mapped) {
+         XUnmapWindow(dpy, scr->clip_balloon);
+         scr->flags.clip_balloon_mapped = 0;
+     }
++#endif /* PRETTY_CLIP_CAPTIONS */
+ 
+ #ifdef DEBUG
+     puts("handling dock");
+@@ -4166,6 +4207,7 @@
+ }
+ 
+ 
++#ifndef PRETTY_CLIP_CAPTIONS
+ static void
+ showClipBalloon(WDock *dock, int workspace)
+ {
+@@ -4207,6 +4249,7 @@
+                  scr->clip_title_font,
+                  0, 0, text, strlen(text));
+ }
++#endif /* PRETTY_CLIP_CAPTIONS */
+ 
+ 
+ static void
+@@ -4252,6 +4295,7 @@
+                                                     (void *)dock);
+     }
+ 
++#ifndef PRETTY_CLIP_CAPTIONS
+     if (btn->xindex == 0 && btn->yindex == 0)
+         showClipBalloon(dock, dock->screen_ptr->current_workspace);
+     else {
+@@ -4260,6 +4304,7 @@
+             dock->screen_ptr->flags.clip_balloon_mapped = 0;
+         }
+     }
++#endif /* PRETTY_CLIP_CAPTIONS */
+ }
+ 
+ 
+@@ -4383,9 +4428,11 @@
+     if (dock->auto_raise_lower)
+         wDockRaise(dock);
+ 
++#ifndef PRETTY_CLIP_CAPTIONS
+     if (dock->screen_ptr->flags.clip_balloon_mapped) {
+         showClipBalloon(dock, dock->screen_ptr->current_workspace);
+     }
++#endif /* PRETTY_CLIP_CAPTIONS */
+ 
+     dock->auto_raise_magic = NULL;
+ }
+diff -Naur WindowMaker-0.92.0-orig/src/wconfig.h.in WindowMaker-0.92.0/src/wconfig.h.in
+--- WindowMaker-0.92.0-orig/src/wconfig.h.in	2004-10-26 18:34:28.000000000 +0200
++++ WindowMaker-0.92.0/src/wconfig.h.in	2004-10-26 20:50:53.000000000 +0200
+@@ -89,6 +89,11 @@
+  */
+ #define SHAPED_BALLOON
+ 
++/* Define PRETTY_CLIP_CAPTIONS if you want a more aesthetically pleasing
++ * arrangement of the workspace name and number in the Clip tile.
++ */
++#define PRETTY_CLIP_CAPTIONS
++
+ 
+ /*
+  * Turn on a hack to make mouse and keyboard actions work even if
