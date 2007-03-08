@@ -1,5 +1,5 @@
-[Name] jack
-[Summary] A console cd-ripper written in python
+[Name] JACK
+[Summary] A low-latency audio server
 [License] GNU General Public License (GPL)
-[Description] Jack is a console based cd-ripper. It supports cdparanoia and cdda2wav (amongst others) for extraction and various MP3 and OGG/Vorbis encoders; you can even rip from a cdrdao-generated CD image. Emphasis is on failure-safeness and ease of use. Jack can encode multiple tracks at once, good on SMP systems. It can resume its work if interrupted and keeps an eye on available HD space. Freedb query is also supported, any time you like, even after encoding. Jack can try to query freedb for MP3s of which you do not know the CD anymore, provided you have a complete rip and know the track sequence.
-[Homepage] http://www.home.unix-ag.org/arne/jack/
+[Description] JACK is a low-latency audio server, written for POSIX conformant operating systems such as GNU/Linux and Apple's OS X. It can connect a number of different applications to an audio device, as well as allowing them to share audio between themselves. Its clients can run in their own processes (ie. as normal applications), or can they can run within the JACK server (ie. as a "plugin").
+[Homepage] http://jackaudio.org
