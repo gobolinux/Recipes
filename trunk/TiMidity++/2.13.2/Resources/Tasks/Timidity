@@ -15,20 +15,29 @@ PARAMS="-iAD -B2,8 -Os1l -s 44100"
 
 case "$1" in
 start)
-[ -d /proc/asound ] || {
-   echo "ALSA is not active, cannot start $DESC"
+   [ -d /proc/asound ] || {
+      echo "ALSA is not active, cannot start $DESC"
+      exit 0
+   }
+   
+   if ( test -e $PIDFILE ) then 
+      echo "$DESC already running, can't start. $PIDFILE exists."
+      exit 0
+   fi
+   $DAEMON $PARAMS > /dev/null
    exit 0
-}
-
-$DAEMON $PARAMS > /dev/null
-exit 0
 ;;
 stop)
-kill -0 `cat $PIDFILE`
+   if ! ( test -e $PIDFILE ) then 
+      echo "$DESC not running, can't stop. $PIDFILE doesn't exists."
+      exit 0
+   fi
+   kill `cat $PIDFILE`
+   rm -f $PIDFILE
 ;;
 restart|force-reload)
-$0 stop
-exec $0 start
+   $0 stop
+   exec $0 start
 ;;
 *)
 echo "Usage: $0 {start|stop|restart|force-reload}" >&2
