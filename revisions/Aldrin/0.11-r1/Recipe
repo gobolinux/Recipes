@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Aldrin by Benjamin Bruheim, on Mon Mar 5 06:41:08 CET 2007
+# Recipe for version 0.11 by Benjamin Bruheim, on Mon Mar 5 06:41:08 CET 2007
+compile_version=1.8.2
+url="$httpSourceforge/aldrin/aldrin-0.11.tar.bz2"
+file_size=3799476
+file_md5=1a40ea5852e34b69abc55e12d049aef8
+dir='aldrin-0.11'
+recipe_type=scons
+pre_build() {
+   GrepReplace "__file__" "os.path.realpath(__file__)" bin/aldrin
+}
