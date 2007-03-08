@@ -1,0 +1,11 @@
+# Recipe for version 5.1.1 by Lucas C. Villa Real, on Wed Mar 7 00:45:36 BRT 2007
+# by Leandro Motta Barros
+
+url=ftp://sunsite.unc.edu/pub/Linux/libs/graphics/t1lib-5.1.1.tar.gz
+file_size=1838914
+file_md5=b1b86b5014364d92ab3b7cee6c81e29d
+compile_version=1.8.2
+recipe_type=configure
+
+# Check this...
+build_target=without_doc
