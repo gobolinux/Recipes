@@ -1,0 +1,12 @@
+diff -aur dosbox-0.65-vanilla/src/dos/cdrom.h dosbox-0.65-lmb/src/dos/cdrom.h
+--- dosbox-0.65-vanilla/src/dos/cdrom.h	2005-11-25 22:30:38.000000000 -0200
++++ dosbox-0.65-lmb/src/dos/cdrom.h	2006-03-30 18:21:38.000000000 -0300
+@@ -17,7 +17,7 @@
+ #include "SDL_thread.h"
+ 
+ #if defined(C_SDL_SOUND)
+-#include "SDL_sound.h"
++#include "SDL/SDL_sound.h"
+ #endif
+ 
+ #define RAW_SECTOR_SIZE		2352
