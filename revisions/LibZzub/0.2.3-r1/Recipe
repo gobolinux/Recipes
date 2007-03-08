@@ -1,0 +1,17 @@
+# Recipe (MakeRecipe) for LibZzub by Benjamin Bruheim, on Mon Mar 5 04:06:15 CET 2007
+# Recipe for version 0.2.3 by Benjamin Bruheim, on Mon Mar 5 04:06:15 CET 2007
+compile_version=1.8.2
+url="$httpSourceforge/aldrin/libzzub-0.2.3.tar.bz2"
+file_size=3217916
+file_md5=330a8d5bb89d0eb81f18b44620655e96
+dir='libzzub-0.2.3'
+recipe_type=scons
+pre_build () {
+   scons configure
+}
+
+pre_link() {
+  pushd src/pyzzub &> /dev/null
+  python setup.py install --prefix $target
+  popd &> /dev/null
+}
