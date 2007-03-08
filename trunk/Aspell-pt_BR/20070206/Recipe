@@ -5,3 +5,7 @@ url="$ftpGnu/aspell/dict/pt_BR/aspell6-pt_BR-20070206.tar.bz2"
 file_size=834924
 file_md5=3cbed920adb94a093e7d49780da52a9f
 recipe_type=configure
+install_variables=(
+   "dictdir=$target/lib/aspell"
+   "datadir=$target/lib/aspell"
+)
