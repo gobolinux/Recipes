@@ -1,0 +1,9 @@
+# Recipe for version 1.3.0 by Lucas C. Villa Real, on Thu Mar 8 19:03:22 BRT 2007
+# Recipe (MakeRecipe) for Audacious by Andre Detsch <detsch@gobolinux.org>, on Qua Nov 30 15:01:27 BRST 2005
+compile_version=1.8.2
+recipe_type=meta
+
+include=(
+   "Audacious-Itself--1.3.0"
+   "Audacious-Plugins--1.3.0"
+)
