@@ -6,6 +6,7 @@ file_md5=acdab0b0467c55e10ed02d2afed80575
 recipe_type=configure
 
 configure_options=(
-    --disable-debug
-    --disable-verbose
+   "--disable-debug"
+   "--disable-verbose"
+   "--mandir=${target}/man"
 )
