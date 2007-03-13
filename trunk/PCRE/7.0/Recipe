@@ -1,7 +1,12 @@
 # Recipe for version 7.0 by Lucas C. Villa Real, on Thu Feb 22 01:29:14 BRT 2007
 # by Jeremy Vernon
-
-url="ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-7.0.tar.bz2"
 compile_version=1.8.2
+url="ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-7.0.tar.bz2"
+file_size=607541
+file_md5=b97e3bb84bd665e0fbb7a90344d65a43
 recipe_type=configure
 needs_safe_linking=yes
+
+configure_options=(
+   "--mandir=${target}/man"
+)
