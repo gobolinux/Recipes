@@ -5,3 +5,7 @@ url="ftp://ftp.gnupg.org/gcrypt/alpha/gnutls/gnutls-1.6.1.tar.bz2"
 file_size=4226536
 file_md5=fc3cc2509aa93e150cafd39619de7428
 recipe_type=configure
+
+configure_options=(
+   "--mandir=${target}/man"
+)
