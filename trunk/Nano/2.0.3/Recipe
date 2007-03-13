@@ -9,9 +9,10 @@ docs=(
 )
 
 configure_options=(
+   "--mandir=${target}/man"
 #  "--with-slang"
-  "--enable-color"
-  "--enable-multibuffer"
-  "--enable-nanorc"
+   "--enable-color"
+   "--enable-multibuffer"
+   "--enable-nanorc"
 #  "--enable-utf8"
 )
