@@ -1,5 +1,6 @@
-[Name] zlib
-[Summary] A compression/decompression Library
-[License] zlib/libpng License
-[Description] zlib is designed to be a free, general-purpose, legally unencumbered, lossless data-compression library for use on virtually any computer hardware and operating system. The zlib data format is itself portable across platforms. Unlike the LZW compression method used in Unix compress(1), the compression method currently used in zlib essentially never expands the data. (LZW can double or triple the file size in extreme cases.) zlib's memory footprint is also independent of the input data and can be reduced, if necessary, at some cost in compression.
-[Homepage] http://www.gzip.org/zlib/
+[Name]  zlib
+[Summary]  A data compression library
+[Description]  ftp://ds.internic.net/rfc/rfc1950.txt (zlib format), rfc1951.txt (deflate format) and rfc1952.txt (gzip format). These documents are also available in other formats from ftp://ftp.uu.net/graphics/png/documents/zlib/zdoc-index.html.
+[Suse Category]  System/Libraries
+[License]  Other License(s), see package
+[Homepage]  http://www.gzip.org/zlib/
