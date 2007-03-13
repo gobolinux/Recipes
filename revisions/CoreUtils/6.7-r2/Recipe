@@ -1,0 +1,15 @@
+# Recipe for version 6.7 by Andre Detsch <detsch@gobolinux.org>, on Sat Dec 16 23:14:02 BRST 2006
+url=$ftpGnu/coreutils/coreutils-6.7.tar.bz2
+file_size=5315342
+file_md5=a16465d0856cd011a1acc1c21040b7f4
+recipe_type=configure
+install_target="install install-root"
+needs_safe_linking=yes
+compile_version=1.8.2
+configure_options=(
+   "--mandir=${target}/man"
+)
+
+pre_link() {
+   mv $target/bin/install $target/bin/real_install
+}
