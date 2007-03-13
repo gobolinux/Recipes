@@ -2,15 +2,18 @@
 # Recipe for Module-Init-Tools 3.2-pre9 by Lucas Correia Villa Real
 compile_version=1.8.2
 url="http://www.kernel.org/pub/linux/utils/kernel/module-init-tools/module-init-tools-3.2.2.tar.bz2"
+file_size=169182
+file_md5=a1ad0a09d3231673f70d631f3f5040e9
 recipe_type=configure
 
 configure_options=(
 	"--with-moddir=$goboModules"
+    "--mandir=${target}/man"
 )
 build_variables=(
         "DOCBOOKTOMAN=''"
 )
 
 pre_build(){
-touch modprobe.conf.5
+   touch modprobe.conf.5
 }
