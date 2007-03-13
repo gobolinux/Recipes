@@ -1,4 +1,9 @@
 # Recipe for version 0.16.1 by Andre Detsch <detsch@gobolinux.org>, on Sat Dec 16 23:14:11 BRST 2006
-url="ftp://ftp.gnu.org/pub/gnu/gettext/gettext-0.16.1.tar.gz"
+compile_version=1.8.2
+url="$ftpGnu/gnu/gettext/gettext-0.16.1.tar.gz"
+file_size=8539634
+file_md5=3d9ad24301c6d6b17ec30704a13fe127
 recipe_type=configure
-compile_version=1.8.0
+configure_options=(
+   "--mandir=${target}/man"
+)
