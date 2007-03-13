@@ -1,0 +1,17 @@
+# Recipe for version 4.0.18.1 by Andre Detsch <detsch@gobolinux.org>, on Sat Oct 28 02:04:21 BRST 2006
+compile_version=1.8.2
+url=ftp://ftp.pld.org.pl/software/shadow/shadow-4.0.18.1.tar.bz2
+mirror_urls=(
+        http://www.mirrors.wiretapped.net/security/host-security/shadow/shadow-4.0.18.1.tar.bz2
+        http://www.mirrors.wiretapped.net/security/host-security/shadow/old/shadow-4.0.18.1.tar.bz2
+        ftp://ftp.pld.org.pl/software/shadow/old/shadow-4.0.18.1.tar.bz2
+)
+recipe_type=configure
+configure_options=(
+	"--enable-shared"
+	"--enable-static"
+	"--without-libpam"
+	"--without-selinux"
+    "--disable-shadowgrp"
+    "--mandir=${target}/man"
+)
