@@ -1,0 +1,11 @@
+--- ion-3ds-20070203_orig/etc/Makefile	2007-02-03 15:50:52.000000000 +0100
++++ ion-3ds-20070203/etc/Makefile	2007-03-09 18:07:20.000000000 +0100
+@@ -22,6 +22,5 @@
+ 
+ ######################################
+ 
+-_install: etc_install
+-	rm -f $(ETCDIR)/look.lua
+-	ln -s look_cleanviolet.lua $(ETCDIR)/look.lua
++SETTINGS_DIR=$(PREFIX)
++_install: 
