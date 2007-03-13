@@ -1,9 +1,14 @@
-# Recipe for version 1.4.8 by Andre Detsch <detsch@gobolinux.org>, on Sat Dec 16 23:14:57 BRST 2006
+# Recipe for version 1.4.8 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Nov 21 07:51:30 CET 2006
+compile_version=1.8.2
 url=$ftpGnu/m4/m4-1.4.8.tar.gz
+file_size=724448
+file_md5=66542b27c0ffa7513b52aed0ce5d784c
 recipe_type=configure
 configure_options=(
+   "--mandir=${target}/man"
    "--enable-changeword"
 )
+
 pre_build() {
    autoconf
 }
