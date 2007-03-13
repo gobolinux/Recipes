@@ -1,0 +1,10 @@
+# Recipe for version 2.10.4 by Jonas Karlsson <jonka750@student.liu.se>, on Wed Mar 7 10:11:08 CET 2007
+url="http://ftp.gnome.org/pub/GNOME/sources/pygtk/2.10/pygtk-2.10.4.tar.bz2"
+file_size=1888801
+file_md5=89afe242275a3fce57b4ffb5fadc5888
+compile_version=1.8.2
+recipe_type=configure
+configure_options=(
+   "--enable-numpy"
+   "--disable-docs"
+)
