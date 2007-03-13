@@ -12,5 +12,6 @@ configure_options=(
 	"--enable-static"
 	"--without-libpam"
 	"--without-selinux"
-        "--disable-shadowgrp"
+    "--disable-shadowgrp"
+    "--mandir=${target}/man"
 )
