@@ -1,0 +1,6 @@
+# Recipe (MakeRecipe) for XFBurn by Jonas Karlsson <jonka750@student.liu.se>, on Mon Mar 5 08:04:49 CET 2007
+# Recipe for version SVN by Jonas Karlsson <jonka750@student.liu.se>, on Mon Mar 5 08:04:49 CET 2007
+compile_version=1.8.2
+svn="http://svn.xfce.org/svn/xfce/xfburn/trunk"
+recipe_type=configure
+autogen_before_configure=yes
