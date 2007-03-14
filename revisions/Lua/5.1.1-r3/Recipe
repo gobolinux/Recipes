@@ -1,0 +1,13 @@
+# Recipe for version 5.1.1 by Aitor Pérez Iturri, on Fri Mar 9 19:20:51 CET 2007
+compile_version=1.8.2
+url=http://www.lua.org/ftp/lua-5.1.1.tar.gz
+file_size=207810
+file_md5=22f4f912f20802c11006fe9b84d5c461
+recipe_type=makefile
+build_target=linux
+docs=(
+	"doc/*.html"
+)
+make_variables=(
+   INSTALL_TOP=$target
+)
