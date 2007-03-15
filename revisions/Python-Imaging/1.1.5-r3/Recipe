@@ -1,0 +1,14 @@
+compile_version=1.8.2
+url="http://effbot.org/downloads/Imaging-1.1.5.tar.gz"
+file_size=429570
+file_md5=a64512e39469213ced0d091b9eba76c0
+recipe_type=python
+do_build=no
+pre_install(){
+    python setup.py build_ext -i
+    python selftest.py
+
+    # At least Sketch needs these header, not included in the standard installation.
+	mkdir -p $target/include
+	cp ./libImaging/Imaging.h ./libImaging/ImPlatform.h ./libImaging/ImConfig.h $target/include
+}
