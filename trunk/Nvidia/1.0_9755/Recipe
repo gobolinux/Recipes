@@ -1,0 +1,60 @@
+# Recipe (MakeRecipe) for Nvidia by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Mar 14 17:39:46 GMT 2007
+# Recipe for version 1.0-9755 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Mar 14 17:39:46 GMT 2007
+compile_version=1.8.2
+url=http://us.download.nvidia.com/XFree86/Linux-x86/1.0-9755/NVIDIA-Linux-x86-1.0-9755-pkg1.run
+file_size=14540439
+file_md5=594a47bd7e85343bd482775482cd1dce
+recipe_type=manifest
+uncompress=no
+
+symlink_options=(
+    "--conflict overwrite"
+)
+
+pre_install() {
+    # uncompress
+    sh $compileArchivesDir/$(basename $url) -x
+    Quiet mv NVIDIA-Linux-x86-1.0-9755-pkg1/* .
+    Quiet mv NVIDIA-Linux-x86-1.0-9755-pkg1/.* .
+    Quiet rmdir NVIDIA-Linux-x86-1.0-9755-pkg1
+	
+    # assignments
+    if [ -d $goboLibraries/xorg/modules ]
+    then XMODULEPATH=$target/lib/xorg/modules
+    else XMODULEPATH=$target/lib/modules
+    fi
+    KERNELDIR=$goboModules/$(uname -r)
+    export LD_LIBRARY_PATH=$target/lib:$LD_LIBRARY_PATH
+
+    # compile
+ 	./nvidia-installer                                      \
+ 	--expert                                                \
+ 	--no-network                                            \
+ 	--no-runlevel-check                                     \
+ 	--no-backup                                             \
+ 	--no-x-check                                            \
+ 	--no-rpms                                               \
+    --no-recursion                                          \
+ 	--no-precompiled-interface                              \
+ 	--opengl-prefix=$target                                 \
+ 	--opengl-libdir=lib                                     \
+ 	--utility-prefix=$target                                \
+ 	--xfree86-prefix=$target                                \
+ 	--x-prefix=$target                                      \
+ 	--x-library-path=$target/lib                            \
+ 	--documentation-prefix=$target                          \
+ 	--kernel-source-path=$KERNELDIR/build                   \
+ 	--kernel-install-path=$KERNELDIR/kernel/drivers/video   \
+ 	--proc-mount-point=$goboStatus                          \
+ 	--log-file-name=$goboVariable/log/nvidia-install.log    \
+ 	--x-module-path=$XMODULEPATH
+}
+
+post_install() {
+    Log_Terse "Now run 'modprobe nvidia' and edit $goboSettings/X11/xorg.conf so that the 'nvidia' driver is used."
+}
+
+unmanaged_files=(
+    $goboVariable/log/nvidia-install.log
+	$goboModules/$(uname -r)/kernel/drivers/video/nvidia.ko
+)
