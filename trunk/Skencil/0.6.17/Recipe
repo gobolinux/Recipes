@@ -1,4 +1,4 @@
-compile_version=1.8.0
+compile_version=1.8.2
 url="$httpSourceforge/sketch/skencil-0.6.17.tar.gz"
 file_size=1148628
 file_md5=03f0a57cf623bcd657a4b8887d3ebe0b
@@ -8,8 +8,7 @@ python_options=(
     "--prefix=$target"
 )
 pre_build(){
-    setup.py configure --prefix=$target --with-nls
+    setup.py configure --prefix=$target --with-nls \
+		--imaging-include=$python_imaging_path/include \
+		--tk-flags="-L$tk_path/lib -ltk8.5 -ltcl8.5"
 }
-# sandbox_option=(
-#     "--no-sandbox"
-# )
