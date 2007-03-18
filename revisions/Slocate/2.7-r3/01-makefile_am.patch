@@ -1,0 +1,30 @@
+--- slocate-2.7/Makefile.am.orig	2003-01-25 05:41:49.000000000 +0100
++++ slocate-2.7/Makefile.am	2005-04-09 00:57:02.000000000 +0200
+@@ -11,25 +11,13 @@
+ #CFLAGS = -g3
+ 
+ install-exec-hook:
+-if FREEBSD
+-	-/usr/sbin/pw groupadd slocate	
+-else
+-	-/usr/sbin/groupadd slocate
+-endif	
+ 	$(INSTALL) -d $(DESTDIR)$(datadir)/slocate
+-	chown root.slocate $(DESTDIR)$(bindir)/slocate
+-	chown root.slocate $(DESTDIR)$(datadir)/slocate
+ 	chmod 2755 $(DESTDIR)$(bindir)/slocate
+ 	chmod 0750 $(DESTDIR)$(datadir)/slocate
++	chown 0.slocate $(DESTDIR)$(bindir)/slocate
++	chown 0.slocate $(DESTDIR)$(datadir)/slocate
+ 	-ln -f -s $(DESTDIR)$(bindir)/slocate $(DESTDIR)$(bindir)/updatedb
+ 	-ln -f -s $(DESTDIR)$(bindir)/slocate $(DESTDIR)$(bindir)/locate
+-if CRON
+-	$(mkinstalldirs) $(DESTDIR)/etc/cron.daily/
+-	$(INSTALL) -m 755 slocate.cron $(DESTDIR)/etc/cron.daily/slocate
+-else
+-	./install-cron.sh
+-	
+-endif
+ 	$(INSTALL) -m 644 doc/slocate.1.linux.gz $(DESTDIR)$(mandir)/man1/slocate.1.gz
+ 	$(INSTALL) -m 644 doc/updatedb.1.gz $(DESTDIR)$(mandir)/man1/updatedb.1.gz
+ 	-ln -f -s $(DESTDIR)$(mandir)/man1/slocate.1.gz $(DESTDIR)$(mandir)/man1/locate.1.gz

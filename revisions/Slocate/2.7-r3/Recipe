@@ -1,0 +1,34 @@
+# Recipe (MakeRecipe) for Slocate by Jonas Karlsson <jonka750@student.liu.se>, on Fri Apr 8 17:26:15 CEST 2005
+# Recipe for version 2.7 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Apr 8 17:26:15 CEST 2005
+compile_version=1.8.2
+url="$httpSourceforge/slocate/slocate-2.7.tar.gz"
+file_size=87240
+file_md5=4872830642ea2ed5f9aff932720583c9
+recipe_type=configure
+
+configure_options=(
+   "--mandir=$target/man"
+)
+
+pre_build () {
+   # Add group slocate
+   if ! grep -q slocate $goboSettings/group
+   then
+      groupadd slocate
+   fi
+   export NOCONFIGURE="true"; autogen.sh
+}
+
+post_install() {
+   # Force links to executables (Steal them from FindUtils)
+   ln -s -f $target/bin/locate $goboExecutables/locate 
+   ln -s -f $target/bin/updatedb $goboExecutables/updatedb
+
+   # If crond is installed, make a cron job
+   ./install-cron.sh
+}
+
+unmanaged_files=(
+   $goboVariable/lib
+   $goboVariable/lib/slocate
+)
