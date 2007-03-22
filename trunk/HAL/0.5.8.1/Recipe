@@ -1,9 +1,18 @@
-# Recipe (MakeRecipe) for HAL by Carlo J. Calica <ccalica@gmail.com>, on Sat Oct 1 21:36:06 PDT 2005
+# Recipe (MakeRecipe) for HAL by Michael Homer <michael@e.geek.nz>, on Tue Mar 20 15:33 NZST 2007
 compile_version=1.8.2
 url="http://freedesktop.org/~david/dist/hal-0.5.8.1.tar.gz"
+file_md5=568d7ce9831c18a5e6e502abd6781257
+file_size=1752840
 recipe_type=configure
+environment=(
+    "LDFLAGS=-lz"
+)
 configure_options=(
     "--disable-policy-kit"
     "--disable-docbook-docs"
 )
-
+unmanaged_files=(
+    "/System/Variable/run/hald"
+    "/System/Variable/run/hald/hald-local"
+    "/System/Variable/run/hald/hald-runner"
+)
