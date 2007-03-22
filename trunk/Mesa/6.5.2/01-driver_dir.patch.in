@@ -1,0 +1,26 @@
+diff -Naur Mesa-6.5.2/configs/default Mesa-6.5.2.new/configs/default
+--- Mesa-6.5.2/configs/default	2006-10-22 19:20:22.000000000 +0200
++++ Mesa-6.5.2.new/configs/default	2007-03-20 23:35:38.000000000 +0100
+@@ -78,8 +78,8 @@
+ 
+ 
+ # Installation directories (for make install)
+-INSTALL_DIR = /usr/local
+-DRI_DRIVER_INSTALL_DIR = /usr/X11R6/lib/modules/dri
++INSTALL_DIR = @%Compile_target%@
++DRI_DRIVER_INSTALL_DIR = @%Compile_target%@/lib/modules/dri
+ 
+ # Where libGL will look for DRI hardware drivers
+ DRI_DRIVER_SEARCH_DIR = $(DRI_DRIVER_INSTALL_DIR)
+diff -Naur Mesa-6.5.2/src/glx/x11/dri_glx.c Mesa-6.5.2.new/src/glx/x11/dri_glx.c
+--- Mesa-6.5.2/src/glx/x11/dri_glx.c	2006-08-17 16:09:03.000000000 +0200
++++ Mesa-6.5.2.new/src/glx/x11/dri_glx.c	2007-03-20 23:37:40.000000000 +0100
+@@ -58,7 +58,7 @@
+ 
+ #ifndef DEFAULT_DRIVER_DIR
+ /* this is normally defined in Mesa/configs/default with DRI_DRIVER_SEARCH_PATH */
+-#define DEFAULT_DRIVER_DIR "/usr/X11R6/lib/modules/dri"
++#define DEFAULT_DRIVER_DIR "@%Compile_goboLibraries%@/modules/dri"
+ #endif
+ 
+ static __DRIdriver *Drivers = NULL;
