@@ -1,0 +1,10 @@
+# Recipe for version 3.3.6 by Jonas Karlsson <jonka750@student.liu.se>, on Wed Mar 14 22:38:38 CET 2007
+# Recipe (MakeRecipe) for KDevelop by Rui Andrada <shingonoide at gmail>, on Sat Nov 26 07:54:48 BRST 2005
+compile_version=1.8.2
+url="http://download.kde.org/stable/3.5.6/src/kdevelop-3.3.6.tar.bz2"
+file_size=8176547
+file_md5=0de7c7d82c176456f2adff48981f5d40
+recipe_type=configure
+configure_options=(
+   "--disable-libsuffix"
+)
