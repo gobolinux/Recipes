@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for HtDig by Jonas Karlsson <jonka750@student.liu.se>, on Tue Mar 20 14:33:46 CET 2007
+# Recipe for version 3.1.6 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Mar 20 14:33:46 CET 2007
+compile_version=1.8.2
+url="$httpSourceforge/htdig/htdig-3.1.6.tar.gz"
+file_size=2068675
+file_md5=7a2f20d8d6149efd8d119bb2ebf55f23
+recipe_type=configure
+configure_options=(
+   --with-cgi-bin-dir="${target}/doc/www/cgi-bin"
+   --with-image-dir="${target}/doc/www/htdoc/htdig"
+   --with-search-dir="${target}/doc/www/htdoc/htdig"
+)
+environment=(
+   "CXXFLAGS=-Wno-deprecated"
+   "CPPFLAGS=-Wno-deprecated"
+)
