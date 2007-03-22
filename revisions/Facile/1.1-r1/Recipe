@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for Facile by Jonas Karlsson <jonka750@student.liu.se>, on Tue Mar 20 14:15:53 CET 2007
+# Recipe for version 1.1 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Mar 20 14:15:53 CET 2007
+compile_version=1.8.2
+url="http://www.recherche.enac.fr/opti/facile/distrib/facile-1.1.tar.gz"
+file_size=96343
+file_md5=ab673e1fc0859a42bcb639a02c2d7e9e
+recipe_type=configure
+configure_options=(
+   --faciledir ${target}/lib/ocaml/facile
+)
+
+pre_install() {
+   mkdir -p ${target}/lib/ocaml
+}
