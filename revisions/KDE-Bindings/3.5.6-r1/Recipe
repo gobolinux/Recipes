@@ -1,0 +1,15 @@
+# Recipe for version 3.5.6 by Jonas Karlsson <jonka750@student.liu.se>, on Wed Mar 14 22:24:37 CET 2007
+# Recipe (MakeRecipe) for KDE-Bindings by Fernando Santos <kosh.linux at gmail.com>, on Wed Oct 19 08:47:32 BRST 2005
+compile_version=1.8.2
+url="http://download.kde.org/stable/3.5.6/src/kdebindings-3.5.6.tar.bz2"
+file_size=5421905
+file_md5=d26b5f54f062b765a949d66657c2ab3c
+recipe_type=configure
+configure_options=(
+   "--disable-libsuffix"
+)
+#install_variables=(
+#   PERLPREFIX=${target}
+#   SITEPREFIX=${target}
+#   PYTHONMODDIR=${target}/lib/python2.4
+#)

@@ -1,0 +1,22 @@
+--- kdebindings-3.5.6/python/Makefile.in	2007-03-22 11:50:10.000000000 +0100
++++ kdebindings-3.5.6.new/python/Makefile.in	2007-03-22 12:56:34.000000000 +0100
+@@ -377,7 +377,7 @@
+ site_packages = @PYTHONMODDIR@/site-packages
+ sip_dir = @datadir@/sip/
+ qt_dir = $(dir @qt_includes@)
+-python_inc_dir = `echo @PYTHONINC@ | sed s/-I//`
++python_inc_dir = @%Compile_target%@/include/python2.4
+ 
+ # qassistantclient.h
+ # qlist.h
+--- kdebindings-3.5.6/python/Makefile.am	2007-03-22 11:50:10.000000000 +0100
++++ kdebindings-3.5.6.new/python/Makefile.am	2007-03-22 12:56:47.000000000 +0100
+@@ -7,7 +7,7 @@
+ qt_includes = @qt_includes@
+ qt_dir = $(dir @qt_includes@)
+ 
+-python_inc_dir = `echo @PYTHONINC@ | sed s/-I//`
++python_inc_dir = @%Compile_target%@/include/python2.4
+ 
+ # qassistantclient.h
+ # qlist.h
