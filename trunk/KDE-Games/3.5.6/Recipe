@@ -1,0 +1,15 @@
+# Recipe for version 3.5.6 by Jonas Karlsson <jonka750@student.liu.se>, on Wed Mar 14 22:27:02 CET 2007
+# by Maglan C. Diemer 3.4.3 by roko
+
+url="http://download.kde.org/stable/3.5.6/src/kdegames-3.5.6.tar.bz2"
+file_size=10763523
+file_md5=d6cdf7d9235896670d5299e9e91665e2
+compile_version=1.8.2
+recipe_type=configure
+configure_options=(
+   "--disable-debug"
+   "--disable-dependency-tracking"
+   "--disable-libsuffix"
+   "DO_NOT_COMPILE=ktuberling"
+   # atlantik doc kasteroids katomic kbackgammon kbattleship kblackbox kbounce kenolaba kfouleggs kgoldrunner kjumbingcube klickety klines kmahjongg kimes kolf konquest kpat kpoker kreversi ksame kshisen ksmiletris ksnake ksokoban kspaceduel ktron ktuberling kwin4lskat
+)
