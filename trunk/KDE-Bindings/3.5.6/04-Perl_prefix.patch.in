@@ -1,0 +1,12 @@
+--- kdebindings-3.5.6/configure	2007-01-16 08:16:12.000000000 +0100
++++ kdebindings-3.5.6.new/configure	2007-03-21 21:51:47.000000000 +0100
+@@ -59195,7 +59195,7 @@
+   case $ac_file in
+     dcopperl/Makefile.PL )
+         cd dcopperl
+-        perl -I$srcdir Makefile.PL
++        perl -I$srcdir Makefile.PL PREFIX=@%Compile_target%@
+         cd ..
+  ;;
+     smoke/kde/qtguess.pl )
+ 
