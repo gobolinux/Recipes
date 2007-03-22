@@ -5,9 +5,9 @@ url="http://subversion.tigris.org/downloads/subversion-1.4.3.tar.bz2"
 file_size=4721031
 file_md5=de0e792c9804c7bce397d267af5eb30d
 recipe_type=configure
-
 configure_options=(
-   "--with-ssl"
+   --with-apr=${httpd_path}
+   --with-apr-util=${httpd_path}
 )
 
 make_variables=(
