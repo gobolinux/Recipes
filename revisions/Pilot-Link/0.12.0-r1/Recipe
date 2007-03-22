@@ -1,0 +1,11 @@
+# Recipe for version 0.12.0 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Mar 20 12:16:06 CET 2007
+# by Maglan C. Diemer
+
+compile_version=1.8.2
+url="http://downloads.pilot-link.org/pilot-link-0.12.0.tar.bz2"
+file_size=931260
+file_md5=4330ca271aea8bf288b89a9192b9b0ad
+recipe_type=configure
+install_variables=(
+   udevdir="${settings_target}/udev/rules.d"
+)
