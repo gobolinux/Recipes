@@ -1,0 +1,36 @@
+diff -Naur libofa-0.9.3/configure.in libofa-0.9.3.new/configure.in
+--- libofa-0.9.3/configure.in	2006-05-10 20:00:19.000000000 +0200
++++ libofa-0.9.3.new/configure.in	2006-08-12 14:43:17.000000000 +0200
+@@ -85,7 +85,7 @@
+     AC_MSG_NOTICE([Using libfftw3])
+     AC_CHECK_LIB(fftw3, fftw_malloc,
+             [
+-             LIBS="$LIBS -lfftw3"
++             LIBS="$LIBS"
+              FFT_WRAPPER="fftlibw3_op.cpp"
+              AM_CONDITIONAL(FFTW3, true)
+              AM_CONDITIONAL(VDSP, false)
+diff -Naur libofa-0.9.3/lib/Makefile.am libofa-0.9.3.new/lib/Makefile.am
+--- libofa-0.9.3/lib/Makefile.am	2006-05-10 20:07:58.000000000 +0200
++++ libofa-0.9.3.new/lib/Makefile.am	2006-08-12 14:43:23.000000000 +0200
+@@ -38,7 +38,7 @@
+ #  6. If any interfaces have been removed since the last public release, then 
+ #     set age to 0. 
+ libofa_la_LDFLAGS = -version-info 0:0:0 -no-undefined 
+-libofa_la_LIBADD = AFLIB/libaflib.la -lm 
++libofa_la_LIBADD = AFLIB/libaflib.la -lm -lfftw3
+ 
+ noinst_HEADERS = error_op.h fftlib_op.h fft_op.h frametracker_op.h signal_op.h \
+                  trackdata_op.h trackframe_op.h tracklist_op.h
+diff -Naur libofa-0.9.3/lib/Makefile.in libofa-0.9.3.new/lib/Makefile.in
+--- libofa-0.9.3/lib/Makefile.in	2006-05-10 20:10:03.000000000 +0200
++++ libofa-0.9.3.new/lib/Makefile.in	2006-08-12 14:54:16.000000000 +0200
+@@ -243,7 +243,7 @@
+ #  6. If any interfaces have been removed since the last public release, then 
+ #     set age to 0. 
+ libofa_la_LDFLAGS = -version-info 0:0:0 -no-undefined 
+-libofa_la_LIBADD = AFLIB/libaflib.la -lm 
++libofa_la_LIBADD = AFLIB/libaflib.la -lm -lfftw3
+ noinst_HEADERS = error_op.h fftlib_op.h fft_op.h frametracker_op.h signal_op.h \
+                  trackdata_op.h trackframe_op.h tracklist_op.h
+ 
