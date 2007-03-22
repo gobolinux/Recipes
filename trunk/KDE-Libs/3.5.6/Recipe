@@ -1,0 +1,12 @@
+# Recipe for version 3.5.6 by Jonas Karlsson <jonka750@student.liu.se>, on Wed Mar 14 22:40:40 CET 2007
+# KDE-Libs meta-recipe 
+# by Andre Detsch
+
+compile_version=1.8.2
+
+# ARTS and Libs compilation don't support different prefixes yet...
+include=(
+   "ARTS--1.5.6"
+   "KDE-Libs-Itself--3.5.6"
+)
+recipe_type=meta
