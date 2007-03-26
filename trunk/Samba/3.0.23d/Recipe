@@ -1,7 +1,8 @@
 # Recipe for version 3.0.23d by Andre Detsch <detsch@gobolinux.org>, on Sat Dec 9 15:00:38 BRST 2006
 # Recipe (MakeRecipe) for Samba by roko, <ro.ko@mcnon.com>, on Sun Dec 26 11:04:52 BRST 2004
-compile_version=1.8.0
-url="ftp://se.samba.org/pub/samba/samba-3.0.23d.tar.gz"
+compile_version=1.8.2
+url="http://us1.samba.org/samba/ftp/stable/samba-3.0.23d.tar.gz"
+mirror_url="ftp://se.samba.org/pub/samba/samba-3.0.23d.tar.gz"
 recipe_type=configure
 dir="samba-3.0.23d/source"
 
