@@ -1,0 +1,10 @@
+# Recipe for version 6.8 by Samuel A. Falvo II, on Fri Mar 23 13:40:43 PDT 2007
+# Recipe (MakeRecipe) for LibGC by Felix Breuer, on Sun Sep 5 17:11:57 BRT 2004
+compile_version=1.8.2
+url="http://www.hpl.hp.com/personal/Hans_Boehm/gc/gc_source/gc6.8.tar.gz"
+file_size=756879
+file_md5=418d38bd9c66398386a372ec0435250e
+recipe_type=configure
+configure_options=(
+	"--enable-cplusplus"
+)
