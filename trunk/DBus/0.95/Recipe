@@ -12,3 +12,7 @@ configure_options=(
 post_install() {
     dbus-uuidgen --ensure
 }
+
+unmanaged_files=(
+    $goboVariable/run/dbus
+)
