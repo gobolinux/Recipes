@@ -1,0 +1,23 @@
+# Recipe (MakeRecipe) for GV by Andreas Koehler, on Fri Aug 12 13:13:23 CEST 2005
+# Recipe for version 3.5.8 by Andreas Koehler, on Fri Aug 12 13:13:23 CEST 2005
+compile_version=1.8.2
+#url="ftp://ftpthep.physik.uni-mainz.de/pub/gv/unix/gv-3.5.8.tar.gz"
+url="http://mirrors.usc.edu/pub/gnu/gv/gv-3.5.8.tar.gz"
+file_size=369609
+file_md5=8f2f0bd97395d6cea52926ddee736da8
+recipe_type=xmkmf
+
+pre_build() {
+   cp doc/gv.man source
+   mv config.Unix config.Unix.bak
+   sed -e "/GV....DIR/s,/usr/local,$target," \
+       -e "s,doc/gv,doc," \
+      config.Unix.bak > config.Unix
+   echo 'DOCDIR=$(GV_DOCDIR)' >> doc/Imakefile
+}
+
+install_target="install install.man install.doc"
+
+install_variables=(
+	ETCX11DIR="$settings_target/X11"
+)
