@@ -1,0 +1,12 @@
+# Recipe for version 1.5.1 by Lucas C. Villa Real, on Tue Mar 27 09:20:28 BRT 2007
+# Recipe (MakeRecipe) for Doxygen by roko, <ro.ko@mcnon.com>, on Mon Dec 6 00:03:33 BRST 2004
+compile_version=1.8.2
+url="ftp://ftp.stack.nl/pub/users/dimitri/doxygen-1.5.1.src.tar.gz"
+file_size=2888159
+file_md5=43b8e58e5ca70cb8f1285c35a171014e
+dir='doxygen-1.5.1'
+recipe_type=makefile
+pre_build () {
+    configure --prefix $target 
+    #--with-doxywizard
+}
