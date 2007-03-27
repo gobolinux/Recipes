@@ -1,0 +1,11 @@
+diff -Naur Mesa-6.5.2.old/progs/xdemos/Makefile Mesa-6.5.2.new/progs/xdemos/Makefile
+--- Mesa-6.5.2.old/progs/xdemos/Makefile	2007-03-23 23:06:51.000000000 +0100
++++ Mesa-6.5.2.new/progs/xdemos/Makefile	2007-03-23 23:45:05.000000000 +0100
+@@ -24,7 +24,6 @@
+ 	pbinfo \
+ 	pbdemo \
+ 	wincopy \
+-	xdemo \
+ 	xfont \
+ 	xrotfontdemo \
+ 	yuvrect_client
