@@ -1,0 +1,8 @@
+# Recipe for version 7.2 by Lucas C. Villa Real, on Mon Mar  5 13:59:14 GMT 2007
+recipe_type=meta
+compile_version=1.8.2
+pre_link() {
+    pushd $target/bin >& /dev/null
+    chmod +s X*
+    popd >& /dev/null
+}
