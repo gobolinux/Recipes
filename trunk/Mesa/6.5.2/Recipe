@@ -13,3 +13,10 @@ build_target=linux-dri
 make_variables=(
     "DESTDIR=$target"
 )
+
+pre_link() {
+   for p in glxheads glthreads glxcontexts glxdemo glxgears glxgears_fbconfig glxinfo glxpbdemo glxpixmap glxswapcontrol
+   do
+      cp progs/xdemos/${p} ${target}/bin
+   done
+}

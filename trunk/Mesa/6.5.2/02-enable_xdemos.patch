@@ -1,0 +1,12 @@
+diff -Naur Mesa-6.5.2.old/configs/linux-dri Mesa-6.5.2.new/configs/linux-dri
+--- Mesa-6.5.2.old/configs/linux-dri	2007-03-23 23:06:51.000000000 +0100
++++ Mesa-6.5.2.new/configs/linux-dri	2007-03-23 23:14:04.000000000 +0100
+@@ -57,7 +57,7 @@
+ PROGRAM_DIRS = egl
+ else
+ SRC_DIRS = glx/x11 mesa glu glut/glx glw
+-PROGRAM_DIRS =
++PROGRAM_DIRS = xdemos
+ endif
+ 
+ DRIVER_DIRS = dri
