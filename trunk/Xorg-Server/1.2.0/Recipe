@@ -27,5 +27,6 @@ configure_options=(
    "--disable-secure-rpc"
    "--enable-multibuffer"
    "--enable-dmx"
-   "--with-mesa-source=$compileSourcesDir/Mesa-6.5.2"
+   "--with-dri-driver-path=$goboLibraries/xorg/modules/dri"
+   "--with-mesa-source=/Files/Compile/Sources/Mesa-6.5.2"
 )
