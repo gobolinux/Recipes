@@ -1,0 +1,12 @@
+# Recipe for version 6.3.3-1 by Jonas Karlsson <jonka750@student.liu.se>, on Mon Mar 26 21:38:02 CEST 2007
+compile_version=1.8.2
+url="$httpSourceforge/imagemagick/ImageMagick-6.3.3-1.tar.bz2"
+file_size=5620923
+file_md5=682df363b566875fb885639d0b778746
+dir='ImageMagick-6.3.3'
+recipe_type=configure
+configure_options=(
+    "--enable-shared"
+    "--with-x"
+    "--without-perl"
+)
