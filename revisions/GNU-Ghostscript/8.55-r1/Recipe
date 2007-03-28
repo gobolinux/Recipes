@@ -1,0 +1,19 @@
+# Recipe (MakeRecipe) for GNU-Ghostscript by Jonas Karlsson <jonka750@student.liu.se>, on Mon Mar 26 22:27:01 CEST 2007
+# Recipe for version 8.55 by Jonas Karlsson <jonka750@student.liu.se>, on Mon Mar 26 22:27:01 CEST 2007
+compile_version=1.8.2
+url="$ftpGnu/ghostscript/gnu-ghostscript-8.55.tar.bz2"
+file_size=7947779
+file_md5=d48d7574b74846f1c4ffbe541955367f
+recipe_type=configure
+build_target="std so"
+install_target="install soinstall"
+
+pre_link() {
+   # Linking fonts dir so ghostscript can find it.
+   ln -sf /Files/Fonts/Ghostscript ${target}/share/ghostscript/fonts
+   
+   # Making headers dir and copying headers
+   install -v -d -m755 ${target}/include/ps
+   install -v -m644 src/*.h ${target}/include/ps
+   ln -s ${target}/include/ps ${target}/include/ghostscript
+}
