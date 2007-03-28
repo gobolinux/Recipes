@@ -1,0 +1,11 @@
+# Recipe for version 8.56 by Jonas Karlsson <jonka750@student.liu.se>, on Thu Mar 22 18:24:20 CET 2007
+# Recipe (MakeRecipe) for GhostScript by Jonas Karlsson <jonka750@student.liu.se>, on Tue Jan 24 11:36:14 CET 2006
+compile_version=1.8.2
+url="$httpSourceforge/ghostscript/ghostscript-8.56.tar.bz2"
+file_size=12224304
+file_md5=498015a278308d147bea563be2c5165e
+recipe_type=configure
+
+pre_link() {
+   ln -sf /Files/Fonts/Ghostscript ${target}/share/ghostscript/fonts
+}
