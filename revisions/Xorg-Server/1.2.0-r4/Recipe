@@ -1,0 +1,32 @@
+# Recipe for version 1.2.0 by Lucas C. Villa Real, on Mon Mar 5 11:56:36 GMT 2007
+# Recipe (MakeRecipe) for Xorg-Server by Hisham Muhammad <lode@gobolinux.org>, on Fri Aug 19 18:49:06 BRT 2005
+compile_version=1.8.2
+urls=(
+   "http://xorg.freedesktop.org/releases/X11R7.2/src/everything/xorg-server-X11R7.2-1.2.0.tar.bz2"
+   "$httpSourceforge/mesa3d/MesaLib-6.5.2.tar.bz2"
+)
+
+file_sizes=(
+   6018402
+   3295166
+)
+
+file_md5s=(
+   a57338a8b6cc5cb49785b00f6d9a85db
+   e4d894181f1859651658b3704633e10d
+)
+
+recipe_type=configure
+
+configure_options=(
+   "--enable-dri"
+   "--enable-glx"
+   "--enable-glx-tls"
+   "--enable-lbx"
+   "--disable-fontcache"
+   "--disable-secure-rpc"
+   "--enable-multibuffer"
+   "--enable-dmx"
+   "--with-dri-driver-path=$goboLibraries/xorg/modules/dri"
+   "--with-mesa-source=$compileSourcesDir/Mesa-6.5.2"
+)
