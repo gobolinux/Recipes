@@ -28,5 +28,5 @@ configure_options=(
    "--enable-multibuffer"
    "--enable-dmx"
    "--with-dri-driver-path=$goboLibraries/xorg/modules/dri"
-   "--with-mesa-source=/Files/Compile/Sources/Mesa-6.5.2"
+   "--with-mesa-source=$compileSourcesDir/Mesa-6.5.2"
 )
