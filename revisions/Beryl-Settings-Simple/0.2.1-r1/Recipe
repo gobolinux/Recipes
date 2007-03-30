@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Beryl-Settings-Simple by Jonas Karlsson <jonka750@student.liu.se>, on Sat Mar 24 08:30:32 CET 2007
+# Recipe for version 0.2.1 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Mar 24 08:30:32 CET 2007
+compile_version=1.8.2
+url="http://releases.beryl-project.org/0.2.1/beryl-settings-simple-0.2.1.tar.bz2"
+file_size=158547
+file_md5=2476d9618a07ec2d7acc117417f77a3b
+recipe_type=configure
+
+configure_options=(
+   --mandir=${target}/man
+)
