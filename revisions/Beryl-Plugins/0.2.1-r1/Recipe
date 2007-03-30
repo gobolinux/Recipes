@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Beryl-Plugins by Jonas Karlsson <jonka750@student.liu.se>, on Sat Mar 24 08:31:59 CET 2007
+# Recipe for version 0.2.1 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Mar 24 08:31:59 CET 2007
+compile_version=1.8.2
+url="http://releases.beryl-project.org/0.2.1/beryl-plugins-0.2.1.tar.bz2"
+file_size=2603366
+file_md5=3d7d13dd42aea48bba5be7cfe6c7f371
+recipe_type=configure
+
+configure_options=(
+   --mandir=${target}/man
+   --with-gl-cflags=-I/System/Links/Headers/GL
+)
