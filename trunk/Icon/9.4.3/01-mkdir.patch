@@ -1,0 +1,13 @@
+--- icon.v943src/Makefile	2005-11-09 00:24:34.000000000 +0100
++++ icon.v943src/Makefile.new	2007-03-30 08:42:59.000000000 +0200
+@@ -97,8 +97,8 @@
+ 
+ D=$(dest)
+ Install:
+-		mkdir $D
+-		mkdir $D/bin $D/lib $D/doc $D/man $D/man/man1
++		mkdir -p $D
++		mkdir -p $D/bin $D/lib $D/doc $D/man $D/man/man1
+ 		cp README $D
+ 		cp bin/[cflpvwx]* $D/bin
+ 		cp bin/icon[tx]* $D/bin
