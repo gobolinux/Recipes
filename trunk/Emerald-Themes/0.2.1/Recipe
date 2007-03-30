@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Emerald-Themes by Jonas Karlsson <jonka750@student.liu.se>, on Sat Mar 24 08:34:00 CET 2007
+# Recipe for version 0.2.1 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Mar 24 08:34:00 CET 2007
+compile_version=1.8.2
+url="http://releases.beryl-project.org/0.2.1/emerald-themes-0.2.1.tar.bz2"
+file_size=1381386
+file_md5=43ef8f6803afb8ce542309f46bc85885
+recipe_type=configure
+
+configure_options=(
+   --mandir=${target}/man
+)
