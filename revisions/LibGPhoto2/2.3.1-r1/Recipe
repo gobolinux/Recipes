@@ -1,0 +1,13 @@
+# Recipe for version 2.3.1 by Lucas C. Villa Real, on Thu Mar 29 09:31:47 BRT 2007
+compile_version=1.8.2
+url=$httpSourceforge/gphoto/libgphoto2-2.3.1.tar.gz
+file_size=4716197
+file_md5=9b9722ff5ce3935ae40919b60d77d96c
+recipe_type=configure
+pre_build() {
+   mkdir gphoto2
+   for i in libgphoto2/* libgphoto2_port/libgphoto2_port/* 
+   do 
+      ln -sfn `readlink -f $i` gphoto2/
+   done
+}
