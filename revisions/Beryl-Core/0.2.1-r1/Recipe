@@ -1,0 +1,44 @@
+# Recipe (MakeRecipe) for Beryl-Core by Jonas Karlsson <jonka750@student.liu.se>, on Sat Mar 24 00:59:58 CET 2007
+# Recipe for version 0.2.1 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Mar 24 00:59:58 CET 2007
+compile_version=1.8.2
+urls=(
+   "http://releases.beryl-project.org/0.2.1/beryl-core-0.2.1.tar.bz2"
+   "$httpSourceforge/mesa3d/MesaLib-6.5.2.tar.bz2"
+)
+file_sizes=(
+   470173
+   3295166
+)
+
+file_md5s=(
+   895fe727d4396f6d51ffaf73cf8460d0
+   e4d894181f1859651658b3704633e10d
+)
+
+recipe_type=configure
+
+configure_options=(
+   --mandir=${target}/man
+   --enable-xgl
+   --disable-gconf
+   --with-berylmesadir=../Mesa-6.5.2
+)
+
+pre_build() {
+   pushd ../Mesa-6.5.2/configs &>/dev/null
+   rm -rf current &>2
+   echo "MKLIB_OPTIONS = -static" >> linux-indirect
+   ln -s linux-indirect current
+   popd &>/dev/null
+}
+
+install_variables=(
+   backenddir="${target}/lib/beryl/backends"
+)
+
+pre_install() {
+   # This substitution is needed so that libtool accepts to install
+   # the .la files into ${target}/lib
+   sed -i "s,${goboLibraries},${target}/lib,g" settings-backends/*.la
+}
+   

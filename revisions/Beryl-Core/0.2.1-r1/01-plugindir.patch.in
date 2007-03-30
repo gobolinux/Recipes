@@ -1,0 +1,11 @@
+--- beryl-core-0.2.1/configure	2007-03-17 21:53:56.000000000 +0100
++++ beryl-core-0.2.1/configure.new	2007-03-28 15:24:28.000000000 +0200
+@@ -22688,7 +22688,7 @@
+ esac
+ 
+ 
+-plugindir=$libdir/beryl
++plugindir=@%Compile_goboLibraries%@/beryl
+ 
+ 
+ imagedir=$datadir/beryl
