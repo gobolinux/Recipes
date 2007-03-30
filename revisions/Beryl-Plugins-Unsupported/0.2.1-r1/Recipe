@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Beryl-Plugins-Unsupported by Jonas Karlsson <jonka750@student.liu.se>, on Sat Mar 24 08:32:57 CET 2007
+# Recipe for version 0.2.1 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Mar 24 08:32:57 CET 2007
+compile_version=1.8.2
+url="http://releases.beryl-project.org/0.2.1/beryl-plugins-unsupported-0.2.1.tar.bz2"
+file_size=395693
+file_md5=262a5900b42c52671c2a0f9a69ac93b4
+recipe_type=configure
+
+configure_options=(
+   --mandir=${target}/man
+)
