@@ -1,0 +1,11 @@
+# Recipe for version 1.2.7.1 by Benjamin Bruheim, on Sat Mar 31 08:51:50 CEST 2007
+# Recipe (MakeRecipe) for Nicotine+ by Benjamin Bruheim, on Fri Dec 8 02:35:07 CET 2006
+compile_version=1.8.2
+url="$httpSourceforge/nicotine-plus/nicotine+-1.2.7.1.tar.bz2"
+recipe_type=python
+environment=(
+	PYTHONOPTIMIZE=2
+)
+pre_build() {
+	GrepReplace "sys.prefix" "\"$target\"" setup.py
+}
