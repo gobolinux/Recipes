@@ -1,0 +1,75 @@
+Bash-Release: 3.2
+Patch-ID: bash32-015
+
+Bug-Reported-by:
+Bug-Reference-ID:
+Bug-Reference-URL:
+
+Bug-Description:
+
+Under certain circumstances, when using FIFOs for process substitution,
+bash fails to unlink the FIFOs.  This leaves open file descriptors that
+can cause the shell to hang and litters the file system.
+
+--- bash-3.2/execute_cmd.c	2007-04-01 05:04:42.000000000 +0200
++++ bash-3.2/execute_cmd.c.new	2007-04-01 05:54:56.000000000 +0200
+@@ -3050,6 +3050,11 @@
+   if (command_line == 0)
+     command_line = savestring (the_printed_command_except_trap);
+ 
++#if defined (PROCESS_SUBSTITUTION)
++  if ((subshell_environment & SUBSHELL_COMSUB) && (simple_command->flags & CMD_NO_FORK) && fifos_pending() > 0)
++    simple_command->flags &= ~CMD_NO_FORK;
++#endif
++     
+   execute_disk_command (words, simple_command->redirects, command_line,
+ 			pipe_in, pipe_out, async, fds_to_close,
+ 			simple_command->flags);
+--- bash-3.2/subst.c	2007-04-01 05:45:25.000000000 +0200
++++ bash-3.2/subst.c.new	2007-04-01 06:00:36.000000000 +0200
+@@ -4143,6 +4143,12 @@
+     nfifo = 0;
+ }
+ 
++int
++fifos_pending ()
++{
++  return nfifo;
++}
++
+ static char *
+ make_named_pipe ()
+ {
+@@ -4192,6 +4198,12 @@
+   nfds++;
+ }
+ 
++int
++fifos_pending ()
++{
++  return 0;/* used for cleanup; not needed with /dev/fd */
++}
++
+ void
+ unlink_fifo_list ()
+ {
+@@ -4693,6 +4705,9 @@
+ 
+       last_command_exit_value = rc;
+       rc = run_exit_trap ();
++#if defined (PROCESS_SUBSTITUTION)
++      unlink_fifo_list ();
++#endif
+       exit (rc);
+     }
+   else
+--- bash-3.2/subst.h	2006-09-19 14:34:41.000000000 +0200
++++ bash-3.2/subst.h.new	2007-04-01 06:01:32.000000000 +0200
+@@ -222,6 +222,7 @@
+ extern char *command_substitute __P((char *, int));
+ extern char *pat_subst __P((char *, char *, char *, int));
+ 
++extern int fifos_pending __P((void));
+ extern void unlink_fifo_list __P((void));
+ 
+ extern WORD_LIST *list_string_with_quotes __P((char *));

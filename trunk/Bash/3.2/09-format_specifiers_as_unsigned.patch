@@ -1,0 +1,33 @@
+Bash-Release: 3.2
+Patch-ID: bash32-009
+
+Bug-Reported-by:    James.M.Botte@lowes.com
+Bug-Reference-ID: <BA9FF90F7E5B424998F98EDA9F1F94BE01FA9853@msexchdb01.lowes.com>
+Bug-Reference-URL: http://lists.gnu.org/archive/html/bug-bash/2006-12/msg00000.html
+
+Bug-Description:
+
+When using its built-in replacement for snprintf/asprintf, bash does not
+treat the %x, %X, and %o format specifiers as unsigned numbers.
+
+--- bash-3.2/lib/sh/snprintf.c	2007-04-01 04:49:25.000000000 +0200
++++ bash-3.2/lib/sh/snprintf.c.new	2007-04-01 04:51:35.000000000 +0200
+@@ -668,7 +668,8 @@
+     p->flags &= ~PF_ZEROPAD;
+ 
+   sd = d;	/* signed for ' ' padding in base 10 */
+-  flags = (*p->pf == 'u' || *p->pf == 'U') ? FL_UNSIGNED : 0;
++  flags = 0;
++  flags = (*p->pf == 'x' || *p->pf == 'X' || *p->pf == 'o' || *p->pf == 'u' || *p->pf == 'U') ? FL_UNSIGNED : 0;
+   if (*p->pf == 'X')
+     flags |= FL_HEXUPPER;
+ 
+@@ -738,7 +739,7 @@
+     p->flags &= ~PF_ZEROPAD;
+ 
+   sd = d;	/* signed for ' ' padding in base 10 */
+-  flags = (*p->pf == 'u' || *p->pf == 'U') ? FL_UNSIGNED : 0;
++  flags = (*p->pf == 'x' || *p->pf == 'X' || *p->pf == 'o' || *p->pf == 'u' || *p->pf == 'U') ? FL_UNSIGNED : 0;
+   if (*p->pf == 'X')
+     flags |= FL_HEXUPPER;
+ 
