@@ -1,0 +1,25 @@
+Bash-Release: 3.2
+Patch-ID: bash32-006
+
+Bug-Reported-by:    ebb9@byu.net
+Bug-Reference-ID:   <45540862.9030900@byu.net>
+Bug-Reference-URL: http://lists.gnu.org/archive/html/bug-bash/2006-11/msg00017.html
+                   http://lists.gnu.org/archive/html/bug-bash/2006-11/msg00016.html
+
+Bug-Description:
+
+In some cases, code that is intended to be used in the presence of multibyte
+characters is called when no such characters are present, leading to incorrect
+display position calculations and incorrect redisplay.
+
+--- bash-3.2/lib/readline/display.c	2006-09-14 20:20:12.000000000 +0200
++++ bash-3.2/lib/readline/display.c.new	2007-04-01 03:58:30.000000000 +0200
+@@ -2380,6 +2380,8 @@
+ 
+   if (end <= start)
+     return 0;
++  if (MB_CUR_MAX == 1 || rl_byte_oriented)
++    return (end - start);
+ 
+   memset (&ps, 0, sizeof (mbstate_t));
+ 
