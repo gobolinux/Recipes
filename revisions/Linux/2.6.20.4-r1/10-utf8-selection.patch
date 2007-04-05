@@ -1,0 +1,62 @@
+diff -Naurdp a/drivers/char/consolemap.c b/drivers/char/consolemap.c
+--- a/drivers/char/consolemap.c	2005-09-20 05:00:41.000000000 +0200
++++ b/drivers/char/consolemap.c	2005-09-22 15:38:46.709343622 +0200
+@@ -323,6 +323,11 @@ int con_get_trans_new(ushort __user * ar
+ 	return 0;
+ }
+ 
++unsigned short con_get_trans_new_one_character(unsigned char c)
++{
++	return translations[USER_MAP][(int)c];
++}
++
+ /*
+  * Unicode -> current font conversion 
+  *
+diff -Naurdp a/drivers/char/selection.c b/drivers/char/selection.c
+--- a/drivers/char/selection.c	2005-09-20 05:00:41.000000000 +0200
++++ b/drivers/char/selection.c	2005-09-22 15:38:46.710343512 +0200
+@@ -240,7 +240,7 @@ int set_selection(const struct tiocl_sel
+ 	sel_end = new_sel_end;
+ 
+ 	/* Allocate a new buffer before freeing the old one ... */
+-	bp = kmalloc((sel_end-sel_start)/2+1, GFP_KERNEL);
++	bp = kmalloc((sel_end-sel_start)/2*3+1, GFP_KERNEL);
+ 	if (!bp) {
+ 		printk(KERN_WARNING "selection: kmalloc() failed\n");
+ 		clear_selection();
+@@ -252,7 +252,22 @@ int set_selection(const struct tiocl_sel
+ 
+ 	obp = bp;
+ 	for (i = sel_start; i <= sel_end; i += 2) {
+-		*bp = sel_pos(i);
++		unsigned char c;
++		unsigned short ch;
++		c = sel_pos(i);
++		/* Lookup sel_pos(i) in the unicode translation map
++		   and convert it to UTF-8. */
++		ch = con_get_trans_new_one_character(c);
++		if (ch < 0x0080) {
++			*bp   = (unsigned char) ch;
++		} else if (ch < 0x0800) {
++			*bp++ = (unsigned char) (0xC0 | (ch >> 6));
++			*bp   = (unsigned char) (0x80 | (ch & 0x3F));
++		} else {
++			*bp++ = (unsigned char) (0xE0 | (ch >> 12));
++			*bp++ = (unsigned char) (0x80 | ((ch >> 6) & 0x3F));
++			*bp   = (unsigned char) (0x80 | (ch & 0x3F));
++		}
+ 		if (!isspace(*bp++))
+ 			obp = bp;
+ 		if (! ((i + 2) % vc->vc_size_row)) {
+diff -Naurdp a/include/linux/vt_kern.h b/include/linux/vt_kern.h
+--- a/include/linux/vt_kern.h	2005-09-20 05:00:41.000000000 +0200
++++ b/include/linux/vt_kern.h	2005-09-22 15:39:22.511405608 +0200
+@@ -61,6 +61,7 @@ int con_set_trans_old(unsigned char __us
+ int con_get_trans_old(unsigned char __user * table);
+ int con_set_trans_new(unsigned short __user * table);
+ int con_get_trans_new(unsigned short __user * table);
++unsigned short con_get_trans_new_one_character(unsigned char c);
+ int con_clear_unimap(struct vc_data *vc, struct unimapinit *ui);
+ int con_set_unimap(struct vc_data *vc, ushort ct, struct unipair __user *list);
+ int con_get_unimap(struct vc_data *vc, ushort ct, ushort __user *uct, struct unipair __user *list);
