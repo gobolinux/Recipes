@@ -1,0 +1,19 @@
+diff -Naur gcc-4.1.2-orig/gcc/d/dmd/expression.c gcc-4.1.2/gcc/d/dmd/expression.c
+--- gcc-4.1.2-orig/gcc/d/dmd/expression.c	2007-03-04 05:47:46.000000000 -0800
++++ gcc-4.1.2/gcc/d/dmd/expression.c	2007-04-05 14:20:39.000000000 -0700
+@@ -22,6 +22,7 @@
+ #include <ctype.h>
+ #include <assert.h>
+ #include <complex.h>
++#include "port.h"
+ #include <math.h>
+ 
+ #ifdef __APPLE__
+@@ -39,7 +40,6 @@
+ #elif linux
+ #include "../root/mem.h"
+ #endif
+-#include "port.h"
+ #include "mtype.h"
+ #include "init.h"
+ #include "expression.h"
