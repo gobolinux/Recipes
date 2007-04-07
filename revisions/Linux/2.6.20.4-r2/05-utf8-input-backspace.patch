@@ -1,0 +1,12 @@
+diff -Naurdp a/drivers/char/tty_io.c b/drivers/char/tty_io.c
+--- a/drivers/char/tty_io.c	2007-02-04 19:44:54.000000000 +0100
++++ b/drivers/char/tty_io.c	2007-02-26 18:06:59.000000000 +0100
+@@ -110,7 +110,7 @@
+ #define CHECK_TTY_COUNT 1
+ 
+ struct ktermios tty_std_termios = {	/* for the benefit of tty drivers  */
+-	.c_iflag = ICRNL | IXON,
++	.c_iflag = ICRNL | IXON | IUTF8,
+ 	.c_oflag = OPOST | ONLCR,
+ 	.c_cflag = B38400 | CS8 | CREAD | HUPCL,
+ 	.c_lflag = ISIG | ICANON | ECHO | ECHOE | ECHOK |
