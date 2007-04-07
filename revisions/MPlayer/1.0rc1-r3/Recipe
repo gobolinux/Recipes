@@ -1,0 +1,22 @@
+# Recipe for version 1.0rc1 by Andre Detsch <detsch@gobolinux.org>, on Mon Nov 20 16:59:13 BRST 2006
+urls=(
+   "http://www1.mplayerhq.hu/MPlayer/releases/MPlayer-1.0rc1.tar.bz2"
+   "http://www1.mplayerhq.hu/MPlayer/Skin/plastik-2.0.tar.bz2"
+)
+
+recipe_type=configure
+configure_options=(
+   "--enable-gui"
+   "--with-win32libdir=$goboShared/mplayer-codecs"
+   "--with-codecsdir=$target/share/mplayer-codecs"
+   "--enable-largefiles"
+   "--language=all"
+)
+
+pre_install() {
+   skindir="$target/Shared/mplayer/Skin"
+   mkdir -p ${skindir}
+   cp -a ../plastik ${skindir}
+   ln -nfs plastik ${skindir}/default
+   ln -sfn /Files/Fonts/TrueType/Vera.ttf ${target}/Shared/mplayer/subfont.ttf
+}
