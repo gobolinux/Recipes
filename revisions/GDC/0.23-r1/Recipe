@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for GDC by mpb <mpb.mail@gmail.com>, on Tue Apr 3 16:30:40 PDT 2007
+# Recipe for version 0.23 by mpb <mpb.mail@gmail.com>, on Tue Apr 3 16:30:40 PDT 2007
+compile_version=1.8.2
+urls=(
+  "$ftpGnu/gcc/gcc-4.1.2/gcc-4.1.2.tar.bz2"
+  "http://downloads.sourceforge.net/dgcc/gdc-0.23-src.tar.bz2"
+)
+dir=gcc-4.1.2
+recipe_type=configure
+needs_build_directory=yes
+configure_options=( --enable-languages=d )
+
+pre_patch() {
+  cd $dir  &&  mv ../d gcc/  &&  ./gcc/d/setup-gcc.sh
+  cd $builddir
+}
