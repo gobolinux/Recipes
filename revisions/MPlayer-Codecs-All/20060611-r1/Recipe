@@ -1,0 +1,10 @@
+# Recipe for version 20061022 by Lucas C. Villa Real, on Sat Apr  7 02:33:54 BRT 2007
+url="http://www1.mplayerhq.hu/MPlayer/releases/codecs/all-20061022.tar.bz2"
+file_size=13808014
+file_md5=cb4bb06ebc804f5dc4ec0ed516dc20d9
+recipe_type=manifest
+
+pre_install() {
+   mkdir -p $target/share/mplayer-codecs
+   cp * $target/share/mplayer-codecs/
+}
