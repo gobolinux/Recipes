@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for GForth by Samuel A. Falvo II, on Sat Apr 7 01:50:03 PDT 2007
+# Recipe for version 0.6.2 by Samuel A. Falvo II, on Sat Apr 7 01:50:03 PDT 2007
+compile_version=1.8.2
+url="http://mirrors.kernel.org/gnu/gforth/gforth-0.6.2.tar.gz"
+file_size=1925536
+file_md5=869112bd762b07fc4d2038a2d9965148
+recipe_type=configure
+environment=(HOME=$goboTemp)
