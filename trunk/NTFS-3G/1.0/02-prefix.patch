@@ -1,0 +1,25 @@
+--- ntfs-3g-1.0/src/Makefile.in.orig	2007-04-09 14:43:13.000000000 -0300
++++ ntfs-3g-1.0/src/Makefile.in	2007-04-09 14:44:36.000000000 -0300
+@@ -580,16 +580,16 @@ libs:
+ 	(cd ../libntfs-3g && $(MAKE) libs) || exit 1;
+ 
+ install-exec-hook:
+-	$(INSTALL) -d $(DESTDIR)/sbin
+-	$(LN_S) -f $(bindir)/ntfs-3g $(DESTDIR)/sbin/mount.ntfs-3g
++	$(INSTALL) -d $(prefix)/sbin
++	$(LN_S) -f $(bindir)/ntfs-3g $(prefix)/sbin/mount.ntfs-3g
+ 
+ install-data-hook:
+-	$(INSTALL) -d $(DESTDIR)$(man8dir)
+-	$(LN_S) -f ntfs-3g.8 $(DESTDIR)$(man8dir)/mount.ntfs-3g.8
++	$(INSTALL) -d $(prefix)$(man8dir)
++	$(LN_S) -f ntfs-3g.8 $(prefix)$(man8dir)/mount.ntfs-3g.8
+ 
+ uninstall-local:
+-	$(RM) -f $(DESTDIR)/sbin/mount.ntfs-3g
+-	$(RM) -f $(DESTDIR)$(man8dir)/mount.ntfs-3g.8
++	$(RM) -f $(prefix)/sbin/mount.ntfs-3g
++	$(RM) -f $(prefix)$(man8dir)/mount.ntfs-3g.8
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.
+ # Otherwise a system limit (for SysV at least) may be exceeded.
+ .NOEXPORT:
