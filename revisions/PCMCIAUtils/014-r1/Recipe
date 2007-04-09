@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for PCMCIAUtils by Jonas Karlsson <jonka750@student.liu.se>, on Sat Apr 7 17:27:42 CEST 2007
+# Recipe for version 014 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Apr 7 17:27:42 CEST 2007
+compile_version=1.8.2
+url="http://kernel.org/pub/linux/utils/kernel/pcmcia/pcmciautils-014.tar.bz2"
+file_size=42996
+file_md5=3f07c926875f6c5dcb83240f39725177
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+)
