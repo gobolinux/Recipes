@@ -1,0 +1,42 @@
+diff -Naurdp a/drivers/char/keyboard.c b/drivers/char/keyboard.c
+--- a/drivers/char/keyboard.c	2006-09-27 18:52:05.000000000 +0200
++++ b/drivers/char/keyboard.c	2006-09-27 19:04:30.000000000 +0200
+@@ -1380,7 +1380,7 @@ int __init kbd_init(void)
+ 		kbd_table[i].lockstate = KBD_DEFLOCK;
+ 		kbd_table[i].slockstate = 0;
+ 		kbd_table[i].modeflags = KBD_DEFMODE;
+-		kbd_table[i].kbdmode = VC_XLATE;
++		kbd_table[i].kbdmode = VC_UNICODE;
+ 	}
+ 
+ 	input_register_handler(&kbd_handler);
+diff -Naurdp a/drivers/char/sysrq.c b/drivers/char/sysrq.c
+--- a/drivers/char/sysrq.c	2006-09-20 05:42:06.000000000 +0200
++++ b/drivers/char/sysrq.c	2006-09-27 19:03:57.000000000 +0200
+@@ -82,12 +82,12 @@ static void sysrq_handle_unraw(int key, 
+ 	struct kbd_struct *kbd = &kbd_table[fg_console];
+ 
+ 	if (kbd)
+-		kbd->kbdmode = VC_XLATE;
++		kbd->kbdmode = VC_UNICODE;
+ }
+ static struct sysrq_key_op sysrq_unraw_op = {
+ 	.handler	= sysrq_handle_unraw,
+ 	.help_msg	= "unRaw",
+-	.action_msg	= "Keyboard mode set to XLATE",
++	.action_msg	= "Keyboard mode set to UNICODE",
+ 	.enable_mask	= SYSRQ_ENABLE_KEYBOARD,
+ };
+ #else
+diff -Naurdp a/drivers/char/vt_ioctl.c b/drivers/char/vt_ioctl.c
+--- a/drivers/char/vt_ioctl.c	2006-09-20 05:42:06.000000000 +0200
++++ b/drivers/char/vt_ioctl.c	2006-09-27 19:03:57.000000000 +0200
+@@ -1057,7 +1057,7 @@ int vt_waitactive(int vt)
+ void reset_vc(struct vc_data *vc)
+ {
+ 	vc->vc_mode = KD_TEXT;
+-	kbd_table[vc->vc_num].kbdmode = VC_XLATE;
++	kbd_table[vc->vc_num].kbdmode = VC_UNICODE;
+ 	vc->vt_mode.mode = VT_AUTO;
+ 	vc->vt_mode.waitv = 0;
+ 	vc->vt_mode.relsig = 0;

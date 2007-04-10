@@ -1,0 +1,161 @@
+diff -Naurdp a/drivers/char/_isalpha.c b/drivers/char/_isalpha.c
+--- a/drivers/char/_isalpha.c	1970-01-01 01:00:00.000000000 +0100
++++ b/drivers/char/_isalpha.c	2005-09-22 15:05:10.126608587 +0200
+@@ -0,0 +1,44 @@
++/* This utility was used to generate the kernel keyboard unicode capslock patch */
++
++#include <stdio.h>
++#include <wctype.h>
++#include <locale.h>
++
++int main (int argc, char *argv[])
++{
++	wint_t i, j;
++	int x = 0;
++	int isal;
++	int min, max;
++	setlocale(LC_ALL, "en_US.UTF-8");
++	for (i = 0; i < 65536; i++) {
++		isal = 0;
++		if (iswlower(i) && !iswupper(i)) {
++			j = towupper(i);
++			if (!iswlower(j) && iswupper(j)) {
++				isal = 1;
++			}
++		}
++		if (!iswlower(i) && iswupper(i)) {
++			j = towlower(i);
++			if (iswlower(j) && !iswupper(j)) {
++				isal = 1;
++			}
++		}
++		if (isal && !x) {
++			min = i;
++			x = 1;
++			continue;
++		}
++		if (!isal && x) {
++			max = i - 1;
++			x = 0;
++			if (min == max) {
++				printf(" || (keysym == 0x%04X)\n", min);
++			} else {
++				printf(" || (keysym >= 0x%04X && keysym <= 0x%04X)\n", min, max);
++			}
++		}
++	}
++	return 0;
++}
+diff -Naurdp a/drivers/char/keyboard.c b/drivers/char/keyboard.c
+--- a/drivers/char/keyboard.c	2005-09-22 15:05:09.478679026 +0200
++++ b/drivers/char/keyboard.c	2005-09-22 15:36:33.796960378 +0200
+@@ -1141,6 +1141,109 @@ static void kbd_keycode(unsigned int key
+ 	type = KTYP(keysym);
+ 
+ 	if (type < 0xf0) {
++		if (down && !raw_mode) {
++			if ((keysym >= 0x0041 && keysym <= 0x005A)
++			 || (keysym >= 0x0061 && keysym <= 0x007A)
++			 || (keysym == 0x00B5)
++			 || (keysym >= 0x00C0 && keysym <= 0x00D6)
++			 || (keysym >= 0x00D8 && keysym <= 0x00DE)
++			 || (keysym >= 0x00E0 && keysym <= 0x00F6)
++			 || (keysym >= 0x00F8 && keysym <= 0x0137)
++			 || (keysym >= 0x0139 && keysym <= 0x0148)
++			 || (keysym >= 0x014A && keysym <= 0x017F)
++			 || (keysym >= 0x0181 && keysym <= 0x018C)
++			 || (keysym >= 0x018E && keysym <= 0x0199)
++			 || (keysym >= 0x019C && keysym <= 0x01A9)
++			 || (keysym >= 0x01AC && keysym <= 0x01B9)
++			 || (keysym >= 0x01BC && keysym <= 0x01BD)
++			 || (keysym == 0x01BF)
++			 || (keysym == 0x01C4)
++			 || (keysym >= 0x01C6 && keysym <= 0x01C7)
++			 || (keysym >= 0x01C9 && keysym <= 0x01CA)
++			 || (keysym >= 0x01CC && keysym <= 0x01EF)
++			 || (keysym == 0x01F1)
++			 || (keysym >= 0x01F3 && keysym <= 0x0220)
++			 || (keysym >= 0x0222 && keysym <= 0x0233)
++			 || (keysym >= 0x0253 && keysym <= 0x0254)
++			 || (keysym >= 0x0256 && keysym <= 0x0257)
++			 || (keysym == 0x0259)
++			 || (keysym == 0x025B)
++			 || (keysym == 0x0260)
++			 || (keysym == 0x0263)
++			 || (keysym >= 0x0268 && keysym <= 0x0269)
++			 || (keysym == 0x026F)
++			 || (keysym == 0x0272)
++			 || (keysym == 0x0275)
++			 || (keysym == 0x0280)
++			 || (keysym == 0x0283)
++			 || (keysym == 0x0288)
++			 || (keysym >= 0x028A && keysym <= 0x028B)
++			 || (keysym == 0x0292)
++			 || (keysym == 0x0345)
++			 || (keysym == 0x0386)
++			 || (keysym >= 0x0388 && keysym <= 0x038A)
++			 || (keysym == 0x038C)
++			 || (keysym >= 0x038E && keysym <= 0x038F)
++			 || (keysym >= 0x0391 && keysym <= 0x03A1)
++			 || (keysym >= 0x03A3 && keysym <= 0x03AF)
++			 || (keysym >= 0x03B1 && keysym <= 0x03CE)
++			 || (keysym >= 0x03D0 && keysym <= 0x03D1)
++			 || (keysym >= 0x03D5 && keysym <= 0x03D6)
++			 || (keysym >= 0x03D8 && keysym <= 0x03F2)
++			 || (keysym >= 0x03F4 && keysym <= 0x03F5)
++			 || (keysym >= 0x0400 && keysym <= 0x0481)
++			 || (keysym >= 0x048A && keysym <= 0x04BF)
++			 || (keysym >= 0x04C1 && keysym <= 0x04CE)
++			 || (keysym >= 0x04D0 && keysym <= 0x04F5)
++			 || (keysym >= 0x04F8 && keysym <= 0x04F9)
++			 || (keysym >= 0x0500 && keysym <= 0x050F)
++			 || (keysym >= 0x0531 && keysym <= 0x0556)
++			 || (keysym >= 0x0561 && keysym <= 0x0586)
++			 || (keysym >= 0x1E00 && keysym <= 0x1E95)
++			 || (keysym == 0x1E9B)
++			 || (keysym >= 0x1EA0 && keysym <= 0x1EF9)
++			 || (keysym >= 0x1F00 && keysym <= 0x1F15)
++			 || (keysym >= 0x1F18 && keysym <= 0x1F1D)
++			 || (keysym >= 0x1F20 && keysym <= 0x1F45)
++			 || (keysym >= 0x1F48 && keysym <= 0x1F4D)
++			 || (keysym == 0x1F51)
++			 || (keysym == 0x1F53)
++			 || (keysym == 0x1F55)
++			 || (keysym == 0x1F57)
++			 || (keysym == 0x1F59)
++			 || (keysym == 0x1F5B)
++			 || (keysym == 0x1F5D)
++			 || (keysym >= 0x1F5F && keysym <= 0x1F7D)
++			 || (keysym >= 0x1F80 && keysym <= 0x1FB1)
++			 || (keysym == 0x1FB3)
++			 || (keysym >= 0x1FB8 && keysym <= 0x1FBC)
++			 || (keysym == 0x1FBE)
++			 || (keysym == 0x1FC3)
++			 || (keysym >= 0x1FC8 && keysym <= 0x1FCC)
++			 || (keysym >= 0x1FD0 && keysym <= 0x1FD1)
++			 || (keysym >= 0x1FD8 && keysym <= 0x1FDB)
++			 || (keysym >= 0x1FE0 && keysym <= 0x1FE1)
++			 || (keysym == 0x1FE5)
++			 || (keysym >= 0x1FE8 && keysym <= 0x1FEC)
++			 || (keysym == 0x1FF3)
++			 || (keysym >= 0x1FF8 && keysym <= 0x1FFC)
++			 || (keysym == 0x2126)
++			 || (keysym >= 0x212A && keysym <= 0x212B)
++			 || (keysym >= 0x2160 && keysym <= 0x217F)
++			 || (keysym >= 0x24B6 && keysym <= 0x24E9)
++			 || (keysym >= 0xFF21 && keysym <= 0xFF3A)
++			 || (keysym >= 0xFF41 && keysym <= 0xFF5A)) {
++				if (vc_kbd_led(kbd, VC_CAPSLOCK)) {
++					key_map = key_maps[shift_final ^ (1 << KG_SHIFT)];
++					if (key_map) {
++						keysym = key_map[keycode];
++						type = KTYP(keysym);
++					}
++				}
++			}
++		}
++	}
++	if (type < 0xf0) {
+ 		if (down && !raw_mode)
+ 			to_utf8(vc, keysym);
+ 		return;
