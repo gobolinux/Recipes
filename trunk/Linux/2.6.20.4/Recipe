@@ -82,10 +82,12 @@ private__calculate_full_version() {
 
 private__link_at_system_kernel_boot() {
    local fullversion="$1"
-   ln -sf kernel-$fullversion $goboBoot/kernel
-   ln -sf System.map-$fullversion $goboBoot/System.map
-   ln -nfs $goboModules/$fullversion $goboModules/Current
-   ln -nfs $goboModules/$fullversion /lib/modules
+   mkdir -p $target/Resources/Unmanaged/$goboLibraries/modules
+   dest=$target/Resources/Unmanaged/$goboBoot
+   ln -sf kernel-$fullversion $dest/kernel
+   ln -sf System.map-$fullversion $dest/System.map
+   ln -nfs $goboModules/$fullversion $target/Resources/Unmanaged/$goboModules/Current
+   ln -nfs $fullversion $target/Resources/Unmanaged/$goboLibraries/modules
 }
 
 private__check_dependant_modules() {

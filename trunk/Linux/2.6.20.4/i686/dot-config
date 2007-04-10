@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Linux kernel version: 2.6.20.4
-# Wed Apr  4 23:26:03 2007
+# Mon Apr  9 20:28:04 2007
 #
 CONFIG_X86_32=y
 CONFIG_GENERIC_TIME=y
@@ -3495,7 +3495,7 @@ CONFIG_UNION_FS_XATTR=y
 # CONFIG_ADFS_FS is not set
 CONFIG_AFFS_FS=m
 CONFIG_HFS_FS=y
-CONFIG_HFSPLUS_FS=y
+CONFIG_HFSPLUS_FS=m
 CONFIG_BEFS_FS=m
 # CONFIG_BEFS_DEBUG is not set
 CONFIG_BFS_FS=m
@@ -3639,7 +3639,7 @@ CONFIG_NLS_ISO8859_14=m
 CONFIG_NLS_ISO8859_15=m
 CONFIG_NLS_KOI8_R=m
 CONFIG_NLS_KOI8_U=m
-CONFIG_NLS_UTF8=y
+CONFIG_NLS_UTF8=m
 
 #
 # Distributed Lock Manager
