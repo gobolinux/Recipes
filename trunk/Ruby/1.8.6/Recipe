@@ -1,0 +1,10 @@
+# Recipe for version 1.8.6 by Michael Homer, on Wed Apr 11 12:06:07 NZST 2007
+compile_version=1.8.2
+url="ftp://ftp.ruby-lang.org/pub/ruby/ruby-1.8.6.tar.bz2"
+file_size=3946186
+file_md5=e558a0e00ae318d43bf6ff9af452bad2
+recipe_type=configure
+
+configure_options=(
+ "--disable-frame-address"
+)
