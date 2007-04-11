@@ -1,0 +1,115 @@
+--- madwifi-0.9.3/Makefile.inc.orig	2007-04-11 03:43:19.000000000 -0300
++++ madwifi-0.9.3/Makefile.inc	2007-04-11 03:44:54.000000000 -0300
+@@ -49,86 +49,6 @@ endif
+ # DESTDIR is used as path prefix during installation.
+ DESTDIR ?=
+ 
+-# KERNELPATH is the path to the Linux kernel build tree.  Unless a
+-# separate build directory was used for the kernel build, it's the same
+-# as the kernel source tree.  KERNELPATH is used to access the kernel
+-# configuration, include files and the build system.  To build for
+-# another kernel, set KERNELPATH manually, for example with:
+-# make KERNELPATH=/path/to/kernel/source
+-
+-# The default KERNELPATH points to the directory where the currently
+-# running kernel was compiled.  Note that the configuration and the
+-# version of the kernel tree might have changed since then.
+-ifeq ($(wildcard $(KERNELPATH)),)
+-KERNELPATH = /lib/modules/$(shell uname -r)/build
+-# sanity check: does KERNELPATH exist?
+-ifeq ($(shell cd $(KERNELPATH) && pwd),)
+-$(error $(KERNELPATH) is missing, please set KERNELPATH)
+-endif
+-export KERNELPATH
+-endif
+-
+-# KERNELRELEASE is the target kernel's version.  It's always taken from
+-# the kernel build tree.  Kernel Makefile doesn't always know the exact
+-# kernel version (especially for vendor stock kernels), so we get it
+-# from <linux/version.h> instead. But simply grepping it from version.h
+-# doesn't work, since some distributions have multiple UTS_RELEASE
+-# in that file.
+-# This trick has been inspired by the lm_sensors project.
+-ifndef KERNELRELEASE
+-KERNELRELEASE := $(shell $(CC) -I $(KERNELPATH)/include -E $(TOP)/kernelversion.c | grep uts_release | cut -f2 -d'"')
+-ifeq (,$(KERNELRELEASE))
+-$(error Cannot detect kernel version - please check compiler and KERNELPATH)
+-endif
+-endif
+-
+-# KERNELCONF is the name of the file that holds the configuration
+-# of the target kernel.
+-KERNELCONF ?=	$(KERNELPATH)/.config
+-
+-# sanity check: does KERNELCONF exist?
+-ifeq ($(wildcard $(KERNELCONF)),)
+-$(error KERNELCONF: $(KERNELCONF) does not exist.)
+-endif
+-include $(KERNELCONF)
+-
+-# Determine architecture of the kernel.
+-include $(TOP)/scripts/get_arch.mk
+-export ARCH
+-
+-# Determine TARGET
+-include $(TOP)/ath_hal/ah_target.inc
+-export TARGET
+-
+-# KMODPATH nominates the directory where the modules will be
+-# installed to
+-KMODPATH :=	/lib/modules/$(KERNELRELEASE)/net
+-
+-# Recognize 2.4.x kernels to support the old build system
+-ifeq ($(filter-out 2.4%,$(KERNELRELEASE)),)
+-LINUX24 = y
+-endif
+-
+-ifndef LINUX24
+-KMODSUF		:= ko
+-else
+-export-objs	= $(foreach m, $(obj-m), $($(m:.o=-objs)))
+-list-multi	= $(obj-m)
+-KMODSUF		:= o
+-endif
+-
+-NM=		nm
+-
+-#
+-# Path to the HAL source code.
+-#
+-ifeq ($(HAL),)
+-HAL=	$(TOP)/hal
+-endif
+-#
+-# Path to HAL/OS interface code
+-#
+-ATH_HAL= $(TOP)/ath_hal
+ #
+ # Path to the 802.11 include files.
+ #
+@@ -149,16 +69,6 @@ TOOLS=  $(TOP)/tools 
+ COPTS+=	-Werror
+ INCS=	-include $(TOP)/include/compat.h -I$(TOP)/include
+ 
+-# TARGET defines the target platform architecture. It must match one of
+-# the target platforms supported by the HAL. The default target is the
+-# host machine architecture. You can override TARGET on the make command
+-# line or in the environment. See hal/linux/*.inc for the list of
+-# supported targets.
+-ifeq (,$(wildcard $(HAL)/public/$(TARGET).inc))
+-TARGETS=$(basename $(notdir $(wildcard $(HAL)/public/*.inc)))
+-$(error TARGET $(TARGET) is invalid, valid targets are: $(TARGETS))
+-endif
+-
+ # Don't let HAL mess with the toolchain - save toolchain variables
+ save_CC := $(CC)
+ save_LD := $(LD)
+@@ -166,8 +76,6 @@ save_STRIP := $(STRIP)
+ save_OBJCOPY := $(OBJCOPY)
+ save_NM := $(NM)
+ 
+-include $(HAL)/public/$(TARGET).inc
+-
+ # Restore toolchain variables
+ CC := $(save_CC)
+ LD := $(save_LD)
