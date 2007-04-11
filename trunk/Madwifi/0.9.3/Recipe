@@ -26,4 +26,16 @@ unmanaged_files=(
    ${goboModules}/$(uname -r)/net/wlan_wep.ko
    ${goboModules}/$(uname -r)/net/wlan_tkip.ko
    ${goboModules}/$(uname -r)/net/wlan.ko
+   ${goboModules}/$(uname -r)/net/wlan.ko
+   ${goboModules}/$(uname -r)/modules.alias
+   ${goboModules}/$(uname -r)/modules.dep
+   ${goboModules}/$(uname -r)/modules.inputmap
+   ${goboModules}/$(uname -r)/modules.ofmap
+   ${goboModules}/$(uname -r)/modules.seriomap
+   ${goboModules}/$(uname -r)/modules.usbmap
+   ${goboModules}/$(uname -r)/modules.ccwmap
+   ${goboModules}/$(uname -r)/modules.ieee1394map
+   ${goboModules}/$(uname -r)/modules.isapnpmap
+   ${goboModules}/$(uname -r)/modules.pcimap
+   ${goboModules}/$(uname -r)/modules.symbols
 )
