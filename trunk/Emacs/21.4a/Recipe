@@ -1,9 +1,11 @@
-# Recipe for version 21.4 by roko, <ro.ko@mcnon.com>, on Mon Mar 7 12:52:46 CET 2005
+# Recipe for version 21.4a-r3 by mpb <mpb.mail@gmail.com>, on Wed Apr 11 00:19:10 PDT 2007
 # by Leandro Motta Barros
-# Revised for version 21.4a by Jonas Karlsson <jonka750@student.liu.se>, on Mon Apr 5 23:05 CET 2005
+# Revised for version 21.4a-r3 by Jonas Karlsson <jonka750@student.liu.se>, on Mon Apr 5 23:05 CET 2005
 
-url=$ftpGnu/emacs/emacs-21.4a.tar.gz
-compile_version=1.8.0
+url="$ftpGnu/emacs/emacs-21.4a.tar.gz"
+file_size=20403483
+file_md5=8f9d97cbd126121bd5d97e5e31168a87
+compile_version=1.8.2
 recipe_type=configure
 dir=emacs-21.4
 
