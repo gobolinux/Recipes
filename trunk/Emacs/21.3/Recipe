@@ -1,7 +1,8 @@
+# Recipe for version 21.3-r2 by mpb <mpb.mail@gmail.com>, on Wed Apr 11 00:19:10 PDT 2007
 # by Leandro Motta Barros
 
 url=$ftpGnu/emacs/emacs-21.3.tar.gz
-compile_version=1.7.1
+compile_version=1.8.2
 recipe_type=configure
 
 # Remove source Emacs Lisp files. Be carefull not to remove .el files
