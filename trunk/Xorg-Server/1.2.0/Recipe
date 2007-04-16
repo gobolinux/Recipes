@@ -22,6 +22,7 @@ configure_options=(
    "--enable-dri"
    "--enable-glx"
    "--enable-glx-tls"
+   "--enable-xglx"
    "--enable-lbx"
    "--disable-fontcache"
    "--disable-secure-rpc"
