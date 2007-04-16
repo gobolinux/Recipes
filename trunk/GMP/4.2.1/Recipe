@@ -1,5 +1,8 @@
 # Recipe for version 4.2.1 by Andre Detsch <detsch@gobolinux.org>, on Thu Nov 9 20:57:57 BRST 2006
 # Recipe (MakeRecipe) for GMP by roko, <ro.ko@mcnon.com>, on Sun Dec 5 19:48:50 BRST 2004
-compile_version=1.8.0
+compile_version=1.8.2
 url="$ftpGnu/gmp/gmp-4.2.1.tar.bz2"
 recipe_type=configure
+environment=(
+	"ABI=32"
+)
