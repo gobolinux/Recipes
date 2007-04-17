@@ -3,6 +3,3 @@
 compile_version=1.8.2
 url="$ftpGnu/gmp/gmp-4.2.1.tar.bz2"
 recipe_type=configure
-environment=(
-	"ABI=32"
-)
