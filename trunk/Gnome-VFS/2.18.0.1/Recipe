@@ -1,0 +1,11 @@
+# Recipe for version 2.18.0.1 by Jonas Karlsson <jonka750@student.liu.se>, on Mon Apr 9 21:44:30 CEST 2007
+# Recipe (MakeRecipe) for Gnome-VFS by Jonas Karlsson <jonka750@student.liu.se>, on Tue May 10 21:38:57 CEST 2005
+# updated deps By Rotem Zach
+compile_version=1.8.2
+url="http://ftp.gnome.org/pub/GNOME/sources/gnome-vfs/2.18/gnome-vfs-2.18.0.1.tar.bz2"
+file_size=1830575
+file_md5=0b7a6ab495c0d94c3db00a7b0321adbf
+recipe_type=configure
+sandbox_options=(
+    --add-allowed ${gconf_settings_path}/gconf/gconf.xml.defaults
+)
