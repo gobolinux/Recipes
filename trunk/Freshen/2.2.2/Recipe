@@ -1,0 +1,19 @@
+# Recipe for version 2.2.2 by Michael Homer, on Fri Apr 13 13:54:17 NZST 2007
+url="http://e.geek.nz/files/gobo/Freshen--2.2.2--i686.tar.bz2"
+file_size=14122
+file_md5=6ccd15e8c996f4305621e91cda96deaf
+compile_version=1.8.2
+recipe_type=manifest
+dir=Freshen/2.2.2
+
+manifest=(
+"bin/Freshen:/bin/"
+"lib/merge.rb:/lib/"
+"lib/progressbar.rb:/lib/"
+"lib/version.rb:/lib/"
+"lib/depsort.rb:/lib/"
+"lib/screen.rb:/lib/"
+"lib/freshen-functions.rb:/lib/"
+"lib/parseconfig.rb:/lib/"
+"Resources:/Resources/"
+)
