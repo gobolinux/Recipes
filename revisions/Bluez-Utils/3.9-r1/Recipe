@@ -1,0 +1,11 @@
+# Recipe for version 3.9 by Henrique Abdalla <teique@gmail.com>, on Sex Abr 13 22:42:26 BRT 2007
+# Recipe (MakeRecipe) for Bluez-Utils by Guilherme Balestieri Bedin (gbedin), on Fri Aug 19 11:02:05 BRT 2005
+compile_version=1.8.2
+url="http://bluez.sourceforge.net/download/bluez-utils-3.9.tar.gz"
+file_size=726320
+file_md5=023a5e6a436f86a28baeec91e4c62736
+recipe_type=configure
+
+sandbox_options=(
+  "--no-sandbox"
+)
