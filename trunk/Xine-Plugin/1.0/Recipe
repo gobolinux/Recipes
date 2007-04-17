@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Xine-Plugin by Jonas Karlsson <jonka750@student.liu.se>, on Thu Apr 12 18:11:51 CEST 2007
+# Recipe for version 1.0 by Jonas Karlsson <jonka750@student.liu.se>, on Thu Apr 12 18:11:51 CEST 2007
+compile_version=1.8.2
+url="$httpSourceforge/xine/xine-plugin-1.0.tar.bz2"
+file_size=571676
+file_md5=05498789ac11990d5ddd05269671ad0d
+recipe_type=configure
+
+configure_options=(
+   "--with-plugindir=${target}/lib/browser-plugins"
+)
