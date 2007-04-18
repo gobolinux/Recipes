@@ -1,0 +1,13 @@
+# Recipe for version 5.1.2 by mpb <mpb.mail@gmail.com>, on Fri Apr 6 23:35:08 PDT 2007
+compile_version=1.8.2
+url=http://www.lua.org/ftp/lua-5.1.2.tar.gz
+file_size=214134
+file_md5=687ce4c2a1ddff18f1008490fdc4e5e0
+recipe_type=makefile
+build_target=linux
+docs=(
+  "doc/*.html"
+)
+make_variables=(
+  INSTALL_TOP=$target
+)
