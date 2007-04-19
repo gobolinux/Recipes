@@ -1,0 +1,22 @@
+[Name] Djbdns
+[Summary] djbdns and tinydns are lightweight, highly secure, DNS servers
+[License] As-is (No license specified)
+[Homepage] http://cr.yp.to/djbdns.html
+
+[Description] djbdns is a compact, highly-secure DNS server suite,
+that includes the following two programs:
+
+* djbdns  (WARNING - not tested on Gobo!)
+* tinydns
+
+The djbdns program is a recursive, resolving DNS server.  You use
+djbdns to look up DNS info for domains and cache it locally on your
+network.  WARNING: djbdns as compiled by this recipe has not been
+tested.  I know of at least one location in the source code where a
+hardcoded '/etc' path probably needs to be patched.
+
+The tinydns program is a master DNS server.  You use tinydns to
+publish authoritative DNS information your own domains.
+
+Non-Gobo tinydns installation instructions:
+http://cr.yp.to/djbdns/run-server.html
