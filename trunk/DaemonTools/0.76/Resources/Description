@@ -1,0 +1,20 @@
+[Name] DaemonTools
+[Summary] DJB's collection of tools for managing UNIX services
+[License] Public Domain
+[Homepage] http://cr.yp.to/daemontools.html
+
+[Description] daemontools is a collection of tools for managing
+(i.e. starting, stopping and restarting) UNIX services.  DaemonTools
+is used by djbdns and tinydns, among others.
+
+This recipe only installs the daemontools programs.
+
+This recipe DOES NOT:
+  * create the /service directory
+  * run svscan
+  * cause svscan to run at boot-time
+
+Perhaps someday automatic configuration will be implemented in a
+Gobo-appropriate way, but at present auto-configuration is not
+implemented.  Please see the website for instructions on manually
+configuring svscan and the other daemontools.
