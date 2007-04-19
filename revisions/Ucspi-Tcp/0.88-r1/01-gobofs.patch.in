@@ -1,0 +1,21 @@
+diff -Naur ucspi-tcp-0.88.orig/conf-home ucspi-tcp-0.88/conf-home
+--- ucspi-tcp-0.88.orig/conf-home	2001-02-11 13:11:45.000000000 -0800
++++ ucspi-tcp-0.88/conf-home	2007-04-11 17:28:31.000000000 -0700
+@@ -1,4 +1,4 @@
+-/usr/local
++@%Compile_target%@
+ 
+ This is the dnscache home directory. Programs will be installed in
+ .../bin.
+diff -Naur ucspi-tcp-0.88.orig/error.h ucspi-tcp-0.88/error.h
+--- ucspi-tcp-0.88.orig/error.h	2001-07-12 09:49:49.000000000 -0700
++++ ucspi-tcp-0.88/error.h	2007-04-11 22:24:37.000000000 -0700
+@@ -3,7 +3,7 @@
+ #ifndef ERROR_H
+ #define ERROR_H
+ 
+-extern int errno;
++#include <errno.h>
+ 
+ extern int error_intr;
+ extern int error_nomem;
