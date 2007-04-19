@@ -1,0 +1,8 @@
+[Name] Sendmail-Libmilter
+[Summary] Sendmail's libmilter library, used by milter based email filters.
+[License] "Sendmail License"
+[Homepage] http://www.sendmail.org/
+
+[Description] A C-language library providing the Milter API used by
+some (many?) email filters.  Sendmail and Postfix support the Milter
+interface.  More info at http://www.sendmail.org/doc/

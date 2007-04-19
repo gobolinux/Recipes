@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for Sendmail-Libmilter by mpb <mpb.mail@gmail.com>, on Wed Apr 18 01:14:37 PDT 2007
+# Recipe for version 8.14.1 by mpb <mpb.mail@gmail.com>, on Wed Apr 18 01:14:37 PDT 2007
+compile_version=1.8.2
+url="ftp://ftp.sendmail.org/pub/sendmail/sendmail.8.14.1.tar.gz"
+file_size=2061959
+file_md5=462bc9e00fdbef3a71b046b967c9a157
+dir='sendmail-8.14.1/libmilter'
+recipe_type=makefile
+makefile='Makefile'
