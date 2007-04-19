@@ -1,0 +1,32 @@
+diff -Naur dkim-milter-0.6.4.orig/devtools/Site/site.config.m4 dkim-milter-0.6.4/devtools/Site/site.config.m4
+--- dkim-milter-0.6.4.orig/devtools/Site/site.config.m4	1969-12-31 16:00:00.000000000 -0800
++++ dkim-milter-0.6.4/devtools/Site/site.config.m4	2007-04-18 01:52:59.000000000 -0700
+@@ -0,0 +1,12 @@
++APPENDDEF(`confLIBDIRS',	`-L@%Compile_goboLibraries%@')
++
++APPENDDEF(`confBINDIR',	`@%Compile_target%@/sbin')
++APPENDDEF(`confUBINDIR',	`@%Compile_target%@/bin')
++APPENDDEF(`confSBINDIR',	`@%Compile_target%@/sbin')
++APPENDDEF(`confMBINDIR',	`@%Compile_target%@/sbin')
++APPENDDEF(`confEBINDIR',	`@%Compile_target%@/libexec')
++
++APPENDDEF(`confINCLUDEDIR',	`@%Compile_target%@/include')
++APPENDDEF(`confLIBDIR',	`@%Compile_target%@/lib')
++
++define(`confMANROOT',		`@%Compile_target%@/man/man')
+diff -Naur dkim-milter-0.6.4.orig/devtools/M4/header.m4 dkim-milter-0.6.4/devtools/M4/header.m4
+--- dkim-milter-0.6.4.orig/devtools/M4/header.m4        2002-08-01 14:58:26.000000000 -0700
++++ dkim-milter-0.6.4/devtools/M4/header.m4     2007-04-18 17:14:43.000000000 -0700
+@@ -26,7 +26,11 @@
+ define(`confLIBDIRS', `')
+ define(`confINCDIRS', `')
+ define(`confLIBSEARCH', `db bind resolv 44bsd')
+-define(`confLIBSEARCHPATH', `/lib /usr/lib /usr/shlib')
++
++dnf  I could not figure out how to cleanly change confLIBSEARCHPATH
++dnf  in site.config.m4, so I am patching it here.  This is a kludge.
++define(`confLIBSEARCHPATH', `/lib /usr/lib /usr/shlib @%Compile_goboLibraries%@')
++
+ define(`confSITECONFIG', `site.config')
+ define(`confBUILDBIN', `${SRCDIR}/devtools/bin')
+ define(`confRANLIB', `echo')

@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for DKIM-Milter by mpb <mpb.mail@gmail.com>, on Tue Apr 17 15:52:55 PDT 2007
+# Recipe for version 0.6.4 by mpb <mpb.mail@gmail.com>, on Tue Apr 17 15:52:55 PDT 2007
+compile_version=1.8.2
+url="http://downloads.sourceforge.net/dkim-milter/dkim-milter-0.6.4.tar.gz"
+file_size=482643
+file_md5=6324ea1949b36e6a08bdc590c43b2908
+recipe_type=makefile
+makefile='Makefile'
