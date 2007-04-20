@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Expect by Jonas Karlsson <jonka750@student.liu.se>, on Tue Oct 17 19:02:35 CEST 2006
+# Recipe for version 5.44.1 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Oct 17 19:02:35 CEST 2006
+compile_version=1.8.2
+url="http://expect.nist.gov/old/expect-5.44.1.tar.gz"
+file_size=623422
+file_md5=0fe7adab383f2d9598c9cd0e790dac64
+recipe_type=configure
+
+configure_options=(
+   '--exec-prefix=${target}'
+)
