@@ -1,9 +1,9 @@
 # /etc/udev/rules/50-udev.rules:  device naming rules for udev
 #
-# Gentoo specific rules
+# GoboLinux specific rules
 #
 # There are a number of modifiers that are allowed to be used in some of the
-# fields.  See the udev man page for a full description of them.
+# different fields.  See the udev man page for a full description of them.
 #
 # Try not to modify this file, if you wish to change things, create a new rule
 # file that can be run before this one.
@@ -37,10 +37,10 @@ BUS=="ide",	KERNEL=="hd[a-z]", ACTION=="add", IMPORT="/sbin/cdrom_id --export $t
 BUS=="scsi",	KERNEL=="sr[0-9]*", ACTION=="add", IMPORT="/sbin/cdrom_id --export $tempnode"
 BUS=="scsi",	KERNEL=="scd[a-z]", ACTION=="add", IMPORT="/sbin/cdrom_id --export $tempnode"
 BUS=="scsi",	KERNEL=="sg[0-9]*", ACTION=="add", DRIVER=="sr", GROUP="console"
-ENV{ID_CDROM}=="?*",		SYMLINK+="cdrom%e", GROUP="console", MODE="0664"
-ENV{ID_CDROM_CD_RW}=="?*",	SYMLINK+="cdrw%e", GROUP="console", MODE="0664"
-ENV{ID_CDROM_DVD}=="?*",	SYMLINK+="dvd%e", GROUP="console", MODE="0664"
-ENV{ID_CDROM_DVD_R}=="?*",	SYMLINK+="dvdrw%e", GROUP="console", MODE="0664"
+ENV{ID_CDROM}=="?*",		SYMLINK+="cdrom%n", GROUP="console", MODE="0664"
+ENV{ID_CDROM_CD_RW}=="?*",	SYMLINK+="cdrw%n", GROUP="console", MODE="0664"
+ENV{ID_CDROM_DVD}=="?*",	SYMLINK+="dvd%n", GROUP="console", MODE="0664"
+ENV{ID_CDROM_DVD_R}=="?*",	SYMLINK+="dvdrw%n", GROUP="console", MODE="0664"
 
 # disk devices
 KERNEL=="sd*",		NAME="%k", GROUP="console"
