@@ -37,6 +37,12 @@ pre_build()
     sed -i "s/^    enum$/& xptinfo_enum_1/" xpcom/reflect/xptinfo/public/xptinfo.h
 }
 
+pre_link()
+{
+    mkdir -p ${target}/Shared/applications
+    cp firefox.desktop ${target}/Shared/applications
+}
+
 post_install()
 {
     # Give Firefox an icon while minimized
@@ -52,4 +58,8 @@ post_install()
     # replace the broken nss files with symbolic links to known good files
     ln -v -sf ${goboLibraries}/pkgconfig/nss.pc ${target}/lib/pkgconfig/firefox-nss.pc
     ln -v -sf ${goboLibraries}/pkgconfig/nspr.pc ${target}/lib/pkgconfig/firefox-nspr.pc
+
+    # Shortcut to the icon
+    mkdir -p ${target}/Shared/icons/firefox
+    cp ${target}/lib/firefox-2.0.0.2/icons/mozicon128.png ${target}/Shared/icons/firefox
 }
