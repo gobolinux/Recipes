@@ -2,10 +2,22 @@
 # Recipe (MakeRecipe) for Mesa by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Nov 23 03:32:41 BRST 2004
 compile_version=1.8.2
 urls=(
-    "$httpSourceforge/mesa3d/MesaLib-6.5.2.tar.bz2"
-    "$httpSourceforge/mesa3d/MesaGLUT-6.5.2.tar.bz2"
-    "$httpSourceforge/mesa3d/MesaDemos-6.5.2.tar.bz2"
+   "$httpSourceforge/mesa3d/MesaLib-6.5.2.tar.bz2"
+   "$httpSourceforge/mesa3d/MesaGLUT-6.5.2.tar.bz2"
+   "$httpSourceforge/mesa3d/MesaDemos-6.5.2.tar.bz2"
 )
+file_sizes=(
+   3295166
+   313048
+   1324545
+)
+
+file_md5s=(
+   e4d894181f1859651658b3704633e10d
+   e84edbb11c69c8e408dfadd2ed08e95b
+   e870efe98d3a50be01ab211b9b2e25d9
+)
+
 recipe_type=makefile
 dir='Mesa-6.5.2'
 build_target=linux-dri
