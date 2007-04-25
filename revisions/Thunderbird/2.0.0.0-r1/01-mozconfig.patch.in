@@ -1,0 +1,25 @@
+--- mozilla/.mozconfig.old	1970-01-01 01:00:00.000000000 +0100
++++ mozilla/.mozconfig	2005-05-03 20:31:00.000000000 +0200
+@@ -0,0 +1,22 @@
++# Include the default settings specified in the source tree
++. $topsrcdir/mail/config/mozconfig
++
++# Create an object directory and specify to build the package in that
++# directory. If desired, modify the location of the object directory
++# to a directory outside the source tree by adding '../' before
++# 'firefox-build' in the line below.
++mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/../thunderbird-build
++# Options for client.mk.
++#mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/Thunderbird
++
++# These two options enable support for building Firefox with
++# system-installed versions of the Network Security Services (NSS)
++# and Netscape Portable Runtime (NSPR) libraries. Uncomment both
++# lines to enable support for system-installed NSS/NSPR.
++ac_add_options --with-system-nss
++ac_add_options --with-nss-prefix=@%Compile_nss_path%@
++ac_add_options --with-system-nspr
++ac_add_options --with-nspr-prefix=@%Compile_nspr_path%@
++ 
++# enable automatic updates
++ac_add_options --enable-updater
