@@ -1,0 +1,20 @@
+--- liblrdf-0.4.0-bak/examples/Makefile.am	2007-04-22 14:26:12.000000000 -0400
++++ liblrdf-0.4.0/examples/Makefile.am	2007-04-22 14:34:45.000000000 -0400
+@@ -2,6 +2,7 @@
+ 	subclass_test add_test instances_test remove_test multi_test \
+ 	setting_test scale_test
+ 
++INCLUDES = -I../src/
+ LIBS = ../src/liblrdf.la
+ 
+ pkgdata_DATA = ladspa.rdfs
+--- liblrdf-0.4.0-bak/examples/Makefile.in	2007-04-22 14:26:12.000000000 -0400
++++ liblrdf-0.4.0/examples/Makefile.in	2007-04-22 14:35:02.000000000 -0400
+@@ -217,6 +216,7 @@
+ sharedstatedir = @sharedstatedir@
+ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
++INCLUDES = -I../src/
+ pkgdata_DATA = ladspa.rdfs
+ EXTRA_DIST = default-sample.rdf example.rdf sample.rdf scale-example.rdf \
+ 	 ladspa.rdfs test-in.n3 preset-in.n3
