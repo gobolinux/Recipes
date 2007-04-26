@@ -1,0 +1,65 @@
+# Recipe for version 2.0.0.2 by Lucas C. Villa Real, on Fri Mar 9 00:25:38 BRT 2007
+# Recipe (MakeRecipe) for Firefox by Jonas Karlsson <jonka750@student.liu.se>, on Sun May 1 10:13:41 CEST 2005
+compile_version=1.8.2
+url="ftp://ftp.mozilla.org/pub/mozilla.org/firefox/releases/2.0.0.2/source/firefox-2.0.0.2-source.tar.bz2"
+file_size=37137694
+file_md5=d7db87b76c1e78a229b662d7dd642265
+dir='mozilla'
+recipe_type=configure
+
+configure_options=(
+    --enable-application=browser   # It's the browser Firefox we want to build, right?
+    --enable-default-toolkit=gtk2  # Use gtk+ 2.x instead of gtk+ 1.x
+
+    --enable-xft
+
+    --with-system-zlib             # These options are used so that the Firefox binaries are linked to
+    --with-system-png              # the system-installed copies of the specified libraries instead of
+    --with-system-jpeg             # the source tree code which may not be the most recent versions.
+
+#    --enable-official-branding     # This option causes the installed binaries to have the official Firefox name embedded in them. 
+# Due to license restrictions, you may not distribute binaries created using this option.
+
+    --with-distribution-id=GoboLinux
+
+    --enable-strip                 # This option is used so that the debugging symbols are removed from the
+    --enable-optimize              # installed binaries during the installation process. Comment out this option
+    --disable-debug                # if you may have a need to retain the debugging symbols in the installed binaries.
+
+    --disable-tests                # This option is added so that test libraries and programs are not built.
+    --disable-installer            # This option is added so that the Mozilla Installer program is not built or installed.
+    --disable-accessibility        # Disable the a11y support. Comment out this option if you require a11y support.
+)
+
+pre_build()
+{
+    # Fix an anonymous enum in an external/public interface header file
+    sed -i "s/^    enum$/& xptinfo_enum_1/" xpcom/reflect/xptinfo/public/xptinfo.h
+}
+
+pre_link()
+{
+    mkdir -p ${target}/Shared/applications
+    cp $recipedir/firefox.desktop ${target}/Shared/applications
+}
+
+post_install()
+{
+    # Give Firefox an icon while minimized
+    install -v -m755 -o0 -g0 -d ${target}/lib/firefox-2.0.0.2/chrome/icons/default
+    ln -v -s ../../../icons/default.xpm ${target}/lib/firefox-2.0.0.2/chrome/icons/default
+    
+    # Changes the ownership of some installed files to more appropriate user:group names
+    chown -v -R 0:0 ${target}/lib/firefox-2.0.0.2/extensions/inspector@mozilla.org/*
+    
+    # install some additional LDAP interface headers
+    install -v -m644 -o0 -g0 firefox-build/dist/public/ldap-private/* ${target}/include/firefox-2.0.0.2/ldap
+    
+    # replace the broken nss files with symbolic links to known good files
+    ln -v -sf ${goboLibraries}/pkgconfig/nss.pc ${target}/lib/pkgconfig/firefox-nss.pc
+    ln -v -sf ${goboLibraries}/pkgconfig/nspr.pc ${target}/lib/pkgconfig/firefox-nspr.pc
+
+    # Shortcut to the icon
+    mkdir -p ${target}/Shared/icons/firefox
+    cp ${target}/lib/firefox-2.0.0.2/icons/mozicon128.png ${target}/Shared/icons/firefox
+}
