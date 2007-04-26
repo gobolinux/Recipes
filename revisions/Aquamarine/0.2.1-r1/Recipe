@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for Aquamarine by Jonas Karlsson <jonka750@student.liu.se>, on Sat Mar 24 08:35:16 CET 2007
+# Recipe for version 0.2.1 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Mar 24 08:35:16 CET 2007
+compile_version=1.8.2
+url="http://releases.beryl-project.org/0.2.1/aquamarine-0.2.1.tar.bz2"
+file_size=436206
+file_md5=186826182dc2cefb3aaa09b7af938bec
+recipe_type=configure
+
+configure_options=(
+   "--mandir=${target}/man"
+   "--disable-libsuffix"
+)
+
+install_variables=(
+   "plugindir=${target}/lib/beryl"
+)
