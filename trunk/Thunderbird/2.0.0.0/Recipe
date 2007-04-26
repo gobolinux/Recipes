@@ -41,7 +41,7 @@ pre_build()
 pre_link()
 {
     mkdir -p ${target}/Shared/applications
-    cp thunderbird.desktop ${target}/Shared/applications
+    cp $recipedir/thunderbird.desktop ${target}/Shared/applications
 }
 
 post_install()
@@ -62,5 +62,5 @@ post_install()
 
     # Shortcut to the icon
     mkdir -p ${target}/Shared/icons/thunderbird
-    cp ${target}/lib/thunderbird-2.0.0.0/icons/mozicon50.png ${target}/Shared/icons/thunderbird
+    cp ${target}/lib/thunderbird-2.0.0.0/icons/mozicon50.xpm ${target}/Shared/icons/thunderbird
 }
