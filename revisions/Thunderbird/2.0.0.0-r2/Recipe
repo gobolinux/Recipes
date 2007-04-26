@@ -1,0 +1,66 @@
+# Recipe (MakeRecipe) for Thunderbird by Lucas C. Villa Real, on Wed Apr 25 11:06:32 GMT 2007
+# Recipe for version 2.0.0.0 by Lucas C. Villa Real, on Wed Apr 25 11:06:32 GMT 2007
+compile_version=1.8.2
+url="http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/2.0.0.0/source/thunderbird-2.0.0.0-source.tar.bz2"
+file_size=37379868
+file_md5=8e672d9f9206e0e1f03790dacb51e1bb
+dir='mozilla'
+recipe_type=configure
+
+configure_options=(
+    --enable-application=mail      # It's the email client that we want to build, right?
+    --enable-default-toolkit=gtk2  # Use gtk+ 2.x instead of gtk+ 1.x
+
+    --with-pthreads
+    --with-system-zlib
+    --with-system-png
+    --with-system-jpeg
+    --with-distribution-id=GoboLinux
+
+    --enable-xft
+    --enable-system-cairo
+    --enable-canvas                # This option specifies to include support for the <canvas></canvas> tag.
+    --enable-svg                   # This option is used to enable support for rendering SVG files.
+    --enable-xinerama              # Uncomment this option if you desire support for dual-monitor display using the X-Window Xinerama libraries.
+    
+    --enable-strip
+    --enable-optimize
+    --disable-debug
+
+    --disable-tests
+    --disable-installer
+    --disable-accessibility
+)
+
+pre_build()
+{
+    # Fix an anonymous enum in an external/public interface header file
+    sed -i "s/^    enum$/& xptinfo_enum_1/" xpcom/reflect/xptinfo/public/xptinfo.h
+}
+
+pre_link()
+{
+    mkdir -p ${target}/Shared/applications
+    cp $recipedir/thunderbird.desktop ${target}/Shared/applications
+}
+
+post_install()
+{
+    # Give Firefox an icon while minimized
+    install -v -m755 -o0 -g0 -d ${target}/lib/thunderbird-2.0.0.0/chrome/icons/default
+    ln -v -s ../../../icons/default.xpm ${target}/lib/thunderbird-2.0.0.0/chrome/icons/default
+
+    # Changes the ownership of some installed files to more appropriate user:group names
+    chown -v -R 0:0 ${target}/lib/thunderbird-2.0.0.0/extensions/inspector@mozilla.org/*
+
+    # install some additional LDAP interface headers
+    install -v -m644 -o0 -g0 thunderbird-build/dist/public/ldap-private/* ${target}/include/thunderbird-2.0.0.0/ldap
+
+    # replace the broken nss files with symbolic links to known good files
+    ln -v -sf ${goboLibraries}/pkgconfig/nss.pc ${target}/lib/pkgconfig/thunderbird-nss.pc
+    ln -v -sf ${goboLibraries}/pkgconfig/nspr.pc ${target}/lib/pkgconfig/thunderbird-nspr.pc
+
+    # Shortcut to the icon
+    mkdir -p ${target}/Shared/icons/thunderbird
+    cp ${target}/lib/thunderbird-2.0.0.0/icons/mozicon50.xpm ${target}/Shared/icons/thunderbird
+}
