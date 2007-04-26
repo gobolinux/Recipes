@@ -145,6 +145,8 @@ pre_link() {
    mkdir -p ${target}/lib/httpd
    mv ${target}/modules ${target}/lib/httpd
    ln -s ${goboLibraries}/httpd/modules ${target}
+
+   mkdir -p ${settings_target}/httpd/conf
 }
 
 
