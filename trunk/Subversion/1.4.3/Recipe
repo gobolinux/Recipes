@@ -6,8 +6,10 @@ file_size=4721031
 file_md5=de0e792c9804c7bce397d267af5eb30d
 recipe_type=configure
 configure_options=(
-   --with-apr=${httpd_path}
-   --with-apr-util=${httpd_path}
+   --with-apr=${apr_path}
+   --with-apr-util=${apr_util_path}
+   --disable-mod-activation
+   --disable-neon-version-check
 )
 
 make_variables=(
