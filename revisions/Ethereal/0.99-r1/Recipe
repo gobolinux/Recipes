@@ -1,0 +1,11 @@
+# Recipe for version 0.99 by Lucas C. Villa Real, on Tue May 1 23:00:57 BRT 2007
+# Recipe (MakeRecipe) for Ethereal by David Smith <dsmith@algonet.se>, on Tue Dec 28 10:54:45 CET 2004
+compile_version=1.8.2
+#url="ftp://ftp.ethereal.com/pub/ethereal/ethereal-0.99.tar.bz2"
+url="http://www.ethereal.com/distribution/ethereal-0.99.0.tar.bz2"
+file_size=8884587
+file_md5=f9905b9d347acdc05af664a7553f7f76
+recipe_type=configure
+configure_options=(
+	"--with-ssl"
+)
