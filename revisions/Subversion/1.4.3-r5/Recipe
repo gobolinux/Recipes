@@ -1,0 +1,31 @@
+# Recipe for version 1.4.3 by Lucas C. Villa Real, on Wed Feb 28 01:16:41 BRT 2007
+# Recipe (MakeRecipe) for Subversion by Jonas Karlsson <jonka750@student.liu.se>, on Wed May 11 07:50:33 CEST 2005
+compile_version=1.8.2
+url="http://subversion.tigris.org/downloads/subversion-1.4.3.tar.bz2"
+file_size=4721031
+file_md5=de0e792c9804c7bce397d267af5eb30d
+recipe_type=configure
+configure_options=(
+   --with-apr=${apr_path}
+   --with-apr-util=${apr_util_path}
+   --disable-mod-activation
+   --disable-neon-version-check
+)
+
+make_variables=(
+   swig_pydir=${target}/lib/python2-4/site-packages/libsvn
+   swig_pydir_extras=${target}/lib/python2-4/site-packages/svn
+)
+
+pre_install(){
+    make swig-py
+}
+
+post_install(){
+    make install-swig-py
+}
+
+pre_link(){
+    mkdir -p ${target}/lib/python2.4/
+    ln -s ${target}/lib/svn-python ${target}/lib/python2.4/site-packages
+}
