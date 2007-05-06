@@ -5,7 +5,7 @@
  # to build any of the extras programs pass:
  #  make EXTRAS="extras/<extra1> extras/<extra2>"
 -EXTRAS =
-+EXTRAS = extras/ata_id extras/cdrom_id extras/dasd_id extras/edd_id extras/firmware extras/floppy extras/path_id extras/run_directory extras/scsi_id extras/usb_id extras/volume_id
- 
++EXTRAS = extras/ata_id extras/cdrom_id extras/edd_id extras/firmware extras/floppy extras/path_id extras/rule_generator extras/scsi_id extras/usb_id extras/volume_id
+
  # make the build silent
  V =
