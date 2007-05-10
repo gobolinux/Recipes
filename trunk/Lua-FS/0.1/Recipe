@@ -6,10 +6,6 @@ file_size=10671
 file_md5=bbf96b89801cb18b3e4017c56c5bdcdd
 recipe_type=makefile
 makefile='Makefile'
-environment=(
-	luamodule="fs"
-	luaversion=`pkg-config --variable=V lua`
-)
 make_variables=(
 	"target=$target"
 )
