@@ -1,0 +1,21 @@
+--- /dev/null	2007-04-14 09:18:46.000000000 +0200
++++ lrexlib-2.1.0/rex_posix.lua	2007-04-14 12:14:29.000000000 +0200
+@@ -0,0 +1,18 @@
++-- @%Compile_luamodule1%@.lua
++-- support code for @%Compile_luamodule1%@ library
++-- usage lua -l@%Compile_luamodule1%@ ...
++
++local SOPATH="@%Compile_target%@/lib/lua/@%Compile_luaversion%@/@%Compile_luamodule1%@.so"
++local OPENFUNC="luaopen_@%Compile_luamodule1%@"
++
++local function so(x)
++	local version=string.sub(_VERSION,5,5)..string.sub(_VERSION,7,7)
++	local loadlib
++	if version >= "51" then
++		loadlib=package.loadlib
++	end
++	return assert(loadlib(SOPATH,OPENFUNC))()
++end
++
++so()
++module("@%Compile_luamodule%@.@%Compile_luamodule1%@")

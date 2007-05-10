@@ -1,0 +1,33 @@
+# Recipe for version 2.1.0 by Aitor Perez Iturri, on vie abr 13 15:15:17 CEST 2007
+# Recipe (MakeRecipe) for LrexLib by Aitor Pérez Iturri, on vie abr 14 15:25:08 CEST 2006
+compile_version=1.8.2
+url="http://luaforge.net/frs/download.php/2141/lrexlib-2.1.0.zip"
+file_size=43356
+file_md5=6be37bb869966306360f1b1a90299f64
+dir='lrexlib-2.1.0'
+recipe_type=makefile
+makefile='Makefile'
+do_install=no
+environment=(
+	luaversion=`pkg-config --variable=V lua`
+	luamodule="rexlib"
+	luamodule1="rex_posix"
+	luamodule2="rex_pcre"
+)
+
+docs=(
+	"test"
+	"doc"
+)
+
+
+# Copy the libs
+pre_link () {
+	mkdir -p ${target}/lib/lua/${luaversion}/
+	mkdir -p ${target}/share/lua/${luaversion}/
+	cp ${luamodule1}.lua ${target}/share/lua/${luaversion}/
+	cp ${luamodule2}.lua ${target}/share/lua/${luaversion}/
+	cp src/rex_pcre.so* ${target}/lib/lua/${luaversion}/
+	cp src/rex_posix.so* ${target}/lib/lua/${luaversion}/
+}
+
