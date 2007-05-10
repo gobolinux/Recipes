@@ -1,0 +1,12 @@
+diff -Naur lua-5.1.2.orig/src/Makefile lua-5.1.2/src/Makefile
+--- lua-5.1.2.orig/src/Makefile	2007-03-25 14:49:23.000000000 +0000
++++ lua-5.1.2/src/Makefile	2007-05-05 17:36:38.000000000 +0000
+@@ -16,7 +16,7 @@
+ LIBS= -lm $(MYLIBS)
+ 
+ MYCFLAGS=
+-MYLDFLAGS=
++MYLDFLAGS= -L@%Compile_goboLibraries%@
+ MYLIBS=
+ 
+ # == END OF USER SETTINGS. NO NEED TO CHANGE ANYTHING BELOW THIS LINE =========
