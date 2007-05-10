@@ -10,9 +10,6 @@ makefile='Makefile'
 do_install=no
 environment=(
 	luaversion=`pkg-config --variable=V lua`
-	luamodule="rexlib"
-	luamodule1="rex_posix"
-	luamodule2="rex_pcre"
 )
 
 docs=(
@@ -24,9 +21,6 @@ docs=(
 # Copy the libs
 pre_link () {
 	mkdir -p ${target}/lib/lua/${luaversion}/
-	mkdir -p ${target}/share/lua/${luaversion}/
-	cp ${luamodule1}.lua ${target}/share/lua/${luaversion}/
-	cp ${luamodule2}.lua ${target}/share/lua/${luaversion}/
 	cp src/rex_pcre.so* ${target}/lib/lua/${luaversion}/
 	cp src/rex_posix.so* ${target}/lib/lua/${luaversion}/
 }
