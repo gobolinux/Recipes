@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Lua-FS by Aitor Pérez Iturri, on lun mar 26 20:26:31 CEST 2007
+# Recipe for version 0.1 by Aitor Pérez Iturri, on lun mar 26 20:26:31 CEST 2007
+compile_version=1.8.2
+url="http://www.steve.org.uk/Software/lua-fs/lua-fs-0.1.tar.gz"
+file_size=10671
+file_md5=bbf96b89801cb18b3e4017c56c5bdcdd
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+	"target=$target"
+)
+
