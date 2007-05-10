@@ -1,12 +1,12 @@
 --- lua-sqlite3-0.4.1_orig/Makefile.in	2006-05-11 13:07:19.000000000 +0200
-+++ lua-sqlite3-0.4.1/Makefile.in	2007-05-06 14:58:27.000000000 +0200
++++ lua-sqlite3-0.4.1/Makefile.in	2007-05-09 19:30:58.000000000 +0200
 @@ -9,7 +9,8 @@
  libexecdir		:= @libexecdir@
  mandir			:= @mandir@
  
 -luadir			:= @libdir@/lua
 +luadir			:= $(prefix)/lib/lua/`pkg-config --variable=V lua`
-+lua_luadir			:= $(prefix)/Shared/lua/`pkg-config --variable=V lua`
++lua_luadir		:= $(prefix)/Shared/lua/`pkg-config --variable=V lua`
  
  install			:= install
  install-data		:= $(install) -p -m 644
@@ -19,17 +19,16 @@
  
  COMPILE			= $(CC) -c $(CFLAGS) -o $@ $<
  LINK			= $(CC) $(LDFLAGS) -o $@ $+ $(LIBS)
-@@ -58,8 +59,11 @@
+@@ -58,8 +59,10 @@
  
  install:		all
  			$(install-dirs) $(DESTDIR)$(luadir)
 -			$(install-data) $(LUA_FILES) libluasqlite3.so $(DESTDIR)$(luadir)
 -			$(install-data) libluasqlite3-loader.lua.install $(DESTDIR)$(luadir)/libluasqlite3-loader.lua
-+			$(install-data) libluasqlite3.so $(DESTDIR)$(luadir)
 +			$(install-dirs) $(DESTDIR)$(lua_luadir)
-+			$(install-data) $(LUA_FILES) $(DESTDIR)$(lua_luadir)/
-+			mv libluasqlite3-loader.lua.install libluasqlite3-loader.lua 
-+			$(install-data) libluasqlite3-loader.lua $(DESTDIR)$(lua_luadir)
++			$(install-data) libluasqlite3.so $(DESTDIR)$(luadir)
++			$(install-data) $(LUA_FILES) $(DESTDIR)$(lua_luadir)
++			$(install-data) libluasqlite3-loader.lua.install $(DESTDIR)$(lua_luadir)/libluasqlite3-loader.lua
  
  uninstall:
  			( cd $(DESTDIR)$(luadir); rm -f $(LUA_FILES) libluasqlite3-loader.lua libluasqlite3.so )
