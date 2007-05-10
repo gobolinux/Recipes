@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Lua-Sqlite3 by Aitor Pérez Iturri, on sáb sep 9 19:31:24 CEST 2006
+# Recipe for version 0.4.1 by Aitor Pérez Iturri, on sáb sep 9 19:31:24 CEST 2006
+compile_version=1.8.2
+url="http://luaforge.net/frs/download.php/1611/lua-sqlite3-0.4.1.tar.bz2"
+file_size=54780
+file_md5=eb14c0b5c4bf8e0052dc2d054386717a
+recipe_type=configure
+docs=(
+	'./tests*.lua'
+)
