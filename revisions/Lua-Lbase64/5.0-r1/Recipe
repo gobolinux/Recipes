@@ -1,0 +1,24 @@
+# Recipe for version nov_2005 by Aitor Perez Iturri, on sáb abr 14 10:09:37 CEST 2007
+# Recipe (MakeRecipe) for Lbase64 by Aitor Pérez Iturri, on Sat Mar 18 13:37:03 CET 2006
+compile_version=1.8.2
+url="http://www.tecgraf.puc-rio.br/~lhf/ftp/lua/5.0/lbase64.tar.gz"
+file_size=2595
+file_md5=1b26dbd11fd6fec788fcb07f9163a0e3
+dir='base64'
+recipe_type=makefile
+makefile='Makefile'
+do_install=no
+build_target="lbase64.so"
+environment=(
+	luaversion=`pkg-config --variable=V lua`
+)
+docs=(
+	"lbase64.ref"
+	"test.lua"
+)
+
+pre_link () {
+	make xx > lbase64.ref
+	mkdir -p ${target}/lib/lua/${luaversion}
+	cp lbase64.so ${target}/lib/lua/${luaversion}/base64.so
+}
