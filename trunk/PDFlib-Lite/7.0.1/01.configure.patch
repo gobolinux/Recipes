@@ -1,0 +1,37 @@
+--- PDFlib-Lite-7.0.1_orig/configure	2007-03-13 13:32:10.000000000 +0100
++++ PDFlib-Lite-7.0.1/configure	2007-04-18 18:01:45.000000000 +0200
+@@ -8407,8 +8407,10 @@
+ echo "${ECHO_T}unable to determine Perl configuration" >&6
+ 	    WITH_PERL=no
+ 	fi
+-
++	GOBO_PERLVERSION=`readlink ${goboPrograms}/Perl/Current`
++	GOBO_PERLPATH="$goboPrograms/Perl/${GOBO_PERLVERSION}"
+ 	PERLLIBDIR=`($PERL -e 'use Config; print $Config{sitearchexp};') 2>/dev/null`
++	PERLLIBDIR=${prefix}/`echo $PERLLIBDIR|awk -v path="$GOBO_PERLPATH" '{print gensub(path,"",1,$0)}'`/
+ 	if test -z "$PERLLIBDIR" -o ! -d "$PERLLIBDIR"; then
+ 	    echo "$as_me:$LINENO: result: unable to determine perl shared library directory" >&5
+ echo "${ECHO_T}unable to determine perl shared library directory" >&6
+@@ -8607,7 +8609,12 @@
+ `
+ 	    if test "$PYTHONLIBDIR" = "" ; then
+ 		PYTHONLIBDIR=/usr/lib
+-	    fi
++		else
++			GOBO_PYTHONVERSION=`readlink ${goboPrograms}/Python/Current`
++			GOBO_PYTHONPATH=${goboPrograms}/Python/$GOBO_PYTHONVERSION
++			PYTHONLIBDIR=${prefix}`echo $PYTHONLIBDIR|awk -v path="$GOBO_PYTHONPATH" '{print gensub(path,"",1,$0)}'`/
++		fi
++	
+ 
+ 
+ 	fi
+@@ -8727,7 +8734,7 @@
+ 	    echo "$as_me:$LINENO: result: $i" >&5
+ echo "${ECHO_T}$i" >&6
+ 	    RUBYINCLUDE="-I$i"
+-	    RUBYLIBDIR="$i"
++	    RUBYLIBDIR=${prefix}/lib/ruby/1.8/${i##*/}/
+ 	    WITH_RUBY=yes
+ 	    break
+ 	fi
