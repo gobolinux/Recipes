@@ -32,7 +32,7 @@
  	$(RANLIB) $@
  
 +$(LUA_SO): $(CORE_O) $(LIB_O)
-+	$(LD) $? -shared -lm -o $@
++	$(LD) $(MYLDFLAGS) $? -shared -lm -o $@
 +
  $(LUA_T): $(LUA_O) $(LUA_A)
  	$(CC) -o $@ $(MYLDFLAGS) $(LUA_O) $(LUA_A) $(LIBS)

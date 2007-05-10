@@ -1,6 +1,6 @@
 --- lua-5.1.2_newopers/etc/lua.pc	2006-06-02 03:37:18.000000000 +0200
 +++ lua-5.1.2/etc/lua.pc	2007-03-09 16:18:43.000000000 +0100
-@@ -8,13 +8,13 @@
+@@ -8,7 +8,7 @@
  R= 5.1.2
  
  # grep '^INSTALL_.*=' ../Makefile | sed 's/INSTALL_TOP/prefix/'
@@ -9,11 +9,3 @@
  INSTALL_BIN= ${prefix}/bin
  INSTALL_INC= ${prefix}/include
  INSTALL_LIB= ${prefix}/lib
- INSTALL_MAN= ${prefix}/man/man1
--INSTALL_LMOD= ${prefix}/share/lua/${V}
--INSTALL_CMOD= ${prefix}/lib/lua/${V}
-+INSTALL_LMOD= ${prefix}/lib/lua/lmod/${V}
-+INSTALL_CMOD= ${prefix}/lib/lua/cmod/${V}
- 
- # canonical vars
- exec_prefix=${prefix}

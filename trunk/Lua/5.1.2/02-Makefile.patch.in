@@ -1,6 +1,6 @@
 --- lua-5.1.2_newopers/Makefile	2007-03-07 23:56:10.000000000 +0100
 +++ lua-5.1.2/Makefile	2007-03-09 16:33:55.000000000 +0100
-@@ -12,13 +12,14 @@
+@@ -12,10 +12,11 @@
  # doc directory.) You may want to make these paths consistent with LUA_ROOT,
  # LUA_LDIR, and LUA_CDIR in luaconf.h (and also with etc/lua.pc).
  #
@@ -11,14 +11,9 @@
  INSTALL_LIB= $(INSTALL_TOP)/lib
 +INSTALL_PKGCONFIG= $(INSTALL_TOP)/lib/pkgconfig
  INSTALL_MAN= $(INSTALL_TOP)/man/man1
--INSTALL_LMOD= $(INSTALL_TOP)/share/lua/$V
--INSTALL_CMOD= $(INSTALL_TOP)/lib/lua/$V
-+INSTALL_LMOD= $(INSTALL_TOP)/lib/lua/lmod/$V
-+INSTALL_CMOD= $(INSTALL_TOP)/lib/lua/cmod/$V
- 
- # How to install. You may prefer "install" instead of "cp" if you have it.
- # To remove debug information from binaries, use "install -s" in INSTALL_EXEC.
-@@ -34,6 +36,7 @@
+ INSTALL_LMOD= $(INSTALL_TOP)/share/lua/$V
+ INSTALL_CMOD= $(INSTALL_TOP)/lib/lua/$V
+@@ -34,6 +35,7 @@
  INSTALL= install
  MKDIR= mkdir
  RANLIB= ranlib
@@ -26,7 +21,7 @@
  
  # == END OF USER SETTINGS. NO NEED TO CHANGE ANYTHING BELOW THIS LINE =========
  
-@@ -43,8 +45,14 @@
+@@ -43,8 +44,14 @@
  # What to install.
  TO_BIN= lua luac
  TO_INC= lua.h luaconf.h lualib.h lauxlib.h ../etc/lua.hpp
