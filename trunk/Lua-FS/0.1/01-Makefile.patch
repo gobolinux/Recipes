@@ -1,0 +1,40 @@
+--- lua-fs-0.1_orig/Makefile	2005-11-07 04:30:32.000000000 +0100
++++ lua-fs-0.1/Makefile	2007-04-01 10:30:52.000000000 +0200
+@@ -1,14 +1,15 @@
+ DIST_PREFIX = /tmp
+ VERSION     = 0.1
+-BASE        = lua-fs
++BASE        = lua-fsa
++LUA_V = `pkg-config --variable=V lua`
+ 
+ 
+-OUT         = libfs.so
++OUT         = fs.so
+ 
+ $(OUT): libfs.c Makefile
+-	cc -fPIC `lua-config --include` -DRELEASE=\"$(VERSION)\" -pedantic -ansi -Wall -O2 -c -o libfs.o libfs.c
+-	cc -o libfs.so -shared libfs.o
+-	strip libfs.so
++	cc -fPIC `pkg-config --cflags lua` -DRELEASE=\"$(VERSION)\" -pedantic -ansi -Wall -O2 -c -o fs.o libfs.c
++	cc -o fs.so -shared fs.o
++	strip fs.so
+ 
+ 
+ clean:
+@@ -49,10 +50,12 @@
+ 
+ 
+ install: $(OUT)
+-	mkdir -p /usr/lib/lua/5.0
+-	mv $(OUT) /usr/lib/lua/5.0/
+-	mkdir -p /usr/share/lua50
+-	cp default.lua /usr/share/lua50/libfs.lua
++	mkdir -p $(target)/lib/lua/$(LUA_V)
++	mv $(OUT) $(target)/lib/lua/$(LUA_V)
++	mkdir -p $(target)/share/lua/$(LUA_V)
++	cp default.lua $(target)/share/lua/$(LUA_V)/fs.lua
++	cp docs/* $(target)/doc
++	cp tests/* $(target)/doc
+ 
+ test:
+ 	cd tests && make
