@@ -1,0 +1,117 @@
+diff -Naur posix.orig/Makefile posix/Makefile
+--- posix.orig/Makefile	2003-11-06 00:26:49.000000000 +0000
++++ posix/Makefile	2007-05-06 00:20:22.000000000 +0000
+@@ -1,7 +1,7 @@
+ # makefile for POSIX library for Lua
+ 
+ # change these to reflect your Lua installation
+-LUA= /tmp/lhf/lua-5.0
++LUA= @%Compile_lua_path%@
+ LUAINC= $(LUA)/include
+ LUALIB= $(LUA)/lib
+ LUABIN= $(LUA)/bin
+@@ -16,12 +16,12 @@
+ 
+ OBJS= $(MYLIB).o
+ 
+-T= $(MYLIB).so
++T= $(MYNAME).so
+ 
+ all:	test
+ 
+ test:	$T
+-	$(LUABIN)/lua -l$(MYNAME) test.lua
++	env -u LUA_CPATH LUA_PATH= $(LUABIN)/lua -l$(MYNAME) test.lua
+ 
+ $T:	$(OBJS)
+ 	$(CC) -o $@ -shared $(OBJS)
+@@ -63,3 +63,15 @@
+ 	touch --reference=$(FTP)/$A $@
+ 
+ # eof
++
++# gobo
++
++install: DEST=@%Compile_target%@/lib/lua/5.1
++install:
++	mkdir -p $(DEST)
++	cp posix.so $(DEST)/
++
++patch:
++	-rm Makefile~ lposix.c~ test.lua~
++	cd ..  &&  diff -Naur posix.orig posix  \
++	  > ../LocalRecipes/Lua-Lposix/5.0/01-lua51.patch.in
+diff -Naur posix.orig/lposix.c posix/lposix.c
+--- posix.orig/lposix.c	2003-11-06 00:23:48.000000000 +0000
++++ posix/lposix.c	2007-05-05 23:00:09.000000000 +0000
+@@ -49,6 +49,17 @@
+ 
+ typedef int (*Selector)(lua_State *L, int i, const void *data);
+ 
++
++/* copied luaL_findstring from the Lua 5.0 sources. */
++static int luaL_findstring_static (const char *name, const char *const list[]) {
++  int i;
++  for (i=0; list[i]; i++)
++    if (strcmp(list[i], name) == 0)
++      return i;
++  return -1;  /* name not found */
++}
++
++
+ static int doselection(lua_State *L, int i, const char *const S[], Selector F, const void *data)
+ {
+ 	if (lua_isnone(L, i))
+@@ -64,7 +75,7 @@
+ 	}
+ 	else
+ 	{
+-		int j=luaL_findstring(luaL_checkstring(L, i), S);
++		int j=luaL_findstring_static(luaL_checkstring(L, i), S);
+ 		if (j==-1) luaL_argerror(L, i, "unknown selector");
+ 		return F(L, j, data);
+ 	}
+@@ -599,7 +610,7 @@
+  clock_t elapsed;
+ };
+ 
+-#define pushtime(L,x)		lua_pushnumber(L,((lua_Number)x)/CLK_TCK)
++#define pushtime(L,x)		lua_pushnumber(L,((lua_Number)x)/CLOCKS_PER_SEC)
+ 
+ static int Ftimes(lua_State *L, int i, const void *data)
+ {
+@@ -620,7 +631,7 @@
+ 	"utime", "stime", "cutime", "cstime", "elapsed", NULL
+ };
+ 
+-#define storetime(L,name,x)	storenumber(L,name,(lua_Number)x/CLK_TCK)
++#define storetime(L,name,x)	storenumber(L,name,(lua_Number)x/CLOCKS_PER_SEC)
+ 
+ static int Ptimes(lua_State *L)			/** times() */
+ {
+diff -Naur posix.orig/test.lua posix/test.lua
+--- posix.orig/test.lua	2003-11-07 11:42:30.000000000 +0000
++++ posix/test.lua	2007-05-05 23:54:53.000000000 +0000
+@@ -41,7 +41,7 @@
+ f"HOME"
+ f"SHELL"
+ f"absent"
+-for k in ox.getenv() do io.write(k,"\t") end io.write"\n"
++for k in pairs(ox.getenv()) do io.write(k,"\t") end io.write"\n"
+ 
+ ------------------------------------------------------------------------------
+ testing"putenv"
+@@ -179,11 +179,11 @@
+ ------------------------------------------------------------------------------
+ testing"times"
+ a=ox.times()
+-for k,v in a do print(k,v) end
++for k,v in pairs(a) do print(k,v) end
+ print"sleeping 10 seconds..."
+ ox.sleep(10)
+ b=ox.times()
+-for k,v in b do print(k,v) end
++for k,v in pairs(b) do print(k,v) end
+ print""
+ print("elapsed",b.elapsed-a.elapsed)
+ print("clock",os.clock())
