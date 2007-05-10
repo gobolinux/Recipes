@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for Lua-Lposix by mpb <mpb.mail@gmail.com>, on Sat May 5 17:50:49 UTC 2007
+# Recipe for version 5.0 by mpb <mpb.mail@gmail.com>, on Sat May 5 17:50:49 UTC 2007
+compile_version=1.8.2
+url="http://www.tecgraf.puc-rio.br/~lhf/ftp/lua/5.0/lposix.tar.gz"
+file_size=9651
+file_md5=f22871247e444412a901d179028a0d82
+dir='posix'
+recipe_type=makefile
+makefile='Makefile'
