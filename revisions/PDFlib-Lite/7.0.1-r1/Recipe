@@ -1,0 +1,10 @@
+# Recipe for version 7.0.1 by Aitor Perez Iturri, on vie abr 13 08:49:19 CEST 2007
+# Recipe (MakeRecipe) for PDFlib-Lite by Aitor Pérez Iturri, on Sat Mar 18 18:40:55 CET 2006
+compile_version=1.8.2
+url="http://www.pdflib.com/binaries/PDFlib/701/PDFlib-Lite-7.0.1.tar.gz"
+file_size=5350886
+file_md5=ac47f3f4b9d769c84ad211b76a33ef20
+recipe_type=configure
+docs=(
+	"doc/pdflib/PDFlib-manual.pdf"
+)

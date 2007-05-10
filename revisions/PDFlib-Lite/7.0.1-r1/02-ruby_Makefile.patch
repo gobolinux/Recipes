@@ -1,0 +1,11 @@
+--- PDFlib-Lite-7.0.1_orig/bind/pdflib/ruby/Makefile	2007-03-13 13:32:23.000000000 +0100
++++ PDFlib-Lite-7.0.1/bind/pdflib/ruby/Makefile	2007-04-18 17:59:50.000000000 +0200
+@@ -11,7 +11,7 @@
+ 
+ PDFPEDANTIC	=
+ 
+-LANG_LIBDIR 	= $(libdir)
++LANG_LIBDIR 	= $(RUBYLIBDIR)
+ BINDEXTERNALLIBS= $(RUBYLINK)
+ 
+ _LIBNAME	= PDFlib
