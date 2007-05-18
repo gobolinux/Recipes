@@ -1,0 +1,27 @@
+[Name] Nanoweb
+[Summary] an HTTP server written in PHP
+[License] GPL
+[Homepage] http://nanoweb.si.kz/
+
+[Description] an HTTP server written in PHP, designed to be small,
+secure, and extensible.
+
+
+GOBO SPECIFIC NOTE: This recipe will install Nanoweb.  The Nanoweb
+installer does a pretty good job of setting up pathes correctly.
+However, there are a couple paths that you will need to fix manually.
+When you run nanoctl, the error messages will make it obvious which
+paths need to be fixed.
+
+I would have added patches to the Recipe to fix these issues, but my
+document root had many symlinks inside it, which Nanoweb seemed to
+consider to be a security violation.  When I disabled symlink
+checking, Nanoweb/PHP started core dumping on me, perhaps due to a
+FastCGI issue.  At this point I decided Nanoweb was too much work,
+switched back to using Lighttpd, which works fine with the same PHP
+executable.
+
+If anyone wants to use Nanoweb with Gobo in the future, starting with
+this recipe may save them some time.  I was able to successfully serve
+static HTML pages and PHP pages with Nanoweb prior to giving up due to
+the coredumps.
