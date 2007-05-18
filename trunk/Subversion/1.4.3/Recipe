@@ -12,20 +12,15 @@ configure_options=(
    --disable-neon-version-check
 )
 
+build_target="all swig-py"
+install_target="install install-swig-py"
+
 make_variables=(
-   swig_pydir=${target}/lib/python2-4/site-packages/libsvn
-   swig_pydir_extras=${target}/lib/python2-4/site-packages/svn
+   swig_pydir=${target}/lib/python2.4/site-packages/libsvn
+   swig_pydir_extra=${target}/lib/python2.4/site-packages/svn
 )
 
-pre_install(){
-    make swig-py
-}
-
-post_install(){
-    make install-swig-py
-}
-
-pre_link(){
-    mkdir -p ${target}/lib/python2.4/
-    ln -s ${target}/lib/svn-python ${target}/lib/python2.4/site-packages
-}
+install_variables=(
+   swig_pydir=${target}/lib/python2.4/site-packages/libsvn
+   swig_pydir_extra=${target}/lib/python2.4/site-packages/svn
+)
