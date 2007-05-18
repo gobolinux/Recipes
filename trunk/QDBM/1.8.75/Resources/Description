@@ -1,0 +1,10 @@
+[Name] QDBM
+[Summary] Quick Database Manager (key-value style database)
+[License] GNU LGPL
+[Homepage] http://qdbm.sourceforge.net/
+
+[Description] QDBM is a key-value style database manager with
+hash-table and B+ tree backends.  QDBM is an alternative to the widely
+used Berkeley DB (BDB).  QDBM is LGPL, wherease BDB is GPL.  QDBM is
+lighter-weight than BDB.  For some applications QDBM may be the
+approriate choice.
