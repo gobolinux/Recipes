@@ -1,0 +1,61 @@
+diff -Naur nanoweb_2.2.8.orig/install-sh nanoweb_2.2.8.new/install-sh
+--- nanoweb_2.2.8.orig/install-sh	2006-08-10 11:19:29.000000000 -0700
++++ nanoweb_2.2.8.new/install-sh	2007-05-16 01:26:54.000000000 -0700
+@@ -37,9 +37,9 @@
+ 
+ else
+ 
+-	export PHP_BIN
++	export PHP_BIN=@%Compile_goboExecutables%@/php
+ 
+-	tail +101 $0 >/tmp/nanoweb.install.php.tmp
++	tail --lines=+101 $0 >/tmp/nanoweb.install.php.tmp
+ 	$PHP_BIN -C -q /tmp/nanoweb.install.php.tmp $1 $2 $3 $4 $5 $6 $7 $8 $9
+ 
+ 	exit 0
+@@ -102,20 +102,20 @@
+ 
+ # -- Default installation directories.
+ $setup = array(
+-	"BIN" => "/usr/sbin",
+-	"LIB" => "/usr/lib/nanoweb",
+-	"CONF" => "/etc/nanoweb",
+-	"LOG" => "/var/log/nanoweb",
+-	"WWWROOT" => "/var/www/localhost",
+-	"DOC" => "/usr/share/doc/nanoweb",
++	"BIN"     => "@%Compile_target%@/bin",
++	"LIB"     => "@%Compile_target%@/lib/nanoweb",
++	"CONF"    => "@%Compile_target%@/etc/nanoweb",
++	"LOG"     => "@%Compile_target%@/var/log/nanoweb",
++	"WWWROOT" => "@%Compile_target%@/var/www/localhost",
++	"DOC"     => "@%Compile_target%@/share/doc/nanoweb",
+ 	"NWGROUP" => "www-data",
+-	"NWUSER" => "www-data",
+-	"INETD" => "1",
+-	"INIT" => "1",
+-	"PHP" => "/usr/local/bin/php",
+-	"MANDIR" => "/usr/share/man",
+-	"SSLDIR" => "/etc/ssl/certs",
+-	"DONE" => ''
++	"NWUSER"  => "www-data",
++	"INETD"   => false,
++	"INIT"    => false,
++	"PHP"     => "@%Compile_goboExecutables%@/php",
++	"MANDIR"  => "@%Compile_target%@/share/man",
++	"SSLDIR"  => "@%Compile_target%@/etc/ssl/certs",
++	"DONE"    => ''
+ );
+ 
+ 
+diff -Naur nanoweb_2.2.8.orig/Makefile nanoweb_2.2.8.new/Makefile
+--- nanoweb_2.2.8.orig/Makefile	1969-12-31 16:00:00.000000000 -0800
++++ nanoweb_2.2.8.new/Makefile	2007-05-16 01:06:26.000000000 -0700
+@@ -0,0 +1,8 @@
++
++
++make:
++	echo 'Nothing to make.'
++
++
++install:
++	./install-sh --force
