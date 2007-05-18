@@ -551,7 +551,7 @@ diff -Nurp linux-2.6.20.orig/include/linux/fs.h linux-2.6.20/include/linux/fs.h
 diff -Nurp linux-2.6.20.orig/include/linux/gobohide.h linux-2.6.20/include/linux/gobohide.h
 --- linux-2.6.20.orig/include/linux/gobohide.h	1969-12-31 21:00:00.000000000 -0300
 +++ linux-2.6.20/include/linux/gobohide.h	2007-02-06 01:42:17.000000000 -0200
-@@ -0,0 +1,45 @@
+@@ -0,0 +1,46 @@
 +#ifndef _LINUX_GOBOLINUX_H
 +#define _LINUX_GOBOLINUX_H
 +
@@ -567,9 +567,10 @@ diff -Nurp linux-2.6.20.orig/include/linux/gobohide.h linux-2.6.20/include/linux
 +#define GETSTATSUID           0x0000004 /* Get the inodes hidden */
 +
 +struct hide {
++   unsigned long i_ino;    /* shortcut to inode number */
 +   struct file *filp;      /* used to recover the inode's pathname */
 +   char *pathname;         /* a fresh cache of the inode's pathname */
-+   unsigned long page; /* page on which pathname has been copied */
++   unsigned long page;     /* page on which pathname has been copied */
 +   struct list_head head;  /* a simple doubly linked list */
 +};
 +
