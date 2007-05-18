@@ -1,0 +1,27 @@
+# Recipe (MakeRecipe) for Gnash by Lucas C. Villa Real, on Tue May 15 21:20:17 BRT 2007
+# Recipe for version cvs by Lucas C. Villa Real, on Tue May 15 21:20:17 BRT 2007
+compile_version=1.8.2
+cvs=:pserver:anonymous:@cvs.sv.gnu.org:/sources/gnash
+cvs_module=gnash
+recipe_type=configure
+autogen_before_configure=yes
+
+configure_options=(
+    # --enable-write         # Makes the Mozilla plugin write the currently playing SWF movie to /tmp.
+    --disable-cygnal         # Disable support for the Cygnal server.
+    --enable-sdk-install     # Enable installing the libraries and headers as an SDK.
+    --enable-gui=KDE         # GTK, FLTK, RISCOS, AQUA (OS X), FB (framebuffer), KDE or SDL [GTK]
+    --enable-renderer=OpenGL # OpenGL, Agg or Cairo (experimental)
+    --enable-media=mad       # ffmpeg, mad, GST (Gstreamer) or none (no sound) [ffmpeg]
+    --enable-z               # Enable support for zlib compression library.
+    --enable-jpeg            # Enable support for jpeg images.
+    --disable-glext          # Disable support for GTK OpenGL extension
+    --enable-Xft             # Enable support for xft library.
+    --enable-expat           # Enable support for Expat library.
+    --disable-docbook        # Disable support for building documentation
+    --with-plugindir=$target/lib/mozilla/plugins
+)
+
+pre_build() {
+    [ ! -f .bootstrapped ] && autogen.sh && touch .bootstrapped
+}
