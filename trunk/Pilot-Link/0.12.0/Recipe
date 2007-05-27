@@ -9,3 +9,7 @@ recipe_type=configure
 install_variables=(
    udevdir="${settings_target}/udev/rules.d"
 )
+
+post_install() {
+   GrepReplace "dialout" "console" ${settings_target}/udev/rules.d/60-libpisock.rules 
+}
