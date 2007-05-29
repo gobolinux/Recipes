@@ -1,0 +1,36 @@
+# PalmOne Tungsten T3 and other models
+BUS="usb", SYSFS{serial}="12345467893ABC", NAME="pilot", MODE="0666"
+BUS="usb", KERNEL="ttyUSB?", SYSFS{product}="Palm-Handheld", NAME="palm%n", SYMLINK="palm"
+
+# Wacom tablet
+BUS="usb", SYSFS{manufacturer}="WACOM", SYSFS{product}="FT-0405-UV1.4-1", NAME="wacom0", MODE="0666"
+
+# Digital cameras
+BUS="usb", KERNEL="sd?1", SYSFS{model}="Sony DSC", NAME="camera%n", SYMLINK="camera"
+BUS="usb", SYSFS{product}="USB 2.0M DSC", KERNEL="sd?1", NAME="camera%n", SYMLINK="camera"
+BUS="usb", SYSFS{vendor}="FUJIFILM", SYSFS{model}="M100", NAME="camera%n", SYMLINK="camera"
+BUS="scsi", SYSFS{manufacturer}="Tekom Technologies, Inc", NAME="%k"
+
+# USB stick and mass storage devices
+BUS="scsi", KERNEL="sd?1", SYSFS{model}="Mobile Disk", NAME="usbhd%n"
+BUS="usb", KERNEL="sd*", SYSFS{product}="USB 2.0 Storage Device", NAME="%k", SYMLINK="usbhd%n"
+BUS="scsi", SYSFS{model}="PEG Mass Storage", NAME{all_partitions}="clie", SYMLINK="usbhd%n"
+BUS="scsi", SYSFS{model}="ZZZZZZZZ*", NAME{all_partitions}="pendrive", SYMLINK="usbhd%n"
+BUS="usb", SYSFS{product}="USB 2.0 Storage Device", NAME{all_partitions}="usbhd"
+
+# Lexar 256MB jump drive
+BUS="usb", KERNEL="sd*", SYSFS{product}="JUMPDRIVE ELITE", NAME="hs-jd-%k", SYMLINK="hs-jd-usb%n"
+
+# USB printers
+BUS="usb", SYSFS{serial}="H80090312041247250", NAME="lp_cx6400", SYMLINK="printers/cx6400"
+BUS="usb", SYSFS{serial}="FM7CC0305061255060", NAME="lp_c42ux",  SYMLINK="printers/c42ux"
+BUS="usb", SYSFS{serial}="HXOLL0012202323480", NAME="lp_epson",  SYMLINK="printers/epson_stylus"
+BUS="usb", SYSFS{serial}="L72010011070626380", NAME="%k",        SYMLINK="epson_680"
+
+# Card readers
+BUS="scsi", ID="*:0:0:0", SYSFS{model}="ImageMate 6 in 1", NAME="hs-usb-cr-%k"
+BUS="scsi", SYSFS{model}="USB Reader-SMC*", NAME{all_partitions}="smartmedia"
+BUS="scsi", SYSFS{model}="USB Reader-CF*",  NAME{all_partitions}="cf"
+BUS="scsi", SYSFS{model}="USB Reader-SD*",  NAME{all_partitions}="sd"
+BUS="scsi", SYSFS{model}="USB Reader-MS*",  NAME{all_partitions}="mstick"
+BUS="scsi", KERNEL="sd*", SYSFS{model}="223 U HS-CF", NAME="%k", SYMLINK="cards/cf%n"
