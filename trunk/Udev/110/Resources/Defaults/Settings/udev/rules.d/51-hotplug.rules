@@ -1,7 +1,7 @@
 ACTION!="add", GOTO="hotplug_not_add_event"
 
 # check if the device has already been claimed by a driver
-SUBSYSTEM!="input", GOTO="hotplug_driver_loaded"
+ENV{DRIVER}=="?*", SUBSYSTEM!="input", GOTO="hotplug_driver_loaded"
 
 # load the drivers
 ENV{MODALIAS}=="?*",	RUN+="/sbin/modprobe $env{MODALIAS}"
