@@ -10,13 +10,13 @@ mount -t tmpfs tmpfs $goboDevices
 # ensure that basic devices are created, now that tmpfs is mounted over /dev
 mknod $goboDevices/null        c  1   3
 mknod $goboDevices/random      c  1   8
-for i in `seq 0 12`; do
-	mknod $goboDevices/tty$i c 4 $i
-done
 mknod $goboDevices/urandom     c  1   9
 mknod $goboDevices/zero        c  1   5
-mkdir $goboDevices/shm
-mkdir $goboDevices/pts
+mknod $goboDevices/console     c  5   1
+# correct the permissions
+chmod 666 $goboDevices/{null,random,urandom,zero}
+chmod 600 $goboDevices/console
+mkdir $goboDevices/{shm,pts}
 
 ln -snf $goboStatus/self/fd   $goboDevices/fd
 ln -snf $goboStatus/self/fd/0 $goboDevices/stdin
