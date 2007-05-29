@@ -1,0 +1,28 @@
+# Recipe for version 110 by Lucas C. Villa Real, on Sun May 6 03:37:03 BRT 2007
+# Recipe for Udev 110 by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.8.2
+url="http://www.kernel.org/pub/linux/utils/kernel/hotplug/udev-110.tar.bz2"
+file_size=188708
+file_md5=34c703949f7c22745f52ef5a56d5910c
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=(
+    prefix="$target"
+    etcdir="$settings_target"
+    udevdir="$goboDevices"
+    usrbindir="$target/bin"
+    usrsbindir="$target/sbin"
+    mandir="$target/man"
+    includedir="$target/include"
+    usrlibdir="$target/lib"
+)
+
+pre_link() {
+   pushd $target/bin
+   for i in ../lib/udev/*
+   do
+       [ -x $i ] && ln -s $i .
+   done
+   popd
+}
