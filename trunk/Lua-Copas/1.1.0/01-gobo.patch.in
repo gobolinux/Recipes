@@ -1,0 +1,11 @@
+--- copas-1.1.0/Makefile.ap-orig	2007-05-27 16:05:51.000000000 -0700
++++ copas-1.1.0/Makefile	2007-05-27 16:09:14.000000000 -0700
+@@ -0,0 +1,8 @@
++
++
++make:
++
++
++install:
++	mkdir -p @%Compile_target%@/share/lua/5.1
++	cp src/copas/copas.lua @%Compile_target%@/share/lua/5.1/
