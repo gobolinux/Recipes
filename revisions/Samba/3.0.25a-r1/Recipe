@@ -1,0 +1,35 @@
+# Recipe for version 3.0.25a by Jonas Karlsson <jonka750@student.liu.se>, on Wed May 30 16:38:00 CEST 2007
+# Recipe (MakeRecipe) for Samba by roko, <ro.ko@mcnon.com>, on Sun Dec 26 11:04:52 BRST 2004
+compile_version=1.8.4
+url="ftp://se.samba.org/pub/samba/samba-3.0.25a.tar.gz"
+file_size=18145636
+file_md5=cbd33bb5d904ccd8a294a4019743745d
+recipe_type=configure
+dir="samba-3.0.25a/source"
+
+configure_options=(
+  "--with-smbwrapper"
+  "--with-libsmbclient"
+  "--with-automount"
+  "--with-smbmount"
+  "--with-quotas"
+  "--with-acl-support"    		# Include ACL support (default=no)
+  "--with-configdir=${settings_target}"
+  "--mandir=${target}/man"
+  "--with-lockdir=${variable_target}/locks/samba"
+  "--with-piddir=${variable_target}/run/samba"
+  "--with-logfilebase=${variable_target}/log/samba"
+)
+
+install_variables=(
+   exec_prefix=${target}
+)
+
+
+pre_link() {
+  mkdir -p ${target}/doc
+  cp -Rv ../examples ${target}/doc 
+  mkdir -p ${target}/Resources/Default/Settings
+  cp -v  ../examples/smb.conf.default ${target}/Resources/Default/Settings
+  ln -s ${target}/lib/libsmbclient.so ${target}/lib/libsmbclient.so.0
+}
