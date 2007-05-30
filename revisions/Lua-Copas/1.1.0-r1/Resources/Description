@@ -1,0 +1,18 @@
+[Name] Lua-Copas
+[Summary] Coroutine Oriented Portable Asynchronous Services for Lua
+[License] MIT/X Consortium License
+[Homepage] http://www.keplerproject.org/copas/
+
+[Description]
+
+Copas is a dispatcher based on coroutines that can be used by TCP/IP
+servers. It uses LuaSocket as the interface with the TCP/IP stack.
+
+A server registered with Copas should provide a handler for requests
+and use Copas socket functions to send the response. Copas loops
+through requests and invokes the corresponding handlers. For a full
+implementation of a Copas HTTP server you can refer to Xavante as an
+example.
+
+http://www.keplerproject.org/copas/
+http://luaforge.net/projects/copas/
