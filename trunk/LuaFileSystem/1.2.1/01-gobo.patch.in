@@ -1,0 +1,13 @@
+--- luafilesystem-1.2.1/config.orig	2007-05-25 14:32:52.000000000 -0700
++++ luafilesystem-1.2.1/config	2007-05-25 14:19:38.000000000 -0700
+@@ -1,8 +1,8 @@
+ # Installation directories
+ # System's libraries directory (where binary libraries are installed)
+-LUA_LIBDIR= /usr/local/lib/lua/5.1
++LUA_LIBDIR= @%Compile_target%@/lib/lua/5.1
+ # Lua includes directory
+-LUA_INC= /usr/local/include/lua51
++LUA_INC= @%Compile_goboHeaders%@
+ 
+ # OS dependent
+ LIB_OPTION= -shared #for Linux
