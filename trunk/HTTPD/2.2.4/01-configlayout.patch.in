@@ -12,15 +12,15 @@
 +    sbindir:         ${exec_prefix}/sbin
 +    libdir:          ${exec_prefix}/lib
 +    libexecdir:      ${prefix}/modules
-+    mandir:          ${exec_prefix}/share/man
++    mandir:          ${prefix}/man
 +    sysconfdir:      @%Compile_settings_target%@/httpd
 +    datadir:         /Files/WWW/
 +    installbuilddir: ${datadir}/Build
 +    errordir:        ${datadir}/Error
 +    iconsdir:        ${datadir}/Icons
-+    manualdir:       ${prefix}/man
 +    htdocsdir:       ${datadir}/Documents
 +    cgidir:          ${datadir}/CGI-Executables
++    manualdir:       ${prefix}/doc/Manual
 +    includedir:      ${prefix}/include
 +    localstatedir:   @%Compile_variable_target%@/httpd
 +    runtimedir:      @%Compile_variable_target%@/run/httpd
