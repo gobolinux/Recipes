@@ -1,0 +1,19 @@
+# Recipe for version 2.2.5 by Jonas Karlsson <jonka750@student.liu.se>, on Thu May 31 07:51:21 CEST 2007
+# Recipe (MakeRecipe) for PCIUtils by Carlo J. Calica <ccalica@gmail.com>, on Tue Oct 11 20:14:02 PDT 2005
+compile_version=1.8.4
+url="http://kernel.org/pub/software/utils/pciutils/pciutils-2.2.5.tar.bz2"
+file_size=204718
+file_md5=b07080bfcf1816f8803813ac4dc0bc0b
+
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
+
+pre_link() {
+   mkdir -p $target/include/pci
+   mkdir -p $target/lib
+   cp lib/*.h $target/include/pci
+   cp lib/libpci.a $target/lib
+}
