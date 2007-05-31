@@ -25,6 +25,15 @@ install_variables=(
    exec_prefix=${target}
 )
 
+unmanaged_files=(
+   ${variable_target}/locks/samba
+   ${variable_target}/run/samba
+   ${variable_target}/log/samba
+)
+
+pre_install() {
+   mkdir -p ${variable_target}/{locks,run,log}/samba
+}
 
 pre_link() {
   mkdir -p ${target}/doc
