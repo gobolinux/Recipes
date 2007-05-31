@@ -1,0 +1,8 @@
+[Name] LibLZF
+[Summary] A small data compression library
+[License] BSD-like
+[Description] LibLZF is a very small data compression library. It is \
+very easy to incorporate into your own programs. The compression \
+algorithm is very fast, rivaling a straight copy loop, especially for \
+decompression which is basically at (unoptimized) memcpy-speed.
+[Homepage] http://www.goof.com/pcg/marc/liblzf.html
