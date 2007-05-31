@@ -1,0 +1,20 @@
+--- suspend-0.5/Makefile	2006-11-12 15:43:54.000000000 +0100
++++ suspend-0.5.new/Makefile	2007-04-28 23:32:08.000000000 +0200
+@@ -66,7 +66,7 @@
+ 	rm -f $(S2DISK) $(S2BOTH) swap-offset suspend-keygen suspend.keys resume s2ram *.o vbetool/*.o vbetool/x86emu/*.o vbetool/x86emu/*.a
+ 
+ s2ram:	s2ram.c dmidecode.c whitelist.c radeontool.c $(S2RAMOBJ)
+-	$(CC) $(CFLAGS) -g s2ram.c $(S2RAMOBJ) -lpci -o s2ram
++	$(CC) $(CFLAGS) -g s2ram.c $(S2RAMOBJ) -lpci -lz -o s2ram
+ 
+ vbetool/vbetool.o:	vbetool/vbetool.c
+ 	$(CC) $(CFLAGS) -DS2RAM -c vbetool/vbetool.c -o vbetool/vbetool.o
+@@ -114,7 +114,7 @@
+ 	$(CC) -g $(CFLAGS) $(CC_FLAGS) vt.o md5.o encrypt.o config.o suspend.c -o $@ $(SPLASHOBJ) $(LD_FLAGS)
+ 
+ $(S2BOTH):	md5.o encrypt.o config.o suspend.c swsusp.h config.h encrypt.h md5.h s2ram.c dmidecode.c whitelist.c radeontool.c $(S2RAMOBJ) $(SPLASHOBJ)
+-	$(CC) -g $(CFLAGS) -DCONFIG_BOTH $(CC_FLAGS) md5.o encrypt.o config.o suspend.c s2ram.c -o $@ $(S2RAMOBJ) $(SPLASHOBJ) $(LD_FLAGS) -lpci
++	$(CC) -g $(CFLAGS) -DCONFIG_BOTH $(CC_FLAGS) md5.o encrypt.o config.o suspend.c s2ram.c -o $@ $(S2RAMOBJ) $(SPLASHOBJ) $(LD_FLAGS) -lpci -lz
+ 
+ resume:	md5.o encrypt.o config.o resume.c swsusp.h config.h encrypt.h md5.h $(SPLASHOBJ)
+ 	$(CC) $(CFLAGS) $(CC_FLAGS) $(STATIC_CC_FLAGS) md5.o encrypt.o config.o vt.o resume.c $(SPLASHOBJ) -static -o resume $(LD_FLAGS) $(STATIC_LD_FLAGS)
