@@ -10,14 +10,10 @@ file_md5=536c86c7041515a25dd8bad3611da9a3
 
 unmanaged_files=(
     /Files/WWW
+    $goboVariable/httpd
+    $goboVariable/log/httpd
+    $goboVariable/run/httpd
 )
-
-pre_build() {
-  grep -q httpd $goboSettings/group || groupadd httpd &&
-  grep -q httpd $goboSettings/passwd || useradd httpd -s /bin/false -d ${target} -g httpd
-  mkdir -p /Files/WWW
-  chown httpd.httpd /Files/WWW
-}
 
 configure_options=(
   --sysconfdir=$settings_target/httpd
@@ -135,6 +131,17 @@ configure_options=(
   --enable-vhost-alias=shared		# Enable mass virtual hosting provided by mod_vhost_alias.
   
 )
+
+pre_build() {
+  grep -q httpd $goboSettings/group || groupadd httpd &&
+  grep -q httpd $goboSettings/passwd || useradd httpd -s /bin/false -d ${target} -g httpd
+  mkdir -p /Files/WWW
+  chown httpd.httpd /Files/WWW
+}
+
+pre_install() {
+   mkdir $goboVariable/{,log,run}/httpd
+}
 
 pre_link() {  
    mkdir -p ${variable_target}/httpd/proxycache
