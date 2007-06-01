@@ -8,16 +8,10 @@ dir='netsurf'
 build_target='gtk'
 do_install=no
 
-pre_build() {
-    GrepReplace "I.. -g -O0" "I.. -O0" makefile
-    GrepReplace "^#ifdef NDEBUG" "#if 1" utils/log.h
-}
-
 pre_install() {
     cp nsgtk $target
-    mkdir -p $target/gtk/res
-    cp gtk/res/* $target/gtk/res 2> /dev/null
+    ln -s $target/nsgtk $target/bin/netsurf
+    mkdir -p $target/share/netsurf
+    cp gtk/res/* $target/share/netsurf 2> /dev/null
     ln -s gtk/res/netsurf-logo.png $target/netsurf-logo.png
-    echo -e "#!/bin/sh\ncd $target\n./nsgtk 2> /dev/null" > $target/bin/nsgtk
-    chmod +x $target/bin/nsgtk
 }
