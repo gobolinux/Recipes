@@ -34,7 +34,7 @@ diff -Nurp linux-2.6.20.orig/fs/Makefile linux-2.6.20/fs/Makefile
 diff -Nurp linux-2.6.20.orig/fs/gobohide.c linux-2.6.20/fs/gobohide.c
 --- linux-2.6.20.orig/fs/gobohide.c	1969-12-31 21:00:00.000000000 -0300
 +++ linux-2.6.20/fs/gobohide.c	2007-02-06 01:42:17.000000000 -0200
-@@ -0,0 +1,323 @@
+@@ -0,0 +1,342 @@
 +/*
 + * Copyright (C) 2002 CScience.ORG World Domination Inc.
 + *
@@ -51,6 +51,9 @@ diff -Nurp linux-2.6.20.orig/fs/gobohide.c linux-2.6.20/fs/gobohide.c
 + * Original idea: Lucas C. Villa Real <lucasvr@gobolinux.org>
 + *
 + * Changes:
++ * 18-May-2007 - Lucas C. Villa Real
++ *               Added support to unionfs.
++ *
 + * 04-Jul-2006 - Lucas C. Villa Real
 + *               Added GoboHide support to all filesystems through the VFS.
 + *               
@@ -101,10 +104,14 @@ diff -Nurp linux-2.6.20.orig/fs/gobohide.c linux-2.6.20/fs/gobohide.c
 +#include <linux/stat.h>
 +#include <linux/mount.h>
 +
++#ifdef CONFIG_UNION_FS
++#include "unionfs/union.h"
++#endif
++
 +#include <asm/uaccess.h>
 +
 +static LIST_HEAD(inode_list);
-+static rwlock_t inode_lock = RW_LOCK_UNLOCKED;
++static rwlock_t inode_rwlock = RW_LOCK_UNLOCKED;
 +
 +/** 
 + * gobolinux_fs_ioctl - Handle fs-related ioctls 
@@ -188,13 +195,13 @@ diff -Nurp linux-2.6.20.orig/fs/gobohide.c linux-2.6.20/fs/gobohide.c
 +   
 +   hide->stats.hidden_inodes = 0;
 +   
-+   read_lock_irqsave(&inode_lock, flags);
++   read_lock_irqsave(&inode_rwlock, flags);
 +   list_for_each_safe(p, next, &inode_list) {
 +       inode = list_entry(p, struct hide, head);
 +       if (inode)
 +           hide->stats.hidden_inodes++;
 +   }
-+   read_unlock_irqrestore(&inode_lock, flags);
++   read_unlock_irqrestore(&inode_rwlock, flags);
 +   return 0;
 +}
 +
@@ -246,6 +253,17 @@ diff -Nurp linux-2.6.20.orig/fs/gobohide.c linux-2.6.20/fs/gobohide.c
 +   return NULL;
 +}
 +
++unsigned long gobolinux_translate_inode_nr(struct inode *inode)
++{
++   unsigned long ino = inode->i_ino;
++#ifdef CONFIG_UNION_FS
++   /* we must take the inode number from the underlying filesystem */
++   struct inode *lower_inode = unionfs_lower_inode(inode);
++   ino = lower_inode->i_ino;
++#endif
++   return ino;
++}
++
 +/**
 + * gobolinux_inode_add - Add the inode to the "must hide" list 
 + * @ino: inode to be added
@@ -270,17 +288,18 @@ diff -Nurp linux-2.6.20.orig/fs/gobohide.c linux-2.6.20/fs/gobohide.c
 +       ret = len;
 +       goto out;
 +   }
-+   
-+   if (gobolinux_hide(ino, n->filp->f_dentry->d_sb)) {
++
++   n->i_ino = gobolinux_translate_inode_nr(n->filp->f_dentry->d_inode);
++   if (gobolinux_hide(n->i_ino, n->filp->f_dentry->d_sb)) {
 +       ret = -EEXIST;
 +       goto out;
 +   }   
 +   
-+   write_lock_irqsave(&inode_lock, flags);
++   write_lock_irqsave(&inode_rwlock, flags);
 +   INIT_LIST_HEAD(&n->head);
 +   
 +   list_add(&n->head, &inode_list);
-+   write_unlock_irqrestore(&inode_lock, flags);
++   write_unlock_irqrestore(&inode_rwlock, flags);
 +out:
 +   return ret;
 +}
@@ -294,11 +313,11 @@ diff -Nurp linux-2.6.20.orig/fs/gobohide.c linux-2.6.20/fs/gobohide.c
 +   struct list_head *p, *next;
 +   struct hide *inode;
 +   unsigned long flags;
-+   
-+   write_lock_irqsave(&inode_lock, flags);
++
++   write_lock_irqsave(&inode_rwlock, flags);
 +   list_for_each_safe(p, next, &inode_list) {
 +       inode = list_entry(p, struct hide, head);
-+       if (inode && (inode->filp->f_dentry->d_inode->i_ino== ino)) {
++       if (inode && (inode->i_ino== ino)) {
 +           list_del(&inode->head);
 +           free_page(inode->page);
 +           filp_close(inode->filp, current->files);
@@ -307,7 +326,7 @@ diff -Nurp linux-2.6.20.orig/fs/gobohide.c linux-2.6.20/fs/gobohide.c
 +       }
 +   }
 +
-+   write_unlock_irqrestore(&inode_lock, flags);
++   write_unlock_irqrestore(&inode_rwlock, flags);
 +   return 0;
 +}
 +
@@ -333,16 +352,16 @@ diff -Nurp linux-2.6.20.orig/fs/gobohide.c linux-2.6.20/fs/gobohide.c
 +       goto out;
 +
 +   ret = 0;
-+   read_lock_irqsave(&inode_lock, flags);
++   read_lock_irqsave(&inode_rwlock, flags);
 +   list_for_each(p, &inode_list) {
 +       inode = list_entry(p, struct hide, head);
-+       if (inode->filp->f_dentry->d_inode->i_ino == ino) {
++       if (inode->i_ino == ino) {
 +           if (inode->filp->f_dentry->d_sb == inode_sb)
 +               ret = 1;
 +           break;
 +       }
 +   }
-+   read_unlock_irqrestore(&inode_lock, flags);
++   read_unlock_irqrestore(&inode_rwlock, flags);
 +out:
 +   return ret;
 +}
@@ -532,7 +551,7 @@ diff -Nurp linux-2.6.20.orig/include/linux/fs.h linux-2.6.20/include/linux/fs.h
 diff -Nurp linux-2.6.20.orig/include/linux/gobohide.h linux-2.6.20/include/linux/gobohide.h
 --- linux-2.6.20.orig/include/linux/gobohide.h	1969-12-31 21:00:00.000000000 -0300
 +++ linux-2.6.20/include/linux/gobohide.h	2007-02-06 01:42:17.000000000 -0200
-@@ -0,0 +1,45 @@
+@@ -0,0 +1,46 @@
 +#ifndef _LINUX_GOBOLINUX_H
 +#define _LINUX_GOBOLINUX_H
 +
@@ -548,9 +567,10 @@ diff -Nurp linux-2.6.20.orig/include/linux/gobohide.h linux-2.6.20/include/linux
 +#define GETSTATSUID           0x0000004 /* Get the inodes hidden */
 +
 +struct hide {
++   unsigned long i_ino;    /* shortcut to inode number */
 +   struct file *filp;      /* used to recover the inode's pathname */
 +   char *pathname;         /* a fresh cache of the inode's pathname */
-+   unsigned long page; /* page on which pathname has been copied */
++   unsigned long page;     /* page on which pathname has been copied */
 +   struct list_head head;  /* a simple doubly linked list */
 +};
 +

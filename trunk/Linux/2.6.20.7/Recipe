@@ -105,7 +105,7 @@ private__calculate_full_version() {
    if [ "$count" -gt "0" ]
    then
       let count=$count+1
-      newsuffix="-$count$suffix"
+      newsuffix="$suffix-$count"
    fi
    echo "$version$newsuffix"
 }
