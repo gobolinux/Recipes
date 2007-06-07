@@ -1,6 +1,6 @@
 # Recipe for version 0.5.9 by Jonas Karlsson <jonka750@student.liu.se>, on Wed Apr 25 16:11:21 CEST 2007
 # Recipe (MakeRecipe) for HAL by Michael Homer <michael@e.geek.nz>, on Tue Mar 20 15:33 NZST 2007
-compile_version=1.8.2
+compile_version=1.8.4
 url="http://freedesktop.org/~david/dist/hal-0.5.9.tar.gz"
 file_size=1587364
 file_md5=a6f532770cf9286e1de38d6570cbc6bc
@@ -15,22 +15,41 @@ configure_options=(
     "--with-socket-dir=${goboVariable}/run/hald"
     "--with-dbus-sys=${settings_target}/dbus-1/system.d"
     "--with-hwdata=${goboShared}/hwdata"
+    "--mandir=${target}/man"
+    "--with-eject=${goboExecutables}/eject"
 )
 unmanaged_files=(
     "${goboVariable}/run/hald"
     "${goboVariable}/run/hald/hald-local"
     "${goboVariable}/run/hald/hald-runner"
+    "${goboVariable}/cache"
 )
 
 pre_build() {
    if ! grep -q "haldaemon" $goboSettings/group
    then
       Log_Normal "Adding group haldaemon"
-      groupadd haldaemon
+      for ((i=50;i<200;i++))
+      do
+         if grep -q "^[^:]*:[^:]*:$i:.*" ${goboSettings}/group
+	 then continue
+	 else
+            groupadd -g ${i} haldaemon
+	    break
+         fi
+      done
    fi
    if ! grep -q "haldaemon:x:" $goboSettings/passwd
    then
       Log_Normal "Adding user haldaemon"
-      useradd -g haldaemon -c 'Added by Compile' -d $goboVariable/empty -s $goboExecutables/false haldaemon
+      for ((i=50;i<200;i++))
+      do
+         if grep -q "^[^:]*:[^:]*:$i:.*" ${goboSettings}/passwd
+	 then continue
+	 else
+            useradd -g haldaemon -u ${i} -c 'Added by Compile' -d $goboVariable/empty -s $goboExecutables/false haldaemon
+	    break
+	 fi
+      done
    fi
 }
