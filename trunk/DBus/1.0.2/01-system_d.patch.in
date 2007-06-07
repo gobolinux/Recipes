@@ -6,7 +6,7 @@ diff -Puar dbus-0.50-orig/bus/system.conf.in dbus-0.50/bus/system.conf.in
    <!-- Config files are placed here that among other things, punch 
         holes in the above policy for specific services. -->
 -  <includedir>system.d</includedir>
-+  <includedir>/System/Settings/dbus-1/system.d</includedir>
++  <includedir>@%Compile_goboSettings%@/dbus-1/system.d</includedir>
  
    <!-- This is included last so local configuration can override what's 
         in this standard file -->
