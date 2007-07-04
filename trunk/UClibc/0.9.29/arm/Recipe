@@ -16,3 +16,7 @@ pre_build() {
     GrepReplace "CROSS_COMPILER_PREFIX=.*" "CROSS_COMPILER_PREFIX=\"$crosscompiler\"" .config
   )
 }
+
+pre_link() {
+	GrepReplace " /lib/" " $goboLibraries/" $target/lib/libc.so
+}
