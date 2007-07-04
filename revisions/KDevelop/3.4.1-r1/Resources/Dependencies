@@ -1,0 +1,32 @@
+Ctags >= 5.6 # Recommended (Unversioned)
+CVS >= 1.12.0 # Optional (Unversioned)
+Doxygen >= 1.4.0 # Recommended (Unversioned)
+Fontconfig >= 2.4.0 # Recommended (Unversioned)
+FreeType >= 2.0.0 # Recommended
+#GCC 4.0.2
+#Glibc 2.3.5-r1
+HtDig >= 3.1.6 # Recommended (Unversioned)
+LibXML2 >= 2.4.8 # Recommended
+LibXSLT >= 1.0.7 # Recommended
+Qt >= 3.3.2 < 4.0
+Subversion >= 1.4.0 # Optional (Unversioned)
+Xorg >= 7.0 # (Unversioned)
+ZLib >= 1.1
+# Added/changed these for the 3.4.1 build
+# refer to http://www.kdevelop.org/index.html?filename=3.4/requirements.html
+KDE-Base >= 3.4 < 4.0
+KDE-Libs >= 3.4 < 4.0
+Automake >= 1.6
+Autoconf >= 2.52
+Make >= 3.5 # (Unversioned)
+Flex >= 2.5.33 (2.5.4 required, but no recipe available)
+Perl >= 5.004
+DB >= 4.1 # Required
+#Cervisia >= 2.0 # (Optional) replaces CVS dependency? no recipe yet
+#Perforce >= 2003.1 # Optional - Perforce command line tool (not needed to build) no recipe
+#Valgrind >= 20030725 # (Optional) memory leak checker - no recipe
+#Clearcase >= 4.0 # (Optional) no recipe
+#GhostScript >= 6.53 # no longer required?
+Graphviz >= 1.8.7 # Optional (class inheritance and collaboration diagrams)
+#Yzis >= M3 # Optional - text editor similar to vim - no recipe
+libtool >= 1.4
