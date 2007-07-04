@@ -1,0 +1,4 @@
+#!/bin/sh
+
+real_gcc=i386-linux-uclibc-gcc
+$real_gcc $UCLIBC_CFLAGS -I$UCLIBC_GCCINCDIR $@

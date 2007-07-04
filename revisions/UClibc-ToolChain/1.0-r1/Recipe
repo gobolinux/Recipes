@@ -1,0 +1,74 @@
+# Recipe (MakeRecipe) for UClibc-ToolChain by Aitor Perez Iturri, on vie jun 1 19:07:00 CEST 2007
+# Recipe for version 1.0 by Aitor Perez Iturri, on vie jun 1 19:07:00 CEST 2007
+compile_version=1.8.2
+urls=(
+	"ftp://gd.tuwien.ac.at/gnu/gcc/releases/gcc-4.1.2/gcc-4.1.2.tar.bz2"
+	"http://ftp.gnu.org/gnu/binutils/binutils-2.17.tar.bz2"
+)
+dirs=(
+	"UClibc-ToolChain/"
+)
+unpack_files=files_in_root
+file_size=39707720
+file_md5=a4a3eb15c96030906d8494959eeda23c
+environment=(
+	"binutilssrc=binutils-2.17"
+	"gccsrc=gcc-4.1.2"
+)
+recipe_type=manifest
+
+private__get_host_arch () {
+	local arch=`uname -m|sed -e 's/i.86/i386/'`
+	echo ${arch}-linux-uclibc
+}
+
+# Does symlinks needed to build gcc
+private__prepare_target_dir () {
+	targetarch=$1
+	# do symlinks to uclibc libs and headers, needed by gcc
+	mkdir -p $target/usr
+	ln -s ${uclibc_path}/include $target/usr/include || return 1
+	ln -s ${uclibc_path}/lib $target/usr/lib || return 1
+
+	return 0
+}
+
+private__build_binutils () {
+	# Configure it
+	targetarch=$1
+	pushd $binutilssrc
+	./configure --prefix=$target --target=$targetarch --with-sysroot=$target || return 1
+	# make and install
+	make || return 1
+	make install || return 1
+	popd
+	return 0
+}
+
+private__build_gcc () {
+	pushd $gccsrc
+	targetarch=$1
+	./configure --prefix=$target --target=$targetarch --with-sysroot=$target --enable-languages=c || return 1
+	# make and install
+	make || return 1
+	make install || return 1
+	popd
+	return 0
+}
+
+private__build_environment () {
+	echo "export UCLIBC_GCCINCDIR=`i386-linux-uclibc-gcc -print-search-dirs|sed -ne 's/install: \(.*\)/\1include/gp'`" > $target/Resources/Environment
+	echo "export UCLIBC_CFLAGS=\"-nostdinc -I$target/usr/include -IL$UCLIBC_GCCINCDIR\"" >> $target/Resources/Environment
+}
+
+# Function to build the toolchain
+pre_install () {
+	local hostarch=`private__get_host_arch`
+	private__prepare_target_dir || Die "Some errors found when preparing the program directory"
+	private__build_binutils $hostarch || Die "Some errors found when building binutils for uclibc"
+	PATH=$PATH:$target/bin
+	LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/i386-linux-uclibc/lib"
+	private__build_gcc $hostarch || Die "Some errors when building gcc for uclibc"
+	private__build_environment || Die "Some errors when building environment file"
+}
+
