@@ -1,0 +1,10 @@
+pre_build() {
+	if [ ! -f .config ]
+    then
+		cp "$archsubdir"/dot-config .config
+		yes "" | make oldconfig
+	fi
+	GrepReplace "RUNTIME_PREFIX=.*" "RUNTIME_PREFIX=\"${target}\"" .config
+	GrepReplace "DEVEL_PREFIX=.*" "DEVEL_PREFIX=\"${target}\"" .config
+	make menuconfig
+}

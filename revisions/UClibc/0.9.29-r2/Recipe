@@ -1,0 +1,15 @@
+# Recipe for version 0.9.29 by Aitor Perez Iturri, on sáb may 5 01:45:07 CEST 2007
+# Recipe (MakeRecipe) for UClibc by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sun Dec 19 12:44:30 BRST 2004
+compile_version=1.8.2
+url="http://www.uclibc.org/downloads/uClibc-0.9.29_rc1.tar.bz2"
+file_size=2203292
+file_md5=73d26615068861b0e5a4223cf0245c17
+recipe_type=makefile
+makefile='Makefile'
+install_variables=(
+	PREFIX=${target}
+)
+
+pre_link() {
+	mkdir -p "$target/include/sys"
+}
