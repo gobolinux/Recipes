@@ -1,0 +1,20 @@
+# Recipe for version 1.6.0 by Aitor Perez Iturri, on Thu Jun 7 15:41:15 CEST 2007
+# Recipe (MakeRecipe) for BusyBox by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sun Dec 19 13:55:31 BRST 2004
+compile_version=1.8.2
+url="http://www.busybox.net/downloads/busybox-1.6.0.tar.bz2"
+file_size=1689981
+file_md5=b587dd978fed23467b42ef959b6aa449
+recipe_type=makefile
+makefile='Makefile'
+
+sandbox_options=(
+    "--no-sandbox"
+)
+
+pre_link() {
+    mkdir -p $target/Shared/udhcpc
+    cp examples/udhcp/simple.script $target/Shared/udhcpc/default.script
+    chmod +x $target/Shared/udhcpc/default.script
+    cp .config $target/Resources/config && gzip $target/Resources/config
+    cp $recipedir/Resources/mdev_wrapper $target/bin
+}

@@ -1,0 +1,14 @@
+make_variables=(
+	CROSS_COMPILE="$cross_compiler"
+	V=1
+)
+
+pre_build() {
+    (
+        unset C_INCLUDE_PATH
+        crosscompiler="$cross_toolchain_dir/bin/$cross_compiler"
+        [ ! -f .config ] && cp "$archsubdir"/dot-config .config
+        GrepReplace "PREFIX=.*" "PREFIX=\"$target\"" .config
+        make menuconfig
+    )
+}
