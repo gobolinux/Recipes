@@ -1,0 +1,30 @@
+--- busybox-1.6.0_old/modutils/modprobe.c	2007-06-07 16:46:04.000000000 +0200
++++ busybox-1.6.0/modutils/modprobe.c	2007-06-07 16:46:33.000000000 +0200
+@@ -15,6 +15,10 @@
+ #include <sys/utsname.h>
+ #include <fnmatch.h>
+ 
++#ifndef MODPROBE_MODDIR
++#define MODPROBE_MODDIR "/System/Kernel/Modules"
++#endif
++
+ struct mod_opt_t {	/* one-way list of options to pass to a module */
+ 	char *  m_opt_val;
+ 	struct mod_opt_t * m_next;
+@@ -342,13 +346,14 @@
+ 		k_version = un.release[2] - '0';
+ 	}
+ 
+-	filename = xasprintf("/lib/modules/%s/modules.dep", un.release);
++	filename = xasprintf("/%s/%s/modules.dep", MODPROBE_MODDIR,un.release);
+ 	fd = open(filename, O_RDONLY);
+ 	if (ENABLE_FEATURE_CLEAN_UP)
+ 		free(filename);
+ 	if (fd < 0) {
+ 		/* Ok, that didn't work.  Fall back to looking in /lib/modules */
+-		fd = open("/lib/modules/modules.dep", O_RDONLY);
++		filename = xasprintf("%s/modules.dep", MODPROBE_MODDIR );
++		fd = open(filename, O_RDONLY);
+ 		if (fd < 0) {
+ 			return 0;
+ 		}
