@@ -1,0 +1,14 @@
+--- LVM2.2.02.22_orig/doc/Makefile.in	2004-06-15 19:25:04.000000000 +0200
++++ LVM2.2.02.22/doc/Makefile.in	2007-03-05 10:27:11.000000000 +0100
+@@ -20,10 +20,5 @@
+ 
+ include $(top_srcdir)/make.tmpl
+ 
++# Do nothing 
+ install:
+-	@if [ ! -e $(confdir)/$(CONFDEST) ]; then \
+-		echo "Installing $(CONFSRC) as $(confdir)/$(CONFDEST)"; \
+-		@INSTALL@ -D $(OWNER) $(GROUP) -m 644 $(CONFSRC) \
+-			$(confdir)/$(CONFDEST); \
+-	fi
+-
