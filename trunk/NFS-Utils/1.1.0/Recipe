@@ -6,12 +6,15 @@ recipe_type=configure
 configure_options=(
 	"--disable-nfsv4"
 	"--disable-gss"
-	"--sysconfdir=$goboPrograms/NFS-Utils/Settings"
-	"--with-statedir=$goboPrograms/NFS-Utils/Variable/lib/nfs"
-	"--localstatedir=$goboPrograms/NFS-Utils/Variable/lib/nfs"
+	"--sysconfdir=$settings_target"
+	"--with-statedir=$goboVariable/lib/nfs"
+	"--localstatedir=$goboVariable/lib/nfs"
 )
 
 pre_build(){
-	useradd -d /var/lib/nfs rpcuser
+	useradd -d $goboVariable/lib/nfs rpcuser
 }
 
+unmanaged_files=(
+    $goboVariable/lib/nfs
+)
