@@ -1,0 +1,11 @@
+--- Python-2.5/Modules/_ctypes/libffi/src/arm/ffitarget.h.orig	2007-06-20 00:51:14.000000000 -0300
++++ Python-2.5/Modules/_ctypes/libffi/src/arm/ffitarget.h	2007-06-20 00:51:21.000000000 -0300
+@@ -40,7 +40,7 @@ typedef enum ffi_abi {
+ 
+ /* ---- Definitions for closures ----------------------------------------- */
+ 
+-#define FFI_CLOSURES 0
++#define FFI_CLOSURES 1
+ #define FFI_NATIVE_RAW_API 0
+ 
+ #endif
