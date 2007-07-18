@@ -1,0 +1,53 @@
+## Lua 5.1 Environment
+#####################
+
+
+if [ -z $LUA_PATH ]
+then
+export LUA_PATH="\
+?;\
+?.lua;\
+?/init.lua;\
+?/?.lua;\
+$goboPrefix/System/Links/Shared/lua/5.1/?.lua;\
+$goboPrefix/System/Links/Shared/lua/5.1/?;\
+$goboPrefix/System/Links/Shared/lua/5.1/?/init.lua;\
+$goboPrefix/System/Links/Shared/lua/5.1/?/?.lua;\
+$goboPrefix/System/Links/Shared/lua/?.lua;\
+$goboPrefix/System/Links/Shared/lua/?;\
+$goboPrefix/System/Links/Shared/lua/?/init.lua;\
+$goboPrefix/System/Links/Shared/lua/?/?.lua\
+"
+else
+export LUA_PATH="\
+$LUA_PATH;\
+$goboPrefix/System/Links/Shareds/lua/5.1/?.lua;\
+$goboPrefix/System/Links/Shareds/lua/5.1/?;\
+$goboPrefix/System/Links/Shareds/lua/5.1/?/init.lua;\
+$goboPrefix/System/Links/Shareds/lua/5.1/?/?.lua\
+"
+fi
+
+
+if [ -z $LUA_CPATH ]
+then
+export LUA_CPATH="?.so;\
+?/?.so;\
+$goboPrefix/System/Links/Libraries/lua/5.1/?.so;\
+$goboPrefix/System/Links/Libraries/lua/5.1/?/?.so;\
+$goboPrefix/System/Links/Libraries/lua/?.so\
+"
+else
+export LUA_CPATH="$LUA_CPATH;\
+$goboPrefix/System/Links/Libraries/lua/5.1/?.so;\
+$goboPrefix/System/Links/Libraries/lua/5.1/?/?.so\
+"
+fi
+
+
+if [ -z $LUA_VERSIONS ]
+then
+	export LUA_VERSIONS="5.1"
+else
+	export LUA_VERSIONS="$LUA_VERSIONS;5.1"
+fi
