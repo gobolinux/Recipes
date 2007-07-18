@@ -1,6 +1,20 @@
 # Recipe for version 1.6.8p12 by Laurent Pelecq (laurent.pelecq at soleil.org), on mer mai 10 07:50:05 CEST 2006
 # Recipe (MakeRecipe) for Sudo by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sun Feb 27 23:19:34 BRT 2005
-compile_version=1.8.0
+compile_version=1.8.2
 url="http://www.courtesan.com/sudo/dist/sudo-1.6.8p12.tar.gz"
+file_size=585643
+file_md5=b29893c06192df6230dd5f340f3badf5
 recipe_type=configure
 sandbox_options=("--no-sandbox")
+configure_options=(
+   --with-runas-default="#0"
+   --with-logpath="$goboVariable/log/sudo.log"
+   --with-timedir="$goboVariable/run/sudo"
+   --with-stow
+   --enable-log-host
+)
+
+pre_link() {
+   chmod 4111 "${target}/bin/sudo"
+}
+

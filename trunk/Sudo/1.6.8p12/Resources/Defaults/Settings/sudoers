@@ -14,7 +14,12 @@
 # Defaults specification
 
 # User privilege specification
-gobo	ALL=(ALL) ALL
+
+# user #0 is normally in group sys, allowed later anyway.
+# (user id's can't syntactically be allowed to
+#  do things, in this file -- this was here:
+#  gobo	ALL=(ALL) ALL
+# )
 
 # Uncomment to allow people in group wheel to run all commands
 # %wheel	ALL=(ALL)	ALL
