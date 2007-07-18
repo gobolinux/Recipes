@@ -1,0 +1,10 @@
+--- udev-070.orig/Makefile	2005-09-14 16:19:07.000000000 -0700
++++ udev-070/Makefile	2005-10-05 20:31:00.000000000 -0700
+@@ -373,7 +373,6 @@
+ .PHONY: uninstall-man
+ 
+ install-bin:
+-	$(INSTALL) -d $(DESTDIR)$(udevdir)
+ 	$(INSTALL_PROGRAM) -D udev $(DESTDIR)$(sbindir)/udev
+ 	$(INSTALL_PROGRAM) -D udevd $(DESTDIR)$(sbindir)/udevd
+ 	$(INSTALL_PROGRAM) -D udevsend $(DESTDIR)$(sbindir)/udevsend
