@@ -1,0 +1,13 @@
+# Recipe for version 3.3.17 by Aitor Perez Iturri, on dom may 6 14:25:25 CEST 2007
+compile_version=1.8.2
+url="http://www.sqlite.org/sqlite-3.3.17.tar.gz"
+file_size=2111281
+file_md5=549eac1ee0b6ff4615f16e0ef0eb68fb
+recipe_type=configure
+configure_options=(
+    "--disable-tcl"
+)
+
+pre_link() {
+    ln -s $target/bin/sqlite3 $target/bin/sqlite
+}
