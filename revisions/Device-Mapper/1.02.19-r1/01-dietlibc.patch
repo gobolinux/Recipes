@@ -1,0 +1,27 @@
+diff -Nur device-mapper.1.02.19_orig/dmsetup/dmsetup.c device-mapper.1.02.19/dmsetup/dmsetup.c
+--- device-mapper.1.02.19_orig/dmsetup/dmsetup.c	2007-04-27 20:01:45.000000000 +0200
++++ device-mapper.1.02.19/dmsetup/dmsetup.c	2007-05-12 10:25:11.000000000 +0200
+@@ -19,6 +19,10 @@
+ #define _GNU_SOURCE
+ #define _FILE_OFFSET_BITS 64
+ 
++#ifdef __dietlibc__
++#define UINT64_C(c)	c ## UL
++#endif
++
+ #include "configure.h"
+ 
+ #include "libdevmapper.h"
+diff -Nur device-mapper.1.02.19_orig/include/configure.h.in device-mapper.1.02.19/include/configure.h.in
+--- device-mapper.1.02.19_orig/include/configure.h.in	2007-01-19 16:53:01.000000000 +0100
++++ device-mapper.1.02.19/include/configure.h.in	2007-05-12 10:24:05.000000000 +0200
+@@ -1,5 +1,9 @@
+ /* include/configure.h.in.  Generated from configure.in by autoheader.  */
+ 
++#ifdef __dietlibc__
++#define rpl_malloc malloc
++#endif
++
+ /* Define to 1 if the `closedir' function returns void instead of `int'. */
+ #undef CLOSEDIR_VOID
+ 
