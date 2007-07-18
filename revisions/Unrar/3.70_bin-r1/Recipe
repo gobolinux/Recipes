@@ -1,0 +1,13 @@
+compile_version=1.8.2
+url="ftp://ftp.elf.stuba.sk/pub/pc/pack/unrarsrc.tgz"
+file_size=129934
+file_md5=c6e1ae41bc140d47f4608c1ab5f01802
+dir='unrar'
+
+recipe_type=makefile
+makefile=makefile.unix
+do_install=no
+
+pre_link() {
+	cp unrar $target/bin/
+}
