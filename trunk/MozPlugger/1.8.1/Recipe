@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for MozPlugger by Lucas C. Villa Real, on Sat May 26 03:44:59 BRT 2007
+# Recipe for version 1.8.1 by Lucas C. Villa Real, on Sat May 26 03:44:59 BRT 2007
+compile_version=1.8.2
+url="http://mozplugger.mozdev.org/files/mozplugger-1.8.1.tar.gz"
+file_size=56308
+file_md5=f3e6a65573e7e8a1d056d8e4d90b6f9a
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+   "sysconfdir=$settings_target"
+)
+build_target="linux"

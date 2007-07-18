@@ -1,0 +1,24 @@
+--- mozplugger-1.8.1/Makefile.orig	2007-05-26 03:48:36.000000000 -0300
++++ mozplugger-1.8.1/Makefile	2007-05-26 03:49:19.000000000 -0300
+@@ -8,6 +8,7 @@ root=
+ #
+ # For installing
+ prefix=/usr
++sysconfdir=/etc
+ 
+ #
+ #
+@@ -158,11 +159,11 @@ install:
+ 	-@mkdir -p $(root)$(prefix)/bin
+ 	-@mkdir -p $(root)$(prefix)/lib/mozilla/plugins
+ 	-@mkdir -p $(root)$(prefix)/share/man/man7
+-	-@mkdir -p $(root)/etc
++	-@mkdir -p $(root)$(sysconfdir)
+ 	cp mozplugger-helper $(root)$(prefix)/bin/
+ 	cp mozplugger-controller $(root)$(prefix)/bin/
+ 	cp mozplugger.so $(root)$(prefix)/lib/mozilla/plugins/
+-	cp mozpluggerrc $(root)/etc/
++	cp mozpluggerrc $(root)$(sysconfdir)
+ 	cp mozplugger.7 $(root)$(prefix)/share/man/man7/
+ 
+ mozplugger.tar.gz: $(BASE_FILES) $(SOURCE_FILES)
