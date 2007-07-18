@@ -1,0 +1,8 @@
+# Recipe for version 0.9.8e by Isaac Dupree <id@isaac.cedarswampstudios.org>, on Sat Jun 23 11:05:33 BRT 2007
+compile_version=1.8.2
+url=http://www.openssl.org/source/openssl-0.9.8e.tar.gz
+file_size=3341665
+file_md5=3a7ff24f6ea5cd711984722ad654b927
+recipe_type=configure
+configure=Configure
+build_target="all"
