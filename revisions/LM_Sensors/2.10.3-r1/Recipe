@@ -1,0 +1,31 @@
+# Recipe for version 2.10.3 by Mike Hughes, on Sun Jun 3 14:45:01 PDT 2007
+compile_version=1.8.2
+url="http://dl.lm-sensors.org/lm-sensors/releases/lm_sensors-2.10.3.tar.gz"
+file_size=920926
+file_md5=55d77146fbd56c205a9f81d262b9453c
+recipe_type=makefile
+dir=lm_sensors-2.10.3
+build_target=user
+install_target=user_install
+
+make_variables=(
+  "PREFIX=$target"
+  "ETCDIR=$settings_target"
+  "I2C_HEADERS=$goboModules/Current/build/include"
+  "SHELL=${bash_path}/bin/bash"
+)
+
+sandbox_options=(
+  "--add-allowed kernel:kernel/include:kernel/busses:kernel/chips:prog:prog/sensors:prog/detect:prog/dump:lib"
+)
+
+private__sed() {
+  sed -i -e "/^${1}/s/^/# /" Makefile
+}
+
+pre_build() {
+  private__sed PREFIX
+  private__sed ETCDIR
+  private__sed I2C_HEADERS
+  sed -i -e 's/^# PREFIX.*/\$(warning PREFIX = \$(PREFIX) and make target is \$(MAKECMDGOALS)) /' Makefile
+}
