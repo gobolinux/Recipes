@@ -27,11 +27,11 @@
 -export INSTALLDIR  = $(prefix)/lib/klibc
 -export INSTALLROOT =
 +export prefix      = ${PREFIX}
-+export bindir      = /bin
-+export libdir      = /lib
-+export mandir      = /man
-+export INSTALLDIR  = /share/klibc
-+export INSTALLROOT = ${PREFIX}
++export bindir      = $(prefix)/bin
++export libdir      = $(prefix)/lib
++export mandir      = $(prefix)/man
++export INSTALLDIR  = $(prefix)/Shared/klibc
++export INSTALLROOT = 
 +
 +
  
