@@ -1,0 +1,17 @@
+# Recipe (MakeRecipe) for MTD-Utils by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Wed Jun 22 11:23:03 BRT 2005
+# Recipe for version CVS by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Wed Jun 22 11:23:03 BRT 2005
+compile_version=1.8.2
+cvs=":pserver:anoncvs:anoncvs@cvs.infradead.org:/home/cvs"
+cvs_module="mtd"
+dir='mtd/util'
+recipe_type=makefile
+
+make_variables=(
+	"SBINDIR=$target/sbin"
+	"MANDIR=$target/man"
+	"INCLUDEDIR=$target/include"
+)
+
+pre_install() {
+    GrepReplace "root" "0" Makefile
+}
