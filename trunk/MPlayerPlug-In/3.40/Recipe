@@ -1,0 +1,13 @@
+# Recipe for version 3.40 by Lucas C. Villa Real, on Sat May 26 03:31:18 BRT 2007
+compile_version=1.8.2
+url="$httpSourceforge/mplayerplug-in/mplayerplug-in-3.40.tar.gz"
+file_size=224081
+file_md5=eaeb723a346570a0e3859c7b056a513f
+dir=mplayerplug-in
+recipe_type=configure
+install_variables=( DESTDIR=/ )
+pre_link() {
+    cd $target/lib/mozilla
+    mkdir components
+    mv plugins/*.xpt components
+}
