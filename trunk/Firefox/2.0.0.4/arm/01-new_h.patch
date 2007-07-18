@@ -1,0 +1,11 @@
+--- mozilla/configure.orig	2007-01-15 22:55:06.000000000 -0200
++++ mozilla/configure	2007-01-15 17:19:21.000000000 -0200
+@@ -8253,7 +8253,7 @@
+ fi
+ 
+ cat >> confdefs.h <<EOF
+-#define NEW_H <$NEW_H>
++#define NEW_H <new>
+ EOF
+ 
+ ac_ext=c
