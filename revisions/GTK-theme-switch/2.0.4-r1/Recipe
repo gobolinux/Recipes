@@ -1,0 +1,15 @@
+# Recipe for version 2.0.4 by Jeremy Visser <jeremy.visser@gmail.com>. Tue Jul 10 02:01:04 UTC 2007
+compile_version=1.8.2
+url="http://ftp.debian.org/debian/pool/main/g/gtk-theme-switch/gtk-theme-switch_2.0.4.tar.gz"
+file_size=24359
+file_md5=ea213872031bebcb0f3d736352a5aae7
+
+recipe_type="makefile"
+
+make_variables=(
+	"PREFIX=$target"
+)
+
+build_target=switch2
+
+dir=gtk-theme-switch-2.0.4
