@@ -1,7 +1,10 @@
 # Recipe for version 2.5 by Andre Detsch <detsch@gobolinux.org>, on Mon Nov 20 16:59:14 BRST 2006
-compile_version=1.8.0
+compile_version=1.8.2
 url=http://python.org/ftp/python/2.5/Python-2.5.tar.bz2
+file_size=9357099
+file_md5=ddb7401e711354ca83b7842b733825a3
 recipe_type=configure
+
 configure_options=(
   "--enable-shared"
   "--with-cxx=no"
