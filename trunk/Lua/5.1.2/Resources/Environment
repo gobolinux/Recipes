@@ -45,7 +45,7 @@ $goboPrefix/System/Links/Libraries/lua/5.1/?/?.so\
 fi
 
 
-if [ -z $LUA_VERSIONS]
+if [ -z $LUA_VERSIONS ]
 then
 	export LUA_VERSIONS="5.1"
 else
