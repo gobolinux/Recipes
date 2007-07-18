@@ -8,7 +8,6 @@ configure_options=(
     "--disable-tcl"
 )
 
-pre_link()
-{
+pre_link() {
     ln -s $target/bin/sqlite3 $target/bin/sqlite
 }
