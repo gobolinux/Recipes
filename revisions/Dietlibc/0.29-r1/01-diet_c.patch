@@ -1,0 +1,26 @@
+--- dietlibc-0.29-orig/diet.c	2005-05-18 16:38:55.000000000 +0200
++++ dietlibc-0.29/diet.c	2006-03-03 22:50:47.000000000 +0100
+@@ -90,12 +90,12 @@
+ #ifdef WANT_SAFEGUARD
+   safeguard2=alloca(strlen(diethome)+30);
+   strcpy(safeguard2, diethome);
+-  strcat(safeguard2, "/include/dietref.h");
++  strcat(safeguard2, "/include/dietlibc/dietref.h");
+ #endif
+   platform=alloca(strlen(diethome)+100);
+   strcpy(platform,diethome);
+ #ifdef INSTALLVERSION
+-  strcat(platform,"/lib-");
++  strcat(platform,"/lib/dietlibc-");
+ #else
+ #ifndef __DYN_LIB
+   strcat(platform,"/bin-");
+@@ -246,7 +246,7 @@
+       b=alloca(strlen(platform)+20);
+       c=alloca(strlen(platform)+20);
+ 
+-      strcpy(a,diethome); strcat(a,"/include");
++      strcpy(a,diethome); strcat(a,"/include/dietlibc");
+ #ifndef __DYN_LIB
+       strcpy(b,platform);
+       if (profile) strcat(b,"/pstart.o"); else strcat(b,"/start.o");
