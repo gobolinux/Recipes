@@ -1,0 +1,50 @@
+--- klibc-1.5_orig/Makefile	2007-03-04 02:52:10.000000000 +0100
++++ klibc-1.5/Makefile	2007-04-09 00:21:35.000000000 +0200
+@@ -9,6 +9,7 @@
+ export KLIBCOBJ := usr/klibc
+ export KLIBCKERNELSRC := linux/
+ export KLIBCKERNELOBJ := linux/
++export KERNEL_SRC := ${goboModules}/`uname -r`/build
+ include scripts/Kbuild.include
+ 
+ KLIBCROSS	?= $(CROSS_COMPILE)
+@@ -21,6 +22,7 @@
+ export NM	:= $(KLIBCROSS)nm
+ export OBJCOPY  := $(KLIBCROSS)objcopy
+ export OBJDUMP  := $(KLIBCROSS)objdump
++export LN := ln -s
+ 
+ NOSTDINC_FLAGS := -nostdlib -nostdinc -isystem $(shell $(CC) -print-file-name=include)
+ 
+@@ -33,12 +35,14 @@
+ export PERL       := perl
+ 
+ # Location for installation
+-export prefix      = /usr
+-export bindir      = $(prefix)/bin
+-export libdir      = $(prefix)/lib
+-export mandir      = $(prefix)/man
+-export INSTALLDIR  = $(prefix)/lib/klibc
+-export INSTALLROOT =
++export prefix      = ${PREFIX}
++export bindir      = $(prefix)/bin
++export libdir      = $(prefix)/lib
++export mandir      = $(prefix)/man
++export INSTALLDIR  = $(prefix)/Shared/klibc
++export INSTALLROOT = 
++
++
+ 
+ # Create a fake .config as present in the kernel tree
+ # But if it exists leave it alone
+@@ -89,9 +93,7 @@
+ 	@false
+ 
+ linux:
+-	@echo "The 'linux' symlink is missing; it should point to a kernel tree "
+-	@echo "configured for the $(KLIBCARCH) architecture."
+-	@false
++	$(LN) $(KERNEL_SRC) linux
+ 
+ rpmbuild = $(shell which rpmbuild 2>/dev/null || which rpm)
+ 
