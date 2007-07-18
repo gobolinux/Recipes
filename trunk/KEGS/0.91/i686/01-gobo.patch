@@ -1,0 +1,28 @@
+--- ./Makefile.ap-orig	2007-06-21 19:13:43.000000000 -0700
++++ ./Makefile	2007-06-21 20:11:22.000000000 -0700
+@@ -0,0 +1,15 @@
++
++
++PREFIX=/usr/local
++
++
++make:
++	cd src  &&  ln -sf vars_x86linux vars
++	cd src  &&  make
++	cd src  &&  make to_pro
++
++
++install:
++	mkdir -p $(PREFIX)/share/kegs
++	cp xkegs      $(PREFIX)/bin
++	cp src/to_pro $(PREFIX)/bin
+--- ./src/sim65816.c.ap-orig	2007-06-21 20:06:09.000000000 -0700
++++ ./src/sim65816.c	2007-06-21 20:13:47.000000000 -0700
+@@ -22,6 +22,7 @@
+ char g_argv0_path[256] = "./";
+ 
+ const char *g_kegs_default_paths[] = { "", "./", "${HOME}/",
++	"${goboPrefix}/System/Links/Shared/kegs/",
+ 	"${HOME}/Library/KEGS/",
+ 	"${0}/Contents/Resources/", "/usr/local/lib/",
+ 	"/usr/local/kegs/", "/usr/local/lib/kegs/", "/usr/share/kegs/",

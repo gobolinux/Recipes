@@ -1,0 +1,17 @@
+[Name] KEGS
+[Summary] Apple IIgs emulator
+[License] GPLv2
+[Homepage] http://kegs.sourceforge.net/
+
+[Description] 
+
+KEGS emulates an Apple IIgs accurately at between 8MHz and 120MHz on
+pretty much any Unix/Linux computer, Win32, or Mac OS X.
+
+As the Apple IIgs is backwards compatible with the Apple II line, KEGS
+can also run almost all Apple II software.
+
+You'll need to supply a copy of the Apple IIgs ROM (version 1 or 3).
+You should put the ROM file at:
+
+$goboPrefix/System/Links/Shared/kegs/ROM
