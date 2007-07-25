@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for DevelScripts by Hisham Muhammad
+compile_version=1.8.2
+cvs=:pserver:anonymous:@cvs.savannah.nongnu.org:/sources/goboscripts
+cvs_module=tools/DevelScripts
+recipe_type=makefile
+make_variables=(
+   VERSION=$version
+   PREFIX=$target
+)
