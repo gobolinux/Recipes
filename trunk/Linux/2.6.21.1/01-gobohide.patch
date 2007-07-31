@@ -34,7 +34,7 @@ diff -Nurp linux-2.6.20.orig/fs/Makefile linux-2.6.20/fs/Makefile
 diff -Nurp linux-2.6.20.orig/fs/gobohide.c linux-2.6.20/fs/gobohide.c
 --- linux-2.6.20.orig/fs/gobohide.c	1969-12-31 21:00:00.000000000 -0300
 +++ linux-2.6.20/fs/gobohide.c	2007-02-06 01:42:17.000000000 -0200
-@@ -0,0 +1,342 @@
+@@ -0,0 +1,364 @@
 +/*
 + * Copyright (C) 2002 CScience.ORG World Domination Inc.
 + *
@@ -113,7 +113,10 @@ diff -Nurp linux-2.6.20.orig/fs/gobohide.c linux-2.6.20/fs/gobohide.c
 +static LIST_HEAD(inode_list);
 +static rwlock_t inode_rwlock = RW_LOCK_UNLOCKED;
 +
-+/** 
++struct file *gobolinux_get_filp(ino_t ino, const char *pathname, int *ret);
++int gobolinux_resolve_path(struct hide *inode);
++
++	/** 
 + * gobolinux_fs_ioctl - Handle fs-related ioctls 
 + * @inode: inode number being added/removed from the hide-list
 + * @hide: structure containing the user's request 
@@ -146,7 +149,22 @@ diff -Nurp linux-2.6.20.orig/fs/gobohide.c linux-2.6.20/fs/gobohide.c
 +           error = gobolinux_inode_add(hide->inode, hide->pathname);
 +           break;
 +       case GOBOLINUX_UNHIDEINODE:
-+           error = gobolinux_inode_del(hide->inode);
++		   do {
++			   int len, ret;
++			   struct hide n;
++
++			   n.filp = gobolinux_get_filp(hide->inode, hide->pathname, &ret);
++			   if (!n.filp) {
++				   error = -ENOENT;
++				   goto out;
++			   }
++			   len = gobolinux_resolve_path(&n);
++			   if (len < 0) {
++				   error = -ENOENT;
++				   goto out;
++			   }
++			   error = gobolinux_inode_del(n.filp->f_dentry->d_inode);
++		   } while(0);
 +           break;
 +       case GETSTATSUIDNUMBER:
 +           error = gobolinux_count_hidden(hide);
@@ -257,9 +275,11 @@ diff -Nurp linux-2.6.20.orig/fs/gobohide.c linux-2.6.20/fs/gobohide.c
 +{
 +   unsigned long ino = inode->i_ino;
 +#ifdef CONFIG_UNION_FS
-+   /* we must take the inode number from the underlying filesystem */
-+   struct inode *lower_inode = unionfs_lower_inode(inode);
-+   ino = lower_inode->i_ino;
++   if (inode->i_sb->s_op == &unionfs_sops) {
++	   /* we must take the inode number from the underlying filesystem */
++	   struct inode *lower_inode = unionfs_lower_inode(inode);
++	   ino = lower_inode->i_ino;
++   }
 +#endif
 +   return ino;
 +}
@@ -308,20 +328,22 @@ diff -Nurp linux-2.6.20.orig/fs/gobohide.c linux-2.6.20/fs/gobohide.c
 + * gobolinux_inode_del - Remove the inode from the "must hide" list 
 + * @ino: inode to be removed
 + */
-+int gobolinux_inode_del(ino_t ino)
++int gobolinux_inode_del(struct inode *inode)
 +{
 +   struct list_head *p, *next;
-+   struct hide *inode;
++   struct hide *entry;
 +   unsigned long flags;
++
++   ino_t ino = gobolinux_translate_inode_nr(inode);
 +
 +   write_lock_irqsave(&inode_rwlock, flags);
 +   list_for_each_safe(p, next, &inode_list) {
-+       inode = list_entry(p, struct hide, head);
-+       if (inode && (inode->i_ino== ino)) {
-+           list_del(&inode->head);
-+           free_page(inode->page);
-+           filp_close(inode->filp, current->files);
-+           kfree(inode);
++       entry = list_entry(p, struct hide, head);
++       if (entry && (entry->i_ino == ino)) {
++           list_del(&entry->head);
++           free_page(entry->page);
++           filp_close(entry->filp, current->files);
++           kfree(entry);
 +           break;
 +       }
 +   }
@@ -424,7 +446,7 @@ diff -Nurp linux-2.6.20.orig/fs/namei.c linux-2.6.20/fs/namei.c
  	if (!error) {
 +#ifdef CONFIG_GOBOHIDE_FS
 +		if (gobolinux_hide(dentry->d_inode->i_ino, dentry->d_sb) > 0)
-+			gobolinux_inode_del(dentry->d_inode->i_ino);
++			gobolinux_inode_del(dentry->d_inode);
 +#endif
  		d_delete(dentry);
  	}
@@ -436,7 +458,7 @@ diff -Nurp linux-2.6.20.orig/fs/namei.c linux-2.6.20/fs/namei.c
 +#ifdef CONFIG_GOBOHIDE_FS
 +		if (dentry->d_inode && (S_ISLNK(dentry->d_inode->i_mode) || S_ISDIR(dentry->d_inode->i_mode))) {
 +			if (gobolinux_hide(dentry->d_inode->i_ino, dentry->d_sb) > 0)
-+				gobolinux_inode_del(dentry->d_inode->i_ino);
++				gobolinux_inode_del(dentry->d_inode);
 +		}
 +#endif
  		d_delete(dentry);
@@ -551,7 +573,6 @@ diff -Nurp linux-2.6.20.orig/include/linux/fs.h linux-2.6.20/include/linux/fs.h
 diff -Nurp linux-2.6.20.orig/include/linux/gobohide.h linux-2.6.20/include/linux/gobohide.h
 --- linux-2.6.20.orig/include/linux/gobohide.h	1969-12-31 21:00:00.000000000 -0300
 +++ linux-2.6.20/include/linux/gobohide.h	2007-02-06 01:42:17.000000000 -0200
-@@ -0,0 +1,46 @@
 +#ifndef _LINUX_GOBOLINUX_H
 +#define _LINUX_GOBOLINUX_H
 +
@@ -593,7 +614,7 @@ diff -Nurp linux-2.6.20.orig/include/linux/gobohide.h linux-2.6.20/include/linux
 +int  gobolinux_show_hidden(struct gobolinux_hide *hide);
 +int  gobolinux_hide(ino_t ino, struct super_block *inode_sb);
 +int  gobolinux_inode_add(ino_t ino, const char *pathname);
-+int  gobolinux_inode_del(ino_t ino);
++int  gobolinux_inode_del(struct inode *inode);
 +int  gobolinux_fs_ioctl(struct inode *inode, struct gobolinux_hide *hide);
 +
 +#endif  /* CONFIG_GOBOHIDE_FS */

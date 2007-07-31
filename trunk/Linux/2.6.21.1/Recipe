@@ -23,7 +23,6 @@ sandbox_options=(
 )
 
 pre_build() {
-   private__calculate_full_version
    if [ ! -f .config ]
    then
       if [ ! -f $goboStatus/config.gz ]
