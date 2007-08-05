@@ -1,0 +1,19 @@
+# Recipe for version 2.01.01a27 by Isaac Dupree <id@isaac.cedarswampstudios.org>, on Sat Jun 23 11:25:30 BRT 2007
+# by Andre Detsch
+# 2004.01.06 16:59
+
+url="ftp://ftp.berlios.de/pub/cdrecord/alpha/cdrtools-2.01.01a27.tar.bz2"
+file_size=1594145
+file_md5=ac3244b90403e3cb43ff168396a865e5
+dir='cdrtools-2.01.01'
+compile_version=1.8.5
+recipe_type=makefile
+
+pre_build() {
+   GrepReplace -R "DEFINSUSR=.*bin"  "DEFINSUSR= root"  *
+   GrepReplace -R "DEFINSGRP=.*bin"  "DEFINSGPR= root"  *
+   GrepReplace -R "INSUSR_DEF=.*bin" "INSUSR_DEF= root" *
+   GrepReplace -R "INSGRP_DEF=.*bin" "INSGRP_DEF= root" *
+   
+   GrepReplace "/opt/schily" "$target" DEFAULTS/Defaults.linux
+}
