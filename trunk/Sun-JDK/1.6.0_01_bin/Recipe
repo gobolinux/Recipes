@@ -1,0 +1,10 @@
+# Recipe for JDK version 1.6.0 by Mike Hughes
+compile_version=1.8.2
+uncompress=no
+recipe_type=manifest
+
+pre_install() {
+  cd jdk1.6.0_01
+  cp -R ./* "$target"
+}
+
