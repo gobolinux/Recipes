@@ -1,0 +1,5 @@
+[Name] cryptsetup
+[Summary] Encrypted partition manager supporting LUKS
+[License] GNU General Public License (GPL)
+[Description] cryptsetup provides commands to create and manage encrypted partitions. LUKS (Linux Unified Key Setup, see http://luks.endorphin.org/) for dm-crypt is implemented in cryptsetup, as well as the old non-LUKS dm-crypt mapping. Formerly named cryptsetup-luks, it has now replaced the old, original "cryptsetup".  It provides all the functionality of the original version plus all LUKS features, that are accesible by luks* action.
+[Homepage] http://luks.endorphin.org/dm-crypt
