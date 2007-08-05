@@ -1,0 +1,11 @@
+# Recipe for version 1.40 by Isaac Dupree <id@isaac.cedarswampstudios.org>, on Sat Jun 30 08:22:13 BRT 2007
+url=$httpSourceforge/e2fsprogs/e2fsprogs-1.40.tar.gz
+file_size=4160254
+file_md5=40095356dbe3d970b898469fe598317c
+recipe_type=configure
+needs_safe_linking=yes
+compile_version=1.8.5
+configure_options=(
+   "--enable-elf-shlibs"
+)
+install_target="install install-libs"
