@@ -1,0 +1,11 @@
+Glibc 2.4
+GMP 4.2
+Ncurses 5.4
+Readline 5.0
+#GHC >= 6.0
+#technically ghc 6.6 only depends on >= 5.04, but 6.8 will depend on >= 6.0,
+#and 5.04 is older than any Gobo recipe/package I found anyway.
+#Unfortunately cyclic dependencies (on binaries - not really cyclic :)
+#are likely to badly confuse tools like Freshen at least.  So until (unless)
+#we work out a good solution here, this dependency will just have to
+#remain "disabled".
