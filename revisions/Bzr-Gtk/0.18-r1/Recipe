@@ -1,0 +1,23 @@
+# Recipe (MakeRecipe) for Bazaar by Jeremy Visser, on Thu Jul 19 23:35:24 BRT 2007
+# Recipe for version 0.18 by Jeremy Visser, on Thu Jul 19 23:35:24 BRT 2007
+compile_version=1.8.5
+url="http://samba.org/~jelmer/bzr/bzr-gtk-0.18.0.tar.gz"
+file_size=129174
+file_md5=4be297c58fc6aeb79e660d77770f24fd
+
+recipe_type=manifest
+
+manifest=(
+	".:lib/python2.4/site-packages/bzrlib/plugins/gtk"
+	"bzr-notify.desktop:usr/share/applications"
+	"bazaar-properties.desktop:usr/share/applications"
+	"olive-gtk.desktop:usr/share/applications"
+	"icons:Shared/olive"
+	"oliveicon2.png:Shared/olive"
+	"olive-gtk:bin"
+	"olive.glade:Shared/olive"
+	"cmenu.ui:Shared/olive"
+	"olive:lib/python2.4/site-packages/bzrlib/plugins/gtk/olive"
+	"olive:lib/python2.4/site-packages/olive"
+)
+
