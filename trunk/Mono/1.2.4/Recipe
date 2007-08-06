@@ -1,0 +1,23 @@
+# Recipe (MakeRecipe) for Mono by Mike Hughes, on Sun Aug 5 00:45:54 PDT 2007
+# Recipe for version 1.2.4 by Mike Hughes, on Sun Aug 5 00:45:54 PDT 2007
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; version 2 of the License.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+compile_version=1.8.5
+url="http://go-mono.com/sources/mono/mono-1.2.4.tar.bz2"
+file_size=17146737
+file_md5=1d106acef8e3af3593c779f281541a0b
+recipe_type=configure
+
+# Mono needs /proc mounted during "make install", which UnionSandbox
+# doesn't provide. Remove the following environment statement when 
+# UnionSandbox is fixed.
+environment=(
+"NO_UNIONFS=yes"
+)
