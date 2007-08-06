@@ -14,5 +14,5 @@ pre_build() {
 }
 
 pre_link() {
-    cp mksquashfs $target/bin/
+    cp mksquashfs unsquashfs $target/bin/
 }
