@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for GNU-EFI by Isaac Dupree <id@isaac.cedarswampstudios.org>, on Sat Jun 23 20:12:16 BRT 2007
+# Recipe for version 3.0c by Isaac Dupree <id@isaac.cedarswampstudios.org>, on Sat Jun 23 20:12:16 BRT 2007
+compile_version=1.8.5
+url="ftp://ftp.hpl.hp.com/pub/linux-ia64/gnu-efi-3.0c.tar.gz"
+file_size=119478
+file_md5=823e5f04d1c0a7b88831f91fbf12d470
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+"INSTALLROOT=$target"
+)
