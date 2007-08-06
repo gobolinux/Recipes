@@ -1,0 +1,10 @@
+# Recipe for version 2.02.26 by Isaac Dupree <id@isaac.cedarswampstudios.org>, on Fri Jun 29 14:51:09 BRT 2007
+# Recipe (MakeRecipe) for LVM2 by Aitor Pérez Iturri, on dom mar 4 14:05:20 CET 2007
+compile_version=1.8.5
+url="ftp://sources.redhat.com/pub/lvm2/LVM2.2.02.26.tgz"
+file_size=518777
+file_md5=41b36c12a4ff25859ee9076a0bf2260f
+recipe_type=configure
+configure_options=(
+	"--disable-realtime"
+)
