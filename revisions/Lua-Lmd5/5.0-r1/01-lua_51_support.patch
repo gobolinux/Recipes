@@ -1,0 +1,105 @@
+Binary files md5_orig/lsha1.o and md5/lsha1.o differ
+diff -Nur md5_orig/Makefile md5/Makefile
+--- md5_orig/Makefile	2004-07-04 03:57:44.000000000 +0200
++++ md5/Makefile	2007-05-27 00:18:00.000000000 +0200
+@@ -1,22 +1,23 @@
+ # makefile for md5/sha1 library for Lua
+ 
+ # change these to reflect your Lua installation
+-LUA= /tmp/lhf/lua-5.0
+-LUAINC= $(LUA)/include
+-LUALIB= $(LUA)/lib
+-LUABIN= $(LUA)/bin
++LUAINC= `pkg-config --variable=INSTALL_INC lua`
++LUALIB= `pkg-config --variable=INSTALL_LIB lua`
++LUABIN= `pkg-config --variable=INSTALL_BIN lua`
++
+ 
+ ### change these to reflect your MD5 library
+ MYNAME= md5
+ #
+ # MD5 library available in libmd5 -- assumes md5global.h
+-MD5LIB= -lmd5
+-MD5INC= .
++#MD5LIB= -lmd5
++#MD5INC= .
+ #
+ # MD5 library available in libcrypto (openssl)
+ #	make DEFS=-DUSE_MD5_OPENSSL MD5LIB=-lcrypto
+-#DEFS= -DUSE_MD5_OPENSSL
+-#MD5LIB= -lcrypto
++DEFS= -DUSE_MD5_OPENSSL
++MD5LIB= -lcrypto
++MD5INC= .
+ #
+ # Rivest's MD5 library from source -- rename or link global.h as md5global.h
+ #	make DEFS=-DUSE_MD5_RIVEST MD5LIB=md5c.o
+@@ -41,8 +42,8 @@
+ #
+ # SHA1 library available in libcrypto (openssl)
+ #	make DEFS=-DUSE_SHA1_OPENSSL MD5LIB=-lcrypto MYNAME=sha1
+-#DEFS= -DUSE_SHA1_OPENSSL
+-#MD5LIB= -lcrypto
++SHA1DEFS= -DUSE_SHA1_OPENSSL
++SHA1LIB= -lcrypto
+ #
+ # rfc3174 SHA1 library from source
+ #	make DEFS=-DUSE_SHA1_RFC MD5LIB=sha1.o MYNAME=sha1
+@@ -66,7 +67,7 @@
+ OBJS= $(MYLIB).o
+ TEST= test.lua
+ 
+-all:	test
++all: $T sha1
+ 
+ test:	$T
+ 	$(LUABIN)/lua -l$(MYNAME) $(TEST)
+@@ -76,7 +77,11 @@
+ so:	$T
+ 
+ $T:	$(OBJS) $(MD5OBJ)
+-	$(CC) -o $@ -shared $(OBJS) $(MD5LIB)
++	$(CC) -o md5.so -shared $(OBJS) $(MD5LIB)
++
++sha1: lsha1.o
++	cc -I`pkg-config --variable=INSTALL_INC lua` -I. $(SHA1DEFS)  -O2  -c -o lsha1.o lsha1.c
++	$(CC) -o sha1.so -shared lsha1.o $(SHA1LIB)
+ 
+ clean:
+ 	rm -f $(OBJS) $T core core.* a.out $(MD5OBJ)
+diff -Nur md5_orig/md5.lua md5/md5.lua
+--- md5_orig/md5.lua	2003-08-29 13:10:43.000000000 +0200
++++ md5/md5.lua	2007-05-27 00:01:53.000000000 +0200
+@@ -2,9 +2,13 @@
+ -- support code for md5 library
+ -- usage lua -lmd5 ...
+ 
++if package.loadlib then
++	loadlib=package.loadlib
++end
++
+ local function so(x)
+ 	local SOPATH= os.getenv"LUA_SOPATH" or "./"
+-	assert(loadlib(SOPATH.."l"..x..".so","luaopen_"..x))()
++	assert(loadlib(SOPATH..x..".so","luaopen_"..x))()
+ end
+ 
+ so"md5"
+diff -Nur md5_orig/sha1.lua md5/sha1.lua
+--- md5_orig/sha1.lua	2004-03-26 14:28:41.000000000 +0100
++++ md5/sha1.lua	2007-05-27 00:17:06.000000000 +0200
+@@ -2,9 +2,13 @@
+ -- support code for sha1 library
+ -- usage lua -lsha1 ...
+ 
++if package.loadlib then
++	loadlib=package.loadlib
++end
++
+ local function so(x)
+ 	local SOPATH= os.getenv"LUA_SOPATH" or "./"
+-	assert(loadlib(SOPATH.."l"..x..".so","luaopen_"..x))()
++	assert(loadlib(SOPATH..x..".so","luaopen_"..x))()
+ end
+ 
+ so"sha1"
