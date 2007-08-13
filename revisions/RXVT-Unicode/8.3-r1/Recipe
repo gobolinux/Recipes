@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for RXVT-Unicode by Isaac Dupree <id@isaac.cedarswampstudios.org>, on Sun Jul 22 19:06:17 BRT 2007
+# Recipe for version 8.3 by Isaac Dupree <id@isaac.cedarswampstudios.org>, on Sun Jul 22 19:06:17 BRT 2007
+compile_version=1.8.5
+url="http://dist.schmorp.de/rxvt-unicode/rxvt-unicode-8.3.tar.bz2"
+file_size=885212
+file_md5=c53043a5178e2eeb33578148d56f8f96
+recipe_type=configure
+environment=(
+  "TERMINFO=${target}/Shared/terminfo"
+)
+
