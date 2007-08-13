@@ -1,0 +1,20 @@
+--- fi-0.0.14/main.c.orig	2005-03-06 16:19:28.000000000 -0300
++++ fi-0.0.14/main.c	2005-03-06 16:22:43.000000000 -0300
+@@ -391,7 +391,16 @@
+ 		free(conf_path);
+ 	}
+ 
+-	if (config_loaded == -1) /* if it's not there, load from current directory */
++	if (config_loaded == -1) /* if it's not there, load from system's settings dir */
++	{
++		char *conf_path = mymalloc(path_max, "path");
++
++		snprintf(conf_path, path_max, "%s/firc.conf", SYSCONFDIR);
++		config_loaded = load_config(conf_path);
++
++		free(conf_path);
++	}
++	if (config_loaded == -1) /* if it's still not there, load from current directory */
+ 	{
+ 		config_loaded = load_config("firc.conf");
+ 	}
