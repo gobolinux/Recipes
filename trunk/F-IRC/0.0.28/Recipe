@@ -10,3 +10,10 @@ make_variables=(
 	"DESTDIR=$target"
 	"SYSCONFDIR=$settings_target"
 )
+
+pre_link() {
+    # rename the executable's name, as it conflicts with the shell's built-in 'fi' command
+    cd $target/bin
+    mv fi f-irc
+    ln -s f-irc firc
+}
