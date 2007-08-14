@@ -1,0 +1,54 @@
+# Recipe (MakeRecipe) for Privoxy by Isaac Dupree <id@isaac.cedarswampstudios.org>, on Tue Aug 14 15:38:18 BRT 2007
+# Recipe for version 3.0.6 by Isaac Dupree <id@isaac.cedarswampstudios.org>, on Tue Aug 14 15:38:18 BRT 2007
+compile_version=1.8.5
+url="$httpSourceforge/ijbswa/privoxy-3.0.6-stable-src.tar.gz"
+file_size=1755661
+file_md5=c3b34c620e1174f0c0b91aa2a04ceae4
+dir='privoxy-3.0.6-stable'
+
+#According to INSTALL,
+#Then, to build from either unpacked tarball or CVS source:
+#
+# autoheader                                                                    
+# autoconf                                                                      
+# ./configure      # (--help to see options)                                    
+# make             # (the make from GNU, sometimes called gmake)                
+# su               # Possibly required                                          
+# make -n install  # (to see where all the files will go)                       
+# make -s install  # (to really install, -s to silence output)                  
+#
+#Using GNU make, you can have the first four steps automatically done for you by
+#just typing:
+#
+#  make                                                                         
+
+#We need to do the ./configure ourselves so we can set the
+#gobo-specific prefixes, I think, so type "makefile" won't do:
+recipe_type=configure
+pre_build() {
+  # configure complains about "not GNU Make" otherwise:
+  unalias make
+
+# This recipe should probably make a "privoxy" user and group,
+# if there is a good way to specify that a program wants such
+# things to be present...
+#copied from HAL 0.5.9-r1 recipe, and user/group name changed:
+   if ! grep -q "privoxy" $goboSettings/group
+   then
+      Log_Normal "Adding group privoxy"
+      groupadd privoxy
+   fi
+   if ! grep -q "privoxy:x:" $goboSettings/passwd
+   then
+      Log_Normal "Adding user privoxy"
+      useradd -g privoxy -c 'Added by Compile' -d $goboVariable/empty -s $goboExecutables/false privoxy
+   fi
+
+  autoheader && autoconf
+}
+makefile=GNUmakefile
+
+unmanaged_files=(
+  "$goboVariable/log/privoxy/logfile"
+  "$goboVariable/log/privoxy/jarfile"
+)
