@@ -1,0 +1,15 @@
+#allegedly required Qt>=4.1, but the build failed for me with
+#  Qt 4.1.2, and succeeded with 4.3.1, which is available, so...
+Qt >= 4.3.1
+#also stated on website:
+Tor >= 0.1.1.15
+
+Expat 2.0.0
+Fontconfig 2.4.2
+FreeType 2.1.10
+GCC 4.1.2
+GLib 2.12.11
+Glibc 2.5
+LibPNG 1.2.16
+Xorg 7.2
+ZLib 1.2.3
