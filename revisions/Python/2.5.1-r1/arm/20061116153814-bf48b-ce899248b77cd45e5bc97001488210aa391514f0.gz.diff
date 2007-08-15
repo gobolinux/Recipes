@@ -1,0 +1,23 @@
+Thu Nov 16 16:38:14 CET 2006  hanwen@lilypond.org
+  * detect wsock32/winsock2.h 
+diff -rN -u old-Python-2.5.cross/configure.in new-Python-2.5.cross/configure.in
+--- old-Python-2.5.cross/configure.in	2006-11-16 17:47:47.000000000 +0100
++++ new-Python-2.5.cross/configure.in	2006-11-16 17:47:47.000000000 +0100
+@@ -1706,6 +1706,16 @@
+ # BeOS' sockets are stashed in libnet.
+ AC_CHECK_LIB(nsl, t_open, [LIBS="-lnsl $LIBS"]) # SVR4
+ AC_CHECK_LIB(socket, socket, [LIBS="-lsocket $LIBS"], [], $LIBS) # SVR4 sockets
++AC_CHECK_HEADER(winsock2.h)
++AC_CHECK_LIB(wsock32, select, [LIBS="-lwsock32 $LIBS"], [], $LIBS) # Mingw32 select
++save_LIBS="$LIBS"
++LIBS="-lwsock32 $LIBS"
++AC_MSG_CHECKING([for include <winsock2.h> select in libwinsock32])
++AC_TRY_LINK([#include <winsock2.h>],
++            [select (1,2,3,4,5);],
++ 	    [AC_MSG_RESULT(yes)],
++	    [AC_MSG_RESULT(no)]
++	    [LIBS="$save_LIBS"])
+ 
+ case "$ac_sys_system" in
+ BeOS*)
+

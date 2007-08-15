@@ -1,0 +1,52 @@
+Thu Nov 16 16:43:09 CET 2006  hanwen@lilypond.org
+  * discover ac_sys_system for x-compile with GCC using -dumpmachine.
+diff -rN -u old-Python-2.5.cross/configure.in new-Python-2.5.cross/configure.in
+--- old-Python-2.5.cross/configure.in	2006-11-16 17:47:46.000000000 +0100
++++ new-Python-2.5.cross/configure.in	2006-11-16 17:47:46.000000000 +0100
+@@ -9,6 +9,11 @@
+ AC_CONFIG_SRCDIR([Include/object.h])
+ AC_CONFIG_HEADER(pyconfig.h)
+ 
++# find compiler while respecting --host setting
++AC_CANONICAL_HOST()
++AC_CHECK_TOOLS(CC,gcc cc)
++AC_CHECK_TOOLS(CXX,g++ c++)
++
+ dnl This is for stuff that absolutely must end up in pyconfig.h.
+ dnl Please use pyport.h instead, if possible.
+ AH_TOP([
+@@ -163,8 +168,8 @@
+ # Set name for machine-dependent library files
+ AC_SUBST(MACHDEP)
+ AC_MSG_CHECKING(MACHDEP)
+-if test -z "$MACHDEP"
+-then
++if test -z "$MACHDEP"; then
++    if test "$cross_compiling" = "no"; then
+ 	ac_sys_system=`uname -s`
+ 	if test "$ac_sys_system" = "AIX" -o "$ac_sys_system" = "Monterey64" \
+ 	-o "$ac_sys_system" = "UnixWare" -o "$ac_sys_system" = "OpenUNIX"; then
+@@ -172,6 +177,22 @@
+ 	else
+ 		ac_sys_release=`uname -r`
+ 	fi
++    else
++	m=`$CC -dumpmachine`
++ 	changequote(<<, >>)#dnl
++	ac_sys_system=`expr "$m" : "[^-]*-\([^-]*\)"`
++ 	changequote([, ])#dnl
++
++
++	case $ac_sys_system in
++	cygwin*) ac_sys_system=`echo $ac_sys_system | sed s/cygwin/CYGWIN/g `;;
++	darwin*) ac_sys_system=`echo $ac_sys_system | sed s/darwin/Darwin/g `;;
++	linux*) ac_sys_system=`echo $ac_sys_system | sed s/linux/Linux/g `;;
++	esac
++	
++
++    fi
++    
+ 	ac_md_system=`echo $ac_sys_system |
+ 			   tr -d '[/ ]' | tr '[[A-Z]]' '[[a-z]]'`
+ 	ac_md_release=`echo $ac_sys_release |
+
