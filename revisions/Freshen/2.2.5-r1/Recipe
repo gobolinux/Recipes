@@ -1,0 +1,12 @@
+# Recipe for version 2.2.5 by Michael Homer, on Thur Aug 16 13:41:22 NZST 2007
+url="http://e.geek.nz/files/gobo/Freshen-2.2.5.tar.bz2"
+file_size=24300
+file_md5=5504cecdbfb62db36ddc98d17910a302
+compile_version=1.8.2
+recipe_type=manifest
+
+manifest=(
+"bin:bin"
+"lib:lib"
+"Resources:Resources"
+)
