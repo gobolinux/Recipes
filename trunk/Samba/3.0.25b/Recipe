@@ -38,7 +38,7 @@ pre_install() {
 pre_link() {
   mkdir -p ${target}/doc
   cp -Rv ../examples ${target}/doc 
-  mkdir -p ${target}/Resources/Default/Settings
-  cp -v  ../examples/smb.conf.default ${target}/Resources/Default/Settings
+  mkdir -p ${target}/Resources/Defaults/Settings
+  cp -v  ../examples/smb.conf.default ${target}/Resources/Defaults/Settings
   ln -s ${target}/lib/libsmbclient.so ${target}/lib/libsmbclient.so.0
 }
