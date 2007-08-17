@@ -19,15 +19,10 @@ recipe_type=configure
 # Other valid options are "athena" and "motif"
 # See the file "INSTALL" in the source package for more configure options.
 configure_options=(
-"--with-x-toolkit=gtk"
+   "--with-x-toolkit=gtk"
 )
 
-dir=emacs-22.1
 unmanaged_files=(
-$goboVariable
-$goboVariable/games
-$goboVariable/games/emacs
-$goboVariable/games/emacs/snake-scores
-$goboVariable/games/emacs/tetris-scores
+   $goboVariable/games/emacs
 )
 
