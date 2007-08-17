@@ -1,0 +1,28 @@
+# Recipe for version 22.1 by Mike Hughes, in Aug 2007
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; version 2 of the License.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+compile_version=1.8.5
+url="$ftpGnu/emacs/emacs-22.1.tar.gz"
+file_size=38172226
+file_md5=6949df37caec2d7a2e0eee3f1b422726
+recipe_type=configure
+
+# Comment out (or change) --with-x-toolkit=gtk if you don't want
+# gtk libraries pulled into your emacs compile.
+# Other valid options are "athena" and "motif"
+# See the file "INSTALL" in the source package for more configure options.
+configure_options=(
+   "--with-x-toolkit=gtk"
+)
+
+unmanaged_files=(
+   $goboVariable/games/emacs
+)
+
