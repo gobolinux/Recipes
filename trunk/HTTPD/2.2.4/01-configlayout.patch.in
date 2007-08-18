@@ -15,8 +15,8 @@
 +    mandir:          ${prefix}/man
 +    sysconfdir:      @%Compile_settings_target%@/httpd
 +    datadir:         /Files/WWW/
-+    installbuilddir: ${datadir}/Build
-+    errordir:        ${datadir}/Error
++    installbuilddir: ${sysconfdir}/Build
++    errordir:        ${datadir}/ErrorDocuments
 +    iconsdir:        ${datadir}/Icons
 +    htdocsdir:       ${datadir}/Documents
 +    cgidir:          ${datadir}/CGI-Executables
