@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for QMPDClient by Fabian Bergstrom, on Sat Aug 18 11:29:34 CEST 2007
+# Recipe for version 1.0.8 by Fabian Bergstrom, on Sat Aug 18 11:29:34 CEST 2007
+compile_version=1.8.5
+url="http://havtknut.tihlde.org/qmpdclient/files/qmpdclient-1.0.8.tar.gz"
+file_size=190349
+file_md5=5c4d9734b83d87d98fe6ea24fb38227c
+recipe_type=makefile
+
+pre_build() {
+   qmake
+}

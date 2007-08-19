@@ -1,0 +1,9 @@
+--- qmpdclient-1.0.8/qmpdclient.pro	2007-06-27 18:44:23.000000000 +0200
++++ qmpdclient-1.0.8/qmpdclient.pro.new	2007-08-18 16:28:15.000000000 +0200
+@@ -1,5 +1,5 @@
+ # installation prefix on *nix/osx
+-PREFIX = /usr/local
++PREFIX = @%Compile_target%@
+ 
+ # Most people need not muck about below here
+ !contains(QT_MAJOR_VERSION, 4) {
