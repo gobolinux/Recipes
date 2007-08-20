@@ -1,0 +1,13 @@
+# Recipe for version 3.4.2 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Aug 18 22:03:22 CEST 2007
+compile_version=1.8.5
+url="http://www.sqlite.org/sqlite-3.4.2.tar.gz"
+file_size=2377646
+file_md5=2feec9b429f9298c9f288420c8b449f8
+recipe_type=configure
+configure_options=(
+    "--disable-tcl"
+)
+
+pre_link() {
+    ln -s $target/bin/sqlite3 $target/bin/sqlite
+}
