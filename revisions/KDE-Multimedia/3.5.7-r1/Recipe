@@ -1,0 +1,16 @@
+# Recipe for version 3.5.7 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Aug 17 11:12:02 CEST 2007
+# by Maglan C. Diemer, 3.3.2 by roko
+url="http://download.kde.org/stable/3.5.7/src/kdemultimedia-3.5.7.tar.bz2"
+file_size=6347766
+file_md5=3d18574ca14258fb565160aa84bf217c
+recipe_type=configure
+compile_version=1.8.5
+configure_options=(
+  "--with-gnu-ld"
+  "--disable-debug"
+  "--disable-dependency-tracking"
+  "--with-arts-alsa"
+  "--disable-libsuffix"
+#  "DO_NOT_COMPILE=kaboodle"
+  #akode arts audiofile_artsplugin doc juk kaboodle kappfinder-data kfile-plugins kmid kmix libkcddb mpeglib mpg123_artsplugin oggvorbis_artsplugin xine_artsplugin krec noatun kscd kioslave kaudiocreator mpeglib_artsplug
+)
