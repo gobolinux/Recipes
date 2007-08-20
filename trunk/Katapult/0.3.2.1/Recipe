@@ -1,0 +1,12 @@
+# Recipe for version 0.3.2.1 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Aug 17 23:06:09 CEST 2007
+# Recipe (MakeRecipe) for Katapult by Jonas Karlsson <jonka750@student.liu.se>, on Sat Mar 31 21:31:53 CEST 2007
+compile_version=1.8.5
+url="$httpSourceforge/katapult/katapult-0.3.2.1.tar.bz2"
+file_size=791730
+file_md5=1ec79283841336d80079d6442326391a
+dir='katapult-0.3.2.1'
+recipe_type=configure
+
+configure_options=(
+   "--disable-libsuffix"             
+)
