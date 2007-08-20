@@ -1,0 +1,15 @@
+# Recipe for version 3.5.7 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Aug 17 11:11:46 CEST 2007
+
+url="http://download.kde.org/stable/3.5.7/src/kdegraphics-3.5.7.tar.bz2"
+file_size=7424976
+file_md5=eae753e80c5f8dd304e7fd0dca84ae67
+recipe_type=configure
+compile_version=1.8.5
+configure_options=(
+   "--disable-debug"
+   "--disable-dependency-tracking"
+   "--disable-libsuffix"
+#  "DO_NOT_COMPILE="
+#kamera kcoloredit kdvi kfax kfaxview kfile-plugins kgamma kghostview kiconedit kmrml kolourpaint kooka 
+#kpdf kpovmodeler kruler ksnapshot ksvg kuickshow kview kvieshell libkscan
+)
