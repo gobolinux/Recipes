@@ -1,0 +1,28 @@
+# Recipe for version 3.5.7 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Aug 17 11:07:47 CEST 2007
+# by Maglan C. Diemer && Andre Detsch, 3.3.2 by roko
+
+compile_version=1.8.5
+url="http://download.kde.org/stable/3.5.7/src/kdelibs-3.5.7.tar.bz2"
+file_size=15576038
+file_md5=50ed644f2ec91963570fe2b155652957
+recipe_type=configure
+dir='kdelibs-3.5.7'
+
+configure_options=(
+	"--disable-debug"
+	"--disable-dependency-tracking"
+	"--disable-warnings"
+	"--with-alsa"
+	"--enable-fast-malloc=no"
+	"--with-distribution"
+	"--enable-dnotify"
+	"--enable-inotify"
+    "--disable-libsuffix"
+#  "DO_NOT_COMPILE="
+#  dcop libltdl kdefx  kdecore  kdeui  kdesu  kjs  kwallet  kio arts kab  kconf_update  kdoctools  kimgio  kioslave  knewstuff
+# kparts  kresources   ksmartcard  kstyles  kutils  libkmid  libscreensaver  licenses  mimetypes  pics  doc  kcert  interfaces  kinit # kdeprint  kac  kspell2  kmdi  khtml  kate  kdewidgets
+)
+
+install_variables=(
+    cups_modeldir="${target}/Shared/cups/model"
+)
