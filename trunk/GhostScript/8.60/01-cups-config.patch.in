@@ -1,0 +1,30 @@
+--- ghostscript-8.60/configure	2007-08-02 00:55:02.000000000 +0200
++++ ghostscript-8.60/configure.new	2007-08-17 16:57:50.000000000 +0200
+@@ -8226,9 +8226,9 @@
+ CUPSDEV=""
+ CUPSINCLUDE=""
+ CUPSCONFIG="${CUPSCONFIG:=}"
+-cups_datadir="/usr/share/cups"
+-cups_serverroot="/etc/cups"
+-cups_serverbin="/usr/lib/cups"
++cups_datadir="@%Compile_target%@/share/cups"
++cups_serverroot="@%Compile_settings_target%@/cups"
++cups_serverbin="@%Compile_target%@/lib/cups"
+ 
+ if ( test -d cups ); then
+     if test x$enable_cups != xno; then
+--- ghostscript-8.60/cups/cups.mak	2007-07-25 00:29:24.000000000 +0200
++++ ghostscript-8.60/cups/cups.mak.new	2007-08-17 16:58:23.000000000 +0200
+@@ -24,9 +24,9 @@
+ 
+ cups_=	$(GLOBJ)gdevcups.$(OBJ)
+ 
+-CUPSSERVER=`cups-config --serverbin`
+-CUPSCONFIG=`cups-config --serverroot`
+-CUPSDATA=`cups-config --datadir`
++CUPSSERVER=@%Compile_target%@/lib/cups
++CUPSCONFIG=@%Compile_settings_target%@/cups
++CUPSDATA=@%Compile_target%@/Shared/cups
+ 
+ $(DD)cups.dev:	$(cups_) $(GLD)page.dev
+ 	$(ADDMOD) $(DD)cups -lib cupsimage -lib cups
