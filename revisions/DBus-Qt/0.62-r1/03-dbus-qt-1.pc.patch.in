@@ -1,0 +1,16 @@
+diff -Naur dbus-qt3-0.62/dbus-qt-1.pc dbus-qt3-0.62.new/dbus-qt-1.pc
+--- dbus-qt3-0.62/dbus-qt-1.pc	1970-01-01 01:00:00.000000000 +0100
++++ dbus-qt3-0.62.new/dbus-qt-1.pc	2007-08-16 16:08:56.000000000 +0200
+@@ -0,0 +1,12 @@
++prefix=@%Compile_target%@
++exec_prefix=${prefix}
++libdir=${exec_prefix}/lib
++includedir=${prefix}/include
++
++Name: dbus-qt
++Description: Qt integration for the free desktop message bus
++Version: 0.62
++Requires: dbus-1 qt-mt
++Libs: -L${libdir} -ldbus-qt-1
++Cflags: -I${includedir}/dbus-1.0
++
