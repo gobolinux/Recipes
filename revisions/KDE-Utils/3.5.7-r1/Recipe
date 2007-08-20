@@ -1,0 +1,14 @@
+# Recipe for version 3.5.7 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Aug 17 11:11:35 CEST 2007
+# by Maglan C. Diemer , 3.5.7 by roko
+compile_version=1.8.5
+url="http://download.kde.org/stable/3.5.7/src/kdeutils-3.5.7.tar.bz2"
+file_size=3068596
+file_md5=5f167f53bdbf0b8c71c2d0f0ff7593fd
+recipe_type=configure
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+  "--disable-libsuffix"
+  #"DO_NOT_COMPILE=kedit kdelirc"
+  # ark charselectapplet doc kcalc kcardtools kcharselect kdelirc kdessh kdf kedit kfloppy kgpg khexedit kjots klaptopdaemon kmilo kregexpeditor ksim ktimer kwallet
+)
