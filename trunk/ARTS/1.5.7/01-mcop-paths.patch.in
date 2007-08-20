@@ -1,0 +1,22 @@
+--- arts-1.4.0-org/mcop/Makefile.am	2004-11-19 11:34:03.000000000 +0100
++++ arts-1.4.0/mcop/Makefile.am	2005-03-30 22:08:26.000000000 +0200
+@@ -1,5 +1,6 @@
+ 
+-AM_CPPFLAGS = -DEXTENSION_DIR='"$(libdir)"' -DTRADER_DIR='"$(libdir)/mcop"'
++gobolibdir = @%Compile_goboLibraries%@
++AM_CPPFLAGS = -DEXTENSION_DIR='"$(gobolibdir)"' -DTRADER_DIR='"$(gobolibdir)/mcop"'
+ ##
+ lib_LTLIBRARIES = libmcop.la
+ #
+--- arts-1.4.0-org/mcop/Makefile.in	2005-03-04 10:58:22.000000000 +0100
++++ arts-1.4.0/mcop/Makefile.in	2005-03-30 22:10:44.000000000 +0200
+@@ -385,7 +385,8 @@
+ x11_SUBDIR_included_TRUE = @x11_SUBDIR_included_TRUE@
+ x_includes = @x_includes@
+ x_libraries = @x_libraries@
+-AM_CPPFLAGS = -DEXTENSION_DIR='"$(libdir)"' -DTRADER_DIR='"$(libdir)/mcop"'
++gobolibdir = @%Compile_goboLibraries%@
++AM_CPPFLAGS = -DEXTENSION_DIR='"$(gobolibdir)"' -DTRADER_DIR='"$(gobolibdir)/mcop"'
+ lib_LTLIBRARIES = libmcop.la
+ #
+ # Programs to compile, Manpages to install and Versions
