@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for DBus-Qt by Jonas Karlsson <jonka750@student.liu.se>, on Thu Aug 16 12:31:58 CEST 2007
+# Recipe for version 0.62 by Jonas Karlsson <jonka750@student.liu.se>, on Thu Aug 16 12:31:58 CEST 2007
+compile_version=1.8.5
+url="http://anduin.linuxfromscratch.org/files/BLFS/sources/dbus-qt3-0.62.tar.bz2"
+file_size=390428
+file_md5=307e119f501c207a437d1dd087c9af80
+recipe_type=configure
+
+configure_options=(
+   "--disable-libsuffix"
+)
+
+pre_link() {
+   install -d -o 0 -g 0 -m 755 ${target}/lib/pkgconfig
+   install -o 0 -g 0 -m 644 dbus-qt-1.pc ${target}/lib/pkgconfig
+}
