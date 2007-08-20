@@ -1,0 +1,17 @@
+# Recipe for version 1.0.10 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Aug 18 22:11:13 CEST 2007
+# by Jeremy Vernon
+url="$httpSourceforge/libmng/libmng-1.0.10.tar.gz"
+file_size=1093337
+file_md5=a464ae7d679781beebdf7440d144b7bd
+compile_version=1.8.5
+recipe_type=configure
+
+pre_build() {
+  ln -s makefiles/configure.in .
+  ln -s makefiles/acinclude.m4 .
+  ln -s makefiles/Makefile.am .
+  aclocal
+  libtoolize --automake
+  automake --foreign --add-missing
+  autoconf
+}
