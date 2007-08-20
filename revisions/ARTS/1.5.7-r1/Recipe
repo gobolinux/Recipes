@@ -1,0 +1,21 @@
+# Recipe for version 1.5.7 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Aug 17 11:07:28 CEST 2007
+# by Maglan C. Diemer
+# Version 1.4.92 by Kosh <kosh.linux at gmail.com>, on Tue Oct 18 11:44:03 BRST 2005
+
+compile_version=1.8.5
+url="http://download.kde.org/stable/3.5.7/src/arts-1.5.7.tar.bz2"
+file_size=980842
+file_md5=28ac10541e5d8daf9009f6af1f7857af
+dir='arts-1.5.7'
+recipe_type=configure
+keep_existing_target=yes
+configure_options=(
+    "--disable-debug"
+    "--disable-dependency-tracking"
+    "--with-alsa"
+    "--disable-libsuffix"
+    # "DO_NOT_COMPILE="mcop flow mcop_mt soundserver artsc examples tests doc gmcop qtmcop x11"
+)
+symlink_options=(
+    "--conflict overwrite"
+)
