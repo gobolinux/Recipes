@@ -1,0 +1,24 @@
+# Recipe for version 3.5.7 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Aug 17 11:12:19 CEST 2007
+# by Maglan C. Diemer && Andre Detsch
+
+url="http://download.kde.org/stable/3.5.7/src/kdepim-3.5.7.tar.bz2"
+file_size=14166061
+file_md5=8571db6dcf4168614c96bb72c493f931
+recipe_type=configure
+compile_version=1.8.5
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+  "--disable-libsuffix"
+#  "--without-kpilot"
+#  "DO_NOT_COMPILE=kpilot" 
+)
+
+pre_install() {
+	# Change install path for designer plugins so they go to $target
+	# and not /Programs/KDE-Libs
+	repl_from='$(DESTDIR)$(kde_widgetdir)'
+	repl_to="$target/lib/kde3/plugins/designer"
+	GrepReplace "$repl_from" "$repl_to" ./libkdepim/kpartsdesignerplugin/Makefile
+	GrepReplace "$repl_from" "$repl_to" ./libkdepim/Makefile
+}
