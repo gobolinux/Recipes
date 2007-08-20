@@ -1,0 +1,12 @@
+# Recipe for version 3.5.7 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Aug 17 11:10:51 CEST 2007
+# KDE-Libs meta-recipe 
+# by Andre Detsch
+
+compile_version=1.8.5
+
+# ARTS and Libs compilation don't support different prefixes yet...
+include=(
+   "ARTS--1.5.7"
+   "KDE-Libs-Itself--3.5.7"
+)
+recipe_type=meta
