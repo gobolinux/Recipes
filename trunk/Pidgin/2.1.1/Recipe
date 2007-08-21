@@ -1,0 +1,24 @@
+# Recipe for version 2.1.1 by Jonas Karlsson <jonka750@student.liu.se>, on Mon Aug 20 23:35:45 CEST 2007
+# Recipe (MakeRecipe) for Pidgin by Jonas Karlsson <jonka750@student.liu.se>, on Sat May 5 01:40:29 CEST 2007
+compile_version=1.8.5
+url="$httpSourceforge/pidgin/pidgin-2.1.1.tar.bz2"
+file_size=7829592
+file_md5=eb29fecb2f3a6d4790f47ce8e658c07c
+recipe_type=configure
+
+configure_options=(
+   "--enable-dbus"
+   "--with-dbus-services=${goboShared}/dbus-1/services"
+   "--enable-gnutls"
+   "--enable-tcl"
+   "--enable-tk"
+   "--enable-cyrus-sasl"
+   "--disable-nss"
+   "--mandir=${target}/man"
+)
+
+make_variables=(
+    DESTINSTALLARCHLIB="$target/lib/perl5/`echo $perl_path | sed 's,/\(.*\)/\(.*\)/\(.*\),\3,g'`/i686-linux"
+    DESTINSTALLSITEARCH="$target/lib/perl5/`echo $perl_path | sed 's,/\(.*\)/\(.*\)/\(.*\),\3,g'`/i686-linux"
+    DESTINSTALLVENDORARCH="$target/lib/perl5/`echo $perl_path | sed 's,/\(.*\)/\(.*\)/\(.*\),\3,g'`/i686-linux"
+)
