@@ -1,0 +1,12 @@
+# Recipe for version 20070618 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Aug 21 15:44:31 CEST 2007
+# Recipe (MakeRecipe) for HAL-Info by Jonas Karlsson <jonka750@student.liu.se>, on Wed Apr 25 16:14:09 CEST 2007
+compile_version=1.8.5
+url="http://people.freedesktop.org/~david/dist/hal-info-20070618.tar.gz"
+file_size=118985
+file_md5=c7005ccb1765d8359fd2348350770495
+recipe_type=configure
+
+configure_options=(
+   "--enable-recall"
+   "--enable-video"
+)
