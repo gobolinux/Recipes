@@ -1,0 +1,13 @@
+# Recipe for version 1.1.7 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Aug 21 08:45:34 CEST 2007
+# Recipe (MakeRecipe) for XineLib by Michael Farrell <michael@xinomorph.org>, on Sun Oct 24 19:29:17 CST 2004
+compile_version=1.8.5
+url="$httpSourceforge/xine/xine-lib-1.1.7.tar.bz2"
+file_size=7295585
+file_md5=63735be200f97d784ed02b2123da7caf
+recipe_type=configure
+configure_options=(
+   "--with-xv-path=$goboLibraries"
+   "--with-xvmc-path=$goboLibraries"
+   "--enable-ipv6"
+   "--with-xcb"
+)
