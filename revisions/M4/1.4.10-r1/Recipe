@@ -1,0 +1,14 @@
+# Recipe for version 1.4.10 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Aug 21 09:36:17 CEST 2007
+compile_version=1.8.5
+url=$ftpGnu/m4/m4-1.4.10.tar.gz
+file_size=928375
+file_md5=4f2cdda3328ec06198578596e8b12727
+recipe_type=configure
+configure_options=(
+   "--mandir=${target}/man"
+   "--enable-changeword"
+)
+
+pre_build() {
+   autoconf
+}
