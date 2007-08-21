@@ -1,0 +1,10 @@
+[Name] Libdaemon
+[Summary] A lightweight C library that eases the writing of UNIX daemons
+[License] GNU LGPL (GNU Lesser General Public License)
+[Description] libdaemon is a lightweight C library that eases the \
+writing of UNIX daemons. It consists of a wrapper around fork(), for \
+daemonize a procedure of a process, a wrapper and an API for syslog \
+for redirection between syslog and STDOUT and STDERR, an API for \
+writing PID files and an API for serializing UNIX signals into a pipe \
+for usage with select() or poll()
+[Homepage] http://0pointer.de/lennart/projects/libdaemon/
