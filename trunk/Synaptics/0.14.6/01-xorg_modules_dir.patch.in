@@ -1,0 +1,11 @@
+--- synaptics-0.14.6/Makefile	2006-07-15 17:58:26.000000000 +0200
++++ synaptics-0.14.6/Makefile.new	2007-08-21 14:30:28.000000000 +0200
+@@ -29,7 +29,7 @@
+ ifeq ($(BUILD_MODULAR),y)
+   # Xorg 7.0 uses /usr/lib/xorg/modules and builds stripped shared objects
+   INSTALLED_X = $(shell pkg-config xorg-server --variable=prefix)
+-  INPUT_MODULE_DIR = $(DESTDIR)$(shell pkg-config xorg-server --variable=moduledir)/input
++  INPUT_MODULE_DIR = @%Compile_target%@/lib/xorg/modules/input
+   SYNAPTICS_DRV = synaptics_drv.so
+   LDCOMBINEFLAGS = -shared -lc
+   PICFLAG = $(call check_gcc,-fPIC,)

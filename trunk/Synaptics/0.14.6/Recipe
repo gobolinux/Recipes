@@ -1,0 +1,12 @@
+# Recipe for version 0.14.6 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Aug 21 14:17:18 CEST 2007
+# Recipe (MakeRecipe) for Synaptics by Matthias Wolf, on Sun Jan 9 12:30:22 CET 2005
+compile_version=1.8.5
+url="http://web.telia.com/~u89404340/touchpad/files/synaptics-0.14.6.tar.bz2"
+file_size=126833
+file_md5=1102cd575045640a064ab6f9b1e391af
+recipe_type=makefile
+makefile='Makefile'
+
+install_variables=(
+   "PREFIX=$target"
+)
