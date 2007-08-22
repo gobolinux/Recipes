@@ -1,0 +1,17 @@
+# Recipe for version 2.2.44-1 by Jonas Karlsson <jonka750@student.liu.se>, on Wed Aug 22 18:36:49 CEST 2007
+# Recipe (MakeRecipe) for ACL by ro.ko@mcnon.com, on Tue Oct 12 00:32:04 BRST 2004
+compile_version=1.8.5
+url="ftp://oss.sgi.com/projects/xfs/cmd_tars/acl_2.2.44-1.tar.gz"
+file_size=152771
+file_md5=f92f56998a94735419ec932fb9d0118d
+recipe_type=configure
+dir="acl-2.2.44"
+configure_options=(
+--libexecdir=$target/lib
+)
+
+install_target="install install-lib install-dev" 
+
+pre_link() {
+   ln -snf $target/lib/libacl.so.1.1.0 $target/lib/libacl.so
+}
