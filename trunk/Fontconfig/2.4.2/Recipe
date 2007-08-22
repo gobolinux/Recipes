@@ -1,12 +1,17 @@
 # Recipe for version 2.4.2 by Lucas C. Villa Real, on Wed Mar 7 00:40:25 BRT 2007
 # Recipe (MakeRecipe) for Fontconfig by Michael Farrell <michael@xinomorph.org>, on Sat Oct 23 14:31:12 BRST 2004
-compile_version=1.8.2
+compile_version=1.8.5
 url="http://www.fontconfig.org/release/fontconfig-2.4.2.tar.gz"
 file_size=1278340
 file_md5=f035852f521b54677f2b5c9e2f6d54a4
 recipe_type=configure
 configure_options=(
     "--with-default-fonts=/Files/Fonts"
+    "--with-cache-dir=$goboVariable/cache/fontconfig"
+    "--with-confdir=$settings_target/fonts"
 )
+build_target="all fonts.conf"
 
-sandbox_options=("--no-sandbox")
+unmanaged_files=(
+   "$goboVariable/cache/fontconfig"
+)
