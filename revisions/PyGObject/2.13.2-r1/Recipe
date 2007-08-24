@@ -1,0 +1,10 @@
+# Recipe for version 2.13.2 by Jonas Karlsson <jonka750@student.liu.se>, on Thu Aug 23 23:39:49 CEST 2007
+# Recipe (MakeRecipe) for Pygobject by Rafael Guterres Jeffman (rafasgj), on Thu Mar 2 10:28:59 BRT 2006
+compile_version=1.8.5
+url="http://ftp.gnome.org/pub/GNOME/sources/pygobject/2.13/pygobject-2.13.2.tar.bz2"
+file_size=360305
+file_md5=98122d47749ecf1d52bde3b9fa306bd4
+recipe_type=configure
+configure_options=(
+   --disable-docs
+)
