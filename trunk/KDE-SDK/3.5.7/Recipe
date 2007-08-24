@@ -1,0 +1,15 @@
+# Recipe for version 3.5.7 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Aug 17 11:12:45 CEST 2007
+
+url="http://download.kde.org/stable/3.5.7/src/kdesdk-3.5.7.tar.bz2"
+file_size=5200751
+file_md5=6a8f7b7fea753e2a4517301dee76d84a
+compile_version=1.8.5
+recipe_type=configure
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+  "--enable-pcm"
+  "--disable-libsuffix"
+  #"DO_NOT_COMPILE=cervisia" 
+ # doc kapptemplate kbabel kbugbuster kcachegrind kdeaccounts-plugin kdepalettes kfile.plugins kmtrace kompare kprofilemethod kspy kstartperf kuiviewer poxml scheck scripts umbrello
+)
