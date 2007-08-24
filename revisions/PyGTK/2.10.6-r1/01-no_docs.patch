@@ -1,0 +1,26 @@
+This patch makes sure we don not proceed into the 'docs' subdir, as
+there are broken rules.
+
+-
+Jonas Karlsson
+
+--- pygtk-2.10.6/Makefile.in	2007-07-10 12:31:02.000000000 +0200
++++ pygtk-2.10.6/Makefilekin.new	2007-08-24 06:38:50.000000000 +0200
+@@ -116,7 +116,7 @@
+ DATA = $(defs_DATA) $(pkgconfig_DATA)
+ ETAGS = etags
+ CTAGS = ctags
+-DIST_SUBDIRS = codegen . gtk examples tests docs
++DIST_SUBDIRS = codegen . gtk examples tests
+ DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
+ distdir = $(PACKAGE)-$(VERSION)
+ top_distdir = $(distdir)
+@@ -292,7 +292,7 @@
+ target_alias = @target_alias@
+ AUTOMAKE_OPTIONS = 1.7
+ @BUILD_GTK_TRUE@GTK_SUBDIR = gtk
+-SUBDIRS = codegen . $(GTK_SUBDIR) examples tests docs
++SUBDIRS = codegen . $(GTK_SUBDIR) examples tests
+ PLATFORM_VERSION = 2.0
+ CLEANFILES = atk.c pango.c pangocairo.c
+ EXTRA_DIST = \
