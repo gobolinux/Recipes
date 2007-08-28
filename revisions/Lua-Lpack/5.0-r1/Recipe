@@ -1,0 +1,19 @@
+# Recipe (MakeRecipe) for Lua-Lpack by Aitor Perez Iturri, on dom may 27 00:38:04 CEST 2007
+# Recipe for version 5.0 by Aitor Perez Iturri, on dom may 27 00:38:04 CEST 2007
+compile_version=1.8.5
+url="http://www.tecgraf.puc-rio.br/~lhf/ftp/lua/5.0/lpack.tar.gz"
+file_size=3844
+file_md5=d27ea4b17ad53b4eb27ecf8c42969ae8
+dir='pack'
+recipe_type=makefile
+makefile='Makefile'
+environment=(
+	V=`pkg-config --variable=V lua`
+)
+do_install=no
+build_target="lpack.so"
+
+pre_link () {
+	mkdir -p ${target}/lib/lua/$V
+	cp lpack.so ${target}/lib/lua/$V/pack.so
+}
