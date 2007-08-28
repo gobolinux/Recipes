@@ -1,0 +1,16 @@
+--- /Depot/Resources/RecipeSources//Lua-Lpack_orig/5.1/pack//Makefile	2007-08-28 11:00:59.000000000 +0200
++++ pack//Makefile	2007-08-28 11:02:26.000000000 +0200
+@@ -1,10 +1,9 @@
+ # makefile for pack library for Lua
+ 
+ # change these to reflect your Lua installation
+-LUA= /tmp/lhf/lua-5.1.2
+-LUAINC= $(LUA)/src
+-LUALIB= $(LUA)/src
+-LUABIN= $(LUA)/src
++LUAINC= `pkg-config --variable=INSTALL_INC lua`
++LUALIB= `pkg-config --variable=INSTALL_LIB lua`
++LUABIN= `pkg-config --variable=INSTALL_BIN lua`
+ 
+ # probably no need to change anything below here
+ CFLAGS= $(INCS) $(WARN) -O2 $G
