@@ -1,0 +1,11 @@
+# Recipe for version 8.2.1 by Aitor Perez Iturri, on Thu Jul 19 18:51:49 CEST 2007
+# Recipe (MakeRecipe) for AsciiDoc by Aitor Pérez Iturri, on lun feb 19 10:54:16 CET 2007
+compile_version=1.8.2
+url="http://switch.dl.sourceforge.net/sourceforge/asciidoc/asciidoc-8.2.1.tar.gz"
+recipe_type=makefile
+do_build=no
+do_install=no
+
+pre_link () {
+	./install.sh
+}
