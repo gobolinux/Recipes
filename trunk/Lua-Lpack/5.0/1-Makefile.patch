@@ -1,19 +1,16 @@
-Binary files pack_orig/lpack.o and pack/lpack.o differ
-Binary files pack_orig/lpack.so and pack/lpack.so differ
-diff -Nur pack_orig/Makefile pack/Makefile
---- pack_orig/Makefile	2006-07-31 18:21:45.000000000 +0200
-+++ pack/Makefile	2007-05-27 00:42:07.000000000 +0200
-@@ -2,9 +2,10 @@
+--- /Depot/Resources/RecipeSources//Lua-Lpack_orig/5.0/pack//Makefile	2007-08-29 10:48:55.000000000 +0200
++++ pack//Makefile	2007-08-29 10:49:43.000000000 +0200
+@@ -1,10 +1,9 @@
+ # makefile for pack library for Lua
  
  # change these to reflect your Lua installation
- LUA= /tmp/lhf/lua-5.0
+-LUA= /tmp/lhf/lua-5.0
 -LUAINC= $(LUA)/include
 -LUALIB= $(LUA)/lib
 -LUABIN= $(LUA)/bin
 +LUAINC= `pkg-config --variable=INSTALL_INC lua`
 +LUALIB= `pkg-config --variable=INSTALL_LIB lua`
 +LUABIN= `pkg-config --variable=INSTALL_BIN lua`
-+
  
  # no need to change anything below here
  CFLAGS= $(INCS) $(WARN) -O2 $G
