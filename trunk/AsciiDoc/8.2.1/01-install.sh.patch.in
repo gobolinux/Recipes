@@ -1,0 +1,26 @@
+--- asciidoc-8.2.1_orig/install.sh	2007-04-03 04:58:39.000000000 +0200
++++ asciidoc-8.2.1/install.sh	2007-07-19 19:12:27.000000000 +0200
+@@ -5,10 +5,11 @@
+ # Documented in INSTALL file.
+ #
+ 
+-BINDIR=/usr/local/bin
+-MANDIR=/usr/local/man
+-CONFDIR=/etc/asciidoc
+-VIM_CONFDIR=/etc/vim
++PREFIX=@%Compile_target%@
++BINDIR=${PREFIX}/bin
++MANDIR=${PREFIX}/man
++CONFDIR=${PREFIX}/Resources/Defaults/Settings/asciidoc
++VIM_CONFDIR=${PREFIX}/Resources/Defaults/Settings/vim
+ 
+ if [ `basename $0` = uninstall.sh ]; then
+     rm $BINDIR/asciidoc
+@@ -36,6 +37,7 @@
+     install -m 644 javascripts/*.js $CONFDIR/javascripts
+     install -m 644 images/icons/callouts/* $CONFDIR/images/icons/callouts
+     install -m 644 images/icons/README images/icons/*.png $CONFDIR/images/icons
++    mkdir -p $VIM_CONFDIR
+     if [ -d $VIM_CONFDIR ]; then
+         install -d $VIM_CONFDIR/syntax
+         install -m 644 vim/syntax/asciidoc.vim \
