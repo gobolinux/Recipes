@@ -5,6 +5,3 @@ url="http://www.eecs.umich.edu/~pelzlpj/wyrd/wyrd-1.4.3b.tar.gz"
 file_size=226447
 file_md5=d428191d81769894cf773b8de6cae7ac
 recipe_type=configure
-configure_options=(
-	--sysconfdir=$target/Resources/Defaults/Settings
-)
