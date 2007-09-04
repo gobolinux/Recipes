@@ -1,8 +1,15 @@
-Expat 1.95.8
-Fontconfig 2.3.1
-FreeType 2.1.10
+#CUPS >= 1.0.0 # Optional
+DBus >= 0.62
+Fontconfig >= 2.1.91
+FreeType >= 2.1.3
 GCC 3.4.3
+GLib >= 2.4
 Glibc 2.3.2
-LibPNG 1.2.8
-Xorg 6.8.2
-ZLib 1.2.2
+JPEG >= 6b
+LibMNG >= 1.0.9
+LibPNG >= 1.0.17
+OpenSSL >= 0.9.7
+TIFF >= 3.8.0
+SQLite >= 3.0.0
+Xorg >= 7.0.0
+ZLib >= 1.0.8

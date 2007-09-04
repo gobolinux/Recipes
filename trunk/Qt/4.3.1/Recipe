@@ -10,14 +10,5 @@ compile_version=1.8.5
 recipe_type=makefile
 
 pre_build() {
-   export QTDIR=`pwd` && echo yes | nice -10 ./configure -release -qt-gif -prefix $target
-   #GrepReplace "sub-tools sub-tutorial sub-examples" "sub-tools" Makefile
-   GrepReplace "QT_PROJECTS += demos examples" "#QT_PROJECTS += demos examples" projects.pro
-   export LD_LIBRARY_PATH=$QTDIR/lib:$LD_LIBRARY_PATH
+   export QTDIR=`pwd` && echo yes | nice -10 ./configure -release -qt-gif -prefix $target -nomake "examples demos"
 }
-
-#pre_link() {
-#   rm -f $target/bin/qmake
-#   cp -f ./qmake/qmake  $target/bin
-#}
-
