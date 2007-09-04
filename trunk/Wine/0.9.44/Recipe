@@ -1,0 +1,18 @@
+# Recipe for version 0.9.44 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Aug 25 18:03:49 CEST 2007
+# Recipe (MakeRecipe) for Wine by roko, <ro.ko@mcnon.com>, on Thu Jan 27 22:27:44 CET 2005
+compile_version=1.8.5
+url="$httpSourceforge/wine/wine-0.9.44.tar.bz2"
+file_size=12377043
+file_md5=cdfc5cc1d813a955c8e7310346fb5629
+recipe_type=configure
+configure_options=(
+   "--localstatedir=$goboVariable/wine"
+#"--without-curses"
+)
+
+# below is a hack where one can't use unmanaged_files for
+# directories under variable in a proper way. Too much is
+# stripped from the path.
+unmanaged_files=(
+   "$goboVariable/wine/directory"
+)
