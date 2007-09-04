@@ -1,0 +1,14 @@
+# Recipe for version 4.3.1 by Isaac Dupree <id@isaac.cedarswampstudios.org>, on Tue Aug 14 16:29:01 BRT 2007
+# by Andre Detsch
+
+url="ftp://ftp.tu-chemnitz.de/pub/Qt/qt/source/qt-x11-opensource-src-4.3.1.tar.gz"
+file_size=43118858
+file_md5=ec255dcc2b30f5efe0ded85ae8a75e13
+#url=ftp://ftp.trolltech.com/qt/source/qt-x11-free-4.3.1.tar.bz2
+
+compile_version=1.8.5
+recipe_type=makefile
+
+pre_build() {
+   export QTDIR=`pwd` && echo yes | nice -10 ./configure -release -qt-gif -prefix $target -nomake "examples demos"
+}
