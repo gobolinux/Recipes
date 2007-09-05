@@ -1,0 +1,32 @@
+# Recipe for version 7.0.1 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Sep 4 23:06:09 CEST 2007
+# Recipe (MakeRecipe) for Mesa by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Nov 23 03:32:41 BRST 2004
+compile_version=1.8.5
+urls=(
+   "$httpSourceforge/mesa3d/MesaLib-7.0.1.tar.bz2"
+   "$httpSourceforge/mesa3d/MesaGLUT-7.0.1.tar.bz2"
+   "$httpSourceforge/mesa3d/MesaDemos-7.0.1.tar.bz2"
+)
+file_sizes=(
+   3343538
+   315599
+   1340949
+)
+file_md5s=(
+   c056abd763e899114bf745c9eedbf9ad
+   25f30d0c1651997b4412366ba0572f7f
+   3b66b3268df12ca8a6c4e0c4c457912c
+)
+recipe_type=makefile
+dir='Mesa-7.0.1'
+build_target=linux-dri
+
+make_variables=(
+    "DESTDIR=$target"
+)
+
+pre_link() {
+   for p in glxheads glthreads glxcontexts glxdemo glxgears glxgears_fbconfig glxinfo glxpbdemo glxpixmap glxswapcontrol
+   do
+      cp progs/xdemos/${p} ${target}/bin
+   done
+}
