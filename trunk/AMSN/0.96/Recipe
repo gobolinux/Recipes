@@ -1,0 +1,8 @@
+# Recipe for version 0.96 by Hisham Muhammad, on Thu Aug 30 16:37:07 BRT 2007
+url=$httpSourceforge/amsn/amsn-0.96.tar.bz2
+compile_version=1.8.5
+recipe_type=configure
+configure_options=(
+   --with-tcl=$tcl_path/lib
+   --with-tk=$tk_path/lib
+)
