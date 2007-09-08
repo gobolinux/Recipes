@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Wireshark by demian <demianflorentin_æt_gmail.com>, on mar sep 4 15:16:18 PYT 2007
+# Recipe for version 0.99.6 by demian <demianflorentin_æt_gmail.com>, on mar sep 4 15:16:18 PYT 2007
+compile_version=1.8.5
+url="http://www.wireshark.org/download/src/wireshark-0.99.6.tar.gz"
+file_size=15004582
+file_md5=d9c723032c424b3a210a0426167e9732
+recipe_type=configure
+configure_options=(
+   "--enable-threads"
+)
