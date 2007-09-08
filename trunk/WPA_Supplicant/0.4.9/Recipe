@@ -15,7 +15,6 @@ pre_build(){
 pre_install(){
     make wpa_gui
 }
-
 pre_link(){
     cp wpa_gui/wpa_gui $target/sbin
-    }
+}
