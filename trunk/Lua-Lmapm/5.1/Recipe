@@ -1,0 +1,25 @@
+# Recipe (MakeRecipe) for Lua-Lmapm by Aitor Perez Iturri, on mié sep 12 21:52:59 CEST 2007
+# Recipe for version 5.1 by Aitor Perez Iturri, on mié sep 12 21:52:59 CEST 2007
+compile_version=1.9.0
+url="http://www.tecgraf.puc-rio.br/~lhf/ftp/lua/5.1/lmapm.tar.gz"
+file_size=4515
+file_md5=eb0e7ed49f6b75b1db193f6b894cb829
+dir='mapm'
+recipe_type=makefile
+makefile='Makefile'
+do_install=no
+build_target="mapm.so"
+docs=(
+	"test.lua"
+)
+environment=(
+	LUAVERSION=`pkg-config --variable=V lua`
+)
+build_variables=(
+	"MAPM=$goboLibraries"
+)
+
+pre_link () {
+	mkdir -p $target/lib/lua/$LUAVERSION
+	cp mapm.so $target/lib/lua/$LUAVERSION
+}
