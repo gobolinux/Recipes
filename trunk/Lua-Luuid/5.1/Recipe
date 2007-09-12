@@ -1,0 +1,22 @@
+# Recipe (MakeRecipe) for Lua-Luuid by Aitor Perez Iturri, on mié sep 12 21:28:11 CEST 2007
+# Recipe for version 5.1 by Aitor Perez Iturri, on mié sep 12 21:28:11 CEST 2007
+compile_version=1.9.0
+url="http://www.tecgraf.puc-rio.br/~lhf/ftp/lua/5.1/luuid.tar.gz"
+file_size=2097
+file_md5=8530e99dda5d73c7e12196b7e1a85339
+dir='uuid'
+recipe_type=makefile
+makefile='Makefile'
+do_install=no
+build_target="uuid.so"
+environment=(
+	"LUAVERSION=`pkg-config --variable=V lua`"
+)
+docs=(
+	"test.lua"
+)
+
+pre_link () {
+	mkdir -p $target/lib/lua/$LUAVERSION
+	cp uuid.so $target/lib/lua/$LUAVERSION
+}
