@@ -1,0 +1,13 @@
+Install also gadgets
+--- dzen2-0.8.5_orig//Makefile	2007-09-11 01:56:15.000000000 +0200
++++ dzen2-0.8.5//Makefile	2007-09-11 02:14:49.000000000 +0200
+@@ -49,6 +49,9 @@
+ 	@cp -f dzen2 ${DESTDIR}${PREFIX}/bin
+ 	@chmod 755 ${DESTDIR}${PREFIX}/bin/dzen2
+ 
++install_gadgets:
++	@cd gadgets && make && make install
++
+ uninstall:
+ 	@echo removing executable file from ${DESTDIR}${PREFIX}/bin
+ 	@rm -f ${DESTDIR}${PREFIX}/bin/dzen2
