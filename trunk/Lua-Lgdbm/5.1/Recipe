@@ -1,0 +1,22 @@
+# Recipe (MakeRecipe) for Lua-Lgdbm by Aitor Perez Iturri, on mié sep 12 13:45:22 CEST 2007
+# Recipe for version 5.1 by Aitor Perez Iturri, on mié sep 12 13:45:22 CEST 2007
+compile_version=1.9.0
+url="http://www.tecgraf.puc-rio.br/~lhf/ftp/lua/5.1/lgdbm.tar.gz"
+file_size=3753
+file_md5=205a5e34676097732c7e33e8c7034580
+dir='gdbm'
+recipe_type=makefile
+makefile='Makefile'
+environment=(
+	LUAVERSION=`pkg-config --variable=V lua`
+)
+build_target="gdbm.so"
+do_install=no
+docs=(
+	"test.lua"
+)
+
+pre_link () {
+	mkdir -p ${target}/lib/lua/${LUAVERSION}
+	cp gdbm.so ${target}/lib/lua/${LUAVERSION}/gdbm.so
+}
