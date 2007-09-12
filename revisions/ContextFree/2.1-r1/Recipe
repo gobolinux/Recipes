@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for ContextFree by Aitor Perez Iturri, on mié sep 12 23:30:58 CEST 2007
+# Recipe for version 2.1 by Aitor Perez Iturri, on mié sep 12 23:30:58 CEST 2007
+compile_version=1.9.0
+url="http://www.contextfreeart.org/download/ContextFreeSource2.1.tgz"
+file_size=1363136
+file_md5=477242e74c4f953ceca7bf06e944a46e
+recipe_type=makefile
+makefile='Makefile'
+do_install=no
+
+pre_link () {
+	cp cfdg $target/bin
+}
