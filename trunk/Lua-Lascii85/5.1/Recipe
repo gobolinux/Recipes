@@ -1,0 +1,21 @@
+# Recipe for version 5.1 by Aitor Perez Iturri, on miÃ© sep 12 00:58:49 CEST 2007
+# Recipe (MakeRecipe) for Lascii by Aitor Pérez Iturri, on Sat Mar 18 13:49:41 CET 2006
+compile_version=1.9.0
+url="http://www.tecgraf.puc-rio.br/~lhf/ftp/lua/5.1/lascii85.tar.gz"
+file_size=2411
+file_md5=109cc5758a1e956ffae8031e22abf83f
+dir='ascii85'
+recipe_type=makefile
+makefile='Makefile'
+do_install=no
+build_target="ascii85.so"
+docs=(
+	"lascii85.ref"
+	"test.lua"
+)
+
+pre_link () {
+	make doc > lascii85.ref
+	mkdir -p ${target}/lib/lua/`pkg-config --variable=V lua`
+	cp ascii85.so ${target}/lib/lua/`pkg-config --variable=V lua`/ascii85.so
+}
