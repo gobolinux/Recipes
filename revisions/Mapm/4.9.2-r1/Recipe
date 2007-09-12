@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for Mapm by Aitor Perez Iturri, on mié sep 12 21:38:00 CEST 2007
+# Recipe for version 4.9.2 by Aitor Perez Iturri, on mié sep 12 21:38:00 CEST 2007
+compile_version=1.9.0
+url="http://www.tc.umn.edu/~ringx004/mapm-4.9.2.tar.gz"
+file_size=161575
+file_md5=23fcc197079333160966a44cbff7fbda
+dir='mapm_4.9.2'
+recipe_type=makefile
+makefile='Makefile'
+do_install=no
+
+pre_link () {
+	cp libmapm.a $target/lib
+	cp m_apm.h $target/include
+}
