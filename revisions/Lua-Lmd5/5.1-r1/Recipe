@@ -1,0 +1,19 @@
+# Recipe for version 5.1 by Aitor Perez Iturri, on miÃ© sep 12 02:10:29 CEST 2007
+# Recipe (MakeRecipe) for Lua-Lmd5 by Aitor Perez Iturri, on mié may 9 19:33:54 CEST 2007
+compile_version=1.9.0
+url="http://www.tecgraf.puc-rio.br/~lhf/ftp/lua/5.1/lmd5.tar.gz"
+file_size=3959
+file_md5=7b8fffeea0194b6ab72ed7bc85c9fa20
+dir='md5'
+recipe_type=makefile
+do_install=no
+makefile='Makefile'
+environment=(
+	V=`pkg-config --variable=V lua`
+)
+
+pre_link () {
+	mkdir -p ${target}/lib/lua/$V
+	cp md5.so ${target}/lib/lua/$V/md5.so
+	cp sha1.so ${target}/lib/lua/$V/sha1.so
+}

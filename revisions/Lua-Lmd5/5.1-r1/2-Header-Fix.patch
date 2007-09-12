@@ -1,0 +1,13 @@
+Fix a problem with includes
+--- /Depot/Resources/RecipeSources//Lua-Lmd5_orig/5.1/md5//lmd5.h	2007-09-12 02:15:34.000000000 +0200
++++ md5//lmd5.h	2007-09-12 11:41:48.000000000 +0200
+@@ -59,9 +59,6 @@
+ #include "md5.h"
+ #endif
+ 
+-#ifndef AUTHOR
+-#define USE_MD5_RIVEST
+-#endif
+ 
+ #ifdef USE_MD5_RIVEST
+ #define AUTHOR			"Rivest"
