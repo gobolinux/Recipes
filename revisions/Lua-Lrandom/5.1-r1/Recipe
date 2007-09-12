@@ -1,0 +1,22 @@
+# Recipe (MakeRecipe) for Lua-Lrandom by Aitor Perez Iturri, on mié sep 12 20:10:45 CEST 2007
+# Recipe for version 5.1 by Aitor Perez Iturri, on mié sep 12 20:10:45 CEST 2007
+compile_version=1.9.0
+url="http://www.tecgraf.puc-rio.br/~lhf/ftp/lua/5.1/lrandom.tar.gz"
+file_size=4528
+file_md5=a295eb3e1d90e01e3c361880ba64c8f0
+dir='random'
+recipe_type=makefile
+makefile='Makefile'
+do_install=no
+environment=(
+	LUAVERSION=`pkg-config --variable=V lua`
+)
+docs=(
+	"test.lua"
+)
+build_target="random.so"
+
+pre_link () {
+	mkdir -p $target/lib/lua/$LUAVERSION
+	cp random.so $target/lib/lua/$LUAVERSION
+}
