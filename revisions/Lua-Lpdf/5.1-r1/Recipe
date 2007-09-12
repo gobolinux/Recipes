@@ -1,0 +1,25 @@
+# Recipe for version 5.1 by Aitor Perez Iturri, on mi√© sep 12 02:06:47 CEST 2007
+# Recipe (MakeRecipe) for LPDF by Aitor PÈrez Iturri, on Sat Mar 18 19:04:56 CET 2006
+compile_version=1.9.0
+url="http://www.tecgraf.puc-rio.br/~lhf/ftp/lua/5.1/lpdf.tar.gz"
+file_size=14227
+file_md5=85c3ebe49312bf316cd633c165df8446
+dir='pdf'
+recipe_type=makefile
+makefile='Makefile'
+do_install=no
+build_target="pdf.so"
+docs=(
+	"test.lua"
+	"clock.lua"
+	"image.lua"
+	"logo.lua"
+	"lua-logo.lua"
+	"image.png"
+)
+
+pre_link () {
+	local version=`pkg-config --variable=V lua`
+	mkdir -p ${target}/lib/lua/${version}/
+	cp pdf.so ${target}/lib/lua/${version}/pdf.so
+}
