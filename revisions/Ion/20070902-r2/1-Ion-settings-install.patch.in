@@ -1,0 +1,15 @@
+Changed location for setting files
+--- ion-3rc-20070902_orig//build//rules.mk	2007-09-13 10:26:38.000000000 +0200
++++ ion-3rc-20070902//build//rules.mk	2007-09-13 22:46:52.000000000 +0200
+@@ -167,9 +167,9 @@
+ 	done
+ 
+ etc_install:
+-	$(INSTALLDIR) $(ETCDIR)
++	$(INSTALLDIR) @%Compile_settings_target%@/ion3
+ 	for i in $(ETC); do \
+-		$(INSTALL) -m $(DATA_MODE) $$i $(ETCDIR); \
++		$(INSTALL) -m $(DATA_MODE) $$i @%Compile_settings_target%@/ion3; \
+ 	done
+ 
+ # Dependencies

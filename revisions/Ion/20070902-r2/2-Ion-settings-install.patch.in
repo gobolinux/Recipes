@@ -1,0 +1,11 @@
+Change location for setting files
+--- ion-3rc-20070902_orig//etc//Makefile	2007-09-11 23:56:38.000000000 +0200
++++ ion-3rc-20070902//etc//Makefile	2007-09-12 00:11:01.000000000 +0200
+@@ -24,5 +24,5 @@
+ ######################################
+ 
+ _install: etc_install
+-	rm -f $(ETCDIR)/look.lua
+-	ln -s look_newviolet.lua $(ETCDIR)/look.lua
++	rm -f @%Compile_settings_target%@/ion3/look.lua
++	ln -s @%Compile_settings_target%@/ion3/look_newviolet.lua @%Compile_settings_target%@/ion3/look.lua

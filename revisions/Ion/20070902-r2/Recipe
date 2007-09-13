@@ -1,0 +1,16 @@
+# Recipe for version 20070902 by Aitor Perez Iturri, on mar sep 11 13:19:12 CEST 2007
+# Recipe (MakeRecipe) for Ion by Aitor Pérez Iturri, on dom oct 22 11:10:05 CEST 2006
+compile_version=1.9.0
+url="http://iki.fi/tuomov/dl/ion-3rc-20070902.tar.gz"
+file_size=655566
+file_md5=cdaff06fd9519c593f898a81ce01b5f9
+recipe_type=makefile
+make_variables=(
+	"PREFIX=$target"
+	"LUA_LIBS=`pkg-config --libs lua51`"
+	"LUA_INCLUDES=`pkg-config --cflags lua51`"
+	"LUA=/usr/bin/lua"
+	"LUAC=/usr/bin/luac"
+	"ETCDIR=$goboSettings/ion3"
+	"VARDIR=$goboVariable/chache/ion3"
+)
