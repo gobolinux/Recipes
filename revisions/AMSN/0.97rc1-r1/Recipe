@@ -1,0 +1,10 @@
+# Recipe for version 0.97RC1 by Hisham Muhammad, on Sun Sep 9 20:29:02 BRT 2007
+url=$httpSourceforge/amsn/amsn-0.97RC1.tar.bz2
+file_size=6294926
+file_md5=382431ba91ae014daf9148dd5b5674b6
+compile_version=1.8.5
+recipe_type=configure
+configure_options=(
+   --with-tcl=$tcl_path/lib
+   --with-tk=$tk_path/lib
+)
