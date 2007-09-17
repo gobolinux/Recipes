@@ -1,0 +1,20 @@
+diff -Naur xdm-0.99.0-orig/auth.c xdm-0.99.0/auth.c
+--- xdm-0.99.0-orig/auth.c	2005-08-20 20:48:48.000000000 -0300
++++ xdm-0.99.0/auth.c	2005-08-20 20:59:09.000000000 -0300
+@@ -866,6 +866,8 @@
+ 
+ #else
+ 
++#include <netinet/in.h>
++
+ #ifdef WINTCP /* NCR with Wollongong TCP */
+ 
+ #include <sys/un.h>
+@@ -876,7 +878,6 @@
+ #include <net/if.h>
+ #include <netinet/ip.h>
+ #include <netinet/ip_var.h>
+-#include <netinet/in.h>
+ #include <netinet/in_var.h>
+ 
+ static void
