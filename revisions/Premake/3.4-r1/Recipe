@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for Premake by Hisham Muhammad, on Fri Sep 21 22:32:54 BRT 2007
+# Recipe for version 3.4 by Hisham Muhammad, on Fri Sep 21 22:32:54 BRT 2007
+compile_version=1.9.0
+url="http://prdownloads.sf.net/premake/premake-src-3.4.zip"
+file="premake-src-3.4.zip"
+file_size=375559
+file_md5=dcb1eedccc26ac2b57b3989aa9f4f06d
+dir='Premake-3.4'
+recipe_type=makefile
+makefile='Makefile'
+do_install=no
+pre_install() {
+   cp bin/premake $target/bin
+}
