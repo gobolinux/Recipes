@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Joe by Nathan Middleton, on Sun Sep 23 07:59:42 CDT 2007
+# Recipe for version 3.5 by Nathan Middleton, on Sun Sep 23 07:59:42 CDT 2007
+compile_version=1.9.0
+url="http://downloads.sourceforge.net/joe-editor/joe-3.5.tar.gz"
+file_size=613815
+file_md5=9bdffecce7ef910feaa06452d48843de
+recipe_type=configure
+configure_options=(
+    "--enable-256-color"
+    "--enable-paste64"
+)
