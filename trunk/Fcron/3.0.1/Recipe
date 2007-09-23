@@ -2,18 +2,20 @@
 # Recipe by Bill Burdick, Mobile Reasoning, July 13 2004
 
 compile_version=1.8.0
-url="ftp://ftp.seul.org/pub/fcron/fcron-3.0.1.src.tar.gz"
+url="http://fcron.free.fr/archives/fcron-3.0.1.src.tar.gz"
 file_size=536972
 file_md5=8e5dcb3a646c11294294895954ef0a48
 dir=fcron-3.0.1
 recipe_type=configure
 
-#--with-etcdir=${goboSettings}
+unmanaged_files=(
+    $goboVariable/spool/fcron
+)
 
 configure_options=(
 	--with-docdir=$target/share/doc
-	--with-etcdir=$target/../Settings
-	--with-spooldir=$target/../Variable/spool/fcron
+	--with-etcdir=$settings_target
+	--with-spooldir=$goboVariable/spool/fcron
 	--with-rootname=`SuperUserName`
 	--with-rootgroup=`SuperUserName`
 	--without-sendmail
@@ -22,13 +24,11 @@ configure_options=(
 )
 
 pre_build() {
-    mkdir -p $target/../Settings
-    grep -q fcron $goboSettings/group  || groupadd fcron
-    grep -q fcron $goboSettings/passwd || useradd fcron -g fcron -s /bin/false
+    grep -q cron  $goboSettings/group  || groupadd cron
+    grep -q fcron $goboSettings/passwd || useradd fcron -g cron -s /bin/false
 }
 
 post_install() {
-	settingsDir=$goboPrograms/$appname/Settings
-	chown -R 0:fcron $goboPrograms/$appname/Variable $settingsDir
-	chmod -R 640 $goboPrograms/$appname/Variable $settingsDir
+	chown -R 0:cron $goboVariable/spool/fcron
+	chmod -R 640 $goboVariable/spool/fcron
 }
