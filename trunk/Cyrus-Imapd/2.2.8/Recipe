@@ -5,14 +5,20 @@ url="ftp://ftp.andrew.cmu.edu/pub/cyrus-mail/cyrus-imapd-2.2.8.tar.gz"
 file_size=1937828
 file_md5=7e6cb571e1d9b648725aa579077f6f8d
 recipe_type=configure
-pre_build() {
-grep cyrus-imapd $goboSettings/group || groupadd cyrus-imapd &&
-grep cyrus-imapd $goboSettings/passwd || useradd cyrus-imapd -s /bin/false -d /dev/null -g cyrus-imapd
-}
-configure_options=(
---sysconfdir=$goboPrograms/Cyrus-Imapd/Settings/cyrus-imapd
---localstatedir=$goboPrograms/Cyrus-Imapd/Variable/cyrus-imapd
---with-cyrus-prefix=$target
- --with-cyrus-user=cyrus-imapd
- --with-cyrus-group=cyrus-imapd
+
+unmanaged_files=(
+    $goboVariable/cyrus-imapd
 )
+
+configure_options=(
+    --sysconfdir=$settings_target/cyrus-imapd
+    --localstatedir=$goboVariable/cyrus-imapd
+    --with-cyrus-prefix=$target
+    --with-cyrus-user=cyrus-imapd
+    --with-cyrus-group=cyrus-imapd
+)
+
+pre_build() {
+    grep cyrus-imapd $goboSettings/group  || groupadd cyrus-imapd
+    grep cyrus-imapd $goboSettings/passwd || useradd cyrus-imapd -s /bin/false -d /dev/null -g cyrus-imapd
+}
