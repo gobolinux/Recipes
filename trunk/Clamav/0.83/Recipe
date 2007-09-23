@@ -4,26 +4,32 @@ compile_version=1.8.0
 url="$httpSourceforge/clamav/clamav-0.83.tar.gz"
 recipe_type=configure
 configure_options=(
-#--enable-milter
---datadir=$goboPrograms/Clamav/Variable/clamav
+    #--enable-milter
+    --datadir=$goboVariable/clamav
 )
+
+unmanaged_files=(
+    $goboVariable/clamav
+)
+
 pre_build() {
-Log_Normal "Check if user and group clamav exist, add if necessary !!"
-grep clamav $goboSettings/group || groupadd clamav &&
-grep clamav $goboSettings/passwd || useradd clamav -s /bin/false -d $goboPrograms/Clamav -g clamav
+    Log_Normal "Check if user and group clamav exist, add if necessary !!"
+    grep -q clamav $goboSettings/group  || groupadd clamav
+    grep -q clamav $goboSettings/passwd || useradd clamav -s /bin/false -d $target -g clamav
 }
 
 pre_link() {
- mkdir -p $goboPrograms/Clamav/Variable/clamav
- mv $goboPrograms/Clamav/0.83/Shared/clamav/*.cvd $goboPrograms/Clamav/Variable/clamav/
- chown -R clamav $goboPrograms/Clamav/Variable/clamav 
- GrepReplace "Example" "#Example" $goboPrograms/Clamav/Settings/clamd.conf
- GrepReplace "#User clamav" "User clamav" $goboPrograms/Clamav/Settings/clamd.conf
- GrepReplace "LocalSocket /tmp/clamd" "LocalSocket $goboVariable/tmp/clamd" $goboPrograms/Clamav/Settings/clamd.conf
- GrepReplace "#LogFile /tmp/clamd.log" "LogFile $goboPrograms/Clamav/Variable/clamav/clamd.log" $goboPrograms/Clamav/Settings/clamd.conf
- GrepReplace "#DatabaseDirectory /var/lib/clamav" "DatabaseDirectory $goboPrograms/Clamav/Variable/clamav" $goboPrograms/Clamav/Settings/clamd.conf
- GrepReplace "Example" "#Example" $goboPrograms/Clamav/Settings/freshclam.conf
- GrepReplace "#DatabaseDirectory /var/lib/clamav" "DatabaseDirectory $goboPrograms/Clamav/Variable/clamav" $goboPrograms/Clamav/Settings/freshclam.conf
- GrepReplace "#UpdateLogFile /var/log/freshclam.log" "UpdateLogFile $goboPrograms/Clamav/Variable/clamav/freshclam.logs" $goboPrograms/Clamav/Settings/freshclam.conf
- }
+    mkdir -p $goboVariable/clamav
+    cp $target/Shared/clamav/*.cvd $goboVariable/clamav/
+    chown -R clamav $goboVariable/clamav
+ 
+    GrepReplace "Example" "#Example" $settings_target/clamd.conf
+    GrepReplace "#User clamav" "User clamav" $settings_target/clamd.conf
+    GrepReplace "LocalSocket /tmp/clamd" "LocalSocket $goboVariable/tmp/clamd" $settings_target/clamd.conf
+    GrepReplace "#LogFile /tmp/clamd.log" "LogFile $goboVariable/clamav/clamd.log" $settings_target/clamd.conf
+    GrepReplace "#DatabaseDirectory /var/lib/clamav" "DatabaseDirectory $goboVariable/clamav" $settings_target/clamd.conf
+    GrepReplace "Example" "#Example" $settings_target/freshclam.conf
+    GrepReplace "#DatabaseDirectory /var/lib/clamav" "DatabaseDirectory $goboVariable/clamav" $settings_target/freshclam.conf
+    GrepReplace "#UpdateLogFile /var/log/freshclam.log" "UpdateLogFile $goboVariable/clamav/freshclam.logs" $settings_target/freshclam.conf
+}
 #for databasemirrors look here: http://www.clamav.net/mirrors.html
