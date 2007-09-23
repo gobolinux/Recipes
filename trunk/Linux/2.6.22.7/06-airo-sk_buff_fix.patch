@@ -1,0 +1,29 @@
+--- linux-2.6.22.7/drivers/net/wireless/airo.c.orig	2007-09-22 17:34:50.000000000 -0700
++++ linux-2.6.22.7/drivers/net/wireless/airo.c	2007-09-22 17:42:12.000000000 -0700
+@@ -2574,7 +2574,7 @@ static int add_airo_dev( struct net_devi
+ 
+ static int wll_header_parse(struct sk_buff *skb, unsigned char *haddr)
+ {
+-	memcpy(haddr, skb->mac.raw + 10, ETH_ALEN);
++	memcpy(haddr, skb->mac_header + 10, ETH_ALEN);
+ 	return ETH_ALEN;
+ }
+ 
+@@ -3573,7 +3573,7 @@ badrx:
+ 			OUT4500( apriv, EVACK, EV_RX);
+ 
+ 			if (test_bit(FLAG_802_11, &apriv->flags)) {
+-				skb->mac.raw = skb->data;
++				skb->mac_header = skb->data;
+ 				skb->pkt_type = PACKET_OTHERHOST;
+ 				skb->dev = apriv->wifidev;
+ 				skb->protocol = htons(ETH_P_802_2);
+@@ -3943,7 +3943,7 @@ void mpi_receive_802_11 (struct airo_inf
+ 		wireless_spy_update(ai->dev, sa, &wstats);
+ 	}
+ #endif /* IW_WIRELESS_SPY */
+-	skb->mac.raw = skb->data;
++	skb->mac_header = skb->data;
+ 	skb->pkt_type = PACKET_OTHERHOST;
+ 	skb->dev = ai->wifidev;
+ 	skb->protocol = htons(ETH_P_802_2);
