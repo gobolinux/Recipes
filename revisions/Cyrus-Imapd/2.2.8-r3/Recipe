@@ -1,0 +1,24 @@
+# Recipe (MakeRecipe) for Cyrus-Imapd by roko, <ro.ko@mcnon.com>, on Fri Nov 19 01:51:37 BRST 2004
+# Recipe for version 2.2.8 by roko, <ro.ko@mcnon.com>, on Fri Nov 19 01:51:37 BRST 2004
+compile_version=1.8.0
+url="ftp://ftp.andrew.cmu.edu/pub/cyrus-mail/cyrus-imapd-2.2.8.tar.gz"
+file_size=1937828
+file_md5=7e6cb571e1d9b648725aa579077f6f8d
+recipe_type=configure
+
+unmanaged_files=(
+    $goboVariable/cyrus-imapd
+)
+
+configure_options=(
+    --sysconfdir=$settings_target/cyrus-imapd
+    --localstatedir=$goboVariable/cyrus-imapd
+    --with-cyrus-prefix=$target
+    --with-cyrus-user=cyrus-imapd
+    --with-cyrus-group=cyrus-imapd
+)
+
+pre_build() {
+    grep cyrus-imapd $goboSettings/group  || groupadd cyrus-imapd
+    grep cyrus-imapd $goboSettings/passwd || useradd cyrus-imapd -s /bin/false -d /dev/null -g cyrus-imapd
+}
