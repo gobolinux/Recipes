@@ -15,7 +15,7 @@ unmanaged_files=(
    $goboModules/${version}-Gobo
    $goboBoot
    $goboLibraries/modules
-   /Files/Compile/Sources/linux-2.6.22.7
+   $compileSourcesDir/linux-2.6.22.7
 )
 
 sandbox_options=(
