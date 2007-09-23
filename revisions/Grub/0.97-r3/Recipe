@@ -1,0 +1,16 @@
+# Recipe for 0.97 with Suse patches by Hisham Muhammad and Guilherme Bedin
+# Based on recipe by Peter Clark <mla@forrussia.org>
+url=ftp://alpha.gnu.org/gnu/grub/grub-0.97.tar.gz
+file_size=971783
+file_md5=cd3f3eb54446be6003156158d51f4884
+compile_version=1.8.0
+recipe_type=configure
+
+post_install() {
+   local grubdir="$target/Resources/Unmanaged/$goboBoot/grub"
+   mkdir -p ${grubdir}
+   # Using goboPrograms explicitly here because Compile 1.6.0 does not support
+   # *_path variables for build dependencies. :(
+   cp -f ${goboPrograms}/GfxBoot/Current/Shared/gfxboot/themes/GoboGrubTheme/boot/message ${grubdir}
+   cp -f ${target}/lib/grub/i386-pc/* ${grubdir}
+}
