@@ -1,0 +1,12 @@
+# Recipe for version 2.10.14 by Hisham Muhammad, on Sat Sep 15 22:34:39 BRT 2007
+# Recipe (MakeRecipe) for GTK+ by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 11:55:54 BRT 2005
+compile_version=1.8.2
+url="http://ftp.acc.umu.se/pub/GNOME/sources/gtk+/2.10/gtk+-2.10.14.tar.bz2"
+file_size=15172170
+file_md5=018d7dd0fa7de01cfdb77c7c55e7ba26
+recipe_type=configure
+
+configure_options=(
+   --with-xinput=yes
+   --mandir=$target/man
+)
