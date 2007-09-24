@@ -1,0 +1,14 @@
+--- linux-2.6.22.1/fs/squashfs/inode.c.orig	2007-08-02 14:39:12.000000000 -0400
++++ linux-2.6.22.1/fs/squashfs/inode.c	2007-08-02 14:39:38.000000000 -0400
+@@ -2297,10 +2297,7 @@ static void squashfs_destroy_inode(struc
+ static void init_once(void * foo, struct kmem_cache * cachep, unsigned long flags)
+ {
+ 	struct squashfs_inode_info *ei = foo;
+-
+-	if ((flags & (SLAB_CTOR_VERIFY|SLAB_CTOR_CONSTRUCTOR)) ==
+-							SLAB_CTOR_CONSTRUCTOR)
+-		inode_init_once(&ei->vfs_inode);
++	inode_init_once(&ei->vfs_inode);
+ }
+  
+ 
