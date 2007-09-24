@@ -1,0 +1,14 @@
+# Recipe for version 1.2.20 by Hisham Muhammad, on Sat Sep 15 22:38:47 BRT 2007
+compile_version=1.8.5
+url=$httpSourceforge/libpng/libpng-1.2.20.tar.bz2
+file_size=613683
+file_md5=8c186d9da3d011e2c3076b28f9c6be7b
+recipe_type=configure
+configure_options=(
+   "--mandir=${target}/man"
+)
+
+pre_link() {
+    ln -sf libpng12 $target/include/libpng
+    ln -sf libpng.so $target/lib/libpng.so.0
+}
