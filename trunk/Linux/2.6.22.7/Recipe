@@ -13,6 +13,7 @@ make_variables=(
 
 unmanaged_files=(
    $goboModules/${version}-Gobo
+   $goboModules/Current
    $goboBoot
    $goboLibraries/modules
    $compileSourcesDir/linux-2.6.22.7
