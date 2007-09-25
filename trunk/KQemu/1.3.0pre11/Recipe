@@ -2,7 +2,16 @@
 compile_version=1.8.2
 url="http://fabrice.bellard.free.fr/qemu/kqemu-1.3.0pre11.tar.gz"
 recipe_type=configure
+file_size=161478
+file_md5=970521874ef8b1ba4598925ace5936c3
 
 unmanaged_files=(
         $goboModules
 )
+
+pre_link () {
+    # Make a note that this is a third part module that needs
+    # recompiling with a new kernel
+    mkdir -p ${target}/Shared/Compile/Recompile/Linux/
+    touch ${target}/Shared/Compile/Recompile/Linux/KQemu
+}
