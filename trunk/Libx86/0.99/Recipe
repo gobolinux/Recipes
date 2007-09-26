@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Libx86 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Sep 25 08:43:51 CEST 2007
+# Recipe for version 0.99 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Sep 25 08:43:51 CEST 2007
+compile_version=1.8.0
+url="http://www.codon.org.uk/~mjg59/libx86/downloads/libx86-0.99.tar.gz"
+file_size=100534
+file_md5=c426d4f29fdf3499158cf49d4f374315
+recipe_type=makefile
+makefile='Makefile'
+
+install_variables=(
+   PREFIX=${target}
+)
