@@ -1,0 +1,19 @@
+Setting default configuration
+-- 
+Jonas Karlsson
+
+--- suspend-0.7/conf/suspend.conf	2006-05-01 12:40:21.000000000 +0200
++++ suspend-0.7/conf/suspend.conf.new	2007-09-25 08:22:47.000000000 +0200
+@@ -1,9 +1,9 @@
+-snapshot device = /dev/snapshot
++snapshot device = @%Compile_goboDevices%@/snapshot
+ resume device = <path_to_resume_device_file>
+ #image size = 350000000
+ #suspend loglevel = 2
+ #compute checksum = y
+-#compress = y
+-#encrypt = y
++compress = y
++encrypt = y
+ #early writeout = y
+ #splash = y

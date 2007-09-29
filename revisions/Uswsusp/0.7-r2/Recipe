@@ -1,0 +1,40 @@
+# Recipe for version 0.7 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Sep 25 08:01:05 CEST 2007
+# Recipe (MakeRecipe) for Uswsusp by Jonas Karlsson <jonka750@student.liu.se>, on Wed Apr 25 11:20.79 CEST 2007
+compile_version=1.8.4
+url="$httpSourceforge/suspend/suspend-0.7.tar.gz"
+file_size=107669
+file_md5=ecc1b0f1bc59eebd1328390e6612c7a4
+recipe_type=makefile
+
+make_variables=(
+   PREFIX="${target}"
+   CONFIG_DIR="${settings_target}"
+   BOOT_DIR="${goboBoot}"
+   SNAPSHOT="${goboDevices}/snapshot"
+)
+
+pre_patch() {
+   if [ -z "$(zcat ${goboStatus}/config.gz | grep "CONFIG_SOFTWARE_SUSPEND=y")" ]
+   then
+      Log_Error "Your kernel does not support software suspend or \
+configuration could not be read. Make sure you have enabled \
+CONFIG_SOFTWARE_SUSPEND=y in your kernel or reconfigure your kernel \
+to include it."
+      Ask_Continue "Do you want to continue anyway? (Not recommended \
+unless you know what you do)"
+   fi
+   largestswap=$(cat /proc/swaps | grep -v Filename | awk {'print $3'} | sort -r)
+   if [ -z "${largestswap}" ]
+   then
+      Log_Verbose "No swap partition/file was found. To be able to use \
+hibernation you will have to have a swap partition or file at least \
+the size of half your total RAM. Suspend-to-RAM will still work."
+   else if [ $(( ${largestswap} * 2 )) -lt $(cat /proc/meminfo | grep MemTotal | awk {'print $2'}) ]
+      then
+         Log_Verbose "None of the swap partitions/files found is not big \
+enough to guarantee that hibernation will work. To be able to use \
+hibernation you will have to have a swap partition or file at least \
+the size of half your total RAM. Suspend-to-RAM will still work."
+      fi
+   fi
+}
