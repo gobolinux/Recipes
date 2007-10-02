@@ -1,0 +1,8 @@
+# Recipe for version 7.3 by Jonas Karlsson <jonka750@student.liu.se>, on Sun Sep 9 21:35:00 CEST 2007
+recipe_type=meta
+compile_version=1.8.5
+pre_link() {
+    pushd $target/bin >& /dev/null
+    chmod +s X*
+    popd >& /dev/null
+}
