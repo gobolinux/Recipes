@@ -7,6 +7,7 @@ file_md5=f035852f521b54677f2b5c9e2f6d54a4
 recipe_type=configure
 configure_options=(
     "--with-default-fonts=/Files/Fonts"
+    "--with-add-fonts=$goboShared/fonts"
     "--with-cache-dir=$goboVariable/cache/fontconfig"
     "--with-confdir=$settings_target/fonts"
 )
