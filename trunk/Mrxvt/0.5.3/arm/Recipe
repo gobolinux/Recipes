@@ -1,0 +1,24 @@
+configure_options=(
+  --with-save-lines=1000
+  --disable-debug
+  --disable-next-scroll
+  --disable-xterm-scroll
+  --disable-plain-scroll
+  --disable-sgi-scroll
+  --disable-utmp
+  --disable-wtmp
+  --disable-lastlog
+  --enable-text-shadow
+  --enable-menubar
+  --enable-xft
+)
+
+environment=(
+    LIBS="-lXdmcp -lXau -lexpat -lICE"
+)
+
+pre_link() {
+	pushd $target/bin >& /dev/null
+	ln -s mrxvt xterm
+	popd >& /dev/null
+}
