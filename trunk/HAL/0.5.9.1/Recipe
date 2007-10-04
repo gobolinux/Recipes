@@ -23,6 +23,7 @@ unmanaged_files=(
     "${goboVariable}/run/hald/hald-local"
     "${goboVariable}/run/hald/hald-runner"
     "${goboVariable}/cache/"
+    "${goboVariable}/lib/hal"
 )
 
 pre_build() {
