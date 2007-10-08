@@ -1,0 +1,17 @@
+# Recipe for version 3.5.7 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Aug 17 11:13:32 CEST 2007
+# by Maglan C. Diemer ,3.4.0 by roko
+
+url="http://download.kde.org/stable/3.5.7/src/kdeartwork-3.5.7.tar.bz2"
+file_size=16577346
+file_md5=4ce75cd6f98b8662e450be735bc0b060
+compile_version=1.8.5
+recipe_type=configure
+configure_options=(
+   "--disable-debug"
+   "--with-extra-includes=$goboHeaders"
+   "--with-extra-libs=$goboLibraries"
+   "--disable-dependency-tracking"
+   "--disable-libsuffix"
+   #"DO_NOT_COMPILE="
+   #IconThemes icewm-themes kscreensaver kwin-styles kworldclock sounds styles wallpapers
+)
