@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for PowerTOP by Hisham Muhammad, on Wed Sep 26 01:33:22 BRT 2007
+# Recipe for version 1.8 by Hisham Muhammad, on Wed Sep 26 01:33:22 BRT 2007
+compile_version=1.8.5
+url="http://www.lesswatts.org/projects/powertop/download/powertop-1.8.tar.gz"
+file_size=66947
+file_md5=38fd8a6825cd62b6c22df8a44b4e27d0
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   BINDIR="$target/bin"
+   LOCALESDIR="$target/share/locale"
+   MANDIR="$target/man/man1"
+)
