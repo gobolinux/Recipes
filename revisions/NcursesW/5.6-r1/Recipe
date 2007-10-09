@@ -1,0 +1,26 @@
+# Recipe for version 5.6 by Hisham Muhammad, on Wed Sep 26 01:39:04 BRT 2007
+compile_version=1.8.0
+url="$ftpGnu/ncurses/ncurses-5.6.tar.gz"
+recipe_type=configure
+needs_safe_linking=yes
+configure_options=(
+   "--with-shared"
+   "--without-debug"
+   "--with-termlib"
+   "--with-gpm"
+   "--enable-rpath"
+   "--enable-termcap"
+   "--enable-symlinks"
+   "--enable-widec"
+   "--with-terminfo-dirs=$target/share/terminfo"
+   "--with-default-terminfo-dir=$target/share/terminfo"
+)
+install_target=install.libs
+pre_install() {
+   mkdir $target/share/ncursesw
+   echo "Hack created so that ncursesw gets a share symlink" > $target/share/ncursesw/README
+}
+post_install() {
+   chmod 755 $target/lib/*.5.6
+   chmod 644 $target/lib/libncurses++w.a
+}
