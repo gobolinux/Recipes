@@ -1,0 +1,9 @@
+[Name] Viewglob
+[Summary] An X-Windows filesystem visualization add-on for Bash and Zsh.
+[License] GNU General Public License version 2 (GPLv2)
+[Description] It's a filesystem visualization add-on for Bash and Zsh... sort-of. The idea is simple but hard to describe simply. Here is an example usage scenario:
+You open up a new terminal and start Viewglob. A graphical display appears showing the layout of your current directory ($HOME). It looks a little like a file manager. Back in the shell, you begin typing "cd pictures" - when 'p' is pressed, the display highlights two directories, pictures and packages. As you type the following 'i', packages loses its highlight. Since pictures is the only directory with a highlight, you press TAB to complete the word and press ENTER. 
+Now the display shows the layout of ~/pictures. You type "du -ch dsc*" to check out a few file sizes, and several files in the display receive a vibrant highlight, as they have been "selected" by the naming glob. 
+In a second terminal, you ssh into another machine and start Viewglob there. The display immediately updates to show what's going on in the remote shell. If you shuffle back to the first terminal, it automatically updates itself again. 
+And so on. 
+[Homepage] http://viewglob.sourceforge.net/
