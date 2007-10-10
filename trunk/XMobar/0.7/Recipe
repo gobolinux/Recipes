@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for XMobar by Nathan Middleton, on Tue Oct 2 11:26:00 CDT 2007
+# Recipe for version 0.7 by Nathan Middleton, on Tue Oct 2 11:26:00 CDT 2007
+compile_version=1.9.0
+url="http://hackage.haskell.org/packages/archive/xmobar/0.7/xmobar-0.7.tar.gz"
+file_size=21331
+file_md5=5ce3ff7e72eca9bde311b871de689266
+recipe_type=manifest
+
+pre_install() {
+    runhaskell Setup.lhs configure --prefix=$target
+    runhaskell Setup.lhs build
+    runhaskell Setup.lhs haddock
+    runhaskell Setup.lhs install
+}
