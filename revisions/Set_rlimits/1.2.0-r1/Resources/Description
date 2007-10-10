@@ -1,0 +1,10 @@
+[Name] Set_rlimits
+[Summary] set_rlimits allows non-root apps to use realtime extensions
+[Description] set_rlimits is a small wrapper program to allow people to take advantage of
+the realtime resource limit extensions available in Linux kernels 2.6.12 and
+later without having to resort to using a PAM module.  This is of particular
+interest for Slackware users since Slackware doesn't use PAM, but other
+users may find this program helpful as well.  In addition, several other
+resource limits can be manipulated by the program.
+[License] GNU General Public License version 2
+[Homepage] http://www.physics.adelaide.edu.au/~jwoithe/
