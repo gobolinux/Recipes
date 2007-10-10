@@ -1,0 +1,12 @@
+# Recipe for version 8.4.15 by Jonas Karlsson <jonka750@student.liu.se>, on Wed Oct 10 21:15:29 CEST 2007
+compile_version=1.8.5
+url="$httpSourceforge/tcl/tcl8.4.15-src.tar.gz"
+file_size=3635163
+file_md5=5e1b71eef1f75a294072aa3218f62b66
+dir='tcl8.4.15/unix'
+recipe_type=configure
+install_target='install install-private-headers'
+pre_link(){
+    ln -nfs ${target}/bin/tclsh8.4 ${target}/bin/tclsh
+    ln -nfs ${goboLibraries}/tk8.4 ${target}/lib/tk8.4
+}
