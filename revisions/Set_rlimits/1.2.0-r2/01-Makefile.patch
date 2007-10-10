@@ -1,0 +1,33 @@
+--- set_rlimits-1.2.0/Makefile.orig	2007-10-10 00:34:43.000000000 -0700
++++ set_rlimits-1.2.0/Makefile	2007-10-10 00:35:15.000000000 -0700
+@@ -3,25 +3,26 @@
+ 
+ # Installation locations.  If SYSCONFDIR is changed, the CONFIG_FILE define
+ # in set_rtlimits.c will need changing to match.
++CC=gcc
+ PREFIX=/usr/local
+ SYSCONFDIR=/etc
+ 
+ all:	set_rlimits
+ 
+ set_rlimits:	set_rlimits.c
+-	gcc -Wall -g -o set_rlimits set_rlimits.c
++	$(CC) -Wall -g -o set_rlimits set_rlimits.c
+ 
+ install:	set_rlimits
+ 	test -d $(PREFIX)/bin || mkdir -p $(PREFIX)/bin
+ 	test -d $(PREFIX)/man/man8 || mkdir -p $(PREFIX)/man/man8
+ 	test -d $(SYSCONFDIR) || mkdir -p $(SYSCONFDIR)
+ 	cp -p set_rlimits $(PREFIX)/bin/
+-	chown root.root $(PREFIX)/bin/set_rlimits
++	chown 0.0 $(PREFIX)/bin/set_rlimits
+ 	chmod u+s $(PREFIX)/bin/set_rlimits
+ 	test -e $(SYSCONFDIR)/set_rlimits.conf || cp set_rlimits.conf $(SYSCONFDIR)/
+-	chown root.root $(SYSCONFDIR)/set_rlimits.conf
++	chown 0.0 $(SYSCONFDIR)/set_rlimits.conf
+ 	cp -p set_rlimits.8 $(PREFIX)/man/man8/
+-	chown root.root $(PREFIX)/man/man8/set_rlimits.8
++	chown 0.0 $(PREFIX)/man/man8/set_rlimits.8
+ 
+ .PHONY:	clean tidy
+ 
