@@ -1,0 +1,16 @@
+This patch adapts the dbus system.d to the GoboLinux layout
+-- 
+Jonas Karlsson
+
+diff -Puar dbus-0.50-orig/bus/system.conf.in dbus-0.50/bus/system.conf.in
+--- dbus-0.50-orig/bus/system.conf.in	2005-07-15 10:28:35.000000000 -0700
++++ dbus-0.50/bus/system.conf.in	2005-10-12 16:37:51.000000000 -0700
+@@ -51,7 +51,7 @@
+ 
+   <!-- Config files are placed here that among other things, punch 
+        holes in the above policy for specific services. -->
+-  <includedir>system.d</includedir>
++  <includedir>@%Compile_goboSettings%@/dbus-1/system.d</includedir>
+ 
+   <!-- This is included last so local configuration can override what's 
+        in this standard file -->
