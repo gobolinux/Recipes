@@ -1,0 +1,51 @@
+# Recipe for version 1.6.9p6 by Hisham Muhammad, on Thu Oct 11 03:12:07 BRT 2007
+# Recipe (MakeRecipe) for Sudo by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sun Feb 27 23:19:34 BRT 2005
+compile_version=1.8.5
+url="http://www.courtesan.com/sudo/dist/sudo-1.6.9p6.tar.gz"
+file_size=574983
+file_md5=1f262526f321af388b37e05ee57bb2c7
+recipe_type=configure
+configure_options=(
+   #Name of the root user is immaterial, number is significant:
+   --with-runas-default="#0"
+   #Unless sudo depends on Sendmail, assuming we use ChrootCompile,
+   #a path to sendmail will not be found at all.
+   #
+   #The default address to send to is "root".  This is not particularly
+   #sensible on a system where user "root" is different from superuser.
+   #
+   #Keeping the configured sendmail from being an actual mail-sending
+   #program's path seems to be the only clean way to disable mail-sending
+   #by default (since there is no sensible default, and we certainly don't
+   #want to risk privilege escalation by sending mail some arbitrary
+   #default way).
+   #
+   #There are be comments in the default sudoers file to help set
+   #up mailing for anyone who wants it.
+   --without-sendmail
+   --with-mailto=""
+   #sudo 1.6.9 didn't seem to be able to build in absence of PAM otherwise
+   #(it tried to link with -lpam)
+   --without-pam
+   #Are the following because of sudo complaining about symlinks in paths?
+   --with-logpath="$goboVariable/log/sudo.log"
+   --with-timedir="$goboVariable/run/sudo"
+   #Good for sudo not breaking with our directory/symlink layout:
+   --with-stow
+   #I guess someone just thought this was a good idea?
+   --enable-log-host
+)
+
+#Don't try to install their default sudoers file, just the stuff we want.
+#hmm... this didn't fix the FiboSandbox problems...
+#install_target="install_binaries install_man"
+sandbox_options=("--no-sandbox")
+
+pre_link() {
+   chmod 4111 "${target}/bin/sudo"
+}
+
+post_install() {
+   chmod 0440 "${target}/Resources/Defaults/Settings/sudoers"
+   chmod 0440 "${settings_target}/sudoers"
+}
