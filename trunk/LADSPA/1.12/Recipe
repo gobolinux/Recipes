@@ -12,3 +12,5 @@ make_variables=(
    "INSTALL_INCLUDE_DIR=$target/include"
    "INSTALL_BINARY_DIR=$target/bin"
 )
+build_target=targets
+
