@@ -18,6 +18,7 @@
 #uncomment this line and fill in an appropriate address for mailto:
 #Default mailto="", mailerpath=/bin/sendmail
 
+Defaults !env_reset, setenv
 
 # User privilege specification
 
