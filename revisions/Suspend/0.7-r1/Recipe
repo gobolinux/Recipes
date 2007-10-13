@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for Suspend by Lucas C. Villa Real, on Sat Sep 8 01:35:40 PDT 2007
+# Recipe for version 0.7 by Lucas C. Villa Real, on Sat Sep 8 01:35:40 PDT 2007
+compile_version=1.8.6
+url="$httpSourceforge/suspend/suspend-0.7.tar.gz"
+file_size=107669
+file_md5=ecc1b0f1bc59eebd1328390e6612c7a4
+recipe_type=makefile
+
+make_variables=(
+    PREFIX=$target
+    CONFIG_DIR=$settings_target
+    BOOT_DIR=$goboBoot
+    CONFIG_UDEV=yes
+)
