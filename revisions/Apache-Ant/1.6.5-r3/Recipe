@@ -1,0 +1,18 @@
+# Recipe for version 1.6.5 by Jonas Karlsson <jonka750@student.liu.se>, on Sun Nov 6 19:25:23 CET 2005
+# Recipe (MakeRecipe) for Apache-Ant by Hisham Muhammad, on Mon Aug 30 15:40:45 BRT 2004
+compile_version=1.8.0
+url="http://archive.apache.org/dist/ant/source/apache-ant-1.6.5-src.tar.gz"
+file_size=7093554
+file_md5=b1a692367b4ef4d08833c434b4863ae9
+dir='apache-ant-1.6.5'
+recipe_type=makefile
+do_build=no
+do_install=no
+
+environment=(
+  JAVA_HOME=$(dirname $(dirname $(which java)))
+)
+
+pre_install() {
+  ./build.sh -Ddist.dir=$target dist
+}
