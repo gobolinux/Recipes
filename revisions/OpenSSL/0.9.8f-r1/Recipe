@@ -1,0 +1,8 @@
+# Recipe for version 0.9.8f by Jonas Karlsson <jonka750@student.liu.se>, on Fri Oct 12 21:24:11 CEST 2007
+compile_version=1.8.2
+url=http://www.openssl.org/source/openssl-0.9.8f.tar.gz
+file_size=3357445
+file_md5=114bf908eb1b293d11d3e6b18a09269f
+recipe_type=configure
+configure=Configure
+build_target="all"
