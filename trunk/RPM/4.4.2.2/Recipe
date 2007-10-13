@@ -1,0 +1,18 @@
+# Recipe for version 4.4.2.2 by Lucas C. Villa Real, on Fri Oct 12 10:45:36 EDT 2007
+# Recipe (MakeRecipe) for RPM by Lucas C. Villa Real, on Mon Feb 26 01:11:39 BRT 2007
+compile_version=1.8.2
+url="http://rpm.org/releases/rpm-4.4.x/rpm-4.4.2.2.tar.gz"
+file_size=11031970
+file_md5=15faa7ebd9791ade1a2f8181821ac259
+recipe_type=configure
+
+configure_options=(
+    --without-apidocs
+    --without-selinux
+    --without-python
+    --without-perl
+    --without-lua
+    --without-syck
+    --without-dmalloc
+    --without-efence
+)
