@@ -1,0 +1,48 @@
+# Recipe for version 1.4 by Jonas Karlsson <jonka750@student.liu.se>, on Mon Sep 10 06:59:57 CEST 2007
+# Recipe (MakeRecipe) for Xorg-Server by Hisham Muhammad <lode@gobolinux.org>, on Fri Aug 19 18:49:06 BRT 2005
+compile_version=1.8.5
+urls=(
+   "http://xorg.freedesktop.org/archive/individual/xserver/xorg-server-1.4.tar.bz2"
+   "$httpSourceforge/mesa3d/MesaLib-7.0.1.tar.bz2"
+)
+file_sizes=(
+   6179392
+   3343538
+)
+file_md5s=(
+   a06d9fe4f9f1d459ae02657f9ce64220
+   c056abd763e899114bf745c9eedbf9ad
+)
+
+recipe_type=configure
+
+configure_options=(
+   "--enable-dri"
+   "--enable-glx"
+   "--enable-glx-tls"
+   "--enable-lbx"
+   "--enable-xgl"
+   "--enable-xglx"
+   "--disable-dmx"
+   "--enable-config-dbus"
+   "--enable-config-hal"
+   "--disable-fontcache"
+   "--disable-secure-rpc"
+   "--enable-multibuffer"
+   "--enable-tslib"
+   "--enable-xorgcfg"
+   "--with-module-dir=${goboLibraries}/xorg/modules"
+   "--with-dri-driver-path=${goboLibraries}/xorg/modules/dri"
+   "--with-mesa-source=${compileSourcesDir}/Mesa-7.0.1"
+)
+
+install_variables=(
+   "appdefaultdir=${target}/share/X11/app-defaults"
+   "moduledir=${target}/lib/xorg/modules"
+)
+
+pre_link() {
+    pushd $target/bin >& /dev/null
+    chmod +s X*
+    popd >& /dev/null
+}
