@@ -23,16 +23,26 @@ configure_options=(
    "--enable-lbx"
    "--enable-xgl"
    "--enable-xglx"
+   "--disable-dmx"
    "--enable-config-dbus"
    "--enable-config-hal"
    "--disable-fontcache"
    "--disable-secure-rpc"
    "--enable-multibuffer"
-   "--disable-dmx"
+   "--enable-tslib"
+   "--enable-xorgcfg"
+   "--with-module-dir=${goboLibraries}/xorg/modules"
    "--with-dri-driver-path=${goboLibraries}/xorg/modules/dri"
    "--with-mesa-source=${compileSourcesDir}/Mesa-7.0.1"
 )
 
 install_variables=(
    "appdefaultdir=${target}/share/X11/app-defaults"
+   "moduledir=${target}/lib/xorg/modules"
 )
+
+pre_link() {
+    pushd $target/bin >& /dev/null
+    chmod +s X*
+    popd >& /dev/null
+}

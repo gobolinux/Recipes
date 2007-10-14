@@ -1,0 +1,32 @@
+From 75278dc3fb29ba7c29fe7dadcee8e7bad6dfffc4 Mon Sep 17 00:00:00 2001
+From: Elvis Pranskevichus <el@prans.net>
+Date: Sun, 9 Sep 2007 19:33:55 -0400
+Subject: [PATCH] [config/dbus] Fix dbus_bus_request_name failure check
+
+The code in connect_hook incorrectly checks for dbus_bus_request_name failure.
+The dbus_bus_request_name error indicator is -1, not 0. This leads
+to subsequent assertion failure in libdbus
+---
+ config/dbus.c |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/config/dbus.c b/config/dbus.c
+index c6f4af0..7eabcb9 100644
+--- a/config/dbus.c
++++ b/config/dbus.c
+@@ -353,8 +353,10 @@ connect_hook(DBusConnection *connection, void *data)
+ 
+     dbus_error_init(&error);
+ 
+-    if (!dbus_bus_request_name(info->connection, info->busname,
+-                               0, &error)) {
++    dbus_bus_request_name(info->connection, info->busname,
++                               0, &error);
++
++    if (dbus_error_is_set(&error)) {
+         ErrorF("[config/dbus] couldn't take over org.x.config: %s (%s)\n",
+                error.name, error.message);
+         goto err_start;
+-- 
+1.5.3
+
