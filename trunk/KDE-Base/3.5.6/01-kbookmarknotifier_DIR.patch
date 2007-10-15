@@ -1,3 +1,9 @@
+Fixes an issue where include and library directories were set to be
+the same as $prefix, instead of the system paths. This broke systems
+where kde-libs and kde-base were installed in different prefixes.
+
+-- 
+Jonas Karlsson
 --- kdebase-3.5.6/konqueror/keditbookmarks/Makefile.am.orig	2007-03-26 02:34:38.000000000 -0300
 +++ kdebase-3.5.6/konqueror/keditbookmarks/Makefile.am	2007-03-26 02:34:46.000000000 -0300
 @@ -13,7 +13,7 @@ kbookmarkmerger_LDADD = $(LIB_KIO)
