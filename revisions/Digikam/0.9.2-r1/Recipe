@@ -1,0 +1,11 @@
+# Recipe for version 0.9.2 by Michael Homer, on Mon Oct 15 10:24:39 NZDT 2007
+# Recipe (MakeRecipe) for Digikam by roko, <ro.ko@mcnon.com>, on Fri Mar 25 01:16:32 CET 2005
+compile_version=1.9.0
+url="$httpSourceforge/digikam/digikam-0.9.2.tar.bz2"
+file_size=10514411
+file_md5=0710efe340d1a30a36e3954ea03c46ef
+recipe_type=configure
+configure_options=(
+ '--disable-libsuffix'
+)
+
