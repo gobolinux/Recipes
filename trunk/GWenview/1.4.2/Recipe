@@ -1,0 +1,11 @@
+# Recipe for version 1.4.2 by Michael Homer, on Sun Oct 14 22:40:26 NZDT 2007
+# Recipe (MakeRecipe) for GWenview by roko, <ro.ko@mcnon.com>, on Thu Mar 24 03:36:34 CET 2005
+compile_version=1.9.0
+url="$httpSourceforge/gwenview/gwenview-1.4.2.tar.bz2"
+file_size=984977
+file_md5=33c3fc68224d57f5f5cc4d34b48293c6
+recipe_type=configure
+configure_options=(
+ '--disable-libsuffix'
+)
+
