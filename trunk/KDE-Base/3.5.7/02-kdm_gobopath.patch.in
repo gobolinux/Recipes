@@ -1,3 +1,7 @@
+Fix for hardcoded patches against /var
+
+-- 
+Jonas Karlsson
 diff -Naur kdebase-3.5.6/kdm/config.def kdebase-3.5.6.new/kdm/config.def
 --- kdebase-3.5.6/kdm/config.def	2005-10-10 17:04:31.000000000 +0200
 +++ kdebase-3.5.6.new/kdm/config.def	2007-03-19 14:44:38.000000000 +0100
