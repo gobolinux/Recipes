@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for LibKDcraw by Michael Homer, on Mon Oct 15 12:22:15 NZDT 2007
+# Recipe for version 0.1.2 by Michael Homer, on Mon Oct 15 12:22:15 NZDT 2007
+compile_version=1.9.0
+url="$httpSourceforge/kipi/libkdcraw-0.1.2.tar.bz2"
+file_size=649251
+file_md5=38ed88e8b7387526113f150c349c8eb4
+recipe_type=configure
+configure_options=(
+ '--disable-libsuffix'
+)
+
