@@ -1,0 +1,10 @@
+# Recipe for version 1.9.3 by Michael Homer, on Wed Oct 17 16:10:02 NZDT 2007
+# Recipe (MakeRecipe) for Kile by roko, <ro.ko@mcnon.com>, , on Mon Oct 18 20:11:47 BRST 2004
+compile_version=1.9.0
+url="http://dl.sourceforge.net/sourceforge/kile/kile-1.9.3.tar.bz2"
+file_size=5984752
+file_md5=0404b4be7bced7123111c49918130a1f
+recipe_type=configure
+configure_options=(
+ --disable-libsuffix
+)
