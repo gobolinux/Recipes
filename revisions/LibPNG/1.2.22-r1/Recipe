@@ -1,0 +1,14 @@
+# Recipe for version 1.2.22 by Jonas Karlsson <jonka750@student.liu.se>, on Thu Oct 18 19:00:51 CEST 2007
+compile_version=1.8.5
+url=$httpSourceforge/libpng/libpng-1.2.22.tar.bz2
+file_size=614414
+file_md5=e50208ad684a5822c74b8a260962a4d4
+recipe_type=configure
+configure_options=(
+   "--mandir=${target}/man"
+)
+
+pre_link() {
+    ln -sf libpng12 $target/include/libpng
+    ln -sf libpng.so $target/lib/libpng.so.0
+}
