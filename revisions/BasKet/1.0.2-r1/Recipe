@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for BasKet by Michael Homer, on Tue Oct 16 10:33:36 NZDT 2007
+# Recipe for version 1.0.2 by Michael Homer, on Tue Oct 16 10:33:36 NZDT 2007
+compile_version=1.9.0
+url="http://basket.kde.org/downloads/basket-1.0.2.tar.gz"
+file_size=6046068
+file_md5=d71c62a56de9cc32ba2633e63e99071f
+recipe_type=configure
+configure_options=(
+ --disable-libsuffix
+)
