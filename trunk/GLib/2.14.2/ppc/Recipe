@@ -1,0 +1,4 @@
+configure_options=(
+	${configure_options[@]}
+	--with-iconv=gnu
+)
