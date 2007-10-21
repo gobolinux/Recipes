@@ -1,0 +1,26 @@
+# Recipe for version 1.4.5 by Hisham Muhammad, on Sun Oct 21 12:40:28 BRST 2007
+# Recipe (MakeRecipe) for Subversion by Jonas Karlsson <jonka750@student.liu.se>, on Wed May 11 07:50:33 CEST 2005
+compile_version=1.8.5
+url="http://subversion.tigris.org/downloads/subversion-1.4.5.tar.bz2"
+file_size=4722624
+file_md5=4c333a5fe827568c67d195cda7a5e154
+recipe_type=configure
+configure_options=(
+   --with-apr=${apr_path}
+   --with-apr-util=${apr_util_path}
+   --disable-mod-activation
+   --disable-neon-version-check
+)
+
+build_target="all swig-py"
+install_target="install install-swig-py"
+
+make_variables=(
+   swig_pydir=${target}/lib/python2.4/site-packages/libsvn
+   swig_pydir_extra=${target}/lib/python2.4/site-packages/svn
+)
+
+install_variables=(
+   swig_pydir=${target}/lib/python2.4/site-packages/libsvn
+   swig_pydir_extra=${target}/lib/python2.4/site-packages/svn
+)
