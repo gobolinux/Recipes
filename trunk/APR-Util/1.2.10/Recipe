@@ -1,0 +1,10 @@
+# Recipe for version 1.2.10 by Hisham Muhammad, on Sun Oct 21 12:43:02 BRST 2007
+# Recipe (MakeRecipe) for APR-Util by Kosh <kosh.linux at gmail.com>, on Tue Feb 28 21:59:01 BRT 2006
+compile_version=1.8.2
+url="http://mirrors.dedipower.com/ftp.apache.org/apr/apr-util-1.2.10.tar.gz"
+file_size=654083
+file_md5=7558fba2ce6eade83cf28a7164a981fa
+recipe_type=configure
+configure_options=(
+    "--with-apr=$apr_path"
+)
