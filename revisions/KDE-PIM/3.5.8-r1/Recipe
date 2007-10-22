@@ -1,0 +1,24 @@
+# Recipe for version 3.5.8 by Andre Detsch <detsch@gobolinux.org>, on Sat Oct 20 11:04:46 BRT 2007
+# by Maglan C. Diemer && Andre Detsch
+
+url="http://download.kde.org/stable/3.5.8/src/kdepim-3.5.8.tar.bz2"
+file_size=14107449
+file_md5=a1ffff553f1d6739c7791891028b176b
+recipe_type=configure
+compile_version=1.9.0
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+  "--disable-libsuffix"
+#  "--without-kpilot"
+#  "DO_NOT_COMPILE=kpilot" 
+)
+
+pre_install() {
+	# Change install path for designer plugins so they go to $target
+	# and not /Programs/KDE-Libs
+	repl_from='$(DESTDIR)$(kde_widgetdir)'
+	repl_to="$target/lib/kde3/plugins/designer"
+	GrepReplace "$repl_from" "$repl_to" ./libkdepim/kpartsdesignerplugin/Makefile
+	GrepReplace "$repl_from" "$repl_to" ./libkdepim/Makefile
+}
