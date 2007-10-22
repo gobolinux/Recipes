@@ -1,0 +1,15 @@
+This patch fixes so that the pkgconfig file is placed under /lib
+instead of /share.
+-- 
+Jonas Karlsson
+--- gnome-mime-data-2.18.0/Makefile.in	2007-04-03 19:35:51.000000000 +0200
++++ gnome-mime-data-2.18.0/Makefile.in.new	2007-10-20 06:04:21.000000000 +0200
+@@ -228,7 +228,7 @@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+ SUBDIRS = man po
+-pkgconfigdir = $(datadir)/pkgconfig
++pkgconfigdir = $(libdir)/pkgconfig
+ pkgconfig_DATA = gnome-mime-data-2.0.pc
+ NULL = 
+ keys_in_files = gnome-vfs.keys.in
