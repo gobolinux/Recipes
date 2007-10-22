@@ -1,0 +1,11 @@
+# Recipe for version 2.20.1 by Jonas Karlsson <jonka750@student.liu.se>, on Thu Oct 18 21:06:59 CEST 2007
+# Recipe (MakeRecipe) for LibGnome by Rafael Guterres Jeffman (rafasgj), on Thu Sep 8 13:06:36 BRT 2005
+compile_version=1.9.0
+url="http://ftp.acc.umu.se/pub/GNOME/sources/libgnome/2.20/libgnome-2.20.1.tar.bz2"
+file_size=1398906
+file_md5=a0caaea31657f5595473c9ebac7268db
+recipe_type=configure
+
+configure_options=(
+   "--disable-esd"
+)
