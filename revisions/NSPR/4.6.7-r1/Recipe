@@ -1,0 +1,23 @@
+# Recipe for version 4.6.7 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Oct 20 18:36:09 CEST 2007
+# Recipe (MakeRecipe) for NSPR by Jonas Karlsson <jonka750@student.liu.se>, on Sun Sep 24 11:30:09 CEST 2006
+compile_version=1.8.2
+url="http://ftp.mozilla.org/pub/mozilla.org/nspr/releases/v4.6.7/src/nspr-4.6.7.tar.gz"
+file_size=1303759
+file_md5=75d5de21ebc1a21886a25673920490ff
+recipe_type=configure
+dir="nspr-4.6.7/mozilla/nsprpub"
+
+pre_link() {
+    install -v -m755 config/nspr-config \
+                     config/nsinstall \
+                     ${target}/bin &&
+    install -v -m755 -d ${target}/lib/pkgconfig &&
+    install -v -m644 lib/pkgconfig/nspr.pc \
+                    ${target}/lib/pkgconfig &&
+
+    cd dist &&
+    install -v -m755 lib/*.so ${target}/lib &&
+
+    cp -v -RL include/* ${target}/include/nspr &&
+    chmod -v 644 ${target}/include/nspr/prvrsion.h
+}
