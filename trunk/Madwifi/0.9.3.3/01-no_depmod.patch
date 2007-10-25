@@ -1,0 +1,16 @@
+This patch make sures that "depmod" isn't run inside the sandbox
+-- 
+Jonas Karlsson
+
+--- madwifi-0.9.3.3/Makefile	2007-03-07 09:39:40.000000000 +0100
++++ madwifi-0.9.3.3/Makefile.new	2007-10-25 20:30:36.000000000 +0200
+@@ -93,9 +93,6 @@
+ 	for i in $(DIRS_MODULES); do \
+ 		$(MAKE) -C $$i install || exit 1; \
+ 	done
+-ifeq ($(DESTDIR),)
+-	(export KMODPATH=$(KMODPATH); /sbin/depmod -ae $(KERNELRELEASE))
+-endif
+ 
+ install-tools:
+ 	$(MAKE) -C $(TOOLS) install || exit 1
