@@ -7,5 +7,5 @@ file_md5=0fe7adab383f2d9598c9cd0e790dac64
 recipe_type=configure
 
 configure_options=(
-   '--exec-prefix=${target}'
+   "--exec-prefix=${target}"
 )
