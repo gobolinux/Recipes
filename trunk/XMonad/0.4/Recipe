@@ -1,0 +1,13 @@
+# Recipe for version 0.4 by Fabian Bergstrom, on tor okt 18 08:49:49 CEST 2007
+# Recipe (MakeRecipe) for XMonad by Aitor Perez Iturri, on lun sep 10 23:48:59 CEST 2007
+compile_version=1.9.0
+url="http://hackage.haskell.org/packages/archive/xmonad/0.4/xmonad-0.4.tar.gz"
+file_size=41025
+file_md5=5d24c556f7c8f04954721b391fd79a13
+recipe_type=manifest
+
+pre_install () {
+	runhaskell Setup.lhs configure --prefix=$target
+	runhaskell Setup.lhs build
+	runhaskell Setup.lhs install
+}
