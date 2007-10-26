@@ -1,0 +1,10 @@
+# Recipe for version 0.12.0 by Nathan Middleton, on Mon Oct 22 19:32:13 CDT 2007
+# Recipe (MakeRecipe) for Gnome-Doc-Utils by Matthias Wolf, on Wed Jul 27 17:23:00 CEST 2005
+compile_version=1.9.0
+url="http://ftp.gnome.org/pub/GNOME/sources/gnome-doc-utils/0.12/gnome-doc-utils-0.12.0.tar.bz2"
+file_size=592073
+file_md5=5934c08d12407d8233416343cd73df24
+recipe_type=configure
+configure_options=(
+    "--disable-scrollkeeper"
+)
