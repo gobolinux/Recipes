@@ -1,0 +1,15 @@
+# Recipe for JDK version 1.6.0 by Mike Hughes
+url="ftp://202.96.64.144/pub/jdk-6u3-linux-i586.bin" #urlwas="http://www.cs.wcupa.edu/~rkline/anonftp/general/jdk-6u1-linux-i586.bin"
+file_md5=dfb8b697591cf63d7f289fd621571db7
+file_size=68573254
+
+pre_patch() {
+  chmod +x jdk-6u3-linux-i586.bin
+  ./jdk-6u3-linux-i586.bin
+}
+
+post_install() {
+  # for the Firefox plugin
+  mkdir -p $target/lib/mozilla/plugins
+  ln -s "$target/jre/plugin/i386/ns7/libjavaplugin_oji.so" "$target/lib/mozilla/plugins/libjavaplugin_oji.so"
+}
