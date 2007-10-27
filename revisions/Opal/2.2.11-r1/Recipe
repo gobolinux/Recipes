@@ -1,0 +1,11 @@
+# Recipe for version 2.2.11 by demian florentin demianflorentin_at_gmail.com, on Tue Oct 16 10:57:22 PYT 2007
+# Recipe (MakeRecipe) for Opal by demian florentin demianflorentin_at_gmail.com, on Sat Sep 22 15:57:54 PYT 2007
+compile_version=1.9.0
+url="http://www.ekiga.org/admin/downloads/latest/sources/sources/opal-2.2.11.tar.gz"
+file_size=4165191
+file_md5=eb4a9c0c9ea93ec95c876aaeadf83936
+recipe_type=configure
+environment=(
+   PWLIBDIR=${goboShared}/pwlib
+)
+
