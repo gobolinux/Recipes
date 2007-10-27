@@ -10,15 +10,33 @@
 # pidfile: /Programs/DBus/Variable/run/dbus/pid
 #
 
-# Sanity checks.
-#[ -x /Programs/DBus/0.95/bin/dbus-daemon ] || exit 0
-mkdir -p /System/Variable/run/dbus/
-rm /System/Variable/run/dbus/pid > /dev/null
+op="$1"
+[ "$op" ] || op="start"
 
-# so we can rearrange this easily
-RETVAL=0
-
-/bin/dbus-daemon --system
-RETVAL=$?
-#sleep 2
-exit $RETVAL
+case "$op" in
+[Ss]tart)
+   # Sanity checks.
+   mkdir -p /System/Variable/run/dbus/
+   if [ -e /System/Variable/run/dbus/pid ]
+   then
+      if ps `cat /System/Variable/run/dbus/pid` &> /dev/null
+      then
+         echo "Already running."
+         exit 1
+      else
+         rm -f /System/Variable/run/dbus/pid
+      fi
+   fi   
+   # so we can rearrange this easily
+   RETVAL=0
+   
+   /bin/dbus-daemon --system
+   RETVAL=$?
+   #sleep 2
+   exit $RETVAL
+   ;;
+[Ss]top)
+   killall dbus-daemon
+   rm -f /System/Variable/run/dbus/pid > /dev/null
+   ;;
+esac
