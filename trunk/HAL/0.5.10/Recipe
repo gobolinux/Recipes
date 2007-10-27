@@ -27,19 +27,22 @@ unmanaged_files=(
 )
 
 pre_build() {
-   if ! grep -q "haldaemon" $goboSettings/group
-   then
-      Log_Normal "Adding group haldaemon"
-      for ((i=50;i<200;i++))
-      do
-         if grep -q "^[^:]*:[^:]*:$i:.*" ${goboSettings}/group
-         then continue
-         else
-            groupadd -g ${i} haldaemon
-            break
-         fi
-      done
-   fi
+   for g in haldaemon plugdev
+   do
+      if ! grep -q "$g" $goboSettings/group
+      then
+         Log_Normal "Adding group $g"
+         for ((i=50;i<200;i++))
+         do
+            if grep -q "^[^:]*:[^:]*:$i:.*" ${goboSettings}/group
+            then continue
+            else
+               groupadd -g ${i} ${g}
+               break
+            fi
+         done
+      fi
+   done
    if ! grep -q "haldaemon:x:" $goboSettings/passwd
    then
       Log_Normal "Adding user haldaemon"

@@ -1,6 +1,15 @@
 #!/bin/sh
 
-# Assert this dir
-mkdir -p /Mount/Media
+op="$1"
+[ "$op" ] || op="start"
 
-/bin/hald --daemon=yes
+case "$op" in
+[Ss]tart)
+   # Assert this dir
+   mkdir -p /Mount/Media
+   /bin/hald --daemon=yes
+   ;;
+[Ss]top)
+   killall hald
+   ;;
+esac
