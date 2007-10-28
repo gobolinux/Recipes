@@ -1,0 +1,14 @@
+# Recipe for version 1.10.10 by demian florentin demianflorentin_at_gmail.com, on Tue Oct 16 10:57:40 PYT 2007
+# Recipe (MakeRecipe) for PWLib by demian florentin demianflorentin_at_gmail.com, on Sat Sep 22 15:57:41 PYT 2007
+compile_version=1.9.0
+url="http://www.ekiga.org/admin/downloads/latest/sources/sources/pwlib-1.10.10.tar.gz"
+file_size=2266255
+file_md5=abebf45332e70772ffa876d31975d4b9
+recipe_type=configure
+configure_options=(
+   '--enable-plugins'
+   '--enable-v4l'
+   '--enable-v4l2'
+   '--enable-alsa'
+   '--enable-oss'
+)
