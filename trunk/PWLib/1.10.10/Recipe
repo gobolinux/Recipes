@@ -5,3 +5,10 @@ url="http://www.ekiga.org/admin/downloads/latest/sources/sources/pwlib-1.10.10.t
 file_size=2266255
 file_md5=abebf45332e70772ffa876d31975d4b9
 recipe_type=configure
+configure_options=(
+   '--enable-plugins'
+   '--enable-v4l'
+   '--enable-v4l2'
+   '--enable-alsa'
+   '--enable-oss'
+)
