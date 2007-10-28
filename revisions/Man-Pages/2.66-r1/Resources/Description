@@ -1,0 +1,7 @@
+has wget --timeout=5 --quiet http://gobo.calica.com/descriptions/man-pages -O /Files/Descriptions/man-pages && touch /Files/Descriptions/man-pages
+[Name]  man-pages
+[Summary]  Linux Documentation Project manual pages
+[Description]  The Linux Documentation Project (LDP) manual pages. They are maintained by Andries Brouwer.
+[Suse Category]  Documentation/Man
+[License]  X11/MIT, Other License(s), see package
+[Homepage]
