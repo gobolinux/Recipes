@@ -1,9 +1,10 @@
-# Recipe for version 2.4.38-1 by Jonas Karlsson <jonka750@student.liu.se>, on Wed Aug 22 18:44:46 CEST 2007
+# Recipe for version 2.4.38_1 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Oct 20 16:38:29 CEST 2007
 # Recipe (MakeRecipe) for ATTR by ro.ko@mcnon.com, on Tue Oct 12 00:31:42 BRST 2004
 compile_version=1.8.5
 url="ftp://oss.sgi.com/projects/xfs/cmd_tars/attr_2.4.38-1.tar.gz"
 file_size=113241
 file_md5=92b71f124cf5bd80c97eac3d50ba0c61
+mirror_url="ftp://oss.sgi.com/projects/xfs/previous/cmd_tars/attr_2.4.38-1.tar.gz"
 dir="attr-2.4.38"
 recipe_type=configure
 install_target="install install-lib install-dev" 
