@@ -1,0 +1,21 @@
+--- ndiswrapper-1.49.old/Makefile	2007-10-28 11:47:52.000000000 +0100
++++ ndiswrapper-1.49/Makefile	2007-10-28 11:48:43.000000000 +0100
+@@ -10,7 +10,7 @@
+ DIST_SUBDIRS=utils driver
+ 
+ DESTDIR = 
+-mandir = $(DESTDIR)$(shell [ -d /usr/man/man8 ] && echo /usr/man || echo /usr/share/man )
++mandir = $(DESTDIR)$(shell [ -d /man/man8 ] && echo /man || echo /share/man )
+ 
+ KVERS ?= $(shell uname -r)
+ 
+--- ndiswrapper-1.49.old/utils/Makefile	2007-10-28 11:47:52.000000000 +0100
++++ ndiswrapper-1.49/utils/Makefile	2007-10-28 11:49:10.000000000 +0100
+@@ -1,6 +1,6 @@
+ DESTDIR =
+ sbindir = $(DESTDIR)/sbin
+-usrsbindir = $(DESTDIR)/usr/sbin
++usrsbindir = $(DESTDIR)/sbin
+ 
+ DRIVER_DIR ?= ../driver
+ 
