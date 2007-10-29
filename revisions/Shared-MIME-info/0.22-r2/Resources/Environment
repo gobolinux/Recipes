@@ -1,0 +1,2 @@
+export XDG_DATA_HOME=${goboVariable}
+export XDG_DATA_DIRS=${goboVariable}${XDG_DATA_DIRS:+:${XDG_DATA_DIRS}}:${goboShared}
