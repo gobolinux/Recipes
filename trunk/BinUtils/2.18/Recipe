@@ -1,0 +1,16 @@
+# Recipe for version 2.18 by Giambattista Bloisi, on Sun Oct 28 20:49:59 CET 2007
+url=$ftpGnu/binutils/binutils-2.18.tar.bz2
+file_size=14962245
+file_md5=9d22ee4dafa3a194457caf4706f9cf01
+needs_build_directory=yes
+needs_safe_linking=yes
+recipe_type=configure
+configure_options=(
+   "--enable-shared"
+)
+make_variables=(
+   "tooldir=$target"
+)
+pre_install() {
+   cp include/libiberty.h $target/include
+}

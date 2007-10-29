@@ -1,0 +1,10 @@
+[Name] binutils
+[Summary] Provides programs to assemble and manipulate binary and object files.
+[License] GNU General Public License (GPL)
+[Description] GNU binutils work mostly behind the scenes of
+Linux development, largely because GNU make and
+the GCC frontend does so many things
+automatically. Utilities include: ld as nm objdump
+objcopy nm ar ranlib strip c filt size addr2line
+and dlltool.
+[Homepage] http://sources.redhat.com/binutils/
