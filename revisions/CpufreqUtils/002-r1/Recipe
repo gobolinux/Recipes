@@ -1,0 +1,15 @@
+# Recipe for version 002 by Giambattista Bloisi, on Sun Oct 28 01:54:33 CEST 2007
+# Recipe (MakeRecipe) for CpufreqUtils by Jonas Karlsson <jonka750@student.liu.se>, on Sun Feb 26 04:05:57 CET 2006
+compile_version=1.9.0
+url="http://www.kernel.org/pub/linux/utils/kernel/cpufreq/cpufrequtils-002.tar.bz2"
+file_size=35313
+file_md5=93291a0d705ee2e19a6d7491b223c9f2
+recipe_type=makefile
+
+make_variables=(
+"bindir=$target/bin"
+"mandir=$target/man"
+"includedir=$target/include"
+"libdir=$target/lib"
+"localedir=$target/share/locale"
+)
