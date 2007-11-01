@@ -1,0 +1,25 @@
+# Recipe (MakeRecipe) for ArmagetronAD by Michael Homer, on Thu Nov 1 15:56:23 NZDT 2007
+# Recipe for version 0.2.8.2.1 by Michael Homer, on Thu Nov 1 15:56:23 NZDT 2007
+compile_version=1.9.0
+url="$httpSourceforge/armagetronad/armagetronad-0.2.8.2.1.src.tar.bz2"
+file_size=1623441
+file_md5=b09104b3af550fe590ff11bc1fd46e26
+dir='armagetronad-0.2.8.2.1'
+recipe_type=configure
+
+configure_options=(
+        "--enable-etc=no"
+        "--enable-sysinstall=no"
+)
+
+# Copied from the original Armagetron recipe
+#pre_build() {
+# # this is to stop it trying to make $target/games/armagetron directory and
+# # forking forever on the install
+# tmpfile=`mktemp`
+# mv batch/install.in $tmpfile
+# sed -e 's:/games/armagetron:/Shared:' \
+# -e 's:install -m 755 -d $:#do nothing:' \
+# $tmpfile > batch/install.in
+#}
+
