@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for IPW3945 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Oct 9 19:27:30 CEST 2007
+# Recipe for version 1.2.2 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Oct 9 19:27:30 CEST 2007
+compile_version=1.9.0
+url="$httpSourceforge/ipw3945/ipw3945-1.2.2.tgz"
+file_size=201005
+file_md5=9e5ca2f3ffbb84270ede45d5572df4c9
+recipe_type=makefile
+makefile='Makefile'
+
+unmanaged_files=(
+   "${goboModules}/$(uname -r)/kernel/drivers/net/wireless/ipw3945.ko"
+)
