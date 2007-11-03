@@ -1,0 +1,17 @@
+#! /bin/sh
+
+op="$1"
+[ "$op" ] || op="start"
+
+case "$op" in
+    [Ss]tart)
+	/bin/noip2
+    ;;
+    [Ss]top)
+	killall noip2
+    ;;
+    *)
+	echo "Usage: $0 {start|stop}"
+	exit 1
+esac
+exit 0
