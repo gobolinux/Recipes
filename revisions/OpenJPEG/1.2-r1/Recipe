@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for OpenJPEG by Nathan Middleton, on Sun Oct 28 22:49:21 CDT 2007
+# Recipe for version 1.2 by Nathan Middleton, on Sun Oct 28 22:49:21 CDT 2007
+compile_version=1.9.0
+url="http://www.openjpeg.org/openjpeg_v1_2.tar.gz"
+file_size=929866
+file_md5=4973c564c96683a921a7f6759906da4e
+dir='trunk'
+# cmake type needs Compile > 1.9.0
+#recipe_type=cmake
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
