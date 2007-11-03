@@ -1,0 +1,16 @@
+Disable creation of a config file from 'make install'. Instead this is
+done from the 'post_install()' hook in the recipe.
+-- 
+Jonas Karlsson
+
+--- noip-2.1.7/Makefile	2007-08-11 20:35:34.000000000 +0200
++++ noip-2.1.7/Makefile.new	2007-11-01 21:15:45.000000000 +0100
+@@ -27,8 +27,6 @@
+ 	if [ ! -d ${BINDIR} ]; then mkdir -p ${BINDIR};fi
+ 	if [ ! -d ${CONFDIR} ]; then mkdir -p ${CONFDIR};fi
+ 	cp ${TGT} ${BINDIR}/${TGT}
+-	${BINDIR}/${TGT} -C -c /tmp/no-ip2.conf
+-	mv /tmp/no-ip2.conf ${CONFDIR}/no-ip2.conf
+ 
+ package: ${TGT}
+ 	rm  -f *.bak
