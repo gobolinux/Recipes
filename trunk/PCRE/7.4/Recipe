@@ -1,0 +1,14 @@
+# Recipe for version 7.4 by Isaac Dupree <id@isaac.cedarswampstudios.org>, on Sun Nov 11 09:10:57 EST 2007
+# by Jeremy Vernon
+compile_version=1.8.2
+url="ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-7.4.tar.bz2"
+file_size=783044
+file_md5=7d05b4fb088ffa6fcf704e36ebb427f9
+recipe_type=configure
+needs_safe_linking=yes
+
+configure_options=(
+   "--mandir=${target}/man"
+   "--enable-utf8"
+   #utf-8 support here needed for at least Goffice 0.5.2
+)
