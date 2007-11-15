@@ -1,0 +1,8 @@
+# Recipe for JDK version 1.6.0 by Mike Hughes
+compile_version=1.9.0
+recipe_type=manifest
+uncompress=no
+
+pre_patch() {
+  bash jdk-6u3-linux-i586.bin
+}
