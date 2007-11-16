@@ -5,3 +5,7 @@ url="http://xorg.freedesktop.org/archive/individual/app/beforelight-1.0.3.tar.bz
 file_size=85067
 file_md5=d55b0e7196dafcfeb4db3886af2e1969
 recipe_type=configure
+
+install_variables=(
+   "appdefaultdir=${target}/share/X11/app-defaults"
+)
