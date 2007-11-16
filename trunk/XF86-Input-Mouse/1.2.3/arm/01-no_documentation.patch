@@ -1,0 +1,25 @@
+--- xf86-input-mouse-X11R7.1-1.0.3.1/configure.ac.orig	2005-12-21 00:29:57.000000000 -0200
++++ xf86-input-mouse-X11R7.1-1.0.3.1/configure.ac	2006-03-17 16:53:13.000000000 -0300
+@@ -89,6 +89,6 @@ AC_HEADER_STDC
+ XORG_MANPAGE_SECTIONS
+ XORG_RELEASE_VERSION
+ 
+-XORG_CHECK_LINUXDOC
++#XORG_CHECK_LINUXDOC
+ 
+ AC_OUTPUT([Makefile src/Makefile man/Makefile])
+--- xf86-input-mouse-X11R7.1-1.0.3.1/Makefile.am.orig	2005-10-03 18:22:06.000000000 -0300
++++ xf86-input-mouse-X11R7.1-1.0.3.1/Makefile.am	2006-03-17 16:53:37.000000000 -0300
+@@ -19,11 +19,4 @@
+ #  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ 
+ AUTOMAKE_OPTIONS = foreign
+-SUBDIRS = src man
+-
+-if BUILD_LINUXDOC
+-README: README.sgml
+-	$(MAKE_TEXT) README.sgml && mv README.txt README
+-endif
+-
+-EXTRA_DIST = README.sgml
++SUBDIRS = src
