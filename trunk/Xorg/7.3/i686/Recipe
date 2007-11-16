@@ -249,7 +249,7 @@ include=(
 	xkbevd--1.0.2
 	xkbprint--1.0.1
 	xkbutils--1.0.1
-#	xkbdata--1.0.1 # Moved from data due to dependencies; deprecated, but still needed for KDE 3.5.x
+	xkbdata--1.0.1 # Moved from data due to dependencies; deprecated, but still needed for KDE 3.5.x
 	xkill--1.0.1
 	xload--1.0.2
 	xlogo--1.0.1
