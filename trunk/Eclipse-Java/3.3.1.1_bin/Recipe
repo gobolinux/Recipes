@@ -1,0 +1,26 @@
+# Recipe (MakeRecipe) for Eclipse by Nathan Middleton, on Thu Nov 15 04:52:13 CST 2007
+# Recipe for version Europa by Nathan Middleton, on Thu Nov 15 04:52:13 CST 2007
+compile_version=1.9.0
+recipe_type=manifest
+url="http://mirrors.ibiblio.org/pub/mirrors/eclipse/technology/epp/downloads/release/20071103/eclipse-java-europa-fall2-linux-gtk.tar.gz"
+file_size=82436827
+file_md5=ca0397409a0ff9a4c89855c6884dd1c0
+dir='eclipse'
+
+manifest=(
+    "eclipse:eclipse/eclipse"
+    "libcairo-swt.so:eclipse/libcairo-swt.so"
+    "configuration:eclipse/configuration"
+    "features:eclipse/features"
+    "plugins:eclipse/plugins"
+    "readme:Shared/doc/eclipse/readme"
+    "about.html:Shared/doc/eclipse"
+    "notice.html:Shared/doc/eclipse"
+    "epl-v10.html:Shared/doc/eclipse"
+    "icon.xpm:Shared/icons/hicolor/48x48/apps/eclipse.xpm"
+)
+
+pre_link() {
+    mkdir -p ${target}/bin
+    ln -s ${target}/eclipse/eclipse ${target}/bin/eclipse-java
+}
