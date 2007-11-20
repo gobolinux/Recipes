@@ -1,0 +1,11 @@
+# Recipe for version 1.2.1 by Lucas C. Villa Real, on Tue Nov 20 10:05:16 PST 2007
+# Recipe for Flac 1.2.1 by Maglan C. Diemer, maglan@univates.br
+compile_version=1.8.2
+url="$httpSourceforge/flac/flac-1.2.1.tar.gz"
+file_size=2009217
+file_md5=153c8b15a54da428d1f0fadc756c22c7
+recipe_type=configure
+
+configure_options=(
+    --enable-ogg
+)
