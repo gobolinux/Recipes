@@ -1,7 +1,7 @@
-diff -x .gitignore -Nurp linux-2.6.24/fs/Kconfig linux-2.6.24-squashfs3.3/fs/Kconfig
---- linux-2.6.24/fs/Kconfig	2007-10-25 17:41:45.000000000 +0100
-+++ linux-2.6.24-squashfs3.3/fs/Kconfig	2007-11-01 05:06:25.000000000 +0000
-@@ -1396,6 +1396,56 @@ config CRAMFS
+diff -x .gitignore -Nurp linux-2.6.23/fs/Kconfig linux-2.6.23-squashfs3.3/fs/Kconfig
+--- linux-2.6.23/fs/Kconfig	2007-10-09 21:31:38.000000000 +0100
++++ linux-2.6.23-squashfs3.3/fs/Kconfig	2007-11-01 05:06:25.000000000 +0000
+@@ -1364,6 +1364,56 @@ config CRAMFS
  
  	  If unsure, say N.
  
@@ -58,20 +58,20 @@ diff -x .gitignore -Nurp linux-2.6.24/fs/Kconfig linux-2.6.24-squashfs3.3/fs/Kco
  config VXFS_FS
  	tristate "FreeVxFS file system support (VERITAS VxFS(TM) compatible)"
  	depends on BLOCK
-diff -x .gitignore -Nurp linux-2.6.24/fs/Makefile linux-2.6.24-squashfs3.3/fs/Makefile
---- linux-2.6.24/fs/Makefile	2007-10-25 17:41:45.000000000 +0100
-+++ linux-2.6.24-squashfs3.3/fs/Makefile	2007-11-01 05:08:09.000000000 +0000
+diff -x .gitignore -Nurp linux-2.6.23/fs/Makefile linux-2.6.23-squashfs3.3/fs/Makefile
+--- linux-2.6.23/fs/Makefile	2007-10-09 21:31:38.000000000 +0100
++++ linux-2.6.23-squashfs3.3/fs/Makefile	2007-11-01 05:06:25.000000000 +0000
 @@ -72,6 +72,7 @@ obj-$(CONFIG_JBD)		+= jbd/
  obj-$(CONFIG_JBD2)		+= jbd2/
  obj-$(CONFIG_EXT2_FS)		+= ext2/
  obj-$(CONFIG_CRAMFS)		+= cramfs/
 +obj-$(CONFIG_SQUASHFS)		+= squashfs/
- obj-y				+= ramfs/
+ obj-$(CONFIG_RAMFS)		+= ramfs/
  obj-$(CONFIG_HUGETLBFS)		+= hugetlbfs/
  obj-$(CONFIG_CODA_FS)		+= coda/
-diff -x .gitignore -Nurp linux-2.6.24/fs/squashfs/inode.c linux-2.6.24-squashfs3.3/fs/squashfs/inode.c
---- linux-2.6.24/fs/squashfs/inode.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.24-squashfs3.3/fs/squashfs/inode.c	2007-11-01 05:05:00.000000000 +0000
+diff -x .gitignore -Nurp linux-2.6.23/fs/squashfs/inode.c linux-2.6.23-squashfs3.3/fs/squashfs/inode.c
+--- linux-2.6.23/fs/squashfs/inode.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-2.6.23-squashfs3.3/fs/squashfs/inode.c	2007-11-01 03:09:05.000000000 +0000
 @@ -0,0 +1,2192 @@
 +/*
 + * Squashfs - a compressed read only filesystem for Linux
@@ -2235,7 +2235,7 @@ diff -x .gitignore -Nurp linux-2.6.24/fs/squashfs/inode.c linux-2.6.24-squashfs3
 +}
 +
 +
-+static void init_once(struct kmem_cache *cachep, void *foo)
++static void init_once(void * foo, struct kmem_cache * cachep, unsigned long flags)
 +{
 +	struct squashfs_inode_info *ei = foo;
 +
@@ -2265,9 +2265,9 @@ diff -x .gitignore -Nurp linux-2.6.24/fs/squashfs/inode.c linux-2.6.24-squashfs3
 +MODULE_DESCRIPTION("squashfs 3.2-r2-CVS, a compressed read-only filesystem");
 +MODULE_AUTHOR("Phillip Lougher <phillip@lougher.demon.co.uk>");
 +MODULE_LICENSE("GPL");
-diff -x .gitignore -Nurp linux-2.6.24/fs/squashfs/Makefile linux-2.6.24-squashfs3.3/fs/squashfs/Makefile
---- linux-2.6.24/fs/squashfs/Makefile	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.24-squashfs3.3/fs/squashfs/Makefile	2005-11-20 14:31:00.000000000 +0000
+diff -x .gitignore -Nurp linux-2.6.23/fs/squashfs/Makefile linux-2.6.23-squashfs3.3/fs/squashfs/Makefile
+--- linux-2.6.23/fs/squashfs/Makefile	1970-01-01 01:00:00.000000000 +0100
++++ linux-2.6.23-squashfs3.3/fs/squashfs/Makefile	2005-11-20 14:31:00.000000000 +0000
 @@ -0,0 +1,7 @@
 +#
 +# Makefile for the linux squashfs routines.
@@ -2276,9 +2276,9 @@ diff -x .gitignore -Nurp linux-2.6.24/fs/squashfs/Makefile linux-2.6.24-squashfs
 +obj-$(CONFIG_SQUASHFS) += squashfs.o
 +squashfs-y += inode.o
 +squashfs-y += squashfs2_0.o
-diff -x .gitignore -Nurp linux-2.6.24/fs/squashfs/squashfs2_0.c linux-2.6.24-squashfs3.3/fs/squashfs/squashfs2_0.c
---- linux-2.6.24/fs/squashfs/squashfs2_0.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.24-squashfs3.3/fs/squashfs/squashfs2_0.c	2007-10-25 00:43:59.000000000 +0100
+diff -x .gitignore -Nurp linux-2.6.23/fs/squashfs/squashfs2_0.c linux-2.6.23-squashfs3.3/fs/squashfs/squashfs2_0.c
+--- linux-2.6.23/fs/squashfs/squashfs2_0.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-2.6.23-squashfs3.3/fs/squashfs/squashfs2_0.c	2007-10-25 00:43:59.000000000 +0100
 @@ -0,0 +1,740 @@
 +/*
 + * Squashfs - a compressed read only filesystem for Linux
@@ -3020,9 +3020,9 @@ diff -x .gitignore -Nurp linux-2.6.24/fs/squashfs/squashfs2_0.c linux-2.6.24-squ
 +
 +	return 1;
 +}
-diff -x .gitignore -Nurp linux-2.6.24/fs/squashfs/squashfs.h linux-2.6.24-squashfs3.3/fs/squashfs/squashfs.h
---- linux-2.6.24/fs/squashfs/squashfs.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.24-squashfs3.3/fs/squashfs/squashfs.h	2007-08-19 04:23:16.000000000 +0100
+diff -x .gitignore -Nurp linux-2.6.23/fs/squashfs/squashfs.h linux-2.6.23-squashfs3.3/fs/squashfs/squashfs.h
+--- linux-2.6.23/fs/squashfs/squashfs.h	1970-01-01 01:00:00.000000000 +0100
++++ linux-2.6.23-squashfs3.3/fs/squashfs/squashfs.h	2007-08-19 04:23:16.000000000 +0100
 @@ -0,0 +1,86 @@
 +/*
 + * Squashfs - a compressed read only filesystem for Linux
@@ -3110,9 +3110,9 @@ diff -x .gitignore -Nurp linux-2.6.24/fs/squashfs/squashfs.h linux-2.6.24-squash
 +	return 0;
 +}
 +#endif
-diff -x .gitignore -Nurp linux-2.6.24/include/linux/squashfs_fs.h linux-2.6.24-squashfs3.3/include/linux/squashfs_fs.h
---- linux-2.6.24/include/linux/squashfs_fs.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.24-squashfs3.3/include/linux/squashfs_fs.h	2007-11-01 03:50:57.000000000 +0000
+diff -x .gitignore -Nurp linux-2.6.23/include/linux/squashfs_fs.h linux-2.6.23-squashfs3.3/include/linux/squashfs_fs.h
+--- linux-2.6.23/include/linux/squashfs_fs.h	1970-01-01 01:00:00.000000000 +0100
++++ linux-2.6.23-squashfs3.3/include/linux/squashfs_fs.h	2007-11-01 03:50:57.000000000 +0000
 @@ -0,0 +1,935 @@
 +#ifndef SQUASHFS_FS
 +#define SQUASHFS_FS
@@ -4049,9 +4049,9 @@ diff -x .gitignore -Nurp linux-2.6.24/include/linux/squashfs_fs.h linux-2.6.24-s
 +
 +#endif
 +#endif
-diff -x .gitignore -Nurp linux-2.6.24/include/linux/squashfs_fs_i.h linux-2.6.24-squashfs3.3/include/linux/squashfs_fs_i.h
---- linux-2.6.24/include/linux/squashfs_fs_i.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.24-squashfs3.3/include/linux/squashfs_fs_i.h	2007-08-19 04:24:08.000000000 +0100
+diff -x .gitignore -Nurp linux-2.6.23/include/linux/squashfs_fs_i.h linux-2.6.23-squashfs3.3/include/linux/squashfs_fs_i.h
+--- linux-2.6.23/include/linux/squashfs_fs_i.h	1970-01-01 01:00:00.000000000 +0100
++++ linux-2.6.23-squashfs3.3/include/linux/squashfs_fs_i.h	2007-08-19 04:24:08.000000000 +0100
 @@ -0,0 +1,45 @@
 +#ifndef SQUASHFS_FS_I
 +#define SQUASHFS_FS_I
@@ -4098,9 +4098,9 @@ diff -x .gitignore -Nurp linux-2.6.24/include/linux/squashfs_fs_i.h linux-2.6.24
 +	struct inode	vfs_inode;
 +};
 +#endif
-diff -x .gitignore -Nurp linux-2.6.24/include/linux/squashfs_fs_sb.h linux-2.6.24-squashfs3.3/include/linux/squashfs_fs_sb.h
---- linux-2.6.24/include/linux/squashfs_fs_sb.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-2.6.24-squashfs3.3/include/linux/squashfs_fs_sb.h	2007-08-19 04:24:26.000000000 +0100
+diff -x .gitignore -Nurp linux-2.6.23/include/linux/squashfs_fs_sb.h linux-2.6.23-squashfs3.3/include/linux/squashfs_fs_sb.h
+--- linux-2.6.23/include/linux/squashfs_fs_sb.h	1970-01-01 01:00:00.000000000 +0100
++++ linux-2.6.23-squashfs3.3/include/linux/squashfs_fs_sb.h	2007-08-19 04:24:26.000000000 +0100
 @@ -0,0 +1,76 @@
 +#ifndef SQUASHFS_FS_SB
 +#define SQUASHFS_FS_SB
@@ -4178,9 +4178,9 @@ diff -x .gitignore -Nurp linux-2.6.24/include/linux/squashfs_fs_sb.h linux-2.6.2
 +	int			(*read_fragment_index_table)(struct super_block *s);
 +};
 +#endif
-diff -x .gitignore -Nurp linux-2.6.24/init/do_mounts_rd.c linux-2.6.24-squashfs3.3/init/do_mounts_rd.c
---- linux-2.6.24/init/do_mounts_rd.c	2007-10-25 17:41:49.000000000 +0100
-+++ linux-2.6.24-squashfs3.3/init/do_mounts_rd.c	2007-11-01 05:06:25.000000000 +0000
+diff -x .gitignore -Nurp linux-2.6.23/init/do_mounts_rd.c linux-2.6.23-squashfs3.3/init/do_mounts_rd.c
+--- linux-2.6.23/init/do_mounts_rd.c	2007-10-09 21:31:38.000000000 +0100
++++ linux-2.6.23-squashfs3.3/init/do_mounts_rd.c	2007-11-01 05:06:25.000000000 +0000
 @@ -5,6 +5,7 @@
  #include <linux/ext2_fs.h>
  #include <linux/romfs_fs.h>
