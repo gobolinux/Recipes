@@ -4,3 +4,4 @@ compile_version=1.8.0
 cvs=:pserver:anonymous:@cvs.savannah.nongnu.org:/sources/goboscripts
 cvs_module=tools/GoboHide
 recipe_type=configure
+autogen_before_configure=yes
