@@ -1,0 +1,17 @@
+# Recipe for version 3.3 by Lucas C. Villa Real, on Thu Nov 22 00:37:32 PST 2007
+# Recipe for Squashfs-Tools by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.8.2
+url="http://downloads.sourceforge.net/squashfs/squashfs3.3.tgz"
+file_size=323291
+file_md5=95c40fca0d886893631b5de14a0af25b
+recipe_type=makefile
+dir="squashfs3.3/squashfs-tools"
+do_install=no
+
+environment=(
+    PREFIX="$target"
+)
+
+pre_link() {
+    cp mksquashfs unsquashfs $target/bin/
+}
