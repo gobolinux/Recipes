@@ -1,0 +1,8 @@
+[Name] Unsermake
+[Summary] A replacement tool for Automake from the KDE project
+[Description] Unsermake replaces 'automake' and 'make' but keeps everything \
+else, including the same Makefile.am syntax. Unsermake creates one large Makefile \
+rather than one per directory, making compilations faster, especially on SMP or \
+distributed compiling machines.
+[License] GNU General Public License
+[Homepage] http://wiki.kde.org/tiki-index.php?page=unsermake
