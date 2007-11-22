@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Zenity by Nathan Middleton, on Thu Oct 25 04:26:14 CDT 2007
+# Recipe for version 2.20.0 by Nathan Middleton, on Thu Oct 25 04:26:14 CDT 2007
+compile_version=1.9.0
+url="http://ftp.acc.umu.se/pub/GNOME/sources/zenity/2.20/zenity-2.20.0.tar.bz2"
+file_size=1787052
+file_md5=64992cdbb38c9f8ea8cd9ea07c1dfc38
+recipe_type=configure
+configure_options=(
+    --disable-scrollkeeper
+)
