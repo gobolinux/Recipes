@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for CUPS-DDK by Giambattista Bloisi <giamby@infinito.it>, on Thu Nov 8 22:29:13 CET 2007
+# Recipe for version 1.2.3 by Giambattista Bloisi <giamby@infinito.it>, on Thu Nov 8 22:29:13 CET 2007
+compile_version=1.9.0
+url="http://ftp.easysw.com/pub/cupsddk/1.2.3/cupsddk-1.2.3-source.tar.bz2"
+file_size=2082214
+file_md5=3ec52813bf12bf9b34d34f8a81bab508
+dir='cupsddk-1.2.3'
+recipe_type=configure
+
+install_variables=(
+    CUPS_DATADIR=$target/Shared/cups
+    CUPS_SERVERBIN=$target/Shared/cups
+)
