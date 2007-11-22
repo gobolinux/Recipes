@@ -1,0 +1,11 @@
+--- Pyrex-0.9.6.3/setup.py.orig	2007-11-04 18:43:40.000000000 +0100
++++ Pyrex-0.9.6.3/setup.py	2007-11-04 18:43:54.000000000 +0100
+@@ -6,7 +6,7 @@
+ from distutils.sysconfig import get_python_lib
+ import os, sys
+ #from Pyrex.Compiler.Version import version
+-execfile(distutils.util.convert_path('Pyrex/Compiler/Version.py')
++execfile('Pyrex/Compiler/Version.py')
+ 
+ compiler_dir = os.path.join(get_python_lib(prefix=''), 'Pyrex', 'Compiler')
+ 
