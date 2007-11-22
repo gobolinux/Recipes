@@ -1,0 +1,40 @@
+# Recipe for version 116 by Hisham Muhammad, on Thu Oct 25 09:55:04 BRST 2007
+compile_version=1.8.5
+url="http://www.us.kernel.org/pub/linux/utils/kernel/hotplug/udev-116.tar.bz2"
+file_size=199112
+file_md5=02c49d93ffda4a104c853c082138b835
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=(
+   prefix="$target"
+   etcdir="$settings_target"
+   udevdir="/dev"
+   usrbindir="$target/bin"
+   usrsbindir="$target/sbin"
+   mandir="$target/man"
+   includedir="$target/include"
+   usrlibdir="$target/lib"
+   EXTRAS="extras/ata_id extras/cdrom_id extras/edd_id extras/firmware extras/floppy extras/path_id extras/rule_generator extras/scsi_id extras/usb_id extras/volume_id"
+)
+
+pre_install() {
+   local devices="$target/lib/udev/devices"
+   mkdir -p $devices
+   mknod $devices/null        c  1   3
+   mknod $devices/random      c  1   8
+   mknod $devices/urandom     c  1   9
+   mknod $devices/zero        c  1   5
+   mknod $devices/console     c  5   1
+   chmod 666 $devices/{null,random,urandom,zero}
+   chmod 600 $devices/console
+   mkdir $devices/{shm,pts}
+   ln -snf $goboStatus/self/fd   $devices/fd
+   ln -snf $goboStatus/self/fd/0 $devices/stdin
+   ln -snf $goboStatus/self/fd/1 $devices/stdout
+   ln -snf $goboStatus/self/fd/2 $devices/stderr
+   ln -snf $goboStatus/kcore     $devices/core
+   mkdir -p $settings_target/udev/rules.d
+   cp etc/udev/rules.d/* $settings_target/udev/rules.d
+#   cp etc/udev/packages/* $settings_target/udev/rules.d
+}
