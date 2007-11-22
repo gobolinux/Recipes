@@ -1,0 +1,20 @@
+--- alsa-utils-1.0.13/Makefile.in.orig	2006-12-17 14:06:51.000000000 -0200
++++ alsa-utils-1.0.13/Makefile.in	2006-12-17 14:07:07.000000000 -0200
+@@ -66,7 +66,7 @@ RECURSIVE_TARGETS = all-recursive check-
+ ETAGS = etags
+ CTAGS = ctags
+ DIST_SUBDIRS = include alsactl alsaconf alsamixer amidi amixer aplay \
+-	iecset seq speaker-test utils m4 po
++	iecset seq utils m4 po
+ DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
+ distdir = $(PACKAGE)-$(VERSION)
+ top_distdir = $(distdir)
+@@ -185,7 +185,7 @@ target_alias = @target_alias@
+ INCLUDES = -I$(top_srcdir)/include
+ @ALSAMIXER_FALSE@ALSAMIXER_DIR = 
+ @ALSAMIXER_TRUE@ALSAMIXER_DIR = alsamixer
+-SUBDIRS = include alsactl alsaconf $(ALSAMIXER_DIR) amidi amixer aplay iecset seq speaker-test utils m4 po
++SUBDIRS = include alsactl alsaconf $(ALSAMIXER_DIR) amidi amixer aplay iecset seq utils m4 po
+ EXTRA_DIST = config.rpath mkinstalldirs  config.rpath mkinstalldirs ChangeLog INSTALL TODO README configure hgcompile depcomp
+ AUTOMAKE_OPTIONS = foreign
+ ACLOCAL_AMFLAGS = -I m4
