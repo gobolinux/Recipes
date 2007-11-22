@@ -1,0 +1,19 @@
+# Recipe (MakeRecipe) for MPEd by Nathan Middleton, on Mon Nov 5 00:12:46 CST 2007
+# Recipe for version 5.0.0_rc3 by Nathan Middleton, on Mon Nov 5 00:12:46 CST 2007
+compile_version=1.9.0
+url="http://www.triptico.com/download/mp-5.0.0-rc3.tar.gz"
+file="mp-5.0.0-rc3.tar.gz"
+file_size=345296
+file_md5=42e34bac36f853cb9d3efa45340ede56
+recipe_type=configure
+configure=config.sh
+
+pre_link() {
+    for dest in $(find $goboShared/icons/hicolor | grep apps | sed "s,$goboShared/,,")
+    do
+        install -d ${target}/Shared/${dest}
+        install ${dir}/mp.png ${target}/Shared/${dest}
+        install ${dir}/mp.xpm ${target}/Shared/${dest}
+    done
+    ln -s ${target}/bin/mp-5 ${target}/bin/mped
+}
