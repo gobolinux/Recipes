@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for KPowersave by Lucas C. Villa Real, on Thu Nov 22 01:24:10 PST 2007
+# Recipe for version 0.7.3 by Lucas C. Villa Real, on Thu Nov 22 01:24:10 PST 2007
+compile_version=1.8.2
+url="$httpSourceforge/powersave/kpowersave-0.7.3.tar.bz2"
+file="kpowersave-0.7.3.tar.bz2"
+file_size=3228911
+file_md5=061cb55774ebac15549a1e7affa87827
+recipe_type=configure
+make=unsermake
+
+configure_options=(
+    --with-extra-includes=$goboHeaders/dbus-1.0
+)
