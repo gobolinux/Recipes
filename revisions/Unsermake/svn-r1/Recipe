@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for Unsermake by Lucas C. Villa Real, on Thu Nov 22 01:00:29 PST 2007
+# Recipe for version svn by Lucas C. Villa Real, on Thu Nov 22 01:00:29 PST 2007
+compile_version=1.8.2
+svn="svn://anonsvn.kde.org/home/kde/tags/unmaintained/3/unsermake"
+recipe_type=manifest
+
+pre_install() {
+    pythonversion=`python --version 2>&1 | awk {'print $2'} | cut -b1-3`
+    unsermakedir=$target/lib/python${pythonversion}/site-packages/unsermake
+    mkdir -p $unsermakedir
+    cp unsermake *.um *.py $unsermakedir
+    cp COPYING README TODO doc/* $target/doc
+
+    echo "$unsermakedir/unsermake \$@" > $target/bin/unsermake
+    chmod +x $target/bin/unsermake
+}
