@@ -10,7 +10,8 @@ configure_options=(
 #    "--enable-swscaler"
     "--enable-libfaac"
     "--enable-libfaad"
-    "--enable-libogg"
+#    "--enable-libogg" is now implicit in e.g. libvorbis
+#         and cannot be specified on its own
     "--enable-libvorbis"
     "--enable-libmp3lame"
     "--enable-pp"
