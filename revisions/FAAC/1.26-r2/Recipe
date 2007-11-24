@@ -1,0 +1,19 @@
+# Recipe for version 1.26 by Isaac Dupree <id@isaac.cedarswampstudios.org>, on Fri Nov 23 21:10:21 EST 2007
+# Recipe (MakeRecipe) for Faac by roko, <ro.ko@mcnon.com>, , on Mon Oct 25 01:08:43 BRST 2004
+compile_version=1.8.2
+url="$httpSourceforge/faac/faac-1.26.tar.gz"
+file_size=400915
+file_md5=1d7c019bd2dbb4f3101b8937ebc59cf6
+recipe_type=configure
+dir="faac"
+
+pre_build() {
+    # remove lines terminated with ^M
+    find . | while read i
+    do
+        [ ! -d "$i" ] && cat $i | sed 's/\cM//' > $i.tmp && mv $i.tmp $i
+    done
+
+    chmod +x bootstrap
+    ./bootstrap
+}
