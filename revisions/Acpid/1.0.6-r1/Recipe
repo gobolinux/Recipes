@@ -1,0 +1,14 @@
+# Recipe for version 1.0.6 by Giambattista Bloisi <giamby@infinito.it>, on Sun Nov 25 22:22:07 CET 2007
+# Recipe (MakeRecipe) for Acpid by Jonas Karlsson <jonka750@student.liu.se>, on Sat May 14 09:17:12 CEST 2005
+compile_version=1.8.0
+url="$httpSourceforge/acpid/acpid-1.0.6.tar.gz"
+file_size=24226
+file_md5=5c9b705700df51d232be223b6ab6414d
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+"INSTPREFIX=$target"
+"BINDIR=$target/bin"
+"SBINDIR=$target/sbin"
+"MAN8DIR=$target/man/man8"
+)
