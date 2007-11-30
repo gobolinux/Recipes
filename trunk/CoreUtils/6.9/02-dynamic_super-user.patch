@@ -1,0 +1,15 @@
+--- coreutils-5.97/src/su.c.orig	2006-07-31 11:04:10.000000000 -0300
++++ coreutils-5.97/src/su.c	2006-07-31 11:07:02.000000000 -0300
+@@ -491,6 +491,12 @@ main (int argc, char **argv)
+     }
+   if (optind < argc)
+     new_user = argv[optind++];
++  else
++    {
++      struct passwd *entry = getpwuid(0);
++      if (entry) 
++        new_user = entry->pw_name;
++    }
+ 
+   pw = getpwnam (new_user);
+   if (! (pw && pw->pw_name && pw->pw_name[0] && pw->pw_dir && pw->pw_dir[0]
