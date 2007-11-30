@@ -8,7 +8,6 @@ recipe_type=makefile
 makefile='Makefile'
 sandbox_options=("--no-sandbox")
 post_install() {
-    depmod -ae 
     Log_Terse "Now run 'modprobe gspca' to load the module. "    
 }
 
