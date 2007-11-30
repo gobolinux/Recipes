@@ -1,0 +1,9 @@
+[Name] LibTar
+[Summary] libtar is a C library for manipulating POSIX tar files.
+[Description]libtar is a C library for manipulating POSIX tar files. It handles adding and extracting files to/from a tar archive.
+libtar offers the following features:
+    * Flexible API - you can manipulate individual files or just extract a whole archive at once.
+    * Allows user-specified read() and write() functions, such as zlib's gzread() and gzwrite().
+    * Supports both POSIX 1003.1-1990 and GNU tar file formats. 
+[License] 
+[Homepage]http://www.feep.net/libtar/
