@@ -7,35 +7,41 @@ file_md5=26f98dddf9d8c0775221b800986003ee
 recipe_type=configure
 configure_options=(
     "--sbindir=${target}/bin"
-    "--sysconfdir=${settings_target}/lighttpd"
     "--libdir=${target}/lib/lighttpd"
 )
 docs=(
     'doc/*.txt'
 )
 unmanaged_files=(
-    "/Files/WWW/htdocs"
-    "/Files/WWW/errors"
-    "/Files/WWW/vhosts"
+    "/Files/WWW/"
     "${goboVariable}/log/lighttpd"
     "${goboVariable}/run/lighttpd"
 )
 
+pre_build() {
+    gid=100
+    for ngid in `egrep '^.*:[0-9]{2,3}:.*$' /etc/group | \
+            cut -d':' -f3 | sort | xargs`; do
+        if [ $gid -eq $ngid ]; then gid=$(($gid+1)); else break; fi
+    done
+    groupadd -g $gid httpd
+    
+    uid=-1
+    while [ $uid -eq -1 ]; do
+        if [ "$(grep ":$gid:" /etc/passwd)" ]; then
+            gid=$(($gid+1)); else uid=$gid
+        fi
+    done
+    useradd -s /bin/false -d /Files/WWW -g httpd -u $uid httpd
+}
+
 pre_link() {
     mkdir -p ${target}/doc/tests
     cp -r tests/* ${target}/doc/tests
-}
-
-post_install() {
-    [ ! "$(grep httpd ${goboSettings}/group)" ] && {
-        groupadd httpd
-        [ ! "$(grep httpd ${goboSettings}/passwd)" ] && {
-            useradd -s /bin/false -d /Files/WWW -g httpd httpd
-        }
-    }
-    mkdir -p /Files/WWW/{htdocs,errors,vhosts}
+    
+    mkdir -p /Files/WWW
+    mv ${target}/Resources/index.html /Files/WWW/
     mkdir -p ${goboVariable}/{log,run}/lighttpd
-    mv ${target}/Resources/index.html /Files/WWW/htdocs/
     chown -R httpd.httpd /Files/WWW
     chown httpd.httpd ${goboVariable}/{log,run}/lighttpd
 }
