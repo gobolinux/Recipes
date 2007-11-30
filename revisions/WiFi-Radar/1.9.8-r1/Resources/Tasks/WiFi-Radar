@@ -1,0 +1,13 @@
+#!/bin/sh
+
+op="$1"
+[ "$op" ] || op="start"
+
+case "$op" in
+[Ss]tart)
+   wifi-radar -d 
+   ;;
+[Ss]top)
+   killall wifi-radar
+   ;;
+esac
