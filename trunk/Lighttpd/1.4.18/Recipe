@@ -8,6 +8,7 @@ recipe_type=configure
 configure_options=(
     "--sbindir=${target}/bin"
     "--libdir=${target}/lib/lighttpd"
+    "--sysconfdir=${settings_target}/lighttpd"
 )
 docs=(
     'doc/*.txt'
@@ -19,20 +20,24 @@ unmanaged_files=(
 )
 
 pre_build() {
-    gid=100
-    for ngid in `egrep '^.*:[0-9]{2,3}:.*$' /etc/group | \
-            cut -d':' -f3 | sort | xargs`; do
-        if [ $gid -eq $ngid ]; then gid=$(($gid+1)); else break; fi
-    done
-    groupadd -g $gid httpd
+    [ ! "$(grep httpd /etc/group)" ] && {
+        gid=100
+        for ngid in `egrep '^.*:[0-9]{2,3}:.*$' /etc/group | \
+                cut -d':' -f3 | sort | xargs`; do
+            if [ $gid -eq $ngid ]; then gid=$(($gid+1)); else break; fi
+        done
+        groupadd -g $gid httpd
+    }
     
-    uid=-1
-    while [ $uid -eq -1 ]; do
-        if [ "$(grep ":$gid:" /etc/passwd)" ]; then
-            gid=$(($gid+1)); else uid=$gid
-        fi
-    done
-    useradd -s /bin/false -d /Files/WWW -g httpd -u $uid httpd
+    [ ! "$(grep httpd /etc/passwd)" ] && {
+        uid=-1
+        while [ $uid -eq -1 ]; do
+            if [ "$(grep ":$gid:" /etc/passwd)" ]; then
+                gid=$(($gid+1)); else uid=$gid
+            fi
+        done
+        useradd -s /bin/false -d /Files/WWW -g httpd -u $uid httpd
+    }
 }
 
 pre_link() {
