@@ -4,7 +4,7 @@
 #
 source GoboPath
 pid=${goboVariable}/run/lighttpd/lighttpd.pid
-conf=${goboSettings}/lighttpd.conf
+conf=${goboSettings}/lighttpd/lighttpd.conf
 
 #function getPid() {
 #    ps axo pid,comm | \
