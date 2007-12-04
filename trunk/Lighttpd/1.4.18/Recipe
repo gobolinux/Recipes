@@ -12,13 +12,6 @@ configure_options=(
 docs=(
     'doc/*.txt'
 )
-unmanaged_files=(
-    "/Files/WWW"
-    "/Files/WWW/Documents"
-#    "/Files/WWW/Documents/index.html"
-    "${goboVariable}/log/lighttpd"
-    "${goboVariable}/run/lighttpd"
-)
 
 pre_build() {
     if test ! "$(grep httpd /etc/group)"
@@ -27,7 +20,6 @@ pre_build() {
         for ngid in `egrep '^.*:[0-9]{3}:.*$' /etc/group | cut -d':' -f3 | sort | xargs`; do
             if [ $gid -eq $ngid ]; then gid=$(($gid+1)); else break; fi
         done
-        LogNormal "Adding httpd group with id $gid..."
         groupadd -g $gid httpd
     fi
     
@@ -39,7 +31,6 @@ pre_build() {
                 gid=$(($gid+1)); else uid=$gid
             fi
         done
-        LogNormal "Adding httpd user with id $gid..."
         useradd -s /bin/false -d /Files/WWW -g httpd -u $uid httpd
     fi
 }
@@ -47,10 +38,10 @@ pre_build() {
 pre_link() {
     mkdir -p ${target}/doc/tests
     cp -r tests/* ${target}/doc/tests
-    
-    mkdir -p /Files/WWW/Documents
-    mv ${target}/Resources/index.html /Files/WWW/Documents
-    mkdir -p ${goboVariable}/{log,run}/lighttpd
+}
+ 
+post_install() {
     chown -R httpd.httpd /Files/WWW
-    chown httpd.httpd ${goboVariable}/{log,run}/lighttpd
+    chown -R httpd.httpd ${goboVariable}/run/lighttpd
+    chown -R httpd.httpd ${goboVariable}/log/lighttpd
 }
