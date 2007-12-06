@@ -6,5 +6,5 @@ file_md5=6332c695e28100acbb84730e7ff7f6e9
 recipe_type=makefile
 environment=(
     "DESTDIR=$target"
-    "MANPREFIX=$target/share"
+    "MANPREFIX="
 )
