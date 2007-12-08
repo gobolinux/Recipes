@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for KDE-Style-Lipstik by Daniele Maccari, on Sat Nov 17 18:02:48 CET 2007
+# Recipe for version 2.2.3 by Daniele Maccari, on Sat Nov 17 18:02:48 CET 2007
+compile_version=1.9.0
+url="http://www.kde-look.org/CONTENT/content-files/18223-lipstik-2.2.3.tar.gz"
+file_size=527041
+file_md5=809112598947796145d19a01f138345c
+dir='lipstik-2.2.3'
+recipe_type=configure
+configure_options=(
+   "--disable-debug"
+   "--with-extra-includes=$goboHeaders"
+   "--with-extra-libs=$goboLibraries"
+   "--disable-dependency-tracking"
+)
