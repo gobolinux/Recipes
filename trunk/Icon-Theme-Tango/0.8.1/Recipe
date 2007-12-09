@@ -23,7 +23,7 @@ pre_link() {
     for cnt in $(seq 0 $((${#dirs[@]} -1))); do
         cd ${goboSources}/${dirs[$cnt]}
         ./configure --prefix=${target}
-        make
-        make install
+        make || exit 1
+        make install || exit 1
     done
 }
