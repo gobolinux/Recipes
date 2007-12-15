@@ -1,0 +1,10 @@
+--- ntfs-3g-1.0/src/Makefile.in.orig	2007-03-01 17:44:14.000000000 -0300
++++ ntfs-3g-1.0/src/Makefile.in	2007-03-01 17:44:30.000000000 -0300
+@@ -582,7 +582,6 @@ libs:
+ install-exec-hook:
+ 	$(INSTALL) -d $(DESTDIR)/sbin
+ 	$(LN_S) -f $(bindir)/ntfs-3g $(DESTDIR)/sbin/mount.ntfs-3g
+-	$(LDCONFIG)
+ 
+ install-data-hook:
+ 	$(INSTALL) -d $(DESTDIR)$(man8dir)
