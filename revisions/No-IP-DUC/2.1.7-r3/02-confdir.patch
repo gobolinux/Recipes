@@ -1,0 +1,30 @@
+Make the daemon use the CONFDIR set in the makefile instead of having
+it hardcoded.
+-- 
+Jonas Karlsson
+--- noip-2.1.7/noip2.c	2007-08-27 23:54:19.000000000 +0200
++++ noip-2.1.7/noip2.c.new	2007-11-01 21:15:02.000000000 +0100
+@@ -221,8 +221,8 @@
+ #ifndef PREFIX
+   #define PREFIX		"/usr/local"
+ #endif
+-#define CONFIG_FILEPATH		PREFIX"/etc"
+-#define CONFIG_FILENAME		PREFIX"/etc/no-ip2.conf"
++#define CONFIG_FILEPATH		CONFDIR
++#define CONFIG_FILENAME		CONFDIR"/no-ip2.conf"
+ #define CONFSTRLEN		1024
+ #define MAX_DEVLEN		16
+ #define MAX_INSTANCE		4
+--- noip-2.1.7/Makefile	2007-08-11 20:35:34.000000000 +0200
++++ noip-2.1.7/Makefile.new	2007-11-01 21:24:40.000000000 +0100
+@@ -21,9 +21,9 @@
+ # ARCH=sun
+ 
+ ${TGT}: Makefile ${TGT}.c 
+-	${CC} -Wall -g -O2 -D${ARCH} -DPREFIX=\"${PREFIX}\" ${TGT}.c -o ${TGT} ${LIBS}
++	${CC} -Wall -g -O2 -D${ARCH} -DPREFIX=\"${PREFIX}\" -DCONFDIR=\"${CONFDIR}\" ${TGT}.c -o ${TGT} ${LIBS}
+ 
+ install: ${TGT} 
+ 	if [ ! -d ${BINDIR} ]; then mkdir -p ${BINDIR};fi
+ 	if [ ! -d ${CONFDIR} ]; then mkdir -p ${CONFDIR};fi
+ 	cp ${TGT} ${BINDIR}/${TGT}

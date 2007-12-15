@@ -1,0 +1,24 @@
+# Recipe (MakeRecipe) for No-IP-DUC by Jonas Karlsson <jonka750@student.liu.se>, on Wed Oct 31 09:50:24 CET 2007
+# Recipe for version 2.1.7 by Jonas Karlsson <jonka750@student.liu.se>, on Wed Oct 31 09:50:24 CET 2007
+compile_version=1.8.0
+url="http://www.no-ip.com/client/linux/noip-duc-linux.tar.gz"
+file="noip-duc-linux.tar.gz"
+file_size=147640
+file_md5=7b6b64c08708c2b147c375dda074a8dc
+dir='noip-2.1.7'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+   "CONFDIR=$settings_target"
+)
+
+post_install(){
+   # Create a settings file if none exists
+   [ ! -f ${settings_target}/no-ip2.conf ] && {
+      $sudo_exec mkdir -p ${settings_target}
+      $sudo_exec ${target}/bin/noip2 -C -c ${settings_target}/no-ip2.conf
+      # noip2 switch to user and group 'nobody' if started by superuser
+      $sudo_exec chown nobody:nobody ${settings_target}/no-ip2.conf
+   }
+}
