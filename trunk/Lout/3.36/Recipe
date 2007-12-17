@@ -1,0 +1,19 @@
+# Recipe (MakeRecipe) for Lout by Nathan Middleton, on Sun Dec 16 18:04:27 CST 2007
+# Recipe for version 3.36 by Nathan Middleton, on Sun Dec 16 18:04:27 CST 2007
+compile_version=1.9.0
+url="${httpSourceforge}/lout/lout-3.36.tar.gz"
+file="lout-3.36.tar.gz"
+file_size=2125218
+file_md5=9fb418e5db4cb242f7ab1c6e8c59a1c2
+dir='lout-3.36'
+recipe_type=makefile
+makefile='makefile'
+build_target="install installman"
+make_variables=(
+   "PREFIX=${target}"
+   "LOUTLIBDIR=${target}/lib/lout"
+   "MANDIR=${target}/man/man1"
+)
+docs=(
+    'doc/*'
+)
