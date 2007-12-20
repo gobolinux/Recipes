@@ -1,0 +1,5 @@
+[Name] PWDUtils
+[Summary] pwdutils is a collection of utilities to manage the passwd and shadow user information.
+[Description] pwdutils is a collection of utilities to manage the passwd and shadow user information. The difference to the shadow suite is that these utilities can also modify the information stored in NIS, NIS+, or LDAP. PAM is used for user authentication and changing the pasword. It contains passwd, chage, chfn, chsh, and a daemon for changing the password on a remote machine over a secure SSL connection. The daemon also uses PAM so that it can change passwords independent of where they are stored.
+[License] GNU General Public License version 2
+[Homepage] http://freshmeat.net/projects/pwdutils/
