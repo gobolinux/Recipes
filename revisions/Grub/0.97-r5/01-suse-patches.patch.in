@@ -1,0 +1,1609 @@
+diff -Naur grub-0.97/docs/grub.texi grub-0.97-suse/docs/grub.texi
+--- grub-0.97/docs/grub.texi	2005-05-07 23:59:59.000000000 -0300
++++ grub-0.97-suse/docs/grub.texi	2006-09-09 17:00:12.000000000 -0300
+@@ -2118,6 +2118,7 @@
+ * default::                     Set the default entry
+ * fallback::                    Set the fallback entry
+ * hiddenmenu::                  Hide the menu interface
++* gfxmenu::                     Use graphical menu interface
+ * timeout::                     Set the timeout
+ * title::                       Start a menu entry
+ @end menu
+@@ -2150,6 +2151,15 @@
+ @end deffn
+ 
+ 
++@node gfxmenu
++@subsection gfxmenu
++
++@deffn Command gfxmenu file
++Use the graphical menu interface. The graphics data are taken from
++@var{file} and must be created using 'mkbootmsg' from the gfxboot package.
++@end deffn
++
++
+ @node hiddenmenu
+ @subsection hiddenmenu
+ 
+@@ -2909,7 +2919,7 @@
+ @node install
+ @subsection install
+ 
+-@deffn Command install [@option{--force-lba}] [@option{--stage2=os_stage2_file}] stage1_file [@option{d}] dest_dev stage2_file [addr] [@option{p}] [config_file] [real_config_file]
++@deffn Command install [@option{--force-lba[=off]}] [@option{--stage2=os_stage2_file}] stage1_file [@option{d}] dest_dev stage2_file [addr] [@option{p}] [config_file] [real_config_file]
+ This command is fairly complex, and you should not use this command
+ unless you are familiar with GRUB. Use @command{setup} (@pxref{setup})
+ instead.
+@@ -2956,6 +2966,13 @@
+ bitmap even if they do have the support. So GRUB provides a solution to
+ ignore the wrong bitmap, that is, the option @option{--force-lba}. Don't
+ use this option if you know that your BIOS doesn't have LBA support.
++On the other hand there is at least one known BIOS that does the opposite,
++it claims to support LBA and then fails to provide it. Iff you have an
++Adaptec 2940 with BIOS revision 1.21 ( newer ones just work and older ones
++don't make the false claim ), or otherwise experience grub hanging
++after stage1, you can try to use the option @option{--force-lba=off},
++as long as all disk blocks involved in booting reside
++within the first 1024 cylinders.
+ 
+ @strong{Caution3:} You must specify the option @option{--stage2} in the
+ grub shell, if you cannot unmount the filesystem where your stage2 file
+diff -Naur grub-0.97/grub/asmstub.c grub-0.97-suse/grub/asmstub.c
+--- grub-0.97/grub/asmstub.c	2005-02-16 18:45:14.000000000 -0200
++++ grub-0.97-suse/grub/asmstub.c	2006-09-09 17:00:13.000000000 -0300
+@@ -43,6 +43,8 @@
+ #include <termios.h>
+ #include <signal.h>
+ 
++#include <sys/mman.h>
++
+ #ifdef __linux__
+ # include <sys/ioctl.h>		/* ioctl */
+ # if !defined(__GLIBC__) || \
+@@ -142,14 +144,30 @@
+     }
+ 
+   assert (grub_scratch_mem == 0);
+-  scratch = malloc (0x100000 + EXTENDED_MEMSIZE + 15);
++#ifdef MAP_32BIT
++#define MY_MAP_SET MAP_PRIVATE | MAP_GROWSDOWN | MAP_ANONYMOUS | MAP_32BIT
++#else
++#define MY_MAP_SET MAP_PRIVATE | MAP_GROWSDOWN | MAP_ANONYMOUS
++#endif
++  scratch = mmap(NULL,
++                 0x100000 + EXTENDED_MEMSIZE + 15,
++                 PROT_EXEC | PROT_READ | PROT_WRITE,
++                 MY_MAP_SET,
++                 -1,
++                 0);
++
+   assert (scratch);
+   grub_scratch_mem = (char *) ((((int) scratch) >> 4) << 4);
+ 
+   /* FIXME: simulate the memory holes using mprot, if available. */
+ 
+   assert (disks == 0);
+-  disks = malloc (NUM_DISKS * sizeof (*disks));
++  disks = mmap(NULL,
++               NUM_DISKS * sizeof (*disks),
++               PROT_EXEC | PROT_READ | PROT_WRITE,
++               MY_MAP_SET,
++               -1,
++               0);
+   assert (disks);
+   /* Initialize DISKS.  */
+   for (i = 0; i < NUM_DISKS; i++)
+@@ -215,9 +233,9 @@
+   /* Release memory. */
+   restore_device_map (device_map);
+   device_map = 0;
+-  free (disks);
++  munmap(disks, NUM_DISKS * sizeof (*disks));
+   disks = 0;
+-  free (scratch);
++  munmap(scratch, 0x100000 + EXTENDED_MEMSIZE + 15);
+   grub_scratch_mem = 0;
+ 
+   if (serial_device)
+@@ -480,6 +498,32 @@
+   return 0;
+ }
+ 
++/* graphical menu functions .  */
++int
++gfx_init (gfx_data_t *gfx_data)
++{
++  return 0;
++}
++
++int
++gfx_done (gfx_data_t *gfx_data)
++{
++  return 0;
++}
++
++int
++gfx_input (gfx_data_t *gfx_data, int *menu_entry)
++{
++  return 0;
++}
++
++int
++gfx_setup_menu (gfx_data_t *gfx_data)
++{
++  return 0;
++}
++
++
+ /* low-level timing info */
+ int
+ getrtsecs (void)
+diff -Naur grub-0.97/grub/main.c grub-0.97-suse/grub/main.c
+--- grub-0.97/grub/main.c	2003-07-09 08:45:36.000000000 -0300
++++ grub-0.97-suse/grub/main.c	2006-09-09 17:00:12.000000000 -0300
+@@ -44,7 +44,7 @@
+ int verbose = 0;
+ int read_only = 0;
+ int floppy_disks = 1;
+-char *device_map_file = 0;
++char *device_map_file = "@%Compile_goboBoot%@/grub/device.map";
+ static int default_boot_drive;
+ static int default_install_partition;
+ static char *default_config_file;
+diff -Naur grub-0.97/lib/device.c grub-0.97-suse/lib/device.c
+--- grub-0.97/lib/device.c	2005-03-27 20:14:25.000000000 -0300
++++ grub-0.97-suse/lib/device.c	2006-09-09 17:00:12.000000000 -0300
+@@ -515,6 +515,7 @@
+      probing devices.  */
+   char buf[1024];		/* XXX */
+   int line_number = 0;
++  int retval = 0;		/* default to failure */
+   
+   while (fgets (buf, sizeof (buf), fp))
+     {
+@@ -541,14 +542,14 @@
+       if (*ptr != '(')
+ 	{
+ 	  show_error (line_number, "No open parenthesis found");
+-	  return 0;
++	  continue;
+ 	}
+       
+       ptr++;
+       if ((*ptr != 'f' && *ptr != 'h') || *(ptr + 1) != 'd')
+ 	{
+ 	  show_error (line_number, "Bad drive name");
+-	  return 0;
++	  continue;
+ 	}
+       
+       if (*ptr == 'f')
+@@ -559,7 +560,7 @@
+       if (drive < 0)
+ 	{
+ 	  show_error (line_number, "Bad device number");
+-	  return 0;
++	  continue;
+ 	}
+       else if (drive > 127)
+ 	{
+@@ -575,7 +576,7 @@
+       if (*ptr != ')')
+ 	{
+ 	  show_error (line_number, "No close parenthesis found");
+-	  return 0;
++	  continue;
+ 	}
+       
+       ptr++;
+@@ -586,7 +587,7 @@
+       if (! *ptr)
+ 	{
+ 	  show_error (line_number, "No filename found");
+-	  return 0;
++	  continue;
+ 	}
+       
+       /* Terminate the filename.  */
+@@ -604,9 +605,11 @@
+       
+       map[drive] = strdup (ptr);
+       assert (map[drive]);
++
++      retval = 1;	/* at least 1 drive configured successfully */
+     }
+   
+-  return 1;
++  return retval;
+ }
+ 
+ /* Initialize the device map MAP. *MAP will be allocated from the heap
+@@ -831,9 +834,11 @@
+ is_disk_device (char **map, int drive)
+ {
+   struct stat st;
++  int retval;
+   
+   assert (map[drive] != 0);
+-  assert (stat (map[drive], &st) == 0);
++  retval = stat (map[drive], &st);
++  assert (retval == 0);
+   /* For now, disk devices under Linux are all block devices.  */
+   return S_ISBLK (st.st_mode);
+ }
+@@ -843,7 +848,7 @@
+ 		    int sector, int size, const char *buf)
+ {
+   char dev[PATH_MAX];	/* XXX */
+-  int fd;
++  int fd, len, pnum;
+   
+   if ((partition & 0x00FF00) != 0x00FF00)
+     {
+@@ -861,7 +866,16 @@
+       if (strcmp (dev + strlen(dev) - 5, "/disc") == 0)
+ 	strcpy (dev + strlen(dev) - 5, "/part");
+     }
+-  sprintf (dev + strlen(dev), "%d", ((partition >> 16) & 0xFF) + 1);
++
++  len = strlen(dev);
++  pnum = ((partition >> 16) & 0xFF);
++  if (isdigit(dev[len-1]))
++    {
++      /* It is obviously some RAID disk: "/dev/<dsk>/c0d0" . "p1" */
++      sprintf (dev + len, "p%d",  pnum + 1);
++    }
++  else
++    sprintf (dev + len, "%d",  pnum + 1);
+   
+   /* Open the partition.  */
+   fd = open (dev, O_RDWR);
+diff -Naur grub-0.97/netboot/main.c grub-0.97-suse/netboot/main.c
+--- grub-0.97/netboot/main.c	2004-05-20 19:19:33.000000000 -0300
++++ grub-0.97-suse/netboot/main.c	2006-09-09 17:00:12.000000000 -0300
+@@ -54,9 +54,9 @@
+ 
+ static int vendorext_isvalid;
+ static unsigned long netmask;
+-static struct bootpd_t bootp_data;
++struct bootpd_t bootp_data;
+ static unsigned long xid;
+-static unsigned char *end_of_rfc1533 = NULL;
++unsigned char *end_of_rfc1533 = NULL;
+ 
+ #ifndef	NO_DHCP_SUPPORT
+ #endif /* NO_DHCP_SUPPORT */
+diff -Naur grub-0.97/stage1/stage1.S grub-0.97-suse/stage1/stage1.S
+--- grub-0.97/stage1/stage1.S	2005-02-15 19:54:31.000000000 -0200
++++ grub-0.97-suse/stage1/stage1.S	2006-09-09 17:00:12.000000000 -0300
+@@ -177,7 +177,11 @@
+ 	/* check if AH=0x42 is supported if FORCE_LBA is zero */
+ 	MOV_MEM_TO_AL(ABS(force_lba))	/* movb	ABS(force_lba), %al */
+ 	testb	%al, %al
++	/* check if LBA is forced OFF 0x80 <= %al <= 0xff */
++	js	chs_mode
++	/* or forced ON 0x01 <= %al <= 0x7f */
+ 	jnz	lba_mode
++	/* otherwise trust BIOS int's result */
+ 	andw	$1, %cx
+ 	jz	chs_mode
+ 	
+diff -Naur grub-0.97/stage2/asm.S grub-0.97-suse/stage2/asm.S
+--- grub-0.97/stage2/asm.S	2004-06-19 13:55:22.000000000 -0300
++++ grub-0.97-suse/stage2/asm.S	2006-09-09 17:00:12.000000000 -0300
+@@ -1091,7 +1091,11 @@
+ 	/* check if AH=0x42 is supported if FORCE_LBA is zero */
+ 	movb	EXT_C(force_lba), %al
+ 	testb	%al, %al
++	/* check if LBA is forced OFF 0x80 <= %al <= 0xff */
++	js	1f
++	/* or forced ON 0x01 <= %al <= 0x7f */
+ 	jnz	2f
++	/* otherwise trust BIOS int's result */
+ 	andw	$1, %cx
+ 	jnz	2f
+ 	
+@@ -1610,6 +1614,301 @@
+ 	popl	%ebp
+ 	ret
+ 
++
++/*
++ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
++ *
++ * graphical menu functions
++ *
++ */
++
++/*
++ * int gfx_init (gfx_data_t *gfx_data)
++ *
++ * init gfx things
++ *
++ * return vales:
++ *   0: ok
++ *   1: failed
++ *   sets gfx_data->ok
++ */
++
++ENTRY(gfx_init)
++	pushl	%ebp
++	movl	%esp, %ebp
++	
++	pushl	%edi
++	pushl	%esi
++	pushl	%ebx
++
++	movl	8(%ebp),%edx
++	movl	%edx,%edi
++	andl	$0xf,%edi
++	shrl	$4,%edx
++
++	pushl	%ebp
++
++	call	EXT_C(prot_to_real)
++	.code16
++
++	pushw	%ds
++
++	movw	%dx,%ds
++	leal	gfx_ofs_sys_cfg(%di),%esi
++	movl	gfx_ofs_mem_file(%di),%eax
++	movl	gfx_ofs_mem_cur(%di),%ebx
++	movl	gfx_ofs_mem_max(%di),%ecx
++	movw	%ds,%dx
++
++	/* basically just a lcall, but we need %edi */
++	pushw	%cs
++	pushw	$gfx_init_50
++	pushl	gfx_ofs_jmp_table + 4 * 0 (%di)
++
++	movl	gfx_ofs_mem_align(%di),%edi
++
++	lret
++
++gfx_init_50:
++	movl	$0,%ebx
++	adcl	$0,%ebx
++
++	popw	%ds
++
++	DATA32	call	EXT_C(real_to_prot)
++	.code32
++
++	popl	%ebp
++
++	movl	%ebx,%eax
++	negl	%ebx
++	incl	%ebx
++	movl	8(%ebp),%edx
++	movl	%ebx,gfx_ofs_ok(%edx)
++
++	popl	%ebx
++	popl	%esi
++	popl	%edi
++
++	popl	%ebp
++	ret
++
++
++/*
++ * int gfx_done (gfx_data_t *gfx_data)
++ *
++ * shut down gfx things
++ *
++ * return vales:
++ *   always 0
++ *   sets gfx_data->ok
++ */
++
++ENTRY(gfx_done)
++	pushl	%ebp
++	movl	%esp, %ebp
++	
++	pushl	%edi
++	pushl	%esi
++	pushl	%ebx
++
++	movl	8(%ebp),%edx
++	movl	%edx,%ebx
++	andl	$0xf,%ebx
++	shrl	$4,%edx
++
++	pushl	%ebp
++
++	call	EXT_C(prot_to_real)
++	.code16
++
++	pushw	%ds
++
++	movw	%dx,%ds
++
++	lcall	*gfx_ofs_jmp_table + 4 * 1 (%bx)
++
++	popw	%ds
++
++	DATA32	call	EXT_C(real_to_prot)
++	.code32
++
++	popl	%ebp
++
++	xorl	%eax,%eax
++	movl	8(%ebp),%edx
++	movl	%eax,gfx_ofs_ok(%edx)
++
++	popl	%ebx
++	popl	%esi
++	popl	%edi
++
++	popl	%ebp
++	ret
++
++
++/*
++ * int gfx_input (gfx_data_t *gfx_data, int *menu_entry)
++ *
++ * let user enter a command line
++ *
++ * uses gfx_data->cmdline as buffer
++ *
++ * return values:
++ *   1: abort
++ *   2: boot
++ *   menu_entry: selected entry
++ */
++
++ENTRY(gfx_input)
++	pushl	%ebp
++	movl	%esp, %ebp
++	
++	pushl	%edi
++	pushl	%esi
++	pushl	%ebx
++
++	movl	8(%ebp),%edx
++	movl	%edx,%ebx
++	andl	$0xf,%ebx
++	shrl	$4,%edx
++
++	pushl	%ebp
++
++	call	EXT_C(prot_to_real)
++	.code16
++
++	pushw	%ds
++
++	movw	%dx,%ds
++	shll	$4,%edx
++	movl	gfx_ofs_cmdline(%bx),%edi
++	subl	%edx,%edi
++	movw	gfx_ofs_cmdline_len(%bx),%cx
++	movw	gfx_ofs_timeout(%bx),%ax
++	imulw	$18,%ax
++
++	pushl	%ebp
++	lcall	*gfx_ofs_jmp_table + 4 * 2 (%bx)
++	popl	%ebp
++	movl	%eax,%ecx
++
++	popw	%ds
++
++	DATA32	call	EXT_C(real_to_prot)
++	.code32
++
++	popl	%ebp
++
++	movl	12(%ebp),%edx
++	movl	%ebx,(%edx)
++
++	movl	%ecx,%eax
++
++	popl	%ebx
++	popl	%esi
++	popl	%edi
++
++	popl	%ebp
++	ret
++
++
++/*
++ * int gfx_setup_menu (gfx_data_t *gfx_data)
++ *
++ * draw boot menu
++ *
++ * return values:
++ *   always 0
++ */
++
++/* menu entry descriptor */
++#define menu_entries		0
++#define menu_default		2	/* seg:ofs */
++#define menu_ent_list		6	/* seg:ofs */
++#define menu_ent_size		10
++#define menu_arg_list		12	/* seg:ofs */
++#define menu_arg_size		16
++#define sizeof_menu_desc	18
++
++ENTRY(gfx_setup_menu)
++	pushl	%ebp
++	movl	%esp, %ebp
++	
++	pushl	%edi
++	pushl	%esi
++	pushl	%ebx
++
++	movl	8(%ebp),%edx
++	movl	%edx,%ebx
++	andl	$0xf,%ebx
++	shrl	$4,%edx
++
++	call	EXT_C(prot_to_real)
++	.code16
++
++	pushw	%ds
++
++	movw	%dx,%ds
++	shll	$4,%edx
++
++	subw	$sizeof_menu_desc,%sp
++	movw	%sp,%bp
++
++	movl	gfx_ofs_menu_entries(%bx),%eax
++	movw	%ax,menu_entries(%bp)
++
++	movl	gfx_ofs_menu_default_entry(%bx),%eax
++	subl	%edx,%eax
++	movw	%ax,menu_default(%bp)
++	movw	%ds,menu_default+2(%bp)
++
++	movl	gfx_ofs_menu_list(%bx),%eax
++	subl	%edx,%eax
++	movw	%ax,menu_ent_list(%bp)
++	movw	%ds,menu_ent_list+2(%bp)
++
++	movl	gfx_ofs_menu_entry_len(%bx),%eax
++	movw	%ax,menu_ent_size(%bp)
++
++	movl	gfx_ofs_args_list(%bx),%eax
++	subl	%edx,%eax
++	movw	%ax,menu_arg_list(%bp)
++	movw	%ds,menu_arg_list+2(%bp)
++
++	movl	gfx_ofs_args_entry_len(%bx),%eax
++	movw	%ax,menu_arg_size(%bp)
++
++	movw	%bp,%si
++	pushw	%ss
++	popw	%es
++	
++	lcall	%ds: *gfx_ofs_jmp_table + 4 * 3 (%bx)
++
++	addw	$sizeof_menu_desc,%sp
++
++	popw	%ds
++
++	DATA32	call	EXT_C(real_to_prot)
++	.code32
++
++	xorl	%eax,%eax
++
++	popl	%ebx
++	popl	%esi
++	popl	%edi
++
++	popl	%ebp
++	ret
++
++
++/*
++ *
++ * end graphics stuff
++ *
++ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
++ */
++
+ 		
+ /*
+  * gateA20(int linear)
+diff -Naur grub-0.97/stage2/boot.c grub-0.97-suse/stage2/boot.c
+--- grub-0.97/stage2/boot.c	2004-03-30 08:44:08.000000000 -0300
++++ grub-0.97-suse/stage2/boot.c	2006-09-09 17:00:12.000000000 -0300
+@@ -824,8 +824,11 @@
+     moveto = (mbi.mem_upper + 0x400) << 10;
+   
+   moveto = (moveto - len) & 0xfffff000;
+-  max_addr = (lh->header == LINUX_MAGIC_SIGNATURE && lh->version >= 0x0203
+-	      ? lh->initrd_addr_max : LINUX_INITRD_MAX_ADDRESS);
++  max_addr = LINUX_INITRD_MAX_ADDRESS;
++  if (lh->header == LINUX_MAGIC_SIGNATURE &&
++      lh->version >= 0x0203 &&
++      lh->initrd_addr_max < max_addr)
++    max_addr = lh->initrd_addr_max;
+   if (moveto + len >= max_addr)
+     moveto = (max_addr - len) & 0xfffff000;
+   
+diff -Naur grub-0.97/stage2/builtins.c grub-0.97-suse/stage2/builtins.c
+--- grub-0.97/stage2/builtins.c	2005-02-15 19:58:23.000000000 -0200
++++ grub-0.97-suse/stage2/builtins.c	2006-09-09 17:00:12.000000000 -0300
+@@ -63,6 +63,8 @@
+ int fallback_entries[MAX_FALLBACK_ENTRIES];
+ /* The number of current entry.  */
+ int current_entryno;
++/* graphics file */
++char graphics_file[64];
+ /* The address for Multiboot command-line buffer.  */
+ static char *mb_cmdline;
+ /* The password.  */
+@@ -766,11 +768,11 @@
+ default_func (char *arg, int flags)
+ {
+ #ifndef SUPPORT_DISKLESS
+-  if (grub_strcmp (arg, "saved") == 0)
++  if (grub_strcmp (arg, "saved") == 0 || (saved_entryno & 0x4000))
+     {
+-      default_entry = saved_entryno;
+-      return 0;
++      default_entry = saved_entryno & 0x3fff;
+     }
++  else
+ #endif /* SUPPORT_DISKLESS */
+   
+   if (! safe_parse_maxint (&arg, &default_entry))
+@@ -791,6 +793,22 @@
+ #endif
+ };
+ 
++#ifndef SUPPORT_DISKLESS
++static int savedefault_func (char *arg, int flags);
++void __savedefault_once_reset()
++{
++  if (saved_entryno & 0x4000)
++    {
++      int saved_current_entryno = current_entryno;
++      grub_timeout = 0;
++      current_entryno = default_entry;
++      savedefault_func("\0", BUILTIN_SCRIPT);
++      current_entryno = saved_current_entryno;
++      saved_entryno &= 0x3fff;
++    }
++}
++#endif /* SUPPORT_DISKLESS */
++
+ 
+ #ifdef GRUB_UTIL
+ /* device */
+@@ -1331,6 +1349,26 @@
+ };
+ 
+ 
++/* graphics */
++static int
++gfxmenu_func (char *arg, int flags)
++{
++  memmove(graphics_file, arg, sizeof graphics_file - 1);
++  graphics_file[sizeof graphics_file - 1] = 0;
++
++  return 0;
++}
++
++static struct builtin builtin_gfxmenu =
++{
++  "gfxmenu",
++  gfxmenu_func,
++  BUILTIN_MENU | BUILTIN_HELP_LIST,
++  "gfxmenu FILE",
++  "Use the graphical menu from FILE."
++};
++
++
+ /* geometry */
+ static int
+ geometry_func (char *arg, int flags)
+@@ -1834,7 +1872,12 @@
+   /* First, check the GNU-style long option.  */
+   while (1)
+     {
+-      if (grub_memcmp ("--force-lba", arg, sizeof ("--force-lba") - 1) == 0)
++      if (grub_memcmp ("--force-lba=off", arg, sizeof ("--force-lba=off") - 1) == 0)
++	{
++	  is_force_lba = 0xff;
++	  arg = skip_to (0, arg);
++	}
++      else if (grub_memcmp ("--force-lba", arg, sizeof ("--force-lba") - 1) == 0)
+ 	{
+ 	  is_force_lba = 1;
+ 	  arg = skip_to (0, arg);
+@@ -1842,9 +1885,23 @@
+ #ifdef GRUB_UTIL
+       else if (grub_memcmp ("--stage2=", arg, sizeof ("--stage2=") - 1) == 0)
+ 	{
++	  int fd;
+ 	  stage2_os_file = arg + sizeof ("--stage2=") - 1;
+ 	  arg = skip_to (0, arg);
+ 	  nul_terminate (stage2_os_file);
++
++#if defined(__linux__) && defined (FSYS_REISERFS)
++	  if ((fd=open(stage2_os_file, O_RDONLY)) >= 0)
++	    {
++	      struct statfs buf;
++	      /* see if the file sits on a reiserfs,
++		 and try do defragment it if so. */
++	      fstatfs(fd, &buf);
++	      if (buf.f_type == REISERFS_SUPER_MAGIC)
++		ioctl (fd, REISERFS_IOC_UNPACK, 1);
++	    }
++#endif	/* __linux__ && FSYS_REISERFS */
++
+ 	}
+ #endif /* GRUB_UTIL */
+       else
+@@ -2263,7 +2320,7 @@
+   "install",
+   install_func,
+   BUILTIN_CMDLINE,
+-  "install [--stage2=STAGE2_FILE] [--force-lba] STAGE1 [d] DEVICE STAGE2 [ADDR] [p] [CONFIG_FILE] [REAL_CONFIG_FILE]",
++  "install [--stage2=STAGE2_FILE] [--force-lba[=off]] STAGE1 [d] DEVICE STAGE2 [ADDR] [p] [CONFIG_FILE] [REAL_CONFIG_FILE]",
+   "Install STAGE1 on DEVICE, and install a blocklist for loading STAGE2"
+   " as a Stage 2. If the option `d' is present, the Stage 1 will always"
+   " look for the disk where STAGE2 was installed, rather than using"
+@@ -2276,8 +2333,9 @@
+   " 1.5 and REAL_CONFIG_FILE is present, then the Stage 2 CONFIG_FILE is"
+   " patched with the configuration filename REAL_CONFIG_FILE."
+   " If the option `--force-lba' is specified, disable some sanity checks"
+-  " for LBA mode. If the option `--stage2' is specified, rewrite the Stage"
+-  " 2 via your OS's filesystem instead of the raw device."
++  " for LBA mode, `--force-lba=off' will disable it completely. If the"
++  " option `--stage2' is specified, rewrite the Stage 2 via your OS's"
++  " filesystem instead of the raw device."
+ };
+ 
+ 
+@@ -3890,7 +3948,12 @@
+   /* Check if the user specifies --force-lba.  */
+   while (1)
+     {
+-      if (grub_memcmp ("--force-lba", arg, sizeof ("--force-lba") - 1) == 0)
++      if (grub_memcmp ("--force-lba=off", arg, sizeof ("--force-lba=off") - 1) == 0)
++	{
++	  is_force_lba = 0xff;
++	  arg = skip_to (0, arg);
++	}
++      else if (grub_memcmp ("--force-lba", arg, sizeof ("--force-lba") - 1) == 0)
+ 	{
+ 	  is_force_lba = 1;
+ 	  arg = skip_to (0, arg);
+@@ -4011,6 +4074,9 @@
+ 	}
+   }
+ 
++  /* force buffer cache invalidation after embedding */
++  buf_drive = -1;
++
+   /* Construct a string that is used by the command "install" as its
+      arguments.  */
+   sprint_device (installed_drive, installed_partition);
+@@ -4018,7 +4084,9 @@
+ #if 1
+   /* Don't embed a drive number unnecessarily.  */
+   grub_sprintf (cmd_arg, "%s%s%s%s %s%s %s p %s %s",
+-		is_force_lba? "--force-lba " : "",
++		is_force_lba ?
++		 (is_force_lba == 0xff ? "--force-lba=off " : "--force-lba ")
++		 : "",
+ 		stage2_arg? stage2_arg : "",
+ 		stage2_arg? " " : "",
+ 		stage1,
+@@ -4071,17 +4139,18 @@
+   "setup",
+   setup_func,
+   BUILTIN_CMDLINE | BUILTIN_HELP_LIST,
+-  "setup [--prefix=DIR] [--stage2=STAGE2_FILE] [--force-lba] INSTALL_DEVICE [IMAGE_DEVICE]",
++  "setup [--prefix=DIR] [--stage2=STAGE2_FILE] [--force-lba[=off]] INSTALL_DEVICE [IMAGE_DEVICE]",
+   "Set up the installation of GRUB automatically. This command uses"
+   " the more flexible command \"install\" in the backend and installs"
+   " GRUB into the device INSTALL_DEVICE. If IMAGE_DEVICE is specified,"
+   " then find the GRUB images in the device IMAGE_DEVICE, otherwise"
+   " use the current \"root device\", which can be set by the command"
+   " \"root\". If you know that your BIOS should support LBA but GRUB"
+-  " doesn't work in LBA mode, specify the option `--force-lba'."
+-  " If you install GRUB under the grub shell and you cannot unmount the"
+-  " partition where GRUB images reside, specify the option `--stage2'"
+-  " to tell GRUB the file name under your OS."
++  " doesn't work in LBA mode, specify the option `--force-lba'. If the"
++  " BIOS claims to support LBA mode but really doesn't, use"
++  " `--force-lba=off'. If you install GRUB under the grub shell and"
++  " you cannot unmount the partition where GRUB images reside, specify"
++  " the option `--stage2' to tell GRUB the file name under your OS."
+ };
+ 
+ 
+@@ -4823,6 +4892,7 @@
+   &builtin_find,
+   &builtin_fstest,
+   &builtin_geometry,
++  &builtin_gfxmenu,
+   &builtin_halt,
+   &builtin_help,
+   &builtin_hiddenmenu,
+diff -Naur grub-0.97/stage2/disk_io.c grub-0.97-suse/stage2/disk_io.c
+--- grub-0.97/stage2/disk_io.c	2004-05-23 13:35:24.000000000 -0300
++++ grub-0.97-suse/stage2/disk_io.c	2006-09-09 17:00:12.000000000 -0300
+@@ -128,7 +128,7 @@
+ int filemax;
+ 
+ static inline unsigned long
+-log2 (unsigned long word)
++grub_log2 (unsigned long word)
+ {
+   asm volatile ("bsfl %1,%0"
+ 		: "=r" (word)
+@@ -140,7 +140,7 @@
+ rawread (int drive, int sector, int byte_offset, int byte_len, char *buf)
+ {
+   int slen, sectors_per_vtrack;
+-  int sector_size_bits = log2 (buf_geom.sector_size);
++  int sector_size_bits = grub_log2 (buf_geom.sector_size);
+ 
+   if (byte_len <= 0)
+     return 1;
+@@ -163,7 +163,7 @@
+ 	    }
+ 	  buf_drive = drive;
+ 	  buf_track = -1;
+-	  sector_size_bits = log2 (buf_geom.sector_size);
++	  sector_size_bits = grub_log2 (buf_geom.sector_size);
+ 	}
+ 
+       /* Make sure that SECTOR is valid.  */
+diff -Naur grub-0.97/stage2/filesys.h grub-0.97-suse/stage2/filesys.h
+--- grub-0.97/stage2/filesys.h	2004-05-14 16:36:43.000000000 -0300
++++ grub-0.97-suse/stage2/filesys.h	2006-09-09 17:00:12.000000000 -0300
+@@ -73,6 +73,16 @@
+ int reiserfs_read (char *buf, int len);
+ int reiserfs_dir (char *dirname);
+ int reiserfs_embed (int *start_sector, int needed_sectors);
++#if defined(__linux__) && defined (GRUB_UTIL)
++#include <sys/types.h>
++#include <sys/stat.h>
++#include <sys/ioctl.h>
++#include <sys/statfs.h>
++#include <fcntl.h>
++/* from <linux/reiserfs_fs.h> */
++#define REISERFS_SUPER_MAGIC 0x52654973
++#define REISERFS_IOC_UNPACK  _IOW(0xCD,1,long)
++#endif
+ #else
+ #define FSYS_REISERFS_NUM 0
+ #endif
+diff -Naur grub-0.97/stage2/fsys_ext2fs.c grub-0.97-suse/stage2/fsys_ext2fs.c
+--- grub-0.97/stage2/fsys_ext2fs.c	2004-08-08 15:19:18.000000000 -0300
++++ grub-0.97-suse/stage2/fsys_ext2fs.c	2006-09-09 17:00:12.000000000 -0300
+@@ -193,7 +193,7 @@
+ 
+ 
+ /* ext2/super.c */
+-#define log2(n) ffz(~(n))
++#define grub_log2(n) ffz(~(n))
+ 
+ #define EXT2_SUPER_MAGIC      0xEF53	/* include/linux/ext2_fs.h */
+ #define EXT2_ROOT_INO              2	/* include/linux/ext2_fs.h */
+@@ -216,7 +216,7 @@
+ 
+ /* linux/ext2_fs.h */
+ #define EXT2_ADDR_PER_BLOCK(s)          (EXT2_BLOCK_SIZE(s) / sizeof (__u32))
+-#define EXT2_ADDR_PER_BLOCK_BITS(s)		(log2(EXT2_ADDR_PER_BLOCK(s)))
++#define EXT2_ADDR_PER_BLOCK_BITS(s)		(grub_log2(EXT2_ADDR_PER_BLOCK(s)))
+ 
+ /* linux/ext2_fs.h */
+ #define EXT2_BLOCK_SIZE_BITS(s)        ((s)->s_log_block_size + 10)
+@@ -537,7 +537,7 @@
+ 
+       /* look up an inode */
+       group_id = (current_ino - 1) / (SUPERBLOCK->s_inodes_per_group);
+-      group_desc = group_id >> log2 (EXT2_DESC_PER_BLOCK (SUPERBLOCK));
++      group_desc = group_id >> grub_log2 (EXT2_DESC_PER_BLOCK (SUPERBLOCK));
+       desc = group_id & (EXT2_DESC_PER_BLOCK (SUPERBLOCK) - 1);
+ #ifdef E2DEBUG
+       printf ("ipg=%d, dpb=%d\n", SUPERBLOCK->s_inodes_per_group,
+@@ -553,7 +553,7 @@
+       gdp = GROUP_DESC;
+       ino_blk = gdp[desc].bg_inode_table +
+ 	(((current_ino - 1) % (SUPERBLOCK->s_inodes_per_group))
+-	 >> log2 (EXT2_BLOCK_SIZE (SUPERBLOCK) / sizeof (struct ext2_inode)));
++	 >> grub_log2 (EXT2_BLOCK_SIZE (SUPERBLOCK) / sizeof (struct ext2_inode)));
+ #ifdef E2DEBUG
+       printf ("inode table fsblock=%d\n", ino_blk);
+ #endif /* E2DEBUG */
+diff -Naur grub-0.97/stage2/fsys_fat.c grub-0.97-suse/stage2/fsys_fat.c
+--- grub-0.97/stage2/fsys_fat.c	2005-03-15 13:52:00.000000000 -0300
++++ grub-0.97-suse/stage2/fsys_fat.c	2006-09-09 17:00:12.000000000 -0300
+@@ -55,7 +55,7 @@
+ #define FAT_CACHE_SIZE 2048
+ 
+ static __inline__ unsigned long
+-log2 (unsigned long word)
++grub_log2 (unsigned long word)
+ {
+   __asm__ ("bsfl %1,%0"
+ 	   : "=r" (word)
+@@ -84,9 +84,9 @@
+   if (bpb.sects_per_clust == 0)
+     return 0;
+   
+-  FAT_SUPER->sectsize_bits = log2 (FAT_CVT_U16 (bpb.bytes_per_sect));
++  FAT_SUPER->sectsize_bits = grub_log2 (FAT_CVT_U16 (bpb.bytes_per_sect));
+   FAT_SUPER->clustsize_bits
+-    = FAT_SUPER->sectsize_bits + log2 (bpb.sects_per_clust);
++    = FAT_SUPER->sectsize_bits + grub_log2 (bpb.sects_per_clust);
+   
+   /* Fill in info about super block */
+   FAT_SUPER->num_sectors = FAT_CVT_U16 (bpb.short_sectors) 
+diff -Naur grub-0.97/stage2/fsys_iso9660.c grub-0.97-suse/stage2/fsys_iso9660.c
+--- grub-0.97/stage2/fsys_iso9660.c	2004-05-11 09:11:19.000000000 -0300
++++ grub-0.97-suse/stage2/fsys_iso9660.c	2006-09-09 17:00:12.000000000 -0300
+@@ -57,7 +57,7 @@
+ 
+ 
+ static inline unsigned long
+-log2 (unsigned long word)
++grub_log2 (unsigned long word)
+ {
+   asm volatile ("bsfl %1,%0"
+ 		:          "=r" (word)
+@@ -68,7 +68,7 @@
+ static int
+ iso9660_devread (int sector, int byte_offset, int byte_len, char *buf)
+ {
+-  unsigned short sector_size_lg2 = log2(buf_geom.sector_size);
++  unsigned short sector_size_lg2 = grub_log2(buf_geom.sector_size);
+ 
+   /*
+    * We have to use own devread() function since BIOS return wrong geometry
+diff -Naur grub-0.97/stage2/fsys_reiserfs.c grub-0.97-suse/stage2/fsys_reiserfs.c
+--- grub-0.97/stage2/fsys_reiserfs.c	2004-02-18 19:09:10.000000000 -0300
++++ grub-0.97-suse/stage2/fsys_reiserfs.c	2006-09-09 17:00:12.000000000 -0300
+@@ -367,7 +367,7 @@
+ 
+ 
+ static __inline__ unsigned long
+-log2 (unsigned long word)
++grub_log2 (unsigned long word)
+ {
+   __asm__ ("bsfl %1,%0"
+ 	   : "=r" (word)
+@@ -609,7 +609,7 @@
+   
+   INFO->version = super.s_version;
+   INFO->blocksize = super.s_blocksize;
+-  INFO->fullblocksize_shift = log2 (super.s_blocksize);
++  INFO->fullblocksize_shift = grub_log2 (super.s_blocksize);
+   INFO->blocksize_shift = INFO->fullblocksize_shift - SECTOR_BITS;
+   INFO->cached_slots = 
+     (FSYSREISER_CACHE_SIZE >> INFO->fullblocksize_shift) - 1;
+diff -Naur grub-0.97/stage2/iso9660.h grub-0.97-suse/stage2/iso9660.h
+--- grub-0.97/stage2/iso9660.h	2004-03-27 13:02:38.000000000 -0300
++++ grub-0.97-suse/stage2/iso9660.h	2006-09-09 17:00:12.000000000 -0300
+@@ -73,11 +73,11 @@
+ 
+ typedef	struct __iso_16bit {
+   u_int16_t l, b;
+-} iso_16bit_t __attribute__ ((packed));
++} iso_16bit_t;
+ 
+ typedef	struct __iso_32bit {
+   u_int32_t l, b;
+-} iso_32bit_t __attribute__ ((packed));
++} iso_32bit_t;
+ 
+ typedef u_int8_t		iso_date_t[7];
+ 
+diff -Naur grub-0.97/stage2/shared.h grub-0.97-suse/stage2/shared.h
+--- grub-0.97/stage2/shared.h	2004-06-19 13:40:09.000000000 -0300
++++ grub-0.97-suse/stage2/shared.h	2006-09-09 17:00:12.000000000 -0300
+@@ -374,6 +374,27 @@
+ #endif /* WITHOUT_LIBC_STUBS */
+ 
+ 
++/* see typedef gfx_data_t below */
++#define gfx_ofs_ok			0x00
++#define gfx_ofs_mem_start		0x04
++#define gfx_ofs_mem_cur			0x08
++#define gfx_ofs_mem_max			0x0c
++#define gfx_ofs_code_seg		0x10
++#define gfx_ofs_jmp_table		0x14
++#define gfx_ofs_sys_cfg			0x44
++#define gfx_ofs_cmdline			0x64
++#define gfx_ofs_cmdline_len		0x68
++#define gfx_ofs_menu_list		0x6c
++#define gfx_ofs_menu_default_entry	0x70
++#define gfx_ofs_menu_entries		0x74
++#define gfx_ofs_menu_entry_len		0x78
++#define gfx_ofs_args_list		0x7c
++#define gfx_ofs_args_entry_len		0x80
++#define gfx_ofs_timeout			0x84
++#define gfx_ofs_mem_file		0x88
++#define gfx_ofs_mem_align		0x8c
++
++
+ #ifndef ASM_FILE
+ /*
+  *  Below this should be ONLY defines and other constructs for C code.
+@@ -595,6 +616,41 @@
+ extern int default_entry;
+ extern int current_entryno;
+ 
++
++/*
++ * graphics menu stuff
++ *
++ * Note: gfx_data and all data referred to in it must lie within a 64k area.
++ */
++typedef struct {
++  unsigned ok;			/* set while we're in graphics mode */
++  unsigned mem_start, mem_cur, mem_max;
++  unsigned code_seg;		/* code segment of binary graphics code */
++  unsigned jmp_table[12];	/* link to graphics functions */
++  unsigned char sys_cfg[32];	/* sys_cfg[0]: identifies boot loader (grub == 2) */
++  char *cmdline;		/* command line returned by gfx_input() */
++  unsigned cmdline_len;		/* length of the above */
++  char *menu_list;		/* list of menu entries, each of fixed length (menu_entry_len) */
++  char *menu_default_entry;	/* the default entry */
++  unsigned menu_entries;	/* number of entries in menu_list */
++  unsigned menu_entry_len;	/* one entry */
++  char *args_list;		/* same structure as menu_list, menu_entries entries */
++  unsigned args_entry_len;	/* one entry */
++  unsigned timeout;		/* in seconds (0: no timeout) */
++  unsigned mem_file;		/* aligned gfx file start */
++  unsigned mem_align;		/* aligned cpio file start */
++} __attribute__ ((packed)) gfx_data_t;
++
++extern gfx_data_t *graphics_data;
++
++/* pointer to graphics image data */
++extern char graphics_file[64];
++
++int gfx_init(gfx_data_t *gfx_data);
++int gfx_done(gfx_data_t *gfx_data);
++int gfx_input(gfx_data_t *gfx_data, int *menu_entry);
++int gfx_setup_menu(gfx_data_t *gfx_data);
++
+ /* The constants for password types.  */
+ typedef enum
+ {
+diff -Naur grub-0.97/stage2/stage2.c grub-0.97-suse/stage2/stage2.c
+--- grub-0.97/stage2/stage2.c	2005-03-19 14:51:57.000000000 -0300
++++ grub-0.97-suse/stage2/stage2.c	2006-09-09 17:00:13.000000000 -0300
+@@ -22,6 +22,8 @@
+ 
+ grub_jmp_buf restart_env;
+ 
++gfx_data_t *graphics_data;
++
+ #if defined(PRESET_MENU_STRING) || defined(SUPPORT_DISKLESS)
+ 
+ # if defined(PRESET_MENU_STRING)
+@@ -310,6 +312,12 @@
+       
+       if (! auth && password)
+ 	{
++	  if (*graphics_file)
++	    {
++	      printf ("\
++	WARNING: graphical menu doesn\'t work\
++	in conjunction with the password feature\n" );
++	    }
+ 	  printf ("\
+       Press enter to boot the selected OS or \'p\' to enter a\n\
+       password to unlock the next set of features.");
+@@ -753,6 +761,422 @@
+ }
+ 
+ 
++
++#if 0
++/* for debugging */
++static void hexdump(unsigned char *buf, unsigned len)
++{
++  int i, j = 0;
++  char s[17];
++  unsigned addr = (unsigned) buf;
++
++  s[16] = 0;
++  while(len--) {
++    i = buf[j];
++    i = i & 0xff;
++    s[j & 15] = (i >= 0x20 && i <= 0x7e) ? i : '.';
++    if(!(j & 15)) {
++      printf("%x  ", j + addr);
++    }
++    if(!(j & 7) && (j & 15)) printf(" ");
++    /* stupid grub_printf */
++    printf("%x", (i >> 4) & 0x0f);
++    printf("%x ", i & 0x0f);
++    if(!(++j & 15)) {
++      printf(" %s\n", s);
++    }
++  }
++
++  if(j & 15) {
++    s[j & 15] = 0;
++    if(!(j & 8)) printf(" ");
++    i = 1 + 3 * (16 - (j & 15));
++    while(i--) printf(" ");
++    printf("%s\n", s);
++  }
++}
++#endif
++
++/*
++ * Go through config entry and find kernel args, if any.
++ */
++static char *get_kernel_args(char *cfg)
++{
++  int j;
++  char *s, *t = "";
++
++  for(j = 0; ; j++) {
++    s = get_entry(cfg, j, 0);
++    if(!*s) break;
++    if(!memcmp(s, "kernel", 6) && (s[6] == ' ' || s[6] == '\t')) {
++      t = skip_to(0, s);
++      if(*t) t = skip_to(0, t);
++      break;
++    }
++  }
++
++  return t;
++}
++
++
++/*
++ * Check header and return code start offset.
++ */
++static unsigned magic_ok(unsigned char *buf)
++{
++  if(
++    *(unsigned *) buf == 0x0b2d97f00 &&		/* magic id */
++    (buf[4] >= 5 && buf[4] <= 7)		/* version 5 - 7 */
++  ) {
++    return *(unsigned *) (buf + 8);
++  }
++
++  return 0;
++}
++
++
++/*
++ * Search cpio archive for gfx file.
++ */
++static unsigned find_file(unsigned char *buf, unsigned len, unsigned *gfx_file_start)
++{
++  unsigned i, fname_len, flen, code_start = 0;
++
++  *gfx_file_start = 0;
++
++  for(i = 0; i < len;) {
++    if((len - i) >= 0x1a && (buf[i] + (buf[i + 1] << 8)) == 0x71c7) {
++      fname_len = *(unsigned short *) (buf + i + 20);
++      flen = *(unsigned short *) (buf + i + 24) + (*(unsigned short *) (buf + i + 22) << 16);
++      i += 26 + fname_len;
++      i = ((i + 1) & ~1);
++      if((code_start = magic_ok(buf + i))) {
++        *gfx_file_start = i;
++        return code_start;
++      }
++      i += flen;
++      i = ((i + 1) & ~1);
++    }
++    else {
++      break;
++    }
++  }
++
++  return code_start;
++}
++
++static inline unsigned char * stack_ptr(void)
++{
++  unsigned char * u;
++
++  asm("movl %%esp, %0" : "=r" (u));
++
++  return u;
++}
++
++/*
++ * Leave that much space on the heap. Everything else goes to the graphics
++ * functions.
++ *
++ * 0x2000 is _not_ enough
++ */
++#define MIN_HEAP_SIZE	0x4000
++
++/* gfx code needs at least this much free memory */
++#define MIN_GFX_FREE	0xc000
++
++/*
++ * Does normally not return.
++ */
++static void
++run_graphics_menu (char *menu_entries, char *config_entries, int num_entries,
++	  char *heap, int entryno)
++{
++  unsigned char *buf;
++  unsigned u, buf_size, code_start, file_start;
++  char *s, *t, *cfg, *new_config;
++  char *saved_heap;
++  int i, j, max_len;
++  int selected_entry;
++  gfx_data_t *gfx_data;
++
++  /*
++   * check gfx_data_t struct offsets for consistency; gcc will optimize away
++   * the whole block
++   */
++
++  /* dummy function to make ld fail */
++  {
++    extern void wrong_struct_size(void);
++    #define gfx_ofs_check(a) if(gfx_ofs_##a != (char *) &gfx_data->a - (char *) gfx_data) wrong_struct_size();
++    gfx_ofs_check(ok);
++    gfx_ofs_check(mem_start);
++    gfx_ofs_check(mem_cur);
++    gfx_ofs_check(mem_max);
++    gfx_ofs_check(code_seg);
++    gfx_ofs_check(jmp_table);
++    gfx_ofs_check(sys_cfg);
++    gfx_ofs_check(cmdline);
++    gfx_ofs_check(cmdline_len);
++    gfx_ofs_check(menu_list);
++    gfx_ofs_check(menu_default_entry);
++    gfx_ofs_check(menu_entries);
++    gfx_ofs_check(menu_entry_len);
++    gfx_ofs_check(args_list);
++    gfx_ofs_check(args_entry_len);
++    gfx_ofs_check(timeout);
++    gfx_ofs_check(mem_file);
++    gfx_ofs_check(mem_align);
++    #undef gfx_ofs_check
++  }
++
++  if(!num_entries) return;
++
++  graphics_data = gfx_data = (gfx_data_t *) heap;
++  heap += sizeof *gfx_data;
++  memset(gfx_data, 0, sizeof *gfx_data);
++
++  gfx_data->sys_cfg[0] = 2;	/* bootloader: grub */
++  gfx_data->timeout = grub_timeout >= 0 ? grub_timeout : 0;
++
++
++  /* setup command line edit buffer */
++
++  gfx_data->cmdline_len = 256;
++
++  gfx_data->cmdline = heap;
++  heap += gfx_data->cmdline_len;
++  memset(gfx_data->cmdline, 0, gfx_data->cmdline_len);
++
++
++  /* setup menu entries */
++
++  for(i = max_len = 0; i < num_entries; i++) {
++    j = strlen(get_entry(menu_entries, i, 0));
++    if(j > max_len) max_len = j;
++  }
++
++  if(!max_len) return;
++
++  gfx_data->menu_entry_len = max_len + 1;
++  gfx_data->menu_entries = num_entries;
++
++  gfx_data->menu_list = heap;
++  heap += gfx_data->menu_entry_len * gfx_data->menu_entries;
++
++  memset(gfx_data->menu_list, 0, gfx_data->menu_entry_len * gfx_data->menu_entries);
++
++  for(i = 0; i < (int) gfx_data->menu_entries; i++) {
++    strcpy(gfx_data->menu_list + i * gfx_data->menu_entry_len, get_entry(menu_entries, i, 0));
++  }
++
++  gfx_data->menu_default_entry = gfx_data->menu_list + entryno * gfx_data->menu_entry_len;
++
++
++  /* setup list of kernel args */
++
++  for(i = max_len = 0; i < num_entries; i++) {
++    s = get_kernel_args(get_entry(config_entries, i, 1));
++    j = strlen(s);
++    if(j > max_len) max_len = j;
++  }
++
++  gfx_data->args_entry_len = max_len + 1;
++
++  gfx_data->args_list = heap;
++  heap += gfx_data->args_entry_len * gfx_data->menu_entries;
++
++  memset(gfx_data->args_list, 0, gfx_data->args_entry_len * gfx_data->menu_entries);
++
++  for(i = 0; i < (int) gfx_data->menu_entries; i++) {
++    strcpy(gfx_data->args_list + i* gfx_data->args_entry_len, get_kernel_args(get_entry(config_entries, i, 1)));
++  }
++
++
++  /* go back here when we no longer need the graphics data */
++  saved_heap = heap;
++
++
++  /* get memory area to be used by graphics functions */
++
++  buf = (unsigned char *) (((unsigned) heap + 0xf) & ~0xf);
++
++  buf_size = stack_ptr() - buf - MIN_HEAP_SIZE;
++  buf_size &= ~0xf;
++
++  /* too small */
++  if(buf_size < 0x10000) return;
++
++  gfx_data->mem_start = (unsigned) buf;
++  gfx_data->mem_max = gfx_data->mem_start + buf_size;
++
++#if 0
++  printf("graphics menu\n");
++  printf(
++    "heap = 0x%x, buf = 0x%x (0x%x bytes), graphics_file = %s\n",
++    heap, gfx_data->mem_start, buf_size, graphics_file
++  );
++  getkey();
++#endif
++
++  heap += buf_size;
++
++
++  /* read the file */
++
++  if(!grub_open(graphics_file)) {
++    printf("graphics file \"%s\" missing, press a key to continue...\n", graphics_file);
++    getkey();
++    return;
++  }
++
++  i = grub_read(buf, buf_size);
++
++  grub_close();
++
++  if(i <= 0) {
++    printf("error reading \"%s\", press a key to continue...\n", graphics_file);
++    getkey();
++    return;
++  }
++
++  /* besides the file, we need some working memory, too */
++  if(i + MIN_GFX_FREE + 0x0f >= (int) buf_size) {
++    printf("file \"%s\" too large, press a key to continue...\n", graphics_file);
++    printf("i is %d, MIN_GFX_FREE is %d, buf_size is %d\n",i,MIN_GFX_FREE,buf_size);
++    getkey();
++    return;
++  }
++
++  gfx_data->mem_cur = gfx_data->mem_start + ((i + 0x0f + 3) & ~3);	/* align it */
++
++#if 0
++  printf("image: %d bytes (%d bytes left)\n", i, gfx_data->mem_max - gfx_data->mem_cur);
++  getkey();
++#endif
++
++
++  /* locate file inside cpio archive */
++  if(!(code_start = find_file(buf, i, &file_start))) {
++    printf("\"%s\" has wrong format, press a key to continue...\n", graphics_file);
++    getkey();
++    return;
++  }
++
++
++  /* align it */
++  u = (-(code_start + gfx_data->mem_start + file_start)) & 0x0f;
++  gfx_data->mem_align = gfx_data->mem_start + u;
++  gfx_data->mem_file = gfx_data->mem_align + file_start;
++  if(u) {
++    memcpy((void *) gfx_data->mem_align, (void *) gfx_data->mem_start, i);
++  }
++
++  /* init interface to graphics functions */
++
++  code_start += gfx_data->mem_file;
++
++#if 0
++  printf("code_start: 0x%x, file_start: 0x%x, mem_align = 0x%x, mem_file = 0x%x\n",
++    code_start, file_start, gfx_data->mem_align, gfx_data->mem_file
++  );
++  getkey();
++#endif
++
++  gfx_data->code_seg = code_start >> 4;
++
++#if 0
++  printf("code start = 0x%x, code_seg = 0x%x\n", code_start, gfx_data->code_seg);
++#endif
++
++  for(i = 0; (unsigned) i < sizeof gfx_data->jmp_table / sizeof *gfx_data->jmp_table; i++) {
++    gfx_data->jmp_table[i] = (gfx_data->code_seg << 16) + ((unsigned short *) code_start)[i];
++  }
++
++#if 0
++  for(i = 0; i < 12; i++) {
++    printf("%d: 0x%x\n", i, gfx_data->jmp_table[i]);
++  }
++
++  for(i = 0; i < gfx_data->menu_entries; i++) {
++    printf(">%s< - >%s<\n",
++      gfx_data->menu_list + i * gfx_data->menu_entry_len,
++      gfx_data->args_list + i * gfx_data->args_entry_len
++    );
++  }
++
++  printf("def: >%s<\n", gfx_data->menu_default_entry);
++#endif
++
++
++  /* switch to graphics mode */
++
++  if(gfx_init(gfx_data)) {
++#if 0
++    printf("gfx_init failed\n");
++    getkey();
++#endif
++    return;
++  }
++
++  gfx_setup_menu(gfx_data);
++
++  i = gfx_input(gfx_data, &selected_entry);
++
++  /* ESC -> show text menu */
++  if(i == 1) {
++    gfx_done(gfx_data);
++    grub_timeout = -1;
++
++    return;
++  }
++
++  gfx_done(gfx_data);
++
++  heap = saved_heap;	/* free most of the graphics data */
++
++  // printf("cmdline: >%s<, entry = %d\n", gfx_data->cmdline, selected_entry);
++
++  if(selected_entry < 0 || selected_entry > num_entries) return;
++
++
++  /* create new config with modified kernel option */
++
++  cfg = get_entry(config_entries, selected_entry, 1);
++
++  new_config = heap;
++
++  for(i = 0; ; i++) {
++    s = get_entry(cfg, i, 0);
++    if(!*s) {
++      if(!i) *heap++ = 0;
++      *heap++ = 0;
++      break;
++    }
++    if(!memcmp(s, "kernel", 6) && (s[6] == ' ' || s[6] == '\t')) {
++      t = skip_to(0, s);
++      if(*t) t = skip_to(0, t);
++      memmove(heap, s, t - s);
++      heap += t - s;
++      *heap++ = ' ';
++      strcpy(heap, gfx_data->cmdline);
++      heap += strlen(gfx_data->cmdline) + 1;
++    }
++    else {
++      strcpy(heap, s);
++      heap += strlen(s) + 1;
++    }
++  }
++
++  *heap++ = 0;
++
++  // hexdump(new_config, heap - new_config);
++  // getkey();
++
++  run_script(new_config, heap);
++}
++
++
+ static int
+ get_line_from_config (char *cmdline, int maxlen, int read_from_file)
+ {
+@@ -827,6 +1251,7 @@
+   return pos;
+ }
+ 
++extern void __savedefault_once_reset();
+ 
+ /* This is the starting function in C.  */
+ void
+@@ -1049,7 +1474,9 @@
+ 	    }
+ 	  while (is_preset);
+ 	}
+-
++#ifndef SUPPORT_DISKLESS
++      __savedefault_once_reset();
++#endif
+       if (! num_entries)
+ 	{
+ 	  /* If no acceptable config file, goto command-line, starting
+@@ -1059,9 +1486,12 @@
+ 	}
+       else
+ 	{
+-	  /* Run menu interface.  */
+-	  run_menu (menu_entries, config_entries, num_entries,
+-		    menu_entries + menu_len, default_entry);
++	  if (*graphics_file && !password && show_menu && grub_timeout)
++	    {
++	      run_graphics_menu(menu_entries, config_entries, num_entries,menu_entries + menu_len, default_entry);
++	    }
++	    /* Run menu interface.  */
++            run_menu (menu_entries, config_entries, num_entries, menu_entries + menu_len, default_entry);
+ 	}
+     }
+ }
+diff -Naur grub-0.97/util/grub-md5-crypt.in grub-0.97-suse/util/grub-md5-crypt.in
+--- grub-0.97/util/grub-md5-crypt.in	2003-07-09 08:45:51.000000000 -0300
++++ grub-0.97-suse/util/grub-md5-crypt.in	2006-09-09 17:00:12.000000000 -0300
+@@ -88,7 +88,7 @@
+ fi
+ 
+ # Run the grub shell.
+-$grub_shell --batch --device-map=/dev/null <<EOF \
++$grub_shell --batch <<EOF \
+     | grep "^Encrypted: " | sed 's/^Encrypted: //'
+ md5crypt
+ $password
+diff -Naur grub-0.97/util/mbchk.c grub-0.97-suse/util/mbchk.c
+--- grub-0.97/util/mbchk.c	2003-10-19 13:36:45.000000000 -0200
++++ grub-0.97-suse/util/mbchk.c	2006-09-09 17:00:12.000000000 -0300
+@@ -59,7 +59,9 @@
+   int i;
+   char buf[8192];
+ 
+-  if (fread (buf, 1, 8192, fp) < 0)
++  fread (buf, 1, 8192, fp);
++  
++  if (ferror(fp))
+     {
+       fprintf (stderr, "%s: Read error.\n", filename);
+       return 0;
+diff -Nurp grub-0.97.orig/grub/asmstub.c grub-0.97/grub/asmstub.c
+--- grub-0.97.orig/grub/asmstub.c	2007-09-23 02:43:28.000000000 -0700
++++ grub-0.97/grub/asmstub.c	2007-09-23 02:50:56.000000000 -0700
+@@ -73,7 +73,7 @@ unsigned long install_partition = 0x2000
+ unsigned long boot_drive = 0;
+ int saved_entryno = 0;
+ char version_string[] = VERSION;
+-char config_file[128] = "/boot/grub/menu.lst"; /* FIXME: arbitrary */
++char config_file[128] = "@%Compile_goboBoot%@/grub/menu.lst"; /* FIXME: arbitrary */
+ unsigned long linux_text_len = 0;
+ char *linux_data_tmp_addr = 0;
+ char *linux_data_real_addr = 0;
+diff -Nurp grub-0.97.orig/stage2/asm.S grub-0.97/stage2/asm.S
+--- grub-0.97.orig/stage2/asm.S	2007-09-23 02:43:28.000000000 -0700
++++ grub-0.97/stage2/asm.S	2007-09-23 02:52:41.000000000 -0700
+@@ -98,10 +98,10 @@ VARIABLE(version_string)
+ 	.string VERSION
+ VARIABLE(config_file)
+ #ifndef STAGE1_5
+-	.string "/boot/grub/menu.lst"
++	.string "@%Compile_goboBoot%@/grub/menu.lst"
+ #else   /* STAGE1_5 */
+ 	.long	0xffffffff
+-	.string "/boot/grub/stage2"
++	.string "@%Compile_goboBoot%@/grub/stage2"
+ #endif  /* STAGE1_5 */
+ 
+ 	/*
