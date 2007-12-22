@@ -1,0 +1,24 @@
+#!/bin/sh
+
+source GoboPath
+source $goboSettings/gobohide.conf
+
+case "$1" in
+    [sS]tart)
+        option="-h"
+        ;;
+    [sS]top)
+        option="-u"
+        ;;
+    *)
+        echo "Usage: $0 <start|stop>"
+        exit 1
+esac
+
+for dir in $UserDefinedEntries
+do
+    if [ -d "$dir" -o -h "$dir" ]
+    then
+        gobohide "$option" "$dir"
+    fi
+done
