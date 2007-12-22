@@ -13,4 +13,5 @@ post_install() {
    # *_path variables for build dependencies. :(
    cp -f ${goboPrograms}/GfxBoot/Current/Shared/gfxboot/themes/GoboGrubTheme/boot/message ${grubdir}
    cp -f ${target}/lib/grub/i386-pc/* ${grubdir}
+   cp -f ${recipedir}/message_replacement-64bit ${grubdir}/message
 }
