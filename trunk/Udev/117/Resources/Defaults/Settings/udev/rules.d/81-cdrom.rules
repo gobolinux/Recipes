@@ -1,3 +1,4 @@
 # /etc/udev/rules.d/81-cdrom.rules: Set CD-ROM permissions.
 
-ACTION=="add", SUBSYSTEM=="block", ENV{ID_TYPE}=="cd", GROUP="cdrom"
+ACTION=="add", SUBSYSTEM=="block", ENV{ID_TYPE}=="cd", GROUP="cdrom", MODE="660"
+
