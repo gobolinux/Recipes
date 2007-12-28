@@ -11,3 +11,8 @@ configure_options=(
     --with-dirmngr-pgm=$goboExecutables/dirmngr
     --with-protect-tool-pgm=$goboExecutables/protect-tool
 )
+
+pre_link(){
+	#Create a symlink to gpg2 named gpg for backward compatibility
+	ln -s -n -f $target/bin/gpg2 $target/bin/gpg
+}
