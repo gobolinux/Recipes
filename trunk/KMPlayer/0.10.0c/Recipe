@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for KMPlayer by Daniele Maccari, on Wed Jan 2 17:41:50 CET 2008
+# Recipe for version 0.10.0c by Daniele Maccari, on Wed Jan 2 17:41:50 CET 2008
+compile_version=1.9.0
+url="http://kmplayer.kde.org/pkgs/kmplayer-0.10.0c.tar.bz2"
+file="kmplayer-0.10.0c.tar.bz2"
+file_size=1047729
+file_md5=3e76147784b2642891c9efbfe260e4c4
+recipe_type=configure
+
+configure_options=(
+	"--with-extra-includes=$goboHeaders/dbus-1.0"
+	"--disable-libsuffix"
+)
