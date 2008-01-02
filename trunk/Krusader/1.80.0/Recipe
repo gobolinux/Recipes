@@ -1,0 +1,14 @@
+# Recipe for version 1.80.0 by Daniele Maccari, on Wed Jan 2 12:21:34 CET 2008
+# Recipe (MakeRecipe) for Krusader by Andre Detsch, on Thu Sep 8 10:48:32 BRT 2005
+compile_version=1.8.2
+environment=(
+   "KDEDIR=$KDEDIRS"
+)
+url="$httpSourceforge/krusader/krusader-1.80.0.tar.gz"
+file_size=4722571
+file_md5=32bfaf4de7ca62e0f612357f4aa065a9
+recipe_type=configure
+
+configure_options=(
+	"--disable-libsuffix"
+)
