@@ -7,6 +7,8 @@ file_md5=1c1a87f3cbd3c334c874585e42701961
 recipe_type=makefile
 makefile='Makefile'
 make_variables=(
-   "DESTDIR=$target"
+   "DESTDIR="
    "PREFIX=$target"
+   "MANDIR=$target/man"
+   "CFGDIR=$settings_target"
 )
