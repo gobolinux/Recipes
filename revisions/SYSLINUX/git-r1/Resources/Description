@@ -1,0 +1,19 @@
+[Name]
+SYSLINUX
+
+[Summary]
+The SYSLINUX Project covers lightweight bootloaders for floppy media (SYSLINUX),\
+network booting (PXELINUX), and bootable "El Torito" CD-ROMs (ISOLINUX).
+
+[Description]
+The SYSLINUX Project covers lightweight bootloaders for floppy media (SYSLINUX),\
+network booting (PXELINUX), and bootable "El Torito" CD-ROMs (ISOLINUX).\
+The project also includes MEMDISK, a tool to boot legacy operating systems\
+(such as DOS) from nontraditional media; it is usually used in conjunction with \
+PXELINUX and ISOLINUX.
+
+[License]
+GNU General Public License version 2
+
+[Homepage] 
+http://syslinux.zytor.com
