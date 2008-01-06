@@ -9,3 +9,7 @@ makefile='Makefile'
 make_variables=(
    "prefix=$target"
 )
+
+pre_link() {
+   cp -a Documentation/* $target/doc
+}
