@@ -1,0 +1,27 @@
+# Recipe for version 1.5.4_OSE by Lucas C. Villa Real, on Sat Jan 5 01:52:18 PST 2008
+# Recipe (MakeRecipe) for VirtualBox by Lucas C. Villa Real, on Sat Nov 24 12:02:49 PST 2007
+compile_version=1.10.1
+url="http://www.virtualbox.org/download/1.5.4/VirtualBox-1.5.4_OSE.tar.bz2"
+file_size=26646142
+file_md5=fbebb3f04911c4c39aac27b1d3532acc
+file="VirtualBox-1.5.4_OSE_OSE.tar.bz2"
+dir="VirtualBox-1.5.4_OSE"
+recipe_type=makefile
+
+# The following directories doesn't really need to exist. We just need to make
+# sure that the dependencies are really installed.
+environment=(
+    SDK_VBOX_XERCES_INCS=$compileSources/xerces-c-src_2_8_0
+    SDK_VBOX_XALAN_INCS=$compileSources/xalan-c-src_1_10_0
+)
+
+make_variables=(
+    libIDL_config_cflags="`pkg-config --cflags libIDL-2.0`"
+    libIDL_config_libs="`pkg-config --libs libIDL-2.0`"
+)
+
+pre_build() {
+    GrepReplace "\"PKG_CONFIG_PATH=.*\"" \
+                "\"PKG_CONFIG_PATH=$goboLibraries/pkgconfig $goboExecutables/libIDL-config-2\"" configure
+    ./configure --with-qt-dir=$qt_path --disable-pulse
+}
