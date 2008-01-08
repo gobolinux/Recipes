@@ -38,4 +38,9 @@ post_install(){
 		echo You seem to have the mac80211 stack built as a module.\
 			Be sure to load it at startup in order to use this driver.
 	fi
+
+	# Make a note that this is a third part module that needs
+	# recompiling with a new kernel
+	mkdir -p ${target}/Shared/Compile/Recompile/Linux/
+	touch ${target}/Shared/Compile/Recompile/Linux/Iwlwifi
 }
