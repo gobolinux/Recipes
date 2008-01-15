@@ -5,6 +5,7 @@
 /* Wouldn't it be a lot more sane if we could just untar these things? */
 
 #include <stdlib.h>
+#include <stdio.h>
 
 /* These offsets keep getting bigger, so we're going to just bite a 2MB */
 /* chunk of RAM right away so that we have enough.  Yeah, horrible */
