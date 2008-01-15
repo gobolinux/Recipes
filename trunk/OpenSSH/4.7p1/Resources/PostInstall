@@ -1,3 +1,10 @@
+#!/bin/bash
+
+# Workaround until we support $target variables in PostInstall scripts
+[ -z "${target}" ] && target=${goboPrefix}/Programs/OpenSSH/Current
+[ -z "${settings_target}" ] && settings_target=${goboPrefix}/Programs/OpenSSH/Settings
+
+mkdir -p ${settings_target}/ssh
 if [ ! -f ${settings_target}/ssh/ssh_host_key ]
 then
    ${target}/bin/ssh-keygen -t rsa1 -b 1024 -f ${settings_target}/ssh/ssh_host_key -N ''
