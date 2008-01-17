@@ -10,7 +10,7 @@ recipe_type=configure
 post_install_message="Remember to add this line to ${goboSettings}/BootScripts/BootUp\nin order to load the rules defined with Guarddog at startup:\nExec 'Loading firewall rules...' Guarddog Start"
 
 pre_build(){
-	#Check for mac80211
+	#Check for iptables
 	if ! zcat $goboStatus/config.gz | grep -q "CONFIG_IP_NF_IPTABLES=[m,y]"; then
 		Log_Error "Your kernel does not support iptables or \
 			configuration could not be read. Make sure you have enabled \
@@ -19,9 +19,6 @@ pre_build(){
 		Ask_Continue "Do you want to continue anyway? (Not recommended \
 			unless you know what you do)"
 	fi
-	
-	#Check for patches to apply
-	make check_inc source
 }
 
 post_install(){
