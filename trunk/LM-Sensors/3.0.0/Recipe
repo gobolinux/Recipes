@@ -8,7 +8,7 @@ file_md5=9daeed4b0c9681562541e5d481bf9cf9
 recipe_type=makefile
 makefile='Makefile'
 
-environment=(
+make_variables=(
     "PREFIX=$target"
     "ETCDIR=$settings_target"
 )
