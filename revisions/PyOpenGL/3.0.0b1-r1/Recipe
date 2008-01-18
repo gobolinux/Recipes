@@ -1,0 +1,14 @@
+# Recipe for version 3.0.0b1 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jan 18 15:03:08 CET 2008
+# Recipe (MakeRecipe) for PyOpenGL by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Aug 9 16:51:31 BRT 2005
+compile_version=1.8.0
+url="$httpSourceforge/pyopengl/PyOpenGL-3.0.0b1.tar.gz"
+file_size=614923
+file_md5=8a5536e4ec9fd4eddcc5bd954096205f
+recipe_type=python
+
+environment=(
+   PYTHONPATH="$PYTHONPATH:$target/lib/python$(python --version 2>&1 | awk {'print $2'} | cut -b1-3)/site-packages"
+)
+pre_install() {
+   mkdir -p $target/lib/python$(python --version 2>&1 | awk {'print $2'} | cut -b1-3)/site-packages
+}
