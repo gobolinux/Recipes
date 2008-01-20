@@ -64,9 +64,6 @@ pre_link() {
 
    Log_Normal "Installing prepared tables"
    mount --bind ${target}/Resources/Unmanaged/$databasedir $databasedir
-   $target/bin/mysql_install_db
+   $target/bin/mysql_install_db --user mysql
    umount $databasedir
-
-   Log_Normal "Changing ownership of Variable to mysql:mysql"
-   chown -R mysql:mysql $databasedir
 }
