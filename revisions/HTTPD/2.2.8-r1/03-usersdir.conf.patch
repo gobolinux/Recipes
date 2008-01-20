@@ -1,0 +1,16 @@
+Changes the users home directory to the GoboLinux equivalent, Users
+
+-- 
+Jonas Karlsson
+
+--- httpd-2.2.3/docs/conf/extra/httpd-userdir.conf.in	2005-04-26 09:51:11.000000000 +0200
++++ httpd-2.2.3.new/docs/conf/extra/httpd-userdir.conf.in	2006-11-09 17:15:58.000000000 +0100
+@@ -13,7 +13,7 @@
+ # Control access to UserDir directories.  The following is an example
+ # for a site where these directories are restricted to read-only.
+ #
+-<Directory "/home/*/public_html">
++<Directory "/Users/*/public_html">
+     AllowOverride FileInfo AuthConfig Limit Indexes
+     Options MultiViews Indexes SymLinksIfOwnerMatch IncludesNoExec
+     <Limit GET POST OPTIONS>
