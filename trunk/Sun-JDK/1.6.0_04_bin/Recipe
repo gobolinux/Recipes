@@ -5,5 +5,5 @@ recipe_type=manifest
 uncompress=no
 
 pre_patch() {
-  bash jdk-6u3-linux-i586.bin
+  bash jdk-6u4-linux-i586.bin
 }
