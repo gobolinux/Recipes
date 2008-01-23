@@ -1,0 +1,9 @@
+# Recipe for version svn by Hisham Muhammad <hisham@gobolinux.org>
+# Recipe (MakeRecipe) for Hydrogen by demian florentin <demianflorentin_at_gmail.com>, on Sun Nov 25 20:35:22 PYST 2007
+compile_version=1.9.0
+svn="http://hydrogen-music.org/svn/trunk"
+recipe_type=configure
+# It's a non-autoconf configure, and yes, that is the recommended method.
+environment=(
+   "prefix=$target"
+)
