@@ -8,6 +8,11 @@ file_md5=ade37edad8cee878f2d90f91ef8486fe
 recipe_type=makefile
 makefile='Makefile'
 
+make_variables=(
+	CUPSFILTER=${target}/lib/cups/filter
+	CUPSPPD=${target}/share/cups/model
+)
+
 pre_install(){
 	mkdir -p ${target}/lib/cups/filter
 	mkdir -p ${target}/Shared/cups/model
