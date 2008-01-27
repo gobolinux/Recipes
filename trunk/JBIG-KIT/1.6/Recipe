@@ -12,6 +12,11 @@ pre_install(){
 	make
 }
 
+docs=(
+	"ANNOUNCE"
+	"CHANGES"
+)
+
 manifest=(
 	"libjbig/libjbig.a:lib"
 	"libjbig/jbig.h:include"
