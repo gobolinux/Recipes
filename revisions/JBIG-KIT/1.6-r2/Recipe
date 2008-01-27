@@ -1,0 +1,29 @@
+# Recipe (MakeRecipe) for JBIG-KIT by Daniele Maccari, on Sat Jan 26 22:30:52 CET 2008
+# Recipe for version 1.6 by Daniele Maccari, on Sat Jan 26 22:30:52 CET 2008
+compile_version=1.10.0
+url="http://www.cl.cam.ac.uk/~mgk25/download/jbigkit-1.6.tar.gz"
+file="jbigkit-1.6.tar.gz"
+file_size=405712
+file_md5=ce196e45f293d40ba76af3dc981ccfd7
+dir='jbigkit'
+recipe_type=manifest
+
+pre_install(){
+	make
+}
+
+docs=(
+	"ANNOUNCE"
+	"CHANGES"
+)
+
+manifest=(
+	"libjbig/libjbig.a:lib"
+	"libjbig/jbig.h:include"
+	"pbmtools/jbgtopbm:bin"
+	"pbmtools/pbmtojbg:bin"
+	"pbmtools/jbgtopbm.1:man/man1"
+	"pbmtools/pbmtojbg.1:man/man1"
+	"pbmtools/pbm.5:man/man5"
+	"pbmtools/pgm.5:man/man5"
+)
