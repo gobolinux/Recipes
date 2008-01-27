@@ -5,3 +5,7 @@ file_size=3789493
 file_md5=7ca7e2908e24721471de92cf40c75e60
 mirror_url="ftp://ftp.sane-project.org/pub/sane/old-versions/sane-backends-1.0.18/sane-backends-1.0.18.tar.gz"
 recipe_type=configure
+
+unmanaged_files=(
+    $goboVariables/lock/sane
+)
