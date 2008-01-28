@@ -147,7 +147,7 @@ diff -Nur kdeutils-3.5.8/klaptopdaemon-orig/portable.cpp kdeutils-3.5.8/klaptopd
  	// software_suspend_is_preferred = hibernate;
  }
 +
-+QString
++static QString
 +laptop_portable::get_superuser_name()
 +{
 +	return QString("root");
@@ -166,7 +166,7 @@ diff -Nur kdeutils-3.5.8/klaptopdaemon-orig/portable.h kdeutils-3.5.8/klaptopdae
 +	 * @return the superuser's name present in the passwd structure, or "root" if
 +	 * an error ocurred while scanning the pw entries.
 +	 */
-+	QString get_superuser_name();
++	static QString get_superuser_name();
  };
  
  #endif
