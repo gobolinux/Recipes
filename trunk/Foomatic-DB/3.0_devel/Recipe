@@ -8,8 +8,8 @@ recipe_type=configure
 part_of=Foomatic
 
 install_variables=(
-    CUPS_PPDS=$target/Shared
-    LIBDIR=$target/Shared/foomatic
+    CUPS_PPDS=$target/share
+    LIBDIR=$target/share/foomatic
 )
 
 pre_build() {
