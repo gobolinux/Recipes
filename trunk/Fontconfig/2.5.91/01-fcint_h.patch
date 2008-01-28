@@ -1,0 +1,14 @@
+--- fontconfig-2.3.95/src/fcint.h.orig	2006-05-15 22:00:34.000000000 -0300
++++ fontconfig-2.3.95/src/fcint.h	2006-05-15 22:00:57.000000000 -0300
+@@ -33,10 +33,8 @@
+ #include <stdio.h>
+ #ifdef HAVE_INTTYPES_H
+ #include <inttypes.h>
+-#elif defined(HAVE_STDINT_H)
+-#include <stdint.h>
+ #else
+-#error missing C99 integer data types
++#include <stdint.h>
+ #endif
+ #include <string.h>
+ #include <ctype.h>
