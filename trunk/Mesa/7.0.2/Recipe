@@ -21,25 +21,6 @@ recipe_type=makefile
 dir='Mesa-7.0.2'
 build_target=linux-dri
 
-pre_build() {
-
-# This will be fixed in Mesa 7.0.3
-cat <<__EOF__ >> src/glw/glw.pc.in
-prefix=@INSTALL_DIR@
-exec_prefix=${prefix}
-libdir=${exec_prefix}/@LIB_DIR@
-includedir=${prefix}/include
-
-Name: glw
-Description: Mesa OpenGL widget library
-Requires: gl
-Version: @VERSION@
-Libs: -L${libdir} -lGLw
-Cflags: -I${includedir}
-
-__EOF__
-
-}
 pre_link() {
    for p in glxheads glthreads glxcontexts glxdemo glxgears glxgears_fbconfig glxinfo glxpbdemo glxpixmap glxswapcontrol
    do
