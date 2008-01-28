@@ -9,11 +9,15 @@ recipe_type=makefile
 makefile='Makefile'
 
 make_variables=(
-	CUPSFILTER=${target}/lib/cups/filter
-	CUPSPPD=${target}/share/cups/model
+	CUPSFILTER=${target}/Shared/cups/filter
+	CUPSPPD=${target}/Shared/cups/model
 )
 
-pre_install(){
-	mkdir -p ${target}/lib/cups/filter
-	mkdir -p ${target}/Shared/cups/model
+pre_install() {
+    mkdir -p $target/Shared/cups/filter 
+    mkdir -p $target/Shared/cups/model
+}
+
+pre_link(){
+    ln -s ../share/cups ${target}/lib/cups
 }
