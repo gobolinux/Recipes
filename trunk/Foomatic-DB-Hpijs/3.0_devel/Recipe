@@ -8,7 +8,7 @@ recipe_type=configure
 part_of=Foomatic
 
 install_variables=(
-    LIBDIR=$target/Shared/foomatic
+    LIBDIR=$target/share/foomatic
 )
 
 pre_build() {
