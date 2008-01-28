@@ -12,11 +12,11 @@ configure_options=(
 )
 
 install_variables=(
-    LIBDIR=$target/Shared/foomatic
+    LIBDIR=$target/share/foomatic
     PPR_INTERFACES=$target/lib/ppr/interfaces
     PPR_LIB=$target/lib/ppr/lib
-    CUPS_BACKENDS=$target/Share/cups/backend
-    CUPS_FILTERS=$target/Share/cups/filter
+    CUPS_BACKENDS=$target/share/cups/backend
+    CUPS_FILTERS=$target/share/cups/filter
 )
 
 pre_build() {
