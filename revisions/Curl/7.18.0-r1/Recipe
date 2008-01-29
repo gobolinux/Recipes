@@ -1,0 +1,12 @@
+# Recipe for version 7.18.0 by Giambattista Bloisi <giamby@infinito.it>, on Tue Jan 29 22:50:23 CET 2008
+compile_version=1.9.0
+url="http://curl.oc1.mirrors.redwire.net/download/curl-7.18.0.tar.bz2"
+file_size=1779421
+file_md5=3e50dd887d6a354be312d874e1d3426c
+recipe_type=configure
+
+configure_options=(
+   "--disable-debug"
+   "--disable-verbose"
+   "--mandir=${target}/man"
+)
