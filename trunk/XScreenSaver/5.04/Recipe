@@ -16,6 +16,6 @@ make_variables=(
 configure_options=(
 "--enable-locking"
 "--libexecdir=$target/lib"
-"--with-configdir=$settings_target"
+"--with-configdir=$settings_target/xscreensaver-hacks"
 "--with-x-app-defaults=$settings_target"
 )
