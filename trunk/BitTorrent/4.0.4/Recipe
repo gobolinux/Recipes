@@ -3,6 +3,7 @@
 compile_version=1.8.0
 url="$httpSourceforge/bittorrent/BitTorrent-4.0.4.tar.gz"
 recipe_type=manifest
+
 pre_link() {
-  python setup.py install --prefix=$target
+  $sudo_exec python setup.py install --prefix=$target
 }
