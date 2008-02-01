@@ -1,0 +1,14 @@
+# Recipe for version 2.4.4 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Feb 1 01:50:33 GMT 2008
+# Recipe (MakeRecipe) for Gimp by roko, <ro.ko@mcnon.com>, on Fri Dec 31 19:34:35 BRST 2004
+compile_version=1.9.0
+url="ftp://ftp.gimp.org/pub/gimp/v2.4/gimp-2.4.4.tar.bz2"
+file_size=17775071
+file_md5=41d0568581de99f3fd2ecb5babae1f6e
+recipe_type=configure
+configure_options=(
+#--disable-print
+)  
+#. GoboPath
+environment=(
+   "PKG_CONFIG_PATH=${goboLibraries}/pkgconfig"
+)
