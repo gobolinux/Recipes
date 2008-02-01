@@ -1,0 +1,13 @@
+# Recipe for version 3.5.5 by Giambattista Bloisi <giamby@infinito.it>, on Fri Feb 1 23:51:20 CET 2008
+compile_version=1.9.0
+url="http://www.sqlite.org/sqlite-3.5.5.tar.gz"
+file_size=2512678
+file_md5=1174fc9074db2aa49bd17f3dc2607067
+recipe_type=configure
+configure_options=(
+    "--disable-tcl"
+)
+
+pre_link() {
+    ln -s $target/bin/sqlite3 $target/bin/sqlite
+}
