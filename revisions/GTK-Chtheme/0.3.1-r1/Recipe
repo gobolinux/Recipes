@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for GTK-Chtheme by Daniele Maccari <daniele.maccari@gmail.com>, on Fri Feb 1 22:39:22 CET 2008
+# Recipe for version 0.3.1 by Daniele Maccari <daniele.maccari@gmail.com>, on Fri Feb 1 22:39:22 CET 2008
+compile_version=1.10.1
+url="http://plasmasturm.org/code/gtk-chtheme/gtk-chtheme-0.3.1.tar.bz2"
+file_size=18205
+file_md5=f688053bf26dd6c4f1cd0bf2ee33de2a
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=(
+	"DESTDIR=${target}"
+	"BINDIR=bin"
+	"MANDIR=man"
+)
