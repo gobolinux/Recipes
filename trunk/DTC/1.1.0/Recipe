@@ -9,6 +9,5 @@ dir='dtc'
 recipe_type=makefile
 makefile='Makefile'
 make_variables=(
-   "DESTDIR=$target"
    "PREFIX=$target"
 )
