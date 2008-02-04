@@ -10,8 +10,8 @@ GhostScript >= 6.53 # Recommended
 #Glibc 2.3.2
 #GStreamer >= 0.8 <= 0.8 # Optional
 JPEG >= 6b # Recommended (Unversioned)
-KDE-Base >= 3.5.6
-KDE-Libs >= 3.5.6
+KDE-Base >= 3.5.6, < 4
+KDE-Libs >= 3.5.6, < 4
 Lame >= 3.96.1 # Optional (Unversioned)
 LibMad >= 0.15.0 # Recommended (Unversioned)
 #LibMusicbrainz >= 2.1.0 # Optional (Unversioned)
