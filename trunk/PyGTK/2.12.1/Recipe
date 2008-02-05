@@ -7,3 +7,10 @@ recipe_type=configure
 configure_options=(
    "--enable-numpy"
 )
+
+pre_link() {
+   pythonversion=$(python --version 2>&1 | awk {'print $2'} | cut -b1-3)
+   echo "$goboLibraries/python2.5/site-packages/gtk-2.0" > $target/lib/python${pythonversion}/site-packages/pygtk.pth
+   echo "$goboLibraries/python2.4/site-packages/gtk-2.0" >> $target/lib/python${pythonversion}/site-packages/pygtk.pth
+   echo "$goboLibraries/python2.3/site-packages/gtk-2.0" >> $target/lib/python${pythonversion}/site-packages/pygtk.pth
+}
