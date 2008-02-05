@@ -1,0 +1,12 @@
+# Recipe for version 3.5.8 by Andre Detsch <detsch@gobolinux.org>, on Thu Oct 18 22:40:55 BRT 2007
+# KDE-Libs meta-recipe 
+# by Andre Detsch
+
+compile_version=1.9.0
+
+# ARTS and Libs compilation don't support different prefixes yet...
+include=(
+   "ARTS--1.5.8"
+   "KDE-Libs-Itself--3.5.8"
+)
+recipe_type=meta
