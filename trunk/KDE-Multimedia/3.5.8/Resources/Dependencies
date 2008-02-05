@@ -8,7 +8,7 @@ FreeType >= 2.0.0 # Recommended
 #GCC 3.4.4
 GhostScript >= 6.53 # Recommended
 #Glibc 2.3.2
-#GStreamer >= 0.8 <= 0.8 # Optional
+#GStreamer >= 0.8, <= 0.8 # Optional
 JPEG >= 6b # Recommended (Unversioned)
 KDE-Base >= 3.5.6, < 4
 KDE-Libs >= 3.5.6, < 4
@@ -23,7 +23,7 @@ LibXSLT >= 1.0.7 # Recommended
 Mesa >= 6.4 # Recommended
 Perl >= 5.0
 Speex >= 1.0 # Optional (Unversioned)
-Qt >= 3.3.2 < 4.0
+Qt >= 3.3.2, < 4.0
 #SDL >= 1.2 # Optional (Unversioned)
 Xine-Lib >= 1.1.4 # Recommended (Unversioned)
 Xorg >= 7.0 # (Unversioned)
