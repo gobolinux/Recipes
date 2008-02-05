@@ -1,0 +1,61 @@
+Fix for hardcoded patches against /var
+
+-- 
+Jonas Karlsson
+diff -Naur kdebase-3.5.6/kdm/config.def kdebase-3.5.6.new/kdm/config.def
+--- kdebase-3.5.6/kdm/config.def	2005-10-10 17:04:31.000000000 +0200
++++ kdebase-3.5.6.new/kdm/config.def	2007-03-19 14:44:38.000000000 +0100
+@@ -876,7 +876,7 @@
+ Type: string
+ Default: ""
+ User: core
+-Instance: "/var/run/kdm.pid"
++Instance: "@%Compile_variable_target%@/run/kdm.pid"
+ Merge: xdm
+ Comment:
+  Where &kdm; should store its PID (do not store if empty).
+@@ -901,7 +901,7 @@
+ Key: AuthDir
+ Type: path
+ # differs from XDM
+-Default: "/var/run/xauth"
++Default: "@%Compile_variable_target%@/run/xauth"
+ User: core
+ Instance: #"/tmp"
+ Merge: xdm(P_authDir)
+@@ -943,7 +943,7 @@
+ Key: RandomFile
+ If: !defined(ARC4_RANDOM) && !defined(DEV_RANDOM)
+ Type: string
+-Default: "/dev/mem"
++Default: "@%Compile_goboDevices%@/mem"
+ User: core
+ Instance: #""
+ Merge: xdm
+@@ -1008,7 +1008,7 @@
+ 
+ Key: FifoDir
+ Type: path
+-Default: *"/var/run/xdmctl"
++Default: *"@%Compile_variable_target%@/run/xdmctl"
+ User: core
+ Instance: #"/tmp"
+ Update: upd_fifodir
+@@ -1032,7 +1032,7 @@
+ 
+ Key: DataDir
+ Type: path
+-Default: *"/var/lib/kdm"
++Default: *"@%Compile_variable_target%@/lib/kdm"
+ User: greeter
+ Instance: #""
+ Update: upd_datadir
+@@ -1715,7 +1715,7 @@
+ 
+ Key: UserAuthDir
+ Type: path
+-Default: "/tmp"
++Default: "@%Compile_variable_target%@/tmp"
+ User: core
+ Instance: #*/""
+ Merge: xdm
