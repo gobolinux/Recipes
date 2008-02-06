@@ -1,0 +1,29 @@
+[Name] Schroot
+[Summary] Execute commands in a chroot environment
+[License] GPL
+[Description] schroot allows users to execute commands or interactive shells in
+different chroots.  Any number of named chroots may be created, and
+access permissions given to each, including root access for normal
+users, on a per-user or per-group basis.  Additionally, schroot can
+switch to a different user in the chroot, using PAM for
+authentication and authorisation.  All operations are logged for
+security.
+
+Several different types of chroot are supported, including normal
+directories in the filesystem, and also block devices.  Sessions,
+persistent chroots created on the fly from files (tar with optional
+compression and zip) and LVM snapshots are also supported.
+
+schroot supports kernel personalities, allowing the programs run
+inside the chroot to have a different personality.  For example,
+running 32-bit chroots on 64-bit systems, or even running binaries
+from alternative operating systems such as SVR4 or Xenix.
+
+schroot also integrates with sbuild, to allow building packages with
+all supported chroot types, including session-managed chroot types
+such as LVM snapshots.
+
+schroot shares most of its options with dchroot, but offers vastly
+more functionality.
+
+[Homepage] http://packages.debian.org/unstable/admin/schroot
