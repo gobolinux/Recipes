@@ -12,41 +12,37 @@ configure_options=(
 #    "--enable-xml-docs"
 )
 
-post_install() {
-    dbus-uuidgen --ensure
-}
-
 unmanaged_files=(
     $goboVariable/run/dbus/
     $goboVariable/lib/dbus/
 )
 
-pre_build() {
-   if ! grep -q "messagebus" ${goboSettings}/group
-   then
-      Log_Normal "Adding group messagebus"
-      for ((i=50;i<200;i++))
-      do
-         if grep -q "^[^:]*:[^:]*:$i:.*" ${goboSettings}/group
-	 then continue
-	 else
-            groupadd -g ${i} messagebus
-	    break
-	 fi
-      done
-   fi
-   if ! grep -q "messagebus:x:" ${goboSettings}/passwd
-   then
-      Log_Normal "Adding user messagebus"
-      for ((i=50;i<200;i++))
-      do
-         if grep -q "^[^:]*:[^:]*:$i:.*" ${goboSettings}/passwd
-	 then continue
-	 else
-            useradd -g messagebus -u ${i} -c 'Added by Compile' -d $goboVariable/empty -s $goboExecutables/false messagebus
-	    break
-	 fi
-      done
-   fi
-
-}
+#pre_build() {
+#   if ! grep -q "messagebus" ${goboSettings}/group
+#   then
+#      Log_Normal "Adding group messagebus"
+#      for ((i=50;i<200;i++))
+#      do
+#         if grep -q "^[^:]*:[^:]*:$i:.*" ${goboSettings}/group
+#	 then continue
+#	 else
+#            groupadd -g ${i} messagebus
+#	    break
+#	 fi
+#      done
+#   fi
+#   if ! grep -q "messagebus:x:" ${goboSettings}/passwd
+#   then
+#      Log_Normal "Adding user messagebus"
+#      for ((i=50;i<200;i++))
+#      do
+#         if grep -q "^[^:]*:[^:]*:$i:.*" ${goboSettings}/passwd
+#	 then continue
+#	 else
+#           useradd -g messagebus -u ${i} -c 'Added by Compile' -d $goboVariable/empty -s $goboExecutables/false messagebus
+#	    break
+#	 fi
+#      done
+#   fi
+#
+#}
