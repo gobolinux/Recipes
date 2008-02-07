@@ -9,6 +9,7 @@ configure_options=(
     "--with-x"
     "--with-xml"
     "--localstatedir=$variable_target"
+    "--libexecdir=$target/lib"
 #    "--enable-xml-docs"
 )
 
