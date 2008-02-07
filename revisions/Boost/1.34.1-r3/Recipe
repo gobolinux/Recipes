@@ -1,0 +1,30 @@
+# Recipe for version 1.34.1 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Oct 12 08:46:25 CEST 2007
+compile_version=1.8.2
+url="$httpSourceforge/boost/boost_1_34_1.tar.bz2"
+file_size=12986931
+file_md5=2d938467e8a448a2c9763e0a9f8ca7e5
+#dir='boost_1.34.1'
+# yay! boost has a configure script now
+recipe_type=configure
+
+make_variables=(
+	# Don't build debug versions of libraries (default is release and debug)
+	BUILD=release
+	# Install headers directly in include/boost
+	BJAM_CONFIG=--layout=system
+)
+
+configure_options=(
+	# wave is biiig, and it's an experimental c++ preprocessor, anyone wants it?
+	--without-libraries=wave
+)
+
+pre_link()
+{
+	# Manually install docs
+	mkdir -p $target/doc
+	cp -R doc/html $target/doc
+
+	# Install bjam for use by e.g. BGL-Python
+	cp tools/build/jam_src/bin.linuxx86/bjam $target/bin
+}
