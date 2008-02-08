@@ -1,0 +1,32 @@
+TORCS will segfault when starting a race if OSS isn't available, so run
+through aoss when available. Can be overridden by setting TORCS_USE_AOSS=no.
+--- torcs/src/linux/torcs.in.old	2008-02-07 19:06:09.000000000 +1300
++++ torcs/src/linux/torcs.in	2008-02-07 19:09:16.000000000 +1300
+@@ -26,6 +26,9 @@
+ DATADIR=@datadir@/games/torcs
+ VARDIR=@localstatedir@/games/torcs
+ 
++[ "`which aoss`" ] && AOSS=aoss
++[ "$TORCS_USE_AOSS" = "no" ] && AOSS=
++
+ LOCAL_CONF=$HOME/.torcs
+ 
+ if [ -d $DATADIR ]
+@@ -57,7 +60,7 @@
+ 
+ 	# Run under GDB
+ 	-d) shift
+-	    gdb  $LIBDIR/torcs-bin <<EOF
++	    $AOSS gdb  $LIBDIR/torcs-bin <<EOF
+ r -l $LOCAL_CONF -L $LIBDIR -D $DATADIR $*
+ bt
+ EOF
+@@ -78,7 +81,7 @@
+ 	    ;;
+ 
+ 	# Normal run
+-	*) $LIBDIR/torcs-bin -l $LOCAL_CONF -L $LIBDIR -D $DATADIR $*
++	*) $AOSS $LIBDIR/torcs-bin -l $LOCAL_CONF -L $LIBDIR -D $DATADIR $*
+ 	    ;;
+ 
+     esac
