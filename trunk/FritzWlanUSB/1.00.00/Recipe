@@ -30,3 +30,10 @@ pre_build () {
         $i.old $i
     done
 }
+
+post_install(){
+	# Make note that this is a third party module which
+	# needs to be recompiled when Linux is.
+	mkdir -p ${target}/Shared/Compile/Recompile/Linux
+	touch ${target}/Shared/Compile/Recompile/Linux/FritzWlanUSB
+}
