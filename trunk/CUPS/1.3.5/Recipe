@@ -26,6 +26,10 @@ make_variables=(
     SERVERBIN=$target/Shared/cups
 )
 
+install_variables=(
+    PAMDIR=$settings_target/pam.d
+)
+
 unmanaged_files=(
     $goboVariable/log/cups
     $goboVariable/run/cups/certs
