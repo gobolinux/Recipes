@@ -52,4 +52,4 @@ pre_link(){
     cd .. && cp -vR categories data menu tracks cars $target/Shared/games/torcs/ 
 }
 
-post_install_message="If you experience segmentation faults while a race starts, try running torcs through aoss (in the ALSA-OSS package) with \`aoss torcs\`."
+post_install_message="torcs will be run through aoss if it is available. You can disable this behaviour by setting TORCS_USE_AOSS=no in your environment. If you experience segmentation faults when starting a race and do not have ALSA-OSS installed, you should install it."
