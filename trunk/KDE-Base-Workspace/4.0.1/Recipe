@@ -6,7 +6,3 @@ file_size=29873952
 file_md5=4e445ec738a0586ea9f4f1ce5e379ae2
 file="kdebase-workspace-4.0.1.tar.bz2"
 recipe_type=cmake
-
-cmake_options=(
-    "-DDBUS_INTERFACES_SEARCH_DIR=$goboShared/dbus-1/interfaces"
-)
