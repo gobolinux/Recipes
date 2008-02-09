@@ -7,5 +7,5 @@ mirror_url="ftp://ftp.sane-project.org/pub/sane/old-versions/sane-backends-1.0.1
 recipe_type=configure
 
 unmanaged_files=(
-    $goboVariables/lock/sane
+    $goboVariable/lock/sane
 )
