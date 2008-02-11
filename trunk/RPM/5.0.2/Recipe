@@ -1,0 +1,18 @@
+# Recipe for version 5.0.2 by Giambattista Bloisi <giamby@infinito.it>, on Fri Feb 8 00:03:56 CET 2008
+# Recipe (MakeRecipe) for RPM by Lucas C. Villa Real, on Mon Feb 26 01:11:39 BRT 2007
+compile_version=1.9.0
+url="http://rpm5.org/files/rpm/rpm-5.0/rpm-5.0.2.tar.gz"
+file_size=9317835
+file_md5=596aaf5cd9dea7195f625530bc89e684
+recipe_type=configure
+
+configure_options=(
+    --without-apidocs
+    --without-selinux
+    --without-python
+    --without-perl
+    --without-lua
+    --without-syck
+    --without-dmalloc
+    --without-efence
+)
