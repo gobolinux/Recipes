@@ -31,5 +31,5 @@ pre_install() {
    mkdir -p ${skindir}
    cp -a ../plastik ${skindir}
    ln -nfs plastik ${skindir}/default
-   ln -sfn /Files/Fonts/TrueType/Vera.ttf ${target}/Shared/mplayer/subfont.ttf
+   ln -sfn /Files/Fonts/TrueType/DejaVuSans.ttf ${target}/Shared/mplayer/subfont.ttf
 }
