@@ -9,11 +9,10 @@ configure_options=(
    --with-apr=${apr_path}
    --with-apr-util=${apr_util_path}
    --disable-mod-activation
-   --disable-neon-version-check
 )
 
-build_target="all swig-py"
-install_target="install install-swig-py"
+build_target="all swig-py swig-pl"
+install_target="install install-swig-py install-swig-pl"
 
 make_variables=(
    swig_pydir=${target}/lib/python2.4/site-packages/libsvn

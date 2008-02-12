@@ -1,5 +1,5 @@
 Fix installation of mod_dav modules inside $prefix instead of in httpd's
-directory. HTTPD will still find the modules in /System/Links
+directory. HTTPD will still find the modules in $goboLibraries/httpd/modules
 -- 
 Jonas Karlsson
 --- subversion-1.4.3/Makefile.in.orig	2007-02-28 01:26:06.000000000 -0300
