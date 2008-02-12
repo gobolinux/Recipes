@@ -6,9 +6,6 @@ file_size=18518
 file_md5=ac3cae391bb95137b31175a167a80d0f
 recipe_type=makefile
 makefile='Makefile'
-install_variables=(
-   DESTDIR=$target/Resources/Unmanaged
-)
 
 unmanaged_files=(
    $goboModules/$(uname -r)/extra/wmi-acer.ko
