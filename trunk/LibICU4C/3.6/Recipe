@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for LibICU by Daniele Maccari <daniele.maccari@gmail.com>, on Wed Feb 13 11:50:18 CET 2008
+# Recipe for version 3.6 by Daniele Maccari <daniele.maccari@gmail.com>, on Wed Feb 13 11:50:18 CET 2008
+compile_version=1.10.1
+url="ftp://ftp.software.ibm.com/software/globalization/icu/3.6/icu4c-3_6-src.tgz"
+file_size=10183358
+file_md5=6243f7a19e03e05403ce84e597510d4c
+dir='icu/source'
+recipe_type=configure
