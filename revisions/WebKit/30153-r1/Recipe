@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for WebKit by Daniele Maccari <daniele.maccari@gmail.com>, on Wed Feb 13 11:45:17 CET 2008
+# Recipe for version r30153 by Daniele Maccari <daniele.maccari@gmail.com>, on Wed Feb 13 11:45:17 CET 2008
+compile_version=1.10.1
+url="http://nightly.webkit.org/files/trunk/src/WebKit-r30153.tar.bz2"
+file_size=8553812
+file_md5=91bd1693131ff7854f5802ae2375fd41
+recipe_type=configure
+autogen_before_configure=yes
+makefile='GNUmakefile'
