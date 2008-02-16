@@ -1,0 +1,12 @@
+Patch for buffer overflow in url.c
+
+--- mplayer/stream/url.c	(revision 24724)
++++ mplayer/stream/url.c	(working copy)
+@@ -328,6 +328,7 @@
+ 		}
+ 	}
+ 	
++	tmp = NULL;
+ 	while(i < len) {
+ 		// look for the next char that must be kept
+ 		for  (j=i;j<len;j++) {

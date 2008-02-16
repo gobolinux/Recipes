@@ -24,6 +24,7 @@ configure_options=(
    "--codecsdir=$target/share/mplayer-codecs"
    "--enable-largefiles"
    "--language=all"
+   "--disable-arts"
 )
 
 pre_install() {
