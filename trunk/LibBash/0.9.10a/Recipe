@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for LibBash by Giambattista Bloisi <giamby@infinito.it>, on Sat Feb 16 21:02:55 CET 2008
+# Recipe for version 0.9.10a by Giambattista Bloisi <giamby@infinito.it>, on Sat Feb 16 21:02:55 CET 2008
+compile_version=1.10.2
+url="$httpSourceforge/libbash/libbash-0.9.10a.tar.bz2"
+file_size=90794
+file_md5=289dc42ad1d47d3972b3530e2928b47e
+recipe_type=configure
+
+unmanaged_files=(
+    "$goboVariable/lock/dirlocks"
+)
