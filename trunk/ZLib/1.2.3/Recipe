@@ -6,5 +6,9 @@ file_size=425209
 file_md5=dee233bf288ee795ac96a98cc2e369b6
 recipe_type=configure
 configure_options=(
-   "--shared"
+   --shared
+)
+
+make_variables=(
+   LIBS="libz.a libz.so.1.2.3"
 )
