@@ -6,3 +6,6 @@ file_size=394175
 file_md5=c89f8bc74fda4d19e5f374f59c88810f
 recipe_type=configure
 part_of=Xorg
+install_variables=(
+   appdefaultdir=${target}/Shared/X11/app-defaults
+)
