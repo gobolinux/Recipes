@@ -5,3 +5,7 @@ url="http://xorg.freedesktop.org/releases/X11R7.1/src/app/xfd-X11R7.0-1.0.1.tar.
 file_size=88900
 file_md5=26c83a6fe245906cc05055abf877d0f2
 recipe_type=configure
+part_of=Xorg
+install_variables=(
+   appdefaultdir=${target}/Shared/X11/app-defaults
+)
