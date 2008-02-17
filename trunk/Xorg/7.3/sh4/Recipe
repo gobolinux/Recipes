@@ -9,7 +9,7 @@ include=(
 # Xorg-Proto
 #################################################
 	bigreqsproto--1.0.2
-ompositeproto--0.4
+	compositeproto--0.4
 	damageproto--1.0.3
 	dmxproto--7.0.11
 	evieext--1.0.2
@@ -17,7 +17,6 @@ ompositeproto--0.4
 	fontcacheproto--0.1.2
 	fontsproto--2.0.2
 	glproto--1.4.8
-nputproto--1.4.2.1
 	inputproto--1.4.2.1
 	kbproto--1.0.3
 	printproto--1.0.3
@@ -39,7 +38,7 @@ nputproto--1.4.2.1
 	xineramaproto--1.1.2
 	xproto--7.0.11
 	xproxymanagementprotocol--1.0.2
-        xcb-proto--1.0
+        xcb-proto--1.1
         libpthread-stubs--0.1
 #################################################
 # Xorg-Lib
