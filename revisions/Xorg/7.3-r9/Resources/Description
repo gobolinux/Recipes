@@ -1,0 +1,1 @@
+has wget --timeout=5 --quiet http://gobo.calica.com/descriptions/xorg -O /Files/Descriptions/xorg && touch /Files/Descriptions/xorg
