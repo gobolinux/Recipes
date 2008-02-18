@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for LibOpenSync-Plugin-SyncML by Jonas Karlsson <jonka750@student.liu.se>, on Mon Feb 18 17:18:15 GMT 2008
+# Recipe for version 0.22 by Jonas Karlsson <jonka750@student.liu.se>, on Mon Feb 18 17:18:15 GMT 2008
+compile_version=1.10.2
+url="http://www.opensync.org/download/releases/0.22/libopensync-plugin-syncml-0.22.tar.bz2"
+file_size=220011
+file_md5=8ffa3233ad28fb3ead324d88573f0c38
+recipe_type=configure
+install_variables=(
+   plugindir=$target/lib/opensync/plugins
+   configdir=$target/Shared/opensync/defaults
+)
