@@ -6,3 +6,6 @@ file="soprano-2.0.0.tar.bz2"
 file_size=1616657
 file_md5=597d83ac793fff2ddbd628eb05d31624
 recipe_type=cmake
+environment=(
+   QMAKESPEC="linux-g++"
+)
