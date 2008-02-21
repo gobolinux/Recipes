@@ -21,6 +21,11 @@ pre_install(){
    sed -i 's,'"$goboLibraries"','"$target/lib"',' formats/vformats-xml/*.la
 }
 
+pre_link() {
+   # we have to create this directory as otherwice Shared will be empty and
+   # SymlinkProgram removes it
+   mkdir -p "${target}/share/opensync"
+}
 install_variables=(
    formatsdir=$target/lib/opensync/formats
 )
