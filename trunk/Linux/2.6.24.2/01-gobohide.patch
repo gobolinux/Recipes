@@ -244,7 +244,7 @@
 +   if (inode->i_sb->s_op == &unionfs_sops) {
 +	   /* we must take the inode number from the underlying filesystem */
 +	   struct inode *lower_inode = unionfs_lower_inode(inode);
-+	   ino = lower_inode->i_ino;
++	   ino = lower_inode ? lower_inode->i_ino : inode->i_ino;
 +   }
 +#endif
 +   return ino;
