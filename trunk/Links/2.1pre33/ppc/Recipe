@@ -1,0 +1,8 @@
+configure_options=(
+	"--without-libfl"
+    "--without-directfb"
+	"--enable-javascript"
+	"--enable-graphics"
+	"--with-ssl"
+	"--with-x"
+)
