@@ -1,0 +1,5 @@
+[Name] Preload
+[Summary] Adaptive readahead daemon.
+[Description] preload is an adaptive readahead daemon. It monitors applications that users run, and by analyzing this data, predicts what applications users might run, and fetches those binaries and their dependencies into memory for faster startup times.
+[License] GNU General Public License version 2
+[Homepage] http://preload.sourceforge.net/
