@@ -1,0 +1,12 @@
+Don't call depmod when installing. Let it be called by Compile instead.
+
+diff -Naur kvm-60/kernel/Makefile kvm-60.new/kernel/Makefile
+--- kvm-60/kernel/Makefile	2008-01-20 13:35:04.000000000 +0100
++++ kvm-60.new/kernel/Makefile	2008-02-05 20:56:27.000000000 +0100
+@@ -58,7 +58,6 @@
+ 	for i in $(ORIGMODDIR)/drivers/kvm/*.ko; do \
+ 		if [ -f "$$i" ]; then mv "$$i" "$$i.orig"; fi; \
+ 	done
+-	/sbin/depmod -a
+ 
+ tmpspec = .tmp.kvm-kmod.spec
