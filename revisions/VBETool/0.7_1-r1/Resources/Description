@@ -1,0 +1,7 @@
+[Name] VBETool
+[Summary] Run real-mode video BIOS code to alter hardware state.
+[Description] VBETool uses LRMI in order to run code from the 
+video BIOS. Currently, it is able to alter DPMS states, save/restore
+video card state and attempt to initialize the video card from scratch.
+[License] GNU General Public License, version 2
+[Homepage] http://www.srcf.ucam.org/~mjg59/vbetool/
