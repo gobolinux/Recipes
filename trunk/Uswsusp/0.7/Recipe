@@ -13,8 +13,12 @@ make_variables=(
    SNAPSHOT="${goboDevices}/snapshot"
 )
 
+unmanaged_files=(
+   $goboDevices/snapshot
+)
+
 pre_patch() {
-   if [ -z "$(zcat ${goboStatus}/config.gz | grep "CONFIG_SOFTWARE_SUSPEND=y")" ]
+   if [ -z "$(zcat ${goboStatus}/config.gz | grep "CONFIG_SOFTWARE_SUSPEND=y\|CONFIG_SUSPEND=y")" ]
    then
       Log_Error "Your kernel does not support software suspend or \
 configuration could not be read. Make sure you have enabled \
