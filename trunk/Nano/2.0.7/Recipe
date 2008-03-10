@@ -18,3 +18,10 @@ configure_options=(
    "--enable-nanorc"
 #  "--enable-utf8"
 )
+
+pre_link() {
+    cd $settings_target
+    if [ ! -e nanorc ]
+    then mv nanorc.sample nanorc
+    fi
+}
