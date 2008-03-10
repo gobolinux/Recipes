@@ -20,8 +20,7 @@ configure_options=(
 )
 
 pre_link() {
-    cd $settings_target
-    if [ ! -e nanorc ]
-    then mv nanorc.sample nanorc
-    fi
+    if [ ! -e $settings_target/nanorc ]
+	then cp $target/doc/nano-2.0.7/nanorc.sample $settings_target/nanorc
+	fi
 }
