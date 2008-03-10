@@ -7,8 +7,7 @@ file_md5=8487514517e78fe1cd1143ca67cb4b62
 recipe_type=configure
 
 pre_link() {
-    cd $settings_target
-    if [ ! -e rsnapshot.conf ]
-    then mv rsnapshot.conf.default rsnapshot.conf
+    if [ ! -e $settings_target/rsnapshot.conf ]
+    then mv $target/Resources/Defaults/Settings/rsnapshot.conf.default $target/Resources/Defaults/Settings/rsnapshot.conf
     fi
 }
