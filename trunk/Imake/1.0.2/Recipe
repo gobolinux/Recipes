@@ -5,3 +5,6 @@ url="http://ftp.x.org/pub/X11R7.1/src/util/imake-X11R7.1-1.0.2.tar.gz"
 file_size=137994
 file_md5=703637738dac082cd53adb540b0ebc18
 recipe_type=configure
+configure_options=(
+   --with-config-dir=${goboLibraries}/X11/config
+)
