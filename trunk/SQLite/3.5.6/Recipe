@@ -5,6 +5,10 @@ file_size=2543979
 file_md5=903c9e935c538af392364a9172a3d98d
 recipe_type=configure
 
+environment=(
+   "TCLLIBDIR=$target/tcl8.5/lib"
+)
+
 pre_link() {
-    ln -s $target/bin/sqlite3 $target/bin/sqlite
+   ln -s $target/bin/sqlite3 $target/bin/sqlite
 }
