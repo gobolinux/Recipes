@@ -6,6 +6,6 @@ file_md5=f96ca9198fc0a2192920f5baf002dfe4
 recipe_type=makefile
 makefile='Makefile'
 make_variables=(
-   "DESTDIR=$target"
-   "PREFIX=$target"
+   DESTDIR="$target"
+   PREFIX=""
 )
