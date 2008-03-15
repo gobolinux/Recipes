@@ -1,0 +1,37 @@
+Python imaging module is called PIL and imports should use that.
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+
+--- comix-3.6.4/install.py.old	2008-03-15 06:22:22.000000000 +0000
++++ comix-3.6.4/install.py	2008-03-14 22:04:45.000000000 +0000
+@@ -79,7 +79,7 @@
+         print "    !!! PyGTK .................... Not found"
+         required_found = False
+     try:
+-        import Image
++        from PIL import Image
+         assert Image.VERSION >= "1.1.4"
+         print "    Python Imaging Library ....... OK"
+     except ImportError:
+--- comix-3.6.4/comix	2007-05-26 16:30:16.000000000 +0000
++++ comix-3.6.4/comix.new	2008-03-15 06:23:03.000000000 +0000
+@@ -68,13 +68,13 @@
+     sys.exit(1)
+ 
+ try:
+-    import Image
++    from PIL import Image
+     assert Image.VERSION >= '1.1.4'
+-    import ImageEnhance
+-    import ImageDraw
+-    import ImageOps
+-    import ImageStat
+-    import ImageFont
++    from PIL import ImageEnhance
++    from PIL import ImageDraw
++    from PIL import ImageOps
++    from PIL import ImageStat
++    from PIL import ImageFont
+ except AssertionError:
+     print ('You do not have the required version of the Python Imaging ' +
+     'Library installed.\n\n' + 
