@@ -1,0 +1,21 @@
+# Recipe (MakeRecipe) for Comix by Jonas Karlsson <jonka750@student.liu.se>, on Fri Mar 14 21:14:38 GMT 2008
+# Recipe for version 3.6.4 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Mar 14 21:14:38 GMT 2008
+compile_version=1.10.2
+url="$httpSourceforge/comix/comix-3.6.4.tar.gz"
+file_size=398202
+file_md5=1ece2cde0057abf5913b0f2933d839ab
+dir='comix-3.6.4'
+recipe_type=python
+do_build=no
+override_default_options=yes
+build_script=install.py
+python_options=(
+   --installdir=${target}
+   --no-mime
+)
+pre_link() {
+   mkdir -p ${target}/Shared/mime/packages
+   cp mime/comicthumb ${target}/bin
+   cp mime/comicthumb ${target}/man/man1
+   cp mime/comix.xml ${target}/Shared/mime/packages
+}
