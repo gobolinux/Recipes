@@ -5,3 +5,7 @@ url="$httpSourceforge/id3lib/id3lib-3.8.3.tar.gz"
 file_size=950726
 file_md5=19f27ddd2dda4b2d26a559a4f0f402a7
 recipe_type=configure
+
+pre_build() {
+	autoconf
+} 
