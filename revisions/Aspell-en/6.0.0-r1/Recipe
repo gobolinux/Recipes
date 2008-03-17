@@ -1,0 +1,11 @@
+# Recipe for version 6.0.0 by Giambattista Bloisi <giamby@infinito.it>, on Mon Mar 17 20:58:11 CET 2008
+url="$ftpGnu/aspell/dict/en/aspell6-en-6.0-0.tar.bz2"
+file_size=182442
+file_md5=16449e0a266e1ecc526b2f3cd39d4bc2
+compile_version=1.8.2
+recipe_type=configure
+install_variables=(
+   "dictdir=$target/lib/aspell"
+   "datadir=$target/lib/aspell"
+)
+
