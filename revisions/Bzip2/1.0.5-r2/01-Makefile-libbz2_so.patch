@@ -1,0 +1,28 @@
+--- bzip2-1.0.5/Makefile-libbz2_so.orig	2008-03-18 09:15:48.000000000 +0100
++++ bzip2-1.0.5/Makefile-libbz2_so	2008-03-18 09:16:43.000000000 +0100
+@@ -1,6 +1,6 @@
+ 
+ # This Makefile builds a shared version of the library, 
+-# libbz2.so.1.0.4, with soname libbz2.so.1.0,
++# libbz2.so.1.0.5, with soname libbz2.so.1.0,
+ # at least on x86-Linux (RedHat 7.2), 
+ # with gcc-2.96 20000731 (Red Hat Linux 7.1 2.96-98).  
+ # Please see the README file for some important info 
+@@ -35,13 +35,13 @@
+       bzlib.o
+ 
+ all: $(OBJS)
+-	$(CC) -shared -Wl,-soname -Wl,libbz2.so.1.0 -o libbz2.so.1.0.4 $(OBJS)
+-	$(CC) $(CFLAGS) -o bzip2-shared bzip2.c libbz2.so.1.0.4
++	$(CC) -shared -Wl,-soname -Wl,libbz2.so.1.0 -o libbz2.so.1.0.5 $(OBJS)
++	$(CC) $(CFLAGS) -o bzip2-shared bzip2.c libbz2.so.1.0.5
+ 	rm -f libbz2.so.1.0
+-	ln -s libbz2.so.1.0.4 libbz2.so.1.0
++	ln -s libbz2.so.1.0.5 libbz2.so.1.0
+ 
+ clean: 
+-	rm -f $(OBJS) bzip2.o libbz2.so.1.0.4 libbz2.so.1.0 bzip2-shared
++	rm -f $(OBJS) bzip2.o libbz2.so.1.0.5 libbz2.so.1.0 bzip2-shared
+ 
+ blocksort.o: blocksort.c
+ 	$(CC) $(CFLAGS) -c blocksort.c

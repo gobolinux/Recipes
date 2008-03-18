@@ -1,0 +1,16 @@
+# Recipe for version 1.0.5 by Giambattista Bloisi <giamby@infinito.it>, on Tue Mar 18 09:03:07 CET 2008
+url=http://www.bzip.org/1.0.5/bzip2-1.0.5.tar.gz
+file_size=841402
+file_md5=3c15a0c8d1d3ee1c46a1634d00617b1a
+compile_version=1.8.2
+recipe_type=makefile
+install_variables=(
+   "PREFIX=$target"
+)
+pre_build() {
+   make -f Makefile-libbz2_so
+}
+pre_link() {
+   cp -a libbz2.so* $target/lib
+   ln -nfs $target/lib/libbz2.so.1.0.5 $target/lib/libbz2.so.1
+}
