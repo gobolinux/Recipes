@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for Compile by Hisham Muhammad
+compile_version=1.8.2
+svn=http://svn.gobolinux.org/tools/trunk/Compile
+recipe_type=makefile
+make_variables=(
+   VERSION=$version
+   DESTDIR=$target
+)
