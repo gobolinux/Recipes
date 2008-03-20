@@ -1,0 +1,49 @@
+# Recipe for version 1.1.2 by Jonas Karlsson <jonka750@student.liu.se>, on Wed Oct 10 07:24:28 CEST 2007
+# Recipe (MakeRecipe) for recipe-store by Carlo J. Calica <ccalica@gmail.com>, on Sat Oct 1 17:29:57 PDT 2005
+compile_version=1.8.4
+url="http://dbus.freedesktop.org/releases/dbus/dbus-1.1.2.tar.gz"
+file_size=1380562
+file_md5=e33d96a4c4605536127835a70b14d5b9
+recipe_type=configure
+configure_options=(
+    "--with-x"
+    "--with-xml"
+    "--localstatedir=$variable_target"
+    "--libexecdir=$target/lib"
+#    "--enable-xml-docs"
+)
+
+unmanaged_files=(
+    $goboVariable/run/dbus/
+    $goboVariable/lib/dbus/
+)
+
+#pre_build() {
+#   if ! grep -q "messagebus" ${goboSettings}/group
+#   then
+#      Log_Normal "Adding group messagebus"
+#      for ((i=50;i<200;i++))
+#      do
+#         if grep -q "^[^:]*:[^:]*:$i:.*" ${goboSettings}/group
+#	 then continue
+#	 else
+#            groupadd -g ${i} messagebus
+#	    break
+#	 fi
+#      done
+#   fi
+#   if ! grep -q "messagebus:x:" ${goboSettings}/passwd
+#   then
+#      Log_Normal "Adding user messagebus"
+#      for ((i=50;i<200;i++))
+#      do
+#         if grep -q "^[^:]*:[^:]*:$i:.*" ${goboSettings}/passwd
+#	 then continue
+#	 else
+#           useradd -g messagebus -u ${i} -c 'Added by Compile' -d $goboVariable/empty -s $goboExecutables/false messagebus
+#	    break
+#	 fi
+#      done
+#   fi
+#
+#}
