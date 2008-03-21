@@ -32,11 +32,14 @@ pre_link() {
    ln -s ../program/smath $target/bin/smath
    ln -s ../program/swriter $target/bin/swriter
    ln -sf ../program/soffice $target/bin/soffice
+   ln -sf ../program/soffice.bin $target/bin/soffice.bin
    ln -sf ../program/soffice $target/bin/openoffice.org2.3
+   ln -sf ../program/soffice.bin  $target/bin/openoffice.org2.3.bin
    ln -sf ../program/spadmin $target/bin/openoffice.org2.3-printeradmin
-   ln -sf $target/program/soffice.bin $target/program/openoffice.org2.3.bin
-   ln -sf $target/program/spadmin.bin $target/program/openoffice.org2.3-printeradmin.bin
+   ln -sf ../program/spadmin.bin $target/program/openoffice.org2.3-printeradmin.bin
    ln -sf ../program/unopkg $target/bin/unopkg
+   ln -sf ../program/pagein $target/bin/pagein
+
    ln -sf $target/Shared/xdg/base.desktop $target/Shared/applications/openoffice.org2.3-base.desktop
    ln -sf $target/Shared/xdg/calc.desktop $target/Shared/applications/openoffice.org2.3-calc.desktop
    ln -sf $target/Shared/xdg/draw.desktop $target/Shared/applications/openoffice.org2.3-draw.desktop
