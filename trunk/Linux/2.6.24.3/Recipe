@@ -92,7 +92,8 @@ pre_link() {
             -name "Makefile*" -or \
             -name "Kconfig*" -or  \
             -name "Kbuild*" -or   \
-            -name "asm-offsets.c" \
+            -name "asm-offsets.c" -or \
+            -name "asm-offsets_32.c" \
          \)`
          for dir in $dirlist
          do mkdir -p "$dest/$dir"
