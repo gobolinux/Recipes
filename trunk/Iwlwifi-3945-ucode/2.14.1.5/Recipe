@@ -8,13 +8,10 @@ file_md5=a8122d3e026561055f488dc654ccfcd1
 recipe_type=manifest
 
 manifest=(
-	"iwlwifi-3945-1.ucode:lib/firmware"
+	"iwlwifi-3945-1.ucode:lib/firmware/iwlwifi-3945-1.ucode"
+	"LICENSE.iwlwifi-3945-ucode:lib/firmware/LICENSE.iwlwifi-3945-ucode"
 )
 
 docs=(
 	"LICENSE.iwlwifi-3945-ucode"
 )
-
-pre_install(){
-	mkdir -p $target/lib/firmware
-}
