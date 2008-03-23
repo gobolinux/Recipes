@@ -1,0 +1,31 @@
+diff -Nur LVM2.2.02.25_orig/lib/commands/toolcontext.c LVM2.2.02.25/lib/commands/toolcontext.c
+--- LVM2.2.02.25_orig/lib/commands/toolcontext.c	2007-04-26 18:44:58.000000000 +0200
++++ LVM2.2.02.25/lib/commands/toolcontext.c	2007-05-13 10:46:33.000000000 +0200
+@@ -141,7 +141,11 @@
+ 						 "log/activation", 0));
+ 
+ 	t = time(NULL);
++#ifdef __dietlibc__
++	asctime_r(gmtime(&t), &timebuf[0]);
++#else
+ 	ctime_r(&t, &timebuf[0]);
++#endif
+ 	timebuf[24] = '\0';
+ 	log_verbose("Logging initialised at %s", timebuf);
+ 
+diff -Nur LVM2.2.02.25_orig/lib/misc/configure.h.in LVM2.2.02.25/lib/misc/configure.h.in
+--- LVM2.2.02.25_orig/lib/misc/configure.h.in	2006-09-30 22:02:02.000000000 +0200
++++ LVM2.2.02.25/lib/misc/configure.h.in	2007-05-13 10:40:20.000000000 +0200
+@@ -1,5 +1,12 @@
+ /* lib/misc/configure.h.in.  Generated from configure.in by autoheader.  */
+ 
++#ifdef __dietlibc__
++#define UINT32_MAX	(4294967295U)
++#define rpl_malloc malloc
++#define UINT64_C(c)		c ## UL
++#define UINT32_C(c)		c ## U
++#endif
++
+ /* Define to 1 if the `closedir' function returns void instead of `int'. */
+ #undef CLOSEDIR_VOID
+ 
