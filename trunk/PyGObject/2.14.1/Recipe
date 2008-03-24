@@ -8,6 +8,7 @@ recipe_type=configure
 configure_options=(
    --disable-docs
 )
+install_target="install uninstall-local"
 
 pre_link() {
    pythonversion=$(python --version 2>&1 | awk {'print $2'} | cut -b1-3)
