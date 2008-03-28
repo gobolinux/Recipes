@@ -1,9 +1,10 @@
 # Recipe for version 1.6.9p6 by Hisham Muhammad, on Thu Oct 11 03:12:07 BRT 2007
 # Recipe (MakeRecipe) for Sudo by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sun Feb 27 23:19:34 BRT 2005
 compile_version=1.8.5
-url="http://www.courtesan.com/sudo/dist/sudo-1.6.9p6.tar.gz"
-file_size=574983
-file_md5=1f262526f321af388b37e05ee57bb2c7
+url="http://www.courtesan.com/sudo/dist/sudo-1.6.9.tar.gz"
+mirror_url="http://www.courtesan.com/sudo/dist/OLD/sudo-1.6.9.tar.gz"
+file_size=557692
+file_md5=7eeb0d89a7c358012377c8d150581cd7
 recipe_type=configure
 configure_options=(
    #Name of the root user is immaterial, number is significant:
