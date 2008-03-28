@@ -34,6 +34,8 @@ configure_options=(
    --with-stow
    #I guess someone just thought this was a good idea?
    --enable-log-host
+   # Use EDITOR variable for editor to use with visudo
+   --with-env-editor
 )
 
 #Don't try to install their default sudoers file, just the stuff we want.
