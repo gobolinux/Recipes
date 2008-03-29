@@ -135,25 +135,14 @@ private__link_at_system_kernel_boot() {
    local simpleversion="$1"
    local fullversion="$2"
    mkdir -p $target/Resources/Unmanaged/$goboLibraries/modules
+   mkdir -p $target/Resources/Unmanaged/$goboModules
+
    dest=$target/Resources/Unmanaged/$goboBoot
    ln -sf kernel-$fullversion $dest/kernel
    ln -sf System.map-$fullversion $dest/System.map
-   rm -rf $goboModules/Current $goboModules/$fullversion
-   ln -nfs $simpleversion $target/Resources/Unmanaged/$goboModules/Current
-   ln -nfs $goboModules/$fullversion $target/Resources/Unmanaged/$goboLibraries/modules
-}
 
-private__check_dependant_modules() {
-   local check_prefix="$1"
-   if [ -d $check_prefix ]
-   then
-      for i in $check_prefix/*
-      do
-         depapp=`basename $i`
-         if ! Boolean "batch"                                            
-         then Ask "$depapp depends on the Linux kernel. Would you like to compile it?" || continue
-         fi
-         Compile $batch $lazy $noweb $depapp
-      done
-   fi
+   rm -rf $goboModules/Current $goboModules/$fullversion
+   rm -rf $target/Resources/Unmanaged/$goboModules/Current
+   ln -s $simpleversion $target/Resources/Unmanaged/$goboModules/Current
+   ln -s $goboModules/$fullversion $target/Resources/Unmanaged/$goboLibraries/modules
 }
