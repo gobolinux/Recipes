@@ -1,0 +1,59 @@
+--- linux-2.6.23.8/drivers/net/wireless/airo.c.orig	2007-11-18 20:42:21.000000000 -0800
++++ linux-2.6.23.8/drivers/net/wireless/airo.c	2007-11-18 20:52:08.000000000 -0800
+@@ -3384,8 +3384,6 @@ static void airo_interrupt_tasklet(unsig
+ 			  leaving BSS */
+ #define RC_NOAUTH 9 /* Station requesting (Re)Association is not
+ 		       Authenticated with the responding station */
+-			printk("status : %x\n", newStatus);
+-
+ 			if (newStatus == FORCELOSS && apriv->scan_timeout > 0)
+ 				scan_forceloss = 1;
+ 			if(newStatus == ASSOCIATED || newStatus == REASSOCIATED) {
+@@ -6728,8 +6726,6 @@ static int airo_set_encodeext_wpa(struct
+ 	WpaKeyRid wkr;
+ 	int index = (encoding->flags & IW_ENCODE_INDEX) - 1;
+ 
+-	printk("set wpa : %d %d %d %x\n", ext->alg, ext->key_len, index, ext->ext_flags);
+-
+ 	memset(&wkr, 0, sizeof(wkr));
+ 	wkr.len = sizeof(wkr);
+ 
+@@ -6737,7 +6733,6 @@ static int airo_set_encodeext_wpa(struct
+ 			ext->alg == IW_ENCODE_ALG_NONE || ext->key_len == 0) {
+ 		wkr.kindex = index;
+ 		memcpy( wkr.mac, macaddr, ETH_ALEN );
+-		printk(KERN_INFO "Wpa Removing key %d\n", index);
+ 		memset(local->wpa_tx_key, 0, 8);
+ 		memset(local->wpa_rx_key, 0, 8);
+ 		memset(local->wpa_rx_key_m, 0, 8);
+@@ -6789,7 +6784,6 @@ static int airo_set_encodeext_wpa(struct
+ 		wkr.mac[0] = (char)index;
+ 		wkr.klen = 0x30;
+ 
+-		printk(KERN_INFO "Setting default tx key to %d\n", index);
+ 		writeWpaKeyRid(local, &wkr, 0);
+ 
+ 		local->wpa_key_enabled = 1;
+@@ -6897,7 +6891,6 @@ static int airo_get_encodeext(struct net
+ 	struct iw_encode_ext *ext = (struct iw_encode_ext *)extra;
+ 	CapabilityRid cap_rid;		/* Card capability info */
+ 	int idx, max_key_len;
+-	printk("get_encode\n");
+ 
+ 	/* Is it supported ? */
+ 	readCapabilityRid(local, &cap_rid, 1);
+@@ -6951,14 +6944,12 @@ static int airo_get_encodeext(struct net
+ 
+ static void wpa_off(struct airo_info *local)
+ {
+-	printk(KERN_INFO"WPA dis\n");
+ 	local->config.authType=AUTH_OPEN;
+ 	local->config.extra.auth_key=AUTH_KEY_MGMT_NONE;
+ }
+ 
+ static void wpa_on(struct airo_info *local)
+ {
+-	printk(KERN_INFO"WPA enable\n");
+ 	local->config.authType=AUTH_ENCRYPT_WPA;
+ 	local->config.extra.auth_cipher=AUTH_CIPHER_TKIP;
+ 	//local->config.extra._reserved5[0]=0x40;
