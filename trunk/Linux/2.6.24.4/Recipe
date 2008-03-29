@@ -110,6 +110,9 @@ pre_link() {
    Quiet pushd $dest
    make prepare
    Quiet popd
+
+   Log_Normal "Calculating kernel module dependencies..."
+   depmod -ae -b $target/Resources/Unmanaged ${version}-Gobo
 }
 
 private__calculate_version() {
