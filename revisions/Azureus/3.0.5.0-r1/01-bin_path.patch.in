@@ -1,0 +1,14 @@
+--- azureus/azureus	2008-03-30 17:13:49.000000000 +0200
++++ azureus/azureus.orig	2008-03-30 17:12:48.000000000 +0200
+@@ -1,9 +1,9 @@
+ #!/bin/bash
+ 
+ ######## CONFIGURATION OPTIONS ########
+-SCRIPT_NOT_CHANGED=0	# change this to 1 if you don't want your script overwritten!
++SCRIPT_NOT_CHANGED=1	# change this to 1 if you don't want your script overwritten!
+ JAVA_PROGRAM_DIR=""	# use full path to java bin dir, ex. "/usr/java/j2sdk1.4.2/bin/"
+-#PROGRAM_DIR="/home/username/apps/azureus"	# use full path to Azureus bin dir
++PROGRAM_DIR="@%Compile_target%@/azureus"	# use full path to Azureus bin dir
+ JAVA_ARGS="-Xmx128m"
+ 
+ #export MOZILLA_FIVE_HOME="/path/to/gre"	# Full path to GRE/Mozilla. When commenting out this line, also comment out the next line
