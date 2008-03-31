@@ -85,13 +85,13 @@ private__configure_hal_kdb() {
          H
          g
          i\
-<?xml version="1.0" encoding="UTF-8"?>\n\
+<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\
 <!--
          p
          i\
 -->\n\
-<deviceinfo version="0.2">\n\
-   <match key="info.capabilties" contains="input.keyboard">
+<deviceinfo version=\"0.2\">\n\
+   <match key=\"info.capabilties\" contains=\"input.keyboard\">
          a\
 \   </match>\n\
 </deviceinfo>\n
@@ -102,11 +102,11 @@ private__configure_hal_kdb() {
          # Here are all matching rules: first we look for our keyword and
          # arbitrary long white space. After that the key we're looking for is
          # the negation of the white space match. Break matching at newlines.
-         s/[^\n]*XkbRules[\ \t\"]*([^[\ \t\"]*]*)[^\n]*/      <merge key="input.xkb.rules" type="string">\1<\/merge>/g
-         s/[^\n]*XkbLayout[\ \t\"]*([^[\ \t\"]*]*)[^\n]*/      <merge key="input.xkb.layout" type="string">\1<\/merge>/g
-         s/[^\n]*XkbVariants[\ \t\"]*([^[\ \t\"]*]*)[^\n]*/      <merge key="input.xkb.variants" type="string">\1<\/merge>/g
-         s/[^\n]*XkbOptions[\ \t\"]*([^[\ \t\"]*]*)[^\n]*/      <merge key="input.xkb.options" type="string">\1<\/merge>/g
-         s/[^\n]*XkbModel[\ \t\"]*([^[\ \t\"]*]*)[^\n]*/      <merge key="input.xkb.model" type="string">\1<\/merge>/g
+         s/[^\n]*XkbRules[\ \t\"]*([^[\ \t\"]*]*)[^\n]*/      <merge key=\"input.xkb.rules\" type=\"string\">\1<\/merge>/g
+         s/[^\n]*XkbLayout[\ \t\"]*([^[\ \t\"]*]*)[^\n]*/      <merge key=\"input.xkb.layout\" type=\"string\">\1<\/merge>/g
+         s/[^\n]*XkbVariants[\ \t\"]*([^[\ \t\"]*]*)[^\n]*/      <merge key=\"input.xkb.variants\" type=\"string\">\1<\/merge>/g
+         s/[^\n]*XkbOptions[\ \t\"]*([^[\ \t\"]*]*)[^\n]*/      <merge key=\"input.xkb.options\" type=\"string\">\1<\/merge>/g
+         s/[^\n]*XkbModel[\ \t\"]*([^[\ \t\"]*]*)[^\n]*/      <merge key=\"input.xkb.model\" type=\"string\">\1<\/merge>/g
          p
       }
    }" ${1} > ${2}
