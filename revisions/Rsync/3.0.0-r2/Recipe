@@ -1,0 +1,11 @@
+# Recipe for version 3.0.0 by Thomas Queste <tqueste@free.fr>, on Sun 
+# Mar 9 19:46:45 CET 2008 by Andre Detsch 2004.01.06 16:59
+compile_version=1.8.0 
+url='http://rsync.samba.org/ftp/rsync/src/rsync-3.0.0.tar.gz' 
+file_size=757821
+file_md5=2122d460b4119749c6e5993938a9b501
+recipe_type=configure
+
+configure_options=(
+  "--prefix=${target}"
+)
