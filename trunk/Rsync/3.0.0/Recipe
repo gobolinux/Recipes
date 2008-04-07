@@ -5,3 +5,7 @@ url='http://rsync.samba.org/ftp/rsync/src/rsync-3.0.0.tar.gz'
 file_size=757821
 file_md5=2122d460b4119749c6e5993938a9b501
 recipe_type=configure
+
+configure_options=(
+  "--prefix=${target}"
+)
