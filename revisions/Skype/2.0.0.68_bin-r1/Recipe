@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for Skype by Giambattista Bloisi <giamby@infinito.it>, on Sat Mar 29 17:03:31 CET 2008
+# Recipe for version 2.0.0.68_bin by Giambattista Bloisi <giamby@infinito.it>, on Sat Mar 29 17:03:31 CET 2008
+compile_version=1.10.2
+recipe_type=manifest
+manifest=(
+    "skype:bin"
+    "sounds:Shared/skype/sounds"
+    "lang:Shared/skype/lang"
+    "avatars:Shared/skype/avatars"
+    "skype.desktop:Shared/applications/skype.desktop"
+    "icons/SkypeBlue_16x16.png:Shared/icons/hicolor/16x16/apps/skype.png"
+    "icons/SkypeBlue_32x32.png:Shared/icons/hicolor/32x32/apps/skype.png"
+    "icons/SkypeBlue_48x48.png:Shared/icons/hicolor/48x48/apps/skype.png"
+)
