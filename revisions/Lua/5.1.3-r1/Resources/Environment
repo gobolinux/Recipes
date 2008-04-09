@@ -1,0 +1,16 @@
+## Lua 5.1 Environment
+#####################
+
+export LUA_PATH="\
+./?.lua;\
+$goboShared/lua/5.1/?.lua;\
+$goboShared/lua/5.1/?/init.lua;\
+$goboLibraries/lua/5.1/?.lua;\
+$goboLibraries/lua/5.1/?/init.lua;\
+"
+
+export LUA_CPATH="\
+./?.so;\
+$goboLibraries/lua/5.1/?.so;\
+$goboLibraries/lua/5.1/loadall.so\
+"
