@@ -3,4 +3,8 @@
 compile_version=1.10.2
 svn="svn://svn.videolan.org/libmpeg2/trunk"
 recipe_type=configure
-autogen_before_configure=yes
+#autogen_before_configure=yes
+
+pre_build() {
+    ./bootstrap
+}
