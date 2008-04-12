@@ -1,3 +1,6 @@
+# Modifies the Postfix installation for the GoboLinux "root" user (usually "gobo")
+# and adjusts various paths for the GoboLinux Way.
+
 diff -Naur postfix-2.3.2.old/conf/aliases postfix-2.3.2/conf/aliases
 --- postfix-2.3.2.old/conf/aliases	2006-08-06 22:47:09.000000000 +0200
 +++ postfix-2.3.2/conf/aliases	2006-08-07 00:05:28.000000000 +0200
