@@ -1,0 +1,22 @@
+diff -Puar ntpclient-orig/Makefile ntpclient/Makefile
+--- ntpclient-orig/Makefile	2003-05-18 11:41:25.000000000 -0700
++++ ntpclient/Makefile	2005-11-22 18:37:18.000000000 -0800
+@@ -13,6 +13,10 @@
+ 
+ CFLAGS += -O
+ 
++DESTDIR =
++PREFIX  =/usr/local
++BINDIR  =$(PREFIX)/bin
++
+ all: ntpclient
+ 
+ test: ntpclient
+@@ -24,3 +28,7 @@
+ 
+ clean:
+ 	rm -f ntpclient adjtimex *.o
++
++install: ntpclient
++	install ntpclient $(DESTDIR)$(BINDIR) || exit 1;
++
