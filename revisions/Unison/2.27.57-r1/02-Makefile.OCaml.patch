@@ -1,0 +1,19 @@
+--- ./Makefile.OCaml.old	2006-04-15 00:15:17.000000000 -0300
++++ ./Makefile.OCaml	2006-04-15 00:16:35.000000000 -0300
+@@ -207,14 +208,14 @@
+ 
+ # Gtk GUI
+ ifeq ($(UISTYLE), gtk)
+-  CAMLFLAGS+=-I +lablgtk
++  CAMLFLAGS+=-I $(LABLGTKLIB)
+   OCAMLOBJS+=pixmaps.cmo uigtk.cmo linkgtk.cmo
+   OCAMLLIBS+=lablgtk.cma
+ endif
+ 
+ # Gtk2 GUI
+ ifeq ($(UISTYLE), gtk2)
+-  CAMLFLAGS+=-I +lablgtk2
++  CAMLFLAGS+=-I $(LABLGTK2LIB)
+   OCAMLOBJS+=pixmaps.cmo uigtk2.cmo linkgtk2.cmo
+   OCAMLLIBS+=lablgtk.cma
+ endif
