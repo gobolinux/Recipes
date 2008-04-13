@@ -1,0 +1,4 @@
+#!/bin/sh
+
+/bin/ntpclient -s -h pool.ntp.org
+
