@@ -1,0 +1,14 @@
+# Recipe for version 2.10.1 by Thomas Queste <tqueste@free.fr>, on Sun Apr 13 14:02:54 CEST 2008
+# Recipe (MakeRecipe) for Lablgtk by Jonatan Liljedahl <lijon@kymatica.com>, on Fri Apr 14 21:31:06 BRT 2006
+compile_version=1.8.0
+url="http://wwwfun.kurims.kyoto-u.ac.jp/soft/olabl/dist/lablgtk-2.10.1.tar.gz"
+file_size=768508
+file_md5=bd7073ca05e684e5d5a3d553371fd6e5
+recipe_type=configure
+configure_options=(
+	#"--without-glade"
+	"--without-gnomecanvas"
+	"--without-gnomeui"
+	"--with-libdir=$target/lib/ocaml"
+)
+build_target=opt
