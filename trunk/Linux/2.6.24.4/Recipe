@@ -61,7 +61,7 @@ pre_build() {
    fi
 
    make menuconfig || Die "'menuconfig' failed."
-   chown ${SUDO_USER} -R include/config .config
+   [ -n "${SUDO_USER}" ] && chown ${SUDO_USER} -R include/config .config
 }
 
 pre_link() {
