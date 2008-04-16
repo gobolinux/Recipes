@@ -841,11 +841,11 @@ index 67716f6..4336f2b 100644
  EXPORT_SYMBOL_GPL(fsstack_copy_attr_all);
 diff --git a/fs/unionfs/Makefile b/fs/unionfs/Makefile
 new file mode 100644
-index 0000000..d132aa4
+index 0000000..5efa3ec
 --- /dev/null
 +++ b/fs/unionfs/Makefile
 @@ -0,0 +1,17 @@
-+UNIONFS_VERSION="2.3.1 (for 2.6.24.4)"
++UNIONFS_VERSION="2.3.2 (for 2.6.24.4)"
 +
 +EXTRA_CFLAGS += -DUNIONFS_VERSION=\"$(UNIONFS_VERSION)\"
 +
@@ -3142,10 +3142,10 @@ index 0000000..d154c32
 +}
 diff --git a/fs/unionfs/dentry.c b/fs/unionfs/dentry.c
 new file mode 100644
-index 0000000..5e498c2
+index 0000000..ee0da4f
 --- /dev/null
 +++ b/fs/unionfs/dentry.c
-@@ -0,0 +1,578 @@
+@@ -0,0 +1,567 @@
 +/*
 + * Copyright (c) 2003-2007 Erez Zadok
 + * Copyright (c) 2003-2006 Charles P. Wright
@@ -3419,17 +3419,6 @@ index 0000000..5e498c2
 +	 * revalidation: the address space op is invoked with a lock on our
 +	 * own page, and truncate_inode_pages will block on locked pages.
 +	 */
-+}
-+
-+void purge_sb_data(struct super_block *sb)
-+{
-+	struct inode *inode;
-+
-+	list_for_each_entry(inode, &sb->s_inodes, i_sb_list) {
-+		if (inode->i_state & (I_FREEING|I_WILL_FREE))
-+			continue;
-+		purge_inode_data(inode);
-+	}
 +}
 +
 +/*
@@ -9031,10 +9020,10 @@ index 0000000..1a40f63
 +}
 diff --git a/fs/unionfs/super.c b/fs/unionfs/super.c
 new file mode 100644
-index 0000000..0b54a9d
+index 0000000..f9325ea
 --- /dev/null
 +++ b/fs/unionfs/super.c
-@@ -0,0 +1,1045 @@
+@@ -0,0 +1,1047 @@
 +/*
 + * Copyright (c) 2003-2007 Erez Zadok
 + * Copyright (c) 2003-2006 Charles P. Wright
@@ -9774,10 +9763,12 @@ index 0000000..0b54a9d
 +	 * function).  This revalidation will happen lazily and
 +	 * incrementally, as users perform operations on cached inodes.  We
 +	 * would like to encourage this revalidation to happen sooner if
-+	 * possible, so we try to invalidate as many other pages in our
-+	 * superblock as we can.
++	 * possible, so we like to try to invalidate as many other pages in
++	 * our superblock as we can.  We used to call drop_pagecache_sb() or
++	 * a variant thereof, but either method was racy (drop_caches alone
++	 * is known to be racy).  So now we let the revalidation happen on a
++	 * per file basis in ->d_revalidate.
 +	 */
-+	purge_sb_data(sb);
 +
 +	/* grab new lower super references; release old ones */
 +	for (i = 0; i < new_branches; i++)
@@ -10710,10 +10701,10 @@ index 0000000..9cccb33
 +#endif	/* not _UNION_H_ */
 diff --git a/fs/unionfs/unlink.c b/fs/unionfs/unlink.c
 new file mode 100644
-index 0000000..c66bb3e
+index 0000000..cad0386
 --- /dev/null
 +++ b/fs/unionfs/unlink.c
-@@ -0,0 +1,291 @@
+@@ -0,0 +1,293 @@
 +/*
 + * Copyright (c) 2003-2007 Erez Zadok
 + * Copyright (c) 2003-2006 Charles P. Wright
@@ -10996,6 +10987,8 @@ index 0000000..c66bb3e
 +		    !unionfs_lower_inode_idx(inode, dend))
 +			ibstart(inode) = ibend(inode) = -1;
 +		d_drop(dentry);
++		/* update our lower vfsmnts, in case a copyup took place */
++		unionfs_postcopyup_setmnt(dentry);
 +	}
 +
 +	if (namelist)

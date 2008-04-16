@@ -31,8 +31,7 @@ pre_build() {
       else
          if Ask "Do you want to use a configuration based on the one from the running kernel?"
          then
-            cp $goboStatus/config.gz .
-            gzip -d config.gz && mv config .config
+            zcat $goboStatus/config.gz > .config
             yes "" | make oldconfig
          else
             Log_Normal "Using the kernel configuration shipped with the recipe"
@@ -62,6 +61,7 @@ pre_build() {
    fi
 
    make menuconfig || Die "'menuconfig' failed."
+   chown ${SUDO_USER} -R include/config .config
 }
 
 pre_link() {
