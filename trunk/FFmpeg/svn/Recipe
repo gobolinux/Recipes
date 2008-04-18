@@ -5,18 +5,31 @@ recipe_type=configure
 dir='ffmpeg'
 
 configure_options=(
-#    "--enable-theora"
-#    "--enable-a52"
-#    "--enable-swscaler"
-    "--enable-libfaac"
-    "--enable-libfaad"
-#    "--enable-libogg" is now implicit in e.g. libvorbis
-#         and cannot be specified on its own
-    "--enable-libvorbis"
-    "--enable-libmp3lame"
-    "--enable-pp"
-    "--enable-gpl" 
+    # Enabling this makes the package not redistributable 
+    #"--enable-nonfree"
+
+    "--enable-gpl"
     "--enable-shared"
+    "--enable-postproc"
+#    "--enable-swscale"
     "--enable-pthreads"
     "--enable-x11grab"
+
+#    "--enable-liba52"
+    "--enable-libfaac"
+    "--enable-libfaad"
+    "--enable-libmp3lame"
+#    "--enable-libtheora"
+    "--enable-libvorbis"
+#    "--enable-libx264"
+#    "--enable-libxvid"
 )
+
+pre_link() {
+    pushd $target/include
+    ln -s libpostproc postproc 
+    mkdir -p ffmpeg
+    cd ffmpeg
+    find .. -type f -exec ln -s {} . \;
+    popd
+}
