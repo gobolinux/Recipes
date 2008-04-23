@@ -1,0 +1,641 @@
+diff -Nurdp nethack-3.4.3/include/color.h nethack-3.4.3.statuscolors/include/color.h
+--- nethack-3.4.3/include/color.h	2003-12-07 15:39:13.000000000 -0800
++++ nethack-3.4.3.statuscolors/include/color.h	2006-11-11 19:17:57.000000000 -0800
+@@ -49,4 +49,23 @@
+ #define DRAGON_SILVER	CLR_BRIGHT_CYAN
+ #define HI_ZAP		CLR_BRIGHT_BLUE
+ 
++#ifdef STATUS_COLORS
++struct color_option {
++    int color;
++    int attr_bits;
++};
++
++struct percent_color_option {
++	int percentage;
++	struct color_option color_option;
++	const struct percent_color_option *next;
++};
++
++struct text_color_option {
++	const char *text;
++	struct color_option color_option;
++	const struct text_color_option *next;
++};
++#endif
++
+ #endif /* COLOR_H */
+diff -Nurdp nethack-3.4.3/include/config.h nethack-3.4.3.statuscolors/include/config.h
+--- nethack-3.4.3/include/config.h	2003-12-07 15:39:13.000000000 -0800
++++ nethack-3.4.3.statuscolors/include/config.h	2006-11-11 19:17:57.000000000 -0800
+@@ -348,6 +348,8 @@ typedef unsigned char	uchar;
+  * bugs left here.
+  */
+ 
++#define STATUS_COLORS
++
+ /*#define GOLDOBJ */	/* Gold is kept on obj chains - Helge Hafting */
+ /*#define AUTOPICKUP_EXCEPTIONS */ /* exceptions to autopickup */
+ 
+diff -Nurdp nethack-3.4.3/include/flag.h nethack-3.4.3.statuscolors/include/flag.h
+--- nethack-3.4.3/include/flag.h	2003-12-07 15:39:13.000000000 -0800
++++ nethack-3.4.3.statuscolors/include/flag.h	2006-11-11 19:17:57.000000000 -0800
+@@ -183,6 +183,9 @@ struct instance_flags {
+ 	char prevmsg_window;	/* type of old message window to use */
+ 	boolean  extmenu;	/* extended commands use menu interface */
+ #endif
++#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
++	boolean use_status_colors; /* use color in status line; only if wc_color */
++#endif
+ #ifdef MFLOPPY
+ 	boolean  checkspace;	/* check disk space before writing files */
+ 				/* (in iflags to allow restore after moving
+diff -Nurdp nethack-3.4.3/README.statuscolors nethack-3.4.3.statuscolors/README.statuscolors
+--- nethack-3.4.3/README.statuscolors	1969-12-31 16:00:00.000000000 -0800
++++ nethack-3.4.3.statuscolors/README.statuscolors	2006-11-11 20:10:53.000000000 -0800
+@@ -0,0 +1,62 @@
++Statuscolors is a patch for Nethack (version 3.4.3) that attempts to generalize
++the hpmon patch to be more like the menucolor patch. As of v1.2, the
++statuscolors patch may be applied after the menucolor patch (but not before
++it). Unlike menucolor, it does not use regexps. Instead, it provides the
++following options:
++
++To enable statuscolors:
++    OPTIONS=statuscolors
++
++To specify statuscolor options, write:
++    STATUSCOLOR=<option>,<option>
++
++Numeric options have the format <field>%<max-percent>:<color-option>. For
++example:
++    STATUSCOLOR=hp%15:red&bold,pw%100=green
++
++Text options have the format <text>:<color-option>. Text is case-insensitive.
++For example:
++    STATUSCOLOR=hallu:orange,foodpois:red&inverse&blink
++
++A color option is a <color> followed by an optional sequence of &<attr>. Color
++and attribute names are case insensitive. Valid colors are:
++    black blue brown cyan gray green lightblue lightcyan lightgreen
++    lightmagenta magenta none orange red white yellow
++
++Valid attributes are:
++    blink bold dim inverse none underline
++
++A reasonable set of defaults might be:
++    # HP
++    STATUSCOLOR=hp%100=green,hp%66=yellow,hp%50=orange
++    STATUSCOLOR=hp%33=red&bold,hp%15:red&inverse,hp%0:red&inverse&blink
++    # Pw
++    STATUSCOLOR=pw%100=green,pw%66=yellow,pw%50:orange,pw%33=red&bold
++    # Carry
++    STATUSCOLOR=burdened:yellow,stressed:orange,strained:red&bold
++    STATUSCOLOR=overtaxed:red&inverse,overloaded:red&inverse&blink
++    # Hunger
++    STATUSCOLOR=satiated:yellow,hungry:orange,weak:red&bold
++    STATUSCOLOR=fainting:red&inverse,fainted:red&inverse&blink
++    # Mental
++    STATUSCOLOR=hallu:yellow,conf:orange,stun:red&bold
++    # Health
++    STATUSCOLOR=ill:red&inverse,foodpois:red&inverse,slime:red&inverse
++    # Other
++    STATUSCOLOR=held:red&inverse,blind:red&inverse
++
++Changelog:
++
++    v1.2:
++      - Menucolor compatibility.
++
++    v1.1:
++      - Fixed several shameful bugs.
++
++    v1.0:
++      - Initial release.
++
++---
++Shachaf & Oren Ben-Kiki
++shachaf+nethack@gmail.com
++nethack-oren@ben-kiki.org
+diff -Nurdp nethack-3.4.3/src/botl.c nethack-3.4.3.statuscolors/src/botl.c
+--- nethack-3.4.3/src/botl.c	2003-12-07 15:39:13.000000000 -0800
++++ nethack-3.4.3.statuscolors/src/botl.c	2006-11-11 19:17:57.000000000 -0800
+@@ -34,6 +34,106 @@ STATIC_DCL void NDECL(bot2);
+ #define MAXCO (COLNO+20)
+ #endif
+ 
++#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
++
++extern const struct percent_color_option *hp_colors;
++extern const struct percent_color_option *pw_colors;
++extern const struct text_color_option *text_colors;
++
++struct color_option
++text_color_of(text, color_options)
++const char *text;
++const struct text_color_option *color_options;
++{
++	if (color_options == NULL) {
++		struct color_option result = {NO_COLOR, 0};
++		return result;
++	}
++	if (strstri(color_options->text, text)
++	 || strstri(text, color_options->text))
++		return color_options->color_option;
++	return text_color_of(text, color_options->next);
++}
++
++struct color_option
++percentage_color_of(value, max, color_options)
++int value, max;
++const struct percent_color_option *color_options;
++{
++	if (color_options == NULL) {
++		struct color_option result = {NO_COLOR, 0};
++		return result;
++	}
++	if (100 * value <= color_options->percentage * max)
++		return color_options->color_option;
++	return percentage_color_of(value, max, color_options->next);
++}
++
++void
++start_color_option(color_option)
++struct color_option color_option;
++{
++	int i;
++	if (color_option.color != NO_COLOR)
++		term_start_color(color_option.color);
++	for (i = 0; (1 << i) <= color_option.attr_bits; ++i)
++		if (i != ATR_NONE && color_option.attr_bits & (1 << i))
++			term_start_attr(i);
++}
++
++void
++end_color_option(color_option)
++struct color_option color_option;
++{
++	int i;
++	if (color_option.color != NO_COLOR)
++		term_end_color(color_option.color);
++	for (i = 0; (1 << i) <= color_option.attr_bits; ++i)
++		if (i != ATR_NONE && color_option.attr_bits & (1 << i))
++			term_end_attr(i);
++}
++
++void
++apply_color_option(color_option, newbot2)
++struct color_option color_option;
++const char *newbot2;
++{
++	if (!iflags.use_status_colors) return;
++	curs(WIN_STATUS, 1, 1);
++	start_color_option(color_option);
++	putstr(WIN_STATUS, 0, newbot2);
++	end_color_option(color_option);
++}
++
++void
++add_colored_text(text, newbot2)
++const char *text;
++char *newbot2;
++{
++	char *nb;
++	struct color_option color_option;
++
++	if (*text == '\0') return;
++
++	if (!iflags.use_status_colors) {
++		Sprintf(nb = eos(newbot2), " %s", text);
++                return;
++        }
++
++	Strcat(nb = eos(newbot2), " ");
++	curs(WIN_STATUS, 1, 1);
++	putstr(WIN_STATUS, 0, newbot2);
++
++	Strcat(nb = eos(nb), text);
++	curs(WIN_STATUS, 1, 1);
++       	color_option = text_color_of(text, text_colors);
++	start_color_option(color_option);
++	putstr(WIN_STATUS, 0, newbot2);
++	end_color_option(color_option);
++}
++
++#endif
++
+ #ifndef OVLB
+ STATIC_DCL int mrank_sz;
+ #else /* OVLB */
+@@ -249,21 +349,46 @@ bot2()
+ 	register char *nb;
+ 	int hp, hpmax;
+ 	int cap = near_capacity();
++#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
++	struct color_option color_option;
++	int save_botlx = flags.botlx;
++#endif
+ 
+ 	hp = Upolyd ? u.mh : u.uhp;
+ 	hpmax = Upolyd ? u.mhmax : u.uhpmax;
+ 
+ 	if(hp < 0) hp = 0;
+ 	(void) describe_level(newbot2);
+-	Sprintf(nb = eos(newbot2),
+-		"%c:%-2ld HP:%d(%d) Pw:%d(%d) AC:%-2d", oc_syms[COIN_CLASS],
++	Sprintf(nb = eos(newbot2), "%c:%-2ld", oc_syms[COIN_CLASS],
+ #ifndef GOLDOBJ
+-		u.ugold,
++		u.ugold
+ #else
+-		money_cnt(invent),
++		money_cnt(invent)
+ #endif
+-		hp, hpmax, u.uen, u.uenmax, u.uac);
++	       );
++
++#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
++	Strcat(nb = eos(newbot2), " HP:");
++	curs(WIN_STATUS, 1, 1);
++	putstr(WIN_STATUS, 0, newbot2);
++	flags.botlx = 0;
+ 
++	Sprintf(nb = eos(nb), "%d(%d)", hp, hpmax);
++	apply_color_option(percentage_color_of(hp, hpmax, hp_colors), newbot2);
++#else
++	Sprintf(nb = eos(nb), " HP:%d(%d)", hp, hpmax);
++#endif
++#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
++	Strcat(nb = eos(nb), " Pw:");
++	curs(WIN_STATUS, 1, 1);
++	putstr(WIN_STATUS, 0, newbot2);
++
++	Sprintf(nb = eos(nb), "%d(%d)", u.uen, u.uenmax);
++	apply_color_option(percentage_color_of(u.uen, u.uenmax, pw_colors), newbot2);
++#else
++	Sprintf(nb = eos(nb), " Pw:%d(%d)", u.uen, u.uenmax);
++#endif
++	Sprintf(nb = eos(nb), " AC:%-2d", u.uac);
+ 	if (Upolyd)
+ 		Sprintf(nb = eos(nb), " HD:%d", mons[u.umonnum].mlevel);
+ #ifdef EXP_ON_BOTL
+@@ -275,25 +400,65 @@ bot2()
+ 
+ 	if(flags.time)
+ 	    Sprintf(nb = eos(nb), " T:%ld", moves);
+-	if(strcmp(hu_stat[u.uhs], "        ")) {
+-		Sprintf(nb = eos(nb), " ");
+-		Strcat(newbot2, hu_stat[u.uhs]);
+-	}
+-	if(Confusion)	   Sprintf(nb = eos(nb), " Conf");
++	if(strcmp(hu_stat[u.uhs], "        "))
++#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
++	     	add_colored_text(hu_stat[u.uhs], newbot2);
++#else
++		Sprintf(nb = eos(nb), " %s", hu_stat[u.uhs]);
++#endif
++	if(Confusion)
++#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
++	     	add_colored_text("Conf", newbot2);
++#else
++		Strcat(nb = eos(nb), " Conf");
++#endif
+ 	if(Sick) {
+ 		if (u.usick_type & SICK_VOMITABLE)
+-			   Sprintf(nb = eos(nb), " FoodPois");
++#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
++			add_colored_text("FoodPois", newbot2);
++#else
++			Strcat(nb = eos(nb), " FoodPois");
++#endif
+ 		if (u.usick_type & SICK_NONVOMITABLE)
+-			   Sprintf(nb = eos(nb), " Ill");
++#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
++			add_colored_text("Ill", newbot2);
++#else
++			Strcat(nb = eos(nb), " Ill");
++#endif
+ 	}
+-	if(Blind)	   Sprintf(nb = eos(nb), " Blind");
+-	if(Stunned)	   Sprintf(nb = eos(nb), " Stun");
+-	if(Hallucination)  Sprintf(nb = eos(nb), " Hallu");
+-	if(Slimed)         Sprintf(nb = eos(nb), " Slime");
++	if(Blind)
++#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
++	     	add_colored_text("Blind", newbot2);
++#else
++		Strcat(nb = eos(nb), " Blind");
++#endif
++	if(Stunned)
++#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
++	     	add_colored_text("Stun", newbot2);
++#else
++		Strcat(nb = eos(nb), " Stun");
++#endif
++	if(Hallucination)
++#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
++	     	add_colored_text("Hallu", newbot2);
++#else
++		Strcat(nb = eos(nb), " Hallu");
++#endif
++	if(Slimed)
++#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
++	     	add_colored_text("Slime", newbot2);
++#else
++		Strcat(nb = eos(nb), " Slime");
++#endif
+ 	if(cap > UNENCUMBERED)
++#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
++		add_colored_text(enc_stat[cap], newbot2);
++#else
+ 		Sprintf(nb = eos(nb), " %s", enc_stat[cap]);
++#endif
+ 	curs(WIN_STATUS, 1, 1);
+ 	putstr(WIN_STATUS, 0, newbot2);
++	flags.botlx = save_botlx;
+ }
+ 
+ void
+diff -Nurdp nethack-3.4.3/src/files.c nethack-3.4.3.statuscolors/src/files.c
+--- nethack-3.4.3/src/files.c	2003-12-07 15:39:13.000000000 -0800
++++ nethack-3.4.3.statuscolors/src/files.c	2006-11-11 19:46:27.000000000 -0800
+@@ -1797,6 +1797,10 @@ char		*tmp_levels;
+ 	} else if (match_varname(buf, "GRAPHICS", 4)) {
+ 	    len = get_uchars(fp, buf, bufp, translate, FALSE,
+ 			     MAXPCHARS, "GRAPHICS");
++#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
++	} else if (match_varname(buf, "STATUSCOLOR", 11)) {
++	    (void) parse_status_color_options(bufp);
++#endif
+ 	    assign_graphics(translate, len, MAXPCHARS, 0);
+ 	} else if (match_varname(buf, "DUNGEON", 4)) {
+ 	    len = get_uchars(fp, buf, bufp, translate, FALSE,
+diff -Nurdp nethack-3.4.3/src/options.c nethack-3.4.3.statuscolors/src/options.c
+--- nethack-3.4.3/src/options.c	2003-12-07 15:39:13.000000000 -0800
++++ nethack-3.4.3.statuscolors/src/options.c	2006-11-11 19:19:30.000000000 -0800
+@@ -125,6 +125,11 @@ static struct Bool_Opt
+ #else
+ 	{"mail", (boolean *)0, TRUE, SET_IN_FILE},
+ #endif
++#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
++	{"statuscolors", &iflags.use_status_colors, TRUE, SET_IN_GAME},
++#else
++	{"statuscolors", (boolean *)0, TRUE, SET_IN_GAME},
++#endif
+ #ifdef WIZARD
+ 	/* for menu debugging only*/
+ 	{"menu_tab_sep", &iflags.menu_tab_sep, FALSE, SET_IN_GAME},
+@@ -309,6 +314,7 @@ static struct Comp_Opt
+ #ifdef MSDOS
+ 	{ "soundcard", "type of sound card to use", 20, SET_IN_FILE },
+ #endif
++	{ "statuscolor", "set status colors", PL_PSIZ, SET_IN_FILE },
+ 	{ "suppress_alert", "suppress alerts about version-specific features",
+ 						8, SET_IN_GAME },
+ 	{ "tile_width", "width of tiles", 20, DISP_IN_GAME},	/*WC*/
+@@ -964,6 +970,165 @@ int bool_or_comp;	/* 0 == boolean option
+ 	}
+ }
+ 
++#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
++
++struct name_value {
++	char *name;
++	int value;
++};
++
++const struct name_value status_colornames[] = {
++	{ "black",	CLR_BLACK },
++	{ "red",	CLR_RED },
++	{ "green",	CLR_GREEN },
++	{ "brown",	CLR_BROWN },
++	{ "blue",	CLR_BLUE },
++	{ "magenta",	CLR_MAGENTA },
++	{ "cyan",	CLR_CYAN },
++	{ "gray",	CLR_GRAY },
++	{ "orange",	CLR_ORANGE },
++	{ "lightgreen",	CLR_BRIGHT_GREEN },
++	{ "yellow",	CLR_YELLOW },
++	{ "lightblue",	CLR_BRIGHT_BLUE },
++	{ "lightmagenta", CLR_BRIGHT_MAGENTA },
++	{ "lightcyan",	CLR_BRIGHT_CYAN },
++	{ "white",	CLR_WHITE },
++	{ NULL,		-1 }
++};
++
++const struct name_value status_attrnames[] = {
++	 { "none",	ATR_NONE },
++	 { "bold",	ATR_BOLD },
++	 { "dim",	ATR_DIM },
++	 { "underline",	ATR_ULINE },
++	 { "blink",	ATR_BLINK },
++	 { "inverse",	ATR_INVERSE },
++	 { NULL,	-1 }
++};
++
++int
++value_of_name(name, name_values)
++const char *name;
++const struct name_value *name_values;
++{
++	while (name_values->name && !strstri(name_values->name, name))
++		++name_values;
++	return name_values->value;
++}
++
++struct color_option
++parse_color_option(start)
++char *start;
++{
++	struct color_option result = {NO_COLOR, 0};
++	char last;
++	char *end;
++	int attr;
++
++	for (end = start; *end != '&' && *end != '\0'; ++end);
++	last = *end;
++	*end = '\0';
++	result.color = value_of_name(start, status_colornames);
++
++	while (last == '&') {
++		for (start = ++end; *end != '&' && *end != '\0'; ++end);
++		last = *end;
++		*end = '\0';
++		attr = value_of_name(start, status_attrnames);
++		if (attr >= 0)
++			result.attr_bits |= 1 << attr;
++	}
++
++	return result;
++}
++
++const struct percent_color_option *hp_colors = NULL;
++const struct percent_color_option *pw_colors = NULL;
++const struct text_color_option *text_colors = NULL;
++
++struct percent_color_option *
++add_percent_option(new_option, list_head)
++struct percent_color_option *new_option;
++struct percent_color_option *list_head;
++{
++	if (list_head == NULL)
++		return new_option;
++	if (new_option->percentage <= list_head->percentage) {
++		new_option->next = list_head;
++		return new_option;
++	}
++	list_head->next = add_percent_option(new_option, list_head->next);
++	return list_head;
++}
++
++boolean
++parse_status_color_option(start)
++char *start;
++{
++	char *middle;
++
++	while (*start && isspace(*start)) start++;
++	for (middle = start; *middle != ':' && *middle != '=' && *middle != '\0'; ++middle);
++	*middle++ = '\0';
++	if (middle - start > 2 && start[2] == '%') {
++		struct percent_color_option *percent_color_option =
++			(struct percent_color_option *)alloc(sizeof(*percent_color_option));
++		percent_color_option->next = NULL;
++		percent_color_option->percentage = atoi(start + 3);
++		percent_color_option->color_option = parse_color_option(middle);
++		start[2] = '\0';
++		if (percent_color_option->color_option.color >= 0
++		 && percent_color_option->color_option.attr_bits >= 0) {
++			if (!strcmpi(start, "hp")) {
++				hp_colors = add_percent_option(percent_color_option, hp_colors);
++				return TRUE;
++			}
++			if (!strcmpi(start, "pw")) {
++				pw_colors = add_percent_option(percent_color_option, pw_colors);
++				return TRUE;
++			}
++		}
++		free(percent_color_option);
++		return FALSE;
++	} else {
++		int length = strlen(start) + 1;
++		struct text_color_option *text_color_option =
++			(struct text_color_option *)alloc(sizeof(*text_color_option));
++		text_color_option->next = NULL;
++		text_color_option->text = (char *)alloc(length);
++		memcpy((char *)text_color_option->text, start, length);
++		text_color_option->color_option = parse_color_option(middle);
++		if (text_color_option->color_option.color >= 0
++		 && text_color_option->color_option.attr_bits >= 0) {
++			text_color_option->next = text_colors;
++			text_colors = text_color_option;
++			return TRUE;
++		}
++		free(text_color_option->text);
++		free(text_color_option);
++		return FALSE;
++	}
++}
++
++boolean
++parse_status_color_options(start)
++char *start;
++{
++	char last = ',';
++	char *end = start - 1;
++	boolean ok = TRUE;
++	while (last == ',') {
++		for (start = ++end; *end != ',' && *end != '\0'; ++end);
++		last = *end;
++		*end = '\0';
++		ok = parse_status_color_option(start) && ok;
++	}
++	return ok;
++}
++
++
++#endif /* STATUS_COLORS */
++
+ void
+ parseoptions(opts, tinitial, tfrom_file)
+ register char *opts;
+@@ -1839,6 +2004,17 @@ goodfruit:
+ 	    return;
+ 	}
+ 
++	fullname = "statuscolor";
++	if (match_optname(opts, fullname, 11, TRUE)) {
++#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
++		if (negated) bad_negation(fullname, FALSE);
++		else if ((op = string_for_env_opt(fullname, opts, FALSE)) != 0)
++			if (!parse_status_color_options(op))
++				badoption(opts);
++#endif
++	    return;
++	}
++	
+ 	fullname = "suppress_alert";
+ 	if (match_optname(opts, fullname, 4, TRUE)) {
+ 		op = string_for_opt(opts, negated);
+diff -Nurdp nethack-3.4.3/src/save.c nethack-3.4.3.statuscolors/src/save.c
+--- nethack-3.4.3/src/save.c	2003-12-07 15:39:13.000000000 -0800
++++ nethack-3.4.3.statuscolors/src/save.c	2006-11-11 19:45:02.000000000 -0800
+@@ -48,6 +48,12 @@ static long nulls[10];
+ #define HUP
+ #endif
+ 
++#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
++extern const struct percent_color_option *hp_colors;
++extern const struct percent_color_option *pw_colors;
++extern const struct text_color_option *text_colors;
++#endif
++
+ /* need to preserve these during save to avoid accessing freed memory */
+ static unsigned ustuck_id = 0, usteed_id = 0;
+ 
+@@ -942,6 +948,36 @@ register int fd, mode;
+ 	    ffruit = 0;
+ }
+ 
++#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
++
++void
++free_percent_color_options(list_head)
++const struct percent_color_option *list_head;
++{
++	if (list_head == NULL) return;
++	free_percent_color_options(list_head->next);
++	free(list_head);
++}
++
++void
++free_text_color_options(list_head)
++const struct text_color_option *list_head;
++{
++	if (list_head == NULL) return;
++	free_text_color_options(list_head->next);
++	free(list_head->text);
++	free(list_head);
++}
++
++void
++free_status_colors()
++{
++	free_percent_color_options(hp_colors); hp_colors = NULL;
++	free_percent_color_options(pw_colors); pw_colors = NULL;
++	free_text_color_options(text_colors); text_colors = NULL;
++}
++#endif
++
+ /* also called by prscore(); this probably belongs in dungeon.c... */
+ void
+ free_dungeons()
+@@ -956,6 +992,9 @@ free_dungeons()
+ void
+ freedynamicdata()
+ {
++#if defined(STATUS_COLORS) && defined(TEXTCOLOR)
++	free_status_colors();
++#endif
+ 	unload_qtlist();
+ 	free_invbuf();	/* let_to_name (invent.c) */
+ 	free_youbuf();	/* You_buf,&c (pline.c) */
