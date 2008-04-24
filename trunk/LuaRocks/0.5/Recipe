@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for Luarocks by Hisham Muhammad, on Thu Apr 24 17:43:49 BRT 2008
+# Recipe for version 0.5 by Hisham Muhammad, on Thu Apr 24 17:43:49 BRT 2008
+url="http://luaforge.net/frs/download.php/3284/luarocks-0.5.tar.gz"
+file_size=46255
+file_md5=f9da6ffc4d99f66dfc3026b76d8f719b
+recipe_type=configure
+configure_options=(
+   "--prefix=$target"
+   "--sysconfdir=$settings_target/luarocks"
+   "--rocks-tree=/Files/LuaRocks"
+   "--with-lua=$lua_path"
+)
+unmanaged_files=(
+   "/Files/LuaRocks"
+)
