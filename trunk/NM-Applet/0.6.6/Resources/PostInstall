@@ -1,0 +1,3 @@
+#!/bin/sh
+
+GrepReplace "user=\"root\"" "user=\"$(SuperUserName)\"" $settings_target/dbus-1/system.d/nm-applet.conf
