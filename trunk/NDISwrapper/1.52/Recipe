@@ -23,15 +23,7 @@ pre_build(){
     make scripts
     cd -
     make distclean
-}
-
-pre_link () {
-    # Make the a note that this is a third part module that needs
-    # recompiling with a new kernel
-    mkdir -p ${target}/Shared/Compile/Recompile/Linux/
-    touch ${target}/Shared/Compile/Recompile/Linux/Ndiswrapper
-}
-
-post_install(){
-    depmod
+    
+    GrepReplace "/usr/" "/" Makefile
+    GrepReplace "/usr/" "/" utils/Makefile
 }
