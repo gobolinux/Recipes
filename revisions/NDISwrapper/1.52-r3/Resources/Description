@@ -1,0 +1,8 @@
+[Name] Ndiswrapper
+[Summary] Ndis driver wrapper for the Linux kernel 
+[License] GNU General Public License (GPL)
+[Description] Some vendors do not release specifications of the hardware or provide \
+a linux driver for their wireless network cards. This project provides \
+a linux kernel module that loads and runs NDIS (Windows network driver \
+API) drivers supplied by the vendors)
+[Homepage] http://ndiswrapper.sourceforge.net/ 
