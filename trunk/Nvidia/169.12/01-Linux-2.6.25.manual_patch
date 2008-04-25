@@ -1,9 +1,9 @@
 http://www.nvnews.net/vbulletin/showthread.php?t=110088
 http://bugs.gentoo.org/218178
 
-diff -ru usr/src/nvidia-169.12-1.fc8/Makefile.kbuild usr/src/nv.2286310/Makefile.kbuild
---- nvidia.orig/usr/src/nvidia-169.12-1.fc8/Makefile.kbuild	2008-03-16 14:13:10.000000000 -0700
-+++ nvidia/usr/src/nv.2286310/Makefile.kbuild	2008-03-16 14:37:47.204131496 -0700
+diff -ru usr/src/nv/Makefile.kbuild usr/src/nv/Makefile.kbuild
+--- nvidia.orig/usr/src/nv/Makefile.kbuild	2008-03-16 14:13:10.000000000 -0700
++++ nvidia/usr/src/nv/Makefile.kbuild	2008-03-16 14:37:47.204131496 -0700
 @@ -177,6 +177,7 @@
  	vmap \
  	signal_struct \
@@ -12,9 +12,9 @@ diff -ru usr/src/nvidia-169.12-1.fc8/Makefile.kbuild usr/src/nv.2286310/Makefile
  	change_page_attr \
  	pci_get_class \
  	sysctl_max_map_count \
-diff -ru usr/src/nvidia-169.12-1.fc8/conftest.sh usr/src/nv.2286310/conftest.sh
---- nvidia.orig/usr/src/nvidia-169.12-1.fc8/conftest.sh	2008-03-16 14:13:10.000000000 -0700
-+++ nvidia/usr/src/nv.2286310/conftest.sh	2008-03-16 14:37:47.204131496 -0700
+diff -ru usr/src/nv/conftest.sh usr/src/nv/conftest.sh
+--- nvidia.orig/usr/src/nv/conftest.sh	2008-03-16 14:13:10.000000000 -0700
++++ nvidia/usr/src/nv/conftest.sh	2008-03-16 14:37:47.204131496 -0700
 @@ -100,6 +100,32 @@
              fi
          ;;
@@ -67,9 +67,9 @@ diff -ru usr/src/nvidia-169.12-1.fc8/conftest.sh usr/src/nv.2286310/conftest.sh
              echo "#include <linux/autoconf.h>
              #include <linux/interrupt.h>
              irq_handler_t conftest_isr;
-diff -ru usr/src/nvidia-169.12-1.fc8/nv-linux.h usr/src/nv.2286310/nv-linux.h
---- nvidia.orig/usr/src/nvidia-169.12-1.fc8/nv-linux.h	2008-03-16 14:13:10.000000000 -0700
-+++ nvidia/usr/src/nv.2286310/nv-linux.h	2008-03-16 14:37:47.204131496 -0700
+diff -ru usr/src/nv/nv-linux.h usr/src/nv/nv-linux.h
+--- nvidia.orig/usr/src/nv/nv-linux.h	2008-03-16 14:13:10.000000000 -0700
++++ nvidia/usr/src/nv/nv-linux.h	2008-03-16 14:37:47.204131496 -0700
 @@ -871,9 +871,10 @@
  
  #define NV_PGD_OFFSET(address, kernel, mm)              \
@@ -129,9 +129,9 @@ diff -ru usr/src/nvidia-169.12-1.fc8/nv-linux.h usr/src/nv.2286310/nv-linux.h
   * interface.
   */
  #ifndef X86_FEATURE_NX
-diff -ru usr/src/nvidia-169.12-1.fc8/nv-reg.h usr/src/nv.2286310/nv-reg.h
---- nvidia.orig/usr/src/nvidia-169.12-1.fc8/nv-reg.h	2008-03-16 14:13:10.000000000 -0700
-+++ nvidia/usr/src/nv.2286310/nv-reg.h	2008-03-16 14:37:47.204131496 -0700
+diff -ru usr/src/nv/nv-reg.h usr/src/nv/nv-reg.h
+--- nvidia.orig/usr/src/nv/nv-reg.h	2008-03-16 14:13:10.000000000 -0700
++++ nvidia/usr/src/nv/nv-reg.h	2008-03-16 14:37:47.204131496 -0700
 @@ -391,34 +391,36 @@
  #define NV_REG_REMAP_LIMIT NV_REG_STRING(__NV_REMAP_LIMIT)
  
@@ -210,9 +210,9 @@ diff -ru usr/src/nvidia-169.12-1.fc8/nv-reg.h usr/src/nv.2286310/nv-reg.h
      NV_DEFINE_PARAMS_TABLE_ENTRY(__NV_USE_VBIOS),
      NV_DEFINE_PARAMS_TABLE_ENTRY(__NV_RM_EDGE_INTR_CHECK),
      {NULL, NULL, NULL}
-diff -ru usr/src/nvidia-169.12-1.fc8/nv-vm.c usr/src/nv.2286310/nv-vm.c
---- nvidia.orig/usr/src/nvidia-169.12-1.fc8/nv-vm.c	2008-03-16 14:13:09.000000000 -0700
-+++ nvidia/usr/src/nv.2286310/nv-vm.c	2008-03-16 14:37:47.204131496 -0700
+diff -ru usr/src/nv/nv-vm.c usr/src/nv/nv-vm.c
+--- nvidia.orig/usr/src/nv/nv-vm.c	2008-03-16 14:13:09.000000000 -0700
++++ nvidia/usr/src/nv/nv-vm.c	2008-03-16 14:37:47.204131496 -0700
 @@ -43,42 +43,40 @@
  }
  #endif
@@ -289,9 +289,9 @@ diff -ru usr/src/nvidia-169.12-1.fc8/nv-vm.c usr/src/nv.2286310/nv-vm.c
          if (!NV_PGD_PRESENT(pgd))
              goto failed;
  
-diff -ru usr/src/nvidia-169.12-1.fc8/nv.c usr/src/nv.2286310/nv.c
---- nvidia.orig/usr/src/nvidia-169.12-1.fc8/nv.c	2008-03-16 14:13:09.000000000 -0700
-+++ nvidia/usr/src/nv.2286310/nv.c	2008-03-16 14:37:47.208131723 -0700
+diff -ru usr/src/nv/nv.c usr/src/nv/nv.c
+--- nvidia.orig/usr/src/nv/nv.c	2008-03-16 14:13:09.000000000 -0700
++++ nvidia/usr/src/nv/nv.c	2008-03-16 14:37:47.208131723 -0700
 @@ -15,6 +15,7 @@
  #include "nv_compiler.h"
  #include "os-agp.h"
@@ -606,9 +606,9 @@ diff -ru usr/src/nvidia-169.12-1.fc8/nv.c usr/src/nv.2286310/nv.c
  #else
      return 0;
  #endif
-diff -ru usr/src/nvidia-169.12-1.fc8/os-interface.c usr/src/nv.2286310/os-interface.c
---- nvidia.orig/usr/src/nvidia-169.12-1.fc8/os-interface.c	2008-03-16 14:13:09.000000000 -0700
-+++ nvidia/usr/src/nv.2286310/os-interface.c	2008-03-16 14:37:47.208131723 -0700
+diff -ru usr/src/nv/os-interface.c usr/src/nv/os-interface.c
+--- nvidia.orig/usr/src/nv/os-interface.c	2008-03-16 14:13:09.000000000 -0700
++++ nvidia/usr/src/nv/os-interface.c	2008-03-16 14:37:47.208131723 -0700
 @@ -1198,6 +1198,18 @@
  {
      void *vaddr;

@@ -1,9 +1,0 @@
-#!/bin/sh
-
-# Renames a few directories before applying the final patch. This saves
-# a few MBs of download, as the original patches happen to rename directories
-# here and there (lucasvr).
-
-ln -s nv usr/src/nvidia-169.12-1.fc8 
-mkdir usr/share/doc/nvidia-x11-drv-169.12
-mv usr/share/doc/* usr/share/doc/nvidia-x11-drv-169.12
