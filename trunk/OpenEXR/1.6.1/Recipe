@@ -6,3 +6,7 @@ file_size=13632660
 file_md5=11951f164f9c872b183df75e66de145a
 recipe_type=configure
 dir='openexr-1.6.1'
+
+configure_options=(
+    --with-ilmbase-prefix=$ilmbase_path
+)
