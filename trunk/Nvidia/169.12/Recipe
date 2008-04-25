@@ -30,6 +30,20 @@ pre_install() {
 
     mkdir -p $MODULEDIR
 
+    if [ ! -f AppliedPatches ]
+    then
+       # Run pre-patch scripts, if any
+       for script in $recipedir/*.run
+       do sh $script
+       done
+       # Apply patches
+       for patch in $recipedir/*.manual_patch
+       do
+          patch -i $patch -p1 || { echo "Error applying patch $patch."; exit 1; }
+          echo $patch >> AppliedPatches
+       done
+    fi
+
     # compile
  	./nvidia-installer                                      \
  	--expert                                                \
