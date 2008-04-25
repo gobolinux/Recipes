@@ -1,0 +1,20 @@
+http://mactel-linux.svn.sourceforge.net/viewvc/mactel-linux/trunk/kernel/mactel-patches-2.6.24/
+rev 153
+
+diff -Nurp linux-2.6.25/sound/pci/hda/patch_sigmatel.c linux-2.6.25-lucasvr/sound/pci/hda/patch_sigmatel.c
+--- linux-2.6.25/sound/pci/hda/patch_sigmatel.c	2008-04-16 23:49:44.000000000 -0300
++++ linux-2.6.25-lucasvr/sound/pci/hda/patch_sigmatel.c	2008-04-24 19:47:32.456948410 -0300
+@@ -3475,10 +3475,12 @@ static int patch_stac922x(struct hda_cod
+ 		case 0x106b1700:
+ 		case 0x106b0200:
+ 		case 0x106b1e00:
++		case 0x100: /* Invalid subsystem ID, happens randomly on
++			     * MacBook Pro 1st generation
++			     */
+ 			spec->board_config = STAC_INTEL_MAC_V3;
+ 			break;
+ 		case 0x106b1a00:
+-		case 0x00000100:
+ 			spec->board_config = STAC_INTEL_MAC_V4;
+ 			break;
+ 		case 0x106b0a00:
