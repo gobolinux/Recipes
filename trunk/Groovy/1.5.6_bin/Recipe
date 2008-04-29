@@ -1,0 +1,20 @@
+# Recipe for version 1.5.6 by Nathan Middleton, on Sun Apr 27 22:21:08 CDT 2008
+# Recipe (MakeRecipe) for Groovy by Nathan Middleton, on Thu Nov 15 04:17:52 CST 2007
+compile_version=1.9.0
+recipe_type=manifest
+url="http://dist.groovy.codehaus.org/distributions/groovy-binary-1.5.6.zip"
+file_size=7857512
+file_md5=1bfec2491a251d5e69a00391f80cb3f9
+dir='groovy-1.5.6'
+
+manifest=(
+    "bin:bin"
+    "lib:lib"
+    "conf:conf"
+    "embeddable:embeddable"
+)
+docs=(
+    "LICENSE.txt"
+    "ASM-LICENSE.txt"
+    "NOTICE.txt"
+)
