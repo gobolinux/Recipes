@@ -1,0 +1,33 @@
+Bash-Release: 3.2
+Patch-ID: bash32-007
+
+Bug-Reported-by:    jidanni@jidanni.org
+Bug-Reference-ID:   <E1Gkg12-00017D-Fm@jidanni.org>
+Bug-Reference-URL: http://lists.gnu.org/archive/html/bug-bash/2006-11/msg00039.html
+
+Bug-Description:
+
+When removing the current or previous job from the jobs list, bash incorrectly
+resets the current job under some circumstances.
+
+--- bash-3.2/jobs.c	2006-07-29 22:40:48.000000000 +0200
++++ bash-3.2/jobs.c.new	2007-04-01 03:51:40.000000000 +0200
+@@ -984,8 +984,6 @@
+   temp = jobs[job_index];
+   if (temp == 0)
+     return;
+-  if (job_index == js.j_current || job_index == js.j_previous)
+-    reset_current ();
+ 
+   if ((dflags & DEL_NOBGPID) == 0)
+     {
+@@ -1028,6 +1026,9 @@
+     js.j_firstj = js.j_lastj = 0;
+   else if (jobs[js.j_firstj] == 0 || jobs[js.j_lastj] == 0)
+     reset_job_indices ();
++
++  if (job_index == js.j_current || job_index == js.j_previous)
++    reset_current ();
+ }
+ 
+ /* Must be called with SIGCHLD blocked. */
