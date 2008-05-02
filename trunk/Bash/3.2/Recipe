@@ -12,8 +12,8 @@ configure_options=(
    "--enable-readline"
 )
 
-pre_install() {
-   cd $target/bin
+pre_link() {
+   pushd ${target}/bin &>/dev/null
    ln -nfs bash sh
-   cd -
+   popd &>/dev/null
 }
