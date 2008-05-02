@@ -9,5 +9,5 @@ configure_options=(
    "--mandir=${target}/man"
 )
 pre_link() {
-    mkdir $variable_target
+    mkdir -p $variable_target
 }
