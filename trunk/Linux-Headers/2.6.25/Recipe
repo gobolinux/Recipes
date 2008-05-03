@@ -5,6 +5,7 @@ file_size=48601689
 file_md5=db95a49a656a3247d4995a797d333153
 recipe_type=makefile
 do_build=no
+needs_safe_linking=yes
 install_target="headers_install"
 install_variables=(
     "INSTALL_HDR_PATH=$target"
