@@ -5,6 +5,7 @@ url="http://www.sudo.ws/sudo/dist/sudo-1.6.9p15.tar.gz"
 file_size=593065
 file_md5=06cfeed4ececfce6c82e03974c588066
 mirror_url="http://www.sudo.ws/sudo/dist/OLD/sudo-1.6.9p15.tar.gz"
+needs_safe_linking=yes
 recipe_type=configure
 configure_options=(
    #Name of the root user is immaterial, number is significant:
@@ -25,12 +26,13 @@ configure_options=(
    #up mailing for anyone who wants it.
    --without-sendmail
    --with-mailto=""
-   #sudo 1.6.9 didn't seem to be able to build in absence of PAM otherwise
-   #(it tried to link with -lpam)
+   #./configure adds -lpam to link flags unless this option is given, which
+   # breaks compilation if Linux-PAM isn't installed (no autodetection here)
+   # Will be overridden below if pam use flag is defined
    --without-pam
-   #Are the following because of sudo complaining about symlinks in paths?
-   --with-logpath="$goboVariable/log/sudo.log"
-   --with-timedir="$goboVariable/run/sudo"
+
+   --with-logpath="${variable_target}/log/sudo.log"
+   --with-timedir="${variable_target}/run/sudo"
    #Good for sudo not breaking with our directory/symlink layout:
    --with-stow
    #I guess someone just thought this was a good idea?
@@ -38,6 +40,11 @@ configure_options=(
    # Use EDITOR variable for editor to use with visudo
    --with-env-editor
 )
+
+# This override the "--without-pam" option given in configure_options when
+# pam use flag is set. This should only be used with broken ./configure
+# scripts
+with_pam="--with-pam"
 
 #Don't try to install their default sudoers file, just the stuff we want.
 
