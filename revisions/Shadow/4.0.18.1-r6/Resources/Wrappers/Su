@@ -1,0 +1,26 @@
+#!/bin/sh
+
+is_user() {
+   cat /etc/passwd | cut -d: -f1 | grep "$1" &> /dev/null
+}
+
+super_user() {
+   cat /etc/passwd | grep "^[^:]*:[^:]*:0:" | cut -d: -f1
+}
+
+if [ "$1" ] && {
+      is_user "$1" || {
+         [ -n "$2" -a "$1" = - ] && is_user "$2"
+      }
+   }
+then
+   /bin/su "$@"
+else
+   if [ "$1" = - ]
+   then
+      shift
+      /bin/su - `super_user` "$@"
+   else
+      /bin/su `super_user` "$@"
+   fi
+fi
