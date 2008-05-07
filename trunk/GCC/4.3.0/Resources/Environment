@@ -41,3 +41,5 @@ export GCC_EXEC_PREFIX="/Programs/GCC/Current/lib/gcc/"
 export CFLAGS="-O2 -march=i686 -fomit-frame-pointer -pipe"
 export CXXFLAGS="-O2 -march=i686 -fomit-frame-pointer -pipe"
 
+export CPLUS_INCLUDE_PATH="${goboHeaders}/c++/4.3.0:${goboHeaders}${CPLUS_INCLUDE_PATH:+:$CPLUS_INCLUDE_PATH}"
+export C_INCLUDE_PATH="${goboHeaders}${C_INCLUDE_PATH:+:$C_INCLUDE_PATH}"

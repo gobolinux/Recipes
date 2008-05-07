@@ -8,10 +8,8 @@ recipe_type=configure
 needs_build_directory=yes
 
 pre_link() {
-   cd "$target/bin"
-   ln -s gcc cc
-   cd "$target/lib"
-   ln -s "$target/bin/cpp" .
+   ln -s gcc "$target/bin"/cc
+   ln -s "../bin/cpp" "$target/lib"/.
    rm -f libiberty.a
    cd "$goboExecutables"
    ln -nsf "$target/bin/cc" .
