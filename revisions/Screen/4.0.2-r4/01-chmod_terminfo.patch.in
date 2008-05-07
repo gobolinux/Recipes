@@ -1,0 +1,11 @@
+--- screen-4.0.2/Makefile.in	2003-12-05 14:59:39.000000000 +0100
++++ screen-4.0.2.new/Makefile.in	2007-01-04 22:09:22.000000000 +0100
+@@ -86,7 +86,7 @@
+ 	cd doc ; $(MAKE) install
+ 	-if [ -d /usr/lib/terminfo ]; then \
+ 		PATH="$$PATH:/usr/5bin" tic ${srcdir}/terminfo/screeninfo.src; \
+-		chmod 644 /usr/lib/terminfo/s/screen*; \
++		chmod 644 @%Compile_target%@/lib/terminfo/s/screen*; \
+ 	fi
+ # Better do this by hand. E.g. under RCS...
+ #	cat ${srcdir}/terminfo/screencap >> /etc/termcap
