@@ -9,3 +9,5 @@ recipe_type=configure
 install_variables=(
    "TERMINFO=$target/Shared/terminfo"
 )
+
+with_pam="--enable-pam"
