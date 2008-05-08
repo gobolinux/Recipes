@@ -1,0 +1,441 @@
+Submitted By: Joe Ciccone <jciccone@linuxfromscratch.org>
+Date: 2006-11-26
+Initial Package Version: 2.5
+Origin: Joe Ciccone
+Upstream Status: Unknown
+Description: Adds native compile support to the build system then uses that
+             support to build zic-native, for installing timezone info,
+             rpcgen-native, for building librpcsvc.a, and localedef-native,
+             for creating the locale-archive.
+
+             -2 takes into account the possibility of CFLAGS being set for
+             the target.
+
+diff -Naur glibc-2.5.orig/iconv/Makefile glibc-2.5/iconv/Makefile
+--- glibc-2.5.orig/iconv/Makefile	2004-12-19 18:43:41.000000000 -0500
++++ glibc-2.5/iconv/Makefile	2006-11-26 17:26:05.000000000 -0500
+@@ -56,6 +56,9 @@
+ 		  iconvconfig.h
+ 
+ others		= iconv_prog iconvconfig
++ifneq ($(cross-compiling),no)
++others-native	= iconvconfig-native
++endif
+ install-others	= $(inst_bindir)/iconv
+ install-sbin	= iconvconfig
+ 
+@@ -78,6 +81,7 @@
+ 
+ $(objpfx)iconv_prog: $(iconv_prog-modules:%=$(objpfx)%.o)
+ $(objpfx)iconvconfig: $(iconvconfig-modules:%=$(objpfx)%.o)
++$(objpfx)iconvconfig-native: $(iconvconfig-modules:%=$(objpfx)%-native.o)
+ 
+ ifneq ($(cross-compiling),yes)
+ xtests: test-iconvconfig
+diff -Naur glibc-2.5.orig/iconvdata/Makefile glibc-2.5/iconvdata/Makefile
+--- glibc-2.5.orig/iconvdata/Makefile	2006-05-01 10:18:49.000000000 -0400
++++ glibc-2.5/iconvdata/Makefile	2006-11-26 17:26:05.000000000 -0500
+@@ -311,23 +311,25 @@
+ 
+ headers: $(addprefix $(objpfx), $(generated-modules:=.h))
+ 
++ifeq ($(cross-compiling),no)
++iconvconfig-cmd = LC_ALL=C LANGUAGE=C \
++  $(common-objpfx)elf/ld.so --library-path $(rpath-link) \
++  $(common-objpfx)iconv/iconvconfig
++else
++iconvconfig-cmd = LC_ALL=C LANGUAGE=C \
++  $(common-objpfx)iconv/iconvconfig-native
++endif
++
+ $(addprefix $(inst_gconvdir)/, $(modules.so)): \
+     $(inst_gconvdir)/%: $(objpfx)% $(+force)
+ 	$(do-install-program)
+ $(inst_gconvdir)/gconv-modules: gconv-modules $(+force)
+ 	$(do-install)
+-ifeq (no,$(cross-compiling))
+ # Update the $(prefix)/lib/gconv/gconv-modules.cache file. This is necessary
+ # if this libc has more gconv modules than the previously installed one.
+ 	if test -f "$(inst_gconvdir)/gconv-modules.cache"; then \
+-	   LC_ALL=C LANGUAGE=C \
+-	   $(common-objpfx)elf/ld.so --library-path $(rpath-link) \
+-	   $(common-objpfx)iconv/iconvconfig \
+-	     $(addprefix --prefix=,$(install_root)); \
++	   $(iconvconfig-cmd) $(addprefix --prefix=,$(install_root)); \
+ 	fi
+-else
+-	@echo '*@*@*@ You should recreate $(inst_gconvdir)/gconv-modules.cache'
+-endif
+ 
+ endif # build-shared = yes
+ 
+diff -Naur glibc-2.5.orig/include-native/bits/libc-tsd.h glibc-2.5/include-native/bits/libc-tsd.h
+--- glibc-2.5.orig/include-native/bits/libc-tsd.h	1969-12-31 19:00:00.000000000 -0500
++++ glibc-2.5/include-native/bits/libc-tsd.h	2006-11-26 17:26:05.000000000 -0500
+@@ -0,0 +1,3 @@
++#ifndef __libc_tsd_define
++#define __libc_tsd_define(A,B)
++#endif
+diff -Naur glibc-2.5.orig/include-native/config.h glibc-2.5/include-native/config.h
+--- glibc-2.5.orig/include-native/config.h	1969-12-31 19:00:00.000000000 -0500
++++ glibc-2.5/include-native/config.h	2006-11-26 17:26:05.000000000 -0500
+@@ -0,0 +1 @@
++/* Empty */
+diff -Naur glibc-2.5.orig/include-native/gnu/stubs.h glibc-2.5/include-native/gnu/stubs.h
+--- glibc-2.5.orig/include-native/gnu/stubs.h	1969-12-31 19:00:00.000000000 -0500
++++ glibc-2.5/include-native/gnu/stubs.h	2006-11-26 17:26:05.000000000 -0500
+@@ -0,0 +1 @@
++/* Empty */
+diff -Naur glibc-2.5.orig/include-native/intl/loadinfo.h glibc-2.5/include-native/intl/loadinfo.h
+--- glibc-2.5.orig/include-native/intl/loadinfo.h	1969-12-31 19:00:00.000000000 -0500
++++ glibc-2.5/include-native/intl/loadinfo.h	2006-11-26 17:26:05.000000000 -0500
+@@ -0,0 +1,4 @@
++#ifndef LOADINFO_H
++#define LOADINFO_H
++struct loaded_l10nfile;
++#endif
+diff -Naur glibc-2.5.orig/include-native/libintl.h glibc-2.5/include-native/libintl.h
+--- glibc-2.5.orig/include-native/libintl.h	1969-12-31 19:00:00.000000000 -0500
++++ glibc-2.5/include-native/libintl.h	2006-11-26 17:26:05.000000000 -0500
+@@ -0,0 +1,13 @@
++#include_next <libintl.h>
++
++#ifndef _
++#define _(X) (X)
++#endif
++
++#ifndef N_
++#define N_(X) (X)
++#endif
++
++#ifndef _libc_intl_domainname
++#define _libc_intl_domainname "libc"
++#endif
+diff -Naur glibc-2.5.orig/include-native/symbol-hacks.h glibc-2.5/include-native/symbol-hacks.h
+--- glibc-2.5.orig/include-native/symbol-hacks.h	1969-12-31 19:00:00.000000000 -0500
++++ glibc-2.5/include-native/symbol-hacks.h	2006-11-26 17:26:05.000000000 -0500
+@@ -0,0 +1 @@
++/* Empty */
+diff -Naur glibc-2.5.orig/include-native/tls.h glibc-2.5/include-native/tls.h
+--- glibc-2.5.orig/include-native/tls.h	1969-12-31 19:00:00.000000000 -0500
++++ glibc-2.5/include-native/tls.h	2006-11-26 17:26:05.000000000 -0500
+@@ -0,0 +1,11 @@
++#ifndef _include_tls_h
++#define _include_tls_h 1
++
++#if USE_TLS && HAVE___THREAD \
++    && (!defined NOT_IN_libc || defined IS_IN_libpthread)
++# define USE___THREAD 1
++#else
++# define USE___THREAD 0
++#endif
++
++#endif
+diff -Naur glibc-2.5.orig/locale/Makefile glibc-2.5/locale/Makefile
+--- glibc-2.5.orig/locale/Makefile	2005-12-20 01:58:41.000000000 -0500
++++ glibc-2.5/locale/Makefile	2006-11-26 17:26:05.000000000 -0500
+@@ -44,6 +44,9 @@
+ aux		= $(categories:%=lc-%) $(categories:%=C-%) SYS_libc C_name \
+ 		  xlocale localename global-locale coll-lookup
+ others		= localedef locale
++ifneq ($(cross-compiling),no)
++others-native	= localedef-native
++endif
+ #others-static	= localedef locale
+ install-bin	= localedef locale
+ extra-objs	= $(localedef-modules:=.o) $(localedef-aux:=.o) \
+@@ -81,6 +84,12 @@
+ $(objpfx)locale: $(locale-modules:%=$(objpfx)%.o)
+ $(objpfx)localedef $(objpfx)locale: $(lib-modules:%=$(objpfx)%.o)
+ 
++ifneq ($(cross-compiling),no)
++$(objpfx)localedef-native: $(localedef-modules:%=$(objpfx)%-native.o)
++$(objpfx)localedef-native: $(localedef-aux:%=$(objpfx)%-native.o)
++$(objpfx)localedef-native: $(lib-modules:%=$(objpfx)%-native.o)
++endif
++
+ C-translit.h: C-translit.h.in gen-translit.pl
+ 	$(PERL) gen-translit.pl < $< > $@.tmp
+ 	mv -f $@.tmp $@
+diff -Naur glibc-2.5.orig/localedata/Makefile glibc-2.5/localedata/Makefile
+--- glibc-2.5.orig/localedata/Makefile	2006-04-26 01:14:03.000000000 -0400
++++ glibc-2.5/localedata/Makefile	2006-11-26 17:26:05.000000000 -0500
+@@ -206,8 +206,13 @@
+ INSTALL-SUPPORTED-LOCALES=$(addprefix install-, $(SUPPORTED-LOCALES))
+ 
+ # Sometimes the whole collection of locale files should be installed.
++ifeq ($(cross-compiling),no)
+ LOCALEDEF=I18NPATH=. GCONV_PATH=$(common-objpfx)iconvdata LC_ALL=C \
+ $(common-objpfx)elf/ld.so --library-path $(rpath-link) $(common-objpfx)locale/localedef
++else
++LOCALEDEF=I18NPATH=. GCONV_PATH=$(common-objpfx)iconvdata LC_ALL=C \
++$(common-objpfx)locale/localedef-native
++endif
+ install-locales: $(INSTALL-SUPPORTED-LOCALES)
+ 
+ install-locales-dir:
+diff -Naur glibc-2.5.orig/Makeconfig glibc-2.5/Makeconfig
+--- glibc-2.5.orig/Makeconfig	2006-07-10 17:42:27.000000000 -0400
++++ glibc-2.5/Makeconfig	2006-11-26 18:24:54.000000000 -0500
+@@ -447,6 +447,13 @@
+ 			   $(common-objpfx)libc% $(+postinit),$^) \
+ 	      $(link-extra-libs-static) $(link-libc-static) $(+postctor) $(+postinit)
+ endif
++# Command for linking programs against the host system.
++ifndef +link-native
+++link-native = $(BUILD_CC) -static -g -o $@ $^ \
++              $(LDFLAGS) $(LDFLAGS-$(@F)) \
++              $(combreloc-LDFLAGS) $(relro-LDFLAGS) $(hashstyle-LDFLAGS) \
++              $(link-extra-libs)
++endif
+ # Command for statically linking bounded-pointer programs with the C library.
+ ifndef +link-bounded
+ +link-bounded = $(CC) -nostdlib -nostartfiles -static -fbounded-pointers -o $@ \
+@@ -660,6 +667,8 @@
+ 	    $(+sysdep-includes) $(includes) \
+ 	    $(patsubst %/,-I%,$(..)) $(libio-include) -I. $(sysincludes)
+ 
+++includes-native = -I$(..)include-native -I$(objpfx) -I.
++
+ # Since libio has several internal header files, we use a -I instead
+ # of many little headers in the include directory.
+ libio-include = -I$(..)libio
+@@ -674,10 +683,15 @@
+ 	   $(foreach lib,$(libof-$(basename $(@F))) \
+ 		         $(libof-$(<F)) $(libof-$(@F)),$(CPPFLAGS-$(lib))) \
+ 	   $(CPPFLAGS-$(<F)) $(CPPFLAGS-$(@F)) $(CPPFLAGS-$(basename $(@F)))
++CPPFLAGS-native = -D_GNU_SOURCE $($(subdir)-CPPFLAGS) $(+includes-native) $(defines) \
++           $(CPPFLAGS-$(suffix $@)) -include $(..)include/libc-symbols.h \
++           $(CPPFLAGS-$(<F)) $(CPPFLAGS-$(@F)) $(CPPFLAGS-$(basename $(@F)))
+ override CFLAGS	= -std=gnu99 \
+ 		  $(filter-out %frame-pointer,$(+cflags)) $(+gccwarn-c) \
+ 		  $(sysdep-CFLAGS) $(CFLAGS-$(suffix $@)) $(CFLAGS-$(<F)) \
+ 		  $(CFLAGS-$(@F))
++override CFLAGS-native = -std=gnu99 $(default_cflags) $(+gccwarn-c) \
++                  $(CFLAGS-$(suffix $@)) $(CFLAGS-$(<F)) $(CFLAGS-$(@F))
+ override CXXFLAGS = $(c++-sysincludes) \
+ 		    $(filter-out %frame-pointer,$(+cflags)) $(sysdep-CFLAGS) \
+ 		    $(CFLAGS-$(suffix $@)) $(CFLAGS-$(<F)) $(CFLAGS-$(@F))
+diff -Naur glibc-2.5.orig/Makerules glibc-2.5/Makerules
+--- glibc-2.5.orig/Makerules	2006-09-04 22:02:13.000000000 -0400
++++ glibc-2.5/Makerules	2006-11-26 18:15:25.000000000 -0500
+@@ -292,6 +292,9 @@
+ object-suffixes-left := $(all-object-suffixes)
+ include $(o-iterator)
+ 
++$(objpfx)%-native.o: %.c $(before-compile)
++	$(native-compile-command.c)
++
+ # Omit the objpfx rules when building in the source tree, because
+ # objpfx is empty and so these rules just override the ones above.
+ ifdef objpfx
+@@ -368,6 +371,8 @@
+ compile-command.s = $(COMPILE.s) $< $(OUTPUT_OPTION) $(compile-mkdep-flags)
+ compile-command.c = $(compile.c) $(OUTPUT_OPTION) $(compile-mkdep-flags)
+ compile-command.cc = $(compile.cc) $(OUTPUT_OPTION) $(compile-mkdep-flags)
++# Native commands
++native-compile-command.c = $(native-compile.c) $(OUTPUT_OPTION) $(compile-mkdep-flags)
+ 
+ # GCC can grok options after the file name, and it looks nicer that way.
+ compile.c = $(CC) $< -c $(CFLAGS) $(CPPFLAGS)
+@@ -377,6 +382,8 @@
+ COMPILE.S = $(CC) -c $(CPPFLAGS) $(S-CPPFLAGS) \
+ 		  $(ASFLAGS) $(ASFLAGS-$(suffix $@))
+ COMPILE.s = $(filter-out -pipe,$(CC)) -c $(ASFLAGS)
++# Native commands
++native-compile.c = $(BUILD_CC) -g $< -c $(CFLAGS-native) $(CPPFLAGS-native)
+ 
+ # We need this for the output to go in the right place.  It will default to
+ # empty if make was configured to work with a cc that can't grok -c and -o
+@@ -1168,7 +1175,7 @@
+ $(make-target-directory)
+ $(patsubst %/,cd % &&,$(objpfx)) \
+ $(BUILD_CC) $($(basename $(<F))-CFLAGS) $(ALL_BUILD_CFLAGS) \
+-	    $(firstword $(filter /%,$< $(shell pwd)/$<)) -o $(@F)
++	    $(addprefix $(shell pwd)/, $^) -o $(@F)
+ endef
+ 
+ # Command to compile $< in $(common-objdir) using the native libraries.
+diff -Naur glibc-2.5.orig/malloc/Makefile glibc-2.5/malloc/Makefile
+--- glibc-2.5.orig/malloc/Makefile	2006-05-19 12:42:00.000000000 -0400
++++ glibc-2.5/malloc/Makefile	2006-11-26 17:26:05.000000000 -0500
+@@ -73,10 +73,6 @@
+ endif
+ endif
+ 
+-# Unless we get a test for the availability of libgd which also works
+-# for cross-compiling we disable the memusagestat generation in this
+-# situation.
+-ifneq ($(cross-compiling),yes)
+ # If the gd library is available we build the `memusagestat' program.
+ ifneq ($(LIBGD),no)
+ others: $(objpfx)memusage
+@@ -91,7 +87,6 @@
+ # is to presume that the standard system headers will be ok for this file.
+ $(objpfx)memusagestat.o: sysincludes = # nothing
+ endif
+-endif
+ 
+ # Another goal which can be used to override the configure decision.
+ .PHONY: do-memusagestat
+diff -Naur glibc-2.5.orig/Rules glibc-2.5/Rules
+--- glibc-2.5.orig/Rules	2006-02-28 02:05:48.000000000 -0500
++++ glibc-2.5/Rules	2006-11-26 17:26:05.000000000 -0500
+@@ -87,7 +87,7 @@
+ 
+ .PHONY: others tests
+ ifeq ($(build-programs),yes)
+-others: $(addprefix $(objpfx),$(others) $(sysdep-others) $(extra-objs))
++others: $(addprefix $(objpfx),$(others) $(others-native) $(sysdep-others) $(extra-objs))
+ else
+ others: $(addprefix $(objpfx),$(extra-objs))
+ endif
+@@ -106,9 +106,11 @@
+ ifeq ($(build-programs),yes)
+ binaries-all = $(others) $(sysdep-others) $(tests) $(xtests) $(test-srcs)
+ binaries-static = $(others-static) $(tests-static) $(xtests-static)
++binaries-native = $(others-native)
+ else
+ binaries-all = $(tests) $(xtests) $(test-srcs)
+ binaries-static =
++binaries-native =
+ endif
+ 
+ binaries-shared = $(filter-out $(binaries-static), $(binaries-all))
+@@ -127,6 +129,11 @@
+ 	$(+link-static)
+ endif
+ 
++ifneq "$(strip $(binaries-native))" ""
++$(addprefix $(objpfx),$(binaries-native)): %: %.o
++	$(+link-native)
++endif
++
+ ifeq ($(build-bounded),yes)
+ binaries-bounded = $(addsuffix -bp,$(tests) $(xtests) $(test-srcs))
+ $(addprefix $(objpfx),$(binaries-bounded)): %-bp: %.ob \
+diff -Naur glibc-2.5.orig/sunrpc/Makefile glibc-2.5/sunrpc/Makefile
+--- glibc-2.5.orig/sunrpc/Makefile	2005-06-26 14:24:19.000000000 -0400
++++ glibc-2.5/sunrpc/Makefile	2006-11-26 17:26:05.000000000 -0500
+@@ -70,6 +70,9 @@
+ 	    clnt_unix svc_unix create_xid xdr_intXX_t
+ 
+ others := rpcinfo
++ifneq ($(cross-compiling),no)
++others-native := rpcgen-native
++endif
+ install-bin := rpcgen
+ install-sbin := rpcinfo
+ rpcgen-objs = rpc_main.o rpc_hout.o rpc_cout.o rpc_parse.o \
+@@ -98,15 +101,12 @@
+ 	     $(resolvobjdir)/libresolv.a
+ endif
+ 
+-ifeq (no,$(cross-compiling))
+-# We can only build this library if we can run the rpcgen we build.
+ headers += $(rpcsvc:%.x=rpcsvc/%.h)
+ extra-libs := librpcsvc
+ extra-libs-others := librpcsvc # Make it in `others' pass, not `lib' pass.
+ librpcsvc-routines = $(rpcsvc:%.x=x%)
+ librpcsvc-inhibit-o = .os # Build no shared rpcsvc library.
+ omit-deps = $(librpcsvc-routines)
+-endif
+ 
+ CFLAGS-xbootparam_prot.c = -Wno-unused $(PIC-ccflag)
+ CFLAGS-xnlm_prot.c = -Wno-unused $(PIC-ccflag)
+@@ -136,13 +136,26 @@
+   $(addprefix $(csu-objpfx),start.o) $(+preinit) $(+postinit)
+ 	$(+link)
+ 
++ifneq ($(cross-compiling),no)
++rpcgen.c:
++	touch rpcgen.c
++
++$(objpfx)rpcgen-native: $(addprefix $(objpfx),$(rpcgen-objs:%.o=%-native.o))
++endif
++
+ # This makes sure -DNOT_IN_libc is passed for all these modules.
+ cpp-srcs-left := $(rpcgen-objs:.o=.c)
+ lib := nonlib
+ include $(patsubst %,$(..)cppflags-iterator.mk,$(cpp-srcs-left))
+ 
+ # Tell rpcgen where to find the C preprocessor.
++ifeq ($(cross-compiling),no)
+ rpcgen-cmd = CPP='$(CC) -E -x c-header' $(built-program-cmd) -Y ../scripts
++rpcgen = $(objpfx)rpcgen
++else
++rpcgen-cmd = CPP='$(CC) -E -x c-header' $(objpfx)rpcgen-native -Y ../scripts
++rpcgen = $(objpfx)rpcgen-native
++endif
+ 
+ # Install the rpc data base file.
+ $(inst_sysconfdir)/rpc: etc.rpc $(+force)
+@@ -153,7 +166,7 @@
+ # relinked.
+ $(rpcsvc:%.x=$(objpfx)rpcsvc/%.h): $(objpfx)rpcsvc/%.h: $(objpfx)rpcsvc/%.stmp
+ 	@:
+-$(objpfx)rpcsvc/%.stmp: rpcsvc/%.x $(objpfx)rpcgen
++$(objpfx)rpcsvc/%.stmp: rpcsvc/%.x $(rpcgen)
+ 	$(make-target-directory)
+ 	-@rm -f ${@:stmp=T} $@
+ 	$(rpcgen-cmd) -h $< -o ${@:stmp=T}
+@@ -163,7 +176,7 @@
+ # Generate the rpcsvc XDR functions with rpcgen.
+ $(rpcsvc:%.x=$(objpfx)x%.c): $(objpfx)x%.c: $(objpfx)x%.stmp
+ 	@:
+-$(objpfx)x%.stmp: rpcsvc/%.x $(objpfx)rpcgen
++$(objpfx)x%.stmp: rpcsvc/%.x $(rpcgen)
+ 	-@rm -f ${@:stmp=T} $@
+ 	$(rpcgen-cmd) -c $< -o ${@:stmp=T}
+ 	$(move-if-change) $(@:stmp=T) $(@:stmp=c)
+diff -Naur glibc-2.5.orig/timezone/Makefile glibc-2.5/timezone/Makefile
+--- glibc-2.5.orig/timezone/Makefile	2005-04-15 16:09:08.000000000 -0400
++++ glibc-2.5/timezone/Makefile	2006-11-26 17:26:05.000000000 -0500
+@@ -28,6 +28,9 @@
+ extra-objs := scheck.o ialloc.o
+ 
+ others	:= zdump zic
++ifneq ($(cross-compiling),no)
++others-native := zic-native
++endif
+ tests	:= test-tz tst-timezone
+ 
+ tzbases := africa antarctica asia australasia europe northamerica \
+@@ -69,13 +72,10 @@
+ 					 $(addprefix $(inst_zonedir)/, \
+ 						     $(posixrules-file)))
+ 
+-ifeq ($(cross-compiling),no)
+-# Don't try to install the zoneinfo files since we can't run zic.
+ install-others = $(addprefix $(inst_zonedir)/,$(zonenames) \
+ 					      $(zonenames:%=posix/%) \
+ 					      $(zonenames:%=right/%)) \
+ 		 $(installed-localtime-file) $(installed-posixrules-file)
+-endif
+ 
+ ifeq ($(have-ksh),yes)
+ install-others += $(inst_zonedir)/iso3166.tab $(inst_zonedir)/zone.tab
+@@ -128,7 +128,11 @@
+ # We have to use `-d $(inst_zonedir)' to explictly tell zic where to
+ # place the output files although $(zonedir) is compiled in.  But the
+ # user might have set $(install_root) on the command line of `make install'.
++ifeq ($(cross-compiling),no)
+ zic-cmd = $(built-program-cmd) -d $(inst_zonedir)
++else
++zic-cmd = $(common-objpfx)/timezone/zic-native -d $(inst_zonedir)
++endif
+ tzcompile = $(zic-cmd)$(target-zone-flavor) -L $(word 3,$^) \
+ 	    -y $(dir $(word 4,$^))$(notdir $(word 4,$^)) $<
+ 
+@@ -158,8 +162,10 @@
+ 	$(zic-cmd) -p $(posixrules)
+ endif
+ 
+-
+ $(objpfx)zic: $(objpfx)scheck.o $(objpfx)ialloc.o
++ifneq ($(cross-compiling),no)
++$(objpfx)zic-native:  $(objpfx)scheck-native.o $(objpfx)ialloc-native.o
++endif
+ 
+ tz-cflags = -DTZDIR='"$(zonedir)"' \
+ 	    -DTZDEFAULT='"$(localtime-file)"' \
