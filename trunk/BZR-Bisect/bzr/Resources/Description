@@ -1,0 +1,5 @@
+[Name] BZR-Rebase
+[Summary] bzr plugin to add rebase support.
+[Description] The Bazaar rebase plugin provides support for rebasing branches much like git-rebase does in git. It adds the command 'rebase' to Bazaar. When conflicts occur when replaying patches, the user can resolve the conflict and continue the rebase using the 'rebase-continue' command or abort using the 'rebase-abort' command.
+[License] GNU General Public License version 2
+[Homepage] http://bazaar-vcs.org/Rebase
