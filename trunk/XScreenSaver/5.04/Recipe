@@ -8,6 +8,7 @@ recipe_type=configure
 
 make_variables=(
    "GTK_DATADIR=$target/share"
+   "PAM_DIR=$settings_target/pam.d"
    "KDEDIR=$target"
    "datadir=$target/share"
    "gnulocaledir=$target/share/locale"
@@ -18,4 +19,9 @@ configure_options=(
 "--libexecdir=$target/lib"
 "--with-configdir=$settings_target/xscreensaver-hacks"
 "--with-x-app-defaults=$settings_target"
+"--with-gl"
+"--with-gle"
+"--with-randr-ext"
+"--with-dpms-ext"
+"--with-proc-interrupts"
 )
