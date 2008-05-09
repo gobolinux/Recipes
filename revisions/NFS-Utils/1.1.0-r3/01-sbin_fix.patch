@@ -1,0 +1,12 @@
+diff -Nurp nfs-utils-1.1.0.orig/utils/mount/Makefile.in nfs-utils-1.1.0/utils/mount/Makefile.in
+--- nfs-utils-1.1.0.orig/utils/mount/Makefile.in	2007-05-10 20:43:33.000000000 -0700
++++ nfs-utils-1.1.0/utils/mount/Makefile.in	2007-06-21 19:04:08.000000000 -0700
+@@ -216,7 +216,7 @@ psdir = @psdir@
+ 
+ # These binaries go in /sbin (not /usr/sbin), and that cannot be
+ # overriden at config time.
+-sbindir = /sbin
++sbindir = @sbindir@
+ secure_statd = @secure_statd@
+ sharedstatedir = @sharedstatedir@
+ srcdir = @srcdir@
