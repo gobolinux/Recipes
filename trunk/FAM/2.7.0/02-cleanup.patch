@@ -1,0 +1,66 @@
+Cleanup code from Debian, originaly stolen from Fedora
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+diff -r 33ebdce115fd -r 08edf44d9f72 src/Listener.c++
+--- a/src/Listener.c++	Wed Apr 12 13:49:26 2006 -0700
++++ b/src/Listener.c++	Wed Apr 12 13:49:40 2006 -0700
+@@ -299,10 +299,18 @@
+     //  Keep the scheduler from helpfully cleaning this up.
+     Scheduler::remove_onetime_task(cleanup_negotiation, nc);
+ 
++    //  Remove the temp file
++    uid_t preveuid = geteuid();
++    if (preveuid) seteuid(0);
++    seteuid(nc->uid);
++    unlink(nc->sun.sun_path);
++    if (nc->uid) seteuid(0);
++    seteuid(preveuid);
++
+     Log::debug("client fd %d is local/trusted (socket %s, uid %d).",
+                client_fd, nc->sun.sun_path, nc->uid);
+     Cred cred(nc->uid, client_fd);
+-    new LocalClient(client_fd, &(nc->sun), cred);
++    new LocalClient(client_fd, cred);
+     // We don't need a reference to this object.  The constructor
+     // takes care of registering it with the Scheduler.
+ 
+diff -r 33ebdce115fd -r 08edf44d9f72 src/LocalClient.c++
+--- a/src/LocalClient.c++	Wed Apr 12 13:49:26 2006 -0700
++++ b/src/LocalClient.c++	Wed Apr 12 13:49:40 2006 -0700
+@@ -29,17 +29,12 @@
+ #include "Log.h"
+ #include "Cred.h"
+ 
+-LocalClient::LocalClient(int fd, const struct sockaddr_un *addr, Cred &cred)
++LocalClient::LocalClient(int fd, Cred &cred)
+ : TCP_Client(LOCALHOST(), fd, cred)
+ {
+     assert(cred.is_valid());
+-    sun.sun_family = AF_UNIX;
+-    strncpy(sun.sun_path, addr->sun_path, sizeof(sun.sun_path));
+-    sun.sun_path[sizeof(sun.sun_path) - 1] = '\0';
+ }
+ 
+ LocalClient::~LocalClient()
+ {
+-    if (geteuid() != cred.uid()) cred.become_user();
+-    unlink(sun.sun_path);
+ }
+diff -r 33ebdce115fd -r 08edf44d9f72 src/LocalClient.h
+--- a/src/LocalClient.h	Wed Apr 12 13:49:26 2006 -0700
++++ b/src/LocalClient.h	Wed Apr 12 13:49:40 2006 -0700
+@@ -33,13 +33,8 @@
+ 
+ public:
+ 
+-    LocalClient(int fd, const struct sockaddr_un *addr, Cred &cred);
++    LocalClient(int fd, Cred &cred);
+     ~LocalClient();
+-
+-private:
+-
+-    struct sockaddr_un sun;
+-
+ };
+ 
+ #endif /* !RemoteClient_included */
