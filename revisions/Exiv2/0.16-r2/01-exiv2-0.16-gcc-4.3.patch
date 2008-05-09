@@ -1,0 +1,11 @@
+--- a/src/basicio.cpp
++++ b/src/basicio.cpp
+@@ -428,7 +428,7 @@
+             // Minimum size for 1st block is 32kB
+             long size  = std::max(32768 * (1 + need / 32768), size_);
+             byte* data = (byte*)std::malloc(size);
+-            std::memcpy(data, data_, size_);
++            memcpy(data, data_, size_);
+             data_ = data;
+             sizeAlloced_ = size;
+             isMalloced_ = true;
