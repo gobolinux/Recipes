@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for Portmap by Otto Barnes, on Thu Dec 16 00:05:13 BRST 2004
+# Recipe for version 5beta by Otto Barnes, on Thu Dec 16 00:05:13 BRST 2004
+compile_version=1.8.0
+url="ftp://ftp.porcupine.org/pub/security/portmap_5beta.tar.gz"
+file_size=18702
+file_md5=781e16ed4487c4caa082c6fef09ead4f
+recipe_type=makefile
+makefile='Makefile'
+make_variables=( PREFIX=$target )
