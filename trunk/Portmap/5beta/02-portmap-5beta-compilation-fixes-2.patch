@@ -99,14 +99,14 @@ diff -Naur portmap_5beta/Makefile portmap_5beta.gimli/Makefile
  	cc $(CFLAGS) -DTEST -o $@ get_myaddress.c $(LIBS)
  
 +install: all
-+	install -o 0 -g 0 -m 0755 -s portmap /Programs/Portmap/5beta/sbin
-+	install -o 0 -g 0 -m 0755 -s pmap_dump /Programs/Portmap/5beta/sbin
-+	install -o 0 -g 0 -m 0755 -s pmap_set /Programs/Portmap/5beta/sbin
-+	install -o 0 -g 0 -m 0644 portmap.8 /Programs/Portmap/5beta/man/man8
-+	install -o 0 -g 0 -m 0644 pmap_dump.8 /Programs/Portmap/5beta/man/man8
-+	install -o 0 -g 0 -m 0644 pmap_set.8 /Programs/Portmap/5beta/man/man8
-+#	cat README BLURB >/Programs/Portmap/5beta/doc/portmap/portmapper.txt
-+#	gzip -9f /Programs/Portmap/5beta/doc/portmap/portmapper.txt
++	install -o 0 -g 0 -m 0755 -s portmap $(PREFIX)/sbin
++	install -o 0 -g 0 -m 0755 -s pmap_dump $(PREFIX)/sbin
++	install -o 0 -g 0 -m 0755 -s pmap_set $(PREFIX)/sbin
++	install -o 0 -g 0 -m 0644 portmap.8 $(PREFIX)/man/man8
++	install -o 0 -g 0 -m 0644 pmap_dump.8 $(PREFIX)/man/man8
++	install -o 0 -g 0 -m 0644 pmap_set.8 $(PREFIX)/man/man8
++#	cat README BLURB > $(PREFIX)/doc/portmap/portmapper.txt
++#	gzip -9f $(PREFIX)/doc/portmap/portmapper.txt
 +
 +
  lint:	
