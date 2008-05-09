@@ -1,0 +1,30 @@
+diff -Naur fam-2.7.0/lib/Client.c++ fam-2.7.0.new/lib/Client.c++
+--- fam-2.7.0/lib/Client.c++	2003-01-18 14:18:12.000000000 +0000
++++ fam-2.7.0.new/lib/Client.c++	2008-05-08 18:19:16.000000000 +0000
+@@ -29,12 +29,12 @@
+ #include <rpc/rpc.h>
+ #include <rpc/pmap_clnt.h>
+ #include <rpc/pmap_prot.h>
+-#include <string.h>  // for memset
++#include <cstring>  // for memset
+ #include <ctype.h>
+ #include <syslog.h>
+ #include <errno.h>
+ 
+-#include <iostream.h>
++#include <iostream>
+ 
+ #include "fam.h"
+ #include "Client.h"
+diff -Naur fam-2.7.0/src/IMon.c++ fam-2.7.0.new/src/IMon.c++
+--- fam-2.7.0/src/IMon.c++	2003-01-18 14:18:12.000000000 +0000
++++ fam-2.7.0.new/src/IMon.c++	2008-05-08 18:20:11.000000000 +0000
+@@ -40,7 +40,7 @@
+ #include "Interest.h"
+ #include "Log.h"
+ #include "Scheduler.h"
+-#include "alloc.h"
++#include <memory>
+ 
+ int		   IMon::imonfd = -2;
+ IMon::EventHandler IMon::ehandler = NULL;

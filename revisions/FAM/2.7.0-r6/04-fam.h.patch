@@ -1,0 +1,12 @@
+diff -r 88d07b42269d include/fam.h
+--- a/include/fam.h	Wed Apr 12 13:50:44 2006 -0700
++++ b/include/fam.h	Wed Apr 12 14:30:43 2006 -0700
+@@ -41,7 +41,7 @@
+ *****************************************************************************/
+ 
+ /* For NAME_MAX - maximum # of chars in a filename */
+-#include "limits.h"
++#include <limits.h>
+ 
+ 
+ 
