@@ -1,0 +1,12 @@
+[Name] DBus-GLib
+[Summary] DBus bindings for GLib
+[Description] D-Bus is a message bus system, a simple way for \
+applications to talk to one another. \
+D-Bus supplies both a system daemon (for events such as "new hardware \
+device added" or "printer queue changed") and a per-user-login-session \
+daemon (for general IPC needs among user applications). \
+This is the DBus bindings for GLib for applications using GLib interface \
+to DBus.
+[License] GNU General Public License version 2 or \
+Academic Free License version 2.1 (partly, see source for details)
+[Homepage] http://www.freedesktop.org/wiki/Software/dbus
