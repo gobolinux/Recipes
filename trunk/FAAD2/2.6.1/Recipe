@@ -18,5 +18,5 @@ configure_options=(
 
 pre_patch() {
     # remove lines terminated with ^M
-    find "${dir}" -type f -print0 | xargs -0 sed -i 's/\cM//'
+    find "${compileSourcesDir}/${dir}" -type f -print0 | xargs -0 sed -i 's/\cM//'
 }
