@@ -12,7 +12,7 @@ pre_build(){
    libtoolize --force --copy
    aclocal
    autoconf
-   automake
+   automake --add-missing
 }
 
 pre_link() {
