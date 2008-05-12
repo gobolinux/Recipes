@@ -1,0 +1,19 @@
+# Recipe (MakeRecipe) for MPEd by Nathan Middleton, on Mon Nov 5 00:12:46 CST 2007
+compile_version=1.9.0
+# Recipe for version 5.0.2 by Õsi Róbert <7szunyu@nordtelekom.hu>, on 2008. máj. 11., vasárnap, 21.22.28 CEST
+url="http://triptico.com/download/mp-5.0.2.tar.gz"
+file_size=409037
+file_md5=638a27c395762987a888d8fd84b6b203
+file="mp-5.0.2.tar.gz"
+recipe_type=configure
+configure=config.sh
+
+pre_link() {
+    for dest in $(find $goboShared/icons/hicolor | grep apps | sed "s,$goboShared/,,")
+    do
+        install -d ${target}/Shared/${dest}
+        install ${dir}/mp.png ${target}/Shared/${dest}
+        install ${dir}/mp.xpm ${target}/Shared/${dest}
+    done
+    ln -s ${target}/bin/mp-5 ${target}/bin/mped
+}
