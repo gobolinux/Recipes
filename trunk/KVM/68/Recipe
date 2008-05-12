@@ -20,16 +20,19 @@ unmanaged_files=(
 
 pre_install(){
         # Backup original modules.
-        for module in ${goboModules}/$(uname -r)/kernel/drivers/kvm/*.ko; do
-          [ -f $module ] && mv $module $module.orig
-        done;
+        if [ -d "${goboModules}/$(uname -r)/kernel/drivers/kvm" ]
+        then
+          for module in ${goboModules}/$(uname -r)/kernel/drivers/kvm/*.ko; do
+            [ -f $module ] && mv $module $module.orig
+          done
+        fi
 }
 
 pre_link(){
 	# Copy udev rules to udev/rules.d
 
 	mkdir -p ${settings_target}/udev/rules.d
-	cp scripts/68-kvm.rules ${settings_target}/udev/rules.d
+	cp scripts/65-kvm.rules ${settings_target}/udev/rules.d
 
 	# Tell Compile to recompile this package when Linux is.
 
