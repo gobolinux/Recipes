@@ -1,0 +1,14 @@
+# Recipe for version 4.0.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue May 13 00:03:22 BRT 2008
+# Recipe (MakeRecipe) for KDE-Network by Giambattista Bloisi <giamby@infinito.it>, on Sat Jan 19 00:53:44 CET 2008
+compile_version=1.10.0
+url="ftp://ftp.kde.org/pub/kde/stable/4.0.4/src/kdenetwork-4.0.4.tar.bz2"
+file_size=6373873
+file_md5=139c1f7fbe747baacf31c086b4a6827c
+file="kdenetwork-4.0.4.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+    "-DKDE4_KABC_LIBRARY=$goboLibraries/libkabc.so"
+    "-DKDE4_SYNDICATION_LIBRARY=$goboLibraries/libsyndication.so"
+)
+
