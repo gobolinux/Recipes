@@ -1,0 +1,4 @@
+16c16
+< 	python setup.py install --prefix=$(PREFIX) && /usr/bin/update-desktop-database;
+---
+> 	python setup.py install --prefix=$(PREFIX)
