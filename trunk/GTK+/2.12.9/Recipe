@@ -1,0 +1,11 @@
+# Recipe for version 2.12.9 by Andy Feldman <nereusren@gmail.com>, on Fri May 16 22:13:12 CDT 2008
+# Recipe (MakeRecipe) for GTK+ by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 11:55:54 BRT 2005
+compile_version=1.9.0
+url="ftp://ftp.gnome.org/pub/GNOME/sources/gtk+/2.12/gtk+-2.12.9.tar.bz2"
+file_size=16027448
+file_md5=33499772fdc3bea569c6d5673e5831b4
+recipe_type=configure
+
+configure_options=(
+   --with-xinput=yes
+)
