@@ -1,0 +1,35 @@
+diff -Nurd d/builtin.cpp.old d/builtin.cpp
+--- d/builtin.cpp.old	2004-04-22 16:26:16.175065656 -0400
++++ d/builtin.cpp		2004-04-22 16:27:06.042484656 -0400
+@@ -600,7 +600,7 @@
+ 	0x00f8, 0x00f9, 0x00fa, 0x00fb, 0x00fc, 0x00fd, 0x00fe, 0x00ff
+     };
+ 
+-};
++}
+ 
+ Encoding::BuiltinEncoding_t Encoding::builtin_encodings[] = {
+     {256,191,32,{TT_PLATFORM_MICROSOFT,TT_MS_ID_UNICODE_CS,iso8859_1},{"iso8859-1",}},
+diff -Nurd d/ttf.h.old d/ttf.h
+--- d/ttf.h.old	2004-04-22 16:26:16.176065504 -0400
++++ d/ttf.h	2004-04-22 16:27:06.042484656 -0400
+@@ -49,7 +49,7 @@
+ 	TT_Postscript	    *post;
+ 	std::string	    FileName;
+     };
+-};
++}
+ 
+ #endif /* TTF_H__ */
+ 
+diff -Nurd d/util.h.old d/util.h
+--- d/util.h.old	2004-04-22 16:26:16.176065504 -0400
++++ d/util.h	2004-04-22 16:27:06.042484656 -0400
+@@ -17,6 +17,6 @@
+ 	Singleton (void) {};
+ 	~Singleton (void) {};
+     };
+-}; 
++}
+ 
+ #endif // TTMKFDIRUTIL_H__
