@@ -1,0 +1,33 @@
+[Name] Centericq
+[Summary] Centericq is a text mode menu- and window-driven IM interface that 
+supports the ICQ2000, Yahoo!, AIM, IRC, MSN, Gadu-Gadu and Jabber 
+protocols.
+[License] GNU General Public License (GPL)
+[Description] A brief list of the program's features:
+# Text mode user interface
+
+    * Based on the ncurses library
+    * Provides windows, menus and dialogs
+    * Configurable color schemes
+    * Ability to use the program remotely via telnet or ssh
+    * Configuration is done with dialogs
+    * Support for displaying Hebrew and Arabic texts
+    * UI messages translated into 15 languages 
+
+# General instant messaging features
+
+    * ICQ, Yahoo!, AIM, IRC, MSN, Gadu-Gadu and Jabber are supported
+    * Sending, receiving and forwarding events
+    * Command line parameters for sending events through an already 
+      running instance
+    * Mass-sending events
+    * Contact list groups support
+    * Configurable sounds for specific events and users
+    * External programs to process incoming events
+    * Viewing users' personal data
+    * Updating self user info
+    * List of ignored users
+    * Configurable servers' hostnames and port numbers
+    * Ability to use http proxy (method CONNECT; optionally with proxy 
+      auth) to connect to IM servers 
+[Homepage] http://konst.org.ua/centericq/
