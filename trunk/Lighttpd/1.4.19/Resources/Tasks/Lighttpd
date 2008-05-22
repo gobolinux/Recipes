@@ -1,0 +1,36 @@
+#!/bin/bash
+#
+# lighttpd startup script by Nathan Middleton
+#
+source GoboPath
+pid=${goboVariable}/run/lighttpd/lighttpd.pid
+conf=${goboSettings}/lighttpd/lighttpd.conf
+
+#function getPid() {
+#    ps axo pid,comm | \
+#    grep lighttpd | \
+#    sed 's/[^0-9]*\([0-9]\+\) .*/\1/'
+#}
+
+case "$1" in
+    [Ss]tart)
+        # Start a new copy of lighttpd
+    	${goboExecutables}/lighttpd -f $conf
+        ;;
+    [Ss]top)
+        # Stop a running copy of lighttpd
+        if [ -f ${pid} ]; then
+            kill $(cat ${pid})
+        fi
+    	;;
+    [Rr]estart)
+        # Stop and then Start lighttpd
+    	$0 Stop
+    	$0 Start
+    	;;
+    *)
+        # No options, print usage.
+    	echo "usage: $0 [ Start | Stop | Restart ]"
+    	exit 1
+    	;;
+esac
