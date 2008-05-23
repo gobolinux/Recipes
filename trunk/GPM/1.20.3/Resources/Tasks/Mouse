@@ -1,0 +1,13 @@
+#!/bin/sh
+
+. /System/Settings/BootOptions
+
+case "$1" in
+	[sS]tart)
+		gpm -m "$MouseDevice" -t "$MouseType"
+		;;
+	[sS]top)
+		gpm -k
+		killall -9 gpm
+		;;
+esac # is ridiculous

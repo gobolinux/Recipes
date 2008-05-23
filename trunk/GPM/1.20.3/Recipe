@@ -1,0 +1,22 @@
+# Recipe for version 1.20.3 by Jonas Karlsson <jonka750@student.liu.se>, on Fri May 23 11:46:29 GMT 2008
+# GPM 1.20.3 Recipe by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.8.0
+url="ftp://arcana.linux.it/pub/gpm/gpm-1.20.3.tar.lzma"
+file_size=1139678
+file_md5=53c7be48bab306d601806bea01650854
+recipe_type=configure
+needs_safe_linking=yes
+
+pre_build(){
+   autoconf
+}
+
+make_variables=(
+    LDFLAGS="$LDFLAGS -lm"
+)
+
+pre_link() {
+	pushd "$target/lib"
+	ln -sf libgpm.so.1.20.0 libgpm.so.1
+	popd
+}
