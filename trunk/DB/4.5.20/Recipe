@@ -2,6 +2,8 @@
 # Recipe (MakeRecipe) for DB by roko, <ro.ko@mcnon.com>, on Wed Feb 2 15:29:24 CET 2005
 compile_version=1.8.2
 url="http://download.oracle.com/berkeley-db/db-4.5.20.tar.gz"
+file_size=9281894
+file_md5=b0f1c777708cb8e9d37fb47e7ed3312d
 recipe_type=configure
 dir=db-4.5.20/build_unix
 configure=../dist/configure
