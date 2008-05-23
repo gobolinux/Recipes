@@ -1,0 +1,28 @@
+Thu Nov 16 17:04:46 CET 2006  hanwen@lilypond.org
+  * substitute appropriate posix module in Setup.dist (nt for mingw)
+diff -rN -u old-Python-2.5.cross/configure.in new-Python-2.5.cross/configure.in
+--- old-Python-2.5.cross/configure.in	2006-11-16 17:47:44.000000000 +0100
++++ new-Python-2.5.cross/configure.in	2006-11-16 17:47:44.000000000 +0100
+@@ -3530,6 +3530,9 @@
+ then
+ 	cp $srcdir/Modules/Setup.dist Modules/Setup
+ fi
++mv Modules/Setup Modules/Setup~
++sed -e "s/@POSIX@/$POSIX/g" < Modules/Setup~ > Modules/Setup
++
+ 
+ echo "creating Modules/Setup.local"
+ if test ! -f Modules/Setup.local
+diff -rN -u old-Python-2.5.cross/Modules/Setup.dist new-Python-2.5.cross/Modules/Setup.dist
+--- old-Python-2.5.cross/Modules/Setup.dist	2006-11-16 17:47:44.000000000 +0100
++++ new-Python-2.5.cross/Modules/Setup.dist	2006-11-16 17:47:44.000000000 +0100
+@@ -109,7 +109,7 @@
+ # This only contains the minimal set of modules required to run the 
+ # setup.py script in the root of the Python source tree.
+ 
+-posix posixmodule.c		# posix (UNIX) system calls
++@POSIX@ posixmodule.c		# posix (UNIX) system calls
+ errno errnomodule.c		# posix (UNIX) errno values
+ pwd pwdmodule.c			# this is needed to find out the user's home dir
+ 				# if $HOME is not set
+

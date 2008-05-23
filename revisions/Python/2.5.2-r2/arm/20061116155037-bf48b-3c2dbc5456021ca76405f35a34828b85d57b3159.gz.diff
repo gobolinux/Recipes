@@ -1,0 +1,75 @@
+Thu Nov 16 16:50:37 CET 2006  hanwen@lilypond.org
+  * pgen related patches for Makefile
+diff -rN -u old-Python-2.5.cross/Makefile.pre.in new-Python-2.5.cross/Makefile.pre.in
+--- old-Python-2.5.cross/Makefile.pre.in	2006-11-16 17:47:45.000000000 +0100
++++ new-Python-2.5.cross/Makefile.pre.in	2006-11-16 17:47:45.000000000 +0100
+@@ -198,7 +198,7 @@
+ 
+ ##########################################################################
+ # Parser
+-PGEN=		Parser/pgen$(EXE)
++PGEN_FOR_BUILD=	Parser/pgen$(EXEEXT_FOR_BUILD)
+ 
+ POBJS=		\
+ 		Parser/acceler.o \
+@@ -215,14 +215,27 @@
+ 
+ PARSER_OBJS=	$(POBJS) Parser/myreadline.o Parser/tokenizer.o
+ 
+-PGOBJS=		\
+-		Objects/obmalloc.o \
+-		Python/mysnprintf.o \
+-		Parser/tokenizer_pgen.o \
+-		Parser/printgrammar.o \
+-		Parser/pgenmain.o
++POBJS_FOR_BUILD=		\
++		Parser/acceler.$(O_FOR_BUILD) \
++		Parser/grammar1.$(O_FOR_BUILD) \
++		Parser/listnode.$(O_FOR_BUILD) \
++		Parser/node.$(O_FOR_BUILD) \
++		Parser/parser.$(O_FOR_BUILD) \
++		Parser/parsetok.$(O_FOR_BUILD) \
++		Parser/bitset.$(O_FOR_BUILD) \
++		Parser/metagrammar.$(O_FOR_BUILD) \
++		Parser/firstsets.$(O_FOR_BUILD) \
++		Parser/grammar.$(O_FOR_BUILD) \
++		Parser/pgen.$(O_FOR_BUILD)
++
++PGOBJS_FOR_BUILD=		\
++		Objects/obmalloc.$(O_FOR_BUILD) \
++		Python/mysnprintf.$(O_FOR_BUILD) \
++		Parser/tokenizer_pgen.$(O_FOR_BUILD) \
++		Parser/printgrammar.$(O_FOR_BUILD) \
++		Parser/pgenmain.$(O_FOR_BUILD)
+ 
+-PGENOBJS=	$(PGENMAIN) $(POBJS) $(PGOBJS)
++PGENOBJS=	$(POBJS_FOR_BUILD) $(PGOBJS_FOR_BUILD)
+ 
+ ##########################################################################
+ # AST
+@@ -472,11 +485,11 @@
+ 	$(MAINCC) -c $(PY_CFLAGS) -o $@ $(srcdir)/Modules/python.c
+ 
+ 
+-$(GRAMMAR_H) $(GRAMMAR_C): $(PGEN) $(GRAMMAR_INPUT)
+-		-$(PGEN) $(GRAMMAR_INPUT) $(GRAMMAR_H) $(GRAMMAR_C)
++$(GRAMMAR_H) $(GRAMMAR_C): $(PGEN_FOR_BUILD) $(GRAMMAR_INPUT)
++		-$(PGEN_FOR_BUILD) $(GRAMMAR_INPUT) $(GRAMMAR_H) $(GRAMMAR_C)
+ 
+-$(PGEN):	$(PGENOBJS)
+-		$(CC) $(OPT) $(LDFLAGS) $(PGENOBJS) $(LIBS) -o $(PGEN)
++$(PGEN_FOR_BUILD):	$(PGENOBJS)
++		$(CC_FOR_BUILD) $(OPT) $(LDFLAGS_FOR_BUILD) $(PGENOBJS) $(LIBS_FOR_BUILD) -o $(PGEN_FOR_BUILD)
+ 
+ Parser/grammar.o:	$(srcdir)/Parser/grammar.c \
+ 				$(srcdir)/Include/token.h \
+@@ -780,7 +793,7 @@
+ 		-d $(LIBDEST) -f \
+ 		-x 'bad_coding|badsyntax|site-packages' $(DESTDIR)$(LIBDEST)
+ 	PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
+-		./$(BUILDPYTHON) -Wi -tt -O $(DESTDIR)$(LIBDEST)/compileall.py \
++		$(PYTHON_FOR_BUILD) -Wi -tt -O $(DESTDIR)$(LIBDEST)/compileall.py \
+ 		-d $(LIBDEST) -f \
+ 		-x 'bad_coding|badsyntax|site-packages' $(DESTDIR)$(LIBDEST)
+ 	-PYTHONPATH=$(DESTDIR)$(LIBDEST)  $(RUNSHARED) \
+
