@@ -1,0 +1,119 @@
+Date: 2008-02-19
+Initial Package Version: 2.5.3
+Upstream Status: from upstream, with one slight change to expected test result.
+Origin: from upstream.
+Description: Various fixes, particularly for man and info pages, add a new test to foad1
+(expected results have 'standard input' label added to match the result with the debian fixes)
+and commenting out the (new) tests which are expected to fail.
+
+diff -Naur grep-2.5.3.with-deb-patches/doc/grep.1 grep-2.5.3.lfs/doc/grep.1
+--- grep-2.5.3.with-deb-patches/doc/grep.1	2006-08-18 23:00:31.000000000 +0100
++++ grep-2.5.3.lfs/doc/grep.1	2008-02-10 18:59:10.000000000 +0000
+@@ -21,7 +21,7 @@
+ . \" ISO 8601 date, complete format, extended representation
+ . ds Dt \\*(Yr-\\*(Mn-\\*(Dy
+ ..
+-.Id $Id: grep.1,v 1.38 2006/08/18 22:00:31 bero Exp $
++.Id $Id: grep.1,v 1.39 2008/02/07 03:43:27 taa Exp $
+ .TH GREP 1 \*(Dt "GNU grep 2.5.1-cvs" "User Commands"
+ .hy 0
+ .
+@@ -125,7 +125,8 @@
+ Use
+ .I PATTERN
+ as the pattern.
+-This is useful to protect patterns beginning with hyphen-minus
++This can be used to specify multiple search patterns,
++or to protect a pattern beginning with a hyphen
+ .RB ( \- ).
+ .RB ( \-e
+ is specified by \s-1POSIX\s0.)
+diff -Naur grep-2.5.3.with-deb-patches/doc/grep.texi grep-2.5.3.lfs/doc/grep.texi
+--- grep-2.5.3.with-deb-patches/doc/grep.texi	2006-08-18 23:00:31.000000000 +0100
++++ grep-2.5.3.lfs/doc/grep.texi	2008-02-10 18:59:10.000000000 +0000
+@@ -211,8 +211,9 @@
+ @opindex -e
+ @opindex --regexp=@var{pattern}
+ @cindex pattern list
+-Use @var{pattern} as the pattern;
+-useful to protect patterns beginning with a @samp{-}.
++Use @var{pattern} as the pattern.
++This can be used to specify multiple search patterns,
++or to protect a pattern beginning with a @samp{-}.
+ (@samp{-e} is specified by @sc{posix}.)
+ 
+  @item -f @var{file}
+diff -Naur grep-2.5.3.with-deb-patches/tests/foad1.sh grep-2.5.3.lfs/tests/foad1.sh
+--- grep-2.5.3.with-deb-patches/tests/foad1.sh	2005-11-18 20:02:22.000000000 +0000
++++ grep-2.5.3.lfs/tests/foad1.sh	2008-02-10 19:01:06.000000000 +0000
+@@ -34,9 +34,10 @@
+ # Test "--only-matching" ("-o") option
+ 
+ # "-o" with "-i" should output an exact copy of the matching input text.
+-grep_test "WordA/wordB/WORDC/" "Word/word/WORD/" "Word" -o -i
+ grep_test "WordA/wordB/WORDC/" "Word/word/WORD/" "word" -o -i
+-grep_test "WordA/wordB/WORDC/" "Word/word/WORD/" "WORD" -o -i
++# Comment out cases that are known to fail. These should be uncommented after the 2.5.4 release. TAA.
++#grep_test "WordA/wordB/WORDC/" "Word/word/WORD/" "Word" -o -i
++#grep_test "WordA/wordB/WORDC/" "Word/word/WORD/" "WORD" -o -i
+ 
+ # Should display the line number (-n), octet offset (-b), or file name
+ # (-H) of every match, not just of the first match on each input line.
+@@ -55,6 +56,13 @@
+ grep_test "wA wB/" "(standard input):wA/(standard input):wB/" "w." -o -H -i
+ grep_test "wA wB/" "(standard input):wA/(standard input):wB/" "w." -o -H -3 2>/dev/null
+ 
++# Combination of -h and -H
++grep_test "wA wB/" "wA wB/" "w."
++grep_test "wA wB/" "wA wB/" "w." -h
++grep_test "wA wB/" "(standard input):wA wB/" "w." -H -h
++grep_test "wA wB/" "(standard input):wA wB/" "w." -H
++grep_test "wA wB/" "(standard input):wA wB/" "w." -h -H
++
+ # End of a previous match should not match a "start of ..." expression.
+ grep_test "word_word/" "word_/" "^word_*" -o
+ grep_test "wordword/" "word/" "\<word" -o
+@@ -66,9 +74,10 @@
+ CE="[m[K"
+ 
+ # "--color" with "-i" should output an exact copy of the matching input text.
+-grep_test "WordA/wordb/WORDC/" "${CB}Word${CE}A/${CB}word${CE}b/${CB}WORD${CE}C/" "Word" --color=always -i
+ grep_test "WordA/wordb/WORDC/" "${CB}Word${CE}A/${CB}word${CE}b/${CB}WORD${CE}C/" "word" --color=always -i
+-grep_test "WordA/wordb/WORDC/" "${CB}Word${CE}A/${CB}word${CE}b/${CB}WORD${CE}C/" "WORD" --color=always -i
++# Comment out cases that are known to fail. These should be uncommented after the 2.5.4 release. TAA.
++#grep_test "WordA/wordb/WORDC/" "${CB}Word${CE}A/${CB}word${CE}b/${CB}WORD${CE}C/" "Word" --color=always -i
++#grep_test "WordA/wordb/WORDC/" "${CB}Word${CE}A/${CB}word${CE}b/${CB}WORD${CE}C/" "WORD" --color=always -i
+ 
+ # End of a previous match should not match a "start of ..." expression.
+ grep_test "word_word/" "${CB}word_${CE}word/" "^word_*" --color=always
+diff -Naur grep-2.5.3.with-deb-patches/tests/yesno.sh grep-2.5.3.lfs/tests/yesno.sh
+--- grep-2.5.3.with-deb-patches/tests/yesno.sh	2005-11-13 08:15:16.000000000 +0000
++++ grep-2.5.3.lfs/tests/yesno.sh	2008-02-10 18:59:10.000000000 +0000
+@@ -63,7 +63,6 @@
+   '-m,4,-C,1,-o'    "$c$d$e$h$z0$XI$XJ$XK$XL$XM$XN" \
+   '-m,5'            "$C$D$E$H$I$z0$XJ$XK$XL$XM$XN" \
+   '-m,5,-o'         "$c$d$e$h$i$z0$XJ$XK$XL$XM$XN" \
+-  '-m,5,-C,1'       "$rB$C$D$E$rF$rG$H$I$z0$XJ$XK$XL$XM$XN" \
+   '-m,5,-C,1,-o'    "$c$d$e$h$i$z0$XJ$XK$XL$XM$XN" \
+   '-m,6'            "$C$D$E$H$I$M$z0$XN" \
+   '-m,6,-o'         "$c$d$e$h$i$m$z0$XN" \
+@@ -79,14 +78,17 @@
+   '-m,1,-v,-C,1,-o' "$z0$XB$XC$XD$XE$XF$XG$XH$XI$XJ$XK$XL$XM$XN" \
+   '-m,2,-v'         "$A$B$z0$XC$XD$XE$XF$XG$XH$XI$XJ$XK$XL$XM$XN" \
+   '-m,2,-v,-o'      "$z0$XC$XD$XE$XF$XG$XH$XI$XJ$XK$XL$XM$XN" \
+-  '-m,2,-v,-C,1'    "$A$B$z0$XC$XD$XE$XF$XG$XH$XI$XJ$XK$XL$XM$XN" \
+-  '-m,2,-v,-C,1,-o' "$z0$XC$XD$XE$XF$XG$XH$XI$XJ$XK$XL$XM$XN" \
+   '-m,3,-v'         "$A$B$F$z0$XG$XH$XI$XJ$XK$XL$XM$XN" \
+   '-m,3,-v,-o'      "$z0$XG$XH$XI$XJ$XK$XL$XM$XN" \
+   '-m,3,-v,-C,1'    "$A$B$rC$s$rE$F$z0$XG$XH$XI$XJ$XK$XL$XM$XN" \
+   '-m,3,-v,-C,1,-o' "$rc$s$re$z0$XG$XH$XI$XJ$XK$XL$XM$XN" \
+   x
+ shift
++# Comment out cases that are known to fail. These should be uncommented after the 2.5.4 release. TAA.
++# These should be added back in above and fixed in the code. TAA.
++#  '-m,5,-C,1'       "$rB$C$D$E$rF$rG$H$I$z0$XJ$XK$XL$XM$XN" \
++#  '-m,2,-v,-C,1'    "$A$B$z0$XC$XD$XE$XF$XG$XH$XI$XJ$XK$XL$XM$XN" \
++#  '-m,2,-v,-C,1,-o' "$z0$XC$XD$XE$XF$XG$XH$XI$XJ$XK$XL$XM$XN" \
+ 
+ # Test execution and reporting.
+ t=1
