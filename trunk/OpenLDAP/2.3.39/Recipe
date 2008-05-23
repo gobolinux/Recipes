@@ -8,6 +8,11 @@ recipe_type=configure
 configure_options=(
    --localstatedir=${goboVariable}/openldap
 )
+
+pre_build() {
+   autoconf
+}
+
 pre_install() {
    mkdir -p $goboVariable/openldap
 }
