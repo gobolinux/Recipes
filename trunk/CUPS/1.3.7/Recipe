@@ -37,6 +37,10 @@ unmanaged_files=(
     $goboVariable/spool/cups/tmp
 )
 
+pre_build() {
+   autoconf
+}
+
 pre_link() {
     Quiet pushd $target/lib
     ln -s ../share/cups .
