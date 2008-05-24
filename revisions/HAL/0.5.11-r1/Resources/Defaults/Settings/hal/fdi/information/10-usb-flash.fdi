@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?> <!-- -*- SGML -*- --> 
+
+<deviceinfo version="0.2">
+
+  <device>
+    <match key="@block.storage_device:storage.bus" string="usb">
+      <match key="info.category" string="volume">
+        <merge key="volume.is_usb_storage" type="bool">true</merge>
+      </match>
+    </match>
+  </device>
+
+</deviceinfo>
