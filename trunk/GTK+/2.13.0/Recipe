@@ -1,0 +1,14 @@
+# Recipe for version 2.13.0 by Jonas Karlsson <jonka750@student.liu.se>, on Sat May 24 00:01:46 GMT 2008
+# Recipe (MakeRecipe) for GTK+ by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 11:55:54 BRT 2005
+compile_version=1.9.0
+url="http://ftp.acc.umu.se/pub/GNOME/sources/gtk+/2.13/gtk+-2.13.0.tar.bz2"
+file_size=16252709
+file_md5=6c07effe4cb8055aeb93702b08d68b1e
+recipe_type=configure
+
+configure_options=(
+   --with-xinput=yes
+   --without-libjasper
+)
+
+with_jpeg2000="--with-libjasper"
