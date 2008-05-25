@@ -3,15 +3,15 @@
 compile_version=1.8.5
 urls=(
    "http://xorg.freedesktop.org/archive/individual/xserver/xorg-server-1.4.0.90.tar.bz2"
-   "$httpSourceforge/mesa3d/MesaLib-7.0.1.tar.bz2"
+   "$httpSourceforge/mesa3d/MesaLib-7.0.3.tar.bz2"
 )
 file_sizes=(
    6315011
-   3343538
+   3389327
 )
 file_md5s=(
    bb16e969850dbb5d3805cb88d35656d0
-   c056abd763e899114bf745c9eedbf9ad
+   e6e6379d7793af40a6bc3ce1bace572e
 )
 
 recipe_type=configure
@@ -33,7 +33,7 @@ configure_options=(
    "--enable-xorgcfg"
    "--with-module-dir=${goboLibraries}/xorg/modules"
    "--with-dri-driver-path=${goboLibraries}/xorg/modules/dri"
-   "--with-mesa-source=${compileSourcesDir}/Mesa-7.0.1"
+   "--with-mesa-source=${compileSourcesDir}/Mesa-7.0.3"
 )
 
 install_variables=(
@@ -109,7 +109,7 @@ private__configure_hal_kdb() {
          s/[^\n]*XkbModel[\ \t\"]*([^[\ \t\"]*]*)[^\n]*/      <merge key=\"input.xkb.model\" type=\"string\">\1<\/merge>/g
          p
       }
-   }" ${1} > ${2}
+   }" "${1}" > "${2}"
 }
 
 pre_link() {
@@ -118,7 +118,12 @@ pre_link() {
     popd >& /dev/null
 
     # install fdi file for HAL
-    $sudo_exec install -D ${dir}/config/x11-input.fdi ${target}/Shared/hal/fdi/information/10freedesktop/x11-input.fdi
+    install -D ${dir}/config/x11-input.fdi ${target}/Shared/hal/fdi/information/10freedesktop/x11-input.fdi
+    mkdir -p "${target}/Shared/hal/fdi/policy/10osvendor/"
     # generate HAL configuration from xorg.conf
-    [ -f "${goboSettings}/X11/xorg.conf" ] && private__configure_hal_kdb "${goboSettings}/X11/xorg.conf" "${target}/Shared/hal/fdi/policy/10osvendor/15-xorg-kbd-setup.fdi"
+    if [ -f "${goboSettings}/X11/xorg.conf" ]
+    then
+       private__configure_hal_kdb "${goboSettings}/X11/xorg.conf" "${settings_target}/X11/hal-xorg-kbd.fdi"
+    fi
+    ln -s "${settings_target}/X11/hal-xorg-kbd.fdi" "${target}/Shared/hal/fdi/policy/10osvendor/15-xorg-kbd-setup.fdi"
 }
