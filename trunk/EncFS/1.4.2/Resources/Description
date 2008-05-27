@@ -1,0 +1,5 @@
+[Name] EncFS
+[Summary] EncFS provides an encrypted filesystem in user-space.
+[Description] As with most encrypted filesystems, Encfs is meant to provide security against off-line attacks; ie your notebook or backups fall into the wrong hands, etc. The way Encfs works is different from the "loopback" encrypted filesystem support built into the Linux kernel because it works on files at a time, not an entire block device. This is a big advantage in some ways, but does not come without a cost. 
+[License] GNU General Public License, version 3
+[Homepage] http://www.arg0.net/encfs
