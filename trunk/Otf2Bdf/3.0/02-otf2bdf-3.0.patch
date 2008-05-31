@@ -1,0 +1,36 @@
+Index: otf2bdf.c
+===================================================================
+RCS file: /home/mleisher/cvsrep/otf2bdf/otf2bdf.c,v
+retrieving revision 1.4
+retrieving revision 1.5
+diff -u -r1.4 -r1.5
+--- otf2bdf.c	9 Nov 2005 17:29:44 -0000	1.4
++++ otf2bdf.c	9 Nov 2005 21:47:26 -0000	1.5
+@@ -21,9 +21,9 @@
+  */
+ #ifndef lint
+ #ifdef __GNUC__
+-static char rcsid[] __attribute__ ((unused)) = "$Id: otf2bdf.c,v 1.4 2005/11/09 17:29:44 mleisher Exp $";
++static char rcsid[] __attribute__ ((unused)) = "$Id: otf2bdf.c,v 1.5 2005/11/09 21:47:26 mleisher Exp $";
+ #else
+-static char rcsid[] = "$Id: otf2bdf.c,v 1.4 2005/11/09 17:29:44 mleisher Exp $";
++static char rcsid[] = "$Id: otf2bdf.c,v 1.5 2005/11/09 21:47:26 mleisher Exp $";
+ #endif
+ #endif
+ 
+@@ -755,8 +755,13 @@
+      * Open a temporary file to store the bitmaps in until the exact number
+      * of bitmaps are known.
+      */
+-    if ((tmpdir = getenv("TMPDIR")) == 0)
+-      tmpdir = "/tmp";
++    if ((tmpdir = getenv("TMPDIR")) == 0) {
++        /*
++         * Attempt to get the Windows version of TMPDIR.
++         */
++        if ((tmpdir = getenv("TEMP")) == 0)
++          tmpdir = "/tmp";
++    }
+     sprintf(tmpfile, "%s/otf2bdf%ld", tmpdir, (long) getpid());
+     if ((tmp = fopen(tmpfile, "w")) == 0) {
+         fprintf(stderr, "%s: unable to open temporary file '%s'.\n",
