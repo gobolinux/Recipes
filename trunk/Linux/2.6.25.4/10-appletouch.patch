@@ -1,0 +1,15 @@
+http://mactel-linux.svn.sourceforge.net/viewvc/mactel-linux/trunk/kernel/mactel-patches-2.6.24/
+rev 153
+
+diff -Nurp linux-2.6.25/drivers/input/mouse/appletouch.c linux-2.6.25-lucasvr/drivers/input/mouse/appletouch.c
+--- linux-2.6.25/drivers/input/mouse/appletouch.c	2008-04-24 19:10:04.526939691 -0300
++++ linux-2.6.25-lucasvr/drivers/input/mouse/appletouch.c	2008-04-24 19:11:21.307213000 -0300
+@@ -145,7 +145,7 @@ MODULE_DEVICE_TABLE (usb, atp_table);
+  * Threshold for the touchpad sensors. Any change less than ATP_THRESHOLD is
+  * ignored.
+  */
+-#define ATP_THRESHOLD	 5
++#define ATP_THRESHOLD	 3
+ 
+ /* Geyser initialization constants */
+ #define ATP_GEYSER_MODE_READ_REQUEST_ID		1
