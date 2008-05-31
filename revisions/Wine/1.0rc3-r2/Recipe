@@ -1,0 +1,19 @@
+# Recipe for version 1.0rc3 by Nathan Bennett <quest2013@emailengine.org>, on Fri May 30 17:35:51 EDT 2008
+# Recipe (MakeRecipe) for Wine by roko, <ro.ko@mcnon.com>, on Thu Jan 27 22:27:44 CET 2005
+compile_version=1.9.0
+url="$httpSourceforge/wine/wine-1.0-rc3.tar.bz2"
+file_size=13991771
+file_md5=bcef2a24ed6ffaa4bb14a491e3daff31
+recipe_type=configure
+configure_options=(
+   "--localstatedir=$goboVariable/wine"
+#"--without-curses"
+)
+
+unmanaged_files=(
+   "$goboVariable/wine/"
+)
+
+install_variables=(
+   "UPDATE_DESKTOP_DATABASE=''"
+)
