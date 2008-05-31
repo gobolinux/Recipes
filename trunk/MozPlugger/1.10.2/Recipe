@@ -9,5 +9,6 @@ makefile='Makefile'
 make_variables=(
    "prefix=$target"
    "sysconfdir=$settings_target"
+   "plugindir=$target/lib/browser-plugins"
 )
 build_target="linux"
