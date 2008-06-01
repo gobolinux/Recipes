@@ -8,6 +8,6 @@ make_variables=(
 
 pre_build() {
     unset C_INCLUDE_PATH CXX_INCLUDE_PATH
-    ./Configure -shared --prefix=$target --openssldir=$target linux-generic32
+    ./Configure shared --prefix=$target --openssldir=$target linux-generic32
 }
 
