@@ -1,0 +1,11 @@
+--- xcompmgr-1.1/configure.ac.orig	2004-12-21 22:43:06.000000000 -0200
++++ xcompmgr-1.1/configure.ac	2004-12-21 22:43:18.000000000 -0200
+@@ -23,7 +23,7 @@
+ AC_FUNC_MALLOC
+ AC_CHECK_FUNCS([gettimeofday localtime_r])
+ 
+-PKG_CHECK_MODULES(XCOMPMGR, xcomposite xfixes xdamage xrender)
++PKG_CHECK_MODULES(XCOMPMGR, xcomposite xfixes xdamage xrender xau)
+ 
+ AC_CONFIG_FILES([Makefile])
+ AC_OUTPUT
