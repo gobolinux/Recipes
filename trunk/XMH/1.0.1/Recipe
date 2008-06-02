@@ -6,3 +6,7 @@ recipe_type=configure
 file_size=153096
 file_md5=53af2f87dc096d84f11ca6fbd6748b34
 part_of=Xorg-App
+
+make_variables=(
+    "appdefaultdir=$target/Shared/X11/app-defaults"
+)
