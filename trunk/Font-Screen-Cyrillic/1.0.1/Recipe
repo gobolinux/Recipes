@@ -6,3 +6,6 @@ file_size=45471
 file_md5=c8d5aef01c906c7aaea329702a8b1b63
 recipe_type=configure
 part_of=Xorg-Font
+configure_options=(
+   --with-fontdir="${target}/Shared/fonts/cyrillic"
+)
