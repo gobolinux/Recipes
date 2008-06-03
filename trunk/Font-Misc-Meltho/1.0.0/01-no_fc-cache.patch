@@ -1,0 +1,11 @@
+--- font-misc-meltho-X11R7.0-1.0.0/Makefile.in	2005-12-21 08:19:42.000000000 +0000
++++ font-misc-meltho-X11R7.0-1.0.0/Makefile.in.new	2008-06-01 21:53:56.000000000 +0000
+@@ -402,7 +402,7 @@
+ 	$(MKFONTSCALE) $(DESTDIR)$(fontdir)
+ 	@rm -f $(DESTDIR)$(fontdir)/font.dir
+ 	$(MKFONTDIR) $(DESTDIR)$(fontdir)
+-	$(FCCACHE) $(DESTDIR)$(fontdir)
++#	$(FCCACHE) $(DESTDIR)$(fontdir)
+ 
+ distuninstallcheck:
+ 	@:
