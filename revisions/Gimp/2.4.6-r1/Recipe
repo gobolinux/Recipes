@@ -1,0 +1,14 @@
+# Recipe for version 2.4.6 by John Robert Beshir <namegduf@fudgeman.org>, on Mon Jun 2 23:04:02 UTC 2008
+# Recipe (MakeRecipe) for Gimp by roko, <ro.ko@mcnon.com>, on Fri Dec 31 19:34:35 BRST 2004
+compile_version=1.9.0
+url="ftp://ftp.gimp.org/pub/gimp/v2.4/gimp-2.4.6.tar.bz2"
+file_size=18365363
+file_md5=a0bd1560f81f15c23ed4c0c6cb9c4b59
+recipe_type=configure
+configure_options=(
+#--disable-print
+)  
+#. GoboPath
+environment=(
+   "PKG_CONFIG_PATH=${goboLibraries}/pkgconfig"
+)
