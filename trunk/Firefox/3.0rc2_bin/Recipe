@@ -1,0 +1,35 @@
+# Recipe (MakeRecipe) for Firefox by Giambattista Bloisi <giamby@infinito.it>, on Wed May 7 09:51:35 CEST 2008
+# Recipe for version 3.0b5_bin by Giambattista Bloisi <giamby@infinito.it>, on Wed May 7 09:51:35 CEST 2008
+compile_version=1.11.0
+recipe_type=manifest
+manifest=(
+    ".:lib/firefox-3.0"
+    "firefox:bin"
+)
+
+pre_link()
+{
+    mkdir -p ${target}/Shared/applications
+    cp $recipedir/firefox.desktop ${target}/Shared/applications
+
+    # Shortcut to the icon
+    mkdir -p ${target}/Shared/icons/firefox
+    cp ${target}/lib/firefox-3.0/icons/mozicon128.png ${target}/Shared/icons/firefox
+}
+
+post_install()
+{
+    # Give Firefox an icon while minimized
+    install -v -m755 -o0 -g0 -d ${target}/lib/firefox-3.0/chrome/icons/default
+    ln -v -s ../../../icons/default.xpm ${target}/lib/firefox-3.0/chrome/icons/default
+                        
+    # Changes the ownership of some installed files to more appropriate user:group names
+    #chown -v -R 0:0 ${target}/lib/firefox-3.0/extensions/inspector@mozilla.org/*
+                                    
+    # install some additional LDAP interface headers
+    #install -v -m644 -o0 -g0 firefox-build/dist/public/ldap-private/* ${target}/include/firefox-3.0/ldap
+                                                
+    # replace the broken nss files with symbolic links to known good files
+    #ln -v -sf ${goboLibraries}/pkgconfig/nss.pc ${target}/lib/pkgconfig/firefox-nss.pc
+    #ln -v -sf ${goboLibraries}/pkgconfig/nspr.pc ${target}/lib/pkgconfig/firefox-nspr.pc
+}
