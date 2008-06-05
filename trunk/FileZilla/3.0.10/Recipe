@@ -1,0 +1,11 @@
+# Recipe for version 3.0.10 by Hoppar Tamas <htraki@gmail.com>, on 2008. jún. 5., csütörtök, 18.45.04 CEST
+# Recipe (MakeRecipe) for FileZilla 3.0.10 by keisangi, on Fri Feb 1 14:40:25 JST 2008
+compile_version=1.10.1
+url="http://downloads.sourceforge.net/filezilla/FileZilla_3.0.10_src.tar.bz2"
+file_size=2130261
+file_md5=d453cef44a89e3448fc6790669a811f6
+dir='filezilla-3.0.10'
+recipe_type=configure
+configure_options=(
+"--enable-locales"
+)
