@@ -1,0 +1,13 @@
+syslog needs to be included explicitly now
+Index: pam_ssh-1.91/pam_ssh.c
+===================================================================
+--- pam_ssh-1.91.orig/pam_ssh.c
++++ pam_ssh-1.91/pam_ssh.c
+@@ -63,6 +63,7 @@
+ #include <string.h>
+ #include <sysexits.h>
+ #include <unistd.h>
++#include <syslog.h>
+ 
+ #define PAM_SM_AUTH
+ #define PAM_SM_SESSION
