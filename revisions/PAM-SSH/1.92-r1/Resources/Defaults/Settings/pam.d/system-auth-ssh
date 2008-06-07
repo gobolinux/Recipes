@@ -1,0 +1,3 @@
+auth		sufficient	pam_ssh.so try_first_pass
+session		sufficient	pam_ssh.so
+
