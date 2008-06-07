@@ -1,0 +1,28 @@
+# Recipe (MakeRecipe) for Noweb by Kevin Quick <quick@sparq.org>, on Sun Apr 13 23:09:05 MST 2008
+# Recipe for version 2.11b by Kevin Quick <quick@sparq.org>, on Sun Apr 13 23:09:05 MST 2008
+compile_version=1.11.0
+url="http://www.eecs.harvard.edu/~nr/noweb/dist/noweb-2.11b.tgz"
+file_size=738870
+file_md5=1df580723497b2f2efde07646abf764c
+recipe_type=makefile
+makefile='Makefile'
+build_target="all"
+dir=noweb-2.11b/src
+make_variables=(
+  CC="gcc -ansi -pedantic"
+  "CFLAGS=-DTEMPNAM"
+  "LIBSRC=icon"
+  "ICONC=icont"
+  "BIN=$target/bin"
+  "LIB=$target/lib"
+  "MAN=$target/man"
+  "TEXINPUTS=$target/Shared/texmf/noweb"
+  "ELISP=$target/Shared/emacs/"
+)
+
+pre_install() {
+  mkdir -p $target/Shared/texmf/noweb  #$TEXINPUTS
+  mkdir -p $target/Shared/emacs  #$ELISP
+}
+
+post_install_message="RECOMMENDED: add ${goboShared}/texmf to your TEXINPUTS environment variable searchlist\n(and you may wish to re-run texconfig).\nRECOMMENDED for emacs users: add ${goboShared}/emacs to your EMACSLOADPATH environment variable searchlist."
