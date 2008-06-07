@@ -8,7 +8,7 @@ recipe_type=configure
 
 configure_options=(
     "--with-rcdir=$target"
-	"--with-doc=$target/doc"
+	"--with-docdir=$target/doc"
     "--with-fontpath=/Files/Fonts/Ghostscript"
 	"--with-cups-user=lp"
 	"--with-cups-group=lp"
@@ -19,7 +19,6 @@ configure_options=(
     "--with-python"
     "--enable-threads"
     "--enable-libpaper"
-    "--enable-privilege-dropping"
 )
 
 make_variables=(
