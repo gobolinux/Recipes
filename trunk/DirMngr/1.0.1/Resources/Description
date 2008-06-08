@@ -1,0 +1,5 @@
+[Name] DirMngr
+[Summary] DirMngr is a server for managing and downloading certificate revocation lists
+[Description] DirMngr is a server for managing and downloading certificate revocation lists (CRLs) for X.509 certificates and for downloading the certificates themselves. DirMngr also handles OCSP requests as an alternative to CRLs. DirMngr is either invoked internally by gpgsm or when running as a system daemon through the dirmngr-client tool.
+[License] GNU General Public License version 2
+[Homepage] http://www.gnupg.org/
