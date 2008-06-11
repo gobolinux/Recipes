@@ -1,0 +1,18 @@
+Patch for xorg-serer to find xkbcomp
+
+--- xorg-server-1.4.0.90/configure.old	2008-02-17 15:08:30.000000000 +0000
++++ xorg-server-1.4.0.90/configure	2008-02-17 15:13:16.000000000 +0000
+@@ -36180,11 +36180,11 @@
+   test "x$exec_prefix" = xNONE && exec_prefix_NONE=yes && exec_prefix=$prefix
+   eval ac_define_dir="\"$bindir\""
+   eval ac_define_dir="\"$ac_define_dir\""
+-  XKB_BIN_DIRECTORY="$ac_define_dir"
++  XKB_BIN_DIRECTORY="@%Compile_goboExecutables%@"
+ 
+ 
+ cat >>confdefs.h <<_ACEOF
+-#define XKB_BIN_DIRECTORY "$ac_define_dir"
++#define XKB_BIN_DIRECTORY "@%Compile_goboExecutables%@"
+ _ACEOF
+ 
+   test "$prefix_NONE" && prefix=NONE
