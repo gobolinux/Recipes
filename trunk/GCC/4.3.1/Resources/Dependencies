@@ -1,0 +1,4 @@
+Glibc 2.4
+GMP >= 4.1
+Linux >= 2.6.25 # ABI breakage with Linux < 2.6.25 (CVE-2008-1367)
+MPFR >= 2.3.0
