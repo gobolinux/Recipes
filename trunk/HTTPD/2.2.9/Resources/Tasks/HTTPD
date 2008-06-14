@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# -----------------------------------------
+# Apache task by Volker Wieban
+# updated for 2.2.3 by Otto Barnes
+# -----------------------------------------
+
+case $1 in
+	[sS]tart)
+		httpd -k start 
+		;;
+	[sS]top)
+		httpd -k stop
+		;;
+	[rR]estart)
+		httpd -k restart
+		;;
+	[gG]raceful)
+		httpd -k graceful
+		;;
+	*)	echo 'usage: '$0' [Start|Stop|Restart|Graceful]'
+		;;
+esac # is ridiculous
