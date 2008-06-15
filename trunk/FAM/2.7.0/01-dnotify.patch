@@ -37,7 +37,7 @@ diff -Naur fam-2.7.0/configure.ac fam-2.7.0.new/configure.ac
 +
 +if test "$have_dnotify" = "yes" ; then
 +        MONITOR_FUNCS=IMonNone
-+        AC_DEFINE(USE_DNOTIFY)
++        AC_DEFINE(USE_DNOTIFY, "1", "")
 +	use_dnotify=true
 +elif test "$have_sys_imon_h"; then
  	MONITOR_FUNCS=IMonIRIX
