@@ -6,3 +6,8 @@ file_size=127210
 file_md5=224c36057e4416205d4e421af01a2f15
 recipe_type=configure
 part_of=Xorg-App
+
+configure_options=(
+    --with-xserver=$goboExecutables/X
+    --with-xterm=$goboExecutables/xterm
+)
