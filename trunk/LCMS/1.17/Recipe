@@ -5,6 +5,3 @@ file_size=898816
 file_md5=07bdbb4cfb05d21caa58fe3d1c84ddc1
 compile_version=1.8.2
 recipe_type=configure
-environment=(
-   CFLAGS="${CLFAGS} -fgnu89-inline"
-)
