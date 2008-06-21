@@ -1,0 +1,11 @@
+# Recipe for version 0.9.3 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Mar 20 10:34:08 CET 2007
+# Recipe (MakeRecipe) for LibOFA by Jonas Karlsson <jonka750@student.liu.se>, on Sat Aug 12 11:37:30 CEST 2006
+compile_version=1.8.2
+url="http://www.musicip.com/dns/files/libofa-0.9.3.tar.gz"
+file_size=384043
+file_md5=51507d2c4b432bd2755f48d58471696e
+recipe_type=configure
+
+pre_build() {
+   autoconf
+}

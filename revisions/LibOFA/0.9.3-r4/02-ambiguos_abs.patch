@@ -1,0 +1,37 @@
+diff -Naur libofa-0.9.3/lib/JAMA/tnt_math_utils.h libofa-0.9.3.new/lib/JAMA/tnt_math_utils.h
+--- libofa-0.9.3/lib/JAMA/tnt_math_utils.h	2006-05-10 19:58:50.000000000 +0200
++++ libofa-0.9.3.new/lib/JAMA/tnt_math_utils.h	2007-03-20 10:52:40.000000000 +0100
+@@ -19,6 +19,16 @@
+ 
+ namespace TNT
+ {
++
++/**
++	@returns the absolute value of a real (no-complex) scalar.
++*/
++template <class Real>
++Real abs(const Real &a)
++{
++	return  (a > 0 ? a : -a);
++}
++
+ /**
+ 	@returns hypotenuse of real (non-complex) scalars a and b by 
+ 	avoiding underflow/overflow
+@@ -55,16 +65,7 @@
+ 	return  a > b ? a : b;
+ }
+ */
+-
+-/**
+-	@returns the absolute value of a real (no-complex) scalar.
+-*/
+-template <class Real>
+-Real abs(const Real &a)
+-{
+-	return  (a > 0 ? a : -a);
+ }
+ 
+-}
+ #endif
+ /* MATH_UTILS_H */
