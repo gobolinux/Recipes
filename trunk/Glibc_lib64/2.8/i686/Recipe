@@ -1,0 +1,9 @@
+configure_options=(
+    ${configure_options[@]}
+    "--enable-add-ons"
+)
+
+pre_build() {
+    echo "CFLAGS += -mtune=generic -O2 -pipe -m64" > configparms
+    echo "slibdir=/lib64" >> configparms
+}
