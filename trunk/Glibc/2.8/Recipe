@@ -37,6 +37,8 @@ environment=(
     CFLAGS=
     CXXFLAGS=
     LDFLAGS=
+# This avoids "make install" to interrupt because ld does not find libraries
+    LD_LIBRARY_PATH=$(readlink -f $target/../Current/lib):$goboLibraries
 )
 
 pre_install() {
