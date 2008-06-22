@@ -1,0 +1,3 @@
+pre_build() {
+	sed -i "s:__i386__:__powerpc__:" src/chm_lib.c
+}
