@@ -1,0 +1,5 @@
+[Name] Cpufrequtils
+[Summary] Tools for Linux kernel cpufreq subsystem 
+[License] GNU GPL v2
+[Description]  To make access to the Linux kernel cpufreq subsystem easier for users and cpufreq userspace tools, a cpufrequtils package was created. It contains a library used by other programs (libcpufreq), command line tools to determine current CPUfreq settings and to modify them (cpufreq-info and cpufreq-set), and debug tools.))
+[Homepage] http://www.kernel.org/pub/linux/utils/kernel/cpufreq/cpufrequtils.html 
