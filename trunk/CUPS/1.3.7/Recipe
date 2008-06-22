@@ -8,10 +8,10 @@ recipe_type=configure
 
 configure_options=(
     "--with-rcdir=$target"
-	"--with-docdir=$target/doc"
+    "--with-docdir=$target/doc"
     "--with-fontpath=/Files/Fonts/Ghostscript"
-	"--with-cups-user=lp"
-	"--with-cups-group=lp"
+    "--with-cups-user=lp"
+    "--with-cups-group=lp"
     "--with-system-groups=lpadmin"
     "--with-icondir=$target/Shared/icons"
     "--with-menudir=$target/Shared/applications"
