@@ -1,0 +1,10 @@
+pre_build() {
+    pushd $dir
+    # the shipped configure doesn't recognize parameters such as CC
+    echo "Running autoconf..."
+
+    # weird autoconf spawn an error at the first time it is invoked.
+    # yes, at the first time only :-)
+    autoconf; autoconf
+    popd
+}
