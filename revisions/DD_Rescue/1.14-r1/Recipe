@@ -1,0 +1,13 @@
+# Recipe for version 1.14 by Viola Zoli <violazoli@gmail.com>, on 2008. jún. 15., vasárnap, 21.58.44 CEST
+# Recipe (MakeRecipe) for DD_Rescue by Andre Detsch, on Mon Feb 13 15:01:42 BRST 2006
+compile_version=1.8.0
+url="http://www.garloff.de/kurt/linux/ddrescue/dd_rescue-1.14.tar.gz"
+file_size=17754
+file_md5=417d26eacb5fb7851487329542f225e8
+dir='dd_rescue'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "DESTDIR=$target"
+   "prefix=$target"
+)
