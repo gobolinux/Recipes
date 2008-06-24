@@ -10,9 +10,10 @@ configure_options=(
 	# --enable-write         # Makes the Mozilla plugin write the currently playing SWF movie to /tmp.
 	--disable-gstreamer      # Disable gstreamer support
 	--disable-cygnal         # Disable support for the Cygnal server.
+	--enable-nsapi           # Enable the compilation of Firefox plugin.
 	--enable-sdk-install     # Enable installing the libraries and headers as an SDK.
-	--enable-gui=kde         # Use the specified GUI toolkit (default=gtk,kde)
-	--enable-renderer=ogl    # Use the specified GUI toolkit (default=ogl,agg)
+	--enable-gui=gtk         # Use the specified GUI toolkit (default=gtk,kde)
+	--enable-renderer=agg    # Use the specified GUI toolkit (default=ogl,agg)
 	--enable-mad      	     # Enable support for mad library
 	--enable-z               # Enable support for zlib compression library.
 	--enable-jpeg            # Enable support for jpeg images.
@@ -26,11 +27,13 @@ configure_options=(
 	--enable-media=ffmpeg    # none, ffmpeg or gst
 	--enable-shared
 	--with-shm=sysv
-	--with-plugindir=$target/lib/mozilla/plugins
 	--with-npapi-plugindir=$target/lib/mozilla/plugins
-#	--with-kde-pluginprefix=$target
 	--with-ffmpeg-incl=$goboHeaders
 	--with-ffmpeg-lib=$goboLibraries
+#	--with-kde-pluginprefix=$target
+#	--with-qt-incl=$qt_path/include
+#	--with-qt-lib=$qt_path/lib
+#	--with-kde-lib=$kde_libs_path/include
 )
 
 pre_build() {
