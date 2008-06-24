@@ -1,0 +1,13 @@
+--- mplayerplug-in/install.sh.in.orig	2007-05-26 03:34:30.000000000 -0300
++++ mplayerplug-in/install.sh.in	2007-05-26 03:35:16.000000000 -0300
+@@ -13,8 +13,8 @@ MOZHOME=@MOZILLA_HOME@/plugins
+ 
+ if [ "$DESTDIR" ]; then 
+ 	echo "Installing to $DESTDIR"
+-	$INSTALL -b -D -m0644 mplayerplug-in.conf ${DESTDIR}/etc/mplayerplug-in.conf 
+-	$INSTALL -b -D -m0644 mplayerplug-in.types ${DESTDIR}/etc/mplayerplug-in.types 
++	$INSTALL -b -D -m0644 mplayerplug-in.conf ${sysconfdir}/mplayerplug-in.conf 
++	$INSTALL -b -D -m0644 mplayerplug-in.types ${sysconfdir}/mplayerplug-in.types 
+ 	for mod in @CREATE@
+ 	do
+ 		$INSTALL -D -m0755 ${mod}.so ${DESTDIR}${libdir}/mozilla/plugins/${mod}.so 

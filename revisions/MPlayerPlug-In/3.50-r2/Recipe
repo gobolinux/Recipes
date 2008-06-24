@@ -1,0 +1,24 @@
+# Recipe for version 3.50 by John Robert Beshir, on Sun Feb 17 06:30:05 GMT 2008
+compile_version=1.8.2
+url="$httpSourceforge/mplayerplug-in/mplayerplug-in-3.50.tar.gz"
+file_size=452730
+file_md5=7a9306c39f6550090c16b9c1d87e3168
+dir=mplayerplug-in
+recipe_type=configure
+
+configure_options=(
+    --with-mozilla-home=$firefox_path
+)
+
+install_variables=(
+    DESTDIR=/
+)
+
+pre_link() {
+    cd $target/lib
+    mkdir mozilla/components
+    mv mozilla/plugins/*.xpt mozilla/components
+
+    # Create a link to the plugins directory as the standard browser-plugins directory.
+    ln -s mozilla/plugins browser-plugins
+}
