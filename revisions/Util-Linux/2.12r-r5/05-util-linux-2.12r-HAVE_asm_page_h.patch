@@ -1,0 +1,15 @@
+Description: Fix building when asm/page.h is not available
+
+diff -Naur util-linux-2.12r/disk-utils/fsck.cramfs.c util-linux-2.12r-b2/disk-utils/fsck.cramfs.c
+--- util-linux-2.12r/disk-utils/fsck.cramfs.c	2008-06-23 00:23:28.000000000 +0200
++++ util-linux-2.12r-b2/disk-utils/fsck.cramfs.c	2008-06-23 00:24:21.000000000 +0200
+@@ -76,7 +76,9 @@
+ 
+ #define PAD_SIZE 512
+ 
++#ifdef HAVE_asm_page_h
+ #include <asm/page.h>
++#endif
+ #define PAGE_CACHE_SIZE (4096)
+ 
+ /* Guarantee access to at least 8kB at a time */
