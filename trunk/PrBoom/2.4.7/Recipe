@@ -7,3 +7,7 @@ file_size=999524
 file_md5=9942f521764d7f89df2218a456da4f02
 dir='prboom-2.4.7'
 recipe_type=configure
+
+pre_link() {
+ ln -s $target/games $target/bin
+}
