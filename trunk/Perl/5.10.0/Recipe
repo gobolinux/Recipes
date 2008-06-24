@@ -14,3 +14,8 @@ pre_build() {
 pre_install() {
 	make test | tee $goboTemp/perl-test.log
 }
+pre_link() {
+    eval `${target}/bin/perl -V:archlibexp`
+    ln -s libperl.so.5.8 "${archlibexp}/CORE/libperl.so.5"
+    ln -s libperl.so.5.8 "${archlibexp}/CORE/libperl.so"
+}
