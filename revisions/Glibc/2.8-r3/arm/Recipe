@@ -1,0 +1,20 @@
+configure_options=(
+	${configure_options[@]}
+	"--without-fp"
+	"--enable-add-ons=nptl,ports"
+#	"--with-abi=aapcs-linux"
+)
+
+pre_build() {
+    source /System/Settings/Compile/Cross/Cross-ResetEnv.conf
+}
+
+pre_patch() {
+	glibc=$compileSourcesDir/glibc-2.8
+
+    # Ensures that Glibc uses the right asm/unistd.h headers 
+	GrepReplace "^+sysdep-includes = \(.*\)" "+sysdep-includes = \1 -I$goboHeaders" $glibc/Makeconfig
+
+	# Adjust installation paths
+	echo "install_root=${target}" > $glibc/configparms
+}
