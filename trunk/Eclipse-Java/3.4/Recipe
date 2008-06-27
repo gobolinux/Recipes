@@ -1,0 +1,26 @@
+# Recipe for version 3.4 by Giambattista Bloisi <giamby@infinito.it>, on Fri Jun 27 06:10:19 BRT 2008
+# Recipe (MakeRecipe) for Eclipse by Nathan Middleton, on Thu Nov 15 04:52:13 CST 2007
+compile_version=1.9.0
+recipe_type=manifest
+url="http://mirrors.ibiblio.org/pub/mirrors/eclipse/technology/epp/downloads/release/ganymede/R/eclipse-java-ganymede-linux-gtk.tar.gz"
+file_size=89020850
+file_md5=cdf7e8bf9252dfd3dcb0e7fdd7e83b73
+dir='eclipse'
+
+manifest=(
+    "eclipse:eclipse/eclipse"
+    "libcairo-swt.so:eclipse/libcairo-swt.so"
+    "configuration:eclipse/configuration"
+    "features:eclipse/features"
+    "plugins:eclipse/plugins"
+    "readme:Shared/doc/eclipse/readme"
+    "about.html:Shared/doc/eclipse"
+    "notice.html:Shared/doc/eclipse"
+    "epl-v10.html:Shared/doc/eclipse"
+    "icon.xpm:Shared/icons/hicolor/48x48/apps/eclipse.xpm"
+)
+
+pre_link() {
+    mkdir -p ${target}/bin
+    ln -s ${target}/eclipse/eclipse ${target}/bin/eclipse-java
+}
