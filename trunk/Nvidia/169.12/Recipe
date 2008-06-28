@@ -24,7 +24,7 @@ pre_install() {
     then XMODULEPATH=$target/lib/xorg/modules
     else XMODULEPATH=$target/lib/modules
     fi
-    KERNELDIR=$goboModules/$(uname -r)
+    KERNELDIR=$goboModules/Current
     MODULEDIR=$target/Resources/Unmanaged/$KERNELDIR/kernel/drivers/video
     export LD_LIBRARY_PATH=$target/lib:$LD_LIBRARY_PATH
 
@@ -74,5 +74,5 @@ post_install() {
 
 unmanaged_files=(
     $goboVariable/log/nvidia-install.log
-	$goboModules/$(uname -r)/kernel/drivers/video/nvidia.ko
+	$goboModules/`readlink $goboModules/Current`/kernel/drivers/video/nvidia.ko
 )
