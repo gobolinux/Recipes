@@ -1,0 +1,15 @@
+# Recipe for version 6.12 by Giambattista Bloisi <giamby@infinito.it>, on Sun Jun 29 15:10:50 CEST 2008
+url="http://ftp.gnu.org/gnu/coreutils/coreutils-6.12.tar.lzma"
+file_size=3743740
+file_md5=c10ccd62490cac4de3bff5022468c9b5
+recipe_type=configure
+install_target="install install-root"
+needs_safe_linking=yes
+compile_version=1.10.2
+configure_options=(
+   "--mandir=${target}/man"
+)
+
+pre_link() {
+   mv $target/bin/install $target/bin/real_install
+}
