@@ -1,0 +1,32 @@
+Description: Since the code isn't really checked out from GIT,
+simplify version handling (the original version string that
+include the date broke the configuration phase).
+
+diff -Naur gpm-1.20.5/acinclude.m4 gpm-1.20.5-b2/acinclude.m4
+--- gpm-1.20.5/acinclude.m4	2008-06-16 09:00:59.000000000 +0200
++++ gpm-1.20.5-b2/acinclude.m4	2008-06-27 22:45:37.000000000 +0200
+@@ -72,4 +72,3 @@
+ # Perhaps someone could simply this a bit?
+ #
+ 
+-m4_include(.gitversion.m4)
+diff -Naur gpm-1.20.5/configure.ac gpm-1.20.5-b2/configure.ac
+--- gpm-1.20.5/configure.ac	2008-06-13 10:08:18.000000000 +0200
++++ gpm-1.20.5-b2/configure.ac	2008-06-27 22:53:32.000000000 +0200
+@@ -6,7 +6,7 @@
+ AC_PREREQ(2.61)
+ 
+ 
+-AC_INIT([gpm],["version-set-in-.gitversion-via-acinclude.m4"],[http://unix.schottelius.org/gpm/])
++AC_INIT([gpm],[1.20.5],[http://unix.schottelius.org/gpm/])
+ 
+ AC_CONFIG_SRCDIR([src/daemon/main.c])
+ AC_CONFIG_AUX_DIR([config])
+@@ -142,7 +142,6 @@
+ AC_SUBST(CURSES_OBJS)
+ AC_SUBST(SHARED_LIBS)
+ AC_SUBST(lispdir)
+-AC_SUBST(AC_PACKAGE_VERSION)
+ AC_SUBST(release)
+ AC_SUBST(release_date)
+ 

@@ -1,0 +1,42 @@
+Description: Make it compile on systems without sys/ucred.h
+
+diff -Naur gpm-1.20.5/configure.ac gpm-1.20.5-b2/configure.ac
+--- gpm-1.20.5/configure.ac	2008-06-13 10:08:18.000000000 +0200
++++ gpm-1.20.5-b2/configure.ac	2008-06-27 21:15:46.000000000 +0200
+@@ -80,6 +80,17 @@
+ # Required headers
+ AC_CHECK_HEADERS(sys/socket.h,,[AC_MSG_ERROR([Required header file missing])])
+ 
++# Check for ucred
++AC_MSG_CHECKING(for struct ucred)
++AC_TRY_LINK([
++#include <sys/ucred.h>
++#include <sys/socket.h>
++],[
++struct ucred sucred; sucred.pid=0;
++],[has_ucred=yes],[has_ucred=no])
++AC_MSG_RESULT($has_ucred)
++if test ${has_ucred} = no ; then CFLAGS="$CFLAGS -DNEED_UCRED"; fi
++
+ AC_ARG_WITH(curses,
+ [  --without-curses        disable curses support even if curses found])
+ 
+diff -Naur gpm-1.20.5/src/daemon/processconn.c gpm-1.20.5-b2/src/daemon/processconn.c
+--- gpm-1.20.5/src/daemon/processconn.c	2008-06-13 10:08:19.000000000 +0200
++++ gpm-1.20.5-b2/src/daemon/processconn.c	2008-06-27 21:12:29.000000000 +0200
+@@ -95,6 +95,15 @@
+    uid = statbuf.st_uid;        /* owner of socket */
+ #else
+    {
++#ifdef NEED_UCRED /* from autoconf */
++struct ucred
++   {
++      pid_t pid; /* PID of sending process. */
++      uid_t uid; /* UID of sending process. */
++      gid_t gid; /* GID of sending process. */
++   };
++#endif /* NEED_UCRED */
++ 
+       struct ucred sucred;
+       socklen_t credlen = sizeof(struct ucred);
+ 
