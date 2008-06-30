@@ -1,0 +1,19 @@
+Patch to add a desktop entry.
+
+Author: John Robert Beshir <namegduf@fudgeman.org>
+Submitted Upstream: No. Patch is specific to the installation.
+--- M1A1-old/PrBoom-FreeDoom.desktop	1969-12-31 21:00:00.000000000 -0300
++++ M1A1/PrBoom-FreeDoom.desktop	2008-06-10 17:06:11.000000000 -0300
+@@ -0,0 +1,12 @@
++[Desktop Entry]
++Encoding=UTF-8
++Version=1.0
++Name=FreeDoom - PrBoom
++Comment=An open-source FPS based on the original Doom.
++GenericName=Classic FPS
++Exec=freedoom
++Icon=@%Compile_goboShared%@/icons/hicolor/128x128/apps/PrBoom-FreeDoom.gif
++Terminal=false
++Type=Application
++Categories=Game;
++StartupNotify=true
