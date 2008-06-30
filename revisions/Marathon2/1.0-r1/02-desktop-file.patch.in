@@ -1,0 +1,19 @@
+Patch to add a desktop entry.
+
+Author: John Robert Beshir <namegduf@fudgeman.org>
+Submitted Upstream: No. Patch is specific to the installation.
+--- M1A1-old/AlephOne-Marathon2.desktop	1969-12-31 21:00:00.000000000 -0300
++++ M1A1/AlephOne-Marathon2.desktop	2008-06-10 17:06:11.000000000 -0300
+@@ -0,0 +1,12 @@
++[Desktop Entry]
++Encoding=UTF-8
++Version=1.0
++Name=Marathon 2 - Aleph One
++Comment=A classic FPS on the Aleph One engine.
++GenericName=Classic FPS
++Exec=marathon2
++Icon=@%Compile_goboShared%@/icons/hicolor/128x128/apps/AlephOne-Marathon2.ico
++Terminal=false
++Type=Application
++Categories=Game;
++StartupNotify=true
