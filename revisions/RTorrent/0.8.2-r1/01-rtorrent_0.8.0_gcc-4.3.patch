@@ -1,0 +1,60 @@
+Description: Make rtorrent compile with GCC 4.3
+
+diff -Nurp rtorrent-0.8.0.old/rak/functional.h rtorrent-0.8.0/rak/functional.h
+--- rtorrent-0.8.0.old/rak/functional.h	2008-03-09 15:56:18.000000000 +0100
++++ rtorrent-0.8.0/rak/functional.h	2008-03-09 16:04:47.000000000 +0100
+@@ -37,6 +37,7 @@
+ #ifndef RAK_FUNCTIONAL_H
+ #define RAK_FUNCTIONAL_H
+ 
++#include <cstddef>
+ #include <functional>
+ 
+ namespace rak {
+diff -Nurp rtorrent-0.8.0.old/src/command_ui.cc rtorrent-0.8.0/src/command_ui.cc
+--- rtorrent-0.8.0.old/src/command_ui.cc	2008-03-09 15:56:18.000000000 +0100
++++ rtorrent-0.8.0/src/command_ui.cc	2008-03-09 16:05:36.000000000 +0100
+@@ -36,6 +36,8 @@
+ 
+ #include "config.h"
+ 
++#include <ctime>
++
+ #include <rak/functional.h>
+ #include <rak/functional_fun.h>
+ #include <sigc++/adaptors/bind.h>
+
+diff -Nurp rtorrent-0.8.0.old/src/display/text_element_value.cc rtorrent-0.8.0/src/display/text_element_value.cc
+--- rtorrent-0.8.0.old/src/display/text_element_value.cc	2008-03-09 15:56:18.000000000 +0100
++++ rtorrent-0.8.0/src/display/text_element_value.cc	2008-03-09 16:07:39.000000000 +0100
+@@ -36,6 +36,8 @@
+ 
+ #include "config.h"
+ 
++#include <ctime>
++
+ #include "globals.h"
+ #include "text_element_value.h"
+ 
+diff -Nurp rtorrent-0.8.0.old/src/rpc/exec_file.cc rtorrent-0.8.0/src/rpc/exec_file.cc
+--- rtorrent-0.8.0.old/src/rpc/exec_file.cc	2008-03-09 15:56:18.000000000 +0100
++++ rtorrent-0.8.0/src/rpc/exec_file.cc	2008-03-09 16:04:14.000000000 +0100
+@@ -36,6 +36,7 @@
+ 
+ #include "config.h"
+ 
++#include <cstring>
+ #include <string>
+ #include <unistd.h>
+ #include <rak/path.h>
+diff -Nurp rtorrent-0.8.0.old/src/rpc/parse.cc rtorrent-0.8.0/src/rpc/parse.cc
+--- rtorrent-0.8.0.old/src/rpc/parse.cc	2008-03-09 15:56:18.000000000 +0100
++++ rtorrent-0.8.0/src/rpc/parse.cc	2008-03-09 16:04:29.000000000 +0100
+@@ -36,6 +36,7 @@
+ 
+ #include "config.h"
+ 
++#include <cstring>
+ #include <locale>
+ #include <rak/path.h>
+ #include <torrent/exceptions.h>
