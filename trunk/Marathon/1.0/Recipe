@@ -1,0 +1,29 @@
+# Recipe for Marathon (M1A1) 1.0, by John Robert Beshir <namegduf@fudgeman.org>.
+compile_version=1.8.0
+recipe_type=manifest
+
+urls=(
+    "http://trilogyrelease.bungie.org/files/M1A1.zip"
+    "ftp://ftp2.fileball.net/fileball/marathon/aleph1/alterations/MarathonIconsforWindowsv12.zip"
+)
+file_md5s=(
+    "b333a33fe760f8630243b8ea1ad42d5a"
+    "36462cf4be62a2eb0db9bb5aaa4a05ed"
+)
+file_sizes=(
+    "39698222"
+    "4755759"
+)
+unpack_files=files_in_root
+
+manifest=(
+ "M1A1:Shared/AlephOne/Scenarios/Marathon"
+ "MarathonIcons/Marathon1/AlephOne.ico:Shared/icons/hicolor/128x128/apps/AlephOne-Marathon.ico"
+ "AlephOne-Marathon.desktop:Shared/applications/AlephOne-Marathon.desktop"
+ "marathon:bin/marathon"
+)
+
+pre_install() {
+    # Make the startup script executable.
+    chmod a+x marathon
+}
