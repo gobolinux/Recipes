@@ -1,0 +1,39 @@
+Description: Since GoboLinux uses /S/K/D instead of /dev/, the
+original code for locating the active console did not work. It
+made assumption about the length of device filenames.
+
+The consequence was that only applications running as uid=0 could
+connect to the gpm daemon (as the "active" console always became
+/dev/tty0 or /dev/vc/0, which only root has access to by default).
+
+diff -Naur gpm-1.20.5/src/lib/liblow.c gpm-1.20.5-b2/src/lib/liblow.c
+--- gpm-1.20.5/src/lib/liblow.c	2008-06-13 10:08:19.000000000 +0200
++++ gpm-1.20.5-b2/src/lib/liblow.c	2008-06-28 00:56:02.000000000 +0200
+@@ -248,16 +248,23 @@
+             gpm_report(GPM_PR_OOPS,GPM_MESS_NO_MEM);
+          memcpy(tty, consolename, strlen(consolename)-1);
+          sprintf(&tty[strlen(consolename) - 1], "%i", flag);
+-      } else if (flag==0) { /* use your current vc */ 
++      } else if (flag==0) { /* use your current vc */
++         char *vcnum = NULL;
+          if (isatty(0)) tty = ttyname(0);             /* stdin */
+          if (!tty && isatty(1)) tty = ttyname(1);     /* stdout */
+          if (!tty && isatty(2)) tty = ttyname(2);     /* stderr */
+          if (tty == NULL) {
+             gpm_report(GPM_PR_ERR,"checking tty name failed");
+             goto err;
+-         }   
+-          
+-         conn->vc=atoi(&tty[strlen(consolename)-1]);
++         }
++
++         /* Find the console number */
++         vcnum = &tty[strlen(tty)-1];
++         while (vcnum > tty && isdigit(*vcnum))
++            vcnum--;
++         if (!isdigit(*vcnum))
++            vcnum++;
++         conn->vc=atoi(vcnum);
+       } else /* a default handler -- use console */
+         tty=strdup(consolename);
+ 
