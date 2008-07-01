@@ -26,5 +26,6 @@ pre_link()
 	cp -R doc/html $target/doc
 
 	# Install bjam for use by e.g. BGL-Python
-	cp tools/build/jam_src/bin.linuxx86/bjam $target/bin
+        arch=$(cd tools/jam/src && ./bootstrap/jam0 -d0 -f build.jam --toolset=$(./build.sh --guess-toolset) --toolset-root= --show-locate-target && cd ../../..)
+	cp tools/jam/src/${arch}/bjam $target/bin
 }
