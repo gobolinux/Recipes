@@ -8,6 +8,7 @@ recipe_type=configure
 part_of=Xorg-Lib
 
 pre_link() {
-    cd $target/include
-    ln -s pixman-1/pixman.h .
+   # Force link to not fail if link already exist
+   # (old pixman exist inside Xorg-Lib)
+   ln -v -sf pixman-1/pixman.h $target/include
 }
