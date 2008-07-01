@@ -19,6 +19,7 @@ configure_options=(
    "--disable-avahi"
    "--disable-nm"
    "--disable-gtkui"
+   "--disable-gtkspell"
    "--disable-consoleui"
    "--disable-cap"
    "--disable-perl"
@@ -60,7 +61,12 @@ using_tk() {
 using_dbus() {
     configure_options=("${configure_options[@]}" --enable-dbus --with-dbus-services="${goboShared}/dbus-1/services" )
 }
-		
+
+#with_gtkspell="--enable-gtkspell --enable-gtkui"
+using_gtkspell() {
+    configure_options=("${configure_options[@]}" --enable-gtkspell --enable-gtkui)
+}
+
 
 make_variables=(
     DESTINSTALLARCHLIB="$target/lib/perl5/`echo $perl_path | sed 's,/\(.*\)/\(.*\)/\(.*\),\3,g'`/i686-linux"
