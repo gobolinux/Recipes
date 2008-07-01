@@ -13,5 +13,5 @@ make_variables=(
    "tooldir=$target"
 )
 pre_install() {
-   cp include/libiberty.h $target/include
+ cp ../include/libiberty.h $target/include
 }
