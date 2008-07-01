@@ -12,3 +12,4 @@ pre_link() {
    # (old pixman exist inside Xorg-Lib)
    ln -v -sf pixman-1/pixman.h $target/include
 }
+
