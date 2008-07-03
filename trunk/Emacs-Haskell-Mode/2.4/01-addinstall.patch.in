@@ -1,0 +1,15 @@
+* Adds an install target to the Makefile.  -KWQ 2008 June 26
+
+--- haskell-mode-2.3-orig/Makefile	2007-10-24 22:30:46.000000000 -0700
++++ haskell-mode-2.3/Makefile	2007-10-24 22:32:37.000000000 -0700
+@@ -21,6 +21,10 @@
+ info:
+ 	# No Texinfo file, sorry.
+ 
++install:
++	install -d @%Compile_target%@/Shared/emacs/site-lisp/
++	install *.el *.elc @%Compile_target%@/Shared/emacs/site-lisp/
++
+ ######################################################################
+ ###                    don't look below                            ###
+ ######################################################################
