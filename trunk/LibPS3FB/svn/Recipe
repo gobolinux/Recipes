@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for LibPS3FB by Giambattista Bloisi <giamby@infinito.it>, on Tue Mar 11 21:01:58 UTC 2008
+# Recipe for version svn by Giambattista Bloisi <giamby@infinito.it>, on Tue Mar 11 21:01:58 UTC 2008
+compile_version=1.10.2
+svn="svn://svn.ps2dev.org/ps3ware/trunk/libps3fb"
+recipe_type=configure
+
+pre_build() {
+    aclocal
+    autoconf
+    automake --add-missing 
+}
