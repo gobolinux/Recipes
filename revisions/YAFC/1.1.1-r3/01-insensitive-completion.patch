@@ -1,0 +1,112 @@
+diff -Naur yafc-1.1-orig/doc/yafc.info yafc-1.1/doc/yafc.info
+--- yafc-1.1-orig/doc/yafc.info	2004-05-20 07:28:55.000000000 -0300
++++ yafc-1.1/doc/yafc.info	2004-11-25 18:28:22.000000000 -0200
+@@ -1675,6 +1675,12 @@
+ 
+      Use tab to complete remote files. Yeahh.
+ 
++`insensitive_remote_completion'
++     type: boolean
++
++     Case-insensitive tab completion of remote files. Implies 
++     `remote_completion'.
++
+ `auto_bookmark'
+      type: yes/no/ask
+ 
+diff -Naur yafc-1.1-orig/doc/yafc_keywords.texi yafc-1.1/doc/yafc_keywords.texi
+--- yafc-1.1-orig/doc/yafc_keywords.texi	2003-07-12 07:22:45.000000000 -0300
++++ yafc-1.1/doc/yafc_keywords.texi	2004-11-25 18:29:39.000000000 -0200
+@@ -115,6 +115,12 @@
+ 
+ Use tab to complete remote files. Yeahh.
+ 
++@item insensitive_remote_completion
++type: boolean
++
++Case-insensitive tab completion of remote files. Implies
++remote_completion.
++
+ @item auto_bookmark
+ type: yes/no/ask
+ 
+diff -Naur yafc-1.1-orig/src/completion.c yafc-1.1/src/completion.c
+--- yafc-1.1-orig/src/completion.c	2003-07-12 07:25:41.000000000 -0300
++++ yafc-1.1/src/completion.c	2004-11-25 18:27:01.000000000 -0200
+@@ -197,6 +197,7 @@
+ 
+ 	while(lip) {
+ 		int isdir; /* 0 = not dir, 1 = dir, 2 = link (maybe dir) */
++		int cmp; /* result of strn(case)cmp: 0 = match */
+ 
+ 		fp = (rfile *)lip->data;
+ 		lip = lip->next;
+@@ -212,7 +213,12 @@
+ 		if(strcmp(name, ".") == 0 || strcmp(name, "..") == 0)
+ 			continue;
+ 
+-		if(strncmp(name, unquoted, len) == 0) {
++		if (gvInsensitiveRemoteCompletion)
++			cmp = strncasecmp(name, unquoted, len);
++		else
++			cmp = strncmp(name, unquoted, len);
++
++		if(cmp == 0) {
+ 			char *ret;
+ 			if(dir)
+ 				asprintf(&ret, merge_fmt, dir, name);
+diff -Naur yafc-1.1-orig/src/gvars.c yafc-1.1/src/gvars.c
+--- yafc-1.1-orig/src/gvars.c	2003-07-12 07:22:45.000000000 -0300
++++ yafc-1.1/src/gvars.c	2004-11-25 18:26:51.000000000 -0200
+@@ -57,6 +57,9 @@
+ /* use tab completion for remote files */
+ bool gvRemoteCompletion = true;
+ 
++/* case insensitive completion of remote files/dirs? */
++bool gvInsensitiveRemoteCompletion = true;
++
+ /* quit program when Ctrl-D is pressed */
+ bool gvQuitOnEOF = true;
+ 
+diff -Naur yafc-1.1-orig/src/gvars.h yafc-1.1/src/gvars.h
+--- yafc-1.1-orig/src/gvars.h	2003-07-12 07:22:45.000000000 -0300
++++ yafc-1.1/src/gvars.h	2004-11-25 18:26:34.000000000 -0200
+@@ -75,6 +75,9 @@
+ /* use tab completion for remote files */
+ extern bool gvRemoteCompletion;
+ 
++/* case insensitive completion of remote files/dirs? */
++extern bool gvInsensitiveRemoteCompletion;
++
+ /* bookmark list */
+ extern list *gvBookmarks;      /* list of url_t's */
+ 
+diff -Naur yafc-1.1-orig/src/rc.c yafc-1.1/src/rc.c
+--- yafc-1.1-orig/src/rc.c	2004-05-20 07:04:07.000000000 -0300
++++ yafc-1.1/src/rc.c	2004-11-25 18:26:01.000000000 -0200
+@@ -283,7 +283,11 @@
+ 			/* ignored for backward compat. */ nextbool(fp);
+ 		else if(strcasecmp(e, "remote_completion") == 0)
+ 			gvRemoteCompletion = nextbool(fp);
+-		else if(strcasecmp(e, "read_netrc") == 0)
++		else if(strcasecmp(e, "insensitive_remote_completion") == 0) {
++			gvInsensitiveRemoteCompletion = nextbool(fp);
++                        if (gvInsensitiveRemoteCompletion)
++				gvRemoteCompletion = true;
++		} else if(strcasecmp(e, "read_netrc") == 0)
+ 			gvReadNetrc = nextbool(fp);
+ 		else if(strcasecmp(e, "quit_on_eof") == 0)
+ 			gvQuitOnEOF = nextbool(fp);
+diff -Naur yafc-1.1-orig/yafcrc.sample yafc-1.1/yafcrc.sample
+--- yafc-1.1-orig/yafcrc.sample	2003-07-12 07:25:41.000000000 -0300
++++ yafc-1.1/yafcrc.sample	2004-11-25 18:30:45.000000000 -0200
+@@ -65,6 +65,9 @@
+ # use tab to complete remote files
+ remote_completion on
+ 
++# case-insensitive tab-completion of remote files
++# insensitive_remote_completion on
++
+ # time (in seconds) before a cached directory times out and needs to
+ # be reread, 0 == never
+ cache_timeout 0
