@@ -1,0 +1,20 @@
+--- yafc-1.1.1/lib/gssapi.c.orig	2008-03-29 17:58:21.000000000 +0000
++++ yafc-1.1.1/lib/gssapi.c	2008-03-29 17:59:04.000000000 +0000
+@@ -41,7 +41,7 @@
+   * against Heimdal, which needs krb5_err.h to define *
+   * KRB5KDC_ERR_S_PRINCIPAL_UNKNOWN
+   */
+-# include <krb5_err.h>
++# include <krb5.h>
+ #elif defined(HAVE_GSSAPI_GSSAPI_H)
+ # include <gssapi/gssapi.h>
+  /* if we have gssapi/gssapi.h it might be safe to assume we have the
+@@ -72,7 +72,7 @@
+ static gss_OID_desc gss_c_nt_hostbased_service_oid_desc =
+ {10, (void *)"\x2a\x86\x48\x86\xf7\x12" "\x01\x02\x01\x04"};
+ 
+-static gss_OID GSS_C_NT_HOSTBASED_SERVICE = &gss_c_nt_hostbased_service_oid_desc;
++gss_OID GSS_C_NT_HOSTBASED_SERVICE = &gss_c_nt_hostbased_service_oid_desc;
+ 
+ 
+ 
