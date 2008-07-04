@@ -12,12 +12,21 @@ configure_options=(
     --enable-default-toolkit=cairo-gtk2  # Use gtk+ 2.x instead of gtk+ 1.x
 
     --enable-xft
+    --enable-safe-browsing
+    --enable-jemalloc              # New memory management in 3.0
 
     # Our system libpng does not have  APNG support, which is mandatory, 
     # so disable it for the time being.
     --with-system-zlib             # These options are used so that the Firefox binaries are linked to
-    #--with-system-png              # the system-installed copies of the specified libraries instead of
+    --with-system-bz2              # the system-installed copies of the specified libraries instead of
     --with-system-jpeg             # the source tree code which may not be the most recent versions.
+#    --with-system-png #<- need apng support (https://bugzilla.mozilla.org/show_bug.cgi?id=418900)
+    --enable-system-lcms
+    --enable-system-sqlite
+    --enable-system-cairo
+
+    --enable-canvas
+    --enable-svg
 
     --enable-official-branding     # This option causes the installed binaries to have the official Firefox name embedded in them. 
 # Due to license restrictions, you may not distribute binaries created using this option.
@@ -31,7 +40,25 @@ configure_options=(
     --disable-tests                # This option is added so that test libraries and programs are not built.
     --disable-installer            # This option is added so that the Mozilla Installer program is not built or installed.
     --disable-accessibility        # Disable the a11y support. Comment out this option if you require a11y support.
+    --disable-crashreporter
+    
+    --with-system-nss
+    --with-system-nspr
+
+    --enable-updater # enable automatic updates
+
 )
+
+make_variables=(
+   MOZ_CO_PROJECT=browser
+   MOZ_OBJDIR=@TOPSRCDIR@/../firefox-build
+)
+
+with_startup_notification="--enable-startup-notification"
+with_glitz="--enable-glitz"
+with_xinerama="--enable-xinerama"
+with_ldap="--enable-ldap"
+with_pango="--enable-pango"
 
 pre_build()
 {
@@ -49,19 +76,12 @@ post_install()
 {
     # Give Firefox an icon while minimized
     install -v -m755 -o0 -g0 -d ${target}/lib/firefox-3.0/chrome/icons/default
-    ln -v -s ../../../icons/default.xpm ${target}/lib/firefox-3.0/chrome/icons/default
-    
-    # Changes the ownership of some installed files to more appropriate user:group names
-    #chown -v -R 0:0 ${target}/lib/firefox-3.0/extensions/inspector@mozilla.org/*
+    ln -v -s ../../../icons/mozicon16.xpm ${target}/lib/firefox-3.0/chrome/icons/default
     
     # install some additional LDAP interface headers
     #install -v -m644 -o0 -g0 firefox-build/dist/public/ldap-private/* ${target}/include/firefox-3.0/ldap
     
-    # replace the broken nss files with symbolic links to known good files
-    ln -v -sf ${goboLibraries}/pkgconfig/nss.pc ${target}/lib/pkgconfig/firefox-nss.pc
-    ln -v -sf ${goboLibraries}/pkgconfig/nspr.pc ${target}/lib/pkgconfig/firefox-nspr.pc
-
     # Shortcut to the icon
-    mkdir -p ${target}/Shared/icons/firefox
-    cp ${target}/lib/firefox-3.0/icons/mozicon128.png ${target}/Shared/icons/firefox
+    install -v -m755 -o0 -g0 -d ${target}/Shared/icons/firefox
+    ln -v -s ../../../lib/firefox-3.0/icons/mozicon128.png ${target}/Shared/icons/firefox
 }
