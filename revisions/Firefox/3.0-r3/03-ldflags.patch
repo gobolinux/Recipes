@@ -1,0 +1,6 @@
+--- mozilla/layout/build/Makefile.in.orig	2007-01-13 14:23:19.000000000 -0200
++++ mozilla/layout/build/Makefile.in	2007-01-13 14:24:55.000000000 -0200
+@@ -289,2 +289,3 @@ LDFLAGS += -Wl,-LD_LAYOUT:lgot_buffer=50
+ endif
+ endif
++LDFLAGS += -lX11 -lXrender
