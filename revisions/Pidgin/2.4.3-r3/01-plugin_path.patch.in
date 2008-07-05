@@ -1,0 +1,38 @@
+Include goboLibraries/pidgin to plugin path to allow system
+installed plugins
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+
+diff -Naur pidgin-2.4.2.old/finch/finch.c pidgin-2.4.2/finch/finch.c
+--- pidgin-2.4.2.old/finch/finch.c	2008-07-01 23:51:01.000000000 +0200
++++ pidgin-2.4.2/finch/finch.c	2008-07-01 23:59:30.000000000 +0200
+@@ -344,6 +344,7 @@
+ 
+ 	path = g_build_filename(purple_user_dir(), "plugins", NULL);
+ 	purple_plugins_add_search_path(path);
++	purple_plugins_add_search_path("@%Compile_goboLibraries%@/pidgin");
+ 	g_free(path);
+ 
+ 	purple_plugins_add_search_path(LIBDIR);
+diff -Naur pidgin-2.4.2.old/libpurple/plugin.c pidgin-2.4.2/libpurple/plugin.c
+--- pidgin-2.4.2.old/libpurple/plugin.c	2008-07-01 23:51:01.000000000 +0200
++++ pidgin-2.4.2/libpurple/plugin.c	2008-07-02 00:01:00.000000000 +0200
+@@ -1179,6 +1179,7 @@
+ 	void *handle = purple_plugins_get_handle();
+ 
+ 	purple_plugins_add_search_path(LIBDIR);
++	purple_plugins_add_search_path("@%Compile_goboLibraries%@/pidgin");
+ 
+ 	purple_signal_register(handle, "plugin-load",
+ 						 purple_marshal_VOID__POINTER,
+diff -Naur pidgin-2.4.2.old/pidgin/gtkmain.c pidgin-2.4.2/pidgin/gtkmain.c
+--- pidgin-2.4.2.old/pidgin/gtkmain.c	2008-07-01 23:51:01.000000000 +0200
++++ pidgin-2.4.2/pidgin/gtkmain.c	2008-07-01 23:59:55.000000000 +0200
+@@ -770,6 +770,7 @@
+ 	 */
+ 	search_path = g_build_filename(purple_user_dir(), "plugins", NULL);
+ 	purple_plugins_add_search_path(search_path);
++	purple_plugins_add_search_path("@%Compile_goboLibraries%@/pidgin");
+ 	g_free(search_path);
+ 	purple_plugins_add_search_path(LIBDIR);
+ 
