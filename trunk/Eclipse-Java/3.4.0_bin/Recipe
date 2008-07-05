@@ -1,0 +1,30 @@
+# Recipe for version 3.4.0_bin by José Ricardo da Silva, on Fri Jun 27 09:41:21 AMT 2008
+# Recipe (MakeRecipe) for Eclipse by Nathan Middleton, on Thu Nov 15 04:52:13 CST 2007
+compile_version=1.9.0
+recipe_type=manifest
+
+manifest=(
+    "eclipse:eclipse/eclipse"
+    "libcairo-swt.so:eclipse/libcairo-swt.so"
+    "configuration:eclipse/configuration"
+    "features:eclipse/features"
+    "plugins:eclipse/plugins"
+    "dropins:eclipse/dropins"
+    "p2:eclipse/p2"
+    "readme:Shared/doc/eclipse/readme"
+    "about.html:Shared/doc/eclipse"
+    "notice.html:Shared/doc/eclipse"
+    "epl-v10.html:Shared/doc/eclipse"
+)
+
+pre_link() {
+    mkdir -p ${target}/bin
+    ln -s ${target}/eclipse/eclipse ${target}/bin/eclipse-java
+
+    mkdir -p ${target}/Shared/applications
+    cp $recipedir/eclipse-java.desktop ${target}/Shared/applications
+
+    # Shortcut to the icon
+    mkdir -p ${target}/Shared/icons/eclipse-java
+    cp ${target}/eclipse/plugins/org.eclipse.platform_3.3.100.v200806172000/eclipse.png ${target}/Shared/icons/eclipse-java
+}
