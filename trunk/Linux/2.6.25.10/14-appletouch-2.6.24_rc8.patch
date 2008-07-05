@@ -1,0 +1,31 @@
+diff -Nurp linux-2.6.25/drivers/input/mouse/appletouch.c linux-2.6.25-lucasvr/drivers/input/mouse/appletouch.c
+--- linux-2.6.25/drivers/input/mouse/appletouch.c	2008-04-24 19:44:58.879939501 -0300
++++ linux-2.6.25-lucasvr/drivers/input/mouse/appletouch.c	2008-04-24 21:03:15.273215568 -0300
+@@ -75,6 +75,9 @@
+ #define GEYSER4_HF_ISO_PRODUCT_ID	0x022A
+ #define GEYSER4_HF_JIS_PRODUCT_ID	0x021B
+ 
++/* 3rd Generation MacBook */
++#define GEYSER5_ISO_PRODUCT_ID	0x022A
++
+ #define ATP_DEVICE(prod)					\
+ 	.match_flags = USB_DEVICE_ID_MATCH_DEVICE |		\
+ 		       USB_DEVICE_ID_MATCH_INT_CLASS |		\
+@@ -107,6 +110,7 @@ static struct usb_device_id atp_table []
+ 	{ ATP_DEVICE(GEYSER4_ANSI_PRODUCT_ID) },
+ 	{ ATP_DEVICE(GEYSER4_ISO_PRODUCT_ID) },
+ 	{ ATP_DEVICE(GEYSER4_JIS_PRODUCT_ID) },
++	{ ATP_DEVICE(GEYSER5_ISO_PRODUCT_ID) },
+ 
+ 	/* Core2 Duo MacBook3,1 */
+ 	{ ATP_DEVICE(GEYSER4_HF_ANSI_PRODUCT_ID) },
+@@ -258,7 +262,8 @@ static inline int atp_is_geyser_3_4(stru
+ 		(productId == GEYSER4_JIS_PRODUCT_ID) ||
+ 		(productId == GEYSER4_HF_ANSI_PRODUCT_ID) ||
+ 		(productId == GEYSER4_HF_ISO_PRODUCT_ID) ||
+-		(productId == GEYSER4_HF_JIS_PRODUCT_ID);
++		(productId == GEYSER4_HF_JIS_PRODUCT_ID) ||
++		(productId == GEYSER5_ISO_PRODUCT_ID);
+ }
+ 
+ /*

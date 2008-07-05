@@ -1,0 +1,398 @@
+From dwmw2@infradead.org Fri Apr 25 19:29:12 2008
+From: David Woodhouse <dwmw2@infradead.org>
+Subject: [PATCH, RESEND] RTC class driver for ppc_md RTC functions
+Date: Fri, 25 Apr 2008 19:29:12 +1000
+X-Patchwork-ID: 18139
+
+This hooks up the platform-specific [gs]et_rtc_time functions so that
+kernels using CONFIG_RTC_CLASS have RTC support on most PowerPC
+platforms.
+
+Signed-off-by: David Woodhouse <dwmw2@infradead.org>
+
+
+
+
+---
+diff --git a/drivers/rtc/Kconfig b/drivers/rtc/Kconfig
+index 1e6715e..3e788b7 100644
+--- a/drivers/rtc/Kconfig
++++ b/drivers/rtc/Kconfig
+@@ -461,4 +461,12 @@ config RTC_DRV_RS5C313
+ 	help
+ 	  If you say yes here you get support for the Ricoh RS5C313 RTC chips.
+ 
++config RTC_DRV_PPC
++       tristate "PowerPC machine dependent RTC support"
++       depends on PPC_MERGE
++       help
++         The PowerPC kernel has machine-specific functions for accessing
++	 the RTC. This exposes that functionality through the generic RTC
++	 class.
++
+ endif # RTC_CLASS
+diff --git a/drivers/rtc/Makefile b/drivers/rtc/Makefile
+index 465db4d..e822e56 100644
+--- a/drivers/rtc/Makefile
++++ b/drivers/rtc/Makefile
+@@ -49,3 +49,4 @@ obj-$(CONFIG_RTC_DRV_TEST)	+= rtc-test.o
+ obj-$(CONFIG_RTC_DRV_V3020)	+= rtc-v3020.o
+ obj-$(CONFIG_RTC_DRV_VR41XX)	+= rtc-vr41xx.o
+ obj-$(CONFIG_RTC_DRV_X1205)	+= rtc-x1205.o
++obj-$(CONFIG_RTC_DRV_PPC)	+= rtc-ppc.o
+--- /dev/null	2007-12-03 03:08:41.854157978 +0000
++++ b/drivers/rtc/rtc-ppc.c	2007-12-03 16:56:15.000000000 +0000
+@@ -0,0 +1,69 @@
++/*
++ * RTC driver for ppc_md RTC functions
++ *
++ * © 2007 Red Hat, Inc.
++ *
++ * Author: David Woodhouse <dwmw2@infradead.org>
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++
++
++#include <linux/module.h>
++#include <linux/err.h>
++#include <linux/rtc.h>
++#include <linux/platform_device.h>
++#include <asm/machdep.h>
++
++static int ppc_rtc_read_time(struct device *dev, struct rtc_time *tm)
++{
++	ppc_md.get_rtc_time(tm);
++	return 0;
++}
++
++static int ppc_rtc_set_time(struct device *dev, struct rtc_time *tm)
++{
++	return ppc_md.set_rtc_time(tm);
++}
++
++static const struct rtc_class_ops ppc_rtc_ops = {
++	.set_time = ppc_rtc_set_time,
++	.read_time = ppc_rtc_read_time,
++};
++
++static struct rtc_device *rtc;
++static struct platform_device *ppc_rtc_pdev;
++
++static int __init ppc_rtc_init(void)
++{
++	if (!ppc_md.get_rtc_time || !ppc_md.set_rtc_time)
++		return -ENODEV;
++
++	ppc_rtc_pdev = platform_device_register_simple("ppc-rtc", 0, NULL, 0);
++	if (IS_ERR(ppc_rtc_pdev))
++		return PTR_ERR(ppc_rtc_pdev);
++
++	rtc = rtc_device_register("ppc_md", &ppc_rtc_pdev->dev,
++				  &ppc_rtc_ops, THIS_MODULE);
++	if (IS_ERR(rtc)) {
++		platform_device_unregister(ppc_rtc_pdev);
++		return PTR_ERR(rtc);
++	}
++
++	return 0;
++}
++
++static void __exit ppc_rtc_exit(void)
++{
++	rtc_device_unregister(rtc);
++	platform_device_unregister(ppc_rtc_pdev);
++}
++
++module_init(ppc_rtc_init);
++module_exit(ppc_rtc_exit);
++
++MODULE_LICENSE("GPL");
++MODULE_AUTHOR("David Woodhouse <dwmw2@infradead.org>");
++MODULE_DESCRIPTION("Generic RTC class driver for PowerPC");
+
+ps3-linux-stable-2.6.25
+  o Backported to 2.6.25.4
+  o Removed DEBUG's
+
+Subject: [RFC] [PATCH] vmemmap fixes to use smaller pages
+
+From: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+
+This patch changes vmemmap to use a different region (region 0xf) of the
+address space whose page size can be dynamically configured at boot.
+
+The problem with the current approach of always using 16M pages is that
+it's not well suited to machines that have small amounts of memory such
+as small partitions on pseries, or PS3's.
+
+In fact, on the PS3, failure to allocate the 16M page backing vmmemmap
+tends to prevent hotplugging the HV's "additional" memory, thus limiting
+the available memory even more, from my experience down to something
+like 80M total, which makes it really not very useable.
+
+The logic used by my match to choose the vmemmap page size is:
+
+ - If 16M pages are available and there's 1G or more RAM at boot, use that size.
+ - Else if 64K pages are available, use that
+ - Else use 4K pages
+
+---
+ arch/powerpc/mm/hash_utils_64.c     |   28 ++++++++++++++++++++++++++--
+ arch/powerpc/mm/init_64.c           |    8 ++++----
+ arch/powerpc/mm/slb.c               |   14 +++++++++++++-
+ arch/powerpc/mm/slb_low.S           |   16 +++++++++++++---
+ include/asm-powerpc/mmu-hash64.h    |    1 +
+ include/asm-powerpc/pgtable-ppc64.h |   10 +++++-----
+ 6 files changed, 62 insertions(+), 15 deletions(-)
+
+--- a/arch/powerpc/mm/hash_utils_64.c
++++ b/arch/powerpc/mm/hash_utils_64.c
+@@ -93,6 +93,9 @@ unsigned long htab_hash_mask;
+ int mmu_linear_psize = MMU_PAGE_4K;
+ int mmu_virtual_psize = MMU_PAGE_4K;
+ int mmu_vmalloc_psize = MMU_PAGE_4K;
++#ifdef CONFIG_SPARSEMEM_VMEMMAP
++int mmu_vmemmap_psize = MMU_PAGE_4K;
++#endif
+ int mmu_io_psize = MMU_PAGE_4K;
+ int mmu_kernel_ssize = MMU_SEGSIZE_256M;
+ int mmu_highuser_ssize = MMU_SEGSIZE_256M;
+@@ -363,11 +366,32 @@ static void __init htab_init_page_sizes(
+ 	}
+ #endif /* CONFIG_PPC_64K_PAGES */
+ 
++#ifdef CONFIG_SPARSEMEM_VMEMMAP
++	/* We try to use 16M pages for vmemmap if that is supported
++	 * and we have at least 1G of RAM at boot
++	 */
++	if (mmu_psize_defs[MMU_PAGE_16M].shift &&
++	    lmb_phys_mem_size() >= 0x40000000)
++		mmu_vmemmap_psize = MMU_PAGE_16M;
++	else if (mmu_psize_defs[MMU_PAGE_64K].shift)
++		mmu_vmemmap_psize = MMU_PAGE_64K;
++	else
++		mmu_vmemmap_psize = MMU_PAGE_4K;
++#endif /* CONFIG_SPARSEMEM_VMEMMAP */
++
+ 	printk(KERN_DEBUG "Page orders: linear mapping = %d, "
+-	       "virtual = %d, io = %d\n",
++	       "virtual = %d, io = %d"
++#ifdef CONFIG_SPARSEMEM_VMEMMAP
++	       ", vmemmap = %d"
++#endif
++	       "\n",
+ 	       mmu_psize_defs[mmu_linear_psize].shift,
+ 	       mmu_psize_defs[mmu_virtual_psize].shift,
+-	       mmu_psize_defs[mmu_io_psize].shift);
++	       mmu_psize_defs[mmu_io_psize].shift
++#ifdef CONFIG_SPARSEMEM_VMEMMAP
++	       ,mmu_psize_defs[mmu_vmemmap_psize].shift
++#endif
++	       );
+ 
+ #ifdef CONFIG_HUGETLB_PAGE
+ 	/* Init large page size. Currently, we pick 16M or 1M depending
+--- a/arch/powerpc/mm/init_64.c
++++ b/arch/powerpc/mm/init_64.c
+@@ -208,12 +208,12 @@ int __meminit vmemmap_populated(unsigned
+ }
+ 
+ int __meminit vmemmap_populate(struct page *start_page,
+-					unsigned long nr_pages, int node)
++			       unsigned long nr_pages, int node)
+ {
+ 	unsigned long mode_rw;
+ 	unsigned long start = (unsigned long)start_page;
+ 	unsigned long end = (unsigned long)(start_page + nr_pages);
+-	unsigned long page_size = 1 << mmu_psize_defs[mmu_linear_psize].shift;
++	unsigned long page_size = 1 << mmu_psize_defs[mmu_vmemmap_psize].shift;
+ 
+ 	mode_rw = _PAGE_ACCESSED | _PAGE_DIRTY | _PAGE_COHERENT | PP_RWXX;
+ 
+@@ -235,11 +235,11 @@ int __meminit vmemmap_populate(struct pa
+ 			start, p, __pa(p));
+ 
+ 		mapped = htab_bolt_mapping(start, start + page_size,
+-					__pa(p), mode_rw, mmu_linear_psize,
++					__pa(p), mode_rw, mmu_vmemmap_psize,
+ 					mmu_kernel_ssize);
+ 		BUG_ON(mapped < 0);
+ 	}
+ 
+ 	return 0;
+ }
+-#endif
++#endif /* CONFIG_SPARSEMEM_VMEMMAP */
+--- a/arch/powerpc/mm/slb.c
++++ b/arch/powerpc/mm/slb.c
+@@ -263,13 +263,19 @@ void slb_initialize(void)
+ 	extern unsigned int *slb_miss_kernel_load_linear;
+ 	extern unsigned int *slb_miss_kernel_load_io;
+ 	extern unsigned int *slb_compare_rr_to_size;
++#ifdef CONFIG_SPARSEMEM_VMEMMAP
++	extern unsigned int *slb_miss_kernel_load_vmemmap;
++	unsigned long vmemmap_llp;
++#endif
+ 
+ 	/* Prepare our SLB miss handler based on our page size */
+ 	linear_llp = mmu_psize_defs[mmu_linear_psize].sllp;
+ 	io_llp = mmu_psize_defs[mmu_io_psize].sllp;
+ 	vmalloc_llp = mmu_psize_defs[mmu_vmalloc_psize].sllp;
+ 	get_paca()->vmalloc_sllp = SLB_VSID_KERNEL | vmalloc_llp;
+-
++#ifdef CONFIG_SPARSEMEM_VMEMMAP
++	vmemmap_llp = mmu_psize_defs[mmu_vmemmap_psize].sllp;
++#endif
+ 	if (!slb_encoding_inited) {
+ 		slb_encoding_inited = 1;
+ 		patch_slb_encoding(slb_miss_kernel_load_linear,
+@@ -281,6 +287,12 @@ void slb_initialize(void)
+ 
+ 		DBG("SLB: linear  LLP = %04x\n", linear_llp);
+ 		DBG("SLB: io      LLP = %04x\n", io_llp);
++
++#ifdef CONFIG_SPARSEMEM_VMEMMAP
++		patch_slb_encoding(slb_miss_kernel_load_vmemmap,
++				   SLB_VSID_KERNEL | vmemmap_llp);
++		DBG("SLB: vmemmap LLP = %04lx\n", vmemmap_llp);
++#endif
+ 	}
+ 
+ 	get_paca()->stab_rr = SLB_NUM_BOLTED;
+--- a/arch/powerpc/mm/slb_low.S
++++ b/arch/powerpc/mm/slb_low.S
+@@ -47,8 +47,7 @@ _GLOBAL(slb_allocate_realmode)
+ 	 * it to VSID 0, which is reserved as a bad VSID - one which
+ 	 * will never have any pages in it.  */
+ 
+-	/* Check if hitting the linear mapping of the vmalloc/ioremap
+-	 * kernel space
++	/* Check if hitting the linear mapping or some other kernel space
+ 	*/
+ 	bne	cr7,1f
+ 
+@@ -62,7 +61,18 @@ BEGIN_FTR_SECTION
+ END_FTR_SECTION_IFCLR(CPU_FTR_1T_SEGMENT)
+ 	b	slb_finish_load_1T
+ 
+-1:	/* vmalloc/ioremap mapping encoding bits, the "li" instructions below
++1:
++#ifdef CONFIG_SPARSEMEM_VMEMMAP
++	/* Check virtual memmap region. To be patches at kernel boot */
++	cmpldi	cr0,r9,0xf
++	bne	1f
++_GLOBAL(slb_miss_kernel_load_vmemmap)
++	li	r11,0
++	b	6f
++1:
++#endif /* CONFIG_SPARSEMEM_VMEMMAP */
++
++	/* vmalloc/ioremap mapping encoding bits, the "li" instructions below
+ 	 * will be patched by the kernel at boot
+ 	 */
+ BEGIN_FTR_SECTION
+--- a/include/asm-powerpc/mmu-hash64.h
++++ b/include/asm-powerpc/mmu-hash64.h
+@@ -177,6 +177,7 @@ extern struct mmu_psize_def mmu_psize_de
+ extern int mmu_linear_psize;
+ extern int mmu_virtual_psize;
+ extern int mmu_vmalloc_psize;
++extern int mmu_vmemmap_psize;
+ extern int mmu_io_psize;
+ extern int mmu_kernel_ssize;
+ extern int mmu_highuser_ssize;
+--- a/include/asm-powerpc/pgtable-ppc64.h
++++ b/include/asm-powerpc/pgtable-ppc64.h
+@@ -65,15 +65,15 @@
+ 
+ #define VMALLOC_REGION_ID	(REGION_ID(VMALLOC_START))
+ #define KERNEL_REGION_ID	(REGION_ID(PAGE_OFFSET))
++#define VMEMMAP_REGION_ID	(0xfUL)
+ #define USER_REGION_ID		(0UL)
+ 
+ /*
+- * Defines the address of the vmemap area, in the top 16th of the
+- * kernel region.
++ * Defines the address of the vmemap area, in its own region
+  */
+-#define VMEMMAP_BASE (ASM_CONST(CONFIG_KERNEL_START) + \
+-					(0xfUL << (REGION_SHIFT - 4)))
+-#define vmemmap ((struct page *)VMEMMAP_BASE)
++#define VMEMMAP_BASE		(VMEMMAP_REGION_ID << REGION_SHIFT)
++#define vmemmap			((struct page *)VMEMMAP_BASE)
++
+ 
+ /*
+  * Common bits in a linux-style PTE.  These match the bits in the
+Subject: PS3: Quiet system bus match output
+
+Reduce the verbosity of the output from ps3_system_bus_match().
+
+Signed-off-by: Geoff Levand <geoffrey.levand@am.sony.com>
+---
+ arch/powerpc/platforms/ps3/system-bus.c |   21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
+
+--- a/arch/powerpc/platforms/ps3/system-bus.c
++++ b/arch/powerpc/platforms/ps3/system-bus.c
+@@ -349,9 +349,14 @@ static int ps3_system_bus_match(struct d
+ 
+ 	result = dev->match_id == drv->match_id;
+ 
+-	pr_info("%s:%d: dev=%u(%s), drv=%u(%s): %s\n", __func__, __LINE__,
+-		dev->match_id, dev->core.bus_id, drv->match_id, drv->core.name,
+-		(result ? "match" : "miss"));
++	if (result)
++		pr_info("%s:%d: dev=%u(%s), drv=%u(%s): match\n", __func__,
++			__LINE__, dev->match_id, dev->core.bus_id,
++			drv->match_id, drv->core.name);
++	else
++		pr_debug("%s:%d: dev=%u(%s), drv=%u(%s): miss\n", __func__,
++			__LINE__, dev->match_id, dev->core.bus_id,
++			drv->match_id, drv->core.name);
+ 	return result;
+ }
+ 
+@@ -362,7 +367,7 @@ static int ps3_system_bus_probe(struct d
+ 	struct ps3_system_bus_driver *drv;
+ 
+ 	BUG_ON(!dev);
+-	pr_info(" -> %s:%d: %s\n", __func__, __LINE__, _dev->bus_id);
++	pr_debug(" -> %s:%d: %s\n", __func__, __LINE__, _dev->bus_id);
+ 
+ 	drv = ps3_system_bus_dev_to_system_bus_drv(dev);
+ 	BUG_ON(!drv);
+@@ -370,10 +375,10 @@ static int ps3_system_bus_probe(struct d
+ 	if (drv->probe)
+ 		result = drv->probe(dev);
+ 	else
+-		pr_info("%s:%d: %s no probe method\n", __func__, __LINE__,
++		pr_debug("%s:%d: %s no probe method\n", __func__, __LINE__,
+ 			dev->core.bus_id);
+ 
+-	pr_info(" <- %s:%d: %s\n", __func__, __LINE__, dev->core.bus_id);
++	pr_debug(" <- %s:%d: %s\n", __func__, __LINE__, dev->core.bus_id);
+ 	return result;
+ }
+ 
+@@ -384,7 +389,7 @@ static int ps3_system_bus_remove(struct 
+ 	struct ps3_system_bus_driver *drv;
+ 
+ 	BUG_ON(!dev);
+-	pr_info(" -> %s:%d: %s\n", __func__, __LINE__, _dev->bus_id);
++	pr_debug(" -> %s:%d: %s\n", __func__, __LINE__, _dev->bus_id);
+ 
+ 	drv = ps3_system_bus_dev_to_system_bus_drv(dev);
+ 	BUG_ON(!drv);
+@@ -395,7 +400,7 @@ static int ps3_system_bus_remove(struct 
+ 		dev_dbg(&dev->core, "%s:%d %s: no remove method\n",
+ 			__func__, __LINE__, drv->core.name);
+ 
+-	pr_info(" <- %s:%d: %s\n", __func__, __LINE__, dev->core.bus_id);
++	pr_debug(" <- %s:%d: %s\n", __func__, __LINE__, dev->core.bus_id);
+ 	return result;
+ }
+ 
