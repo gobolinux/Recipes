@@ -5,7 +5,7 @@ Cyrus-SASL [cyrus_sasl]
 GnuTLS [gnutls,ssl]
 GLib >= 2.0.0 
 GStreamer >= 0.10.10 [gstreamer]
-GTK+ >= 2.0.0 [gtk]
+GTK+ >= 2.0.0 [gtk,gui,x11]
 GtkSpell >= 2.0.2 [gtkspell]
 LibXML2 >= 2.6.0
 Meanwhile >= 1.0.0, < 2.0.0 [meanwhile,sametime]
