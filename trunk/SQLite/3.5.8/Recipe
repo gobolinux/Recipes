@@ -9,6 +9,10 @@ environment=(
     "TCLLIBDIR=$target/lib/tcl8.5"
 )
 
+pre_build() {
+   sed -i 's/VERSION/RELEASE/' sqlite{,3}.pc.in
+}
+
 pre_link() {
     ln -s $target/bin/sqlite3 $target/bin/sqlite
 }
