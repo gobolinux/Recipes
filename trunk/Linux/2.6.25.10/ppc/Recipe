@@ -1,11 +1,12 @@
-post_install() {
+#!/bin/sh
 
+private__copy_kernel_image() {
+   local simpleversion=`private__calculate_version`
    local fullversion=`private__calculate_full_version`
 
-   # Copy and symlink the kernel image
-   cp vmlinux $goboBoot/kernel-$fullversion
-   cp System.map $goboBoot/System.map-$fullversion
-
-   private__link_at_system_kernel_boot $fullversion
-
+   # Copy and symlink bzImage and System.map
+   dest=$target/Resources/Unmanaged/$goboBoot
+   mkdir -p $dest
+   cp arch/ppc/boot/bzImage $dest/kernel-$fullversion
+   cp System.map $dest/System.map-$fullversion
 }

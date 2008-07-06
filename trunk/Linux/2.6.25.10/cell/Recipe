@@ -13,9 +13,6 @@ private__copy_kernel_image() {
    mkdir -p $dest
    cp vmlinux $dest/kernel-$fullversion
    cp System.map $dest/System.map-$fullversion
-
-   # Create System.map and kernel symlinks
-   private__link_at_system_kernel_boot $simpleversion $fullversion
 }
 
 private__check_firmware () {
