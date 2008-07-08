@@ -1,0 +1,11 @@
+# Recipe for version 0.7.2 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Jul 8 16:06:09 GMT 2008
+# Recipe (MakeRecipe) for Nucleo by Jonas Karlsson <jonka750@student.liu.se>, on Tue Jul 8 14:17:46 GMT 2008
+compile_version=1.11.0
+cvs=":pserver:anonymous@cvs.lri.fr:/users/asspro/roussel/cvsroot"
+cvs_checkout_options="-r version-0_7_2"
+cvs_module="nucleo"
+recipe_type=configure
+
+pre_build() {
+   ./build-utils/bootstrap
+}
