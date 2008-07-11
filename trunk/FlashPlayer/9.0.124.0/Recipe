@@ -1,0 +1,10 @@
+# Recipe for version 9.0.124.0 by Hugo Barrocas, on Seg Jul 7 21:16:07 WEST 2008
+compile_version=1.10.2
+url=http://fpdownload.macromedia.com/get/flashplayer/current/install_flash_player_9_linux.tar.gz
+file_size=3044538
+file_md5=a311fd97aa6c214f63dc089a20cf7a39
+
+recipe_type=manifest
+manifest=(
+ 'libflashplayer.so:lib/browser-plugins/libflashplayer.so'
+)
