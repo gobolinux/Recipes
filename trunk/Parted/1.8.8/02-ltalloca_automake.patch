@@ -1,0 +1,13 @@
+--- parted-1.8.8/configure.ac.old	2008-07-10 22:17:03.000000000 +0000
++++ parted-1.8.8/configure.ac	2008-07-10 22:18:53.000000000 +0000
+@@ -55,6 +55,10 @@
+ esac
+ AC_SUBST(OS)
+ 
++Xsed="sed -e s/^X//"
++LTALLOCA=`echo X"$ALLOCA"|[$Xsed -e 's,\.$[^.]*,.lo,g']`
++AC_SUBST(LTALLOCA)
++
+ dnl Command-line options
+ AC_ARG_WITH(readline,
+ 	[  --with-readline         support fancy command line editing], ,

@@ -1,0 +1,51 @@
+diff --git a/include/parted/natmath.h b/include/parted/natmath.h index e387833..596d98a 100644
+--- a/include/parted/natmath.h
++++ b/include/parted/natmath.h
+@@ -87,15 +87,21 @@ ped_alignment_is_aligned (const PedAlignment* align, const PedGeometry* geom,
+ extern const PedAlignment* ped_alignment_any;
+ extern const PedAlignment* ped_alignment_none;
+
+-extern inline PedSector
+-ped_div_round_up (PedSector numerator, PedSector divisor);
++static inline PedSector
++ped_div_round_up (PedSector numerator, PedSector divisor)
++{
++	return (numerator + divisor - 1) / divisor;
++}
+
+-extern inline PedSector
+-ped_div_round_to_nearest (PedSector numerator, PedSector divisor);
++
++static inline PedSector
++ped_div_round_to_nearest (PedSector numerator, PedSector divisor)
++{
++	return (numerator + divisor/2) / divisor;
++}
+
+ #endif /* PED_NATMATH_H_INCLUDED */
+
+ /**
+  * @}
+  */
+-
+--- a/libparted/cs/natmath.c	2007-07-23 17:58:31.000000000 +0000
++++ b/libparted/cs/natmath.c.new	2008-07-12 13:43:55.000000000 +0000
+@@ -74,18 +74,6 @@
+ 	return sector - abs_mod (sector, grain_size);
+ }
+ 
+-inline PedSector
+-ped_div_round_up (PedSector numerator, PedSector divisor)
+-{
+-                return (numerator + divisor - 1) / divisor;
+-}
+-
+-inline PedSector
+-ped_div_round_to_nearest (PedSector numerator, PedSector divisor)
+-{
+-                return (numerator + divisor/2) / divisor;
+-}
+-
+ /* Rounds a number up to the closest number that is a multiple of
+  * grain_size.
+  */
