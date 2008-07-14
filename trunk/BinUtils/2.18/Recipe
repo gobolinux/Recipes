@@ -12,6 +12,10 @@ configure_options=(
 make_variables=(
    "tooldir=$target"
 )
+install_variables=(
+   target_header_dir="${target}/include"
+)
+
 pre_install() {
- cp ../include/libiberty.h $target/include
+   cp ../include/libiberty.h $target/include
 }
