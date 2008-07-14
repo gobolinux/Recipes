@@ -1,0 +1,15 @@
+[Name] Wine
+[Summary] An Open Source implementation of the Windows API
+[Description] Wine is a free MS-Windows API implementation which
+allows running Microsoft Windows programs (including DOS, Windows 3.x
+and Win32 executables) on Unix.
+Wine does not require Microsoft Windows, as it is a completely free
+alternative implementation of the Windows API consisting of 100%
+non-Microsoft code, however Wine can optionally use native Windows
+DLLs if they are available.
+Wine provides both a development toolkit for porting Windows source
+code to Unix as well as a program loader, allowing many unmodified
+Windows programs to run on x86-based Unixes, including Linux, FreeBSD,
+Mac OS X, and Solaris.
+[License] GNU Lesser General Public License version 2.1
+[Homepage] http://www.winehq.org
