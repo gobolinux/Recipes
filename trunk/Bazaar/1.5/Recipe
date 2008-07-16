@@ -4,11 +4,4 @@ compile_version=1.9.0
 url="https://launchpad.net/bzr/1.5/1.5/+download/bzr-1.5.tar.gz"
 file_size=3535058
 file_md5=fa82e556401802537eeb8e50ecc8b4e7
-
-recipe_type=manifest
-
-manifest=(
-	"bzr:bin"
-	"bzrlib:lib/python2.4/site-packages/bzrlib"
-)
-
+recipe_type=python
