@@ -1,0 +1,14 @@
+GHC
+Haskell-QuickCheck
+Haskell-Parsec
+Haskell-Text-HTML
+Haskell-Network-HTTP
+Haskell-Text-Regex-Compat
+Curl
+LibIDN
+Ncurses
+OpenSSL
+ZLib
+## Remove Postfix to build without the ability to use "darcs send":
+Postfix
+Latex2HTML [doc]
