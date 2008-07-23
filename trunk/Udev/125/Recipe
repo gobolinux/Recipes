@@ -1,0 +1,25 @@
+# Recipe for version 125 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Jul 22 13:51:24 GMT 2008
+compile_version=1.9.0
+url="http://www.kernel.org/pub/linux/utils/kernel/hotplug/udev-125.tar.bz2"
+file_size=205296
+file_md5=27832847086383309bb3acbde2486e29
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=(
+   prefix="$target"
+   etcdir="$settings_target"
+   udevdir="/dev"
+   usrbindir="$target/bin"
+   usrsbindir="$target/sbin"
+   mandir="$target/man"
+   includedir="$target/include"
+   usrlibdir="$target/lib"
+   EXTRAS="extras/ata_id extras/cdrom_id extras/edd_id extras/firmware extras/floppy extras/path_id extras/rule_generator extras/scsi_id extras/usb_id extras/volume_id"
+)
+
+pre_install() {
+   mkdir -p $settings_target/udev/rules.d
+   cp rules/rules.d/* $settings_target/udev/rules.d
+#   cp etc/udev/packages/* $settings_target/udev/rules.d
+}
