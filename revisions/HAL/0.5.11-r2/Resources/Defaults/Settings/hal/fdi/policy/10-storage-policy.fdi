@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?> <!-- -*- SGML -*- --> 
+
+<deviceinfo version="0.2">
+
+  <!-- Default policies merged onto computer root object  -->
+  <device>
+    <match key="info.udi" string="/org/freedesktop/Hal/devices/computer">
+      <merge key="storage.policy.default.mount_root" type="string">/Mount/Media</merge>
+      <merge key="storage.policy.default.use_managed_keyword" type="bool">true</merge>
+      <merge key="storage.policy.default.managed_keyword.primary" type="string">managed</merge>
+      <merge key="storage.policy.default.managed_keyword.secondary" type="string">kudzu</merge>
+      <merge key="storage.policy.default.mount_option.noauto" type="bool">true</merge>
+      <merge key="storage.policy.default.mount_option.pamconsole" type="bool">true</merge>
+      <merge key="storage.policy.default.mount_option.exec" type="bool">true</merge>
+    </match>
+  </device>
+
+  <device>
+    <!-- Whitelist bus types of storage devices we care about  -->
+    <match key="info.category" string="storage">
+      <match key="storage.bus" string="mmc">
+	<merge key="storage.policy.should_mount" type="bool">true</merge>      
+      </match>
+      <match key="storage.bus" string="usb">
+	<merge key="storage.policy.should_mount" type="bool">true</merge>      
+      </match>
+      <match key="storage.bus" string="ide">
+	<merge key="storage.policy.should_mount" type="bool">true</merge>
+      </match>
+      <match key="storage.bus" string="ieee1394">
+	<merge key="storage.policy.should_mount" type="bool">true</merge>
+      </match>
+      <match key="storage.bus" string="sata">
+	<merge key="storage.policy.should_mount" type="bool">true</merge>
+      </match>
+      <match key="storage.bus" string="platform">
+	<merge key="storage.policy.should_mount" type="bool">true</merge>
+      </match>
+    </match>
+    <!-- Also add SCSI optical drives -->
+    <match key="storage.bus" string="scsi">
+      <match key="storage.drive_type" string="cdrom">
+        <merge key="storage.policy.should_mount" type="bool">true</merge>
+      </match>
+    </match>
+
+    <!-- Handle drives with non-partitioned media  -->
+    <match key="storage.no_partitions_hint" bool="true">
+      <!-- optical drives -->
+      <match key="storage.drive_type" string="cdrom">
+	<merge key="storage.policy.mount_filesystem" type="string">auto</merge>
+	<merge key="storage.policy.desired_mount_point" type="string">cdrom</merge>
+	<match key="storage.cdrom.cdr" bool="true">
+	  <merge key="storage.policy.desired_mount_point" type="string">cdrecorder</merge>
+	</match>
+	<match key="storage.cdrom.cdrw" bool="true">
+	  <merge key="storage.policy.desired_mount_point" type="string">cdrecorder</merge>
+	</match>
+	<match key="storage.cdrom.dvdplusr" bool="true">
+	  <merge key="storage.policy.desired_mount_point" type="string">cdrecorder</merge>
+	</match>
+	<match key="storage.cdrom.dvdplusrw" bool="true">
+	  <merge key="storage.policy.desired_mount_point" type="string">cdrecorder</merge>
+	</match>
+	<match key="storage.cdrom.dvdram" bool="true">
+	  <merge key="storage.policy.desired_mount_point" type="string">cdrecorder</merge>
+	</match>
+	<match key="storage.cdrom.dvdr" bool="true">
+	  <merge key="storage.policy.desired_mount_point" type="string">cdrecorder</merge>
+	</match>
+	<match key="storage.cdrom.dvdrw" bool="true">
+	  <merge key="storage.policy.desired_mount_point" type="string">cdrecorder</merge>
+	</match>
+      </match>
+
+      <!-- floppy drives -->
+      <match key="storage.drive_type" string="floppy">
+	<merge key="storage.policy.mount_filesystem" type="string">auto</merge>
+	<merge key="storage.policy.desired_mount_point" type="string">floppy</merge>
+      </match>
+
+      <!-- zip drives -->
+      <match key="storage.drive_type" string="zip">
+	<merge key="storage.policy.mount_filesystem" type="string">auto</merge>
+	<merge key="storage.policy.desired_mount_point" type="string">zip</merge>
+      </match>
+
+      <!-- jaz drives -->
+      <match key="storage.drive_type" string="jaz">
+	<merge key="storage.policy.mount_filesystem" type="string">auto</merge>
+	<merge key="storage.policy.desired_mount_point" type="string">jaz</merge>
+      </match>
+    </match>
+
+    <!-- Normal volumes; use volume label, uuid or drive_type -->
+    <match key="block.is_volume" bool="true">
+      <match key="volume.fsusage" string="filesystem">
+	<!-- skip for drives with the no partitions hint (they are handled above) -->
+<!--	<match key="@block.storage_device:storage.no_partitions_hint" bool="false"> -->
+	  <merge key="volume.policy.should_mount" type="bool">true</merge>
+	  <merge key="volume.policy.mount_filesystem" type="copy_property">volume.fstype</merge>
+	  
+	  <!-- Fallback is '<storage.bus>', appended with 'disk', e.g. usbdisk,
+	       idedisk, scsidisk etc. -->
+	  <merge key="volume.policy.desired_mount_point" type="copy_property">@block.storage_device:storage.bus</merge>
+	  <append key="volume.policy.desired_mount_point" type="string">disk</append>
+	  
+          <!-- zip drives -->
+          <match key="@block.storage_device:storage.drive_type" string="zip">
+ 	    <merge key="volume.policy.desired_mount_point" type="string">zip</merge>
+          </match>
+	  
+          <!-- Best: If available use filesystem label -->
+          <match key="volume.label" empty="false">
+            <!-- unless it's a path (e.g. /boot, /, /home etc) -->
+            <match key="volume.label" is_absolute_path="false">
+	      <!-- and only if the label is ascii -->
+              <match key="volume.label" is_ascii="true">
+		<merge key="volume.policy.desired_mount_point" type="copy_property">volume.label</merge>
+              </match>
+            </match>
+          </match>
+	  
+	  <!-- Should never mount Apple Bootstrap partitions (it would be
+	       a security hole) - should use the bootable flag from the
+	       Mac partition table instead -->
+	  <match key="volume.fstype" string="hfs">
+	    <match key="volume.label" string="bootstrap">
+	      <merge key="volume.policy.should_mount" type="bool">false</merge>
+	    </match>
+	  </match>
+	  
+	  <!-- Attempt mount point 'ipod' for iPod's -->
+	  <match key="@block.storage_device:portable_audio_player.type" string="ipod">
+	    <merge key="volume.policy.desired_mount_point" type="string">ipod</merge>
+	  </match>
+	  
+	  <!-- whitelist of partition table id's, if from a msdos partition table -->
+	  <match key="volume.partition.msdos_part_table_type" exists="true">
+	    <!-- Default to no mount and punch holes -->
+	    <merge key="volume.policy.should_mount" type="bool">false</merge>
+	    <!-- Linux -->
+	    <match key="volume.partition.msdos_part_table_type" int="0x83">
+	      <merge key="volume.policy.should_mount" type="bool">true</merge>
+	    </match>
+	    <!-- FAT12 -->
+	    <match key="volume.partition.msdos_part_table_type" int="0x01">
+	      <merge key="volume.policy.should_mount" type="bool">true</merge>
+	    </match>
+	    <!-- FAT16 <32M -->
+	    <match key="volume.partition.msdos_part_table_type" int="0x04">
+	      <merge key="volume.policy.should_mount" type="bool">true</merge>
+	    </match>
+	    <!-- FAT16 -->
+	    <match key="volume.partition.msdos_part_table_type" int="0x06">
+	      <merge key="volume.policy.should_mount" type="bool">true</merge>
+	    </match>
+	    <!-- HPFS/NTFS -->
+	    <match key="volume.partition.msdos_part_table_type" int="0x07">
+	      <merge key="volume.policy.should_mount" type="bool">true</merge>
+	    </match>
+	    <!-- W95 FAT32 -->
+	    <match key="volume.partition.msdos_part_table_type" int="0x0b">
+	      <merge key="volume.policy.should_mount" type="bool">true</merge>
+	    </match>
+	    <!-- W95 FAT32 (LBA) -->
+	    <match key="volume.partition.msdos_part_table_type" int="0x0c">
+	      <merge key="volume.policy.should_mount" type="bool">true</merge>
+	    </match>
+	    <!-- W95 FAT16 (LBA) -->
+	    <match key="volume.partition.msdos_part_table_type" int="0x0e">
+	      <merge key="volume.policy.should_mount" type="bool">true</merge>
+	    </match>
+	  </match>	  
+<!--	</match> -->
+      </match>
+    </match>
+    
+  </device>
+  
+  <!-- Dont want to mount non-hotpluggable fixed disks since ideraid
+       detection isnt complete as hald wrongly detects e.g. partitions
+       from some IDE RAID controllers -->
+  <device>
+    <match key="storage.hotpluggable" bool="false">
+      <match key="storage.removable" bool="false">
+	<merge key="storage.policy.should_mount" type="bool">false</merge>
+      </match>
+    </match>
+  </device>
+  
+  <device>
+    <match key="storage.media_check_enabled" bool="true">
+      <append key="info.addons" type="strlist">hald-addon-storage</append>
+    </match>
+  </device>
+  
+</deviceinfo>
