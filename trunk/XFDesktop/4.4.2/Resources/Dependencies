@@ -1,5 +1,5 @@
-DBus >= 0.34
-DBus-GLib >= 0.34
+DBus >= 0.34 [dbus]
+DBus-GLib >= 0.34 [dbus]
 EXO >= 0.3.2
 #GCC 4.0.2
 GLib >= 2.6.4
@@ -11,4 +11,4 @@ LibXFCEGUI4 >= 4.4.1
 Thunar >= 0.8.0
 XFCE-MCS-Manager >= 4.4.1
 XFCE4-Panel >= 4.4.1
-Xorg >= 7.0
+Xorg-Lib >= 7.0
