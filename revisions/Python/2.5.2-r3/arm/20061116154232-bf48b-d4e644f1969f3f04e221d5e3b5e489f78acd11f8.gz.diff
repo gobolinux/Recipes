@@ -1,0 +1,88 @@
+Thu Nov 16 16:42:32 CET 2006  hanwen@lilypond.org
+  * x-compile machinery: define XXXXX_FOR_BUILD flags.
+diff -rN -u old-Python-2.5.cross/configure.in new-Python-2.5.cross/configure.in
+--- old-Python-2.5.cross/configure.in	2006-11-16 17:47:46.000000000 +0100
++++ new-Python-2.5.cross/configure.in	2006-11-16 17:47:46.000000000 +0100
+@@ -492,9 +492,11 @@
+ then
+     AC_MSG_RESULT(yes)
+     BUILDEXEEXT=.exe
++    case_sensitive=no
+ else
+-	AC_MSG_RESULT(no)
+-	BUILDEXEEXT=$EXEEXT
++    AC_MSG_RESULT(no)
++    BUILDEXEEXT=$EXEEXT
++    case_sensitive=yes
+ fi
+ rmdir CaseSensitiveTestDir
+ 
+@@ -3435,6 +3437,67 @@
+ done
+ AC_MSG_RESULT(done)
+ 
++# Cross compiling
++AC_SUBST(cross_compiling)
++
++if test "$cross_compiling" = "yes"; then
++    AC_MSG_CHECKING(cc for build)
++    ## /usr/bin/cc still uses wrong assembler
++    ## CC_FOR_BUILD="${CC_FOR_BUILD-/usr/bin/cc}"
++    CC_FOR_BUILD="${CC_FOR_BUILD-PATH=/usr/bin:$PATH cc}"
++else
++    CC_FOR_BUILD="${CC_FOR_BUILD-$CC}"
++fi   
++     
++if test "$cross_compiling" = "yes"; then
++   AC_MSG_RESULT($CC_FOR_BUILD)
++fi
++
++AC_ARG_VAR(CC_FOR_BUILD,[build system C compiler (default: cc)])
++	
++if test "$cross_compiling" = "yes"; then
++    AC_MSG_CHECKING(python for build)
++    PYTHON_FOR_BUILD="${PYTHON_FOR_BUILD-python}"
++else
++    PYTHON_FOR_BUILD='$(BUILDPYTHON)'
++fi   
++
++if test "$cross_compiling" = "yes"; then
++    AC_MSG_RESULT($PYTHON_FOR_BUILD)
++fi
++AC_ARG_VAR(PYTHON_FOR_BUILD,[build system python (default: python)])
++AC_SUBST(PYTHON_FOR_BUILD)
++  			
++if test "$cross_compiling" = "yes"; then
++    CFLAGS_FOR_BUILD=${CFLAGS_FOR_BUILD-}
++    changequote(<<, >>)#dnl
++    python_include=`$PYTHON_FOR_BUILD -c 'import sys; sys.stdout.write ("%s/include/python%s" % (sys.prefix, sys.version[:3]))'`
++    changequote([, ])#dnl
++    CPPFLAGS_FOR_BUILD=${CPPFLAGS_FOR_BUILD-"-I$python_include"}
++    CROSS_COMMENT=#
++    if test "$case_sensitive" = "yes"
++    then
++        EXEEXT_FOR_BUILD=
++    else
++        EXEEXT_FOR_BUILD=.exe
++    fi
++    LDFLAGS_FOR_BUILD=${LDFLAGS_FOR_BUILD-}
++    LIBS_FOR_BUILD=${LIBS_FOR_BUILD-}
++    O_FOR_BUILD=x
++    RUNSHARED="CROSS_TARGET=$ac_sys_system SRCDIR=$srcdir SO=${SO}"
++else
++    CROSS_COMMENT=
++    EXEEXT_FOR_BUILD=$BUILDEXEEXT
++    O_FOR_BUILD=o
++fi
++AC_SUBST(CFLAGS_FOR_BUILD)
++AC_SUBST(CPPFLAGS_FOR_BUILD)
++AC_SUBST(CROSS_COMMENT)
++AC_SUBST(EXEEXT_FOR_BUILD)
++AC_SUBST(LDFLAGS_FOR_BUILD)
++AC_SUBST(LIBS_FOR_BUILD)
++AC_SUBST(O_FOR_BUILD)
++
+ # generate output files
+ AC_CONFIG_FILES(Makefile.pre Modules/Setup.config)
+ AC_OUTPUT
+

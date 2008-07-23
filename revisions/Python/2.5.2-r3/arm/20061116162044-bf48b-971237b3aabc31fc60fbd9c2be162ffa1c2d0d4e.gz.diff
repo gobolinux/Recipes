@@ -1,0 +1,108 @@
+Thu Nov 16 17:20:44 CET 2006  hanwen@lilypond.org
+  * don't look into native dirs if CROSS_COMPILING is set.
+diff -rN -u old-Python-2.5.cross/setup.py new-Python-2.5.cross/setup.py
+--- old-Python-2.5.cross/setup.py	2006-11-16 17:47:44.000000000 +0100
++++ new-Python-2.5.cross/setup.py	2006-11-16 17:47:44.000000000 +0100
+@@ -110,6 +110,8 @@
+         # Fix up the autodetected modules, prefixing all the source files
+         # with Modules/ and adding Python's include directory to the path.
+         (srcdir,) = sysconfig.get_config_vars('srcdir')
++        if os.environ.get('CROSS_COMPILING') == 'yes':
++            srcdir = os.environ.get('SRCDIR')
+         if not srcdir:
+             # Maybe running on Windows but not using CYGWIN?
+             raise ValueError("No source directory; cannot proceed.")
+@@ -258,8 +260,10 @@
+ 
+     def detect_modules(self):
+         # Ensure that /usr/local is always used
+-        add_dir_to_list(self.compiler.library_dirs, '/usr/local/lib')
+-        add_dir_to_list(self.compiler.include_dirs, '/usr/local/include')
++
++        if os.environ.get('CROSS_COMPILING') != 'yes':
++            add_dir_to_list(self.compiler.library_dirs, '/usr/local/lib')
++            add_dir_to_list(self.compiler.include_dirs, '/usr/local/include')
+ 
+         # Add paths specified in the environment variables LDFLAGS and
+         # CPPFLAGS for header and library files.
+@@ -307,11 +311,14 @@
+         # lib_dirs and inc_dirs are used to search for files;
+         # if a file is found in one of those directories, it can
+         # be assumed that no additional -I,-L directives are needed.
+-        lib_dirs = self.compiler.library_dirs + [
+-            '/lib64', '/usr/lib64',
+-            '/lib', '/usr/lib',
+-            ]
+-        inc_dirs = self.compiler.include_dirs + ['/usr/include']
++        
++        if os.environ.get('CROSS_COMPILING') != 'yes':
++            lib_dirs = self.compiler.library_dirs + [
++                '/lib64', '/usr/lib64',
++                '/lib', '/usr/lib',
++                ]
++            inc_dirs = self.compiler.include_dirs + ['/usr/include']
++            
+         exts = []
+ 
+         config_h = sysconfig.get_config_h_filename()
+@@ -545,6 +552,7 @@
+                                ['/usr/kerberos/include'])
+             if krb5_h:
+                 ssl_incs += krb5_h
++
+         ssl_libs = find_library_file(self.compiler, 'ssl',lib_dirs,
+                                      ['/usr/local/ssl/lib',
+                                       '/usr/contrib/ssl/lib/'
+@@ -626,6 +634,7 @@
+ 
+         # construct a list of paths to look for the header file in on
+         # top of the normal inc_dirs.
++        
+         db_inc_paths = [
+             '/usr/include/db4',
+             '/usr/local/include/db4',
+@@ -636,6 +645,7 @@
+             '/opt/sfw/include/db3',
+             '/sw/include/db3',
+         ]
++        
+         # 4.x minor number specific paths
+         for x in (0,1,2,3,4):
+             db_inc_paths.append('/usr/include/db4%d' % x)
+@@ -652,6 +662,11 @@
+             db_inc_paths.append('/pkg/db-3.%d/include' % x)
+             db_inc_paths.append('/opt/db-3.%d/include' % x)
+ 
++
++        
++        if os.environ.get('CROSS_COMPILING') == 'yes':
++            db_inc_paths = []
++
+         # Add some common subdirectories for Sleepycat DB to the list,
+         # based on the standard include directories. This way DB3/4 gets
+         # picked up when it is installed in a non-standard prefix and
+@@ -771,6 +786,10 @@
+         MIN_SQLITE_VERSION = ".".join([str(x)
+                                     for x in MIN_SQLITE_VERSION_NUMBER])
+ 
++        if os.environ.get('CROSS_COMPILING') == 'yes':
++            sqlite_inc_paths = []
++
++
+         # Scan the default include directories before the SQLite specific
+         # ones. This allows one to override the copy of sqlite on OSX,
+         # where /usr/include contains an old version of sqlite.
+@@ -851,7 +870,12 @@
+         # accidentally building this module with a later version of the
+         # underlying db library.  May BSD-ish Unixes incorporate db 1.85
+         # symbols into libc and place the include file in /usr/include.
++
++
+         f = "/usr/include/db.h"
++        if os.environ.get('CROSS_COMPILING') == 'yes':
++            f = ''
++
+         if os.path.exists(f):
+             data = open(f).read()
+             m = re.search(r"#s*define\s+HASHVERSION\s+2\s*", data)
+
