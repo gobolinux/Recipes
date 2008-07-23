@@ -5,3 +5,9 @@ url="http://ftp.gnu.org/pub/gnu/guile/guile-1.8.5.tar.gz"
 file_size=3933369
 file_md5=a3f8216544509a74a4441f689a0410d2
 recipe_type=configure
+pre_build() {
+   libtoolize --force
+   aclocal
+   autoconf
+   automake --add-missing
+}
