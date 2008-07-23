@@ -12,14 +12,6 @@ make_variables=(
    "DESTDIR=$target"
 )
 
-pre_build(){
-if ! grep -q cron $goboSettings/group
-then
-    Log_Normal "Adding group cron"
-    groupadd cron
-fi
-}
-
 pre_link(){
 if [ ! -d ${variable_target}/spool/cron/crontabs ]
 then
