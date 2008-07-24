@@ -1,0 +1,254 @@
+diff -Naur shadow-4.0.18.1.old/etc/pam.d/chage shadow-4.0.18.1/etc/pam.d/chage
+--- shadow-4.0.18.1.old/etc/pam.d/chage	2008-07-24 16:36:15.000000000 +0200
++++ shadow-4.0.18.1/etc/pam.d/chage	2008-07-24 16:37:31.000000000 +0200
+@@ -1,4 +1,9 @@
+-#%PAM-1.0
+-auth		sufficient	pam_rootok.so
+-account		required	pam_permit.so
+-password	include		system-auth
++# Begin /etc/pam.d/chage
++
++auth        sufficient      pam_rootok.so
++auth        required        pam_unix.so
++account     required        pam_unix.so
++session     required        pam_unix.so
++password    required        pam_permit.so
++
++# End /etc/pam.d/chage
+diff -Naur shadow-4.0.18.1.old/etc/pam.d/chgpasswd shadow-4.0.18.1/etc/pam.d/chgpasswd
+--- shadow-4.0.18.1.old/etc/pam.d/chgpasswd	2008-07-24 16:36:15.000000000 +0200
++++ shadow-4.0.18.1/etc/pam.d/chgpasswd	2008-07-24 16:48:10.000000000 +0200
+@@ -1,4 +1,9 @@
+-#%PAM-1.0
+-auth		sufficient	pam_rootok.so
+-account		required	pam_permit.so
+-password	include		system-auth
++# Begin /etc/pam.d/chpasswd
++
++auth        sufficient      pam_rootok.so
++auth        required        pam_unix.so
++account     required        pam_unix.so
++session     required        pam_unix.so
++password    required        pam_permit.so
++
++# End /etc/pam.d/chpasswd
+diff -Naur shadow-4.0.18.1.old/etc/pam.d/chpasswd shadow-4.0.18.1/etc/pam.d/chpasswd
+--- shadow-4.0.18.1.old/etc/pam.d/chpasswd	2008-07-24 16:36:15.000000000 +0200
++++ shadow-4.0.18.1/etc/pam.d/chpasswd	2008-07-24 16:37:32.000000000 +0200
+@@ -1,4 +1,9 @@
+-#%PAM-1.0
+-auth		sufficient	pam_rootok.so
+-account		required	pam_permit.so
+-password	include		system-auth
++# Begin /etc/pam.d/chpasswd
++
++auth        sufficient      pam_rootok.so
++auth        required        pam_unix.so
++account     required        pam_unix.so
++session     required        pam_unix.so
++password    required        pam_permit.so
++
++# End /etc/pam.d/chpasswd
+diff -Naur shadow-4.0.18.1.old/etc/pam.d/groupadd shadow-4.0.18.1/etc/pam.d/groupadd
+--- shadow-4.0.18.1.old/etc/pam.d/groupadd	2008-07-24 16:36:15.000000000 +0200
++++ shadow-4.0.18.1/etc/pam.d/groupadd	2008-07-24 16:37:32.000000000 +0200
+@@ -1,4 +1,9 @@
+-#%PAM-1.0
+-auth		sufficient	pam_rootok.so
+-account		required	pam_permit.so
+-password	include		system-auth
++# Begin /etc/pam.d/groupadd
++
++auth        sufficient      pam_rootok.so
++auth        required        pam_unix.so
++account     required        pam_unix.so
++session     required        pam_unix.so
++password    required        pam_permit.so
++
++# End /etc/pam.d/groupadd
+diff -Naur shadow-4.0.18.1.old/etc/pam.d/groupdel shadow-4.0.18.1/etc/pam.d/groupdel
+--- shadow-4.0.18.1.old/etc/pam.d/groupdel	2008-07-24 16:36:15.000000000 +0200
++++ shadow-4.0.18.1/etc/pam.d/groupdel	2008-07-24 16:37:33.000000000 +0200
+@@ -1,4 +1,9 @@
+-#%PAM-1.0
+-auth		sufficient	pam_rootok.so
+-account		required	pam_permit.so
+-password	include		system-auth
++# Begin /etc/pam.d/groupdel
++
++auth        sufficient      pam_rootok.so
++auth        required        pam_unix.so
++account     required        pam_unix.so
++session     required        pam_unix.so
++password    required        pam_permit.so
++
++# End /etc/pam.d/groupdel
+diff -Naur shadow-4.0.18.1.old/etc/pam.d/groupmems shadow-4.0.18.1/etc/pam.d/groupmems
+--- shadow-4.0.18.1.old/etc/pam.d/groupmems	2008-07-24 16:36:15.000000000 +0200
++++ shadow-4.0.18.1/etc/pam.d/groupmems	2008-07-24 16:48:36.000000000 +0200
+@@ -1,4 +1,9 @@
+-#%PAM-1.0
+-auth		sufficient	pam_rootok.so
+-account		required	pam_permit.so
+-password	include		system-auth
++# Begin /etc/pam.d/chpasswd
++
++auth        sufficient      pam_rootok.so
++auth        required        pam_unix.so
++account     required        pam_unix.so
++session     required        pam_unix.so
++password    required        pam_permit.so
++
++# End /etc/pam.d/chpasswd
+diff -Naur shadow-4.0.18.1.old/etc/pam.d/groupmod shadow-4.0.18.1/etc/pam.d/groupmod
+--- shadow-4.0.18.1.old/etc/pam.d/groupmod	2008-07-24 16:36:15.000000000 +0200
++++ shadow-4.0.18.1/etc/pam.d/groupmod	2008-07-24 16:37:33.000000000 +0200
+@@ -1,4 +1,9 @@
+-#%PAM-1.0
+-auth		sufficient	pam_rootok.so
+-account		required	pam_permit.so
+-password	include		system-auth
++# Begin /etc/pam.d/groupmod
++
++auth        sufficient      pam_rootok.so
++auth        required        pam_unix.so
++account     required        pam_unix.so
++session     required        pam_unix.so
++password    required        pam_permit.so
++
++# End /etc/pam.d/groupmod
+diff -Naur shadow-4.0.18.1.old/etc/pam.d/login shadow-4.0.18.1/etc/pam.d/login
+--- shadow-4.0.18.1.old/etc/pam.d/login	2008-07-24 16:36:15.000000000 +0200
++++ shadow-4.0.18.1/etc/pam.d/login	2008-07-24 16:37:34.000000000 +0200
+@@ -1,11 +1,16 @@
+-#%PAM-1.0
+-auth		required	pam_securetty.so
+-auth		include		system-auth
+-account		required	pam_nologin.so
+-account		include		system-auth
+-password	include		system-auth
+-session		required	pam_selinux.so close
+-session		include		system-auth
+-session		required	pam_loginuid.so
+-session		optional	pam_console.so
+-session		required	pam_selinux.so open
++# Begin /etc/pam.d/login
++
++auth        requisite      pam_securetty.so
++auth        requisite      pam_nologin.so
++auth        required       pam_env.so
++auth        required       pam_unix.so
++account     required       pam_access.so
++account     required       pam_unix.so
++session     required       pam_motd.so
++session     required       pam_limits.so
++session     optional       pam_mail.so      dir=/var/mail standard
++session     optional       pam_lastlog.so
++session     required       pam_unix.so
++password    required       pam_unix.so      md5 shadow
++
++# End /etc/pam.d/login
+diff -Naur shadow-4.0.18.1.old/etc/pam.d/newusers shadow-4.0.18.1/etc/pam.d/newusers
+--- shadow-4.0.18.1.old/etc/pam.d/newusers	2008-07-24 16:36:15.000000000 +0200
++++ shadow-4.0.18.1/etc/pam.d/newusers	2008-07-24 16:37:35.000000000 +0200
+@@ -1,4 +1,9 @@
+-#%PAM-1.0
+-auth		sufficient	pam_rootok.so
+-account		required	pam_permit.so
+-password	include		system-auth
++# Begin /etc/pam.d/newusers
++
++auth        sufficient      pam_rootok.so
++auth        required        pam_unix.so
++account     required        pam_unix.so
++session     required        pam_unix.so
++password    required        pam_permit.so
++
++# End /etc/pam.d/newusers
+diff -Naur shadow-4.0.18.1.old/etc/pam.d/passwd shadow-4.0.18.1/etc/pam.d/passwd
+--- shadow-4.0.18.1.old/etc/pam.d/passwd	2008-07-24 16:36:15.000000000 +0200
++++ shadow-4.0.18.1/etc/pam.d/passwd	2008-07-24 16:37:35.000000000 +0200
+@@ -1,4 +1,5 @@
+-#%PAM-1.0
+-auth		include		system-auth
+-account		include		system-auth
+-password	include		system-auth
++# Begin /etc/pam.d/passwd
++
++password    required       pam_unix.so      md5 shadow
++
++# End /etc/pam.d/passwd
+diff -Naur shadow-4.0.18.1.old/etc/pam.d/su shadow-4.0.18.1/etc/pam.d/su
+--- shadow-4.0.18.1.old/etc/pam.d/su	2008-07-24 16:36:15.000000000 +0200
++++ shadow-4.0.18.1/etc/pam.d/su	2008-07-24 16:37:36.000000000 +0200
+@@ -1,13 +1,10 @@
+-#%PAM-1.0
+-auth		sufficient	pam_rootok.so
+-# Uncomment the following line to implicitly trust users in the "wheel" group.
+-#auth		sufficient	pam_wheel.so trust use_uid
+-# Uncomment the following line to require a user to be in the "wheel" group.
+-auth		required	pam_wheel.so use_uid
+-auth		include		system-auth
+-account		include		system-auth
+-password	include		system-auth
+-session		required	pam_selinux.so close
+-session		include		system-auth
+-session		required	pam_selinux.so open multiple
+-session		optional	pam_xauth.so
++# Begin /etc/pam.d/su
++
++auth        sufficient      pam_rootok.so
++auth        required        pam_unix.so
++account     required        pam_unix.so
++session     optional        pam_mail.so     dir=/var/mail standard
++session     required        pam_env.so
++session     required        pam_unix.so
++
++# End /etc/pam.d/su
+diff -Naur shadow-4.0.18.1.old/etc/pam.d/useradd shadow-4.0.18.1/etc/pam.d/useradd
+--- shadow-4.0.18.1.old/etc/pam.d/useradd	2008-07-24 16:36:15.000000000 +0200
++++ shadow-4.0.18.1/etc/pam.d/useradd	2008-07-24 16:37:37.000000000 +0200
+@@ -1,4 +1,9 @@
+-#%PAM-1.0
+-auth		sufficient	pam_rootok.so
+-account		required	pam_permit.so
+-password	include		system-auth
++# Begin /etc/pam.d/useradd
++
++auth        sufficient      pam_rootok.so
++auth        required        pam_unix.so
++account     required        pam_unix.so
++session     required        pam_unix.so
++password    required        pam_permit.so
++
++# End /etc/pam.d/useradd
+diff -Naur shadow-4.0.18.1.old/etc/pam.d/userdel shadow-4.0.18.1/etc/pam.d/userdel
+--- shadow-4.0.18.1.old/etc/pam.d/userdel	1970-01-01 01:00:00.000000000 +0100
++++ shadow-4.0.18.1/etc/pam.d/userdel	2008-07-24 16:37:37.000000000 +0200
+@@ -0,0 +1,9 @@
++# Begin /etc/pam.d/userdel
++
++auth        sufficient      pam_rootok.so
++auth        required        pam_unix.so
++account     required        pam_unix.so
++session     required        pam_unix.so
++password    required        pam_permit.so
++
++# End /etc/pam.d/userdel
+diff -Naur shadow-4.0.18.1.old/etc/pam.d/usermod shadow-4.0.18.1/etc/pam.d/usermod
+--- shadow-4.0.18.1.old/etc/pam.d/usermod	2008-07-24 16:36:15.000000000 +0200
++++ shadow-4.0.18.1/etc/pam.d/usermod	2008-07-24 16:37:37.000000000 +0200
+@@ -1,4 +1,9 @@
+-#%PAM-1.0
+-auth		sufficient	pam_rootok.so
+-account		required	pam_permit.so
+-password	include		system-auth
++# Begin /etc/pam.d/usermod
++
++auth        sufficient      pam_rootok.so
++auth        required        pam_unix.so
++account     required        pam_unix.so
++session     required        pam_unix.so
++password    required        pam_permit.so
++
++# End /etc/pam.d/usermod
