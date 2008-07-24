@@ -30,4 +30,10 @@ pre_install(){
    find . -type f -name "*.la" -print0 | xargs -0 sed -i 's,'"$goboLibraries"','"$target/lib"','
 }
 
+pre_link(){                                            
+   # Make unix_chkpwd setuid so that non-root        
+   # processes can read shadow file.             
+   chmod u+s "${target}/sbin/unix_chkpwd"       
+}
+
 post_install_message="You must recompile Shadow to enable PAM support for it."
