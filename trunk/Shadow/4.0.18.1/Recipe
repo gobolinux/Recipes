@@ -12,9 +12,7 @@ mirror_urls=(
 recipe_type=configure
 configure_options=(
    "--enable-shared"
-   "--enable-static"
    "--without-selinux"
-   "--disable-shadowgrp"
    "--mandir=${target}/man"
 )
 
