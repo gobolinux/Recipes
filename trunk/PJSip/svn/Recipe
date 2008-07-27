@@ -3,6 +3,6 @@
 compile_version=1.10.2
 svn=http://svn.pjsip.org/repos/pjproject/trunk/
 recipe_type=configure
-make_variables=(
+install_variables=(
     "prefix=$target"
 )
