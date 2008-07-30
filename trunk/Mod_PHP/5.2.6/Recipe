@@ -35,6 +35,10 @@ configure_options=(
    "--with-bz2"
    "--enable-ftp"
    "--with-gd"
-   "--with-mysql"
    "--without-sqlite"
 )
+
+with_mysql=--with-mysql
+with_sql=--with-mysql
+with_ldap=--with-ldap
+with_openldap=--with-ldap
