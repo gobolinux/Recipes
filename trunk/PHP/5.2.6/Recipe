@@ -22,7 +22,10 @@ file="php-5.2.6.tar.bz2"
 recipe_type=configure
 
 configure_options=(
---with-openssl
---with-ldap
---with-mysql
+   --with-openssl
 )
+
+with_ldap=--with-ldap
+with_openldap=--with-ldap
+with_sql=--with-mysql
+with_mysql=--with-mysql
