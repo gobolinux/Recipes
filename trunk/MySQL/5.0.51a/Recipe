@@ -5,21 +5,19 @@ file_size=27588558
 file_md5=a83dbdbb91267daf73d2297a9c283dd1
 recipe_type=configure
 
-databasedir=/Files/MySQL
-
 unmanaged_files=(
-   "${databasedir}"
+   "$goboPrefix/Files/MySQL"
 )
 
 configure_options=(
-   "--localstatedir=$databasedir"
+   "--localstatedir=$goboPrefix/Files/MySQL"
    "--enable-shared"
    "--enable-thread-safe-client"
    "--with-openssl"
 )
 
 pre_install() {
-   mkdir -p $databasedir
+   mkdir -p "$goboPrefix/Files/MySQL"
 }
 
 pre_link() {
@@ -34,5 +32,5 @@ pre_link() {
    ln -s my-medium.cnf ${target}/Resources/Defaults/Settings/MySQL/my.cnf
 
    Log_Normal "Installing prepared tables"
-   $target/bin/mysql_install_db --user=mysql --datadir=${target}/Resources/Unmanaged/$databasedir
+   $target/bin/mysql_install_db --user=mysql --datadir=${target}/Resources/Unmanaged/Files/MySQL
 }
