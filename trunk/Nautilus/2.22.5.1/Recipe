@@ -8,8 +8,6 @@ recipe_type=configure
 configure_options=(
     --disable-update-mimedb
 )
-
-pre_install() {
-   mkdir -m 0755 -p "${target}/../Settings/gconf/gconf.xml.defaults"
-   mkdir -m 0755 -p "${target}/../Settings/gconf/schemas"
+pre_build() {
+   sed -i 's,DNAUTILUS_EXTENSIONDIR.*,DNAUTILUS_EXTENSIONDIR=\\\""'"${goboLibraries}"'/nautilus/extensions-2.0"\\\" \\,g' libnautilus-private/Makefile*
 }
