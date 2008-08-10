@@ -1,0 +1,10 @@
+[Name] FunionFS
+[Summary] An UnionFS implementation in userspace on FUSE
+[Description] FunionFS is the aggregation of two filesystems: a read-only 
+and a read-write one. The read-only filesystem could be a CDROM or a flash 
+disk for an embedded system. The read-write filesystem could be a Ramdisk 
+or a partition on an USB key... All data is read from the read-only 
+filesystem if it's not present on the read write one. Data is written 
+to the read-write filesystem.
+[License] GNU General Public License version 2
+[Homepage] http://funionfs.apiou.org
