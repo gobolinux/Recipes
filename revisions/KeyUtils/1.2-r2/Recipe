@@ -1,0 +1,20 @@
+# Recipe (MakeRecipe) for KeyUtils by Michael Homer <michael@gobolinux.org>, on Mon Aug 11 15:46:59 NZST 2008
+# Recipe for version 1.2 by Michael Homer <michael@gobolinux.org>, on Mon Aug 11 15:46:59 NZST 2008
+compile_version=1.11.0
+url="http://people.redhat.com/~dhowells/keyutils/keyutils-1.2.tar.bz2"
+file_size=37935
+file_md5=227086776abccc3ee34599591db563f0
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=(
+   "DESTDIR=$target"
+   "MAN1=$target/Shared/man/man1"
+   "MAN3=$target/Shared/man/man3"
+   "MAN5=$target/Shared/man/man5"
+   "MAN8=$target/Shared/man/man8"
+   "ETCDIR=/../Settings"
+   "USRLIBDIR=/lib"
+   "SHAREDIR=/share"
+   "INCLUDEDIR=/include"
+)
