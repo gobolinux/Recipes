@@ -1,0 +1,14 @@
+# Recipe for version 4.7.7 by venisonslurpee <venisonslurpee@gmail.com>, on Tue Aug 12 02:54:51 CDT 2008
+# on Sat Apr 16 13:31:22 CEST 2005
+
+compile_version=1.8.2
+url="http://www.riverbankcomputing.com/static/Downloads/sip4/sip-4.7.7.tar.gz"
+file_size=464994
+file_md5=9cabe6a0f61b73582cfc38b903576211
+
+recipe_type=makefile
+pre_build() {
+   pythonversion=`python --version 2>&1 | awk {'print $2'} | cut -b1-3`
+   sitepackages="$target/lib/python${pythonversion}/site-packages"
+   python configure.py -b $target/bin -e $target/include -d $sitepackages -v $target/share/sip
+}
