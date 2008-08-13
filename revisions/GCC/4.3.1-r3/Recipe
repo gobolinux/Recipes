@@ -1,0 +1,31 @@
+# Recipe for version 4.3.1 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Jun 10 07:16:24 GMT 2008
+# by Hisham Muhammad, Guilherme Bedin
+url=$ftpGnu/gcc/gcc-4.3.1/gcc-4.3.1.tar.bz2
+file_size=58964610
+file_md5=4afa0290cc3a41ac8822666f1110de98
+compile_version=1.9.0
+recipe_type=configure
+needs_build_directory=yes
+
+configure_options=(
+   --with-local-prefix="$target"
+   "--with-cpp-install-dir=lib"
+   "--enable-shared"
+   "--enable-threads=posix"
+   "--enable-__cxa_atexit"
+   "--enable-clocale=gnu"
+   "--enable-languages=c,c++"
+#   "--enable-languages=c,c++,objc"
+   "--with-system-zlib"
+)
+
+pre_link() {
+   ln -s gcc "$target/bin"/cc
+   rm -f "$target/lib"/libiberty.a
+   ln -nsf "$target/bin/cc" "$goboExecutables"/cc
+   ln -nsf "$target/lib/cpp" "$goboLibraries"/cc
+   if [ "$(type -t private__add_arch_aliases)" = "function" ]
+   then
+      private__add_arch_aliases
+   fi
+}
