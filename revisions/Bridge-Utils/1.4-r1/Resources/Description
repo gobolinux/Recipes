@@ -1,0 +1,9 @@
+[Name] Bridge-Utils
+[Summary] IEEE 802.1d ethernet bridging (plus Spanning Tree protocol) for the linux kernel. Kernel code is in Linux 2.4 and 2.6 kernels.
+[Description] IEEE 802.1d ethernet bridging (plus Spanning Tree protocol) for
+the linux kernel. Kernel code is in Linux 2.4 and 2.6 kernels. A Linux bridge
+is more powerful than a pure hardware bridge because it can also filter and
+shape traffic. The combination of bridging and firewalling is done with the
+companion project ebtables.
+[License] GPL 2.0
+[Homepage] http://www.linuxfoundation.org/en/Net:Bridge
