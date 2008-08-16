@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for Diffstat by Andreas Köhler <andi5.py@gmx.net>, on Sat Aug 16 02:15:13 CEST 2008
+# Recipe for version 1.46 by Andreas Köhler <andi5.py@gmx.net>, on Sat Aug 16 02:15:13 CEST 2008
+compile_version=1.11.2
+url="ftp://invisible-island.net/diffstat/diffstat.tar.gz"
+file_size=106551
+file_md5=626acb8cdd9e5cdb3a502bc12b828067
+dir='diffstat-1.46'
+recipe_type=configure
+makefile=makefile
