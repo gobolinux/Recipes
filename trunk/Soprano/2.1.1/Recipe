@@ -1,0 +1,11 @@
+# Recipe for version 2.1.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Aug 23 12:12:15 BRT 2008
+# Recipe (MakeRecipe) for Soprano by Giambattista Bloisi <giamby@infinito.it>, on Sat Jan 12 11:21:29 CET 2008
+compile_version=1.10.0
+url="http://downloads.sourceforge.net/soprano/soprano-2.1.1.tar.bz2"
+file_size=1831720
+file_md5=dc590aa42d832cea5ed13145d359c9f2
+file="soprano-2.1.1.tar.bz2"
+recipe_type=cmake
+environment=(
+   QMAKESPEC="linux-g++"
+)
