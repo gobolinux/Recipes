@@ -1,0 +1,27 @@
+# Recipe for version 7.0.4 by Giambattista Bloisi <giamby@infinito.it>, on Mon Aug 25 16:29:11 CEST 2008
+# Recipe (MakeRecipe) for Mesa by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Nov 23 03:32:41 BRST 2004
+compile_version=1.8.5
+urls=(
+   "$httpSourceforge/mesa3d/MesaLib-7.0.4.tar.bz2"
+   "$httpSourceforge/mesa3d/MesaGLUT-7.0.4.tar.bz2"
+   "$httpSourceforge/mesa3d/MesaDemos-7.0.4.tar.bz2"
+)
+file_sizes=(
+   3414357
+   329563
+   1341624
+)
+file_md5s=(
+   8d7bacbe0234742a5d08c8088c4619e9
+   f5f8b46f7e763d9f7b7d1d115c1c44ee
+   c1215b31c5f7b85f81eed3bfba07d556
+)
+recipe_type=makefile
+dir='Mesa-7.0.4'
+
+pre_link() {
+   for p in glxheads glthreads glxcontexts glxdemo glxgears glxgears_fbconfig glxinfo glxpbdemo glxpixmap glxswapcontrol
+   do
+      cp progs/xdemos/${p} ${target}/bin
+   done
+}
