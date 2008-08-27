@@ -1,0 +1,71 @@
+diff -Nurp linux-2.6.25/drivers/hwmon/applesmc.c linux-2.6.25-lucasvr/drivers/hwmon/applesmc.c
+--- linux-2.6.25/drivers/hwmon/applesmc.c	2008-04-24 21:19:01.450190436 -0300
++++ linux-2.6.25-lucasvr/drivers/hwmon/applesmc.c	2008-04-24 21:19:30.988963146 -0300
+@@ -154,7 +154,8 @@ struct dmi_match_data {
+ 	int temperature_set;
+ };
+ 
+-static const int debug;
++static int debug = 0;
++module_param(debug, int, S_IRUGO|S_IWUSR);
+ static struct platform_device *pdev;
+ static s16 rest_x;
+ static s16 rest_y;
+@@ -193,7 +194,7 @@ static int __wait_status(u8 val)
+ 
+ 	for (i = 0; i < 200; i++) {
+ 		if ((inb(APPLESMC_CMD_PORT) & APPLESMC_STATUS_MASK) == val) {
+-			if (debug)
++			if (debug >= 9)
+ 				printk(KERN_DEBUG
+ 						"Waited %d us for status %x\n",
+ 						i*10, val);
+@@ -202,7 +203,8 @@ static int __wait_status(u8 val)
+ 		udelay(10);
+ 	}
+ 
+-	printk(KERN_WARNING "applesmc: wait status failed: %x != %x\n",
++	if (debug >= 1)
++		printk(KERN_WARNING "applesmc: wait status failed: %x != %x\n",
+ 						val, inb(APPLESMC_CMD_PORT));
+ 
+ 	return -EIO;
+@@ -240,11 +242,11 @@ static int applesmc_read_key(const char*
+ 				goto wait_fail;
+ 			}
+ 		}
+-		if (debug)
++		if (debug >= 9)
+ 			printk(KERN_DEBUG "<%s", key);
+ 
+ 		outb(len, APPLESMC_DATA_PORT);
+-		if (debug)
++		if (debug >= 9)
+ 			printk(KERN_DEBUG ">%x", len);
+ 
+ 		for (i = 0; i < len; i++) {
+@@ -253,22 +255,16 @@ static int applesmc_read_key(const char*
+ 				goto wait_fail;
+ 			}
+ 			buffer[i] = inb(APPLESMC_DATA_PORT);
+-			if (debug)
++			if (debug >= 9)
+ 				printk(KERN_DEBUG "<%x", buffer[i]);
+ 		}
+-		if (debug)
++		if (debug >= 9)
+ 			printk(KERN_DEBUG "\n");
+ 
+ 		break;
+ 
+ wait_fail:
+ 		msleep(ACCESS_WAIT_MSECS);
+-		continue;		
+-	}
+-
+-	if (total != ACCESS_TIMEOUT_MSECS) {
+-		printk(KERN_DEBUG "Read: Waited %d ms for the value\n",
+-						ACCESS_TIMEOUT_MSECS-total);
+ 	}
+ 
+ 	return ret;

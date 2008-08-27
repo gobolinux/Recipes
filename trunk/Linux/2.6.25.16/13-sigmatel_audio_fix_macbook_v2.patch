@@ -1,0 +1,22 @@
+http://mactel-linux.svn.sourceforge.net/viewvc/mactel-linux/trunk/kernel/mactel-patches-2.6.24/
+rev 153
+
+diff -Nurp linux-2.6.25/sound/pci/hda/patch_sigmatel.c linux-2.6.25-lucasvr/sound/pci/hda/patch_sigmatel.c
+--- linux-2.6.25/sound/pci/hda/patch_sigmatel.c	2008-04-24 19:49:47.252963007 -0300
++++ linux-2.6.25-lucasvr/sound/pci/hda/patch_sigmatel.c	2008-04-24 20:56:29.431948836 -0300
+@@ -91,6 +91,7 @@ enum {
+ 	/* for backward compatibility */
+ 	STAC_MACMINI,
+ 	STAC_MACBOOK,
++	STAC_MACBOOK_V2,
+ 	STAC_MACBOOK_PRO_V1,
+ 	STAC_MACBOOK_PRO_V2,
+ 	STAC_IMAC_INTEL,
+@@ -1372,6 +1373,7 @@ static const char *stac922x_models[STAC_
+ 	/* for backward compatibility */
+ 	[STAC_MACMINI]	= "macmini",
+ 	[STAC_MACBOOK]	= "macbook",
++	[STAC_MACBOOK_V2]	= "macbook-v2",
+ 	[STAC_MACBOOK_PRO_V1]	= "macbook-pro-v1",
+ 	[STAC_MACBOOK_PRO_V2]	= "macbook-pro",
+ 	[STAC_IMAC_INTEL] = "imac-intel",
