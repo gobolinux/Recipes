@@ -1,0 +1,58 @@
+# Recipe for version 3.2.2 by Giambattista Bloisi <giamby@infinito.it>, on Mon Aug 25 18:41:05 CEST 2008
+# Recipe (MakeRecipe) for Samba by roko, <ro.ko@mcnon.com>, on Sun Dec 26 11:04:52 BRST 2004
+compile_version=1.8.5
+url="http://samba.org/samba/ftp/stable/samba-3.2.2.tar.gz"
+file_size=23705929
+file_md5=d5c54759e557009e5ec8d870bc735241
+mirror_url="ftp://us4.samba.org/pub/samba/old-versions/samba-3.2.2.tar.gz"
+recipe_type=configure
+dir="samba-3.2.2/source"
+
+post_install_message="To finish the installation, please edit the ${settings_target}/smb.conf.default file and save it as ${settings_target}/smb.conf, then rerun 'SymlinkProgram samba'.\nAlso remember to start the samba daemon at startup by adding the following line to your ${goboSettings}/BootScripts/BootUp if you want to share folders:\n\nExec 'Starting samba service...' Samba Start"
+
+configure_options=(
+  "--with-smbwrapper"
+  "--with-libsmbclient"
+  "--with-automount"
+  "--with-smbmount"
+  "--with-quotas"
+#  "--with-acl-support"    		# Include ACL support (default=no)
+  "--with-configdir=${settings_target}"
+  "--mandir=${target}/man"
+  "--with-lockdir=${variable_target}/locks/samba"
+  "--with-piddir=${variable_target}/run/samba"
+  "--with-logfilebase=${variable_target}/log/samba"
+)
+
+with_pam="--with-pam"
+
+install_variables=(
+   exec_prefix=${target}
+)
+
+unmanaged_files=(
+   ${variable_target}/locks/samba
+   ${variable_target}/run/samba
+   ${variable_target}/log/samba
+)
+
+pre_install() {
+   mkdir -p ${variable_target}/{locks,run,log}/samba
+}
+
+pre_link() {
+  mkdir -p ${target}/doc
+  cp -Rv ../examples ${target}/doc 
+  mkdir -p ${target}/Resources/Defaults/Settings
+  cp -v  ../examples/smb.conf.default ${target}/Resources/Defaults/Settings
+  ln -s ${target}/lib/libsmbclient.so ${target}/lib/libsmbclient.so.0
+
+  # for some reason these files aren't copied by "make install"
+  cp -v bin/libwbclient.so.0 ${target}/lib
+  cp -v bin/libtalloc.so.1 ${target}/lib
+  cp -v bin/libtdb.so.1 ${target}/lib
+  
+  #Create a link to smbspool in the cups' backend directory
+  mkdir -p ${target}/share/cups/backend
+  ln -s ${target}/bin/smbspool ${target}/share/cups/backend/smb
+}
