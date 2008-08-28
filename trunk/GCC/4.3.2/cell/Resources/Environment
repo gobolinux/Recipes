@@ -1,0 +1,2 @@
+export CFLAGS="-O3 -pipe -mcpu=cell -maltivec -mabi=altivec -fomit-frame-pointer"
+export CXXFLAGS="-O3 -pipe -mcpu=cell -maltivec -mabi=altivec -fomit-frame-pointer"
