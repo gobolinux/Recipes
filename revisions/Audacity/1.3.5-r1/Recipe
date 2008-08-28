@@ -1,0 +1,8 @@
+# Recipe for version 1.3.5 by Jonas Karlsson <jonka750@student.liu.se>, on Mon Aug 25 21:39:31 GMT 2008
+# Recipe (MakeRecipe) for Audacity by demian florentin <demianflorentin_at_gmail.com>, on Mon Nov 26 00:42:43 PYST 2007
+compile_version=1.9.0
+url="$httpSourceforge/audacity/audacity-src-1.3.5.tar.bz2"
+file_size=4542637
+file_md5=b15503c331e7145942fa0e4b27760d61
+dir='audacity-src-1.3.5-beta'
+recipe_type=configure
