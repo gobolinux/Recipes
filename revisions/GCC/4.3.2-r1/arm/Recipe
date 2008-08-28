@@ -1,0 +1,15 @@
+configure_options=(
+   "--enable-shared"
+   "--enable-threads=posix"
+   "--enable-__cxa_atexit"
+   "--enable-clocale=gnu"
+   "--enable-languages=c,c++"
+#   "--build=i386-pc-linux-gnu"
+#   "--host=i386-pc-linux-gnu"
+#   "--target=i386-pc-linux-gnu"
+#   "--enable-languages=c,c++,objc"
+)
+
+environment=(
+	AR=${cross_compiler}ar
+)
