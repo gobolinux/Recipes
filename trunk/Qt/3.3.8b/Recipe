@@ -5,19 +5,14 @@
 url="ftp://ftp.trolltech.com/qt/source/qt-x11-free-3.3.8b.tar.gz"
 file_size=17313883
 file_md5=9f05b4125cfe477cc52c9742c3c09009
-
 compile_version=1.8.2
-recipe_type=makefile
-
-environment=(
-   QTDIR="$goboPrefix/Files/Compile/Sources/qt-x11-free-3.3.8b"
-   LD_LIBRARY_PATH="$goboPrefix/Files/Compile/Sources/qt-x11-free-3.3.8b/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
+recipe_type=configure
+configure_options=(
+   -release
+   -qt-gif
+   -thread
+   -system-libjpeg
+   -system-libpng
+   -prefix "$target"
+   -nomake "examples demos docs sub-tutorial sub-examples"
 )
-
-pre_build() {
-   echo foo
-   echo $LD_LIBRARY_PATH
-   echo yes | nice -10 ./configure -release -qt-gif -thread -system-libjpeg -system-libpng -prefix $target
-   GrepReplace "sub-tools sub-tutorial sub-examples" "sub-tools" Makefile
-   export LD_LIBRARY_PATH=$QTDIR/lib:$LD_LIBRARY_PATH
-}
