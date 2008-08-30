@@ -24,6 +24,7 @@ install_variables=(
    BINDIR="${target}/bin"
    LIBDIR="${target}/lib/X11"
    MANPATH="${target}/man"
+   INCDIR="${target}/include/audio"
 )
 
 build_target=World
