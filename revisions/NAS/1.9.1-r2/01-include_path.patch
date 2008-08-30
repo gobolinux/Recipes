@@ -1,0 +1,16 @@
+The "audio" part of the path is already included in the "#include"
+statements
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+
+--- nas-1.9.1/server/dia/Imakefile	2007-06-16 19:03:22.000000000 +0000
++++ nas-1.9.1/server/dia/Imakefile.new	2008-08-30 08:03:34.000000000 +0000
+@@ -38,7 +38,7 @@
+        audispatch.o auswap.o autables.o auevents.o auutil.o auconfig.o \
+        auprocess.o  nasconf.o lex.o gram.o
+ 
+-    INCLUDES = -I. -I../include -I../../include -I../../lib/audio
++    INCLUDES = -I. -I../include -I../../include -I../../lib
+     DEFINES = AllocateLocalDefines -DNASCONFSEARCHPATH=\"NasConfigSearchPath\"
+ 
+ NormalLibraryObjectRule()
