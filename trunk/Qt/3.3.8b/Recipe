@@ -7,12 +7,110 @@ file_size=17313883
 file_md5=9f05b4125cfe477cc52c9742c3c09009
 compile_version=1.8.2
 recipe_type=configure
+override_default_options=yes
 configure_options=(
+   -prefix "${target}"
+   -sysconfdir "${settings_target}/qt3"
+   -libdir "${target}/lib"
+   -plugindir "${goboLibraries}/qt3/plugins"
+   -datadir "${target}/share/qt3"
+   -headerdir "${target}/include/qt3"
+   -docdir "${target}/doc/qt-3.3.8b"
+   -translationdir "${target}/share/translations"
    -release
-   -qt-gif
    -thread
+   -system-zlib
    -system-libjpeg
    -system-libpng
-   -prefix "$target"
-   -nomake "examples demos docs sub-tutorial sub-examples"
+   -system-libmng
+   -qt-gif
+   -qt-imgfmt-png
+   -qt-imgfmt-jpeg
+   -plugin-imgfmt-mng
+   -qt-sql-sqlite
+   -nomake examples
+   -nomake demos
+   -nomake docs
+   -nomake tutorial
 )
+
+with_nas=(-system-nas-sound)
+
+using_opengl() {
+   configure_options=("${configure_options[@]}"
+   -enable-opengl
+   -dlopen-opengl)
+}
+
+using_mysql() {
+   configure_options=("${configure_options[@]}"
+   -plugin-sql-mysql
+   -I"${goboHeaders}/mysql"
+   -L"${goboLibraries}/mysql")
+}
+
+docs=(
+   'README'
+   'README.qt-copy'
+   'LICENSE.GPL2'
+   'LICENSE.GPL3'
+   'LICENSE.QPL'
+)
+
+environment=(
+   QTDIR="$goboPrefix/Files/Compile/Sources/qt-x11-free-3.3.8b"
+   PATH="$goboPrefix/Files/Compile/Sources/qt-x11-free-3.3.8b/bin:$PATH"
+   LD_LIBRARY_PATH="$goboPrefix/Files/Compile/Sources/qt-x11-free-3.3.8b/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
+)
+
+pre_build() {
+   # Don't build everything
+   GrepReplace "sub-tools sub-tutorial sub-examples" "sub-tools" Makefile
+   # Better to copy then symlink, since the link would be pointing to
+   # source dir
+   GrepReplace "ln -s -f @QMAKESPEC@" "cp -fR @QMAKESPEC@" qmake/Makefile.unix
+   
+   # Fix qmake config to use Qt3 specific paths and executables
+   GrepReplace "^QMAKE_INCDIR_QT\t.*" "QMAKE_INCDIR_QT\t\t=${goboHeaders}/qt3" mkspecs/linux-{g++,g++-32,g++-64}/qmake.conf
+   GrepReplace "^QMAKE_LIBDIR_QT\t.*" "QMAKE_LIBDIR_QT\t\t=${goboLibraries}" mkspecs/linux-{g++,g++-32,g++-64}/qmake.conf
+   GrepReplace "^QMAKE_MOC\t.*" "QMAKE_MOC\t\t=${target}/bin/moc-qt3" mkspecs/linux-{g++,g++-32,g++-64}/qmake.conf
+   GrepReplace "^QMAKE_UIC\t.*" "QMAKE_UIC\t\t=${target}/bin/uic-qt3" mkspecs/linux-{g++,g++-32,g++-64}/qmake.conf
+}
+
+pre_install() {
+   # It's not possible to configure different install time and run
+   # time paths for plugins, so we have to replace the run time paths
+   # before we try to install them
+   find -name Makefile | xargs sed -i "s,\$(INSTALL_ROOT)${goboLibraries}/qt3/plugins,\$(INSTALL_ROOT)${target}/lib/qt3/plugins,g"
+}
+
+pre_link() {
+   # Rename files to use qt3 suffix to simplify parallell installation
+   # with Qt4
+   for b in assistant designer linguist lrelease lupdate moc qm2ts qmake qtconfig uic
+   do
+      mv "${target}/bin/$b" "${target}/bin/${b}-qt3"
+      ln -s "${b}-qt3" "${target}/bin/${b}"
+   done
+
+   # Install desktop entries and icons
+   cd xdg
+   for f in $(find . -type f)
+   do
+      install -o 0 -g 0 -m644 -D $f ${target}/Shared/$f
+   done
+   popd &>/dev/null
+   
+   # Install man files that aren't installed normally
+   cd doc
+   for m in $(find man -type f)
+   do
+      install -o 0 -g 0 -m644 -D $f ${target}/Shared/$f
+   done
+   popd &>/dev/null
+   
+   # Fix references to source dir in .prl files
+   sed -i -e "/^QMAKE_PRL_BUILD_DIR/d" \
+   -e "s,${goboPrefix}/Files/Compile/Sources/qt-x11-free-3.3.8b/lib,${goboLibraries},g"\
+   "${target}/lib/"*.prl
+}
