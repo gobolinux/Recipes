@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for MoBlock by Andy Feldman <nereusren@gmail.com>, on Sun Aug 17 16:57:38 CDT 2008
+# Recipe for version 0.8 by Andy Feldman <nereusren@gmail.com>, on Sun Aug 17 16:57:38 CDT 2008
+compile_version=1.11.2
+url="http://download.berlios.de/moblock/MoBlock-0.8-i586.tar.bz2"
+file_size=18553
+file_md5=199967adb48b153be90db10fe21325c5
+dir='MoBlock-0.8'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+"DESTDIR=${target}"
+)

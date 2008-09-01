@@ -1,0 +1,9 @@
+--- ./Makefile.old	2008-08-17 17:06:01.000000000 -0500
++++ ./Makefile	2008-08-17 17:06:24.000000000 -0500
+@@ -29,5 +29,5 @@
+ 
+ install:
+-	install -m 755 moblock $(DESTDIR)/usr/bin
++	install -m 755 moblock $(DESTDIR)/bin
+ 
+ .PHONY: clean
