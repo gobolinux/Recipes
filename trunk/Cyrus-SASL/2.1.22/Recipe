@@ -7,6 +7,9 @@ mirror_url="http://public.www.planetmirror.com/pub/cyrus-mail/cyrus-sasl-2.1.22.
 file_size=1585093
 file_md5=ff63905c6ec930a86dd53e2d9dc6af1f
 recipe_type=configure
+configure_options=(
+   --disable-macos-framework  # Not necessary for Mac OS X since we are building inside Rootless
+)
 
 pre_build() {
     rm config/ltconfig config/libtool.m4
