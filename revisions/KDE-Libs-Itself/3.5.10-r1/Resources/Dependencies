@@ -1,0 +1,27 @@
+ACL >= 2.2.39 [acl] # Optional (Unversioned)
+ALSA-Lib >= 0.9
+Aspell >= 0.50.2 [aspell] # Optional
+Bzip2 >= 1.0.4
+CUPS >= 1.2.1 [cups] # Optional
+FAM >= 2.7.0 [fam] # Recommended (Unversioned)
+Fontconfig >= 2.4.0 # Recommended (Unversioned)
+FreeType >= 2.0.0 # Recommended
+Jasper [jpeg2000]
+JPEG >= 6b # Recommended
+Kerberos >= 1.5 [kerberos]
+LibART_LGPL >= 2.3.8 # Recommended
+LibIDN >= 0.6.3 # Recommended (Unversioned)
+LibPNG >= 1.2.10 # (Unversioned)
+LibXML2 >= 2.4.8 # Recommended
+LibXSLT >= 1.0.7 # Recommended
+Lua [lua]
+M4 >= 1.4
+MDNSResponder >= 87 # Recommended
+OpenEXR >= 1.1.0 [openexr]
+OpenSSL >= 0.9.7 # Recommended
+PCRE >= 6.6
+Perl >= 5.0.0
+Qt >= 3.3.8b, < 4.0 # The high lowest requirement is GoboLinux specific
+TIFF [tiff]
+Xorg-Lib >= 7.0 # (Unversioned)
+ZLib >= 1.1
