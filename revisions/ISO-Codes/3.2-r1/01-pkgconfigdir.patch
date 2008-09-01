@@ -1,0 +1,17 @@
+Correct the destination for the pkg-config file.
+
+ Makefile.in |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff -Nur iso-codes-3.2-orig/Makefile.in iso-codes-3.2/Makefile.in
+--- iso-codes-3.2-orig/Makefile.in	2008-08-01 11:41:58.000000000 +0200
++++ iso-codes-3.2/Makefile.in	2008-08-16 02:45:34.005762528 +0200
+@@ -154,7 +154,7 @@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+ SUBDIRS = iso_15924 iso_3166 iso_4217 iso_639 notes
+-pkgconfigdir = $(datadir)/pkgconfig
++pkgconfigdir = $(prefix)/lib/pkgconfig
+ pkgconfig_DATA = iso-codes.pc
+ EXTRA_DIST = \
+ 	LICENSE			\
