@@ -1,0 +1,14 @@
+# Recipe for version 3.82 by Fabio Mierlo <geromao@gmail.com>, on Mon Aug 18 03:42:10 BRT 2008
+compile_version=1.8.2
+url="http://www.rarlab.com/rar/unrarsrc-3.8.2.tar.gz"
+file_size=134853
+file_md5=897e7d72c7576ff8c83a2b8f48017bb1
+dir='unrar'
+
+recipe_type=makefile
+makefile=makefile.unix
+do_install=no
+
+pre_link() {
+	cp unrar $target/bin/
+}
