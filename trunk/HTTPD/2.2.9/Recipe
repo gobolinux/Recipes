@@ -74,7 +74,7 @@ configure_options=(
   --enable-info=shared		    	# Enable the server information provided by mod_info.
 
        
-  --enable-logio=sharedd			# Enable logging of input and output bytes including
+  --enable-logio=shared     		# Enable logging of input and output bytes including
                 					# headers provided by mod_logio.
 
   --enable-mem-cache=shared		    # Enable memory caching provided by mod_mem_cache.
@@ -126,7 +126,6 @@ configure_options=(
   --enable-usertrack=shared		    # Enable user-session tracking provided by mod_usertrack.
         
   --enable-vhost-alias=shared		# Enable mass virtual hosting provided by mod_vhost_alias.
-  
 )
 
 # Enable LDAP caching and connection pooling services provided by mod_ldap.
@@ -153,5 +152,3 @@ pre_link() {
 
    mkdir -p ${settings_target}/httpd/conf
 }
-
-
