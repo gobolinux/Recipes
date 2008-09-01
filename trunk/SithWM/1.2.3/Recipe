@@ -1,0 +1,11 @@
+# Recipe for version 1.2.3 by Moritz Wilhelmy, on Fr 15. Aug 21:18:34 CEST 2008
+# Recipe (MakeRecipe) for SithWM by Viola Zoli (English order: Zoli Viola) violazoli@gmail.com, on 2007. dec. 26., szerda, 17.48.30 CET
+compile_version=1.9.0
+url="http://sithwm.darkside.no/sn/sithwm-1.2.3.tgz"
+file_size=29976
+file_md5=15619f6977bb0cff32a1cdce49f6530d
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+)
