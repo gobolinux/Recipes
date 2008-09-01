@@ -1,0 +1,10 @@
+# Recipe for version 2.22.3 by Jonas Karlsson <jonka750@student.liu.se>, on Sun Aug 10 16:35:46 CEST 2008
+# Recipe (MakeRecipe) for Gnome-Desktop by Matthias Wolf, on Tue Jul 26 13:10:11 CEST 2005
+compile_version=1.11.2
+url="ftp://ftp.gnome.org/pub/gnome/sources/gnome-desktop/2.22/gnome-desktop-2.22.3.tar.bz2"
+file_size=1444103
+file_md5=c5e24ee437e5d98c03299b0442523a6b
+recipe_type=configure
+configure_options=(
+   --disable-scrollkeeper
+)
