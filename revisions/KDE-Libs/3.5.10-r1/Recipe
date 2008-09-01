@@ -1,0 +1,12 @@
+# Recipe for version 3.5.10 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Aug 29 11:46:57 GMT 2008
+# KDE-Libs meta-recipe 
+# by Andre Detsch
+
+compile_version=1.9.0
+
+# ARTS and Libs compilation don't support different prefixes yet...
+include=(
+   "ARTS--1.5.10"
+   "KDE-Libs-Itself--3.5.10"
+)
+recipe_type=meta
