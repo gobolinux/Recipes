@@ -1,0 +1,12 @@
+# Recipe for version 8.5.4 by Moritz Wilhelmy, on So 24. Aug 12:46:29 UTC 2008
+compile_version=1.8.5
+url="http://prdownloads.sourceforge.net/tcl/tcl8.5.4-src.tar.gz"
+file_size=4402113
+file_md5=15032a6a43f3bfbe9223b95186849472
+dir='tcl8.5.4/unix'
+recipe_type=configure
+install_target='install install-private-headers'
+pre_link(){
+   $sudo_exec ln -nfs ${target}/bin/tclsh8.5 ${target}/bin/tclsh
+   $sudo_exec ln -nfs ${goboLibraries}/tk8.5 ${target}/lib/tk8.5
+}
