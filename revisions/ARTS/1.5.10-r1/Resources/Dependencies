@@ -1,0 +1,14 @@
+ALSA-Lib >= 0.9
+Audiofile >= 0.2.6 # Recommended (Unversioned)
+GLib >= 2.4
+Esound [esound]
+JACK >= 0.90 [jack]
+JPEG >= 6b # Recommended
+LibOGG >= 1.0.0
+LibMAD
+LibPNG >= 1.2.10 # (Unversioned)
+LibVorbis
+NAS [nas]
+Qt >= 3.3.8b, < 4.0 # The high lowest requirement is GoboLinux specific
+TIFF [tiff]
+
