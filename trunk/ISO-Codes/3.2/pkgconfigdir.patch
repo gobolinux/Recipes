@@ -1,0 +1,10 @@
+--- iso-codes-0.49/Makefile.am	2005-07-11 08:04:42.000000000 +0200
++++ iso-codes-0.49.new/Makefile.am	2005-11-28 12:30:38.000000000 +0100
+@@ -1,6 +1,6 @@
+ SUBDIRS = iso_639 iso_3166 iso_4217 notes
+ 
+-pkgconfigdir = $(datadir)/pkgconfig
++pkgconfigdir = $(prefix)/lib/pkgconfig
+ pkgconfig_DATA = iso-codes.pc
+ 
+ EXTRA_DIST = \
