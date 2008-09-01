@@ -1,0 +1,64 @@
+Try to use HAL to eject media first and fallback to "eject" binary if
+that fails else strange error messages can occur.
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+
+diff -Naur kdialog-3.5.9.orig/kdeeject/kdeeject kdialog-3.5.9/kdeeject/kdeeject
+--- kdialog-3.5.9.orig/kdeeject/kdeeject	2006-10-01 19:31:56.000000000 +0200
++++ kdialog-3.5.9/kdeeject/kdeeject	2008-04-26 19:00:44.000000000 +0200
+@@ -4,6 +4,11 @@
+ #
+ # Copyright GPL v2 by David Faure <david@mandrakesoft.com>
+ #
++error() {
++    kdialog --title "KDE Eject" --error "$1"
++    exit 1
++}
++
+ if test $# -ge 1 -a "$1" != "--help"; then
+   quiet=0
+   if test "$1" = "-q"; then
+@@ -22,10 +27,39 @@
+       cdcontrol -f $dev eject >/dev/null 2>&1
+       ;;
+     *)
+-      # Warning, it has to be either eject 2.0.x or >=2.1.5
+-      # Otherwise it doesn't work as expected (it requires a
+-      # fstab entry for no reason).
+-      eject $1 >/dev/null 2>&1
++      # check if HAL userland tools are installed
++      if test -x `which hal-find-by-property`; then
++	  HAL_major=`hal-find-by-property --version | cut -d " " -f 2 | cut -d. -f1`
++          HAL_minor=`hal-find-by-property --version | cut -d " " -f 2 | cut -d. -f2`
++          # HAL umount and eject method exist only for HAL >= 0.5
++          if test $HAL_major -eq 0 -a  $HAL_minor -ge 5 -o $HAL_major -gt 0;  then
++              # Try to find the UDi from the device name
++              BLOCK_UDI=$(hal-find-by-property --key block.device --string "$1" | head -1)
++              [ -n "$BLOCK_UDI" ] || error "Can't find UDI for URL $1"
++              STORAGE_UDI=$(hal-get-property --udi $BLOCK_UDI --key block.storage_device)
++              [ -n "$STORAGE_UDI" ] || error "Can't find device for volume $BLOCK_UDI"
++	      
++              # Unmount each device volume
++              for VOLUME_UDI in $(hal-find-by-property --key block.storage_device --string $STORAGE_UDI); do
++                  [ $(hal-get-property --udi $VOLUME_UDI --key block.is_volume) = true ] || continue
++                  [ $(hal-get-property --udi $VOLUME_UDI --key volume.is_mounted) = true ] || continue
++                  ERROR=$(dcop kded mediamanager unmount $VOLUME_UDI)
++
++                  if test -n "$ERROR"; then
++                      # try to use directly DBUS method in case mediamanager failed
++                      ERROR=$(dbus-send --system --dest=org.freedesktop.Hal "$VOLUME_UDI" org.freedesktop.Hal.Device.Volume.Unmount array:string:"" >/dev/null 2>&1)
++                      [ -n "$ERROR" ] && error "$ERROR"
++                  fi
++              done
++              dbus-send --system --dest=org.freedesktop.Hal "$BLOCK_UDI" org.freedesktop.Hal.Device.Volume.Eject array:string:"" >/dev/null 2>&1
++          fi
++      else
++          # fallback to the old eject method
++          # Warning, it has to be either eject 2.0.x or >=2.1.5
++          # Otherwise it doesn't work as expected (it requires a
++          # fstab entry for no reason).
++	  eject $1 >/dev/null 2>&1
++      fi
+       ;;
+   esac
+   if test $? -eq 0; then
