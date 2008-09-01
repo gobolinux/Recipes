@@ -4,22 +4,16 @@ compile_version=1.8.0
 url="http://web.mit.edu/kerberos/dist/krb5/1.6/krb5-1.6.3-signed.tar"
 file_size=11909120
 file_md5=2dc1307686eb1c2bf1ab08ea805dad46
-recipe_type=manifest
+
+recipe_type=configure
 unpack_files=files_in_root
-
-pre_install() {
-	[ ! -d krb5-1.6.3 ] && tar zxvf krb5-1.6.3.tar.gz
-	cd krb5-1.6.3/src
-	./configure --prefix=$target --sysconfdir=$settings_target \
-	            --enable-ipv6 || exit 1
-    make || exit 1
-}
-
-pre_link() {
-	make install
-}
-
-post_install() {
-	cd /Files/Compile/Sources
-	rm -f krb5-1.6.3.tar.gz krb5-1.6.3.tar.gz.asc
+configure_options=(
+   --enable-ipv6
+)
+pre_build() {
+   tar -zxvf krb5-1.6.3.tar.gz
+   chown -R `ls -l krb5-1.6.3.tar.gz.asc| awk '{print $3}'` krb5-1.6.3
+   mv krb5-1.6.3/src/* .
+   mv krb5-1.6.3/doc .
+   rm -rf krb5-1.6.3*
 }
