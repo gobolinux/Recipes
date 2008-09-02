@@ -1,0 +1,18 @@
+Change the autofoo to propose to install into a gwenhywfar plugins directory
+belonging to $prefix instead of /P/Gwenhywfar.
+
+ gwenhywfar.m4 |    2 ++
+ 1 file changed, 2 insertions(+)
+
+diff -Nur gwenhywfar-3.4.1-old/gwenhywfar.m4 gwenhywfar-3.4.1/gwenhywfar.m4
+--- gwenhywfar-3.4.1-old/gwenhywfar.m4	2008-07-31 19:56:05.000000000 +0200
++++ gwenhywfar-3.4.1/gwenhywfar.m4	2008-08-21 00:29:34.348662738 +0200
+@@ -78,6 +78,8 @@
+       AC_MSG_RESULT($gwenhywfar_bindir)
+       AC_MSG_CHECKING(for gwen plugins)
+       gwenhywfar_plugins="`$gwenhywfar_dir/bin/gwenhywfar-config --plugins`"
++dnl Use a plugins directory derived from $prefix instead of installing into /P/Gwenhywfar
++      gwenhywfar_plugins="\${libdir}/gwenhywfar/${gwenhywfar_plugins##*/lib/gwenhywfar/}"
+       AC_MSG_RESULT($gwenhywfar_plugins)
+       AC_MSG_CHECKING(for gwen headers)
+       gwenhywfar_headers="`$gwenhywfar_dir/bin/gwenhywfar-config --headers`"
