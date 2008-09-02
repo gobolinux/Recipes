@@ -1,0 +1,13 @@
+# Recipe for version 1.4 by Jonas Karlsson <jonka750@student.liu.se>, on Mon Jul 14 13:23:02 GMT 2008
+# Recipe (MakeRecipe) for LibTasn1 by Giovani Facchini, on Qui Abr 14 17:14:26 BRT 2005
+compile_version=1.8.0
+url="http://josefsson.org/gnutls/releases/libtasn1/libtasn1-1.4.tar.gz"
+file_size=1552101
+file_md5=a733ecdfed3517910e627d24e050979f
+recipe_type=configure
+pre_build(){
+   libtoolize --force
+   aclocal
+   autoconf
+   automake --add-missing
+}
