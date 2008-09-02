@@ -1,0 +1,15 @@
+# Recipe for version 1.5.2 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Sep 2 04:53:29 CEST 2008
+# Recipe (MakeRecipe) for Subversion by Jonas Karlsson <jonka750@student.liu.se>, on Wed May 11 07:50:33 CEST 2005
+compile_version=1.9.0
+url="http://subversion.tigris.org/downloads/subversion-1.5.2.tar.bz2"
+file_size=4902078
+file_md5=8321d0e1964846090f0174cb6bb18838
+recipe_type=configure
+configure_options=(
+   --with-apr=${apr_path}
+   --with-apr-util=${apr_util_path}
+   --disable-mod-activation
+)
+
+build_target="all"
+install_target="install"
