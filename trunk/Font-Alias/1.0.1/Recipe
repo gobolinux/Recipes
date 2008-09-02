@@ -6,3 +6,6 @@ file_size=42497
 file_md5=de7035b15ba7edc36f8685ab3c17a9cf
 recipe_type=configure
 part_of=Xorg-Font
+configure_options=(
+    --with-top-fontdir="${target}/Shared/fonts"
+)
