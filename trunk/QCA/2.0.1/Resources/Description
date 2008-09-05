@@ -1,0 +1,12 @@
+[Name] QCA
+[Summary] The Qt Cryptographic Architecture
+[Description] Taking a hint from the similarly-named Java Cryptography
+Architecture, QCA aims to provide a straightforward and cross-platform
+crypto API, using Qt datatypes and conventions. QCA separates the API from
+the implementation, using plugins known as Providers. The advantage of this
+model is to allow applications to avoid linking to or explicitly depending
+on any particular cryptographic library. This allows one to easily change or
+upgrade crypto implementations without even needing to recompile the
+application!
+[License] GNU Lesser Public License v2.1
+[Homepage] http://delta.affinix.com/qca/
