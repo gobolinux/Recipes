@@ -168,9 +168,9 @@ diff -Naur nss-3.11-orig/mozilla/security/nss/lib/pkgconfig/nss.pc nss-3.11/mozi
 +++ nss-3.11/mozilla/security/nss/lib/pkgconfig/nss.pc	2006-01-20 03:27:43.000000000 +0000
 @@ -0,0 +1,12 @@
 +prefix=/usr
-+exec_prefix=$(prefix)
-+libdir=$(prefix)/lib
-+includedir=$(prefix)/include
++exec_prefix=${prefix}
++libdir=${prefix}/lib
++includedir=${prefix}/include
 +
 +Name: NSS
 +Description: Mozilla Network Security Services
