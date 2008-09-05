@@ -1,0 +1,11 @@
+# Recipe for version 1.2.30 by Fabio Mierlo, on s√°b abr 5 20:33:00 CEST 2008
+# Recipe (MakeRecipe) for Asterisk by Aitor PÈrez Iturri, on vie feb 16 18:13:32 CET 2007
+compile_version=1.8.2
+url="http://ftp.digium.com/pub/asterisk/releases/asterisk-1.2.30.tar.gz"
+file_size=10614808
+file_md5=8460b085215f22fbd261da05fb80ce92
+recipe_type=makefile
+make_variables=(
+	"INSTALL_PREFIX=$target"
+)
+install_target="install samples"
