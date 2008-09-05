@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for KPCI9030 by Fabio Mierlo <geromao@gmail.com>, on Mon Sep 1 16:19:46 BRT 2008
+# Recipe for version 20080527_1605 by Fabio Mierlo <geromao@gmail.com>, on Mon Sep 1 16:19:46 BRT 2008
+compile_version=1.11.2
+url="http://www.khomp.com.br/release/K3L/Linux/Asterisk/Vers%E3o_atual/Sources/kpci9030-20080527_1605.tar.gz"
+file_size=16792
+file_md5=e14f987c4beb8e517d592f3638b445a8
+recipe_type=makefile
+makefile='Makefile'
+
+unmanaged_files=(
+    "$goboModules/$(readlink $goboModules/Current)/kernel/drivers/char/kpci9030.ko"
+)
