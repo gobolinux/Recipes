@@ -1,7 +1,9 @@
 # Recipe (MakeRecipe) for Edje by C. Holzberger <ch@MOSAIK-Software.de>, on Tue Feb 12 14:11:05 CET 2008
 # Recipe for version 0.5.0.042 by C. Holzberger <ch@MOSAIK-Software.de>, on Tue Feb 12 14:11:05 CET 2008
 compile_version=1.10.2
-url="http://download.enlightenment.org/snapshots/2008-01-25/edje-0.5.0.042.tar.bz2"
+cvs=:pserver:anonymous@anoncvs.enlightenment.org:/var/cvs/e
+cvs_module=e17/libs/edje
+
 file_size=2819823
 file_md5=fc95528409351acea7a48862331eaffd
 recipe_type=configure
