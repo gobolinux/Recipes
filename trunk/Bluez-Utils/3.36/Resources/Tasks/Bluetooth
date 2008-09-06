@@ -1,0 +1,29 @@
+#!/bin/bash
+
+source GoboPath
+
+cmd="$1"
+[ "$cmd" ] || cmd=Start
+
+case "$cmd" in
+
+[Ss]tart)
+
+   hcid -f $goboSettings/bluetooth/hcid.conf
+
+   ;;
+   
+[Ss]top)
+
+   killall hcid
+
+   ;;
+   
+[Rr]estart)
+
+   killall hcid
+   hcid -f $goboSettings/bluetooth/hcid.conf
+
+   ;;
+
+esac

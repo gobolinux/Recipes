@@ -1,0 +1,10 @@
+# Recipe for version 3.36 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Sep 6 12:33:28 CEST 2008
+# Recipe (MakeRecipe) for Bluez-Utils by Guilherme Balestieri Bedin (gbedin), on Fri Aug 19 11:02:05 BRT 2005
+compile_version=1.8.2
+url="http://bluez.sf.net/download/bluez-utils-3.36.tar.gz"
+file_size=953568
+file_md5=4fc292b635ba7b442c7aaf5680199012
+recipe_type=configure
+unmanaged_files=(
+   "${goboVariable}"/lib/bluetooth/
+)
