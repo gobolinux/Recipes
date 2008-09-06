@@ -1,0 +1,28 @@
+# Recipe for version 3.5.10 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Aug 29 11:57:45 GMT 2008
+# by Maglan C. Diemer && Andre Detsch
+
+url="ftp://ftp.kde.org/pub/kde/stable/3.5.10/src/kdepim-3.5.10.tar.bz2"
+file_size=14559901
+file_md5=fc93e458a8eec8131ede56cff30c28b2
+recipe_type=configure
+compile_version=1.9.0
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+  "--disable-libsuffix"
+#  "--without-kpilot"
+#  "DO_NOT_COMPILE=kpilot" 
+)
+
+pre_install() {
+	# Change install path for designer plugins so they go to $target
+	# and not /Programs/KDE-Libs
+	repl_from='$(DESTDIR)$(kde_widgetdir)'
+	repl_to="$target/lib/kde3/plugins/designer"
+	GrepReplace "$repl_from" "$repl_to" ./libkdepim/kpartsdesignerplugin/Makefile
+	GrepReplace "$repl_from" "$repl_to" ./libkdepim/Makefile
+}
+pre_build() {
+   GrepReplace "\$dir/moc" "\$dir/moc-qt3" configure
+   GrepReplace "\$dir/uic" "\$dir/uic-qt3" configure
+}
