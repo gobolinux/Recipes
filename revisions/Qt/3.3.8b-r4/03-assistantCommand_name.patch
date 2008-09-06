@@ -1,0 +1,21 @@
+Since we renamed all Qt3 binaries to use the '-qt3' suffix we need to
+fix calls to the same binaries.
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+
+--- qt-x11-free-3.3.8b/tools/assistant/lib/qassistantclient.cpp	2008-01-15 19:09:14.000000000 +0000
++++ qt-x11-free-3.3.8b/tools/assistant/lib/qassistantclient.cpp.new	2008-08-30 15:58:41.000000000 +0000
+@@ -135,11 +135,11 @@
+     : QObject( parent, name ), host ( "localhost" )
+ {
+     if ( path.isEmpty() )
+-	assistantCommand = "assistant";
++	assistantCommand = "assistant-qt3";
+     else {
+ 	QFileInfo fi( path );
+ 	if ( fi.isDir() )
+-	    assistantCommand = path + "/assistant";
++	    assistantCommand = path + "/assistant-qt3";
+ 	else
+ 	    assistantCommand = path;
+     }
