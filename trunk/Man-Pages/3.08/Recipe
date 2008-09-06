@@ -1,0 +1,14 @@
+# Recipe for version 3.08 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Aug 29 12:35:30 GMT 2008
+compile_version=1.9.0
+url=ftp://ftp.kernel.org/pub/linux/docs/manpages/man-pages-3.08.tar.bz2
+file_size=977606
+file_md5=4d6340a002d7ab05d9690b54273aafc7
+recipe_type=makefile
+do_build=no
+install_variables=(
+   "MANDIR=$target/man"
+)
+pre_link() {
+   # we have our own hier man page.
+   $sudo_exec rm -f $target/man/man7/hier.7
+}
