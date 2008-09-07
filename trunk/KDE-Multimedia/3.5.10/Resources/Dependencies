@@ -1,0 +1,29 @@
+ALSA-Lib >= 1.0
+Audiofile # Recommended
+Cdparanoia-III
+CDRTools # Optional (Unversioned)
+Flac >= 1.0.3 # Optional
+Fontconfig >= 2.4.0 # Unversioned
+FreeType >= 2.0.0 # Recommended
+#GCC 3.4.4
+GhostScript >= 6.53 # Recommended
+#Glibc 2.3.2
+GStreamer >= 0.8 # Optional
+JPEG >= 6b # Recommended (Unversioned)
+KDE-Base >= 3.5.6, < 4
+KDE-Libs >= 3.5.6, < 4
+Lame >= 3.96 # Optional (Unversioned)
+LibMad >= 0.15.1 # Recommended (We need at least r4 to have a mad.pc file)
+LibMusicbrainz >= 2.1.0 # Optional (Unversioned)
+LibOGG # Recommended
+LibTheora
+LibTunepimp >= 0.5.0 # Optional (Unversioned)
+LibVorbis # Recommended
+Perl >= 5.0
+Qt >= 3.3.8b, < 4.0
+Speex >= 1.0 # Optional (Unversioned)
+Taglib 
+SDL [sdl] # Optional
+Xine-Lib >= 1.1.4 # Recommended (Unversioned)
+Xorg >= 7.0 # (Unversioned)
+ZLib >= 1.1
