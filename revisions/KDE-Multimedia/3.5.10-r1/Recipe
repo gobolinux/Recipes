@@ -1,0 +1,22 @@
+# Recipe for version 3.5.10 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Aug 29 11:56:28 GMT 2008
+# by Maglan C. Diemer, 3.3.2 by roko
+url="ftp://ftp.kde.org/pub/kde/stable/3.5.10/src/kdemultimedia-3.5.10.tar.bz2"
+file_size=6333219
+file_md5=8e8cd7f41d37f7da8bd239048abf3516
+recipe_type=configure
+compile_version=1.9.0
+configure_options=(
+  "--with-gnu-ld"
+  "--disable-debug"
+  "--disable-dependency-tracking"
+  "--with-arts-alsa"
+  "--disable-libsuffix"
+#  "DO_NOT_COMPILE=kaboodle"
+  #akode arts audiofile_artsplugin doc juk kaboodle kappfinder-data kfile-plugins kmid kmix libkcddb mpeglib mpg123_artsplugin oggvorbis_artsplugin xine_artsplugin krec noatun kscd kioslave kaudiocreator mpeglib_artsplug
+)
+pre_build() {
+   GrepReplace "\$dir/moc" "\$dir/moc-qt3" configure
+   GrepReplace "\$dir/uic" "\$dir/uic-qt3" configure
+   sed -i 's/KDE_FIND_PATH(moc,/KDE_FIND_PATH(moc-qt3,/g' acinclude.m4 admin/acinclude.m4.in
+   sed -i 's/KDE_FIND_PATH(uic,/KDE_FIND_PATH(uic-qt3,/g' acinclude.m4 admin/acinclude.m4.in
+}
