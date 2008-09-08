@@ -1,15 +1,8 @@
-# Recipe for version 0.97 by Isaac Dupree <id@isaac.cedarswampstudios.org>, on Mon Aug 6 16:22:43 BRT 2007
+# Recipe for version 1.0.0 by Leandro Motta Barros <lmb@stackedboxes.org>, on Tue Sep 2 21:05:45 BRT 2008
 # Recipe by Felix Breuer <felix@fbreuer.de> 13.09.2004
-url="$httpSourceforge/scons/scons-0.97.tar.gz"
-file_size=439523
-file_md5=de530fa29e83f3b6efb618873398fa31
+url="$httpSourceforge/scons/scons-1.0.0.tar.gz"
+file_size=541330
+file_md5=9afdfe0cc6d957568cc4386567a7c19e
 compile_version=1.8.5
 recipe_type=python
 do_build=no
-
-#pre_build(){
-#    chown -R fibo:fibo .
-#    export SCONS_LIB_DIR=`pwd`/src/engine
-#    python src/script/scons.py build/scons
-#}
-
