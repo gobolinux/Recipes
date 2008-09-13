@@ -1,0 +1,8 @@
+[Name] Rlog
+[Summary] Logging library for c++ applications
+[Description] RLog is a flexible message logging facility for C++
+programs and libraries. It is highly optimized for the case where no
+log messages are output, so that it can be left in production code and
+enabled on-demand.
+[License] GNU Lesser General Public License version 2.1
+[Homepage] http://arg0.net/wiki/rlog
