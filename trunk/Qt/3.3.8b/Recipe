@@ -75,6 +75,7 @@ pre_build() {
    GrepReplace "^QMAKE_LIBDIR_QT\t.*" "QMAKE_LIBDIR_QT\t\t=${goboLibraries}" mkspecs/linux-{g++,g++-32,g++-64}/qmake.conf
    GrepReplace "^QMAKE_MOC\t.*" "QMAKE_MOC\t\t=${target}/bin/moc-qt3" mkspecs/linux-{g++,g++-32,g++-64}/qmake.conf
    GrepReplace "^QMAKE_UIC\t.*" "QMAKE_UIC\t\t=${target}/bin/uic-qt3" mkspecs/linux-{g++,g++-32,g++-64}/qmake.conf
+   find . -name qmake.conf | xargs sudo sed -i -e 's,\(\$(QTDIR)/include\)$,\1/qt3,g' -e 's,\(\$(QTDIR)\\include\)$,\1\\qt3,g'
 }
 
 pre_install() {
