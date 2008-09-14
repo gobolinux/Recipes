@@ -1,0 +1,6 @@
+devices="$target/lib/udev/devices"
+ln -snf "$goboStatus/self/fd"   "$devices/fd"
+ln -snf "$goboStatus/self/fd/0" "$devices/stdin"
+ln -snf "$goboStatus/self/fd/1" "$devices/stdout"
+ln -snf "$goboStatus/self/fd/2" "$devices/stderr"
+ln -snf "$goboStatus/kcore"     "$devices/core"
