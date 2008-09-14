@@ -1,0 +1,14 @@
+# Recipe for version 3.09 by Giambattista Bloisi <giamby@infinito.it>, on Mon Sep 15 18:12:17 CEST 2008
+compile_version=1.9.0
+url=ftp://ftp.kernel.org/pub/linux/docs/manpages/man-pages-3.09.tar.bz2
+file_size=983734
+file_md5=a04a1676e2c0676f047a525184e3320b
+recipe_type=makefile
+do_build=no
+install_variables=(
+   "MANDIR=$target/man"
+)
+pre_link() {
+   # we have our own hier man page.
+   $sudo_exec rm -f $target/man/man7/hier.7
+}
