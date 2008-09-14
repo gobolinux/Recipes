@@ -6,3 +6,7 @@ file_size=571623
 file_md5=11adda157b03d63fd61d95ad7ef00466
 recipe_type=configure
 part_of=Xorg-Font
+
+configure_options=(
+    --with-encodingsdir="$target/share/fonts/encodings"
+)
