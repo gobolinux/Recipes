@@ -5,3 +5,10 @@ url="http://www.de.xfce.org/archive/xfce-4.4.2/src/xfce-mcs-plugins-4.4.2.tar.bz
 file_size=811156
 file_md5=77fcc929058de530d4f91eb25de851a1
 recipe_type=configure
+
+configure_options=(
+    --enable-xf86misc 
+    --enable-xkb 
+    --enable-randr 
+    --enable-xf86vm
+)
