@@ -1,0 +1,13 @@
+# Recipe for version 12.3 by Martin Hilbig <blueonyx@dev-area.net>, on Mi 3. Sep 07:49:48 CEST 2008
+# Recipe (MakeRecipe) for Erlang by Lucas C. Villa Real, on Tue Nov 7 01:46:34 BRST 2006
+compile_version=1.8.0
+url="http://erlang.org/download/otp_src_R12B-3.tar.gz"
+file_size=42195557
+file_md5=c2e7f0ad54b8fadebde2d94106608d97
+dir='otp_src_R12B-3'
+recipe_type=configure
+
+# Uncomment the following comment if you get segfaults while compiling Erlang:
+#configure_options=(
+#    --disable-hipe
+#)
