@@ -1,0 +1,16 @@
+# Recipe for version 4.7.27 by Andreas Köhler <andi5.py@gmx.net>, on Tue Sep 9 17:40:30 CEST 2008
+# Recipe (MakeRecipe) for Whois by Hisham Muhammad, on Wed Sep 1 19:10:16 BRT 2004
+compile_version=1.9.0
+url="http://ftp.debian.org/debian/pool/main/w/whois/whois_4.7.27.tar.gz"
+file_size=67996
+file_md5=0937f34c714e3954894d056b4346d69b
+dir='whois-4.7.27'
+recipe_type=makefile
+makefile='Makefile'
+install_variables=(
+   "BASEDIR=$target"
+   "prefix="
+)
+pre_install() {
+   mkdir -p "$target/share/man/man1"
+}
