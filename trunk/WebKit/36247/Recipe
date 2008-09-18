@@ -1,0 +1,9 @@
+# Recipe for version 36247 by Andreas Köhler <andi5.py@gmx.net>, on Sun Sep 7 20:31:46 CEST 2008
+# Recipe (MakeRecipe) for WebKit by Daniele Maccari <daniele.maccari@gmail.com>, on Wed Feb 13 11:45:17 CET 2008
+compile_version=1.10.1
+url="http://nightly.webkit.org/files/trunk/src/WebKit-r36247.tar.bz2"
+file_size=9494787
+file_md5=2a9f36cf1b2d0f5f16c3d9926b9e8f08
+recipe_type=configure
+autogen_before_configure=yes
+makefile='GNUmakefile'
