@@ -1,0 +1,13 @@
+# Recipe for version 2.22.5.1 by Jonas Karlsson <jonka750@student.liu.se>, on Sun Aug 10 16:21:25 CEST 2008
+compile_version=1.8.0
+url="ftp://ftp.gnome.org/pub/gnome/sources/nautilus/2.22/nautilus-2.22.5.1.tar.bz2"
+file_size=5017090
+file_md5=a63596ca4cccddc970d695d62c05154a
+recipe_type=configure
+
+configure_options=(
+    --disable-update-mimedb
+)
+pre_build() {
+   sed -i 's,DNAUTILUS_EXTENSIONDIR.*,DNAUTILUS_EXTENSIONDIR=\\\""'"${goboLibraries}"'/nautilus/extensions-2.0"\\\" \\,g' libnautilus-private/Makefile*
+}
