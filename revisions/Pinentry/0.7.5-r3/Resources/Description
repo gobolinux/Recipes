@@ -1,0 +1,11 @@
+[Name] Pinentry
+[Summary] Presents password dialogs in a secure way
+[License] GNU General Public License (GPL)
+[Description] This package contains a program that allows for secure \
+entry of PINs or pass phrases. That means it tries to take care that \
+the entered information is not swapped to disk or temporarily stored \
+anywhere. This functionality is particularly useful for entering pass \
+phrases when using encryption software such as GnuPG or e-mail clients \
+using the same. It uses an open protocol and is therefore not tied to \
+particular software.
+[Homepage] http://www.gnupg.org/related_software/pinentry/
