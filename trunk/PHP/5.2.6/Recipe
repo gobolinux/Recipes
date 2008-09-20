@@ -25,7 +25,5 @@ configure_options=(
    --with-openssl
 )
 
-with_ldap=--with-ldap
 with_openldap=--with-ldap
-with_sql=--with-mysql
 with_mysql=--with-mysql
