@@ -22,8 +22,7 @@ configure_options=(
 )
 
 with_theora="--enable-libtheora"
-with_a52="--enable-liba52"
-with_ac3="--enable-liba52"
+with_a52dec="--enable-liba52"
 with_h264="--enable-libx264"
 with_dirac="--enable-libschroedinger"
 with_schroedinger="--enable-libschroedinger"
