@@ -5,6 +5,12 @@ url="ftp://ftp.gnupg.org/gcrypt/pinentry/pinentry-0.7.5.tar.gz"
 file_size=422801
 file_md5=ca492afbbb59cd19f1c875533f18b269
 recipe_type=configure
-using_qt() {
+
+using_qt3() {
    install_variables=(${install_variables:+"${install_variables[@]}"} PINENTRY_DEFAULT=pinentry-qt)
+}
+
+using_qt3_pre_build() {
+   GrepReplace "\$dir/moc" "\$dir/moc-qt3" configure
+   GrepReplace "dummy\ moc" "dummy\ moc-qt3" configure
 }
