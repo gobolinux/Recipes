@@ -8,3 +8,8 @@ recipe_type=configure
 configure_options=(
     "--enable-libsuffix=none"
 )
+
+pre_build() {
+   GrepReplace "\$dir/moc" "\$dir/moc-qt3" configure
+   GrepReplace "\$dir/uic" "\$dir/uic-qt3" configure
+}
