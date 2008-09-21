@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for QCA-SASL by Jonas Karlsson <jonka750@student.liu.se>, on Mon Sep 22 00:30:21 CEST 2008
+# Recipe for version 1.0 by Jonas Karlsson <jonka750@student.liu.se>, on Mon Sep 22 00:30:21 CEST 2008
+compile_version=1.11.0
+url="http://delta.affinix.com/download/qca/qca-sasl-1.0.tar.bz2"
+file_size=20227
+file_md5=2e324cb45706f37a8d2b196f43428023
+recipe_type=configure
+environment=(
+   QTDIR="${qt_path}"
+   QMAKESPEC="linux-g++"
+)
+pre_install() {
+   GrepReplace "$qt_path/plugins/" "${target}/lib/qt3/plugins/" Makefile
+}
