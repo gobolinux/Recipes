@@ -1,0 +1,25 @@
+Fix conversions to const to make GCC happy.
+Patch from debian.
+
+Signed-off-by: Jonas Karlsson <jonas(at)gobolinux.org>
+
+--- qca-tls-1.0.orig/qca-tls.cpp
++++ qca-tls-1.0/qca-tls.cpp
+@@ -454,7 +454,7 @@
+ 			if(!r) {
+ 				// try this other public function, for whatever reason
+ 				p = (void *)in;
+-				r = d2i_RSA_PUBKEY(NULL, (unsigned char **)&p, len);
++				r = d2i_RSA_PUBKEY(NULL, (const unsigned char **)&p, len);
+ 			}
+ 			if(r) {
+ 				if(pub) {
+@@ -798,7 +798,7 @@
+ 
+ 	bool createFromDER(const char *in, unsigned int len)
+ 	{
+-		unsigned char *p = (unsigned char *)in;
++		const unsigned char *p = (const unsigned char *)in;
+ 		X509 *t = d2i_X509(NULL, &p, len);
+ 		if(!t)
+ 			return false;
