@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for QCA-TLS by Jonas Karlsson <jonka750@student.liu.se>, on Sun Sep 21 21:10:58 CEST 2008
+# Recipe for version 1.0 by Jonas Karlsson <jonka750@student.liu.se>, on Sun Sep 21 21:10:58 CEST 2008
+compile_version=1.11.0
+url="http://delta.affinix.com/download/qca/qca-tls-1.0.tar.bz2"
+file_size=23489
+file_md5=886b1f60fc31de3b1a0bd93281e27b73
+recipe_type=configure
+environment=(
+   QTDIR="${qt_path}"
+   QMAKESPEC="linux-g++"
+)
+pre_install() {
+   GrepReplace "$goboLibraries" "${target}/lib" Makefile
+}
