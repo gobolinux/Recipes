@@ -1,0 +1,54 @@
+Use either libungif (deprecated) or giflib.
+
+Signed-off-by: Jonas Karlsson <jonas(at)gobolinux.org
+
+--- ekg-1.7/configure.in	2007-03-11 13:27:04.000000000 +0100
++++ ekg-1.7/configure.in.new	2008-09-22 22:36:08.000000000 +0200
+@@ -463,17 +463,28 @@
+ dnl  Sprawdzamy libungif.so i <gif_lib.h>
+ dnl
+   
+-AC_ARG_WITH(libungif,
+-	[  --without-libungif      Compile without GIF token support])
++AC_ARG_WITH(gif,
++	[  --without-gif      Compile without GIF token support])
+ 
+-if test "x$with_libungif" != "xno"; then
++if test "x$with_gif" != "xno"; then
+ 	AC_CHECK_LIB(ungif, DGifSlurp,
+ 	[ 
+ 		AC_CHECK_HEADERS(gif_lib.h,
+ 		[
+-			AC_DEFINE(HAVE_LIBUNGIF, 1, [define if you have libungif])
++			AC_DEFINE(HAVE_GIF, 1, [define if you have gif])
+ 			LDFLAGS="-lungif $LDFLAGS"
+-			have_libungif=yes
++			have_gif=yes
++			libgif=libungif
++		])
++	])
++	AC_CHECK_LIB(gif, DGifSlurp,
++	[ 
++		AC_CHECK_HEADERS(gif_lib.h,
++		[
++			AC_DEFINE(HAVE_GIF, 1, [define if you have gif])
++			LDFLAGS="-lgif $LDFLAGS"
++			have_gif=yes
++			libgif=giflib
+ 		])
+ 	])
+ fi
+@@ -692,10 +703,10 @@
+ 	echo " - pthread: disabled"
+ fi
+ 
+-if test "x$have_libungif" = "xyes"; then
+-	echo " - libungif: enabled"
++if test "x$have_gif" = "xyes"; then
++	echo " - gif: $libgif"
+ else
+-	echo " - libungif: disabled"
++	echo " - gif: disabled"
+ fi
+ 
+ if test "x$have_libjpeg" = "xyes"; then
