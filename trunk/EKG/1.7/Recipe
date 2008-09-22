@@ -6,6 +6,8 @@ mirror_url="http://ekg.chmurka.net/archive/ekg-1.7.tar.gz"
 file_size=530314
 file_md5=2aa92b56517fdf09d75519a105772b74
 recipe_type=configure
+autogen_before_configure=yes
+
 configure_options=(
    --with-pthread
    --enable-dynamic
