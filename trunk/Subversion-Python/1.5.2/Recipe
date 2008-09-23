@@ -1,0 +1,20 @@
+# Recipe for version 1.5.2 by Michael Homer <michael@gobolinux.org>, on Wed Sep 24 10:55:28 NZST 2008
+# Recipe (MakeRecipe) for Subversion by Jonas Karlsson <jonka750@student.liu.se>, on Wed May 11 07:50:33 CEST 2005
+compile_version=1.9.0
+url="http://subversion.tigris.org/downloads/subversion-1.5.2.tar.bz2"
+file_size=4902078
+file_md5=8321d0e1964846090f0174cb6bb18838
+recipe_type=configure
+configure_options=(
+   --with-apr=${apr_path}
+   --with-apr-util=${apr_util_path}
+   --disable-mod-activation
+)
+
+build_target="swig-py"
+install_target="install-swig-py"
+
+make_variables=(
+   swig_pydir=${target}/lib/python2.4/site-packages/libsvn
+   swig_pydir_extra=${target}/lib/python2.4/site-packages/svn
+)
