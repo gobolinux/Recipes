@@ -16,9 +16,16 @@ file_md5s=(
    f67daf93e12c4a459703bbf3e4004e31
    22e03dc4038cd63f32c21eb60994892b
 )
-
-recipe_type=makefile
+recipe_type=configure
 dir='Mesa-7.2'
+
+configure_options=(
+    --enable-xcb
+    --disable-ttm-api
+    --enable-glx-tls
+    
+    --with-driver=dri
+)
 
 pre_link() {
    for p in glxheads glthreads glxcontexts glxdemo glxgears glxgears_fbconfig glxinfo glxpbdemo glxpixmap glxswapcontrol
