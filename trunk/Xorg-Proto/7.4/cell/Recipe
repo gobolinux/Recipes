@@ -1,4 +1,4 @@
-# cell 
+# i686
 
 include=(
 #################################################
@@ -15,10 +15,10 @@ include=(
 	fontcacheproto--0.1.2
 	fontsproto--2.0.2
 	glproto--1.4.9
-	inputproto--1.4.3
+	inputproto--1.4.4
 	kbproto--1.0.3
 	printproto--1.0.4
-	randrproto--1.2.1
+	randrproto--1.2.2
 	recordproto--1.13.2
 	renderproto--0.9.3
 	resourceproto--1.0.2
@@ -26,7 +26,7 @@ include=(
 	trapproto--3.4.3
 	videoproto--2.2.2
 	xcmiscproto--1.1.2
-	xextproto--7.0.2
+	xextproto--7.0.3
 	xf86bigfontproto--1.1.2
 	xf86dgaproto--2.0.3
 	xf86driproto--2.0.4
@@ -34,7 +34,7 @@ include=(
 	xf86rushproto--1.1.2
 	xf86vidmodeproto--2.2.2
 	xineramaproto--1.1.2
-	xproto--7.0.12
+	xproto--7.0.13
 	xproxymanagementprotocol--1.0.2
 	xcb-proto--1.1
 	libpthread-stubs--0.1
