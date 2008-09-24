@@ -32,9 +32,10 @@ configure_options=(
    "--enable-tslib"
    "--enable-xorgcfg"
    --with-module-dir="${goboLibraries}/xorg/modules"
-   --with-dri-driver-path="${goboLibraries}/xorg/modules/dri"
-   --with-mesa-source="${compileSourcesDir}/Mesa-7.1.0"
+   --with-dri-driver-path="${goboLibraries}/dri"
+   --with-mesa-source="${compileSourcesDir}/Mesa-7.2"
    --with-fontdir="${target}/share/fonts"
+   --enable-install-setuid
 )
 
 install_variables=(

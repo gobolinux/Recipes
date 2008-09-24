@@ -1,0 +1,30 @@
+From e4838e78ea14ce66f641bf0bfdb7f539f33300bc Mon Sep 17 00:00:00 2001
+From: Elvis Pranskevichus <el@prans.net>
+Date: Sun, 9 Sep 2007 21:20:22 -0400
+Subject: [PATCH] Fix x11-input.fdi
+
+HAL keyboard capability is input.keyboard, not input.keys.
+Also do not use evdev for keyboards even on Linux
+---
+ config/x11-input.fdi |    9 ++-------
+ 1 files changed, 2 insertions(+), 7 deletions(-)
+
+diff --git a/config/x11-input.fdi b/config/x11-input.fdi
+index c390706..8a281f0 100644
+--- a/config/x11-input.fdi
++++ b/config/x11-input.fdi
+@@ -60,12 +60,12 @@
+       </match>
+     </match>
+ 
+-    <match key="info.capabilities" contains="input.keys">
++    <match key="info.capabilities" contains="input.keyboard">
+       <merge key="input.x11_options.XkbRules" type="string">base</merge>
+ 
+       <!-- If we're using Linux, we use evdev by default (falling back to
+            keyboard otherwise). -->
+-      <merge key="input.x11_driver" type="string">keyboard</merge>
++      <merge key="input.x11_driver" type="string">kbd</merge>
+       <merge key="input.x11_options.XkbModel" type="string">pc105</merge>
+       <match key="/org/freedesktop/Hal/devices/computer:system.kernel.name"
+              string="Linux">
