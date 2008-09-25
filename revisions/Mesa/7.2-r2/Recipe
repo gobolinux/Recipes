@@ -1,0 +1,35 @@
+# Recipe for version 7.2 by Jonas Karlsson <jonka750@student.liu.se>, on Wed Sep 24 01:32:35 CEST 2008
+# Recipe (MakeRecipe) for Mesa by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Nov 23 03:32:41 BRST 2004
+compile_version=1.8.5
+urls=(
+   "$httpSourceforge/mesa3d/MesaLib-7.2.tar.bz2"
+   "$httpSourceforge/mesa3d/MesaGLUT-7.2.tar.bz2"
+   "$httpSourceforge/mesa3d/MesaDemos-7.2.tar.bz2"
+)
+file_sizes=(
+   3341919
+   327717
+   1360304
+)
+file_md5s=(
+   04d379292e023df0b0266825cb0dbde5
+   f67daf93e12c4a459703bbf3e4004e31
+   22e03dc4038cd63f32c21eb60994892b
+)
+recipe_type=configure
+dir='Mesa-7.2'
+
+configure_options=(
+    --enable-xcb
+    --disable-ttm-api
+    --enable-glx-tls
+    
+    --with-driver=dri
+)
+
+pre_link() {
+   for p in glxheads glthreads glxcontexts glxdemo glxgears glxgears_fbconfig glxinfo glxpbdemo glxpixmap glxswapcontrol
+   do
+      cp progs/xdemos/${p} ${target}/bin
+   done
+}
