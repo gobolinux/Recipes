@@ -1,0 +1,18 @@
+# Recipe for version 0.28.3 by Giambattista Bloisi <giamby@infinito.it>, on Fri Sep 26 09:29:40 CEST 2008
+# Recipe (MakeRecipe) for Neon by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Wed Jul 13 08:44:23 BRT 2005
+compile_version=1.9.0
+url="http://www.webdav.org/neon/neon-0.28.3.tar.gz"
+file_size=799681
+file_md5=47599a328862ce64ac3c52726d6daa12
+recipe_type=configure
+
+configure_options=(
+    "--enable-shared"
+    "--with-ssl"
+)
+
+pre_link() {
+    Quiet pushd $target/include
+    ln -s neon/* .
+    Quiet popd
+}
