@@ -1,0 +1,12 @@
+# Recipe for version 1.5.1 by Giambattista Bloisi <giamby@infinito.it>, on Fri Sep 19 21:55:09 UTC 2008
+# Recipe (MakeRecipe) for Audacious-Plugins by Guilherme B. Bedin, on Wed Jan 24 13:55:32 BRST 2007
+compile_version=1.8.2
+url="http://distfiles.atheme.org/audacious-plugins-1.5.1.tgz"
+file_size=2944448
+file_md5=057b91f33aaf06bb4cde7260177c2f5f
+recipe_type=configure
+part_of=Audacious
+
+make_variables=(
+    "pluginlibdir=$target/lib/audacious"
+)
