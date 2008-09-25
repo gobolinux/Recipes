@@ -1,0 +1,12 @@
+# Recipe for version 1.5.1 by Giambattista Bloisi <giamby@infinito.it>, on Fri Sep 19 21:54:40 UTC 2008
+# Recipe (MakeRecipe) for Audacious-Itself by Guilherme B. Bedin, on Wed Jan 24 13:54:19 BRST 2007
+compile_version=1.8.2
+url="http://distfiles.atheme.org/audacious-1.5.1.tgz"
+file_size=1937747
+file_md5=3c206a6d06d49d8a68f0edd9933d2219
+recipe_type=configure
+part_of=Audacious
+
+configure_options=(
+    --disable-rpath
+)
