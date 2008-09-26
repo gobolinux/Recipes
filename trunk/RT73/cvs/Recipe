@@ -11,11 +11,12 @@ pre_install() {
 }
 
 install_variables=(
+   MODDIR=$target/Resources/Unmanaged/$goboModules/$(readlink $goboModules/Current)/extra
    FIRM_DIR=$target/lib/firmware
    CONFIG_DIR=$settings_target/Wireless/RT73STA
    MODULE_CONF=$settings_target/modprobe.d/ralink
 )
 
 unmanaged_files=(
-   $goboModules/$(uname -r)/extra/rt73.ko
+   "$goboModules/$(readlink $goboModules/Current)/extra/rt73.ko"
 )
