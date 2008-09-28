@@ -1,0 +1,13 @@
+# Recipe for version 1.5 by Michael Homer <michael@gobolinux.org>, on Mon Sep 29 12:35:39 NZDT 2008
+# Recipe (MakeRecipe) for LibTasn1 by Giovani Facchini, on Qui Abr 14 17:14:26 BRT 2005
+compile_version=1.8.0
+url="ftp://ftp.gnu.org/pub/gnu/gnutls/libtasn1-1.5.tar.gz"
+file_size=1547211
+file_md5=7d7e8e21d1159a0b4c0aa69469eef565
+recipe_type=configure
+#pre_build(){
+#   libtoolize --force
+#   aclocal
+#   autoconf
+#   automake --add-missing
+#}
