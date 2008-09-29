@@ -5,3 +5,9 @@ url="http://ftp.acc.umu.se/pub/GNOME/sources/libglade/2.6/libglade-2.6.2.tar.bz2
 file_size=351755
 file_md5=da4f9d1c6cd1337f6ef5e2db768d8557
 recipe_type=configure
+unmanaged_files=(
+   "$goboVariable/lib/xml"
+)
+configure_options=(
+   "--with-xml-catalog=$goboVariable/lib/xml/catalog"
+)
