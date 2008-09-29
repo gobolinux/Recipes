@@ -6,3 +6,7 @@ url="http://ftp.gnome.org/pub/gnome/sources/libbonobo/2.22/libbonobo-2.22.0.tar.
 file_size=1445318
 file_md5=998a576ad26784ac87eab99e96013527
 recipe_type=configure
+
+pre_link() {
+    sed -i "/<searchpath>/a\    <item>${goboLibraries}/bonobo/servers</item>" "${target}/Resources/Defaults/Settings/bonobo-activation/bonobo-activation-config.xml"
+}
