@@ -1,5 +1,22 @@
 # Recipe for version 0.3.14 by Jonas Karlsson <jonka750@student.liu.se>, on Mon Nov 28 10:57:29 CET 2005
 # by Giusepe Casagrande
-compile_version=1.8.0
+compile_version=1.11.2
 url=http://ftp.gnome.org/pub/GNOME/sources/scrollkeeper/0.3/scrollkeeper-0.3.14.tar.bz2
+file_size=546059
+file_md5=b175e582a6cec3e50a9de73a5bb7455a
 recipe_type=configure
+configure_options=(
+   "--with-xml-catalog=$goboVariable/lib/xml/catalog"
+)
+unmanaged_files=(
+    "${goboVariable}/lib/scrollkeeper"
+    "${goboVariable}/log/scrollkeeper.log"
+    "${goboVariable}/lib/xml"
+)
+
+pre_install() {
+    rm -rf "${goboVariable}/lib/scrollkeeper"
+    mkdir -m 0755 -p "${target}/Resources/Unmanaged/${goboVariable}/lib/scrollkeeper"
+    mkdir -m 0755 -p "${target}/Resources/Unmanaged/${goboVariable}/log"
+    touch "${target}/Resources/Unmanaged/${goboVariable}/log/scrollkeeper.log"
+}
