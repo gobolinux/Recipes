@@ -1,0 +1,120 @@
+# Recipe (MakeRecipe) for DocBook-XML-DTD by Andreas Köhler <andi5.py@gmx.net>, on Fri Aug 15 07:54:42 CEST 2008
+# Recipe for version 4.5 by Andreas Köhler <andi5.py@gmx.net>, on Fri Aug 15 07:54:42 CEST 2008
+compile_version=1.11.2
+url="http://www.docbook.org/xml/4.5/docbook-xml-4.5.zip"
+file_size=98497
+file_md5=03083e288e87a7e829e437358da7ef9e
+unpack_files=files_in_root
+recipe_type=manifest
+manifest=(
+    docbook.cat:share/xml/docbook/xml-dtd-4.5/.
+    calstblx.dtd:share/xml/docbook/xml-dtd-4.5/.
+    docbookx.dtd:share/xml/docbook/xml-dtd-4.5/.
+    soextblx.dtd:share/xml/docbook/xml-dtd-4.5/.
+    dbcentx.mod:share/xml/docbook/xml-dtd-4.5/.
+    dbgenent.mod:share/xml/docbook/xml-dtd-4.5/.
+    dbhierx.mod:share/xml/docbook/xml-dtd-4.5/.
+    dbnotnx.mod:share/xml/docbook/xml-dtd-4.5/.
+    dbpoolx.mod:share/xml/docbook/xml-dtd-4.5/.
+    htmltblx.mod:share/xml/docbook/xml-dtd-4.5/.
+    ent:share/xml/docbook/xml-dtd-4.5/ent
+)
+
+pre_link() {
+    XML_DIR="$goboVariable/lib/xml"
+    DOCBOOK="$XML_DIR/docbook"
+    CATALOG="$XML_DIR/catalog"
+    mkdir -p $XML_DIR &&
+    if [ ! -e "$DOCBOOK" ]; then
+	xmlcatalog --noout --create "$DOCBOOK"
+    fi &&
+    if [ ! -e "$CATALOG" ]; then
+	xmlcatalog --noout --create "$CATALOG"
+    fi &&
+    xmlcatalog --noout --add "public" \
+	"-//OASIS//DTD DocBook XML V4.5//EN" \
+	"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" \
+	"$DOCBOOK" &&
+    xmlcatalog --noout --add "public" \
+	"-//OASIS//DTD DocBook XML CALS Table Model V4.5//EN" \
+	"file://${target}/share/xml/docbook/xml-dtd-4.5/calstblx.dtd" \
+	"$DOCBOOK" &&
+    xmlcatalog --noout --add "public" \
+	"-//OASIS//DTD DocBook XML Exchange Table Model 19990315//EN" \
+	"file://${target}/share/xml/docbook/xml-dtd-4.5/soextblx.dtd" \
+	"$DOCBOOK" &&
+    xmlcatalog --noout --add "public" \
+	"-//OASIS//ELEMENTS DocBook XML Information Pool V4.5//EN" \
+	"file://${target}/share/xml/docbook/xml-dtd-4.5/dbpoolx.mod" \
+	"$DOCBOOK" &&
+    xmlcatalog --noout --add "public" \
+	"-//OASIS//ELEMENTS DocBook XML Document Hierarchy V4.5//EN" \
+	"file://${target}/share/xml/docbook/xml-dtd-4.5/dbhierx.mod" \
+	"$DOCBOOK" &&
+    xmlcatalog --noout --add "public" \
+	"-//OASIS//ELEMENTS DocBook XML HTML Tables V4.5//EN" \
+	"file://${target}/share/xml/docbook/xml-dtd-4.5/htmltblx.mod" \
+	"$DOCBOOK" &&
+    xmlcatalog --noout --add "public" \
+	"-//OASIS//ENTITIES DocBook XML Notations V4.5//EN" \
+	"file://${target}/share/xml/docbook/xml-dtd-4.5/dbnotnx.mod" \
+	"$DOCBOOK" &&
+    xmlcatalog --noout --add "public" \
+	"-//OASIS//ENTITIES DocBook XML Character Entities V4.5//EN" \
+	"file://${target}/share/xml/docbook/xml-dtd-4.5/dbcentx.mod" \
+	"$DOCBOOK" &&
+    xmlcatalog --noout --add "public" \
+	"-//OASIS//ENTITIES DocBook XML Additional General Entities V4.5//EN" \
+	"file://${target}/share/xml/docbook/xml-dtd-4.5/dbgenent.mod" \
+	"$DOCBOOK" &&
+    xmlcatalog --noout --add "rewriteSystem" \
+	"http://www.oasis-open.org/docbook/xml/4.5" \
+	"file://${target}/share/xml/docbook/xml-dtd-4.5" \
+	"$DOCBOOK" &&
+    xmlcatalog --noout --add "rewriteURI" \
+	"http://www.oasis-open.org/docbook/xml/4.5" \
+	"file://${target}/share/xml/docbook/xml-dtd-4.5" \
+	"$DOCBOOK" &&
+    xmlcatalog --noout --add "delegatePublic" \
+	"-//OASIS//ENTITIES DocBook XML" \
+	"file://${DOCBOOK}" \
+	"$CATALOG" &&
+    xmlcatalog --noout --add "delegatePublic" \
+	"-//OASIS//DTD DocBook XML" \
+	"file://${DOCBOOK}" \
+	"$CATALOG" &&
+    xmlcatalog --noout --add "delegateSystem" \
+	"http://www.oasis-open.org/docbook/" \
+	"file://${DOCBOOK}" \
+	"$CATALOG" &&
+    xmlcatalog --noout --add "delegateURI" \
+	"http://www.oasis-open.org/docbook/" \
+	"file://${DOCBOOK}" \
+	"$CATALOG" &&
+    for DTDVERSION in 4.1.2 4.2 4.3 4.4; do
+	xmlcatalog --noout --add "public" \
+	    "-//OASIS//DTD DocBook XML V${DTDVERSION}//EN" \
+	    "http://www.oasis-open.org/docbook/xml/${DTDVERSION}/docbookx.dtd" \
+	    "$DOCBOOK" &&
+	xmlcatalog --noout --add "rewriteSystem" \
+	    "http://www.oasis-open.org/docbook/xml/${DTDVERSION}" \
+	    "file://${target}/share/xml/docbook/xml-dtd-4.5" \
+	    "$DOCBOOK" &&
+	xmlcatalog --noout --add "rewriteURI" \
+	    "http://www.oasis-open.org/docbook/xml/${DTDVERSION}" \
+	    "file://${target}/share/xml/docbook/xml-dtd-4.5" \
+	    "$DOCBOOK" &&
+	xmlcatalog --noout --add "delegateSystem" \
+	    "http://www.oasis-open.org/docbook/xml/${DTDVERSION}" \
+	    "file://${DOCBOOK}" \
+	    "$CATALOG" &&
+	xmlcatalog --noout --add "delegateURI" \
+	    "http://www.oasis-open.org/docbook/xml/${DTDVERSION}" \
+	    "file://${DOCBOOK}" \
+	    "$CATALOG"
+    done || die hard
+}
+
+unmanaged_files=(
+   "$goboVariable/lib/xml"
+)
