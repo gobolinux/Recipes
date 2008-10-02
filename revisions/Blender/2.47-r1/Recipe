@@ -1,0 +1,20 @@
+# Recipe (MakeRecipe) for Blender by Filipe Vieira, on Fri Jan 18 14:15:32 WET 2008
+compile_version=1.10.0
+url="http://download.blender.org/source/blender-2.47.tar.gz"
+file_size=21222013
+file_md5=750f3be3214e15334e96afcc866c9f48
+file="blender-2.47.tar.gz"
+recipe_type=scons
+
+pre_build() {
+    GrepReplace "../build/linux2"   "./build/linux2" config/linux2-config.py
+    GrepReplace "../install/linux2" "$target"        config/linux2-config.py
+}
+
+pre_link() {
+    pushd $target >& /dev/null
+    mv blender bin/
+    mv *.html *.txt *.pdf doc/
+    popd >& /dev/null
+}
+
