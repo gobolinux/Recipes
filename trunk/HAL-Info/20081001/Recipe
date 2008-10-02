@@ -1,0 +1,24 @@
+# Recipe for version 20081001 by Giambattista Bloisi <giamby@infinito.it>, on Thu Oct 2 23:05:34 CEST 2008
+# Recipe (MakeRecipe) for HAL-Info by Jonas Karlsson <jonka750@student.liu.se>, on Wed Apr 25 16:14:09 CEST 2007
+compile_version=1.8.5
+url="http://hal.freedesktop.org/releases/hal-info-20081001.tar.gz"
+file_size=217076
+file_md5=1acb8a6558f7cafcddb931f3be9e2a13
+recipe_type=configure
+
+configure_options=(
+   "--enable-recall"
+   "--enable-video"
+)
+
+unmanaged_files=(
+   "${goboVariable}/cache/hald/fdi-cache"
+)
+
+pre_link() {
+   mkdir -p "${goboVariable}/cache/hald"
+   touch "${goboVariable}/cache/hald/fdi-cache"
+   "${hal_path}/libexec/hald-generate-fdi-cache"
+   mkdir -p "${target}/Resources/Unmanaged/${goboVariable}/cache/hald"
+   cp "${goboVariable}/cache/hald/fdi-cache" "${target}/Resources/Unmanaged/${goboVariable}/cache/hald"
+}
