@@ -5,6 +5,15 @@ file_size=1777930
 file_md5=bc80f0198773d5c05086522be67334eb
 recipe_type=configure
 configure_options=(
-   "--enable-pkgdatadir=${target}/lib/aspell"
-   "--enable-pkglibdir=${target}/lib/aspell"
+   "--enable-pkgdatadir=${goboLibraries}/aspell"
+   "--enable-pkglibdir=${goboLibraries}/aspell"
 )
+install_variables=(
+   pkgdatadir="${target}/lib/aspell"
+   pkglibdir="${target}/lib/aspell"
+)
+pre_install() {
+   # *sigh* libtool again... FixDirReferences will revert this after
+   # installation.
+   find . -type f -name "*.la" -print0 | xargs -0 sed -i 's,'"$goboLibraries"','"$target/lib"','
+}
