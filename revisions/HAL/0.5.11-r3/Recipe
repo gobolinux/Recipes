@@ -1,0 +1,29 @@
+# Recipe for version 0.5.11 by Jonas Karlsson <jonka750@student.liu.se>, on Thu May 8 06:45:43 GMT 2008
+# Recipe (MakeRecipe) for HAL by Michael Homer <michael@e.geek.nz>, on Tue Mar 20 15:33 NZST 2007
+compile_version=1.10.2
+url="http://hal.freedesktop.org/releases/hal-0.5.11.tar.gz"
+file_size=1672992
+file_md5=750cf074e88b6fb7012f26d99cd39b9b
+recipe_type=configure
+environment=(
+    "LDFLAGS=-lz"
+)
+configure_options=(
+    "--disable-policy-kit"
+    "--disable-docbook-docs"
+    "--with-pid-file=${goboVariable}/run/hald/pid"
+    "--with-socket-dir=${goboVariable}/run/hald"
+    "--with-dbus-sys=${settings_target}/dbus-1/system.d"
+    "--with-hwdata=${goboShared}/hwdata"
+    "--mandir=${target}/man"
+    "--with-eject=${goboExecutables}/eject"
+    "--enable-parted"
+)
+
+unmanaged_files=(
+    "${goboVariable}/run/hald"
+    "${goboVariable}/run/hald/hald-local"
+    "${goboVariable}/run/hald/hald-runner"
+    "${goboVariable}/cache/"
+    "${goboVariable}/lib/hal"
+)
