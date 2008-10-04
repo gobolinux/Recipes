@@ -1,0 +1,12 @@
+diff -Nur xc/lib/Xaw3d/Imakefile xc-fabio.m/lib/Xaw3d/Imakefile
+--- xc/lib/Xaw3d/Imakefile	2003-03-08 11:55:18.000000000 -0300
++++ xc-fabio.m/lib/Xaw3d/Imakefile	2006-09-04 02:47:58.000000000 -0300
+@@ -22,7 +22,7 @@
+ #define IncSubSubdir Xaw3d
+ 
+ XCOMM When building outside an X11 source tree:
+-XCOMM EXTRA_INCLUDES = -I.
++EXTRA_INCLUDES = -I.
+ 
+ #ifdef SharedXawReqs
+ REQUIREDLIBS = SharedXawReqs
