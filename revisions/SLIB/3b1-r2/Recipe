@@ -1,0 +1,25 @@
+# Recipe (MakeRecipe) for SLIB by Daniele Maccari <daniele.maccari@gmail.com>, on Fri May 9 19:42:58 CEST 2008
+# Recipe for version 3b1 by Daniele Maccari <daniele.maccari@gmail.com>, on Fri May 9 19:42:58 CEST 2008
+compile_version=1.11.0
+url="http://swiss.csail.mit.edu/ftpdir/scm/slib-3b1.zip"
+file_size=1063227
+file_md5=9622df4aba2fde24eeb4456d97c5add1
+dir='slib'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target/"
+)
+
+install_variables=(
+   "bindir=$target/bin/"
+   "libslibdir=$target/share/scheme/slib/"
+)
+
+pre_link() {
+   ln -s mklibcat.scm "${target}/Shared/scheme/slib/mklibcat"
+   if Quiet which guile
+   then
+      GUILE_LOAD_PATH="${target}/Shared/scheme:${GUILE_LOAD_PATH}" guile -c "(use-modules (ice-9 slib)) (require 'new-catalog)"
+   fi
+}
