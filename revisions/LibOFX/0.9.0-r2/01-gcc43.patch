@@ -1,0 +1,78 @@
+Add missing #includes to make it compile with g++-4.3.
+
+ lib/ofx_request_accountinfo.cpp                |    1 +
+ libofx-0.9.0/lib/ofx_container_transaction.cpp |    1 +
+ libofx-0.9.0/lib/ofx_request.cpp               |    1 +
+ libofx-0.9.0/lib/ofx_request_statement.cpp     |    1 +
+ libofx-0.9.0/lib/ofx_utilities.cpp             |    3 ++-
+ libofx-0.9.0/ofxdump/ofxdump.cpp               |    2 ++
+ 6 files changed, 8 insertions(+), 1 deletion(-)
+
+diff -ur libofx-0.9.0-old/lib/ofx_container_transaction.cpp libofx-0.9.0/lib/ofx_container_transaction.cpp
+--- libofx-0.9.0-old/lib/ofx_container_transaction.cpp	2008-09-14 16:20:14.944125712 +0200
++++ libofx-0.9.0/lib/ofx_container_transaction.cpp	2008-09-14 16:21:04.181125642 +0200
+@@ -22,6 +22,7 @@
+ #endif
+ 
+ #include <string>
++#include <cstdlib>
+ #include "messages.hh"
+ #include "libofx.h"
+ #include "ofx_containers.hh"
+--- libofx-0.9.0-old/lib/ofx_request_accountinfo.cpp	2008-09-14 16:25:47.420125122 +0200
++++ libofx-0.9.0/lib/ofx_request_accountinfo.cpp	2008-09-14 16:26:11.670124521 +0200
+@@ -22,6 +22,7 @@
+ #endif
+ 
+ #include <string>
++#include <cstdlib>
+ #include "libofx.h"
+ #include "ofx_request_accountinfo.hh"
+ 
+diff -ur libofx-0.9.0-old/lib/ofx_request.cpp libofx-0.9.0/lib/ofx_request.cpp
+--- libofx-0.9.0-old/lib/ofx_request.cpp	2008-09-14 16:21:47.249125840 +0200
++++ libofx-0.9.0/lib/ofx_request.cpp	2008-09-14 16:25:28.351124202 +0200
+@@ -22,6 +22,7 @@
+ #endif
+ 
+ #include <string>
++#include <cstring>
+ #include "messages.hh"
+ #include "libofx.h"
+ #include "ofx_request.hh"
+diff -ur libofx-0.9.0-old/lib/ofx_request_statement.cpp libofx-0.9.0/lib/ofx_request_statement.cpp
+--- libofx-0.9.0-old/lib/ofx_request_statement.cpp	2008-09-14 16:26:23.873125503 +0200
++++ libofx-0.9.0/lib/ofx_request_statement.cpp	2008-09-14 16:26:51.931124490 +0200
+@@ -22,6 +22,7 @@
+ #endif
+ 
+ #include <string>
++#include <cstdlib>
+ #include "libofx.h"
+ #include "ofx_utilities.hh"
+ #include "ofx_request_statement.hh"
+diff -ur libofx-0.9.0-old/lib/ofx_utilities.cpp libofx-0.9.0/lib/ofx_utilities.cpp
+--- libofx-0.9.0-old/lib/ofx_utilities.cpp	2008-09-14 16:15:08.568125987 +0200
++++ libofx-0.9.0/lib/ofx_utilities.cpp	2008-09-14 16:21:33.740124049 +0200
+@@ -21,7 +21,8 @@
+ 
+ #include "ParserEventGeneratorKit.h"
+ #include "SGMLApplication.h"
+-#include <time.h>
++#include <ctime>
++#include <cstdlib>
+ #include <string>
+ #include <locale.h>
+ #include "messages.hh"
+diff -ur libofx-0.9.0-old/ofxdump/ofxdump.cpp libofx-0.9.0/ofxdump/ofxdump.cpp
+--- libofx-0.9.0-old/ofxdump/ofxdump.cpp	2008-09-14 16:27:25.539126410 +0200
++++ libofx-0.9.0/ofxdump/ofxdump.cpp	2008-09-14 16:27:58.931124404 +0200
+@@ -30,6 +30,8 @@
+ #include <iostream>
+ #include <iomanip>
+ #include <string>
++#include <cstring>
++#include <cstdlib>
+ #include "libofx.h"
+ #include <stdio.h>		/* for printf() */
+ #include <config.h>		/* Include config constants, e.g., VERSION TF */
