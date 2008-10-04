@@ -1,0 +1,16 @@
+diff -Nur gv-3.5.8-old/source/paths.h gv-3.5.8/source/paths.h
+--- gv-3.5.8-old/source/paths.h	1997-04-06 00:00:00.000000000 +0200
++++ gv-3.5.8/source/paths.h	2005-08-12 13:19:18.000000000 +0200
+@@ -34,9 +34,9 @@
+ #   define INC_XMU(aaa) <XMU_DIRECTORY/aaa>
+ #   define INC_XAW(aaa) <XAW_DIRECTORY/aaa>
+ #else
+-#   define INC_X11(aaa) <X11/##aaa##>
+-#   define INC_XMU(aaa) <X11/Xmu/##aaa##>
+-#   define INC_XAW(aaa) <X11/Xaw3d/##aaa##>
++#   define INC_X11(aaa) <X11/aaa>
++#   define INC_XMU(aaa) <X11/Xmu/aaa>
++#   define INC_XAW(aaa) <X11/Xaw3d/aaa>
+ #endif
+ 
+ #endif /* _PATHS_H_ */
