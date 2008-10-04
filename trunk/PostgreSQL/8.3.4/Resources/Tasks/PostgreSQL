@@ -1,0 +1,14 @@
+#!/bin/sh
+# by Maglan C. Diemer, maglan@univates.br
+
+PGDATA=/System/Variable/PostgreSQL/data
+PGLOGFILE=$PGDATA/postgresql.log
+
+case "$1" in
+[Ss]tart)
+  sudo -u postgres /bin/pg_ctl start -D $PGDATA -l $PGLOGFILE
+  ;;
+[Ss]top)
+  sudo -u postgres /bin/pg_ctl stop -D $PGDATA
+  ;;
+esac
