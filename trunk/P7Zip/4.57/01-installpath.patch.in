@@ -1,25 +1,26 @@
---- p7zip_4.43.old/install.sh	2006-11-04 23:37:11.000000000 -0500
-+++ p7zip_4.43/install.sh	2006-11-04 23:39:43.000000000 -0500
+2008-Sep-25  KWQ
+
+  * Adjusts the installation location from /usr/local to the Gobo-specific locations.
+
+diff -Naur p7zip_4.57.old/install.sh p7zip_4.57/install.sh
+--- p7zip_4.57.old/install.sh	2007-09-21 11:55:37.000000000 -0700
++++ p7zip_4.57/install.sh	2008-09-25 23:27:09.000000000 -0700
 @@ -1,7 +1,7 @@
  #! /bin/sh
  
  # global install
-+DEST_HOME=@%Compile_target%@
 -DEST_HOME=/usr/local
++DEST_HOME=@%Compile_target%@
  # for testing 
  # DEST_HOME=${HOME}/INSTALL/usr/local
  DEST_BIN=${DEST_HOME}/bin
-
---- p7zip_4.43.old/makefile	2006-11-04 23:37:11.000000000 -0500
-+++ p7zip_4.43/makefile	2006-11-04 23:40:58.000000000 -0500
-@@ -1,7 +1,7 @@
+diff -Naur p7zip_4.57.old/makefile p7zip_4.57/makefile
+--- p7zip_4.57.old/makefile	2007-09-22 08:52:08.000000000 -0700
++++ p7zip_4.57/makefile	2008-09-25 23:26:52.000000000 -0700
+@@ -1,5 +1,5 @@
  
-+DEST_BIN=@%Compile_target%@/bin
-+DEST_SHARE=@%Compile_target%@/lib/p7zip
-+DEST_MAN=@%Compile_target%@/man
--DEST_BIN=/usr/local/bin
--DEST_SHARE=/usr/local/lib/p7zip
--DEST_MAN=/usr/local/man
- 
- .PHONY: default all all2 7za sfx 7z 7zr common clean tar_bin depend test test_7z test_7zr
- 
+-DEST_HOME=/usr/local
++DEST_HOME=@%Compile_target%@
+ DEST_BIN=$(DEST_HOME)/bin
+ DEST_SHARE=$(DEST_HOME)/lib/p7zip
+ DEST_SHARE_DOC=$(DEST_HOME)/share/doc/p7zip
