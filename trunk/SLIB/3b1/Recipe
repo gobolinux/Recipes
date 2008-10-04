@@ -8,11 +8,18 @@ dir='slib'
 recipe_type=makefile
 makefile='Makefile'
 make_variables=(
-   "prefix=$target"
+   "prefix=$target/"
 )
 
 install_variables=(
    "bindir=$target/bin/"
-   "libslibdir=$target/lib"
-   "man1dir=$target/man"
+   "libslibdir=$target/share/scheme/slib/"
 )
+
+pre_link() {
+   ln -s mklibcat.scm "${target}/Shared/scheme/slib/mklibcat"
+   if Quiet which guile
+   then
+      GUILE_LOAD_PATH="${target}/Shared/scheme:${GUILE_LOAD_PATH}" guile -c "(use-modules (ice-9 slib)) (require 'new-catalog)"
+   fi
+}
