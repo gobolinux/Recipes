@@ -1,0 +1,11 @@
+# Recipe for version 1.5.2 by Martin Hilbig <blueonyx@dev-area.net>, on Do 25. Sep 17:38:59 CEST 2008
+# Recipe (MakeRecipe) for Tree by Rafael Guterres Jeffman, on Wed May 3 15:29:48 BRT 2006
+compile_version=1.8.0
+url="ftp://mama.indstate.edu/linux/tree/tree-1.5.2.tgz"
+file_size=31307
+file_md5=b86a3091ec93e1e13e81020fa33b6270
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+)
