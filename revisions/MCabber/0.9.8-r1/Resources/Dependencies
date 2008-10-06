@@ -1,0 +1,8 @@
+#Aspell # Optional
+GLib >= 2.0.0
+Glibc 2.4
+#GPGME >= 1.0.0 # Optional
+#LibGCrypt >= 1.2.2 # Needed with LibOTR
+#LibOTR >= 3.1.0
+#Ncurses 5.6
+OpenSSL >= 0.9.7 # Needed for SSL connections
