@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Hwinfo by Nathan Middleton <nathan.middleton@gmail.com>, on Sun Oct 5 21:12:27 CDT 2008
+# Recipe for version 13.57 by Nathan Middleton <nathan.middleton@gmail.com>, on Sun Oct 5 21:12:27 CDT 2008
+compile_version=1.11.2
+url="http://aur.archlinux.org/packages/hwinfo/hwinfo/hwinfo-13.57.tar.bz2"
+file_size=683785
+file_md5=d1f61543febea3217988d4d649fdb18c
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+    "DESTDIR=$target"
+)
