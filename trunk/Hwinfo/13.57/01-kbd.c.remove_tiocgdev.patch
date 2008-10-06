@@ -1,0 +1,17 @@
+Removes TIOCGDEV test which is specific to SuSE machines.
+--- hwinfo-13.57/src/hd/kbd.c	2008-10-05 21:21:14.000000000 -0500
++++ hwinfo-13.57/src/hd/kbd.c-new	2008-10-05 21:21:27.000000000 -0500
+@@ -142,11 +142,11 @@
+   }
+ 
+   if(!dev && (fd = open(DEV_CONSOLE, O_RDWR | O_NONBLOCK | O_NOCTTY)) >= 0) {
+-    if(ioctl(fd, TIOCGDEV, &u) != -1) {
++/*    if(ioctl(fd, TIOCGDEV, &u) != -1) {
+       tty_major = (u >> 8) & 0xfff;
+       tty_minor = (u & 0xff) | ((u >> 12) & 0xfff00);
+       ADD2LOG(DEV_CONSOLE ": major %u, minor %u\n", tty_major, tty_minor);
+-    }
++    } */
+ 
+     if (0)
+ 	    ;
