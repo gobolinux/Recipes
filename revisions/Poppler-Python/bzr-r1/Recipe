@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for Poppler-Python by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Sep 30 18:12:57 BRT 2008
+# Recipe for version bzr by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Sep 30 18:12:57 BRT 2008
+compile_version=1.10.1
+bzr="lp:~poppler-python/poppler-python/trunk"
+recipe_type=configure
+
+pre_build() {
+	if [ ! -f .bootstrapped ]
+	then
+		aclocal && \
+		automake --add-missing && \
+		autoconf && \
+		autoheader && \
+		touch .bootstrapped
+	fi
+}
