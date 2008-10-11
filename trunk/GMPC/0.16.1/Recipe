@@ -5,3 +5,11 @@ url="http://download.sarine.nl/Programs/gmpc/0.16.1/gmpc-0.16.1.tar.gz"
 file_size=984406
 file_md5=5dc126a03da41cb92643b48dbd0aba82
 recipe_type=configure
+
+pre_build() {
+   sed -i 's/^context =.*/context = actions/' pixmaps/icons/*/status/Makefile*
+}
+
+build_variables=(
+   pkglibdir="$goboLibraries/gmpc"
+)
