@@ -8,20 +8,19 @@ recipe_type=configure
 dir="xfsprogs-2.10.1"
 install_target="install install-dev"
 
-sandbox_options=("--no-sandbox")
-
 configure_options=(
     --libexecdir=$target/lib
     --enable-shared=yes
 )
-
-environment=(
-    DEBUG=-DNDEBUG
-    OPTIMIZER=-O1
-    LIBTOOL="${goboExecutables}/libtool"
+build_variables=(
+   DEBUG=-DNDEBUG
+)
+make_variables=(
+   PKG_USER=0
+   PKG_GROUP=0
 )
 
 pre_link() {
-    rm "${target}/lib/libhandle.so"
-    ln -s libhandle.so.1.0.3 "${target}/lib/libhandle.so"
+   # Fix broken symlink created by "make install"
+   ln -fs libhandle.so.1.0.3 "${target}/lib/libhandle.so"
 }
