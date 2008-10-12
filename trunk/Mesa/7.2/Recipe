@@ -25,6 +25,11 @@ configure_options=(
     --enable-glx-tls
     
     --with-driver=dri
+    --with-dri-driverdir="${goboLibraries}/xorg/modules/dri"
+)
+
+install_variables=(
+   DRI_DRIVER_INSTALL_DIR="${target}/lib/xorg/modules/dri"
 )
 
 pre_link() {
