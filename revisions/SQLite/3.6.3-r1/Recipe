@@ -1,0 +1,18 @@
+# Recipe for version 3.6.3 by Giambattista Bloisi <giamby@infinito.it>, on Mon Oct 13 13:30:29 CEST 2008
+compile_version=1.9.0
+url="http://www.sqlite.org/sqlite-3.6.3.tar.gz"
+file_size=2332857
+file_md5=671d2715f33158abc47a7a2ddd6066c5
+recipe_type=configure
+
+environment=(
+    "TCLLIBDIR=$target/lib/tcl8.5"
+)
+
+pre_build() {
+   sed -i 's/VERSION/RELEASE/' sqlite{,3}.pc.in
+}
+
+pre_link() {
+    ln -s $target/bin/sqlite3 $target/bin/sqlite
+}
