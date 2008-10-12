@@ -1,0 +1,5 @@
+configure_options=(
+   ${configure_options[@]} 
+   "--enable-32bit"
+   "--with-archflags=-mcpu=cell -mabi=altivec -ftree-vectorize"
+)
