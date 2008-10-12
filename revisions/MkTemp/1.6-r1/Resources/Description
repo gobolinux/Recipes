@@ -1,0 +1,5 @@
+[Name] mktemp
+[Summary] A simple utility to safely create temporary files.
+[License] BSD License (original)
+[Description] mktemp takes an optional filename template and overwrites a portion of it to create a unique filename. It will then create a temporary file or directory for the user, safe from file creation races.
+[Homepage] http://www.mktemp.org/mktemp/
