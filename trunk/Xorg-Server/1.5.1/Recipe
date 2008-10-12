@@ -20,7 +20,6 @@ configure_options=(
    "--enable-dri"
    "--enable-glx"
    "--enable-glx-tls"
-   "--enable-lbx"
    "--enable-xgl"
    "--enable-xglx"
    "--disable-dmx"
@@ -32,7 +31,7 @@ configure_options=(
    "--enable-tslib"
    "--enable-xorgcfg"
    --with-module-dir="${goboLibraries}/xorg/modules"
-   --with-dri-driver-path="${goboLibraries}/dri"
+   --with-dri-driver-path="${goboLibraries}/xorg/modules/dri"
    --with-mesa-source="${compileSourcesDir}/Mesa-7.2"
    --with-fontdir="${target}/share/fonts"
    --enable-install-setuid

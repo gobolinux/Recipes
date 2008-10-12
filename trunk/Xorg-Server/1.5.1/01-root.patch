@@ -1,0 +1,22 @@
+--- xorg-server-1.5.1/hw/xfree86/Makefile.am	2008-10-10 15:59:46.000000000 +0200
++++ xorg-server-1.5.1/hw/xfree86/Makefile.am.new	2008-10-10 15:59:56.000000000 +0200
+@@ -96,7 +96,7 @@
+ install-exec-local: install-binPROGRAMS
+ 	(cd $(DESTDIR)$(bindir) && rm -f X && ln -s Xorg X)
+ if INSTALL_SETUID
+-	chown root $(DESTDIR)$(bindir)/Xorg
++	chown 0 $(DESTDIR)$(bindir)/Xorg
+ 	chmod u+s $(DESTDIR)$(bindir)/Xorg
+ endif
+ 
+--- xorg-server-1.5.1/hw/xfree86/Makefile.in	2008-09-23 20:27:32.000000000 +0200
++++ xorg-server-1.5.1/hw/xfree86/Makefile.in.new	2008-10-10 15:59:23.000000000 +0200
+@@ -958,7 +958,7 @@
+ 
+ install-exec-local: install-binPROGRAMS
+ 	(cd $(DESTDIR)$(bindir) && rm -f X && ln -s Xorg X)
+-@INSTALL_SETUID_TRUE@	chown root $(DESTDIR)$(bindir)/Xorg
++@INSTALL_SETUID_TRUE@	chown 0 $(DESTDIR)$(bindir)/Xorg
+ @INSTALL_SETUID_TRUE@	chmod u+s $(DESTDIR)$(bindir)/Xorg
+ 
+ relink:
