@@ -1,0 +1,207 @@
+diff --git a/exo-mount/exo-mount-hal.c b/exo-mount/exo-mount-hal.c
+index 791a536..4084719 100644
+--- a/exo-mount/exo-mount-hal.c
++++ b/exo-mount/exo-mount-hal.c
+@@ -145,6 +145,42 @@ exo_mount_hal_propagate_error (GError   **error,
+ }
+ 
+ 
++static gboolean
++string_in_list(gchar * const *haystack, const gchar *needle)
++{
++  gint n;
++
++  if (!haystack)
++      return FALSE;
++
++  for (n=0; haystack[n]; ++n) {
++      if (!strcmp (haystack[n], needle))
++          return TRUE;
++  }
++  return FALSE;
++}
++
++
++static gboolean
++device_has_interface(const gchar *udi, const gchar *iface,
++        DBusError *derror)
++{
++  gboolean result;
++  gchar **interfaces;
++
++  /* determine the info.interfaces property of the device */
++  interfaces = libhal_device_get_property_strlist (hal_context, udi,
++          "info.interfaces", derror);
++
++  /* check for the interface we need */
++  result = string_in_list(interfaces, iface);
++  libhal_free_string_array(interfaces);
++
++  return result;
++}
++
++
++
+ 
+ /**
+  * exo_mount_hal_device_from_udi:
+@@ -158,18 +194,15 @@ exo_mount_hal_propagate_error (GError   **error,
+  *               or %NULL in case of an error.
+  **/
+ ExoMountHalDevice*
+-exo_mount_hal_device_from_udi (const gchar *udi,
++exo_mount_hal_device_from_udi (const gchar *in_udi,
+                                GError     **error)
+ {
+   ExoMountHalDevice *device = NULL;
+   DBusError          derror;
+-  gchar            **interfaces;
+-  gchar            **volume_udis;
+-  gchar             *volume_udi = NULL;
+   gint               n_volume_udis;
+-  gint               n;
++  gchar             *udi;
+ 
+-  g_return_val_if_fail (udi != NULL, NULL);
++  g_return_val_if_fail (in_udi != NULL, NULL);
+   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+ 
+   /* make sure the HAL support is initialized */
+@@ -179,55 +212,60 @@ exo_mount_hal_device_from_udi (const gchar *udi,
+   /* initialize D-Bus error */
+   dbus_error_init (&derror);
+ 
+-again:
+-  /* determine the info.interfaces property of the device */
+-  interfaces = libhal_device_get_property_strlist (hal_context, udi, "info.interfaces", &derror);
+-  if (G_UNLIKELY (interfaces == NULL))
++  udi = g_strdup (in_udi);
++  /* at this point, we own udi */
++
++  /* maybe we have a mountable device here */
++  while(G_UNLIKELY (!device_has_interface (udi,
++                  "org.freedesktop.Hal.Device.Volume", &derror)))
+     {
+-      /* reset D-Bus error */
+-      dbus_error_free (&derror);
++      gchar **volume_udis;
+ 
+-      /* release any previous volume UDI */
+-      g_free (volume_udi);
+-      volume_udi = NULL;
++      /* maybe there was a D-Bus error? gotta check */
++      if (G_UNLIKELY (dbus_error_is_set (&derror)))
++        {
++          exo_mount_hal_propagate_error (error, &derror);
++          g_free (udi);
++          return NULL;
++        }
++
++      /* maybe we have a volume whose parent is identified by the udi */
++      volume_udis = libhal_manager_find_device_string_match (hal_context,
++              "info.parent", udi, &n_volume_udis, &derror);
+ 
+-      /* ok, but maybe we have a volume whose parent is identified by the udi */
+-      volume_udis = libhal_manager_find_device_string_match (hal_context, "info.parent", udi, &n_volume_udis, &derror);
+       if (G_UNLIKELY (volume_udis == NULL))
+         {
+-err0:     exo_mount_hal_propagate_error (error, &derror);
+-          goto out;
++          exo_mount_hal_propagate_error (error, &derror);
++          g_free (udi);
++          return NULL;
+         }
+       else if (G_UNLIKELY (n_volume_udis < 1))
+         {
+-          /* no match, we cannot handle that device */
+           libhal_free_string_array (volume_udis);
+-          goto err1;
++          dbus_error_free (&derror);
++          /* definitely not a device that we're able to
++           * mount, eject or unmount */
++          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
++                  _("Given device \"%s\" is not a volume or drive"), udi);
++          g_free (udi);
++          return NULL;
+         }
+ 
++      g_free (udi);
++
+       /* use the first volume UDI... */
+-      volume_udi = g_strdup (volume_udis[0]);
++      udi = g_strdup (volume_udis[0]);
+       libhal_free_string_array (volume_udis);
+-
+       /* ..and try again using that UDI */
+-      udi = (const gchar *) volume_udi;
+-      goto again;
+     }
+ 
+-  /* verify that we have a mountable device here */
+-  for (n = 0; interfaces[n] != NULL; ++n)
+-    if (strcmp (interfaces[n], "org.freedesktop.Hal.Device.Volume") == 0)
+-      break;
+-  if (G_UNLIKELY (interfaces[n] == NULL))
+-    {
+-      /* definitely not a device that we're able to mount, eject or unmount */
+-err1: g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED, _("Given device \"%s\" is not a volume or drive"), udi);
+-      goto out;
+-    }
++  /* at this point, udi contains the UDI of something
++   * that implements Hal.Device.Volume.
++   * udi is the only resource that we hold here. */
+ 
+   /* setup the device struct */
+   device = g_new0 (ExoMountHalDevice, 1);
+-  device->udi = g_strdup (udi);
++  device->udi = udi;
+ 
+   /* check if we have a volume here */
+   device->volume = libhal_volume_from_udi (hal_context, udi);
+@@ -269,8 +307,8 @@ err1: g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED, _("Given device \"%
+   if (G_UNLIKELY (device->file == NULL || device->name == NULL))
+     {
+       exo_mount_hal_device_free (device);
+-      device = NULL;
+-      goto err0;
++      exo_mount_hal_propagate_error(error, &derror);
++      return NULL;
+     }
+ 
+   /* check if we failed */
+@@ -282,11 +320,7 @@ err1: g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED, _("Given device \"%
+       device = NULL;
+     }
+ 
+-out:
+-  /* cleanup */
+-  libhal_free_string_array (interfaces);
+-  g_free (volume_udi);
+-
++  dbus_error_free (&derror);
+   return device;
+ }
+ 
+@@ -313,7 +347,7 @@ exo_mount_hal_device_from_file (const gchar *file,
+   gchar            **interfaces;
+   gchar            **udis;
+   gint               n_udis;
+-  gint               n, m;
++  gint               n;
+ 
+   g_return_val_if_fail (g_path_is_absolute (file), NULL);
+   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+@@ -347,12 +381,7 @@ exo_mount_hal_device_from_file (const gchar *file,
+         continue;
+ 
+       /* check if we have a mountable device here */
+-      for (m = 0; interfaces[m] != NULL; ++m)
+-        if (strcmp (interfaces[m], "org.freedesktop.Hal.Device.Volume") == 0)
+-          break;
+-
+-      /* check if it's a usable device */
+-      if (interfaces[m] != NULL)
++      if (string_in_list (interfaces, "org.freedesktop.Hal.Device.Volume"))
+         {
+           libhal_free_string_array (interfaces);
+           break;
