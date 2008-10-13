@@ -1,0 +1,11 @@
+# Recipe for version 1.41.3 by Giambattista Bloisi <giamby@infinito.it>, on Tue Oct 14 22:10:20 CEST 2008
+url=$httpSourceforge/e2fsprogs/e2fsprogs-1.41.3.tar.gz
+file_size=4365234
+file_md5=b21d26fc46c584021dc9c444933ee1c2
+recipe_type=configure
+needs_safe_linking=yes
+compile_version=1.9.0
+configure_options=(
+   "--enable-elf-shlibs"
+)
+install_target="install install-libs"
