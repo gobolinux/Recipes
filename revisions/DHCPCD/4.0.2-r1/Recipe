@@ -1,0 +1,16 @@
+# Recipe for version 4.0.2 by Giambattista Bloisi <giamby@infinito.it>, on Sun Oct 12 05:13:47 UTC 2008
+compile_version=1.9.0
+url="http://roy.marples.name/dhcpcd/dhcpcd-4.0.2.tar.bz2"
+file_size=51625
+file_md5=7cdc25f37f37260f94335d5b6c76f40e
+recipe_type=makefile
+
+unmanaged_files=(
+   "$variable_target/db/"
+)
+
+make_variables=(
+   INFOD="$variable_target/db"
+   PREFIX="$target"
+   MANPREFIX="$target"
+)
