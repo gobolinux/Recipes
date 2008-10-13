@@ -1,0 +1,10 @@
+# Recipe for version 0.3.9 by Giambattista Bloisi <giamby@infinito.it>, on Tue Oct 14 23:37:21 CEST 2008
+# Recipe (MakeRecipe) for GParted by Andre Detsch <detsch@gobolinux.org>, on Mon Nov 20 21:56:41 BRST 2006
+compile_version=1.8.2
+url="$httpSourceforge/gparted/gparted-0.3.9.tar.bz2"
+file_size=606873
+file_md5=5b6dc1b154322c9721fce5fd5b9e066e
+recipe_type=configure
+configure_options=(
+    --disable-scrollkeeper
+)
