@@ -1,0 +1,14 @@
+# Recipe for version 2.14.3 by Andreas Köhler <andi5.py@gmx.net>, on Sun Oct 12.14.35:15 CEST 2008
+# Recipe (MakeRecipe) for GTK+ by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 11:55:54 BRT 2005
+compile_version=1.9.0
+url="ftp://ftp.gnome.org/pub/gnome/sources/gtk+/2.14/gtk+-2.14.3.tar.bz2"
+file_size=17149160
+file_md5=359e44c8e47dfe04a09ac09b8e015e58
+recipe_type=configure
+
+configure_options=(
+   --with-xinput=yes
+   --without-libjasper
+)
+
+with_jpeg2000="--with-libjasper"
