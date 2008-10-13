@@ -1,0 +1,24 @@
+# Recipe for version 3.4.1.1 by Giambattista Bloisi <giamby@infinito.it>, on Mon Oct 13 18:05:46 CEST 2008
+# Recipe for Module-Init-Tools 3.2-pre9 by Lucas Correia Villa Real
+compile_version=1.8.2
+url="http://www.kernel.org/pub/linux/utils/kernel/module-init-tools/module-init-tools-3.4.1.tar.bz2"
+file_size=195465
+file_md5=e253b066a1bab1d727ca0d54f001b49c
+recipe_type=configure
+
+configure_options=(
+   --with-moddir="$goboModules"
+   --mandir="${target}/man"
+   --enable-zlib
+)
+build_variables=(
+   "DOCBOOKTOMAN=''"
+)
+
+install_variables=(
+   INSTALL=install
+)
+
+pre_build(){
+   touch modprobe.conf.5
+}
