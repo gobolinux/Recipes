@@ -10,3 +10,8 @@ environment=(
   "PYTHONPATH=$target/lib/python"   
 )
 
+pre_link() {
+  install contrib/hg-relink $target/bin/
+  install contrib/hgk $target/bin/
+  install contrib/hgdiff $target/bin/
+}
