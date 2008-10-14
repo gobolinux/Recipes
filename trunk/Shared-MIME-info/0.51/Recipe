@@ -9,6 +9,9 @@ recipe_type=configure
 configure_options=(
    "--disable-update-mimedb"
 )
+pre_build() {
+   sed -i 's,pkgconfigdir = .*,pkgconfigdir = $(libdir)/pkgconfig,' Makefile*
+}
 
 unmanaged_files=(
    "${goboVariable}/xdg/mime"
