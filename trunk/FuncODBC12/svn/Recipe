@@ -1,0 +1,20 @@
+# Recipe (MakeRecipe) for FuncODBC12 by Fabio Mierlo <geromao@gmail.com>, on Mon Oct 13 02:15:55 BRT 2008
+# Recipe for version svn by Fabio Mierlo <geromao@gmail.com>, on Mon Oct 13 02:15:55 BRT 2008
+compile_version=1.11.2
+svn="http://svncommunity.digium.com/svn/func_odbc/1.2/"
+recipe_type=makefile
+makefile='Makefile'
+do_install=no
+
+build_variables=(
+  "ASTSRC=$compileSourcesDir/asterisk-`basename $asterisk_path`"
+)
+
+pre_install() {
+  dir=$target/lib/asterisk/modules
+  mkdir -p $dir
+  cp -a func_odbc.so func_array.so $dir
+
+  mkdir -p $target/Resources/Defaults/Settings/asterisk
+  cp -a func_odbc.conf.sample $target/Resources/Defaults/Settings/asterisk/func_odbc.conf
+}
