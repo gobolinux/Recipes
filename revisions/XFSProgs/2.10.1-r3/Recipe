@@ -1,0 +1,24 @@
+# Recipe for version 2.10.1 by Baffo32 <baffo32@gmail.com>, on Thu Oct 9 07:27:23 PDT 2008
+# Recipe (MakeRecipe) for XFSProgs by ro.ko@mcnon.com, on Tue Oct 12 00:32:49 BRST 2004
+compile_version=1.8.0
+url="ftp://oss.sgi.com/projects/xfs/cmd_tars/xfsprogs_2.10.1-1.tar.gz"
+file_size=1005228
+file_md5=8f0410aa8cfea0936969a3aab447009c
+recipe_type=configure
+dir="xfsprogs-2.10.1"
+install_target="install install-dev"
+configure_options=(
+    --libexecdir=$target/lib
+    --enable-shared=yes
+)
+
+build_variables=(
+   DEBUG=-DNDEBUG
+)
+
+pre_link() {
+   # Fix broken symlink created by "make install"
+   # Because of the circular reference, ln dies unless it is removed
+   rm "${target}/lib/libhandle.so"
+   ln -s libhandle.so.1.0.3 "${target}/lib/libhandle.so"
+}
