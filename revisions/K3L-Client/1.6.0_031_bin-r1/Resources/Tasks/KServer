@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# ChannelKhomp Task
+###############
+
+BIN=$goboPrograms/K3L-Client/Current/sbin/
+export LD_LIBRARY_PATH=$goboLibraries
+
+case $1 in
+	[sS]tart)
+        $BIN/kpload start
+        $BIN/kserver start
+        ;;
+	[sS]top)
+        $BIN/kserver stop
+        $BIN/kpload stop
+		;;
+esac
