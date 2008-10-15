@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Disc-OS-Sounds by Fabio Mierlo <geromao@gmail.com>, on Mon Oct 13 02:36:32 BRT 2008
+# Recipe for version 1.0-pt_BR by Fabio Mierlo <geromao@gmail.com>, on Mon Oct 13 02:36:32 BRT 2008
+compile_version=1.11.2
+url="$httpSourceforge/disc-os/Disc-OS-Sounds-1.0-pt_BR.tar.gz"
+file_size=13505200
+file_md5=97246f468ba1216ff00406797848d6e1
+recipe_type=manifest
+unpack_files=files_in_root
+
+manifest=(
+  "sounds:Resources/Defaults/Variable/lib/asterisk"
+)
