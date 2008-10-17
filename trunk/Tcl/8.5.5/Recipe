@@ -1,0 +1,12 @@
+# Recipe for version 8.5.5 by Giambattista Bloisi <giamby@infinito.it>, on Sat Oct 18 23:51:51 CEST 2008
+compile_version=1.8.5
+url="$httpSourceforge/tcl/tcl8.5.5-src.tar.gz"
+file_size=4405210
+file_md5=39faed045bd03da1267fb66c9b75349f
+dir='tcl8.5.5/unix'
+recipe_type=configure
+install_target='install install-private-headers'
+pre_link(){
+   $sudo_exec ln -nfs ${target}/bin/tclsh8.5 ${target}/bin/tclsh
+   $sudo_exec ln -nfs ${goboLibraries}/tk8.5 ${target}/lib/tk8.5
+}
