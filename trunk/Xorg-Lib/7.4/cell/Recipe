@@ -1,5 +1,5 @@
 include=(
-	xtrans--1.2.1
+	xtrans--1.2.2
 	libFS--1.0.1
 	libICE--1.0.4
 	libSM--1.1.0
@@ -43,7 +43,7 @@ include=(
 	libxkbfile--1.0.5
 	libxkbui--1.0.2
 	libpciaccess--0.10.3
-	pixman--0.10.0
-#	libAppleWM--1.0.0
+	pixman--0.12.0
+#	libAppleWM--1.1.1
 #	libWindowsWM--1.0.0
 )
