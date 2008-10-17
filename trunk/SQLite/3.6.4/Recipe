@@ -1,0 +1,26 @@
+# Recipe for version 3.6.4 by Giambattista Bloisi <giamby@infinito.it>, on Sat Oct 18 21:38:39 CEST 2008
+compile_version=1.9.0
+url="http://www.sqlite.org/sqlite-3.6.4.tar.gz"
+file_size=2246598
+file_md5=b9832cd8734d4568e384e1c60b50c92f
+recipe_type=configure
+
+configure_options=(
+    --disable-tcl
+    --disable-readline
+)
+
+with_tcl="--enable-tcl"
+with_readline="--enable-readline"
+
+environment=(
+    "TCLLIBDIR=$target/lib/tcl8.5"
+)
+
+pre_build() {
+   sed -i 's/VERSION/RELEASE/' sqlite{,3}.pc.in
+}
+
+pre_link() {
+    ln -s $target/bin/sqlite3 $target/bin/sqlite
+}
