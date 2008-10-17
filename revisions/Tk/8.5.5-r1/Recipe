@@ -1,0 +1,14 @@
+# Recipe for version 8.5.5 by Giambattista Bloisi <giamby@infinito.it>, on Sun Oct 19 00:14:37 CEST 2008
+compile_version=1.8.5
+url="$httpSourceforge/tcl/tk8.5.5-src.tar.gz"
+file_size=3774605
+file_md5=e7e17a2dd4197d9872129c0fbd06f02f
+dir='tk8.5.5/unix'
+recipe_type=configure
+configure_options=(
+   --with-tcl=$tcl_path/lib
+   --enable-xft
+)
+pre_link() {
+   $sudo_exec ln -nfs ${target}/bin/wish8.5 ${target}/bin/wish
+}
