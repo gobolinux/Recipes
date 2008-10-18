@@ -1,0 +1,22 @@
+Patch to allow customisation of the installation prefix.
+
+diff -Naur aget-0.4.fix1/Makefile aget-0.4.fix2/Makefile
+--- aget-0.4.fix1/Makefile	2002-11-22 05:39:24.000000000 -0200
++++ aget-0.4.fix2/Makefile	2008-10-11 11:32:24.201640710 -0300
+@@ -6,6 +6,7 @@
+ LDFLAGS = -pthread
+ CC = gcc
+ STRIP = strip
++PREFIX = /usr/local
+ 
+ all: $(OBJS)
+ 	$(CC) -o aget $(OBJS) $(LDFLAGS)
+@@ -14,7 +15,7 @@
+ 	$(STRIP) aget
+ 	
+ install:
+-	cp -f aget /usr/local/bin/aget
++	cp -f aget $(PREFIX)/bin/aget
+ 
+ clean: 
+ 	rm -f aget *.o core.* *~

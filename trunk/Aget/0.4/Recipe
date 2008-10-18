@@ -1,0 +1,8 @@
+compile_version=1.10.2
+url="http://www.enderunix.org/aget/aget-0.4.tar.gz"
+file_size=11152
+file_md5=1d32390f5ea2ddd82dfbb1794cdfa92f
+recipe_type=makefile
+makefile='Makefile'
+build_target="all strip"
+make_variables=( "PREFIX=$target" )

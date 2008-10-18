@@ -1,0 +1,87 @@
+For a glibc with TLS, errno and h_errno are defined with __thread, 
+which generates linking errors with these hardcoded externs.
+The externs need to be replaced with appropriate #includes.
+
+diff -Naur aget-0.4/Aget.c aget-0.4.fix1/Aget.c
+--- aget-0.4/Aget.c	2002-11-22 06:10:23.000000000 -0200
++++ aget-0.4.fix1/Aget.c	2008-10-11 11:26:12.538395905 -0300
+@@ -6,6 +6,7 @@
+ #include <unistd.h>
+ #include <time.h>
+ #include <fcntl.h>
++#include <errno.h>
+ 
+ #include <sys/stat.h>
+ #include <sys/types.h>
+@@ -31,8 +32,6 @@
+ extern int bwritten;
+ extern pthread_t hthread;
+ 
+-extern int errno;
+-
+ 
+ void get(struct request *req)
+ {
+diff -Naur aget-0.4/Download.c aget-0.4.fix1/Download.c
+--- aget-0.4/Download.c	2002-11-19 12:00:39.000000000 -0200
++++ aget-0.4.fix1/Download.c	2008-10-11 11:27:47.638182041 -0300
+@@ -11,6 +11,7 @@
+ #include <time.h>
+ #include <signal.h>
+ #include <pthread.h>
++#include <errno.h>
+ 
+ #include <netinet/in.h>
+ 
+@@ -29,8 +30,6 @@
+ extern sigset_t signal_set;
+ 
+ 
+-extern int errno;
+-
+ unsigned int bwritten = 0;
+ pthread_mutex_t bwritten_mutex = PTHREAD_MUTEX_INITIALIZER;
+ 
+diff -Naur aget-0.4/Head.c aget-0.4.fix1/Head.c
+--- aget-0.4/Head.c	2002-11-22 05:38:03.000000000 -0200
++++ aget-0.4.fix1/Head.c	2008-10-11 11:27:27.584583652 -0300
+@@ -10,6 +10,8 @@
+ #include <netdb.h>
+ #include <time.h>
+ #include <pthread.h>
++#include <errno.h>
++#include <netdb.h>
+ 
+ 
+ #include <sys/types.h>
+@@ -30,10 +32,6 @@
+ #include "Misc.h"
+ 
+ 
+-extern int errno;
+-extern int h_errno;
+-
+-
+ void http_head_req(struct request *req)
+ {
+ 	struct sockaddr_in sin;
+diff -Naur aget-0.4/main.c aget-0.4.fix1/main.c
+--- aget-0.4/main.c	2003-06-04 05:42:09.000000000 -0300
++++ aget-0.4.fix1/main.c	2008-10-11 11:25:41.507034423 -0300
+@@ -4,6 +4,7 @@
+ #include <string.h>
+ #include <signal.h>
+ #include <pthread.h>
++#include <errno.h>
+ 
+ 
+ #include "Defs.h"
+@@ -14,8 +15,6 @@
+ #include "Resume.h"
+ #include "main.h"
+ 
+-extern int errno;
+-
+ int main(int argc, char **argv)
+ {
+ 	extern char *optarg;
