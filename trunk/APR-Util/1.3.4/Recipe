@@ -8,3 +8,6 @@ recipe_type=configure
 configure_options=(
     "--with-apr=$apr_path"
 )
+with_mysql="--with-mysql"
+with_openldap="--with-ldap"
+with_sqlite="--with-sqlite3"
