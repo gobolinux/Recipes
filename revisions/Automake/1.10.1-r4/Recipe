@@ -1,0 +1,12 @@
+# Recipe for version 1.10.1 by Giambattista Bloisi <giamby@infinito.it>, on Tue Jan 22 08:53:18 CET 2008
+url=$ftpGnu/automake/automake-1.10.1.tar.lzma
+file_size=829672
+file_md5=2f35bf1b302f74a7d4c7960014c52ad8
+compile_version=1.10.2
+recipe_type=configure
+pre_install() {
+   pushd $target/Shared
+   ln -s automake-1.10 automake
+   ln -s aclocal-1.10 aclocal
+   popd
+}
