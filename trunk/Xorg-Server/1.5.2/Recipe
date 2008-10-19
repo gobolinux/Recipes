@@ -119,7 +119,7 @@ pre_link() {
        private__configure_hal_kdb "${goboSettings}/X11/xorg.conf" "${settings_target}/X11/hal-xorg-kbd.fdi"
        # Comment out RgbPath, as it doesn't mean anything to
        # xorg-server 1.5 and stop it from starting.
-       sed -i 's/\(^ *RgbPath.*\)/#\1/g' "${goboSettings}/X11/xorg.conf"
+       sed -i 's/\(^\W*RgbPath.*\)/#\1/g' "${goboSettings}/X11/xorg.conf"
     fi
     ln -s "${settings_target}/X11/hal-xorg-kbd.fdi" "${target}/Shared/hal/fdi/policy/10osvendor/15-xorg-kbd-setup.fdi"
 }
