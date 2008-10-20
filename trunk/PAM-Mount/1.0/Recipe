@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for PAM-Mount by Michael Homer <michael@gobolinux.org>, on Mon Oct 20 20:17:33 NZDT 2008
+# Recipe for version 1.0 by Michael Homer <michael@gobolinux.org>, on Mon Oct 20 20:17:33 NZDT 2008
+compile_version=1.11.2
+url="$httpSourceforge/pam-mount/pam_mount-1.0.tar.lzma"
+file_size=249355
+file_md5=3963ae85156fe04f389340a1a1415ada
+recipe_type=configure
+make_variables=(
+   "ssbindir=$target/sbin"
+   "moduledir=$target/lib/security"
+)
