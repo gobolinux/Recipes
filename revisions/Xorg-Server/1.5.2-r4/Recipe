@@ -1,0 +1,134 @@
+# Recipe for version 1.5.2 by Giambattista Bloisi <giamby@infinito.it>, on Tue Oct 14 20:41:03 CEST 2008
+# Recipe (MakeRecipe) for Xorg-Server by Hisham Muhammad <lode@gobolinux.org>, on Fri Aug 19 18:49:06 BRT 2005
+compile_version=1.8.5
+urls=(
+   "http://xorg.freedesktop.org/archive/individual/xserver/xorg-server-1.5.2.tar.bz2"
+   "$httpSourceforge/mesa3d/MesaLib-7.2.tar.bz2"
+)
+
+recipe_type=configure
+symlink_options=(--conflicts=overwrite)
+
+configure_options=(
+   "--enable-dri"
+   "--enable-glx"
+   "--enable-glx-tls"
+   "--enable-xgl"
+   "--enable-xglx"
+   "--disable-dmx"
+   "--enable-config-dbus"
+   "--enable-config-hal"
+   "--disable-fontcache"
+   "--disable-secure-rpc"
+   "--enable-multibuffer"
+   "--enable-tslib"
+   "--enable-xorgcfg"
+   --with-module-dir="${goboLibraries}/xorg/modules"
+   --with-dri-driver-path="${goboLibraries}/xorg/modules/dri"
+   --with-mesa-source="${compileSourcesDir}/Mesa-7.2"
+   --with-fontdir="${target}/share/fonts"
+   --enable-install-setuid
+)
+
+install_variables=(
+   appdefaultdir="${target}/share/X11/app-defaults"
+   moduledir="${target}/lib/xorg/modules"
+)
+
+private__configure_hal_kdb() {
+   mkdir -p "$(dirname "${2}")"
+
+   # find out which keyboard identifier is the core keyboard
+   corekeyboard="$(grep CoreKeyboard "${1}" | awk '{ print $2}')"
+
+   sed -n -r -e "
+   /^Section/{
+      # Hold space is an empty line at the beginning. Put first line there
+      # (this will be removed later, it's just for avoiding extra white lines)
+      h
+   :loopsection
+      n
+      # We have found our core keyboard. Read next line and go to keyboard label
+      /Identifier.*"${corekeyboard}"/{
+         n
+         b keyboard
+      }
+      # Not the end of the section. Append any options to the hold space and loop
+      /^EndSection/!{
+         /Option/H
+         b loopsection
+      }
+      # We have reached the end without finding our core keyboard
+      # Delete pattern space and start with next line
+      /EndSection/d
+   :keyboard
+      # For each line not beginning with "EndSection", is not a comment and
+      # contains "Option" we append to the hold space, then move on to next line
+      /^EndSection/!{
+         /^[\ \t]*#/!{
+            /Option/H
+         }
+         n
+         b keyboard
+      }
+      # We have reached the end of the core keyboard section. Append
+      # "EndSection", get the hold space, insert '<!--' before our pattern
+      # space, print it, insert '-->' and xml start tags, append xml closing
+      # tags, finally do our substitutions and print the result
+      /^EndSection/{
+         H
+         g
+         i\
+<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\
+<!--
+         p
+         i\
+-->\n\
+<deviceinfo version=\"0.2\">\n\
+   <match key=\"info.capabilities\" contains=\"input.keyboard\">
+         a\
+\   </match>\n\
+</deviceinfo>\n
+         # Here we remove the "Section" and "EndSection" lines
+         s/.*Section[^\n]*\n//g
+         s/\n[^\n]*EndSection[^\n]*//g
+      
+         # Here are all matching rules: first we look for our keyword and
+         # arbitrary long white space. After that the key we're looking for is
+         # the negation of the white space match. Break matching at newlines.
+         s/[^\n]*XkbRules[\ \t\"]*([^[\ \t\"]*]*)[^\n]*/      <merge key=\"input.x11_options.XkbRules\" type=\"string\">\1<\/merge>/g
+         s/[^\n]*XkbLayout[\ \t\"]*([^[\ \t\"]*]*)[^\n]*/      <merge key=\"input.x11_options.XkbLayout\" type=\"string\">\1<\/merge>/g
+         s/[^\n]*XkbVariants[\ \t\"]*([^[\ \t\"]*]*)[^\n]*/ <merge key=\"input.x11_options.XkbVariant\" type=\"string\">\1<\/merge>/g
+         s/[^\n]*XkbOptions[\ \t\"]*([^[\ \t\"]*]*)[^\n]*/      <merge key=\"input.x11_options.XkbOptions\" type=\"string\">\1<\/merge>/g
+         s/[^\n]*XkbModel[\ \t\"]*([^[\ \t\"]*]*)[^\n]*/      <merge key=\"input.x11_options.XkbModel\" type=\"string\">\1<\/merge>/g
+         p
+      }
+   }" "${1}" > "${2}"
+}
+
+pre_link() {
+    pushd $target/bin >& /dev/null
+    $sudo_exec chmod +s X*
+    popd >& /dev/null
+
+    # install fdi file for HAL
+    install -D ${dir}/config/x11-input.fdi ${target}/Shared/hal/fdi/information/10freedesktop/x11-input.fdi
+    mkdir -p "${target}/Shared/hal/fdi/policy/10osvendor/"
+    # generate HAL configuration from xorg.conf
+    if [ -f "${goboSettings}/X11/xorg.conf" ]
+    then
+       private__configure_hal_kdb "${goboSettings}/X11/xorg.conf" "${settings_target}/X11/hal-xorg-kbd.fdi"
+       # Comment out RgbPath, as it doesn't mean anything to
+       # xorg-server 1.5 and stop it from starting.
+       sed -i 's/\(^\W*RgbPath.*\)/#\1/g' "${goboSettings}/X11/xorg.conf"
+    fi
+    ln -s "${settings_target}/X11/hal-xorg-kbd.fdi" "${target}/Shared/hal/fdi/policy/10osvendor/15-xorg-kbd-setup.fdi"
+}
+file_sizes=(
+5615666
+3341919
+)
+file_md5s=(
+376a1c790f7519f3ab3e047409c659f0
+04d379292e023df0b0266825cb0dbde5
+)
