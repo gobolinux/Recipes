@@ -1,0 +1,16 @@
+[Name] PAM-Mount
+[Summary] PAM module to mount filesystems on login
+[Description] pam_mount is a Pluggable Authentication Module that can mount volumes for a user session
+
+This module is aimed at environments with central file servers that a user wishes to mount on login and unmount on logout, such as (semi-)diskless stations where many users can logon and where statically mounting the entire /home from a server is a security risk, or listing all possible volumes in /etc/fstab is not feasible.
+
+    * Users can define their own list of volumes without having to change (possibly non-writable) global config files.
+    * Single sign-on feature — the user needs to type the password just once
+    * Transparent mount process
+    * No stored passwords
+    * Volumes are unmounted on logout, freeing system resources and not leaving data exposed.
+
+The module also supports mounting local filesystems of any kind the normal mount utility supports, with extra code to make sure certain volumes are set up properly because often they need more than just a mount call, such as encrypted volumes. This includes SMB/CIFS, NCP, FUSE, dm-crypt and LUKS.
+
+[License] GPL 2
+[Homepage] http://pam-mount.sourceforge.net/
