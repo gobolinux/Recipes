@@ -1,0 +1,13 @@
+[Name] Haskell-QuickCheck
+[Summary] Automatic testing of Haskell programs
+[Description] A library for testing Haskell programs automatically.
+	The programmer provides a specification of the program, in
+	the form of properties which functions should satisfy, and
+	QuickCheck then tests that the properties hold in a large number
+	of randomly generated cases.  Specifications are expressed in
+	Haskell, using combinators defined in the QuickCheck library.
+	QuickCheck provides combinators to define properties, observe
+	the distribution of test data, and define test
+	data generators.
+[License] BSD3
+[Homepage] http://www.math.chalmers.se/~rjmh/QuickCheck/
