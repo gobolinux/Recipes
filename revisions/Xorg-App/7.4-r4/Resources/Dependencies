@@ -1,0 +1,9 @@
+Firefox [xrx] # XUL engine needed for X Remote eXecution
+GConf [gconf,gnome]
+GTK+ >= 2.0.0 [gconf,gnome]# Needed by GRandR
+InetUtils # Needed for xsm
+LibDRM >= 2.3.1 # Temp dep
+LibPNG >= 1.2 # Needed by xcursorgen
+Linux-PAM [pam] # Needed by xdm
+Mesa >= 7.2 # Needed by xdriinfo
+Xorg-Lib >= 7.4
