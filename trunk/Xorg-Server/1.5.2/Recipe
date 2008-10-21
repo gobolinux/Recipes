@@ -7,7 +7,7 @@ urls=(
 )
 
 recipe_type=configure
-symlink_options=(--conflicts=overwrite)
+symlink_options=(--conflict=overwrite)
 
 configure_options=(
    "--enable-dri"
