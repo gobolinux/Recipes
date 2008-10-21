@@ -1,0 +1,38 @@
+# Recipe for version 0.9.13 by Giambattista Bloisi <giamby@infinito.it>, on Sun Oct 19 16:21:05 CEST 2008
+# Recipe (MakeRecipe) for PulseAudio by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Mar 2 16:47:14 PST 2008
+compile_version=1.10.1
+url="http://0pointer.de/lennart/projects/pulseaudio/pulseaudio-0.9.13.tar.gz"
+file_size=1308493
+file_md5=279fb92f08393a6a992d55e3ac9a006b
+recipe_type=configure
+autogen_before_configure=yes
+autogen=bootstrap.sh
+configure_options=(
+  --disable-ltdl-install
+  --disable-samplerate    #Disable optional libsamplerate support
+  --disable-oss           #Disable optional OSS support
+  --disable-alsa          #Disable optional ALSA support
+  --disable-solaris       #Disable optional Solaris audio support
+  --disable-glib2         #Disable optional GLib 2 support
+  --disable-gconf         #Disable optional GConf support
+  --disable-avahi         #Disable optional Avahi support
+  --disable-jack          #Disable optional JACK support
+  --disable-asyncns       #Disable optional Async DNS support
+  --disable-tcpwrap       #Disable optional TCP wrappers support
+  --disable-lirc          #Disable optional LIRC support
+  --disable-hal           #Disable optional HAL support
+  --disable-bluez         #Disable optional BlueZ support
+  --disable-dbus          #Disable optional D-Bus support
+  --disable-polkit        #Disable optional PolicyKit support
+)
+with_alsa="--enable-alsa"
+with_avahi="--enable-avahi"
+with_bluez="--enable-bluez"
+with_dbus="--enable-dbus"
+with_gconf="--enable-gconf"
+with_glib2="--enable-glib2"
+with_hal="--enable-hal"
+with_lirc="--enable-lirc"
+with_jack="--enable-jack"
+with_samplerate="--enable-samplerate"
+with_tcpwrap="--enable-tcpwrap"
