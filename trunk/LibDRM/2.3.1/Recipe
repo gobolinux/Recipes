@@ -5,4 +5,4 @@ url="http://dri.freedesktop.org/libdrm/libdrm-2.3.1.tar.bz2"
 file_size=306013
 file_md5=620fe7dd02c3236c3e9881a3a238173d
 recipe_type=configure
-symlink_options=(--conflicts=overwrite)
+symlink_options=(--conflict=overwrite)
