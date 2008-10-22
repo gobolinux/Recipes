@@ -1,0 +1,14 @@
+# by Carlo Calica
+# 2004.01.06 16:54
+
+url=http://www.ijg.org/files/jpegsrc.v6b.tar.gz
+file_size="613261"
+file_md5="dbd5f3b47ed13132f04c685d608a7547"
+dir=jpeg-6b
+compile_version=1.8.0
+recipe_type=configure
+#needs_safe_linking=yes
+
+configure_options=(
+   "--enable-shared"
+)
