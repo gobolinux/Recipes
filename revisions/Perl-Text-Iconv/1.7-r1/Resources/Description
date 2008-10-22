@@ -1,0 +1,9 @@
+[Name] Perl-Text-Iconv
+[Summary] Perl interface to iconv() codeset conversion function
+[Description] The Text::Iconv module provides a Perl interface to the
+iconv() function as defined by the Single UNIX Specification.
+The convert() method converts the encoding of characters in the input
+string from the fromcode codeset to the tocode codeset, and returns
+the result.
+[License] Perl (Artistic/GPL)
+[Homepage] http://search.cpan.org/~mpiotr/Text-Iconv-1.7/Iconv.pm
