@@ -1,0 +1,95 @@
+This patch set fixes the build errors with gcc 4.1; courtesy of
+Martin Michlmayr.
+
+--- ./libGIFTAcInvertedFile/include/CInvertedFileChunk.h~	2006-03-12 16:38:18.000000000 +0000
++++ ./libGIFTAcInvertedFile/include/CInvertedFileChunk.h	2006-03-12 16:38:24.000000000 +0000
+@@ -73,8 +73,7 @@
+  * add one document of to the list for one feature 
+  *
+  */
+-  void CInvertedFileChunk::addElement(TID inDocumentID,
+-				      double inDocumentFrequency);
++  void addElement(TID inDocumentID, double inDocumentFrequency);
+ 
+ /**
+  * 
+--- ./libMRML/include/CAttributeList.h~	2006-03-12 16:16:42.000000000 +0000
++++ ./libMRML/include/CAttributeList.h	2006-03-12 16:17:25.000000000 +0000
+@@ -79,7 +79,7 @@
+   virtual pair<bool,string> stringReadAttribute(const string& inAttribute)const;
+   /** Outputting a string to XML 
+    */
+-  void CAttributeList::toXML(string& outString)const;
++  void toXML(string& outString)const;
+   /** the destructor 
+       in the case of char* as content it deletes the arrays of char.
+    */
+--- ./libMRML/include/CAccessorAdmin.h~	2006-03-12 16:19:53.000000000 +0000
++++ ./libMRML/include/CAccessorAdmin.h	2006-03-12 16:19:58.000000000 +0000
+@@ -111,11 +111,11 @@
+   /** destructor */
+   ~CAccessorAdmin();
+   /**  */
+-  string CAccessorAdmin::getAlgorithmIDListID()const;
++  string getAlgorithmIDListID()const;
+   /**  */
+-  string CAccessorAdmin::getName()const;
++  string getName()const;
+   /**  */
+-  string CAccessorAdmin::getID()const;
++  string getID()const;
+ 
+   /** for sorting */
+   friend class CSortByName_pAP;
+--- ./libMRML/include/CSessionManager.h~	2006-03-12 16:21:51.000000000 +0000
++++ ./libMRML/include/CSessionManager.h	2006-03-12 16:23:51.000000000 +0000
+@@ -172,18 +172,18 @@
+   bool rename(const string& inName);
+   /** the list of preferred languages of this 
+       is cleared */
+-  void CSession::clearLanguages();
++  void clearLanguages();
+   /** one language code is added at the back of the list
+       of preferred languages */
+-  void CSession::addLanguage(string inLanguageCode);
++  void addLanguage(string inLanguageCode);
+   /** commit the list of languages. That means, here the
+       actual language that will be used throughout the 
+       translation is determined */
+-  void CSession::commitLanguages(const CI18nTranslator& inTranslator);
++  void commitLanguages(const CI18nTranslator& inTranslator);
+   /** get the preferred languages of this session */
+-  list<string> CSession::getLanguages()const;
++  list<string> getLanguages()const;
+   /** get the preferred languages of this session */
+-  string CSession::getPreferredLanguage()const;
++  string getPreferredLanguage()const;
+ 
+   //--------------------------------------------------
+   /**  generating XML output for configuration/shandshake */
+@@ -420,7 +420,7 @@
+   /** i18n: get the list of preferred languages of this session */
+   list<string> getSessionLanguages(const string& inSessionID)const;
+   /** i18n: get the list of preferred languages of this session */
+-  void CSessionManager::translate(string inSessionID,
++  void translate(string inSessionID,
+ 				  CXMLElement& inoutToBeTranslated)const;
+ };
+ 
+--- ./libMRML/include/CI18nTranslator.h~	2006-03-12 16:22:55.000000000 +0000
++++ ./libMRML/include/CI18nTranslator.h	2006-03-12 16:23:02.000000000 +0000
+@@ -98,11 +98,11 @@
+   void translateXMLTree(string inLanguageCode,
+ 			CXMLElement& inoutToBeTranslated)const;
+   /** for parsing the config file */
+-  static void CI18nTranslator::startXMLElement(void *inUserData, 
++  static void startXMLElement(void *inUserData, 
+ 					       const char *inElementName, 
+ 					       const char **inAttributes);
+   /** for parsing the config file */
+-  static void CI18nTranslator::endXMLElement(void *inUserData, 
++  static void endXMLElement(void *inUserData, 
+ 					     const char *inElementName);
+ };
+ #endif
+

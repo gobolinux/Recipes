@@ -1,0 +1,11 @@
+--- gift-0.1.14/libGIFTAcDistanceMatrix/include/CPersistentTranslatedIndexMatrix.h.old	2008-10-23 00:22:49.000000000 +0200
++++ gift-0.1.14/libGIFTAcDistanceMatrix/include/CPersistentTranslatedIndexMatrix.h	2008-10-23 00:22:37.000000000 +0200
+@@ -76,7 +76,7 @@
+ 		     CIDContentPairList& outList)const;
+   ///
+   bool setValue(const TTID& inX,
+-		const TTID& inX,
++		const TTID& iny,
+ 		const TTContent& inValue)const;
+   ///
+   operator bool()const;
