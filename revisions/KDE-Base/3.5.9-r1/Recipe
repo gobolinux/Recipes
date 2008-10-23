@@ -10,11 +10,12 @@ create_dirs_first=yes
 
 pre_build() {
   ln -sf ${KDE-Libs_path}/3.5.9/include/kbookmarknotifier.h $target/include/kbookmarknotifier.h
+  GrepReplace "XBINDIR" "$goboEecutables" kdm/config.def
 }
 
 post_install() {
   rm -f $target/include/kbookmarknotifier.h
-  GrepReplace "$goboPrograms/Xorg[^/]*/[^/]*/" "/usr/" $target/Shared/config/kdm/kdmrc
+#  GrepReplace "$goboPrograms/Xorg[^/]*/[^/]*/" "/usr/" $target/Shared/config/kdm/kdmrc
 }
 
 configure_options=(
