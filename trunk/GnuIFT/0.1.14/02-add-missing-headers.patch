@@ -1,0 +1,39 @@
+>>>> On Tue, 10 May 2005 23:59:36 +0100, Debian/IA64 non-US Build Daemon <buildd@caballero.debian.org> said:
+
+ > Function `malloc' implicitly converted to pointer at rgb2hsv_utils.c:186
+ > Function `malloc' implicitly converted to pointer at quantize.c:29
+
+These are caused by a missing include of <stdlib.h> and, if reachable
+at all, will cause a segfault on some arches (such as ia64) due to
+pointer truncation (implicit "int" return value gets sign-extended to
+64-bit pointer, which results in a crash if theh value is
+dereferenced).
+
+You can use the following script to filter build logs and check for
+these types of errors:
+
+ http://people.debian.org/~dannf/check-implicit-pointer-functions
+
+The attached patch fixes the problems.
+
+Thanks,
+
+	--david
+
+--- gift-0.1.14/FeatureExtraction/rgb2hsv_utils.c~	2002-07-22 00:09:28.000000000 -0700
++++ gift-0.1.14/FeatureExtraction/rgb2hsv_utils.c	2005-05-11 02:18:15.000000000 -0700
+@@ -1,4 +1,5 @@
+ #include <stdio.h>
++#include <stdlib.h>
+ #include <math.h>
+ #include "ppm.h"
+ 
+--- gift-0.1.14/FeatureExtraction/quantize.c~	2002-07-22 00:09:28.000000000 -0700
++++ gift-0.1.14/FeatureExtraction/quantize.c	2005-05-11 02:18:24.000000000 -0700
+@@ -1,4 +1,5 @@
+ #include <math.h>
++#include <stdlib.h>
+ #include <ppm.h>
+ 
+ enum ppm_error hsv_quantize_ppm(PPM *im_hsv, PPM **im_quant, int **colmap, int numH, int numS, int numV, int numG) {
+
