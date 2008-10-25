@@ -1,0 +1,7 @@
+# Recipe (MakeRecipe) for VLC by Michael Homer <michael@gobolinux.org>, on Sat Oct 25 16:05:58 NZDT 2008
+# Recipe for version git by Michael Homer <michael@gobolinux.org>, on Sat Oct 25 16:05:58 NZDT 2008
+compile_version=1.11.3rc1
+git="git://git.videolan.org/vlc.git"
+recipe_type=configure
+autogen_before_configure=yes
+autogen=bootstrap
