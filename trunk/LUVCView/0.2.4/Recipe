@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for LUVCView by Michael Homer <michael@gobolinux.org>, on Tue Oct 21 22:07:35 NZDT 2008
+# Recipe for version 0.2.4 by Michael Homer <michael@gobolinux.org>, on Tue Oct 21 22:07:35 NZDT 2008
+compile_version=1.11.2
+url="http://ftp.de.debian.org/debian/pool/main/l/luvcview/luvcview_0.2.4.orig.tar.gz"
+file_size=93756
+file_md5=23b429a8be844f52bbbddf67027e64f6
+dir='luvcview-0.2.4'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+  "BIN=$target/bin"
+)
