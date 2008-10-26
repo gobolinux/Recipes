@@ -1,0 +1,20 @@
+# Recipe for version 0.8.7 by Michael Homer <michael@gobolinux.org>, on Sat Oct 25 14:16:09 NZDT 2008
+# Recipe (MakeRecipe) for Kaffeine by Maglan C. Diemer, maglan@univates.br, on Seg Ago 22 09:13:58 BRT 2005
+compile_version=1.8.5
+url="$httpSourceforge/kaffeine/kaffeine-0.8.7.tar.bz2"
+file_size=2973819
+file_md5=3ce644c3c5a9583e9df7187f2cf1d8de
+recipe_type=configure
+configure_options=(
+    "--without-gstreamer"
+    "--disable-libsuffix"
+    "--with-xcb"
+    "--with-lame"
+    "--with-oggvorbis"
+)
+
+pre_build() {
+   GrepReplace "\$dir/moc" "\$dir/moc-qt3" configure
+   GrepReplace "\$dir/uic" "\$dir/uic-qt3" configure
+}
+
