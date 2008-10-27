@@ -1,0 +1,22 @@
+Don't use FreeBSD's native off_t for z_off_t, as it may be too large
+for zlib.
+
+diff -Naur zlib-1.2.3-org/zconf.in.h zlib-1.2.3/zconf.in.h
+--- zlib-1.2.3-org/zconf.in.h	2005-05-28 06:40:35.000000000 +0000
++++ zlib-1.2.3/zconf.in.h	2008-10-27 18:18:48.000000000 +0000
+@@ -297,6 +297,15 @@
+ #  define SEEK_CUR        1       /* Seek from current position.  */
+ #  define SEEK_END        2       /* Set file pointer to EOF plus "offset" */
+ #endif
++
++/*
++ * This is hard-configured for FreeBSD, since zlib doesn't actually support
++ * using the system off_t for offsets unless off_t is no longer than long.
++ * To minimize the diff, we just "undef z_off_t" rather than modifying
++ * the following lines.
++ */
++#undef z_off_t
++
+ #ifndef z_off_t
+ #  define z_off_t long
+ #endif
