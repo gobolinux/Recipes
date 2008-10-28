@@ -20,7 +20,10 @@ manifest=(
 	"bashburnrc:Resources/Defaults/Settings/bashburnrc"
 )
 
+pre_install () {
+    GrepReplace "BBROOTDIR:.*" "BBROOTDIR: $target/share/BashBurn" bashburnrc
+}
+
 pre_link () {
-	GrepReplace "BBROOTDIR:.*" "BBROOTDIR: $target/share/BashBurn" bashburnrc
 	ln -s $target/Shared/BashBurn/BashBurn.sh $target/bin/bashburn
 }
