@@ -9,3 +9,8 @@ configure_options=(
  '--disable-libsuffix'
 )
 
+pre_build() {
+   GrepReplace "\$dir/moc" "\$dir/moc-qt3" configure
+   GrepReplace "\$dir/uic" "\$dir/uic-qt3" configure
+}
+
