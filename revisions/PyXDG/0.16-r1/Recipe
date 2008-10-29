@@ -1,0 +1,11 @@
+# Recipe for version 0.16 by Michael Homer <michael@gobolinux.org>, on Thu Oct 30 12:51:29 NZDT 2008
+# Recipe (MakeRecipe) for PyXDG by Nathan Middleton, on Mon Oct 22 15:26:35 CDT 2007
+compile_version=1.9.0
+url="http://www.freedesktop.org/~lanius/pyxdg-0.16.tar.gz"
+file_size=37284
+file_md5=55b71ec0df9509e05e562ac402b119f7
+recipe_type=python
+
+environment=(
+    "PYTHONPATH=.:${goboLibraries}/python2.5/site-packages"
+)
