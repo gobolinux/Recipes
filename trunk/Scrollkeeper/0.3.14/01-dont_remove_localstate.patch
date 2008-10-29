@@ -1,0 +1,20 @@
+--- scrollkeeper-0.3.14/Makefile.in	2003-12-06 09:17:51.000000000 +0100
++++ scrollkeeper-0.3.14/Makefile.in.new	2008-10-18 21:30:14.000000000 +0200
+@@ -670,7 +670,6 @@
+ 
+ # Build/rebuild the catalog
+ install-data-hook:
+-	rm -rf $(DESTDIR)$(scrollkeeper_localstate_dir)
+ 	$(mkinstalldirs) $(DESTDIR)$(scrollkeeper_localstate_dir)
+ 	$(mkinstalldirs) $(DESTDIR)$(localstatedir)/log
+ 	PATH="$(PATH):$(DESTDIR)$(bindir)" ; \
+--- scrollkeeper-0.3.14/Makefile.am	2003-12-06 09:16:48.000000000 +0100
++++ scrollkeeper-0.3.14/Makefile.am.new	2008-10-18 21:38:44.000000000 +0200
+@@ -29,7 +29,6 @@
+ 
+ # Build/rebuild the catalog
+ install-data-hook:
+-	rm -rf $(DESTDIR)$(scrollkeeper_localstate_dir)
+ 	$(mkinstalldirs) $(DESTDIR)$(scrollkeeper_localstate_dir)
+ 	$(mkinstalldirs) $(DESTDIR)$(localstatedir)/log
+ 	PATH="$(PATH):$(DESTDIR)$(bindir)" ; \

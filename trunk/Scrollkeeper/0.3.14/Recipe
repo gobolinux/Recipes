@@ -6,17 +6,14 @@ file_size=546059
 file_md5=b175e582a6cec3e50a9de73a5bb7455a
 recipe_type=configure
 configure_options=(
-   "--with-xml-catalog=$goboVariable/lib/xml/catalog"
-)
-unmanaged_files=(
-    "${goboVariable}/lib/scrollkeeper"
-    "${goboVariable}/log/scrollkeeper.log"
-    "${goboVariable}/lib/xml"
+   --with-xml-catalog="${goboVariable}/lib/xml/catalog"
+   --with-omfdirs="${goboShared}/omf"
 )
 
-pre_install() {
-    rm -rf "${goboVariable}/lib/scrollkeeper"
-    mkdir -m 0755 -p "${target}/Resources/Unmanaged/${goboVariable}/lib/scrollkeeper"
-    mkdir -m 0755 -p "${target}/Resources/Unmanaged/${goboVariable}/log"
-    touch "${target}/Resources/Unmanaged/${goboVariable}/log/scrollkeeper.log"
+unmanaged_files=(
+    "${goboVariable}/lib/scrollkeeper/"
+    "${goboVariable}/log/scrollkeeper.log"
+)
+pre_link() {
+   sed -i 's,OMF_DIR=.*,OMF_DIR='"${goboShared}"'/omf,' "${target}/Resources/Defaults/Settings/scrollkeeper.conf"
 }
