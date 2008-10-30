@@ -1,7 +1,7 @@
 # Recipe for version 2.5.2 by Giambattista Bloisi <giamby@infinito.it>, on Wed Oct 22 21:48:44 CEST 2008
 # Recipe (NewVersion) for version 2.4.0 by João Felipe Santos <joao.eel@gmail.com> on Mar 31 2008.
 # Recipe (MakeRecipe) for Pidgin by Jonas Karlsson <jonka750@student.liu.se>, on Sat May 5 01:40:29 CEST 2007
-compile_version=1.11.0
+compile_version=1.11.3
 url="http://downloads.sourceforge.net/pidgin/pidgin-2.5.2.tar.bz2"
 file_size=8059006
 file_md5=4a712f6fd3d2e25c07ccff1fc350c6ea
@@ -27,20 +27,14 @@ configure_options=(
    "--disable-pango"
 )
 
-with_curses="--enable-consoleui"
 with_ncurses="--enable-consoleui"
 with_pango="--enable-pango"
 with_cyrus_sasl="--enable-cyrus-sasl"
 with_rtl="--enable-pango"
 with_gnutls="--enable-gnutls"
-with_ssl="--enable-gnutls"
 with_gtk="--enable-gtkui"
-with_gui="--enable-gtkui"
-with_x11="--enable-gtkui"
 with_meanwhile="--enable-meanwhile"
-with_sametime="--enable-meanwhile"
 with_avahi="--enable-avahi"
-with_bonjour="--enable-avahi"
 with_mono="--enable-mono"
 with_nss="--enable-nss"
 with_networkmanager="--enable-nm"
@@ -48,27 +42,10 @@ with_sqlite="--enable-cap"
 with_perl="--enable-perl"
 with_gstreamer="--enable-gstreamer"
 
-
-# The below constructs are workarounds for Compile not handling
-# multiple arguments inside with_foo variables. The using_foo()
-# should be switched to their corresponding with_foo as soon as
-# Compile support that.
 with_tcl="--enable-tcl"
-#with_tk="--enable-tk --enable-tcl"
-using_tk() {
-    configure_options=("${configure_options[@]}" "--enable-tk" "--enable-tcl")
-}
-
-#with_dbus="--enable-dbus --with-dbus-services='${goboShared}/dbus-1/services'"
-using_dbus() {
-    configure_options=("${configure_options[@]}" --enable-dbus --with-dbus-services="${goboShared}/dbus-1/services" )
-}
-
-#with_gtkspell="--enable-gtkspell --enable-gtkui"
-using_gtkspell() {
-    configure_options=("${configure_options[@]}" --enable-gtkspell --enable-gtkui)
-}
-
+with_tk=(--enable-tk --enable-tcl)
+with_dbus=(--enable-dbus --with-dbus-services='${goboShared}/dbus-1/services')
+with_gtkspell=(--enable-gtkspell --enable-gtkui)
 
 make_variables=(
     DESTINSTALLARCHLIB="$target/lib/perl5/`echo $perl_path | sed 's,/\(.*\)/\(.*\)/\(.*\),\3,g'`/i686-linux"
