@@ -1,0 +1,8 @@
+# Recipe for version 2.4.1 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Oct 31 11:13:13 CET 2008
+# Recipe (MakeRecipe) for LibDRM by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jan 9 17:56:36 BRST 2.4.16
+compile_version=1.8.2
+url="http://dri.freedesktop.org/libdrm/libdrm-2.4.1.tar.bz2"
+file_size=338907
+file_md5=05feb4c5a48f1f0870a7cbe7617d6cf7
+recipe_type=configure
+symlink_options=(--conflict=overwrite)
