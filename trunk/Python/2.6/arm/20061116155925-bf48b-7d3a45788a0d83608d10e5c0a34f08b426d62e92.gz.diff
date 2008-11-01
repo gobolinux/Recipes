@@ -1,0 +1,17 @@
+Thu Nov 16 16:59:25 CET 2006  hanwen@lilypond.org
+  * don't try importing if CROSS_COMPILING is set
+diff -rN -u old-Python-2.5.cross/setup.py new-Python-2.5.cross/setup.py
+--- old-Python-2.5.cross/setup.py	2006-11-16 17:47:44.000000000 +0100
++++ new-Python-2.5.cross/setup.py	2006-11-16 17:47:44.000000000 +0100
+@@ -210,6 +210,10 @@
+             self.announce('WARNING: skipping import check for Cygwin-based "%s"'
+                 % ext.name)
+             return
++        if os.environ.get('CROSS_COMPILING') == 'yes':
++            self.announce('WARNING: skipping import check for cross compiled "%s"'
++                % ext.name)
++            return
+         ext_filename = os.path.join(
+             self.build_lib,
+             self.get_ext_filename(self.get_ext_fullname(ext.name)))
+
