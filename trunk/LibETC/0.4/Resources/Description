@@ -1,0 +1,5 @@
+[Name] LibETC
+[Summary] LD_PRELOAD module to redirect ~/.* into XDG_CONFIG_HOME
+[Description] LD_PRELOAD module to redirect access to dotfiles in your home directory into access to similarly-named non-dotfiles in XDG_CONFIG_HOME (~/.config).
+[License] GNU General Public License version 3
+[Homepage] http://www.ordiluc.net/fs/libetc/
