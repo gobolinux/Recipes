@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for KDE-Plasma-Addons by Giambattista Bloisi <giamby@infinito.it>, on Sat Nov 1 17:09:32 CET 2008
+# Recipe for version 4.1.2 by Giambattista Bloisi <giamby@infinito.it>, on Sat Nov 1 17:09:32 CET 2008
+compile_version=1.11.3
+url="http://download.kde.org/stable/4.1.2/src/kdeplasma-addons-4.1.2.tar.bz2"
+file_size=4075290
+file_md5=84dc8f919d0a1e9bb1e1e2e499d80156
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+-DWITH_OpenGL=OFF
+)
+
+with_mesa="-DWITH_OpenGL=ON"
