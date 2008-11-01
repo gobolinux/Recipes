@@ -1,0 +1,15 @@
+# Recipe for version 38064 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Nov 1 21:40:03 CET 2008
+# Recipe (MakeRecipe) for WebKit by Daniele Maccari <daniele.maccari@gmail.com>, on Wed Feb 13 11:45:17 CET 2008
+compile_version=1.10.1
+url="http://builds.nightly.webkit.org/files/trunk/src/WebKit-r38064.tar.bz2"
+file_size=9758010
+file_md5=5faaeded024077c0fbc84c59c4a7f132
+recipe_type=configure
+autogen_before_configure=yes
+makefile='GNUmakefile'
+configure_options=(
+   --enable-video
+   --enable-svg-filters
+   --enable-fast-malloc
+)
+with_pango="--with-font-backend=pango"
