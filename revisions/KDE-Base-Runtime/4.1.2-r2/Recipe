@@ -1,0 +1,12 @@
+# Recipe for version 4.1.2 by Giambattista Bloisi <giamby@infinito.it>, on Mon Oct 27 13:08:38 CET 2008
+# Recipe (MakeRecipe) for KDE-Base-Runtime by Giambattista Bloisi <giamby@infinito.it>, on Sat Jan 12 18:42:50 CET 2008
+compile_version=1.10.0
+url="http://download.kde.org/stable/4.1.2/src/kdebase-runtime-4.1.2.tar.bz2"
+file_size=52199670
+file_md5=1f17bdfa4bee4bf1c7afc2bd5bdbae59
+file="kdebase-runtime-4.1.2.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
