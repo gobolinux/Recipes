@@ -9,13 +9,4 @@ recipe_type=cmake
 
 cmake_options=(
 -DCMAKE_BUILD_TYPE=Release
--DWITH_XKB=ON
--DWITH_OpenGL=OFF
--DWITH_PCIUTILS=OFF
--DWITH_RAW1394=OFF
-#-DWITH_GLIB2=OFF
--DWITH_Nepomuk=OFF
-#-DWITH_WebKitKde=OFF
 )
-with_mesa="-DWITH_OpenGL=ON"
-with_pciutils="-DWITH_PCIUTILS=ON"
