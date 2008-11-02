@@ -9,13 +9,9 @@ recipe_type=cmake
 
 cmake_options=(
 -DCMAKE_BUILD_TYPE=Release
--DWITH_OpenGL=OFF
--DWITH_Xscreensaver=OFF
 )
 
-with_mesa="-DWITH_OpenGL=ON"
 with_xscreensaver=(
-    "-DWITH_Xscreensaver=ON"
     "-DXSCREENSAVER_DIR=$xscreensaver_path"
     "-DXSCREENSAVER_CONFIG_DIR=$xscreensaver_settings_path"
 )
