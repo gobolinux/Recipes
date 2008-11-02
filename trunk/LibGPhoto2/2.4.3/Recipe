@@ -1,0 +1,14 @@
+# Recipe for version 2.4.3 by Giambattista Bloisi <giamby@infinito.it>, on Sun Nov 2 19:19:58 CET 2008
+compile_version=1.8.2
+url=$httpSourceforge/gphoto/libgphoto2-2.4.3.tar.gz
+file_size=6324500
+file_md5=ebbc7f682e19f2cd9f3abb486f7b56fa
+recipe_type=configure
+
+#pre_build() {
+#   mkdir gphoto2
+#   for i in libgphoto2/* libgphoto2_port/libgphoto2_port/* 
+#   do 
+#      ln -sfn `readlink -f $i` gphoto2/
+#   done
+#}
