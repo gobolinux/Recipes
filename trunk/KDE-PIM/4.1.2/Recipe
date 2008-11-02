@@ -1,0 +1,14 @@
+# Recipe for version 4.1.2 by Giambattista Bloisi <giamby@infinito.it>, on Mon Oct 27 18:08:04 CET 2008
+# by Maglan C. Diemer && Andre Detsch
+compile_version=1.10.0
+url="http://download.kde.org/stable/4.1.2/src/kdepim-4.1.2.tar.bz2"
+file_size=13168170
+file_md5=484b3b9685ecd258d0c562c5b0fce297
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+-DKDEPIMLIBS_PATH="$kde_pim_libs_path"
+-DWITH_Opensync=OFF # disabled as it causes compile errors
+)
+
