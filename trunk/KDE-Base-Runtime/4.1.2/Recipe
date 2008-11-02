@@ -9,21 +9,4 @@ recipe_type=cmake
 
 cmake_options=(
 -DCMAKE_BUILD_TYPE=Release
--DWITH_Samba=OFF
--DWITH_BZip2=OFF
--DWITH_OpenEXR=OFF
--DWITH_Alsa=OFF
--DWITH_Xine=ON
--DWITH_XCB=ON
--DWITH_Nepomuk=OFF
--DWITH_Soprano=OFF
-
 )
-with_samba="-DWITH_Samba=ON"
-with_bzip="-DWITH_BZip2=ON"
-with_openexr="-DWITH_OpenEXR=ON"
-with_alsa="-DWITH_Alsa=ON"
-#without_xcb="-DWITH_XCB=OFF"
-with_nepomuk="-DWITH_Nepomuk=ON"
-with_soprano="-DWITH_Soprano=ON"
-
