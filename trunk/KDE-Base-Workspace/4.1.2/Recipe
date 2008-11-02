@@ -9,24 +9,4 @@ recipe_type=cmake
 
 cmake_options=(
 -DCMAKE_BUILD_TYPE=Release
--DWITH_USB=OFF
--DWITH_OpenGL=OFF
--DWITH_Sensors=OFF
--DWITH_LibXKlavier=OFF
--DWITH_NetworkManager=OFF
--DWITH_BlueZ=OFF
--DWITH_Xmms=OFF
--DWITH_Soprano=OFF
-
 )
-with_libusb="-DWITH_USB=ON"
-with_mesa="-DWITH_OpenGL=ON"
-with_lm_sensors="-DWITH_Sensors=ON"
-with_libxklavier="-DWITH_LibXKlavier=ON"
-with_networkmanager="-DWITH_NetworkManager=ON"
-with_bluez="-DWITH_BlueZ=ON"
-with_xmms="-DWITH_Xmms=ON"
-with_soprano="-DWITH_Soprano=ON"
-
-
-
