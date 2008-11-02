@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for PyCUPS by Giambattista Bloisi <giamby@infinito.it>, on Sun Nov 2 18:21:45 CET 2008
+# Recipe for version 1.9.42 by Giambattista Bloisi <giamby@infinito.it>, on Sun Nov 2 18:21:45 CET 2008
+compile_version=1.11.3
+url="http://cyberelk.net/tim/data/pycups/pycups-1.9.42.tar.bz2"
+file_size=39157
+file_md5=030379d4accc18c402cd1ec367524a3b
+recipe_type=python
+
+environment=(
+CFLAGS="$CFLAGS -DVERSION=\\\"1.9.42\\\""
+)
