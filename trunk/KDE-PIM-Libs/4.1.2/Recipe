@@ -8,8 +8,4 @@ recipe_type=cmake
 
 cmake_options=(
 -DCMAKE_BUILD_TYPE=Release
--DWITH_Ldap=OFF
--DWITH_Sasl2=OFF
 )
-with_openldap="-DWITH_Ldap=ON"
-with_cyrus_sasl="-DWITH_Sasl2=ON"
