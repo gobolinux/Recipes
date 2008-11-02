@@ -1,0 +1,12 @@
+# Recipe for version 0.10 by Giambattista Bloisi <giamby@infinito.it>, on Sun Nov 2 19:13:43 CET 2008
+# Recipe (MakeRecipe) for Poppler by Harald Klimach, on Mon Mar 6 13:01:20 CET 2006
+compile_version=1.8.2
+url="http://poppler.freedesktop.org/poppler-0.10.0.tar.gz"
+file_size=1525340
+file_md5=c5f3002c2cb295c4e290925a040f80be
+recipe_type=configure
+
+configure_options=(
+    # Required by inkscape
+    --enable-xpdf-headers
+)
