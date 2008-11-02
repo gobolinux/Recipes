@@ -1,0 +1,15 @@
+--- kdepim-4.1.2/akonadi/CMakeLists.txt.old	2008-07-23 23:35:51.000000000 +0200
++++ kdepim-4.1.2/akonadi/CMakeLists.txt	2008-10-27 20:29:16.000000000 +0100
+@@ -14,10 +14,10 @@
+     add_custom_command(
+       OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${_name}.xml
+       COMMAND ${XSLTPROC_EXECUTABLE} --stringparam interfaceName ${_name}
+-              ${DATA_INSTALL_DIR}/akonadi-kde/kcfg2dbus.xsl
++              ${KDEPIMLIBS_PATH}/Shared/apps/akonadi-kde/kcfg2dbus.xsl
+               ${_kcfg}
+               > ${CMAKE_CURRENT_BINARY_DIR}/${_name}.xml
+-      DEPENDS ${DATA_INSTALL_DIR}/akonadi-kde/kcfg2dbus.xsl
++      DEPENDS ${KDEPIMLIBS_PATH}/Shared/apps/akonadi-kde/kcfg2dbus.xsl
+               ${_kcfg}
+     )
+   endmacro( kcfg_generate_dbus_interface )
