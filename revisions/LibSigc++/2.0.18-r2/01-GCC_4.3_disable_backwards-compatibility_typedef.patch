@@ -1,0 +1,31 @@
+GCC 4.3 does not allow typedef to be redefined
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+
+--- libsigc++-2.0.18/sigc++/macros/signal.h.m4.old	2008-11-04 16:36:42.000000000 +0100
++++ libsigc++-2.0.18/sigc++/macros/signal.h.m4	2008-11-04 16:44:42.000000000 +0100
+@@ -484,6 +484,11 @@
+   //do not allow a typedef to have the same name as a class in the typedef's definition.
+   //For Sun Forte CC 5.7 (SUN Workshop 10), comment this out to fix the build.
+   #define SIGC_TYPEDEF_REDEFINE_ALLOWED 1
++
++  // gcc-4.3.0 does not allow typedef redefinitions  
++  #if (__GNUC__ >= 4) && (__GNUC_MINOR__ >= 3)
++      #undef SIGC_TYPEDEF_REDEFINE_ALLOWED
++  #endif
+ #endif
+ 
+ namespace sigc {
+--- libsigc++-2.0.18/sigc++/signal.h.old	2008-11-04 16:42:19.000000000 +0100
++++ libsigc++-2.0.18/sigc++/signal.h	2008-11-04 16:43:09.000000000 +0100
+@@ -19,6 +19,10 @@
+   //do not allow a typedef to have the same name as a class in the typedef's definition.
+   //For Sun Forte CC 5.7 (SUN Workshop 10), comment this out to fix the build.
+   #define SIGC_TYPEDEF_REDEFINE_ALLOWED 1
++  // gcc-4.3.0 does not allow typedef redefinitions  
++  #if (__GNUC__ >= 4) && (__GNUC_MINOR__ >= 3)
++     #undef SIGC_TYPEDEF_REDEFINE_ALLOWED
++  #endif  #define SIGC_TYPEDEF_REDEFINE_ALLOWED 1
+ #endif
+ 
+ namespace sigc {
