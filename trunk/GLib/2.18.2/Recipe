@@ -12,6 +12,14 @@ configure_options=(
 )
 with_fam="--enable-fam"
 
+install_variables=(
+   GIO_MODULE_DIR="${target}/lib/gio/modules"
+)
+
+pre_install() {
+   sed -i "s,libdir='${goboLibraries},libdir='${target}/lib," /Files/Compile/Sources/glib-2.18.2/gio/fam/libgiofam.la
+}
+
 pre_link() {
     Quiet pushd $target/lib/pkgconfig
     for i in *; do ln -s $i `echo $i | sed 's/-2.0//g'`; done
