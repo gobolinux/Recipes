@@ -1,0 +1,15 @@
+# Recipe for version 4.4.3 by Jonas Karlsson <jonka750@student.liu.se>, on Wed Nov 5 14:36:23 CET 2008
+# Recipe (MakeRecipe) for XFCE-MCS-Plugins by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:22:41 CEST 2006
+compile_version=1.8.2
+url="http://www.xfce.org/archive/xfce-4.4.3/src/xfce-mcs-plugins-4.4.3.tar.bz2"
+file_size=898082
+file_md5=a1433d7d2c8705f0d3965dbaf1211943
+recipe_type=configure
+
+configure_options=(
+    --enable-xf86misc 
+    --enable-xkb
+    --enable-xinput
+    --enable-randr 
+    --enable-xf86vm
+)
