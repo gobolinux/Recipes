@@ -1,0 +1,10 @@
+# Recipe for version 4.4.3 by Jonas Karlsson <jonka750@student.liu.se>, on Wed Nov 5 14:41:09 CET 2008
+# Recipe (MakeRecipe) for XFWM4-Themes by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:31:55 CEST 2006
+compile_version=1.8.2
+url="http://www.xfce.org/archive/xfce-4.4.3/src/xfwm4-themes-4.4.3.tar.bz2"
+file_size=492360
+file_md5=0e713465f79a000958307c7f5b37185f
+recipe_type=configure
+configure_options=(
+    '--enable-debug=no'
+)
