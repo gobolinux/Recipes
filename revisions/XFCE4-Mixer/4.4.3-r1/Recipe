@@ -1,0 +1,15 @@
+# Recipe for version 4.4.3 by Jonas Karlsson <jonka750@student.liu.se>, on Wed Nov 5 14:39:00 CET 2008
+# Recipe (MakeRecipe) for XFCE4-Mixer by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:26:34 CEST 2006
+compile_version=1.8.2
+url="http://www.xfce.org/archive/xfce-4.4.3/src/xfce4-mixer-4.4.3.tar.bz2"
+file_size=483417
+file_md5=0d7b402acaffdb5d8b292f2ce3ea1441
+recipe_type=configure
+configure_options=(
+   --libexecdir="${target}/lib"
+)
+
+with_alsa="--with-sound=alsa"
+pre_build() {
+   sed -i 's,/usr/local/libexec,/usr/local/lib,' panel-plugin/xfce4-mixer.desktop
+}
