@@ -1,11 +1,11 @@
-# Recipe for version 0.3.4 by Nathan Middleton, on Sun Dec 2 21:00:16 CST 2007
+# Recipe for version 0.3.4 by Jonas Karlsson <jonka750@student.liu.se>, on Wed Nov 5 14:32:23 CET 2008
 # Recipe (MakeRecipe) for EXO by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:16:44 CEST 2006
 compile_version=1.9.0
-url="http://thunar.xfce.org/download/sources/exo/0.3.4/exo-0.3.4.tar.bz2"
+url="http://www.xfce.org/archive/xfce-4.4.3/src/exo-0.3.4.tar.bz2"
 file_size=1300127
 file_md5=7a1af943b1df32b6f89ae91823118a22
 recipe_type=configure
 configure_options=(
-    '--enable-python'
-    '--enable-debug=no'
+    --enable-debug=no
 )
+with_pygtk="--enable-python"

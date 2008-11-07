@@ -1,3 +1,8 @@
+Fix error when ejecting physical media using physical button. Patch
+from http://bugzilla.xfce.org/show_bug.cgi?id=2968
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+
 diff --git a/exo-mount/exo-mount-hal.c b/exo-mount/exo-mount-hal.c
 index 791a536..4084719 100644
 --- a/exo-mount/exo-mount-hal.c
