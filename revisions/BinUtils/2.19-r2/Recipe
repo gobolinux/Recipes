@@ -1,0 +1,21 @@
+# Recipe for version 2.19 by Giambattista Bloisi <giamby@infinito.it>, on Thu Oct 30 21:35:47 CET 2008
+url=$ftpGnu/binutils/binutils-2.19.tar.bz2
+file_size=16219400
+file_md5=17a52219dee5a76c1a9d9b0bfd337d66
+compile_version=1.8.0
+needs_build_directory=yes
+needs_safe_linking=yes
+recipe_type=configure
+configure_options=(
+   "--enable-shared"
+)
+make_variables=(
+   "tooldir=$target"
+)
+install_variables=(
+   target_header_dir="${target}/include"
+)
+
+pre_install() {
+   cp ../include/libiberty.h $target/include
+}
