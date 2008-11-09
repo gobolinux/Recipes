@@ -1,0 +1,12 @@
+# Recipe for version 4.1.3 by Giambattista Bloisi <giamby@infinito.it>, on Thu Nov 6 09:09:51 CET 2008
+# Recipe (MakeRecipe) for KDE-Base-Workspace by Giambattista Bloisi <giamby@infinito.it>, on Sat Jan 12 19:19:58 CET 2008
+compile_version=1.10.0
+url="http://download.kde.org/stable/4.1.3/src/kdebase-workspace-4.1.3.tar.bz2"
+file_size=47502802
+file_md5=42233b75ce73eaaacae61c0d5db8befa
+file="kdebase-workspace-4.1.3.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
