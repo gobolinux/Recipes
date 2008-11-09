@@ -1,0 +1,114 @@
+--- kdepim-4.1.2/cmake/modules/FindOpensync.cmake.orig	2008-01-15 02:57:29.000000000 +0100
++++ kdepim-4.1.2/cmake/modules/FindOpensync.cmake	2008-11-02 14:11:07.000000000 +0100
+@@ -1,28 +1,88 @@
+-# Find OpenSync
++# - Try to find OpenSync
++# Find OpenSync headers, libraries and the answer to all questions.
++#
++#  OPENSYNC_FOUND               True if OpenSync got found
++#  OPENSYNC_INCLUDE_DIRS         Location of OpenSync headers 
++#  OPENSYNC_LIBRARIES           List of libaries to use OpenSync
++#
++# Copyright (c) 2007 Daniel Gollub <dgollub@suse.de>
++# Copyright (c) 2007 Alban Browaeys <prahal@yahoo.com>
++#
++#  Redistribution and use is allowed according to the terms of the New
++#  BSD license.
++#  For details see the accompanying COPYING-CMAKE-SCRIPTS file.
+ #
+-#  OPENSYNC_FOUND - system has OpenSync
+-#  OPENSYNC_INCLUDE_DIRS - the OpenSync include directory
+-#  OPENSYNC_LDFLAGS - The libraries needed to use OpenSync
+-
+-INCLUDE(FindPkgConfig)
+-
+-if (OPENSYNC_INCLUDE_DIRS AND OPENSYNC_LDFLAGS)
+-
+-  # in cache already
+-  SET(OPENSYNC_FOUND TRUE)
+-
+-else (OPENSYNC_INCLUDE_DIRS AND OPENSYNC_LDFLAGS)
+ 
+-  SET(OPENSYNC_FOUND FALSE)
+-  IF (NOT WIN32)
+-    # use pkg-config to get the directories and then use these values
+-    # in the FIND_PATH() and FIND_LIBRARY() calls
+-    PKG_CHECK_MODULES(OPENSYNC opensync-1.0>=0.33)
+-  ENDIF(NOT WIN32)
++# Take care about libopensync.pc settings
++INCLUDE( FindPkgConfig )
+ 
+-  include(FindPackageHandleStandardArgs)
+-  FIND_PACKAGE_HANDLE_STANDARD_ARGS(OPENSYNC DEFAULT_MSG OPENSYNC_LDFLAGS OPENSYNC_INCLUDE_DIRS)
++IF ( OpenSync_FIND_REQUIRED )
++	SET( _pkgconfig_REQUIRED "REQUIRED" )
++ELSE( OpenSync_FIND_REQUIRED )
++	SET( _pkgconfig_REQUIRED "" )	
++ENDIF ( OpenSync_FIND_REQUIRED )
++
++IF ( OPENSYNC_MIN_VERSION )
++	PKG_SEARCH_MODULE( OPENSYNC ${_pkgconfig_REQUIRED} libopensync >=${OPENSYNC_MIN_VERSION} )
++ELSE ( OPENSYNC_MIN_VERSION )
++	PKG_SEARCH_MODULE( OPENSYNC ${_pkgconfig_REQUIRED} libopensync )
++ENDIF ( OPENSYNC_MIN_VERSION )
++
++FIND_PROGRAM( PKGCONFIG_EXECUTABLE NAMES pkg-config )
++
++IF ( PKGCONFIG_EXECUTABLE )
++	EXEC_PROGRAM( ${PKGCONFIG_EXECUTABLE} ARGS libopensync --variable=datadir OUTPUT_VARIABLE _opensync_data_DIR )
++	STRING( REGEX REPLACE "[\r\n]" " " _opensync_data_DIR "${_opensync_data_DIR}"  )
++ENDIF ( PKGCONFIG_EXECUTABLE )
++
++FIND_PATH( OPENSYNC_CMAKE_MODULES "OpenSyncInternal.cmake" PATHS "${_opensync_data_DIR}" PATH_SUFFIXES "cmake/modules" NO_DEFAULT_PATH) 
++FIND_PATH( OPENSYNC_CMAKE_MODULES "OpenSyncInternal.cmake" PATH_SUFFIXES "cmake/modules" ) 
++IF ( OPENSYNC_CMAKE_MODULES )
++        SET( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${OPENSYNC_CMAKE_MODULES}" )
++ELSE ( OPENSYNC_CMAKE_MODULES )
++    IF( OpenSync_FIND_REQUIRED )
++        MESSAGE( FATAL_ERROR "OpenSync cmake modules not found. Have you installed opensync core or did you set your PKG_CONFIG_PATH if installing in a non system directory ?" )
++    ENDIF( OpenSync_FIND_REQUIRED )
++ENDIF ( OPENSYNC_CMAKE_MODULES )
++
++
++# Look for OpenSync include dir and libraries without pkg-config 
++IF( NOT OPENSYNC_FOUND AND NOT PKG_CONFIG_FOUND )
++	# Fallback if pkg-config doesn't exist
++	FIND_PATH( OPENSYNC_INCLUDE_DIRS opensync/opensync.h PATH_SUFFIXES libopensync
++			PATHS
++			/opt/local/include/
++			/sw/include/
++			/usr/local/include/
++			/usr/include/ )
++
++	FIND_LIBRARY( OPENSYNC_LIBRARIES opensync
++			PATHS
++			/opt/local/lib
++			/sw/lib
++			/usr/lib
++			/usr/local/lib
++			/usr/lib64
++			/usr/local/lib64
++			/opt/lib64 )
++
++	# Report results
++	IF ( OPENSYNC_LIBRARIES AND OPENSYNC_INCLUDE_DIRS )	
++		SET( OPENSYNC_FOUND 1 )
++		IF ( NOT OpenSync_FIND_QUIETLY )
++			MESSAGE( STATUS "Found OpenSync: ${OPENSYNC_LIBRARIES}" )
++		ENDIF ( NOT OpenSync_FIND_QUIETLY )
++	ELSE ( OPENSYNC_LIBRARIES AND OPENSYNC_INCLUDE_DIRS )	
++		IF ( OpenSync_FIND_REQUIRED )
++			MESSAGE( SEND_ERROR "Could NOT find OpenSync" )
++		ELSE ( OpenSync_FIND_REQUIRED )
++			IF ( NOT OpenSync_FIND_QUIETLY )
++				MESSAGE( STATUS "Could NOT find OpenSync" )	
++			ENDIF ( NOT OpenSync_FIND_QUIETLY )
++		ENDIF ( OpenSync_FIND_REQUIRED )
++	ENDIF ( OPENSYNC_LIBRARIES AND OPENSYNC_INCLUDE_DIRS )	
++ENDIF( NOT OPENSYNC_FOUND AND NOT PKG_CONFIG_FOUND )
+ 
+-  MARK_AS_ADVANCED(OPENSYNC_INCLUDE_DIRS OPENSYNC_LDFLAGS)
++# Hide advanced variables from CMake GUIs
++MARK_AS_ADVANCED( OPENSYNC_LIBRARIES OPENSYNC_INCLUDE_DIRS )
+ 
+-endif (OPENSYNC_INCLUDE_DIRS AND OPENSYNC_LDFLAGS)
