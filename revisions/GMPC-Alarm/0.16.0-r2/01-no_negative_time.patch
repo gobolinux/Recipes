@@ -1,0 +1,17 @@
+If time is set to next day, difference will be negative and a negative
+time will be reported. Instead we add number of seconds in one day, to
+get correct diff.
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+
+--- gmpc-alarm-0.16.0/src/plugin.c	2008-11-09 23:13:01.000000000 +0100
++++ gmpc-alarm-0.16.0/src/plugin.c.mod	2008-11-09 23:24:56.000000000 +0100
+@@ -209,6 +209,8 @@
+     target_time_seconds = (target_time_struct->hours * 60 * 60) + (target_time_struct->minutes * 60) + target_time_struct->seconds;
+     current_time_seconds = (current_time_struct->hours * 60 * 60) + (current_time_struct->minutes * 60) + current_time_struct->seconds; 
+     current_diff_seconds = target_time_seconds - current_time_seconds;
++    if (current_diff_seconds < 0)
++        current_diff_seconds += 86400; // add number of seconds in one day
+ 
+     /* Update the ticker label */
+     update_ticker_label(current_diff_seconds);
