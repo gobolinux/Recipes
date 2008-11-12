@@ -1,0 +1,18 @@
+# Recipe for version 6.16.00 by Õsi Róbert <7szunyu@nordtelekom.hu>, on 2008. okt. 22., szerda, 03.06.13 CEST
+compile_version=1.8.0
+urls=(
+  "ftp://ftp.astron.com/pub/tcsh/tcsh-6.16.00.tar.gz"
+#  "ftp://ftp.gw.com/pub/unix/tcsh/tcsh-6.16.00.tar.gz"
+#  "ftp://ftp.funet.fi/pub/unix/shells/tcsh/tcsh-6.16.00.tar.gz"
+)
+recipe_type=configure
+
+pre_link() {
+   ln -s tcsh $target/bin/csh
+}
+file_sizes=(
+886468
+)
+file_md5s=(
+55f1a41512250168ec4bf1db0e246db4
+)
