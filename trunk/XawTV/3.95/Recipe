@@ -19,6 +19,4 @@ configure_options=(
 make_variables=(
 	x11conf="$settings_target/X11"
 	resdir="$settings_target/X11"
-	LDFLAGS="$LDFLAGS -lFS"
-    LDLIBS="-ldl"
 )
