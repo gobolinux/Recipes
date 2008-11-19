@@ -1,0 +1,41 @@
+# i686
+
+include=(
+#################################################
+# Xorg-Proto
+#################################################
+#	applewmproto--1.0.3
+	bigreqsproto--1.0.2
+	compositeproto--0.4
+	damageproto--1.1.0
+	dmxproto--2.2.2
+	dri2proto--1.1
+	evieext--1.0.2
+	fixesproto--4.0
+	fontcacheproto--0.1.2
+	fontsproto--2.0.2
+	glproto--1.4.9
+	inputproto--1.4.4
+	kbproto--1.0.3
+	printproto--1.0.4
+	randrproto--1.2.2
+	recordproto--1.13.2
+	renderproto--0.9.3
+	resourceproto--1.0.2
+	scrnsaverproto--1.1.0
+	trapproto--3.4.3
+	videoproto--2.2.2
+	xcmiscproto--1.1.2
+	xextproto--7.0.3
+	xf86bigfontproto--1.1.2
+	xf86dgaproto--2.0.3
+	xf86driproto--2.0.4
+	xf86miscproto--0.9.2
+	xf86rushproto--1.1.2
+	xf86vidmodeproto--2.2.2
+	xineramaproto--1.1.2
+	xproto--7.0.13
+	xproxymanagementprotocol--1.0.2
+	xcb-proto--1.1
+	libpthread-stubs--0.1
+)
