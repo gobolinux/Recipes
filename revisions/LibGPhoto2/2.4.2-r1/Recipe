@@ -1,0 +1,14 @@
+# Recipe for version 2.4.2 by Andreas Köhler <andi5.py@gmx.net>, on Tue Aug 26 03:42:32 BRT 2008
+compile_version=1.8.2
+url=$httpSourceforge/gphoto/libgphoto2-2.4.2.tar.gz
+file_size=4557361
+file_md5=7ec19a0f434da3aea15e136b9dacdd04
+recipe_type=configure
+
+#pre_build() {
+#   mkdir gphoto2
+#   for i in libgphoto2/* libgphoto2_port/libgphoto2_port/* 
+#   do 
+#      ln -sfn `readlink -f $i` gphoto2/
+#   done
+#}
