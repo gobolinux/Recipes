@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for TinyCDB by Olle Lundberg <olle.lundberg@gmail.com>, on Fri Nov 14 23:26:13 CET 2008
+# Recipe for version 0.76 by Olle Lundberg <olle.lundberg@gmail.com>, on Fri Nov 14 23:26:13 CET 2008
+compile_version=1.11.4
+url="http://www.corpit.ru/mjt/tinycdb/tinycdb_0.76.tar.gz"
+file_size=35777
+file_md5=77db6fa098b674819ba1e06689bc87e8
+dir='tinycdb-0.76'
+recipe_type=makefile
+makefile='Makefile'
+install_target="install install-sharedlib"
+make_variables=(
+   "prefix=$target"
+   "sysconfdir=$settings_target"
+)
