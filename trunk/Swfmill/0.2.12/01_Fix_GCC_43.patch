@@ -1,0 +1,18 @@
+diff -aurp swfmill-vanilla/src/swft/swft_css.cpp swfmill-0.2.12/src/swft/swft_css.cpp
+--- swfmill-vanilla/src/swft/swft_css.cpp	2008-11-17 20:07:15.000000000 -0200
++++ swfmill-0.2.12/src/swft/swft_css.cpp	2008-11-17 20:11:41.000000000 -0200
+@@ -1,5 +1,6 @@
+ /* ultra-simple css "parser". only works for simple inline styles like sodipodi/inkscape use. */
+ 
++#include <cstring>
+ #include <string>
+ #include <iostream>
+ #include <libxslt/extensions.h>
+diff -aurp swfmill-vanilla/src/swft/swft_import_mp3.cpp swfmill-0.2.12/src/swft/swft_import_mp3.cpp
+--- swfmill-vanilla/src/swft/swft_import_mp3.cpp	2008-11-17 20:07:15.000000000 -0200
++++ swfmill-0.2.12/src/swft/swft_import_mp3.cpp	2008-11-17 20:12:16.000000000 -0200
+@@ -1,3 +1,4 @@
++#include <cstring>
+ #include <libxslt/extensions.h>
+ #include <libxslt/xsltutils.h>
+ #include <libxslt/variables.h>
