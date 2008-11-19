@@ -1,0 +1,18 @@
+Install gio modules into our target.
+
+ configure.ac |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff -Nur gvfs-0.2.5-orig/configure.ac gvfs-0.2.5/configure.ac
+--- gvfs-0.2.5-orig/configure.ac	2008-06-30 00:14:28.000000000 -0300
++++ gvfs-0.2.5/configure.ac	2008-08-26 04:10:40.687607138 -0300
+@@ -58,7 +58,8 @@
+ AC_SUBST(DBUS_SERVICE_DIR)
+ 
+ dnl **** gio module path handling ****
+-giomodulesdir=`pkg-config --define-variable=libdir=$libdir --variable=giomoduledir gio-2.0`
++#giomodulesdir=`pkg-config --define-variable=libdir=$libdir --variable=giomoduledir gio-2.0`
++giomodulesdir="${libdir}/gio/modules"
+ AC_SUBST(giomodulesdir)
+ 
+ dnl ****************************
