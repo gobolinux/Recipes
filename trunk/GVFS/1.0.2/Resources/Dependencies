@@ -1,0 +1,19 @@
+Avahi >= 0.6.0 [avahi]
+Bluez-Libs >= 3.12 [bluez_libs,bluetooth]
+DBus >= 1.0 # Not optional, required for gvfs operation
+DBus-GLib 0.74
+E2FSProgs 1.39
+Expat 2.0.1
+Fuse # Optional
+GCC 4.3.2
+GConf # Optional
+GLib >= 2.17.6
+Glibc 2.8
+Gnome-Keyring # Optional
+GPhoto2 >= 2.4.0 [gphoto2]
+HAL >= 0.5.10 # Optional
+LibCdio >= 0.78.2 [cdda,libcdio]
+LibArchive 
+LibSOUP >= 2.23.91
+Samba >= 3.0.22 [samba]
+ZLib 1.2.3
