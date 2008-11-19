@@ -1,0 +1,18 @@
+# Recipe (MakeRecipe) for GVFS by Andreas Köhler <andi5.py@gmx.net>, on Mon Aug 18 21:04:12 CEST 2008
+# Recipe for version 1.0.2 by Jonas Karlsson <jonka750@student.liu.se>, on Mon Nov 17 18:58:32 CET 2008
+compile_version=1.10.0
+url="http://ftp.acc.umu.se/pub/GNOME/sources/gvfs/1.0/gvfs-1.0.2.tar.bz2"
+file_size=918268
+file_md5=04c44757a265f787d6606655b6bbc593
+recipe_type=configure
+configure_options=(
+   --libexecdir="${target}/lib"
+)
+install_variables=(
+   giomodulesdir="${target}/lib/gio/modules"
+)
+pre_install() {
+   # Because the configured gio module path does not match the install
+   # path libtool refuses to install the .la files. This is a workaround.
+   sed -i 's,'"$goboLibraries"','"$target"'/lib,' gconf/libgiogconf.la client/libgvfsdbus.la monitor/proxy/libgioremote-volume-monitor.la
+}
