@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for Youtube-DL by Baffo32 <baffo32@gmail.com>, on Sat Oct 11 09:12:38 BRT 2008
+# Recipe for version 2008.09.20 by Baffo32 <baffo32@gmail.com>, on Sat Oct 11 09:12:38 BRT 2008
+compile_version=1.10.2
+url="http://www.arrakis.es/~rggi3/youtube-dl/youtube-dl"
+file_size=31705
+file_md5=993210a0915877588a0fb055c9b47409
+recipe_type=manifest
+uncompress=no
+manifest=( youtube-dl:bin )
+
+pre_install() {
+	chmod 555 youtube-dl
+}
+
