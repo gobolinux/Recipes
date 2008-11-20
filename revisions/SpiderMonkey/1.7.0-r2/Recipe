@@ -1,0 +1,20 @@
+# Recipe for version 1.7.0 by Giambattista Bloisi <giamby@infinito.it>, on Wed Apr 9 22:08:47 CEST 2008
+# Recipe (MakeRecipe) for SpiderMonkey by Andy Feldman (nereusren@gmail.com), on Fri Mar 24 19:49:35 CST 2006
+compile_version=1.8.0
+url="http://ftp.mozilla.org/pub/mozilla.org/js/js-1.7.0.tar.gz"
+file_size=1165607
+file_md5=5571134c3863686b623ebe4e6b1f6fe6
+mirror_url="http://ftp.mozilla.org/pub/mozilla.org/js/older-packages/js-1.7.0.tar.gz"
+dir='js/src'
+recipe_type=makefile
+makefile=Makefile.ref
+install_target="export"
+make_variables=(
+    "JS_HAS_FILE_OBJECT=1" # Having file I/O is nice
+    "JS_THREADSAFE=1"  # When working with files we really want to be threadsafe
+    "JS_DIST=$nspr_path" # NSPR is the actual library doing the file I/O
+    "BUILD_OPT=1" # Build release not debug
+)
+install_variables=(
+   "DIST=$target"
+)
