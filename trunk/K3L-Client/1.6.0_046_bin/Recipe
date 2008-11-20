@@ -1,0 +1,19 @@
+# Recipe for version 1.6.0_046_bin by Fabio Mierlo <geromao@gmail.com>, on Fri Nov 14 17:51:34 BRST 2008
+# Recipe (MakeRecipe) for K3L by Fabio Mierlo <geromao@gmail.com>, on Tue Sep 2 18:18:18 BRT 2008
+compile_version=1.11.2
+url="http://www.khomp.com.br/release/K3L/Linux/K3L/Vers%F5es_teste/k3l_1.6.0_046_Client.sh.gz"
+file_size=11678300
+file_md5=8899379f1d50502bd8d5813bc58b1e5d
+recipe_type=manifest
+unpack_files=files_in_root
+
+pre_install() {
+  export ROOT=$target/
+  ln -nfs $target/ $target/usr
+  ln -nfs $target/Resources/Defaults/Settings/ $target/etc
+  ln -nfs $target/Resources/Defaults/Variable/ $target/var
+
+  exe_name=`basename $url .gz`
+
+  sh $exe_name -v
+}
