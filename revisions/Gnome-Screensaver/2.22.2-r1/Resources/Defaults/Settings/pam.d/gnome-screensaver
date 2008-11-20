@@ -1,0 +1,2 @@
+auth requisite pam_unix.so nullok_secure
+auth optional pam_gnome_keyring.so
