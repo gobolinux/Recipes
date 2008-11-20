@@ -1,0 +1,11 @@
+# Recipe for version 1.3.0 by Laercio B. S. Sousa <lbsousajr@gmail.com>, on Tue Nov 18 19:45:03 BRST 2008
+# Recipe (MakeRecipe) for DirectFB by roko, <ro.ko@mcnon.com>, on Wed Oct 27 01:25:07 BRST 2004
+compile_version=1.8.2
+url="http://www.directfb.org/downloads/Core/DirectFB-1.3.0.tar.gz"
+file_size=2838272
+file_md5=000a047651f06b0e4a8747697cd1ad4d
+recipe_type=configure
+configure_options=(
+    "--with-gfxdrivers=all"
+    "--enable-multi"
+)
