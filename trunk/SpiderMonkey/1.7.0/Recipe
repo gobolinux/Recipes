@@ -9,6 +9,12 @@ dir='js/src'
 recipe_type=makefile
 makefile=Makefile.ref
 install_target="export"
+make_variables=(
+    "JS_HAS_FILE_OBJECT=1" # Having file I/O is nice
+    "JS_THREADSAFE=1"  # When working with files we really want to be threadsafe
+    "JS_DIST=$nspr_path" # NSPR is the actual library doing the file I/O
+    "BUILD_OPT=1" # Build release not debug
+)
 install_variables=(
    "DIST=$target"
 )
