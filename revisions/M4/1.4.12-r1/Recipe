@@ -1,0 +1,10 @@
+# Recipe for version 1.4.12 by Laszlo Horvath <soma-sk8@freemail.hu>, on 2008. nov. 13., csütörtök, 22.51.31 CET
+compile_version=1.10.2
+url=$ftpGnu/m4/m4-1.4.12.tar.lzma
+file_size=768167
+file_md5=88225297c9e1b2dab92c7626460f8e9c
+recipe_type=configure
+configure_options=(
+   "--mandir=${target}/man"
+   "--enable-changeword"
+)
