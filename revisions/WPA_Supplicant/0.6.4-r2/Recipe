@@ -1,0 +1,27 @@
+# Recipe for version 0.6.4 by Andreas Köhler <andi5.py@gmx.net>, on Tue Sep 9 12:59:50 CEST 2008
+# Recipe (MakeRecipe) for WPA_Supplicant by Jonas Karlsson <jonka750@student.liu.se>, on Sun Jul 24 09:52:31 CEST 2005
+compile_version=1.9.0
+url="http://hostap.epitest.fi/releases/wpa_supplicant-0.6.4.tar.gz"
+file_size=995486
+file_md5=eb06a9a05d3916addf9451297a558aa2
+recipe_type=makefile
+dir=wpa_supplicant-0.6.4/wpa_supplicant
+#makefile='Makefile'
+
+environment=(
+   QMAKESPEC="linux-g++"
+)
+
+make_variables=(
+   "DESTDIR=$target"
+   "INSTALLDIR="
+)
+pre_build(){
+   make mkconfig
+}
+pre_install(){
+   make wpa_gui
+}
+pre_link(){
+   cp wpa_gui/wpa_gui $target/sbin
+}
