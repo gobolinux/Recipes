@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for PDNSD by David Karell <mccoy@doctor.com>, on Thu Nov 6 20:50:51 CET 2008
+# Recipe for version 1.2.7-par by David Karell <mccoy@doctor.com>, on Thu Nov 6 20:50:51 CET 2008
+compile_version=1.11.3
+url="http://www.phys.uu.nl/~rombouts/pdnsd/releases/pdnsd-1.2.7-par.tar.gz"
+file_size=459565
+file_md5=114b3b21b09b43cbfcccdde726b84c12
+dir='pdnsd-1.2.7'
+recipe_type=configure
+
+post_install_message="To finish the installation, please edit the ${settings_target}/pdnsd.conf file.\nYou may also want to adjust your ${goboSettings}/resolv.conf and/or ${goboSettings}/NetworkOptions to point at your DNS proxy. Finally, remember to start the dns proxy daemon at startup by adding the following line to your ${goboSettings}/BootScripts/BootUp:\n\nExec 'Starting PDNSD service...' PDNSD Start"
+
+unmanaged_files=(
+    "$goboVariable/cache/pdnsd"
+)
