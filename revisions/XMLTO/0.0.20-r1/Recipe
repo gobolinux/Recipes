@@ -1,0 +1,10 @@
+# Recipe for version 0.0.20 by Michael Homer <michael@gobolinux.org>, on Tue Nov 25 19:15:37 NZDT 2008
+# Recipe (MakeRecipe) for XMLTO by Kosh <kosh.linux at gmail.com, on Thu Nov 23 20:14:10 BRST 2006
+compile_version=1.8.0
+url="http://cyberelk.net/tim/data/xmlto/stable/xmlto-0.0.20.tar.bz2"
+file_size=98388
+file_md5=ab814ae352fc028862cbea9d676ab93b
+recipe_type=configure
+environment=(
+   "XML_CATALOG_FILES=$docbook_xsl_stylesheets_path/Shared/xml/docbook/stylesheet/catalog.xml $goboVariable/lib/xml/catalog"
+)
