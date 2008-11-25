@@ -1,0 +1,15 @@
+# Recipe for version 1.6.0.4 by Michael Homer <michael@gobolinux.org>, on Tue Nov 25 13:26:37 NZDT 2008
+# Recipe (MakeRecipe) for Git by Jonas Karlsson <jonka750@student.liu.se>, on Sat Apr 15 18:45:06 CEST 2006
+compile_version=1.9.0
+url="http://www.kernel.org/pub/software/scm/git/git-1.6.0.4.tar.bz2"
+file_size=1876842
+file_md5=ed8c4fa007a44d51b646865c35461ce8
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+)
+
+pre_link() {
+   cp -a Documentation/* $target/doc
+}
