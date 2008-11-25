@@ -6,8 +6,14 @@ file_size=1876842
 file_md5=ed8c4fa007a44d51b646865c35461ce8
 recipe_type=makefile
 makefile='Makefile'
+build_target="all doc"
+install_target="install install-doc"
+environment=(
+   "XML_CATALOG_FILES=$docbook_xsl_stylesheets_path/Shared/xml/docbook/stylesheet/catalog.xml $goboVariable/lib/xml/catalog $goboVariable/lib/xml/docbook"
+)
 make_variables=(
    "prefix=$target"
+   "ASCIIDOC8=YesPlease"
 )
 
 pre_link() {
