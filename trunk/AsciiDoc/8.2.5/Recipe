@@ -1,7 +1,7 @@
-# Recipe for version 8.2.5 by Aitor Perez Iturri, on s√°b abr 5 21:19:39 CEST 2008
+# Recipe for version 8.2.5 by Olle Lundberg <olle.lundberg@gmail.com>, on Wed Nov 26 22:11:03 CET 2008
 # Recipe (MakeRecipe) for AsciiDoc by Aitor PÈrez Iturri, on lun feb 19 10:54:16 CET 2007
 compile_version=1.8.3
-url="http://www.methods.co.nz/asciidoc/asciidoc-8.2.5.tar.gz"
+url="$httpSourceforge/asciidoc/asciidoc-8.2.5.tar.gz"
 file_size=722902
 file_md5=6810883dc0705aa6f9a4d621cf3e569c
 recipe_type=makefile
@@ -11,7 +11,7 @@ do_install=no
 pre_link () {
 	GrepReplace "^CONF_DIR=.*$" "CONF_DIR=$settings_target/asciidoc" a2x
 	GrepReplace "^CONF_DIR = \".*\"" "CONF_DIR = \"$settings_target/asciidoc\"" asciidoc.py
-	GrepReplace "^CONFDIR=.*$" "CONF_DIR=$settings_target/asciidoc" install.sh
+	GrepReplace "^CONFDIR=.*$" "CONFDIR=$settings_target/asciidoc" install.sh
 	GrepReplace "^BINDIR=.*$" "BINDIR=$target/bin" install.sh
 	GrepReplace "^MANDIR=.*$" "MANDIR=$target/man" install.sh
 	GrepReplace "VIM_CONFIGDIR=.*$" "VIM_CONFIGDIR=$settings_target/vim" install.sh
