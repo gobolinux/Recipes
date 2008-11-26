@@ -1,0 +1,13 @@
+# Recipe for version 1.7 by Demian Florentin <demianflorentin@gmail.com>, on Wed Nov 26 17:15:02 PYST 2008
+# Recipe (MakeRecipe) for LibTasn1 by Giovani Facchini, on Qui Abr 14 17:14:26 BRT 2005
+compile_version=1.8.0
+url="http://ftp.gnu.org/gnu/gnutls/libtasn1-1.7.tar.gz"
+file_size=1570973
+file_md5=ebfd69b3514d8e8830057f0e9df6a5f9
+recipe_type=configure
+#pre_build(){
+#   libtoolize --force
+#   aclocal
+#   autoconf
+#   automake --add-missing
+#}
