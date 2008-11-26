@@ -1,0 +1,20 @@
+# Recipe for version 8.2.7 by Michael Homer <michael@gobolinux.org>, on Thu Nov 27 10:32:22 NZDT 2008
+# Recipe (MakeRecipe) for AsciiDoc by Aitor Pérez Iturri, on lun feb 19 10:54:16 CET 2007
+compile_version=1.8.3
+url="$httpSourceforge/asciidoc/asciidoc-8.2.7.tar.gz"
+file_size=843238
+file_md5=f631c10bcf7216eaf6bc804c84ebb8e1
+recipe_type=makefile
+do_build=no
+do_install=no
+
+pre_link () {
+	GrepReplace "^CONF_DIR=.*$" "CONF_DIR=$target/Resources/Defaults/Settings/asciidoc" a2x
+	GrepReplace "^CONF_DIR = \".*\"" "CONF_DIR = \"$target/Resources/Defaults/Settings/asciidoc\"" asciidoc.py
+	GrepReplace "^CONFDIR=.*$" "CONFDIR=$target/Resources/Defaults/Settings/asciidoc" install.sh
+	GrepReplace "^BINDIR=.*$" "BINDIR=$target/bin" install.sh
+	GrepReplace "^MANDIR=.*$" "MANDIR=$target/man" install.sh
+	GrepReplace "VIM_CONFIGDIR=.*$" "VIM_CONFIGDIR=$settings_target/vim" install.sh
+
+	./install.sh
+}
