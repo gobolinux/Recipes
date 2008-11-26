@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for NTFS-3G-Extended by Laercio B. S. Sousa <lbsousajr@gmail.com>, on Wed Nov 26 15:03:06 BRST 2008
+# Recipe for version 1.5012AR.2 by Laercio B. S. Sousa <lbsousajr@gmail.com>, on Wed Nov 26 15:03:06 BRST 2008
+compile_version=1.11.3
+url="http://pagesperso-orange.fr/b.andre/ntfs-3g-1.5012AR.2.tgz"
+file_size=809613
+file_md5=5529fad48257593e93f7aacc4d81f57d
+recipe_type=configure
+
+make_variables=(
+    DESTDIR=${target}
+)
