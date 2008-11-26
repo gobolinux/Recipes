@@ -1,0 +1,14 @@
+# Recipe for version 4.4.4 by Laercio B. S. Sousa <lbsousajr@gmail.com>, on Wed Nov 26 14:45:42 BRST 2008
+# on Sat Apr 16 12:56:40 CEST 2005
+
+compile_version=1.9.0
+url="http://www.riverbankcomputing.com/static/Downloads/PyQt4/PyQt-x11-gpl-4.4.4.tar.gz"
+file_size=6982063
+file_md5=4bd346d56d10452e47ac71e2cbe04229
+
+recipe_type=makefile
+pre_build() {
+    pythonversion=`python --version 2>&1 | awk {'print $2'} | cut -b1-3`
+    sitepackages="$target/lib/python${pythonversion}/site-packages"
+   echo yes | python configure.py -b $target/bin -v $target/Shared/sip -d $sitepackages -p $target/plugins 
+}
