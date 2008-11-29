@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Gnome-Audio by Andreas Köhler <andi5.py@gmx.net>, on Tue Aug 26 01:35:59 BRT 2008
+# Recipe for version 2.22.2 by Andreas Köhler <andi5.py@gmx.net>, on Tue Aug 26 01:35:59 BRT 2008
+compile_version=1.11.2
+url="ftp://ftp.gnome.org/pub/gnome/sources/gnome-audio/2.22/gnome-audio-2.22.2.tar.bz2"
+file_size=1743759
+file_md5=51d4a50b8927cc8a4cc52cee498e9d01
+recipe_type=makefile
+makefile='Makefile'
+do_build=no
+install_variables=(
+   datadir="${target}/Shared"
+)
