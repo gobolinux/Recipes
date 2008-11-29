@@ -1,0 +1,11 @@
+DBus-GLib >= 0.60
+Eject # Runtime dep
+GConf
+GLib >= 2.15.0
+Glibc 2.8
+Gnome-Keyring >= 0.4
+GTK+ >= 2.8.0
+HAL >= 0.5.8.1
+LibGlade >= 2.0 [nautilus,gnome]
+LibNotify >= 0.3.0
+Nautilus 2.21.2 [nautilus,gnome]
