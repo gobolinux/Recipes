@@ -9,4 +9,7 @@ recipe_type=cmake
 
 cmake_options=(
 -DCMAKE_BUILD_TYPE=Release
+-DKDE4_COMMON_PAM_SERVICE=kde
+-DKDE4_KDM_PAM_SERVICE=kdm
+-DKDE4_KSCREENSAVER_PAM_SERVICE=kscreensaver
 )
