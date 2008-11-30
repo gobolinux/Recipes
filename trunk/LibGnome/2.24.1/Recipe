@@ -9,3 +9,4 @@ recipe_type=configure
 configure_options=(
    "--disable-esd"
 )
+with_esound="--enable-esd"
