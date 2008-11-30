@@ -1,0 +1,12 @@
+# Recipe for version 2.24.1 by Andreas Köhler <andi5.py@gmx.net>, on Sun Oct 26 23:01:15 CET 2008
+# Recipe (MakeRecipe) for LibGnome by Rafael Guterres Jeffman (rafasgj), on Thu Sep 8 13:06:36 BRT 2005
+compile_version=1.9.0
+url="http://ftp.gnome.org/pub/gnome/sources/libgnome/2.24/libgnome-2.24.1.tar.bz2"
+file_size=1416606
+file_md5=3b2a30329898b37b2461b3aa886e5ad9
+recipe_type=configure
+
+configure_options=(
+   "--disable-esd"
+)
+with_esound="--enable-esd"
