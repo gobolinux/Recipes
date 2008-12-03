@@ -1,0 +1,7 @@
+[Name] S3Backer
+[Summary] FUSE filesystem that contains a single file backed by the Amazon Simple Storage Service (Amazon S3)
+[Description] s3backer is a filesystem that contains a single file backed by the Amazon Simple Storage Service (Amazon S3). As a filesystem, it is quite small and simple: it provides a single normal file having a fixed size. The file is divided up into blocks, and the content of each block is stored in a unique Amazon S3 object. In other words, what s3backer provides is really more like an S3-backed virtual hard disk device, rather than a filesystem.
+
+In typical usage, a normal filesystem is mounted on top of the file exported by the s3backer filesystem using a loopback mount 
+[License] GNU General Public License version 2
+[Homepage] http://code.google.com/p/s3backer/
