@@ -4,7 +4,7 @@
  
  include $(CORE_DEPTH)/coreconf/UNIX.mk
  
-+NSS_VERSION_MINOR=11
++NSS_VERSION_MINOR=12
 +
  #
  # The default implementation strategy for Linux is now pthreads
@@ -21,16 +21,3 @@
  ifdef MAPFILE
  	MKSHLIB += -Wl,--version-script,$(MAPFILE)
  endif
---- nss-3.11.9/mozilla/security/coreconf/rules.mk	2008-05-31 10:21:19.000000000 +0000
-+++ nss-3.11.9/mozilla/security/coreconf/rules.mk.new	2008-05-31 10:26:19.000000000 +0000
-@@ -113,7 +113,10 @@
- 	$(INSTALL) -m 664 $(LIBRARY) $(SOURCE_LIB_DIR)
- endif
- ifdef SHARED_LIBRARY
-+	mv $(SHARED_LIBRARY) $(SHARED_LIBRARY).$(NSS_VERSION_MINOR)
-+	ln -s $(shell pwd)/$(SHARED_LIBRARY).$(NSS_VERSION_MINOR) $(shell pwd)/$(SHARED_LIBRARY)
- 	$(INSTALL) -m 775 $(SHARED_LIBRARY) $(SOURCE_LIB_DIR)
-+	$(INSTALL) -m 775 $(SHARED_LIBRARY).$(NSS_VERSION_MINOR) $(SOURCE_LIB_DIR)
- ifdef MOZ_DEBUG_SYMBOLS
- ifeq (,$(filter-out _WIN%,$(NS_USE_GCC)_$(OS_TARGET)))
- 	$(INSTALL) -m 644 $(SHARED_LIBRARY:$(DLL_SUFFIX)=pdb) $(SOURCE_LIB_DIR)

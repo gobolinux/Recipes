@@ -30,7 +30,7 @@ diff -Naur nss-3.11-orig/mozilla/security/nss/cmd/config/nss-config nss-3.11/moz
 +prefix=/usr
 +
 +major_version=3
-+minor_version=11
++minor_version=12
 +patch_version=0
 +
 +usage()
@@ -174,7 +174,7 @@ diff -Naur nss-3.11-orig/mozilla/security/nss/lib/pkgconfig/nss.pc nss-3.11/mozi
 +
 +Name: NSS
 +Description: Mozilla Network Security Services
-+Version: 3.11.0
++Version: 3.12.0
 +Requires: nspr >= 4.6.1
 +Libs: -L${libdir} -lnss3 -lsmime3 -lssl3 -lsoftokn3
 +Cflags: -I${includedir}/nss
