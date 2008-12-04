@@ -1,0 +1,21 @@
+# Recipe for version 3.0 by Michael Homer <michael@gobolinux.org>, on Thu Dec 4 15:21:18 NZDT 2008
+compile_version=1.8.5
+url=http://python.org/ftp/python/3.0/Python-3.0.tar.bz2
+file_size=9474659
+file_md5=28021e4c542323b7544aace274a03bed
+recipe_type=configure
+needs_safe_linking=yes
+
+configure_options=(
+  "--enable-shared"
+#  "--with-cxx=no"
+)
+
+#environment=(
+#    "PYTHONOPTIMIZE=1"
+#)
+
+post_install() {
+    echo "import site" > $target/lib/python3.0/sitecustomize.py
+    echo "site.addsitedir(\""$goboLibraries"/python3.0/site-packages/\")" >> $target/lib/python3.0/sitecustomize.py
+}

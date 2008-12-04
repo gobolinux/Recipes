@@ -1,0 +1,109 @@
+Thu Nov 16 16:30:39 CET 2006  hanwen@lilypond.org
+  * posixmodule.c: mingw patches
+diff -rN -u old-Python-2.5.cross/Include/osdefs.h new-Python-2.5.cross/Include/osdefs.h
+--- old-Python-2.5.cross/Include/osdefs.h	2006-11-16 17:47:48.000000000 +0100
++++ new-Python-2.5.cross/Include/osdefs.h	2006-11-16 17:47:48.000000000 +0100
+@@ -18,6 +18,7 @@
+ #define SEP '\\'
+ #define ALTSEP '/'
+ #define MAXPATHLEN 256
++#define ROOTSEP ':'
+ #endif
+ #define DELIM ';'
+ #endif
+diff -rN -u old-Python-2.5.cross/Modules/posixmodule.c new-Python-2.5.cross/Modules/posixmodule.c
+--- old-Python-2.5.cross/Modules/posixmodule.c	2006-11-16 17:47:48.000000000 +0100
++++ new-Python-2.5.cross/Modules/posixmodule.c	2006-11-16 17:47:48.000000000 +0100
+@@ -131,6 +131,10 @@
+ #define HAVE_FSYNC	1
+ #define fsync _commit
+ #else
++#ifdef __MINGW32__             /* MINGW32 (cross-)compiler*/
++#define HAVE_FSYNC	1
++#define fsync _commit
++#else
+ #if defined(PYOS_OS2) && defined(PYCC_GCC) || defined(__VMS)
+ /* Everything needed is defined in PC/os2emx/pyconfig.h or vms/pyconfig.h */
+ #else			/* all other compilers */
+@@ -156,12 +160,13 @@
+ #define HAVE_WAIT       1
+ #define HAVE_TTYNAME	1
+ #endif  /* PYOS_OS2 && PYCC_GCC && __VMS */
++#endif  /* __MINGW32__ */
+ #endif  /* _MSC_VER */
+ #endif  /* __BORLANDC__ */
+ #endif  /* ! __WATCOMC__ || __QNX__ */
+ #endif /* ! __IBMC__ */
+ 
+-#ifndef _MSC_VER
++#if !defined(_MSC_VER) && !defined(__MINGW32__)
+ 
+ #if defined(__sgi)&&_COMPILER_VERSION>=700
+ /* declare ctermid_r if compiling with MIPSPro 7.x in ANSI C mode
+@@ -207,7 +212,7 @@
+ #endif /* HAVE_LSTAT */
+ #endif /* !HAVE_UNISTD_H */
+ 
+-#endif /* !_MSC_VER */
++#endif /* !_MSC_VER && !__MINGW32__ */
+ 
+ #ifdef HAVE_UTIME_H
+ #include <utime.h>
+@@ -252,7 +257,7 @@
+ #endif
+ #endif
+ 
+-#ifdef _MSC_VER
++#if defined (_MSC_VER) || defined (__MINGW32__)
+ #ifdef HAVE_DIRECT_H
+ #include <direct.h>
+ #endif
+@@ -268,7 +273,7 @@
+ #include <shellapi.h>	/* for ShellExecute() */
+ #define popen	_popen
+ #define pclose	_pclose
+-#endif /* _MSC_VER */
++#endif /* _MSC_VER || __MINGW32__ */
+ 
+ #if defined(PYCC_VACPP) && defined(PYOS_OS2)
+ #include <io.h>
+@@ -345,9 +350,9 @@
+ */
+ #include <crt_externs.h>
+ static char **environ;
+-#elif !defined(_MSC_VER) && ( !defined(__WATCOMC__) || defined(__QNX__) )
++#elif !defined(_MSC_VER) && !defined(__MINGW32__) && ( !defined(__WATCOMC__) || defined(__QNX__) )
+ extern char **environ;
+-#endif /* !_MSC_VER */
++#endif /* !_MSC_VER && ! __MINGW32__ */
+ 
+ static PyObject *
+ convertenviron(void)
+@@ -7828,7 +7833,7 @@
+ }
+ #endif
+ 
+-#ifdef MS_WINDOWS
++#if defined(MS_WINDOWS) && !defined(__MINGW32__)
+ 
+ PyDoc_STRVAR(win32_urandom__doc__,
+ "urandom(n) -> str\n\n\
+@@ -8227,7 +8232,7 @@
+ #ifdef HAVE_GETLOADAVG
+ 	{"getloadavg",	posix_getloadavg, METH_NOARGS, posix_getloadavg__doc__},
+ #endif
+- #ifdef MS_WINDOWS
++ #if defined(MS_WINDOWS) && !defined(__MINGW32__)
+  	{"urandom", win32_urandom, METH_VARARGS, win32_urandom__doc__},
+  #endif
+  #ifdef __VMS
+@@ -8509,7 +8514,7 @@
+ }
+ 
+ 
+-#if (defined(_MSC_VER) || defined(__WATCOMC__) || defined(__BORLANDC__)) && !defined(__QNX__)
++#if (defined(_MSC_VER) || defined(__WATCOMC__) || defined(__BORLANDC__) || defined (__MINGW32__)) && !defined(__QNX__)
+ #define INITFUNC initnt
+ #define MODNAME "nt"
+ 
+
