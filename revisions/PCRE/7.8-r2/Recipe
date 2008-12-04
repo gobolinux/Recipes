@@ -1,0 +1,14 @@
+# Recipe for version 7.8 by Laercio B. S. Sousa <lbsousajr@gmail.com>, on Tue Nov 18 20:54:34 BRST 2008
+# by Jeremy Vernon
+compile_version=1.9.0
+url="ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-7.8.tar.bz2"
+file_size=840922
+file_md5=141132d6af14dccc7b08fa797e4fd441
+recipe_type=configure
+needs_safe_linking=yes
+
+configure_options=(
+   "--mandir=${target}/man"
+   "--enable-utf8"
+   #utf-8 support here needed for at least Goffice 0.5.2
+)
