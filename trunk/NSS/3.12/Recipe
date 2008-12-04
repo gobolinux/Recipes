@@ -28,7 +28,7 @@ pre_link() {
    cd dist &&
    install -v -m755 ${NSS_LINUXDIR}/lib/*.so ${target}/lib &&
    pushd ${target}/lib &&
-   for i in *
+   for i in *.so
    do
       mv ${i} ${i}.11
       ln -s ${i}.11 ${i}
