@@ -1,0 +1,37 @@
+build_target=none
+
+private__pre_build() {
+   # compile 'nsinstall' with native gcc
+   Quiet pushd security/coreconf
+   make BUILD_OPT=1 CC=$HOSTCC
+   mv nsinstall/Linux*/nsinstall ..
+   Quiet popd
+
+   export nsinstall=$PWD/security/nsinstall
+
+   # compile dbm with native and cross gcc
+   Quiet pushd security/dbm
+   make BUILD_OPT=1 CC=gcc NSINSTALL=$nsinstall
+   make BUILD_OPT=1 CC=$CC NSINSTALL=$nsinstall OS_TEST=arm
+   Quiet popd
+   
+   # compile nss with native and cross gcc
+   Quiet pushd security/nss
+
+   make BUILD_OPT=1 CC=gcc NSINSTALL=$nsinstall
+
+   shlibsign=`find $PWD/cmd/shlibsign/Linux*/shlibsign -type f | grep -v $CC`
+   crossshlibsign=`find $PWD/cmd/shlibsign/Linux*/shlibsign -type f | grep $CC`
+   mv $crossshlibsign ${crossshlibsign}.arm
+   cp $shlibsign $crossshlibsign
+   ssldir=$(dirname `find $PWD/lib/ssl/Linux*/libssl3.so -type f | grep -v $CC`)
+
+   LD_LIBRARY_PATH=$ssldir:$LD_LIBRARY_PATH \
+       make BUILD_OPT=1 CC=$CC NSINSTALL=$nsinstall OS_TEST=arm SHLIBSIGN=$shlibsign
+   
+   # allows top-level's NSS_LINUXDIR to be correctly assigned
+   armdir=`ls $dir/dist/ | grep Linux | grep $CC`
+   mv dist/$armdir dist/__$armdir
+
+   Quiet popd
+}
