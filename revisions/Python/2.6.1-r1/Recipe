@@ -1,0 +1,24 @@
+# Recipe for version 2.6.1 by Michael Homer <michael@gobolinux.org>, on Fri Dec 5 18:18:20 NZDT 2008
+compile_version=1.8.5
+url=http://python.org/ftp/python/2.6.1/Python-2.6.1.tar.bz2
+file_size=10960385
+file_md5=e81c2f0953aa60f8062c05a4673f2be0
+recipe_type=configure
+needs_safe_linking=yes
+
+configure_options=(
+  "--enable-shared"
+#  "--with-cxx=no"
+)
+
+#environment=(
+#    "PYTHONOPTIMIZE=1"
+#)
+
+post_install() {
+    echo "import site" > $target/lib/python2.6/sitecustomize.py
+    echo "site.addsitedir(\""$goboLibraries"/python2.6/site-packages/\")" >> $target/lib/python2.6/sitecustomize.py
+    echo "site.addsitedir(\""$goboLibraries"/python2.5/site-packages/\")" >> $target/lib/python2.6/sitecustomize.py
+    echo "site.addsitedir(\""$goboLibraries"/python2.4/site-packages/\")" >> $target/lib/python2.6/sitecustomize.py
+    echo "site.addsitedir(\""$goboLibraries"/python2.3/site-packages/\")" >> $target/lib/python2.6/sitecustomize.py
+}
