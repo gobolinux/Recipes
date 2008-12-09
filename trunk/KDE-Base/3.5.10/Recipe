@@ -54,6 +54,6 @@ unmanaged_files=(
 )
 
 pre_build() {
-   GrepReplace "\$dir/moc" "\$dir/moc-qt3" configure
-   GrepReplace "\$dir/uic" "\$dir/uic-qt3" configure
+   sed -i "s,\$dir/moc\([\"| ]\),\$dir/moc-qt3\1," configure
+   sed -i "s,\$dir/uiq\([\"| ]\),\$dir/uiq-qt3\1," configure
 }
