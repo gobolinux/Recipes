@@ -1,0 +1,59 @@
+# Recipe for version 3.5.10 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Aug 29 11:43:44 GMT 2008
+# by Maglan C. Diemer , 3.3.2 by roko
+compile_version=1.9.0
+url="ftp://ftp.kde.org/pub/kde/stable/3.5.10/src/kdebase-3.5.10.tar.bz2"
+file_size=24339704
+file_md5=88237188271fbf1e6bcd40180a75d953
+dir='kdebase-3.5.10'
+recipe_type=configure
+create_dirs_first=yes
+
+pre_build() {
+  ln -sf ${KDE-Libs_path}/3.5.10/include/kbookmarknotifier.h $target/include/kbookmarknotifier.h
+  GrepReplace "XBINDIR *\"" "\"$goboExecutables" kdm/config.def
+  GrepReplace "DEF_USER_PATH.*" "DEF_USER_PATH \"$goboExecutables\"" kdm/config.def
+  GrepReplace "DEF_SYSTEM_PATH.*" "DEF_SYSTEM_PATH \"$goboExecutables\"" kdm/config.def
+}
+
+post_install() {
+  rm -f $target/include/kbookmarknotifier.h
+}
+
+configure_options=(
+   --disable-debug
+   --with-shadow
+   --disable-libsuffix
+   --with-sensors
+   --with-libusb
+   --with-usbids=${goboShared}/hwdata/usb.ids
+   --with-libraw1394
+   --with-ssl
+   --with-dpms
+   --without-gl
+#  "DO_NOT_COMPILE="
+#libkonq applnk doc drkonqi kappfinder kate kcheckpass kcminit  kcontrol  kdcop  kdebugdialog  kdepasswd  kdeprint  kdesu  kdialog  kfind  khelpcenter khotkeys  kicker  kioslave  klipper  kmenuedit  konsole  kpager  kpersonalizer  kreadconfig  kscreensaver  ksmserver  ksplashml  kstart  ksysguard ksystraycmd  ktip  kwin  kxkb  l10n  nsplugins  pics  konqueror  kdesktop kdm
+)
+
+with_hal=(--with-hal)
+with_kerberos=(--with-krb5auth)
+with_ldap=(--with-ldap)
+with_openexr=(--with-openexr)
+with_opengl=(--with-gl)
+with_samba=(--with-samba)
+
+using_pam() {
+   configure_options=("${configure_options[@]}"
+   --with-pam=kde
+   --with-kdm-pam=kdm
+   --with-kcp-pam=kcheckpass
+   --with-kss-pam=kscreensaver)
+}
+
+unmanaged_files=(
+   $goboVariable/lib/kdm
+)
+
+pre_build() {
+   sed -i "s,\$dir/moc\([\"| ]\),\$dir/moc-qt3\1," configure
+   sed -i "s,\$dir/uiq\([\"| ]\),\$dir/uiq-qt3\1," configure
+}
