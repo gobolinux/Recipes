@@ -1,0 +1,45 @@
+#!/bin/sh
+
+post_install() {
+   private__check_firmware
+}
+
+private__copy_kernel_image() {
+   local simpleversion=`private__calculate_version`
+   local fullversion=`private__calculate_full_version`
+
+   # Copy and symlink bzImage and System.map
+   dest=$target/Resources/Unmanaged/$goboBoot
+   mkdir -p $dest
+   cp arch/i386/boot/bzImage $dest/kernel-$fullversion
+   cp System.map $dest/System.map-$fullversion
+}
+
+private__check_firmware () {
+   # check for different versions of firmware
+   private__check_firmware_version IPW2200 3.0
+   private__check_firmware_version IPW2100 1.3
+   private__check_firmware_version IWL3945 2.14
+   private__check_firmware_version IWL4965 4.44
+}
+
+private__check_firmware_version () {
+   driver=$1
+   req_version=$2
+   version_found=false
+   if [ -n "`egrep 'CONFIG_${driver}=[my]' .config`" ]
+   then
+      for version in ${goboPrograms}/${driver}-Firmware/*
+      do
+         if [ `GuessLatest ${req_version} $version` = `echo $version | sed 's/.*\/\(.*\)$/\1/g'` ]
+         then
+            version_found=true
+            break
+         fi
+      done 2> /dev/null
+      if [ "$version_found" = "false" ]
+      then
+         Ask "You need to install firmware for the ${driver} driver to work. Do you want to install it?" && InstallPackage ${driver}-Firmware
+      fi
+   fi
+}

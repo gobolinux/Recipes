@@ -1,0 +1,92 @@
+commit d6a5b9228b0d64168f88bb8d906a2040daca74f5
+
+From: Nicolas Boichat <nicolas@boichat.ch>
+
+Remove debugging messages.
+---
+
+ drivers/hwmon/applesmc.c |   24 ++++++++++--------------
+ 1 files changed, 10 insertions(+), 14 deletions(-)
+
+
+diff --git a/drivers/hwmon/applesmc.c b/drivers/hwmon/applesmc.c
+index 3c8b112..fa40ab9 100644
+--- a/drivers/hwmon/applesmc.c
++++ b/drivers/hwmon/applesmc.c
+@@ -138,7 +138,8 @@ struct dmi_match_data {
+ 	int temperature_set;
+ };
+ 
+-static const int debug;
++static int debug = 0;
++module_param(debug, int, S_IRUGO|S_IWUSR);
+ static struct platform_device *pdev;
+ static s16 rest_x;
+ static s16 rest_y;
+@@ -177,7 +178,7 @@ static int __wait_status(u8 val)
+ 
+ 	for (i = 0; i < 200; i++) {
+ 		if ((inb(APPLESMC_CMD_PORT) & APPLESMC_STATUS_MASK) == val) {
+-			if (debug)
++			if (debug >= 9)
+ 				printk(KERN_DEBUG
+ 						"Waited %d us for status %x\n",
+ 						i*10, val);
+@@ -186,7 +187,8 @@ static int __wait_status(u8 val)
+ 		udelay(10);
+ 	}
+ 
+-	printk(KERN_WARNING "applesmc: wait status failed: %x != %x\n",
++	if (debug >= 1)
++		printk(KERN_WARNING "applesmc: wait status failed: %x != %x\n",
+ 						val, inb(APPLESMC_CMD_PORT));
+ 
+ 	return -EIO;
+@@ -224,11 +226,11 @@ static int applesmc_read_key(const char* key, u8* buffer, u8 len)
+ 				goto wait_fail;
+ 			}
+ 		}
+-		if (debug)
++		if (debug >= 9)
+ 			printk(KERN_DEBUG "<%s", key);
+ 
+ 		outb(len, APPLESMC_DATA_PORT);
+-		if (debug)
++		if (debug >= 9)
+ 			printk(KERN_DEBUG ">%x", len);
+ 
+ 		for (i = 0; i < len; i++) {
+@@ -237,22 +239,16 @@ static int applesmc_read_key(const char* key, u8* buffer, u8 len)
+ 				goto wait_fail;
+ 			}
+ 			buffer[i] = inb(APPLESMC_DATA_PORT);
+-			if (debug)
++			if (debug >= 9)
+ 				printk(KERN_DEBUG "<%x", buffer[i]);
+ 		}
+-		if (debug)
++		if (debug >= 9)
+ 			printk(KERN_DEBUG "\n");
+ 
+ 		break;
+ 
+ wait_fail:
+ 		msleep(ACCESS_WAIT_MSECS);
+-		continue;		
+-	}
+-
+-	if (total != ACCESS_TIMEOUT_MSECS) {
+-		printk(KERN_DEBUG "Read: Waited %d ms for the value\n",
+-						ACCESS_TIMEOUT_MSECS-total);
+ 	}
+ 
+ 	return ret;
+@@ -404,7 +400,7 @@ static int applesmc_device_init(void)
+ 	mutex_lock(&applesmc_lock);
+ 
+ 	for (total = INIT_TIMEOUT_MSECS; total > 0; total -= INIT_WAIT_MSECS) {
+-		if (debug)
++		if (debug >= 9)
+ 			printk(KERN_DEBUG "applesmc try %d\n", total);
+ 		if (!applesmc_read_key(MOTION_SENSOR_KEY, buffer, 2) &&
+ 				(buffer[0] != 0x00 || buffer[1] != 0x00)) {
