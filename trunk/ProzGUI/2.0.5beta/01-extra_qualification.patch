@@ -1,0 +1,16 @@
+Patch for compilation error:
+main.cpp:76: error: extra qualification Main_Window:: on member Main_Window
+
+diff -Naur prozgui-2.0.5beta/src/main.cpp 
+prozgui-2.0.5beta.fix/src/main.cpp
+--- prozgui-2.0.5beta/src/main.cpp	2002-02-02 21:02:47.000000000 -0200
++++ prozgui-2.0.5beta.fix/src/main.cpp	2008-10-11 14:27:11.130068501 -0300
+@@ -73,7 +73,7 @@
+ 
+ class Main_Window:public Fl_Window {
+ public:
+-  Main_Window::Main_Window(int w, int h, const char *l);
++  Main_Window(int w, int h, const char *l);
+   int handle(int);
+ 
+ };
