@@ -1,0 +1,10 @@
+# Recipe for version 0.33 by Demian Florentin <demianflorentin@gmail.com>, on Sat Dec 13 17:23:16 PYST 2008
+# Recipe (MakeRecipe) for LibiCal by Jonas Karlsson <jonka750@student.liu.se>, on Fri Sep 5 23:49:20 CEST 2008
+compile_version=1.8.0
+url="http://easyinstall.citadel.org/libical-0.33.tar.gz"
+file_size=1169470
+file_md5=6e25395678a0170f5da0433120ba91bf
+recipe_type=configure
+configure_options=(
+   --sharedstatedir=${target}/Shared
+)
