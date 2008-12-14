@@ -1,0 +1,13 @@
+# Recipe for version 6.4.7_0 by Laércio B. S. Sousa <lbsousajr@gmail.com>, on Fri Dec 5 11:01:21 BRST 2008
+# Recipe (MakeRecipe) for ImageMagick by Seb Haezebrouck, on Wed Mar 19 14:19:20 CET 2008
+compile_version=1.10.2
+url="ftp://ftp.imagemagick.org/pub/ImageMagick/ImageMagick-6.4.7-0.tar.lzma"
+file_size=5827372
+file_md5=f067d92b21241ed50e07f56bad8ba571
+recipe_type=configure
+configure_options=(
+    "--enable-shared"
+    "--with-x"
+    "--without-perl"
+)
+
