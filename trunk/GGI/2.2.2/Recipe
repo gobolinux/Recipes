@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for GGI by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. dec. 7., vasárnap, 16.21.16 CET
+# Recipe for version 2.2.2 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. dec. 7., vasárnap, 16.21.16 CET
+compile_version=1.11.4
+recipe_type=meta
+include=(
+    LibGII--1.0.2
+    LibGIIgic--1.1.2
+    LibGGI--2.2.2
+    LibGGIgcp--1.0.2
+    LibGGImisc--2.2.2
+    LibGGIwmh--0.3.2
+)
