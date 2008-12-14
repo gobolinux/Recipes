@@ -1,0 +1,15 @@
+# Recipe for version 1.5012 by Laercio B. S. Sousa <lbsousajr@gmail.com>, on Mon Nov 3 16:37:00 BRST 2008
+# Recipe (MakeRecipe) for NTFS-3G by Lucas C. Villa Real, on Thu Feb 22 02:10:40 BRT 2007
+compile_version=1.8.2
+url="http://www.ntfs-3g.org/ntfs-3g-1.5012.tgz"
+file_size=650665
+file_md5=601db52936011902206dfe1be05e4756
+recipe_type=configure
+
+configure_options=(
+    "--disable-ldconfig"
+)
+
+make_variables=(
+    DESTDIR=$target
+)
