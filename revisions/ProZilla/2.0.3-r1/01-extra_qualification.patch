@@ -1,0 +1,15 @@
+Patch for compilation error:
+download_win.h:55: error: extra qualification 'DL_Window::' on member 'print_status'
+
+diff -Naur prozilla-2.0.3/src/download_win.h prozilla-2.0.3.fix/src/download_win.h
+--- prozilla-2.0.3/src/download_win.h	2005-12-11 15:21:33.000000000 -0200
++++ prozilla-2.0.3.fix/src/download_win.h	2008-10-11 12:26:34.556042627 -0300
+@@ -52,7 +52,7 @@
+   void handle_joining_thread();
+   void handle_dl_fatal_error();
+   void cleanup(boolean erase_dlparts);
+-  void DL_Window::print_status(download_t * download, int quiet_mode);
++  void print_status(download_t * download, int quiet_mode);
+ 
+   connection_t *connection;
+   download_t *download;
