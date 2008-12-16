@@ -1,0 +1,13 @@
+Required in order to compile.
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/tools/asm/Makefile tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/tools/asm/Makefile
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/tools/asm/Makefile	2005-12-29 01:58:58.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/tools/asm/Makefile	2008-12-16 04:53:07.000000000 +0100
+@@ -13,7 +13,7 @@
+ endif
+ 
+ CC=gcc
+-Q3ASM_CFLAGS=-O2 -Wall -Werror -fno-strict-aliasing
++Q3ASM_CFLAGS=-O2 -Wall -fno-strict-aliasing
+ 
+ ifeq ($(PLATFORM),darwin)
+   LCC_CFLAGS += -DMACOS_X=1
