@@ -1,0 +1,44 @@
+# Recipe (MakeRecipe) for Tremulous by Raphael J. Schmid <raphael.schmid@gmail.com>, on Tue 16. Dec 01:33:42 CET 2008
+# Recipe for version 1.1.0 by Raphael J. Schmid <raphael.schmid@gmail.com>, on Tue 16. Dec 01:33:42 CET 2008
+
+compile_version=1.11.4
+recipe_type=manifest
+uncompress=no
+
+url="$httpSourceforge/tremulous/tremulous-1.1.0-installer.x86.run"
+file_size=106220503
+file_md5=119068b1a0b2b11abd3ab4932b29d331
+
+manifest=(
+  "tremulous/base/:lib/tremulous/base/"
+  "tremulous/tremulous-1.1.0-src/build/release-linux-x86/tremded.x86:lib/tremulous/"
+  "tremulous/tremulous-1.1.0-src/build/release-linux-x86/tremulous.x86:lib/tremulous/"
+  "tremulous/tremulous.xpm:Shared/pixmaps/"
+)
+
+docs=(
+  "tremulous/CC"
+  "tremulous/ChangeLog"
+  "tremulous/COPYING"
+  "tremulous/GPL"
+  "tremulous/manual.pdf"
+)
+
+pre_patch() {
+  sh tremulous-1.1.0-installer.x86.run --target tremulous --noexec
+  cd tremulous
+  tar xvzf tremulous-1.1.0-src.tar.gz.notatarball
+}
+
+pre_install() {
+  cd tremulous/tremulous-1.1.0-src
+  make
+  mkdir -p $target/Shared/{pixmaps,applications} $target/lib/tremulous/base
+  cp $recipedir/tremulous.desktop $target/Shared/applications
+}
+
+pre_link() {
+  mkdir -p $target/bin
+  ln -s $target/lib/tremulous/tremded.x86 $target/bin/tremded
+  ln -s $target/lib/tremulous/tremulous.x86 $target/bin/tremulous
+}
