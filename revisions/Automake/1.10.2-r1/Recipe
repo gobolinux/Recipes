@@ -1,0 +1,12 @@
+# Recipe for version 1.10.2 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. dec. 15., hétfő, 22.44.40 CET
+url=$ftpGnu/automake/automake-1.10.2.tar.lzma
+file_size=842884
+file_md5=95204606899120f10de99112075a4b6d
+compile_version=1.10.2
+recipe_type=configure
+pre_install() {
+   pushd $target/Shared
+   ln -s automake-1.10 automake
+   ln -s aclocal-1.10 aclocal
+   popd
+}
