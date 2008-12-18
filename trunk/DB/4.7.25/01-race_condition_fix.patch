@@ -1,0 +1,68 @@
+Submitted By: Jeremy Huntwork (jhuntwork at linuxfromscratch dot org)
+Date: 2008-04-02
+Initial Package Version: 4.6.21
+Upstream Status: From Upstream
+Origin: http://www.oracle.com/technology/products/berkeley-db/xml/update/4.6.21/patch.4.6.21.html
+Description: "Fixes a race condition between checkpoint and DB->close which can
+result in the checkpoint thread self-deadlocking."
+
+diff -Naur db-4.6.21-orig/dbinc/mp.h db-4.6.21/dbinc/mp.h
+--- db-4.6.21-orig/dbinc/mp.h	2007-09-27 11:28:25.000000000 -0400
++++ db-4.6.21/dbinc/mp.h	2008-04-02 22:22:33.000000000 -0400
+@@ -639,6 +639,9 @@
+  */
+ #define	MP_TRUNC_RECOVER	0x01
+ 
++/* Private flags to DB_MPOOLFILE->close. */
++#define	DB_MPOOL_NOLOCK		0x002	/* Already have mpf locked. */
++
+ #if defined(__cplusplus)
+ }
+ #endif
+diff -Naur db-4.6.21-orig/mp/mp_fopen.c db-4.6.21/mp/mp_fopen.c
+--- db-4.6.21-orig/mp/mp_fopen.c	2007-05-17 13:18:01.000000000 -0400
++++ db-4.6.21/mp/mp_fopen.c	2008-04-02 22:22:33.000000000 -0400
+@@ -888,7 +888,8 @@
+ 	 * when we try to flush them.
+ 	 */
+ 	deleted = 0;
+-	MUTEX_LOCK(dbenv, mfp->mutex);
++	if (!LF_ISSET(DB_MPOOL_NOLOCK))
++		MUTEX_LOCK(dbenv, mfp->mutex);
+ 	if (F_ISSET(dbmfp, MP_MULTIVERSION))
+ 		--mfp->multiversion;
+ 	if (--mfp->mpf_cnt == 0 || LF_ISSET(DB_MPOOL_DISCARD)) {
+@@ -909,13 +910,19 @@
+ 			}
+ 		}
+ 		if (mfp->block_cnt == 0) {
++			/*
++			 * We should never discard this mp file if our caller
++			 * is holding the lock on it.  See comment in
++			 * __memp_sync_file.
++			 */
++			DB_ASSERT(dbenv, !LF_ISSET(DB_MPOOL_NOLOCK));
+ 			if ((t_ret =
+ 			    __memp_mf_discard(dbmp, mfp)) != 0 && ret == 0)
+ 				ret = t_ret;
+ 			deleted = 1;
+ 		}
+ 	}
+-	if (!deleted)
++	if (!deleted && !LF_ISSET(DB_MPOOL_NOLOCK))
+ 		MUTEX_UNLOCK(dbenv, mfp->mutex);
+ 
+ done:	/* Discard the DB_MPOOLFILE structure. */
+diff -Naur db-4.6.21-orig/mp/mp_sync.c db-4.6.21/mp/mp_sync.c
+--- db-4.6.21-orig/mp/mp_sync.c	2007-06-01 14:32:44.000000000 -0400
++++ db-4.6.21/mp/mp_sync.c	2008-04-02 22:22:33.000000000 -0400
+@@ -755,7 +755,8 @@
+ 	 * This is important since we are called with the hash bucket
+ 	 * locked.  The mfp will get freed via the cleanup pass.
+ 	 */
+-	if (dbmfp != NULL && (t_ret = __memp_fclose(dbmfp, 0)) != 0 && ret == 0)
++	if (dbmfp != NULL &&
++	    (t_ret = __memp_fclose(dbmfp, DB_MPOOL_NOLOCK)) != 0 && ret == 0)
+ 		ret = t_ret;
+ 
+ 	--mfp->mpf_cnt;
