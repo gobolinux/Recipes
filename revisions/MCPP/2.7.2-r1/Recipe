@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for MCPP by Raphael J. Schmid <raphael.schmid@gmail.com>, on Wed Dec 17 02:27:21 CET 2008
+# Recipe for version 2.7.2 by Raphael J. Schmid <raphael.schmid@gmail.com>, on Wed Dec 17 02:27:21 CET 2008
+compile_version=1.11.4
+url="$httpSourceforge/mcpp/mcpp-2.7.2.tar.gz"
+file_size=1533457
+file_md5=512de48c87ab023a69250edc7a0c7b05
+recipe_type=configure
+configure_options=("--enable-mcpplib")
