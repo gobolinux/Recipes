@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for Ice by Raphael J. Schmid <raphael.schmid@gmail.com>, on Tue Dec 16 21:22:44 CET 2008
+# Recipe for version 3.3.0 by Raphael J. Schmid <raphael.schmid@gmail.com>, on Tue Dec 16 21:22:44 CET 2008
+compile_version=1.11.4
+url="http://www.zeroc.com/download/Ice/3.3/Ice-3.3.0.tar.gz"
+file_size=4260675
+file_md5=0500306d9cdbc0fbb553fbb529de557a
+recipe_type=makefile
+makefile='Makefile'
+dir="Ice-3.3.0/cpp"
