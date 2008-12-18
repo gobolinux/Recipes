@@ -1,0 +1,12 @@
+# Recipe for version 1.0.0 by Demian Florentin <demianflorentin@gmail.com>, on Sun Nov 30 23:17:58 PYST 2008
+# Recipe (MakeRecipe) for LibPcap by Evandro Clivatti Dall'Agnol, on Wed Sep 1 19:51:16 BRT 2004
+compile_version=1.8.0
+# configure_options changed to compile tcpdump 3.8.3 (by roko)
+url="http://www.tcpdump.org/release/libpcap-1.0.0.tar.gz"
+file_size=524273
+file_md5=9ad1358c5dec48456405eac197a46d3d
+recipe_type=configure
+configure_options=(
+   "--enable-yydebug"
+)
+install_target="install install-shared"
