@@ -1,0 +1,18 @@
+Removed unnecessary portions of configure.
+
+diff -Naur lzip-1.2/configure lzip-1.2-new/configure
+--- lzip-1.2/configure	2008-12-10 14:03:08.000000000 +0100
++++ lzip-1.2-new/configure	2008-12-19 22:29:12.033934470 +0100
+@@ -23,12 +23,6 @@
+ infodir='$(datadir)/info'
+ mandir='$(datadir)/man'
+ sysconfdir='$(prefix)/etc'
+-CC=
+-CXX=
+-CPPFLAGS=
+-CFLAGS='-Wall -W -O2'
+-CXXFLAGS='-Wall -W -O2'
+-LDFLAGS=
+ 
+ # Loop over all args
+ while [ x"$1" != x ] ; do
