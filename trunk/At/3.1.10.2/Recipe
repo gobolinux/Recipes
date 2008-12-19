@@ -1,0 +1,36 @@
+# Recipe (MakeRecipe) for At_3.1.10.2 by Zbigniew Baniewski <zb@ispid.com.pl>, on Sun Nov 16 22:14:45 BRST 2008
+# Recipe for version at_3.1.10.2 by Zbigniew Baniewski <zb@ispid.com.pl>, on Sun Nov 16 22:14:45 BRST 2008
+compile_version=1.11.3
+url="ftp://ftp.debian.org/debian/pool/main/a/at/at_3.1.10.2.tar.gz"
+file_size=100137
+file_md5=485688690a0aae53224c4150867da334
+dir='at-3.1.10.2'
+recipe_type=configure
+
+unmanaged_files=(
+   ${goboVariable}/spool/atjobs
+   ${goboVariable}/spool/atspool
+)
+
+configure_options=(
+   --with-jobdir="${goboVariable}/spool/atjobs"
+   --with-atspool="${goboVariable}/spool/atspool"
+   --with-etcdir="${settings_target}"
+)
+
+pre_build() {
+   grep -q ^daemon: $goboSettings/group  || groupadd -g 6 daemon
+   grep -q ^daemon: $goboSettings/passwd || useradd daemon -c "daemon" -s /bin/sh -d /var/empty -g daemon -u 6
+}
+
+post_install() {
+   chmod 0655 "${target}/Resources/Tasks/Atd"
+   chmod 0600 "${settings_target}/at.deny"
+   chmod 0644 "${settings_target}/pam.d/atd"
+   chown daemon:daemon ${goboVariable}/spool/atjobs
+   chown daemon:daemon ${goboVariable}/spool/atspool
+   touch ${goboVariable}/spool/atjobs/.SEQ
+   chmod 0600 ${goboVariable}/spool/atjobs/.SEQ
+   grep -q "Atd Start" ${goboSettings}/BootScripts/BootUp || echo "Exec \"Starting AT scheduler...\"               Atd Start" >> ${goboSettings}/BootScripts/BootUp
+   ${goboTasks}/Atd Start
+}
