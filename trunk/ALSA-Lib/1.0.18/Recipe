@@ -1,0 +1,10 @@
+# Recipe for version 1.0.18 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. nov. 29., szombat, 01.04.08 CET
+# Recipe (MakeRecipe) for ALSA-Lib by Peter Eriksen <s022018@student.dtu.dk>, on Sat Jan 15 15:28:29 CET 2005
+compile_version=1.9.0
+url="ftp://ftp.alsa-project.org/pub/lib/alsa-lib-1.0.18.tar.bz2"
+file_size=790052
+file_md5=de60df7541fafe8c6a3397e0f105ff0e
+recipe_type=configure
+configure_options=(
+    --enable-symbolic-functions
+)
