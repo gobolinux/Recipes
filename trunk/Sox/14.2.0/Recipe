@@ -5,3 +5,6 @@ url="$httpSourceforge/sox/sox-14.2.0.tar.gz"
 file_size=964800
 file_md5=7afc0e85d14be014f08e7d3b7ee8c24e
 recipe_type=configure
+pre_link() {
+   ln -s $target/bin/sox $target/bin/soxmix
+}
