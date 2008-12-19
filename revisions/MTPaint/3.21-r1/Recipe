@@ -1,0 +1,10 @@
+# Recipe for version 3.21 by Åsi RÃ³bert <7szunyu@nordtelekom.hu>, on 2008. dec. 2., kedd, 02.29.54 CET
+# Recipe (MakeRecipe) for MTPaint by Õsi (7szünyü) Róbert, Hungary (7szunyu .at. nordtelekom d0t hu), on 2008. máj. 8., csütörtök, 01.50.14 CEST
+compile_version=1.10.2
+url="http://prdownloads.sf.net/mtpaint/mtpaint-3.21.tar.bz2"
+file_size=415411
+file_md5=f685b6fbb16966dc5d343f0e63932027
+recipe_type=configure
+configure_options=(
+"gtk2 cflags --cpu=athlon-xp asneeded gif jpeg tiff nojp2 api intl --locale=$target/share/locale man --mandir=$target/man/man1 --prefix=$target newpo pod"
+)
