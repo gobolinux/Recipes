@@ -1,0 +1,12 @@
+# Recipe for version 2.6.27.4 by Demian Florentin <demianflorentin@gmail.com>, on Fri Nov 7 01:49:17 PYST 2008
+compile_version=1.8.1
+url="http://www.kernel.org/pub/linux/kernel/v2.6/linux-2.6.27.4.tar.bz2"
+file_size=50359534
+file_md5=3880fe9f19b9a7690afd151326eb7ce5
+recipe_type=makefile
+do_build=no
+needs_safe_linking=yes
+install_target="headers_install"
+install_variables=(
+    "INSTALL_HDR_PATH=$target"
+)
