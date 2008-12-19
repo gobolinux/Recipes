@@ -1,0 +1,12 @@
+# Added LibGWeather dep - Andrew Stormont <andyjstormont@googlemail.com> 29/11/08
+# Recipe for version 2.22.2 by Andreas Köhler <andi5.py@gmx.net>, on Sat Aug 16 05:17:59 CEST 2008
+# Recipe (MakeRecipe) for Gnome-Panel by Matthias Wolf, on Tue Jul 26 13:06:31 CEST 2005
+compile_version=1.8.0
+url="ftp://ftp.gnome.org/pub/gnome/sources/gnome-panel/2.22/gnome-panel-2.22.2.tar.bz2"
+file_size=3255261
+file_md5=3d8aab9d476a593e731afcd60272454a
+recipe_type=configure
+configure_options=(
+   --localstatedir="${goboVariable}/lib"
+   --disable-scrollkeeper
+)
