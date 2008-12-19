@@ -1,0 +1,11 @@
+# Recipe for version 0.3.4 by kenneth marken <k-marken@online.no>, on to. 27. nov. 08:47:50 +0100 2008
+# Recipe (MakeRecipe) for Obex-Data-Server by kenneth marken <k-marken@online.no>, on to. 20. nov. 14:03:37 +0100 2008
+compile_version=1.11.4
+url="http://tadas.dailyda.com/software/obex-data-server-0.3.4.tar.gz"
+file_size=145145
+file_md5=5c71d24e8d471cc294d9d47a8f8de971
+recipe_type=configure
+
+configure_options=(
+--enable-system-config
+)
