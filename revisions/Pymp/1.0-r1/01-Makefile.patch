@@ -1,0 +1,35 @@
+remove uneeded DESTDIR entry leaving only PREFIX entry
+--- pymp-1.0/Makefile	2008-10-16 20:00:17.000000000 -0500
++++ pymp-1.0/Makefile.new	2008-10-16 20:03:21.000000000 -0500
+@@ -2,24 +2,23 @@
+ 
+ PYTHON=`which python`
+ PREFIX=/usr/local
+-DESTDIR=
+ 
+ all: control.py menu.py mplayer.py playlist.py prefs.py pymp.py
+ 	$(PYTHON) ./build.py; rm -f ./build.pyc
+ 	
+ install: all
+ 	
+-	install -d $(DESTDIR)/$(PREFIX)/lib/pymp
+-	install *.pyc $(DESTDIR)/$(PREFIX)/lib/pymp
++	install -d $(PREFIX)/lib/pymp
++	install *.pyc $(PREFIX)/lib/pymp
+ 	
+-	install -d $(DESTDIR)/$(PREFIX)/share/pixmaps
+-	install -m 644 pymp.png $(DESTDIR)/$(PREFIX)/share/pixmaps
++	install -d $(PREFIX)/share/pixmaps
++	install -m 644 pymp.png $(PREFIX)/share/pixmaps
+ 	
+-	install -d $(DESTDIR)/$(PREFIX)/bin
+-	install pymp $(DESTDIR)/$(PREFIX)/bin
++	install -d $(PREFIX)/bin
++	install pymp $(PREFIX)/bin
+ 	
+ 	sed -i "s|PREFIX|$(PREFIX)|g" \
+-		$(DESTDIR)/$(PREFIX)/bin/pymp
++		$(PREFIX)/bin/pymp
+ 	
+ clean:
+ 	rm -f *.pyc

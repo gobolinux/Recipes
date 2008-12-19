@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Pymp by Nathan Middleton <nathan.middleton@gmail.com>, on Thu Oct 16 13:42:05 CDT 2008
+# Recipe for version 1.0 by Nathan Middleton <nathan.middleton@gmail.com>, on Thu Oct 16 13:42:05 CDT 2008
+compile_version=1.11.2
+url="http://jdolan.dyndns.org/jaydolan/files/pymp-1.0.tar.bz2"
+file_size=131084
+file_md5=beeaff68a195dd8d047cbd4acc020c54
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
