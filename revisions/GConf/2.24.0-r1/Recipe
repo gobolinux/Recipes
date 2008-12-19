@@ -1,0 +1,10 @@
+# Recipe for version 2.24.0 by Andreas Köhler <andi5.py@gmx.net>, on Sun Oct 26 14:53:27 CET 2008
+# Recipe (MakeRecipe) for GConf by Jonas Karlsson <jonka750@student.liu.se>, on Tue Apr 5 23:42:34 CEST 2005
+compile_version=1.8.2
+url="http://ftp.acc.umu.se/pub/GNOME/sources/GConf/2.24/GConf-2.24.0.tar.bz2"
+file_size=1467817
+file_md5=4971d96f5ba94fe4a69396267bd5afe8
+recipe_type=configure
+configure_options=(
+   "--libexecdir=$target/bin"
+)
