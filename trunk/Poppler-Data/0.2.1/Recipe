@@ -1,0 +1,12 @@
+# Recipe for version 0.2.1 by Demian Florentin <demianflorentin@gmail.com>, on Thu Nov 20 15:42:05 PYST 2008
+# Recipe (MakeRecipe) for Poppler-Data by Aitor Perez Iturri, on mar abr 10 20:35:22 CEST 2007
+compile_version=1.8.2
+url="http://poppler.freedesktop.org/poppler-data-0.2.1.tar.gz"
+file_size=4067562
+file_md5=bca78b8786746c7b48b324283992d658
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+	"datadir=/share"
+   "DESTDIR=$target"
+)
