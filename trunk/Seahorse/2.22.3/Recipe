@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Seahorse by Andreas Köhler <andi5.py@gmx.net>, on Sun Aug 24 22:29:58 BRT 2008
+# Recipe for version 2.22.3 by Andreas Köhler <andi5.py@gmx.net>, on Sun Aug 24 22:29:58 BRT 2008
+compile_version=1.11.2
+url="ftp://ftp.gnome.org/pub/gnome/sources/seahorse/2.22/seahorse-2.22.3.tar.bz2"
+file_size=2121204
+file_md5=7fdab30dbf8684881199e15246c3765a
+recipe_type=configure
+configure_options=(
+   --disable-scrollkeeper
+)
