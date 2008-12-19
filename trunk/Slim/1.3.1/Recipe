@@ -1,0 +1,14 @@
+# Recipe for version 1.3.1 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. nov. 26., szerda, 16.48.46 CET
+# Recipe (MakeRecipe) for Slim by Michael Homer, on Mon Jan 7 10:52:39 NZDT 2008
+compile_version=1.9.0
+url="http://download.berlios.de/slim/slim-1.3.1.tar.gz"
+file_size=219446
+file_md5=727d0acb24c0fbf0751134c37a9c895f
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "DESTDIR="
+   "PREFIX=$target"
+   "MANDIR=$target/man"
+   "CFGDIR=$settings_target"
+)
