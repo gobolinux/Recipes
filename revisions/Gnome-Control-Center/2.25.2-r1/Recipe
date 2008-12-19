@@ -1,0 +1,12 @@
+# Recipe for version 2.25.2 by Andrew Stormont <andyjstormont@googlemail.com>, on Web Dec 3 17:54:00 GMT+1
+# Recipe for version 2.22.2.1 by Andreas Köhler <andi5.py@gmx.net>, on Mon Aug 18 00:43:57 CEST 2008
+# Recipe (MakeRecipe) for Gnome-Control-Center by Andreas Köhler <andi5.py@gmx.net>, on Mon Aug 18 00:43:57 CEST 2008
+compile_version=1.11.2
+url="http://ftp.gnome.org/pub/GNOME/desktop/2.25/2.25.2/sources/gnome-control-center-2.25.2.tar.bz2"
+file_size=2201154
+file_md5=d501bac60fa26b3baa9ad17352f47c8b
+recipe_type=configure
+configure_options=(
+    #--disable-update-mimedb
+    --disable-scrollkeeper
+)
