@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Gnome-System-Monitor by Andreas Köhler <andi5.py@gmx.net>, on Tue Aug 19 22:39:31 CEST 2008
+# Recipe for version 2.22.3 by Andreas Köhler <andi5.py@gmx.net>, on Tue Aug 19 22:39:31 CEST 2008
+compile_version=1.11.2
+url="ftp://ftp.gnome.org/pub/gnome/sources/gnome-system-monitor/2.22/gnome-system-monitor-2.22.3.tar.bz2"
+file_size=1921084
+file_md5=06a162294f63cc7c931f78b73d4043b7
+recipe_type=configure
+configure_options=(
+   --disable-scrollkeeper
+)
