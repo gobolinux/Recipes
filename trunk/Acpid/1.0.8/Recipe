@@ -1,0 +1,24 @@
+# Recipe for version 1.0.6 by Giambattista Bloisi <giamby@infinito.it>, on Sun Nov 25 22:22:07 CET 2007
+# Recipe for version 1.0.8 by Zbigniew Baniewski <zb@ispid.com.pl>, on Fri Nov 21 03:13:21 BRST 2008
+# Recipe (MakeRecipe) for Acpid by Jonas Karlsson <jonka750@student.liu.se>, on Sat May 14 09:17:12 CEST 2005
+compile_version=1.8.0
+url="$httpSourceforge/acpid/acpid-1.0.8.tar.gz"
+file_size=26102
+file_md5=1d9c52fe2c0b51f8463f357c2a3d3ddb
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+"INSTPREFIX=$target"
+"BINDIR=$target/bin"
+"SBINDIR=$target/sbin"
+"MAN8DIR=$target/man/man8"
+)
+
+pre_build() {
+  killall -q acpid || true
+}
+
+post_install() {
+   grep -q "Acpid Start" ${goboSettings}/BootScripts/BootUp || echo "Exec \"Starting ACPI daemon...\"                Acpid Start" >> ${goboSettings}/BootScripts/BootUp
+   ${goboTasks}/Acpid Start
+}
