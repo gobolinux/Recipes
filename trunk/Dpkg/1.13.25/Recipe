@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for DPKG_1.13.25 by Zbigniew Baniewski <zb@ispid.com.pl>, on Sun Nov 16 16:14:01 BRST 2008
+# Recipe for version dpkg_1.13.25 by Zbigniew Baniewski <zb@ispid.com.pl>, on Sun Nov 16 16:14:01 BRST 2008
+compile_version=1.11.3
+url="http://ftp.wa.au.debian.org/debian/pool/main/d/dpkg/dpkg_1.13.25.tar.gz"
+file_size=3384618
+file_md5=88effb358aa04d25036b662d588433a6
+dir='dpkg-1.13.25'
+recipe_type=configure
