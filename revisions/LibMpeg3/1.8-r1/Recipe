@@ -1,0 +1,12 @@
+# Recipe for version 1.8 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. nov. 30., vasárnap, 06.37.49 CET
+# Recipe (MakeRecipe) for LibMpeg3 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Nov 23 00:17:57 BRST 2004
+compile_version=1.8.0
+url="$httpSourceforge/heroines/libmpeg3-1.8-src.tar.bz2"
+file_size=2452350
+file_md5=a9d0d34e8941a4437eb8e7dfe559eca1
+dir='libmpeg3-1.8'
+recipe_type=makefile
+make_variables=(
+    PREFIX="$target"
+    DST="$target/bin"
+)

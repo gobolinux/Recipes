@@ -1,0 +1,277 @@
+diff -Nur libmpeg3-1.5.4/video/output.c libmpeg3-1.5.4-lucasvr/video/output.c
+--- libmpeg3-1.5.4/video/output.c	2003-11-07 19:32:32.000000000 -0200
++++ libmpeg3-1.5.4-lucasvr/video/output.c	2004-11-23 01:10:02.000000000 -0200
+@@ -59,21 +59,21 @@
+             "punpcklbw      %%mm7,                  %%mm0\n"  /* 4 W cb   0 u3  0 u2  0 u1  0 u0 */
+             "punpcklbw      %%mm7,                  %%mm1\n"  /* 4 W cr   0 v3  0 v2  0 v1  0 v0 */
+ 
+-            "psubw          mpeg3_MMX_80w,          %%mm0\n"
+-            "psubw          mpeg3_MMX_80w,          %%mm1\n"
++            "psubw          (%9),                   %%mm0\n"
++            "psubw          (%9),                   %%mm1\n"
+             "movq           %%mm0,                  %%mm2\n"  /* Cb 	  0 u3  0 u2  0 u1  0 u0 */
+             "movq           %%mm1,                  %%mm3\n"  /* Cr */
+-            "pmullw         mpeg3_MMX_Ugrncoeff,    %%mm2\n"  /* Cb2green 0 R3  0 R2  0 R1  0 R0 */
++            "pmullw         (%10),                  %%mm2\n"  /* Cb2green 0 R3  0 R2  0 R1  0 R0 */
+             "movq           (%2),                   %%mm6\n"  /* L1 	 l7 L6 L5 L4 L3 L2 L1 L0 */
+-            "pmullw         mpeg3_MMX_Ublucoeff,    %%mm0\n"  /* Cb2blue */
+-            "pand           mpeg3_MMX_00FFw,        %%mm6\n"  /* L1 	 00 L6 00 L4 00 L2 00 L0 */
+-            "pmullw         mpeg3_MMX_Vgrncoeff,    %%mm3\n"  /* Cr2green */
++            "pmullw         (%11),                  %%mm0\n"  /* Cb2blue */
++            "pand           (%12),                  %%mm6\n"  /* L1 	 00 L6 00 L4 00 L2 00 L0 */
++            "pmullw         (%13),                  %%mm3\n"  /* Cr2green */
+             "movq           (%2),                   %%mm7\n"  /* L2 */
+-            "pmullw         mpeg3_MMX_Vredcoeff,    %%mm1\n"  /* Cr2red */
++            "pmullw         (%14),                  %%mm1\n"  /* Cr2red */
+             "psrlw          $8,                     %%mm7\n"  /* L2 	 00 L7 00 L5 00 L3 00 L1 */
+-            "pmullw         mpeg3_MMX_Ycoeff,       %%mm6\n"  /* lum1 */
++            "pmullw         (%15),                  %%mm6\n"  /* lum1 */
+             "paddw          %%mm3,                  %%mm2\n"  /* Cb2green + Cr2green == green */
+-            "pmullw         mpeg3_MMX_Ycoeff,       %%mm7\n"  /* lum2 */
++            "pmullw         (%15),                  %%mm7\n"  /* lum2 */
+ 
+             "movq           %%mm6,                  %%mm4\n"  /* lum1 */
+             "paddw          %%mm0,                  %%mm6\n"  /* lum1 +blue  00 B6 00 B4 00 B2 00 B0 */
+@@ -91,11 +91,11 @@
+             "punpcklbw      %%mm4,                  %%mm4\n"
+             "punpcklbw      %%mm5,                  %%mm5\n"
+ 
+-            "pand           mpeg3_MMX_redmask,      %%mm4\n"
++            "pand           (%16),                  %%mm4\n"
+             "psllw          $3,                     %%mm5\n"  /* GREEN       1 */
+             "punpcklbw      %%mm6,                  %%mm6\n"
+-            "pand           mpeg3_MMX_grnmask,      %%mm5\n"
+-            "pand           mpeg3_MMX_redmask,      %%mm6\n"
++            "pand           (%17),                  %%mm5\n"
++            "pand           (%16),                  %%mm6\n"
+             "por            %%mm5,                  %%mm4\n"  /* */
+             "psrlw          $11,                    %%mm6\n"  /* BLUE		 1 */
+             "movq           %%mm3,                  %%mm5\n"  /* lum2 */
+@@ -109,23 +109,23 @@
+             "packuswb       %%mm3,                  %%mm3\n"
+             "packuswb       %%mm5,                  %%mm5\n"
+             "packuswb       %%mm7,                  %%mm7\n"
+-            "pand           mpeg3_MMX_00FFw,        %%mm6\n"  /* L3 */
++            "pand           (%12),                  %%mm6\n"  /* L3 */
+             "punpcklbw      %%mm3,                  %%mm3\n"
+             "punpcklbw      %%mm5,                  %%mm5\n"
+-            "pmullw         mpeg3_MMX_Ycoeff,       %%mm6\n"  /* lum3 */
++            "pmullw         (%15),                  %%mm6\n"  /* lum3 */
+             "punpcklbw      %%mm7,                  %%mm7\n"
+             "psllw          $3,                     %%mm5\n"  /* GREEN 2 */
+-            "pand           mpeg3_MMX_redmask,      %%mm7\n"
+-            "pand           mpeg3_MMX_redmask,      %%mm3\n"
++            "pand           (%16),                  %%mm7\n"
++            "pand           (%16),                  %%mm3\n"
+             "psrlw          $11,                    %%mm7\n"  /* BLUE  2 */
+-            "pand           mpeg3_MMX_grnmask,      %%mm5\n"
++            "pand           (%17),                  %%mm5\n"
+             "por            %%mm7,  				%%mm3\n"
+             "movq           (%2,%3),				%%mm7\n"  /* L4 */
+             "por            %%mm5,  				%%mm3\n"	 /* */
+             "psrlw          $8,                     %%mm7\n"    /* L4 */
+             "movq           %%mm4,  				%%mm5\n"
+             "punpcklwd      %%mm3,                  %%mm4\n"
+-            "pmullw         mpeg3_MMX_Ycoeff,       %%mm7\n"    /* lum4 */
++            "pmullw         (%15),                  %%mm7\n"    /* lum4 */
+             "punpckhwd      %%mm3,                  %%mm5\n"
+ 
+             "movq           %%mm4,  				(%4)\n"
+@@ -152,11 +152,11 @@
+             "punpcklbw      %%mm5,                  %%mm5\n"
+             "punpcklbw      %%mm6,                  %%mm6\n"
+             "psllw          $3,                     %%mm5\n" /* GREEN 3 */
+-            "pand           mpeg3_MMX_redmask,      %%mm4\n"
++            "pand           (%16),                  %%mm4\n"
+             "psraw          $6,         			%%mm3\n" /* psr 6 */
+             "psraw          $6,         			%%mm0\n"
+-            "pand           mpeg3_MMX_redmask,      %%mm6\n" /* BLUE */
+-            "pand           mpeg3_MMX_grnmask,      %%mm5\n"
++            "pand           (%16),                  %%mm6\n" /* BLUE */
++            "pand           (%17),                  %%mm5\n"
+             "psrlw          $11,                    %%mm6\n"  /* BLUE  3 */
+             "por            %%mm5,  				%%mm4\n"
+             "psraw          $6,                     %%mm7\n"
+@@ -167,11 +167,11 @@
+             "punpcklbw      %%mm3,                  %%mm3\n"
+             "punpcklbw      %%mm0,                  %%mm0\n"
+             "punpcklbw      %%mm7,                  %%mm7\n"
+-            "pand           mpeg3_MMX_redmask,      %%mm3\n"
+-            "pand           mpeg3_MMX_redmask,      %%mm7\n" /* BLUE */
++            "pand           (%16),                  %%mm3\n"
++            "pand           (%16),                  %%mm7\n" /* BLUE */
+             "psllw          $3,                     %%mm0\n" /* GREEN 4 */
+             "psrlw          $11,                    %%mm7\n"
+-            "pand           mpeg3_MMX_grnmask,      %%mm0\n"
++            "pand           (%17),                  %%mm0\n"
+             "por            %%mm7,                  %%mm3\n"
+             "addl           $8,                             %6\n"
+             "por            %%mm0,                  %%mm3\n"
+@@ -203,7 +203,16 @@
+ 			"r" (col1), 
+ 			"m" (x), 
+ 			"m" (mod), 
+-			"m" (y)
++			"m" (y),
++			"o" (mpeg3_MMX_80w),
++			"o" (mpeg3_MMX_Ugrncoeff),
++			"o" (mpeg3_MMX_Ublucoeff),
++			"o" (mpeg3_MMX_00FFw),
++			"o" (mpeg3_MMX_Vgrncoeff),
++			"o" (mpeg3_MMX_Vredcoeff),
++			"o" (mpeg3_MMX_Ycoeff),
++			"o" (mpeg3_MMX_redmask),
++			"o" (mpeg3_MMX_grnmask)
+ 		);
+ }
+ 
+@@ -239,11 +248,11 @@
+ 	"por %%mm5, %%mm2;\n"          /* Overlay new v byte 0x0000000000cb00cb */
+ 
+ /* mm0: 0x000000yy00yy00yy mm1: 0x000000uu00uu0000 mm2: 0x0000000000vv00vv */
+- 	"psubw mpeg3_MMX_U_80, %%mm1;\n"    /* Subtract 128 from u 0x000000uu00uu0000 */
+- 	"pmullw mpeg3_MMX_U_COEF, %%mm1;\n" /* Multiply u coeffs 0x0000uuuuuuuu0000 */
++ 	"psubw (%4), %%mm1;\n"    /* Subtract 128 from u 0x000000uu00uu0000 */
++ 	"pmullw (%5), %%mm1;\n" /* Multiply u coeffs 0x0000uuuuuuuu0000 */
+  	"psllw $6, %%mm0;\n"                /* Shift y coeffs 0x0000yyy0yyy0yyy0 */
+- 	"psubw mpeg3_MMX_V_80, %%mm2;\n"    /* Subtract 128 from v 0x0000000000cb00cb */
+- 	"pmullw mpeg3_MMX_V_COEF, %%mm2;\n" /* Multiply v coeffs 0x0000crcrcrcrcrcr */
++ 	"psubw (%6), %%mm2;\n"    /* Subtract 128 from v 0x0000000000cb00cb */
++ 	"pmullw (%7), %%mm2;\n" /* Multiply v coeffs 0x0000crcrcrcrcrcr */
+ 
+ /* mm0: 0x000000yy00yy00yy mm1: 0x0000uuuuuuuu0000 mm2: 0x00000000vvvvvvvv */
+ 	"paddsw %%mm1, %%mm0;\n"        /* Add u to result */
+@@ -252,7 +261,8 @@
+ 	"packuswb %%mm0, %%mm0;\n"     /* Pack into ARGB 0x0000000000rrggbb */
+ 	"movd %%mm0, (%3);\n"          /* Store output */
+ :
+-: "r" (&y), "r" (&u), "r" (&v), "r" (output));
++: "r" (&y), "r" (&u), "r" (&v), "r" (output), "o" (mpeg3_MMX_U_80), "o" (mpeg3_MMX_U_COEF),
++  "o" (mpeg3_MMX_V_80), "o" (mpeg3_MMX_V_COEF));
+ }
+ 
+ inline void mpeg3_601_bgra32_mmx(unsigned long y, 
+@@ -281,11 +291,11 @@
+ 	"por %%mm5, %%mm2;\n"          /* Overlay new v byte 0x0000000000cb00cb */
+ 
+ /* mm0: 0x000000yy00yy00yy mm1: 0x000000uu00uu0000 mm2: 0x0000000000vv00vv */
+-	"pmullw mpeg3_MMX_601_Y_COEF, %%mm0;\n" /* Scale and shift y coeffs */
+-	"psubw mpeg3_MMX_U_80, %%mm1;\n"     /* Subtract 128 from u 0x000000uu00uu0000 */
+- 	"pmullw mpeg3_MMX_U_COEF, %%mm1;\n"  /* Multiply u coeffs 0x0000uuuuuuuu0000 */
+-	"psubw mpeg3_MMX_V_80, %%mm2;\n"     /* Subtract 128 from v 0x0000000000cb00cb */
+- 	"pmullw mpeg3_MMX_V_COEF, %%mm2;\n"  /* Multiply v coeffs 0x0000crcrcrcrcrcr */
++	"pmullw (%4), %%mm0;\n"        /* Scale and shift y coeffs */
++	"psubw (%5), %%mm1;\n"         /* Subtract 128 from u 0x000000uu00uu0000 */
++ 	"pmullw (%6), %%mm1;\n"        /* Multiply u coeffs 0x0000uuuuuuuu0000 */
++	"psubw (%7), %%mm2;\n"         /* Subtract 128 from v 0x0000000000cb00cb */
++ 	"pmullw (%8), %%mm2;\n"        /* Multiply v coeffs 0x0000crcrcrcrcrcr */
+ 
+ /* mm0: 0x000000yy00yy00yy mm1: 0x0000uuuuuuuu0000 mm2: 0x00000000vvvvvvvv */
+ 	"paddsw %%mm1, %%mm0;\n"        /* Add u to result */
+@@ -294,7 +304,8 @@
+ 	"packuswb %%mm0, %%mm0;\n"     /* Pack into ARGB 0x0000000000rrggbb */
+ 	"movd %%mm0, (%3);\n"          /* Store output */
+ :
+-: "r" (&y), "r" (&u), "r" (&v), "r" (output));
++: "r" (&y), "r" (&u), "r" (&v), "r" (output), "o" (mpeg3_MMX_601_Y_COEF),
++  "o" (mpeg3_MMX_U_80), "o" (mpeg3_MMX_U_COEF), "o" (mpeg3_MMX_V_80), "o" (mpeg3_MMX_V_COEF));
+ }
+ 
+ static unsigned long long  mpeg3_MMX_U_80_RGB    = 0x0000000000800080LL;
+@@ -352,7 +363,7 @@
+ /* Output will be 0x00bbggrr with the 00 trailing so this can also be used */
+ /* for rgb24. */
+ 	"movd (%0), %%mm0;\n"          /* Load y   0x00000000000000yy */
+-	"psubsw mpeg3_MMX_601_Y_DIFF, %%mm0;\n"      /* Subtract 16 from y */
++	"psubsw (%5), %%mm0;\n"        /* Subtract 16 from y */
+ 	"movd (%1), %%mm1;\n"          /* Load v    0x00000000000000vv */
+ 	"movq %%mm0, %%mm3;\n"         /* Copy y to temp */
+ 	"psllq $16, %%mm1;\n"          /* Shift v   0x0000000000vv0000 */
+@@ -369,11 +380,11 @@
+ 	"por %%mm5, %%mm2;\n"          /* Overlay new u byte 0x0000000000uu00uu */
+ 
+ /* mm0: 0x000000yy00yy00yy     mm1: 0x000000vv00vv0000     mm2: 0x0000000000uu00uu */
+-	"pmullw mpeg3_MMX_601_Y_COEF, %%mm0;\n"     /* Scale y coeffs */
+- 	"psubw mpeg3_MMX_V_80_RGB, %%mm1;\n"    /* Subtract 128 from v 0x000000vv00vv0000 */
+- 	"pmullw mpeg3_MMX_V_COEF_RGB, %%mm1;\n" /* Multiply v coeffs 0x0000vvvvvvvv0000 */
+- 	"psubw mpeg3_MMX_U_80_RGB, %%mm2;\n"    /* Subtract 128 from u 0x0000000000uu00uu */
+- 	"pmullw mpeg3_MMX_U_COEF_RGB, %%mm2;\n" /* Multiply u coeffs 0x0000uuuuuuuuuuuu */
++	"pmullw (%5), %%mm0;\n"        /* Scale y coeffs */
++ 	"psubw (%6), %%mm1;\n"         /* Subtract 128 from v 0x000000vv00vv0000 */
++ 	"pmullw (%7), %%mm1;\n"        /* Multiply v coeffs 0x0000vvvvvvvv0000 */
++ 	"psubw (%8), %%mm2;\n"         /* Subtract 128 from u 0x0000000000uu00uu */
++ 	"pmullw (%9), %%mm2;\n"        /* Multiply u coeffs 0x0000uuuuuuuuuuuu */
+ 
+ /* mm0: 0x000000yy00yy00yy mm1: 0x0000vvvvvvvv0000 mm2: 0x00000000uuuuuuuu */
+ 	"paddsw %%mm1, %%mm0;\n"        /* Add v to result */
+@@ -382,7 +393,9 @@
+ 	"packuswb %%mm0, %%mm0;\n"     /* Pack into RGBA 0x0000000000bbggrr */
+ 	"movd %%mm0, (%3);\n"          /* Store output */
+ :
+-: "r" (&y), "r" (&v), "r" (&u), "r" (output));
++: "r" (&y), "r" (&v), "r" (&u), "r" (output), "o" (mpeg3_MMX_601_Y_DIFF),
++  "o" (mpeg3_MMX_601_Y_COEF), "o" (mpeg3_MMX_V_80_RGB), "o" (mpeg3_MMX_V_COEF_RGB),
++  "o" (mpeg3_MMX_U_80_RGB), "o" (mpeg3_MMX_U_COEF_RGB));
+ }
+ 
+ #endif
+diff -Nur libmpeg3-1.5.4/video/reconstruct.c libmpeg3-1.5.4-lucasvr/video/reconstruct.c
+--- libmpeg3-1.5.4/video/reconstruct.c	2003-10-14 05:54:14.000000000 -0200
++++ libmpeg3-1.5.4-lucasvr/video/reconstruct.c	2004-11-23 01:10:02.000000000 -0200
+@@ -334,8 +334,8 @@
+ 	);
+ #else   /* No 3dnow */
+ 	__asm__ (
+-  		"movq	     MASK_AND, 	%%mm5\n"
+-  		"movq	     ADD_1, 	%%mm6\n"
++  		"movq	     (%4), 	%%mm5\n"	/* Move MASK_AND */
++  		"movq	     (%5), 	%%mm6\n"	/* Move ADD_1 */
+ 		"1:\t"
+   			"movq        (%1),%%mm0\n"        /* Load 16 pixels from each row */
+   			"movq        (%2),%%mm1\n"
+@@ -360,7 +360,7 @@
+   			"leal		(%2, %3), %2\n"
+   		"jnz        1b\n"
+ 		:
+-		: "c" (h), "r" (s), "r" (d), "r" (lx2)
++		: "c" (h), "r" (s), "r" (d), "r" (lx2), "r" (MASK_AND), "o" (ADD_1)
+ 	);
+ #endif
+ }
+diff -Nur libmpeg3-1.5.4/video/slice.c libmpeg3-1.5.4-lucasvr/video/slice.c
+--- libmpeg3-1.5.4/video/slice.c	2003-10-14 05:54:14.000000000 -0200
++++ libmpeg3-1.5.4-lucasvr/video/slice.c	2004-11-23 01:10:02.000000000 -0200
+@@ -212,7 +212,7 @@
+             	"movd       (%2),           %%mm0\n"    /* " 0 0 0  v1" */
+             	"punpcklwd  %%mm0,          %%mm0\n"    /* " 0 0 v1 v1" */
+             	"punpcklwd  %%mm0,          %%mm0\n"
+-            	"paddw      MMX_128,        %%mm0\n"
++            	"paddw      (%3),           %%mm0\n"	/* Move MMX_128 */
+             	"packuswb   %%mm0,          %%mm0\n"
+             	"leal       (%0,%1,2),      %%eax\n"
+ 
+@@ -228,13 +228,13 @@
+             	"movq        %%mm0,         (%%eax)\n"
+             	"movq        %%mm0,         (%%eax, %1)\n"
+             	:
+-            	: "D" (rfp), "c" (iincr), "b" (bp)
++            	: "D" (rfp), "c" (iincr), "b" (bp), "o" (MMX_128)
+             	: "eax");
+     		}
+     		else 
+ 			{
+     		__asm__ __volatile__(
+-            	"movq        MMX_128,%%mm4\n"
++            	"movq        (%4),%%mm4\n"	/* Move MMX_128 */
+             	".align 8\n"
+             	"1:"
+             	  "movq      (%1),   %%mm0\n"
+@@ -260,7 +260,7 @@
+             	  "leal       (%2,%3,2), %2\n"
+             	"loop       1b\n"
+             	:
+-            	: "c" (4), "r" (bp), "r" (rfp), "r" (iincr)
++            	: "c" (4), "r" (bp), "r" (rfp), "r" (iincr), "r" (MMX_128)
+         	);
+     		}
+ 		}
