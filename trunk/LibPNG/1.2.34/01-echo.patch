@@ -1,0 +1,17 @@
+$(ECHO) is not set anywhere, so we use hardcoded 'echo' instead.
+
+Signed-off-by: Jonas Karlsson
+--- libpng-1.2.28/Makefile.am	2008-04-30 17:36:05.000000000 +0000
++++ libpng-1.2.28/Makefile.am.new	2008-05-12 20:46:31.000000000 +0000
+@@ -111,9 +111,9 @@
+ 
+ libpng.vers: libpng.sym
+ 	rm -f $@ $@.new
+-	$(ECHO) PNG@PNGLIB_MAJOR@@PNGLIB_MINOR@_0 '{global:' > $@.new
++	echo PNG@PNGLIB_MAJOR@@PNGLIB_MINOR@_0 '{global:' > $@.new
+ 	$(SED) s/$$/\;/ libpng.sym >> $@.new
+-	$(ECHO) 'local: *; };' >> $@.new
++	echo 'local: *; };' >> $@.new
+ 	mv $@.new $@
+ 
+ test: check
