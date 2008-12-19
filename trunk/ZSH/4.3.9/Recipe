@@ -4,3 +4,5 @@ file_size=2659602
 file_md5=0539d0a590e545ad8c40ff8c97e94538
 compile_version=1.8.0
 recipe_type=configure
+
+post_install_message="In ZSH 4.3.9, 'promptinit' no longer autoloads 'colors' function. You may need to add a 'autoload -U colors' statement in your '${goboSettings}/zshrc' file."
