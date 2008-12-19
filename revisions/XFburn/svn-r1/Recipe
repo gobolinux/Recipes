@@ -1,0 +1,6 @@
+# Recipe (MakeRecipe) for XFburn by Demian Florentin <demianflorentin@gmail.com>, on Wed Nov 26 07:15:37 PYST 2008
+# Recipe for version svn by Demian Florentin <demianflorentin@gmail.com>, on Wed Nov 26 07:15:37 PYST 2008
+compile_version=1.11.4
+svn="http://svn.xfce.org/svn/goodies/xfburn/trunk"
+autogen_before_configure=yes
+recipe_type=configure
