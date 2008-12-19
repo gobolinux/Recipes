@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for LuaDoc by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. nov. 21., péntek, 00.12.53 CET
+# Recipe for version 3.0.1 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. nov. 21., péntek, 00.12.53 CET
+compile_version=1.11.4
+url="http://luaforge.net/frs/download.php/3185/luadoc-3.0.1.tar.gz"
+file_size=108824
+file_md5=ec3a0c0b9413e401a2d466cc0930d505
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
