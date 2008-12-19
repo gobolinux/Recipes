@@ -1,0 +1,11 @@
+# Recipe for version 0.14.0 by Andrew Stormont <andyjstormont@googlemail.com>, on Sun Nov 29 23.33.06 GMT+1 2008
+# Recipe for version 0.12.1 by Daniele Maccari <daniele.maccari@gmail.com>, on Wed Feb 13 19:48:05 CET 2008
+# Recipe (MakeRecipe) for Gnome-Doc-Utils by Matthias Wolf, on Wed Jul 27 17:23:00 CEST 2005
+compile_version=1.9.0
+url="http://ftp.gnome.org/pub/GNOME/desktop/2.25/2.25.2/sources/gnome-doc-utils-0.14.0.tar.bz2"
+file_size=617417
+file_md5=3aee9b504f6c9b1cb0f34f80264f2239
+recipe_type=configure
+configure_options=(
+    "--disable-scrollkeeper"
+)
