@@ -1,0 +1,13 @@
+# Recipe for version 2.6.3 by Andreas Köhler <andi5.py@gmx.net>, on Sun Oct 26 22:50:23 CET 2008
+# Recipe (MakeRecipe) for LibGlade by roko, <ro.ko@mcnon.com>, on Fri Dec 31 20:03:01 BRST 2004
+compile_version=1.8.2
+url="http://ftp.acc.umu.se/pub/GNOME/sources/libglade/2.6/libglade-2.6.3.tar.bz2"
+file_size=358989
+file_md5=1c359860b1a0f369f0b6e3f96fd985c2
+recipe_type=configure
+unmanaged_files=(
+   "$goboVariable/lib/xml"
+)
+configure_options=(
+   "--with-xml-catalog=$goboVariable/lib/xml/catalog"
+)
