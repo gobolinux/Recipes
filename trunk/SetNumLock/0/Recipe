@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for SetNumLock by Nathan Middleton <nathan.middleton@gmail.com>, on Wed Oct 15 19:54:05 CDT 2008
+# Recipe for version 0 by Nathan Middleton <nathan.middleton@gmail.com>, on Wed Oct 15 19:54:05 CDT 2008
+compile_version=1.11.2
+url="http://www.geocities.com/cucnews/setnumlock.tar.gz"
+file_size=12533
+file_md5=f3356bc3952419c2685f31b77a75133b
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+	"INSTDIR=$target"
+)
