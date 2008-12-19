@@ -1,0 +1,31 @@
+# Recipe (MakeRecipe) for Polipo by David Karell <mccoy@doctor.com>, on Sat Nov 8 01:22:56 CET 2008
+# Recipe for version 1.0.4 by David Karell <mccoy@doctor.com>, on Sat Nov 8 01:22:56 CET 2008
+compile_version=1.11.4rc1
+url="http://www.pps.jussieu.fr/~jch/software/files/polipo/polipo-1.0.4.tar.gz"
+file_size=180487
+file_md5=defdce7f8002ca68705b6c2c36c4d096
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=${target}"
+   "LOCAL_ROOT=${target}/share/polipo/www"
+   "DISK_CACHE_ROOT=${goboVariable}/cache/polipo"
+   "CDEBUGFLAGS=${CFLAGS}"
+)
+
+pre_link() {
+   mkdir -p "${target}/Resources/Defaults/Settings/polipo"
+   touch "${target}/Resources/Defaults/Settings/polipo/config"
+   mkdir -p "${goboVariable}/run/polipo"
+   chown polipo:polipo "${goboVariable}/run/polipo"
+   mkdir -p "${goboVariable}/cache/polipo"
+   chown polipo:polipo "${goboVariable}/cache/polipo"
+   touch "${goboVariable}/log/polipo"
+   chown polipo:polipo "${goboVariable}/log/polipo"
+}
+
+unmanaged_files=(
+   "${goboVariable}/cache/polipo"
+   "${goboVariable}/run/polipo"
+   "${goboVariable}/log/polipo"
+)
