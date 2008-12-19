@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for Cdecl by Baffo32 <baffo32@gmail.com>, on Sat Oct 18 12:48:32 PDT 2008
+# Recipe for version 2.5 by Baffo32 <baffo32@gmail.com>, on Sat Oct 18 12:48:32 PDT 2008
+compile_version=1.11.2
+url="http://www.ibiblio.org/pub/Linux/devel/lang/c/cdecl-2.5.tar.gz"
+file_size=21435
+file_md5=29895dab52e85b2474a59449e07b7996
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+	"LIBS=-lreadline -ltermcap -L${goboLibraries}"
+	"BINDIR=${target}/bin"
+	"MANDIR=${target}/man/man1"
+	"CATDIR=${target}/man/cat1"
+)

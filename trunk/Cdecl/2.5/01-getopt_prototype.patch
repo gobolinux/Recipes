@@ -1,0 +1,11 @@
+diff -Naur cdecl-2.5.old/cdecl.c cdecl-2.5/cdecl.c
+--- cdecl-2.5.old/cdecl.c	1996-01-15 19:54:46.000000000 -0800
++++ cdecl-2.5/cdecl.c	2008-10-18 12:59:32.000000000 -0700
+@@ -124,7 +124,6 @@
+ 
+ #if __STDC__
+   char *ds(char *), *cat(char *, ...), *visible(int);
+-  int getopt(int,char **,char *);
+   int main(int, char **);
+   int yywrap(void);
+   int dostdin(void);
