@@ -1,0 +1,13 @@
+[Name] MSMTP
+[Summary] MSMTP is an SMTP client.
+[License] GPLv3
+[Homepage] http://msmtp.sourceforge.net/
+[Description] msmtp is an SMTP client.
+In its default mode of operation, it reads a mail from standard input and sends it to a predefined SMTP server that takes care of proper delivery. Command line options and exit codes are compatible to sendmail.
+Supported SMTP features include:
+    * Authentication methods PLAIN, LOGIN, CRAM-MD5 and EXTERNAL (and GSSAPI, DIGEST-MD5 and NTLM when compiled with GNU SASL support)
+    * TLS encrypted connections with the OpenSSL or GnuTLS libraries (including server certificate verification and the possibility to send a client certificate)
+    * Support for Internationalized Domain Names (IDN)
+    * DSN (Delivery Status Notification) support
+    * PIPELINING support for increased transmission speed
+    * RMQS (Remote Message Queue Starting) support (ETRN keyword) 
