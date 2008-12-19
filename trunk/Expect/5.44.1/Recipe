@@ -8,4 +8,5 @@ recipe_type=configure
 
 configure_options=(
    "--exec-prefix=${target}"
+   "--with-tclinclude=${tcl_path}/include/"
 )
