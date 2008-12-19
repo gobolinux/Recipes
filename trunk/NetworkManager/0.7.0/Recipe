@@ -1,0 +1,15 @@
+# Recipe for version 0.7.0 by Demian Florentin <demianflorentin@gmail.com>, on Thu Nov 27 02:13:43 PYST 2008
+# Recipe (MakeRecipe) for NetworkManager by Giambattista Bloisi <giamby@infinito.it>, on Sat Mar 8 01:02:11 CET 2008
+compile_version=1.10.2
+url="http://ftp.gnome.org/pub/GNOME/sources/NetworkManager/0.7/NetworkManager-0.7.0.tar.bz2"
+file_size=1139665
+file_md5=64f780e7f95c252eaaed0201c3d9a4ca
+recipe_type=configure
+
+configure_options=(
+    --with-distro=gentoo
+)
+
+unmanaged_files=(
+    $goboVariable/run/NetworkManager
+)
