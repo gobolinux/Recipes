@@ -1,0 +1,12 @@
+# Recipe for version 2.2.48 by Baffo32 <baffo32@gmail.com>, on Fri Oct 10 11:43:17 PDT 2008
+# Recipe (MakeRecipe) for XFsdump by ro.ko@mcnon.com, on Tue Oct 12 00:33:09 BRST 2004
+compile_version=1.8.0
+url="ftp://oss.sgi.com/projects/xfs/cmd_tars/xfsdump_2.2.48-1.tar.gz"
+file_size=581376
+file_md5=46412a9dabb8c9f84cd1d9ff1cda64a6
+recipe_type=configure
+dir="xfsdump-2.2.48"
+configure_options=(
+	"--enable-shared=yes"
+)
+install_target="install install-dev"
