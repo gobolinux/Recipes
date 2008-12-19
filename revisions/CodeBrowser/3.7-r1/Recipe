@@ -1,0 +1,12 @@
+# Recipe for version 3.7 by ≈êsi R√≥bert <7szunyu@nordtelekom.hu>, on 2008. dec. 2., kedd, 02.20.47 CET
+# Recipe (MakeRecipe) for CodeBrowser by ’si Ω7sz¸ny¸Ω RÛbert, Hungary (7szunyu .at. nordtelekom .dOt. hu), on 2008. ·pr. 29., kedd, 20.42.22 CEST
+compile_version=1.10.2
+url="http://downloads.sourceforge.net/code-browser/code-browser-3.7-src.tar.gz"
+file_size=724320
+file_md5=72dc969d410ab6fdce5cf4e17558310e
+dir='code-browser-3.7'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+)
