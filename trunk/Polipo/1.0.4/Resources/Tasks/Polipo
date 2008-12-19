@@ -1,0 +1,16 @@
+#!/bin/bash
+
+source GoboPath
+piddir="${goboVariable}/run/polipo"
+pid="${piddir}/polipo.pid"
+
+case "$1" in
+[Ss]tart)
+  sudo -u polipo /Programs/Polipo/Current/bin/polipo pidFile="${pid}" daemonise=true
+  ;;
+[Ss]top)
+  if [ -f "${pid}" ]; then
+     kill $(cat ${pid})
+  fi
+  ;;
+esac
