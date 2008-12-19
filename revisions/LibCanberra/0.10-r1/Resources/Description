@@ -1,0 +1,8 @@
+[Name] LibCanberra
+[Summary] libcanberra is an implementation of the XDG Sound Theme and Name Specifications, for generating event sounds on free desktops, such as GNOME.
+[Description] libcanberra is an implementation of the XDG Sound Theme and Name Specifications, for generating event sounds on free desktops, such as GNOME. It comes with several backends (ALSA, PulseAudio, OSS, GStreamer, null) and is designed to be portable. It consists of the following parts:
+   1. libcanberra: the main library
+   2. libcanberra-gtk: some glue code to make it easier to use libcanberra from Gtk+ applications
+   3. libcanberra-gtk-module: a Gtk+ module that uses libcanberra-gtk to trigger input feedback event sounds
+[License] GNU Lesser General Public License
+[Homepage] http://0pointer.de/lennart/projects/libcanberra/
