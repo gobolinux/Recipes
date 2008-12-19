@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Evolution by Andreas Köhler <andi5.py@gmx.net>, on Sun Aug 17 12:40:51 CEST 2008
+# Recipe for version 2.22.3.1 by Andreas Köhler <andi5.py@gmx.net>, on Sun Aug 17 12:40:51 CEST 2008
+compile_version=1.11.2
+url="ftp://ftp.gnome.org/pub/gnome/sources/evolution/2.22/evolution-2.22.3.1.tar.bz2"
+file_size=30988398
+file_md5=5be2cb0584344cfe7bb4944c2fe468be
+recipe_type=configure
+configure_options=(
+   --disable-scrollkeeper
+)
