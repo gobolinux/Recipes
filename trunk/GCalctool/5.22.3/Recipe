@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for GCalctool by Andreas Köhler <andi5.py@gmx.net>, on Thu Aug 28 01:32:18 CEST 2008
+# Recipe for version 5.22.3 by Andreas Köhler <andi5.py@gmx.net>, on Thu Aug 28 01:32:18 CEST 2008
+compile_version=1.11.2
+url="ftp://ftp.gnome.org/pub/gnome/sources/gcalctool/5.22/gcalctool-5.22.3.tar.bz2"
+file_size=1495748
+file_md5=654a2d30f2a1c1b0e7b677fa772f87a3
+recipe_type=configure
+configure_options=(
+   --disable-scrollkeeper
+)
