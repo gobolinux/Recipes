@@ -1,0 +1,13 @@
+Make gcc 4.3.x happy (missing std::sort)
+
+diff -Naur wvstreams-4.5-org/uniconf/uniconf.cc wvstreams-4.5/uniconf/uniconf.cc
+--- wvstreams-4.5-org/uniconf/uniconf.cc	2008-07-14 21:11:35.000000000 +0200
++++ wvstreams-4.5/uniconf/uniconf.cc	2008-11-02 21:10:38.000000000 +0100
+@@ -9,6 +9,7 @@
+ #include "uniconfgen.h"
+ #include "wvstream.h"
+ #include <assert.h>
++#include <algorithm>
+ 
+ 
+ UniConf::UniConf(UniConfRoot *root, const UniConfKey &fullkey)

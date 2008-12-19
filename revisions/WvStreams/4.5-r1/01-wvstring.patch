@@ -1,0 +1,11 @@
+--- wvstreams-4.2.2/include/wvstring-old.h	2006-07-29 13:55:43.000000000 -0300
++++ wvstreams-4.2.2/include/wvstring.h		2006-07-29 13:24:38.000000000 -0300
+@@ -393,7 +393,7 @@
+     
+ protected:
+     void copy_constructor(const WvFastString &s);
+-    inline void WvString::construct(const char *_str)
++    inline void construct(const char *_str)
+         {
+             link(&nullbuf, _str);
+     

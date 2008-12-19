@@ -1,0 +1,11 @@
+--- wvstreams-4.2.2/include/uniconfkey-old.h	2006-07-29 13:57:02.000000000 -0300
++++ wvstreams-4.2.2/include/uniconfkey.h	2006-07-29 13:26:41.000000000 -0300
+@@ -113,7 +113,7 @@
+     bool iswild() const;
+ 
+     /** Returns true if the key has a trailing slash. */
+-    bool UniConfKey::hastrailingslash() const;
++    bool hastrailingslash() const;
+ 
+     /**
+      * Returns the number of segments in this path.
