@@ -1,0 +1,13 @@
+# Recipe for version 4.61 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. dec. 1., hétfő, 03.51.27 CET
+# Recipe (MakeRecipe) for P7Zip by Hisham Muhammad, on Sat Jan 15 19:12:47 BRST 2005
+compile_version=1.11.0
+url="http://downloads.sf.net/p7zip/p7zip_4.61_src_all.tar.bz2"
+file_size=2483533
+file_md5=a01408ac4ef496270ff936db21309b92
+dir='p7zip_4.61'
+recipe_type=makefile
+makefile='makefile'
+make='make all3'
+install_variables=(
+ "DEST_HOME=$target"
+)
