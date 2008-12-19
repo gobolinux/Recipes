@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Brasero by Andreas Köhler <andi5.py@gmx.net>, on Sat Aug 23 20:57:44 BRT 2008
+# Recipe for version 0.8.1 by Andreas Köhler <andi5.py@gmx.net>, on Sat Aug 23 20:57:44 BRT 2008
+compile_version=1.11.2
+url="ftp://ftp.gnome.org/pub/gnome/sources/brasero/0.8/brasero-0.8.1.tar.bz2"
+file_size=2391065
+file_md5=d330593a1f4b701c015259ba80e8cb8b
+recipe_type=configure
+configure_options=(
+   --disable-scrollkeeper
+)
