@@ -1,0 +1,10 @@
+# Recipe for version 2.20.0.1 by Andreas Köhler <andi5.py@gmx.net>, on Fri Aug 29 01:46:14 CEST 2008
+# Recipe (MakeRecipe) for Gnome-Utils by Matthias Wolf, on Wed Jul 27 17:32:01 CEST 2005
+compile_version=1.8.0
+url="ftp://ftp.gnome.org/pub/gnome/sources/gnome-utils/2.20/gnome-utils-2.20.0.1.tar.bz2"
+file_size=4592719
+file_md5=2d4385df2fb566b437b283bd2ce70190
+recipe_type=configure
+configure_options=(
+   --disable-scrollkeeper
+)
