@@ -1,0 +1,20 @@
+# Recipe for version 4.2.4 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. dec. 19., péntek, 03.16.36 CET
+# by Hisham Muhammad, Guilherme Bedin
+url=$ftpGnu/gcc/gcc-4.2.4/gcc-4.2.4.tar.bz2
+file_size=44025458
+file_md5=d79f553e7916ea21c556329eacfeaa16
+compile_version=1.9.0
+recipe_type=configure
+needs_build_directory=yes
+
+pre_link() {
+   cd "$target/bin"
+   ln -s gcc cc
+   cd "$target/lib"
+   ln -s "$target/bin/cpp" .
+   rm -f libiberty.a
+   cd "$goboExecutables"
+   ln -nsf "$target/bin/cc" .
+   cd "$goboLibraries"
+   ln -nsf "$target/lib/cpp" .
+}
