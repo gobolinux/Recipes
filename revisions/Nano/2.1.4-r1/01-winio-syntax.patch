@@ -1,0 +1,15 @@
+Patch for winio.c at line 1733: removing extra semicolon, wich causes
+compilation error.
+Ãsi RÃ³bert, <7szunyu@nordtelekom.hu>
+diff -Naur nano-2.1.4/src/winio.c nano-2.1.4-new/src/winio.c
+--- nano-2.1.4/src/winio.c	2008-07-27 04:23:07.000000000 +0200
++++ nano-2.1.4-new/src/winio.c	2008-12-19 17:54:55.190072155 +0100
+@@ -1733,7 +1733,7 @@
+ 	     * wheel is equivalent to moving down three lines. */
+ 	    for (i = 0; i < 3; i++)
+ 		unget_kbinput((mevent.bstate & BUTTON4_PRESSED) ?
+-			 sc_seq_or(do_up_void, 0) : sc_seq_or(do_down_void, 0);, FALSE,
++			 sc_seq_or(do_up_void, 0) : sc_seq_or(do_down_void, 0), FALSE,
+ 			FALSE);
+ 
+ 	    return 1;

@@ -1,0 +1,26 @@
+# Recipe for version 2.1.4 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. dec. 19., péntek, 17.27.42 CET
+# Recipe (MakeRecipe) for Nano by Laurent Pelecq (laurent.pelecq at soleil.org), on dim mar 26 15:32:24 CEST 2006
+compile_version=1.8.2
+url="$ftpGnu/nano/nano-2.1.4.tar.gz"
+file_size=1450535
+file_md5=5a7df750149507d69694349d4b7d0c79
+recipe_type=configure
+
+docs=(
+  "doc/nanorc.sample"
+)
+
+configure_options=(
+   "--mandir=${target}/man"
+#  "--with-slang"
+   "--enable-color"
+   "--enable-multibuffer"
+   "--enable-nanorc"
+   "--enable-utf8"
+)
+
+pre_link() {
+    if [ ! -e $settings_target/nanorc ]
+	then cp $target/doc/nano-2.1.4/nanorc.sample $settings_target/nanorc
+	fi
+}
