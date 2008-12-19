@@ -1,0 +1,21 @@
+Fix hard-coded installation directories
+--- setnumlock/Makefile	2001-11-20 07:10:08.000000000 -0600
++++ setnumlock/Makefile.new	2008-10-15 20:01:34.000000000 -0500
+@@ -4,6 +4,7 @@
+ CC=gcc
+ OBJECTS=Numlock.o
+ TARGET=setnumlock
++INSTDIR=/usr
+ 
+ .PHONEY: all
+ 
+@@ -18,7 +19,7 @@
+ 
+ install:
+ 	strip ${TARGET}
+-	install ${TARGET} /usr/bin/
++	install ${TARGET} ${INSTDIR}/bin
+ 
+ uninstall:
+-	rm -f /usr/bin/${TARGET}
++	rm -f ${INSTDIR}/bin/${TARGET}
