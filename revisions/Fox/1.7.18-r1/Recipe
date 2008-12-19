@@ -1,0 +1,10 @@
+# Recipe for version 1.7.18 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. dec. 2., kedd, 18.56.55 CET
+compile_version=1.8.0
+url="http://www.fox-toolkit.org/ftp/fox-1.7.18.tar.gz"
+file_size=4879249
+file_md5=1997d2fccbcfd55b4f54f4c7c4f8bc2f
+recipe_type=configure
+configure_options=(
+ --enable-release
+ --with-xft         #     enable Xft support
+ )
