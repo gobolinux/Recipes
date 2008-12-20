@@ -18,7 +18,7 @@ install_variables=(
 )
 
 pre_install() {
-   sed -i "s,libdir='${goboLibraries},libdir='${target}/lib," /Files/Compile/Sources/glib-2.19.2/gio/fam/libgiofam.la
+   sed -i "s,libdir='${goboLibraries},libdir='${target}/lib," gio/fam/libgiofam.la
 }
 
 pre_link() {
