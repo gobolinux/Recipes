@@ -1,0 +1,23 @@
+# Recipe for version 2.5.4 by Michael Homer <michael@gobolinux.org>, on Wed Dec 24 10:26:40 NZDT 2008
+compile_version=1.8.5
+url=http://python.org/ftp/python/2.5.4/Python-2.5.4.tar.bz2
+file_size=9821313
+file_md5=394a5f56a5ce811fb0f023197ec0833e
+recipe_type=configure
+needs_safe_linking=yes
+
+configure_options=(
+  "--enable-shared"
+#  "--with-cxx=no"
+)
+
+#environment=(
+#    "PYTHONOPTIMIZE=1"
+#)
+
+post_install() {
+    echo "import site" > $target/lib/python2.5/sitecustomize.py
+    echo "site.addsitedir(\""$goboLibraries"/python2.5/site-packages/\")" >> $target/lib/python2.5/sitecustomize.py
+    echo "site.addsitedir(\""$goboLibraries"/python2.4/site-packages/\")" >> $target/lib/python2.5/sitecustomize.py
+    echo "site.addsitedir(\""$goboLibraries"/python2.3/site-packages/\")" >> $target/lib/python2.5/sitecustomize.py
+}
