@@ -1,0 +1,25 @@
+# Recipe (MakeRecipe) for Commit-Patch by Kevin Quick <quick@sparq.org>, on Wed Dec 24 10:33:00 MST 2008
+# Recipe for version 2.1 by Kevin Quick <quick@sparq.org>, on Wed Dec 24 10:33:00 MST 2008
+compile_version=1.11.4
+url="http://porkrind.org/commit-patch/commit-patch-2.1.tar.gz"
+file_size=16828
+file_md5=a19261c0726108ee8308c2543b6c7a3e
+recipe_type=manifest
+manifest=(
+	"commit-patch:bin"
+	"commit-partial:bin"
+	"commit-patch.1:man/man1"
+	"commit-partial.1:man/man1"
+	"commit-patch.html:doc"
+	"commit-patch-buffer.el:Shared/emacs"
+)
+
+pre_install() {
+   ln -s commit-patch commit-partial
+   pod2man -c "User Commands" commit-patch > commit-patch.1
+   ln -s commit-patch.1 commit-partial.1
+   pod2html commit-patch > commit-patch.html
+   mkdir -p $target/Shared/emacs   #$ELISP
+}
+
+post_install_message='RECOMMENDED for emacs users: add \${goboShared}/emacs to your EMACSLOADPATH environment variable searchlist.'
