@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for LibMSPack by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. dec. 24., szerda, 17.36.30 CET
+# Recipe for version cvs-r1 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. dec. 24., szerda, 17.36.30 CET
+compile_version=1.11.4
+cvs=:pserver:anonymous:@libmspack.cvs.sourceforge.net/cvsroot/libmspack
+cvs_module=libmspack
+recipe_type=configure
+pre_build() {
+    autoreconf -i
+}
