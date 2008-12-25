@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for GSM by Zbigniew Baniewski <zb@ispid.com.pl>, on czw, 25 gru 2008, 01:10:39 BRST
+# Recipe for version 1.0.12 by Zbigniew Baniewski <zb@ispid.com.pl>, on czw, 25 gru 2008, 01:10:39 BRST
+compile_version=1.11.4
+url="http://kbs.cs.tu-berlin.de/~jutta/gsm/gsm-1.0.12.tar.gz"
+file_size=62156
+file_md5=8909828c601e82e842e6a0ceade60a4e
+dir='gsm-1.0-pl12'
+recipe_type=makefile
+makefile='Makefile'
