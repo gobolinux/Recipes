@@ -1,0 +1,17 @@
+# Recipe for version 8.5.6 by Zbigniew Baniewski <zb@ispid.com.pl>, on czw, 25 gru 2008, 22:35:36 BRST
+compile_version=1.8.5
+url="$httpSourceforge/tcl/tcl8.5.6-src.tar.gz"
+file_size=4409651
+file_md5=d0b0b3ff7600ff63135c710b575265cd
+dir='tcl8.5.6/unix'
+recipe_type=configure
+install_target='install install-private-headers'
+
+configure_options=(
+   --with-encoding="iso8859-1"
+)
+
+pre_link(){
+   $sudo_exec ln -nfs ${target}/bin/tclsh8.5 ${target}/bin/tclsh
+   $sudo_exec ln -nfs ${goboLibraries}/tk8.5 ${target}/lib/tk8.5
+}
