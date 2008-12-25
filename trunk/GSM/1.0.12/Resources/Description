@@ -1,0 +1,5 @@
+[Name] GSM 06.10
+[Summary] lossy speech compression library
+[License] Free source code (see COPYRIGHT)
+[Description] GSM 06.10 compresses frames of 160 13-bit samples (8 kHz sampling rate, i.e. a frame rate of 50 Hz) into 260 bits; for compatibility with typical UNIX applications, our implementation turns frames of 160 16-bit linear samples into 33-byte frames (1650 Bytes/s). The quality of the algorithm is good enough for reliable speaker recognition; even music often survives transcoding in recognizable form (given the bandwidth limitations of 8 kHz sampling rate).
+[Homepage] http://kbs.cs.tu-berlin.de/~jutta/toast.html
