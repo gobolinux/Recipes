@@ -1,0 +1,9 @@
+# Recipe for version 0.6.17 by Zbigniew Baniewski <zb@ispid.com.pl>, on czw, 25 gru 2008, 17:29:53 BRST
+url=$httpSourceforge/libexif/libexif-0.6.17.tar.bz2
+file_size=820976
+file_md5=f7cf4e623a48c9a3b13f7f95f0a41015
+compile_version=1.8.0
+recipe_type=configure
+pre_build() {
+    GrepReplace 'SUBDIRS = m4m po libexif test doc binary' 'SUBDIRS = m4m po libexif test binary' Makefile.in
+}
