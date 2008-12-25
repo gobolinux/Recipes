@@ -1,0 +1,12 @@
+# Recipe for version 12.4 by Zbigniew Baniewski <zb@ispid.com.pl>, on czw, 25 gru 2008, 20:08:58 BRST
+url=$httpSourceforge/heirloom/mailx-12.4.tar.bz2
+file_size=271482
+file_md5=0c93759e34200eb56a0e7c464680a54a
+compile_version=1.8.0
+recipe_type=makefile
+
+make_variables=(
+  "PREFIX=$target"
+  "MAILRC=$settings_target/nail.rc"
+  "UCBINSTALL=$target/../../Scripts/Current/bin/install"
+)
