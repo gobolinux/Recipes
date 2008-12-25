@@ -1,0 +1,15 @@
+# Recipe for version 1.0.3 by Zbigniew Baniewski <zb@ispid.com.pl>, on czw, 25 gru 2008, 23:25:19 BRST
+url=$httpSourceforge/konwert/konwert-1.0.3.tgz
+file_size=11385
+file_md5=6d7739d522fd39929d1594ea12d1a527
+compile_version=1.8.0
+recipe_type=makefile
+pre_build() {
+    GrepReplace 'all: konwert' 'install: konwert' Makefile
+}
+
+post_install() {
+  mkdir $target/bin
+  $goboScripts/install -c konwert $target/bin/konwert
+  ln -fs $target/bin/konwert $goboExecutables/konwert
+}
