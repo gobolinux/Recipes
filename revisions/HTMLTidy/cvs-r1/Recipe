@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for HTMLTidy by Ősi Róbert <7szunyu@nordtelekom.hu>, on Fri Dec 26 13:35:00 NZDT 2008
+# Recipe for version CVS by Ősi Róbert <7szunyu@nordtelekom.hu>, on Fri Dec 26 13:35:00 NZDT 2008
+compile_version=1.8.2
+cvs=:pserver:anonymous:@tidy.cvs.sf.net:/cvsroot/tidy
+cvs_module=tidy
+recipe_type=configure
+pre_build() {
+    sh build/gnuauto/setup.sh
+}
