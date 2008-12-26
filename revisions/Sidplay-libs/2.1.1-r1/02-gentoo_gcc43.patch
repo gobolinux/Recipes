@@ -1,0 +1,37 @@
+--- sidplay-libs-2.1.1/builders/resid-builder/src/resid.cpp.old	2008-07-25 17:00:41.000000000 \
++0000
++++ sidplay-libs-2.1.1/builders/resid-builder/src/resid.cpp	2008-07-25 16:59:44.000000000 \
++0000
+@@ -16,6 +16,8 @@
+  *                                                                         *
+  ***************************************************************************/
+ 
++#include <cstring>
++
+ #include "config.h"
+ 
+ #ifdef HAVE_EXCEPTIONS
+--- sidplay-libs-2.1.1/builders/resid-builder/src/resid-builder.cpp.old	2008-07-25 \
+17:02:00.000000000 +0000
++++ sidplay-libs-2.1.1/builders/resid-builder/src/resid-builder.cpp	2008-07-25 17:01:47.000000000 \
++0000
+@@ -37,6 +37,7 @@
+  ***************************************************************************/
+ 
+ #include <stdio.h>
++#include <cstring>
+ 
+ #include "config.h"
+ #ifdef HAVE_EXCEPTIONS
+--- sidplay-libs-2.1.1/builders/hardsid-builder/src/hardsid-builder.cpp.old	2008-07-25 \
+17:08:50.000000000 +0000
++++ sidplay-libs-2.1.1/builders/hardsid-builder/src/hardsid-builder.cpp	2008-07-25 \
+17:08:17.000000000 +0000
+@@ -47,6 +47,7 @@
+  ***************************************************************************/
+ 
+ #include <stdio.h>
++#include <cstring>
+ #include "config.h"
+ 
+ #ifdef HAVE_EXCEPTIONS
