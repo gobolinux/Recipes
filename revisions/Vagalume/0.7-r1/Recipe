@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Vagalume by kenneth marken <k-marken@online.no>, on lø. 27. des. 08:54:57 +0100 2008
+# Recipe for version 0.7 by kenneth marken <k-marken@online.no>, on lø. 27. des. 08:54:57 +0100 2008
+compile_version=1.11.4
+url="http://vagalume.igalia.com/files/source/vagalume_0.7.orig.tar.gz"
+file_size=607507
+file_md5=97e1497eed21ef0ac82514ead94c5ee4
+dir='vagalume-0.7.orig'
+recipe_type=configure
+install_variables=(
+"serviceentrydir=$target/Shared/dbus-1/services"
+)
