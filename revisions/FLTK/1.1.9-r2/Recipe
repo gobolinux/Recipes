@@ -1,0 +1,17 @@
+# Recipe for version 1.1.9-r3 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 1.1.9-r38. dec. 27., szombat, 22.55.45 CET
+# Recipe (MakeRecipe) for FLTK by Harald Klimach, on Thu Jun 8 21:25:23 CEST 1.1.9-r36
+compile_version=1.8.2
+url="http://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub/fltk/1.1.9/fltk-1.1.9-source.tar.bz2"
+file_size=2206178
+file_md5=e146fd264e1001b1313acfd41ef75552
+recipe_type=configure
+dir='fltk-1.1.9'
+configure_options=(
+    --enable-gl 
+    --enable-shared 
+    --enable-threads 
+    --enable-largefile
+    --enable-xinerama 
+    --enable-xft 
+    --enable-xdbe 
+)
