@@ -1,0 +1,22 @@
+# Recipe for version 2.5 by Andy Feldman <nereusren@gmail.com>, on Sun Dec 28 18:52:27 CST 2008
+compile_version=1.8.0
+url="ftp://ftp.perforce.com/jam/jam-2.5.tar"
+file_size=614400
+file_md5=c7eb7719d8523c0f819116479492d367
+dir='jam-2.5'
+recipe_type=makefile
+makefile='Makefile'
+
+pre_build() {
+
+   make mkjambase
+   mkjambase jambase.c Jambase
+
+   cat <<EOF >>Makefile
+
+install: \$(EXENAME)
+	cp bin.linuxx86/jam $target/bin
+	cp bin.linuxx86/mkjambase $target/bin
+	cp RELNOTES Jambase *.html $target/doc
+EOF
+}
