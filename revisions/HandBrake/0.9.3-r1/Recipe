@@ -1,0 +1,18 @@
+# Recipe (MakeRecipe) for HandBrake by Andy Feldman <nereusren@gmail.com>, on Sun Dec 28 18:21:53 CST 2008
+# Recipe for version 0.9.3 by Andy Feldman <nereusren@gmail.com>, on Sun Dec 28 18:21:53 CST 2008
+compile_version=1.11.3
+url="http://handbrake.fr/rotation.php?file=HandBrake-0.9.3.tar.gz"
+file="HandBrake-0.9.3.tar.gz"
+file_size=2067663
+file_md5=ee79c94b5acd68f28351ba2704b4d55d
+dir='HandBrake-0.9.3'
+recipe_type=makefile
+do_install=no
+
+docs=(
+   'docs/*'
+)
+
+pre_link() {
+   cp HandBrakeCLI ${target}/bin
+}
