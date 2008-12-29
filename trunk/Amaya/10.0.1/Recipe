@@ -4,15 +4,6 @@ compile_version=1.11.2
 url="http://www.w3.org/Amaya/Distribution/amaya-sources-10.0.1.tgz"
 file_size=28620304
 file_md5=0a32af56cf81c13b6efc5c65c2137859
-#dir=`[ -d Amaya10.0/Amaya/Gobobld ] && echo 'Amaya10.0/Amaya/Gobobld' || echo 'Amaya10.0/Amaya'`
 dir=Amaya10.0/Amaya
-recipe_type=manifest
-
-# Must be built in a subdir
-pre_install() {
-  [ -d Gobobld ] || mkdir Gobobld
-  cd Gobobld
-  ../configure --prefix=$target --sysconfdir=$settings_target --localstatedir=$goboVariable
-  make
-  make install
-}
+recipe_type=configure
+needs_build_directory=yes
