@@ -1,0 +1,15 @@
+# Recipe for version 0.17.0 by Jonas Karlsson <jonka750@student.liu.se>, on Wed Dec 31 01:02:38 CET 2008
+# Recipe (MakeRecipe) for GMPC by Jonas Karlsson <jonka750@student.liu.se>, on Wed Jul 30 23:56:51 CEST 2008
+compile_version=1.10.0
+url="http://download.sarine.nl/Programs/gmpc/0.17.0/gmpc-0.17.0.tar.gz"
+file_size=1041200
+file_md5=de71d4cbfa2a6386e1604e201866b5f7
+recipe_type=configure
+
+pre_build() {
+   sed -i 's/^context =.*/context = actions/' pixmaps/icons/*/status/Makefile*
+}
+
+build_variables=(
+   pkglibdir="$goboLibraries/gmpc"
+)
