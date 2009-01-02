@@ -1,0 +1,31 @@
+Add some make variables to make it work with firefox too.
+--- mozplugger-1.10.2/Makefile	2008-03-22 22:47:51.000000000 +0100
++++ mozplugger-1.10.2.new/Makefile	2008-05-25 18:05:57.000000000 +0200
+@@ -8,7 +8,8 @@
+ #
+ # For installing
+ prefix=/usr
+-
++sysconfdir=/etc
++plugindir=/lib/mozilla/plugins
+ #
+ #
+ RPMDIR=/usr/src/RPM
+@@ -175,13 +176,13 @@
+ 
+ install:
+ 	-@mkdir -p $(root)$(prefix)/bin
+-	-@mkdir -p $(root)$(prefix)/lib/mozilla/plugins
++	-@mkdir -p $(root)$(plugindir)
+ 	-@mkdir -p $(root)$(prefix)/share/man/man7
+-	-@mkdir -p $(root)/etc
++	-@mkdir -p $(root)$(sysconfdir)
+ 	cp mozplugger-helper $(root)$(prefix)/bin/
+ 	cp mozplugger-controller $(root)$(prefix)/bin/
+-	cp mozplugger.so $(root)$(prefix)/lib/mozilla/plugins/
+-	cp mozpluggerrc $(root)/etc/
++	cp mozplugger.so $(root)$(plugindir)/
++	cp mozpluggerrc $(root)$(sysconfdir)/
+ 	cp mozplugger.7 $(root)$(prefix)/share/man/man7/
+ 
+ mozplugger.tar.gz: $(BASE_FILES) $(SOURCE_FILES)
