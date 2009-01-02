@@ -1,0 +1,14 @@
+# Recipe for version 1.12.0 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jan. 1., csütörtök, 21.45.45 CET
+# Recipe (MakeRecipe) for MozPlugger by Lucas C. Villa Real, on Sat May 26 03:44:59 BRT 2007
+compile_version=1.8.2
+url="http://mozplugger.mozdev.org/files/mozplugger-1.12.0.tar.gz"
+file_size=95073
+file_md5=6d4dd7b1c577f625c9d664532389d6db
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+   "sysconfdir=$settings_target"
+   "plugindir=$target/lib/browser-plugins"
+)
+build_target="linux"
