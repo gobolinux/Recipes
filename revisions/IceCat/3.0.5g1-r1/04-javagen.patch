@@ -1,0 +1,14 @@
+Correcting config/rules.mk to do what it need to do.
+
+diff -Naur icecat-3.0.5-g1/config/rules.mk icecat-3.0.5-g1-new/config/rules.mk
+--- icecat-3.0.5-g1/config/rules.mk	2008-11-14 19:04:18.000000000 +0100
++++ icecat-3.0.5-g1-new/config/rules.mk	2008-12-31 21:23:13.757718118 +0100
+@@ -1690,7 +1690,7 @@
+ 	$(NSINSTALL) -D $@
+ 
+ export:: $(JAVA_DIST_DIR) $(JAVADEPFILES) $(JAVA_INSTALL_DIR)
+-	(cd $(JAVA_GEN_DIR) && tar $(TAR_CREATE_FLAGS) - .) | (cd $(JAVA_INSTALL_DIR) && tar -xf -)
++	(echo y | cp -Rf $(JAVA_GEN_DIR)/. $(JAVA_INSTALL_DIR))
+ 
+ endif # XPIDLSRCS || SDK_XPIDLSRCS
+ endif # MOZ_JAVAXPCOM

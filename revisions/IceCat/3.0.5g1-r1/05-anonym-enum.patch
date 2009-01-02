@@ -1,0 +1,14 @@
+Patch for an anonymous enum
+
+diff -Naur icecat-3.0.5-g1/xpcom/reflect/xptinfo/public/xptinfo.h icecat-3.0.5-g1-new/xpcom/reflect/xptinfo/public/xptinfo.h
+--- icecat-3.0.5-g1/xpcom/reflect/xptinfo/public/xptinfo.h	2008-11-14 19:04:28.000000000 +0100
++++ icecat-3.0.5-g1-new/xpcom/reflect/xptinfo/public/xptinfo.h	2008-12-30 04:17:19.000000000 +0100
+@@ -114,7 +114,7 @@
+     uint8 TagPart() const
+         {return (uint8) (flags & XPT_TDP_TAGMASK);}
+ 
+-    enum
++    enum xptinfo_enum_1
+     {
+         T_I8                = TD_INT8             ,
+         T_I16               = TD_INT16            ,

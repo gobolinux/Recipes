@@ -1,0 +1,36 @@
+Correcting some LDFLAGS variables
+
+diff -Naur icecat-3.0.5-g1/layout/build/Makefile.in icecat-3.0.5-g1-new/layout/build/Makefile.in
+--- icecat-3.0.5-g1/layout/build/Makefile.in	2008-11-14 19:04:12.000000000 +0100
++++ icecat-3.0.5-g1-new/layout/build/Makefile.in	2008-12-30 04:13:49.000000000 +0100
+@@ -288,3 +288,5 @@
+ LDFLAGS += -Wl,-LD_LAYOUT:lgot_buffer=50
+ endif
+ endif
++
++LDFLAGS += -lX11 -lXrender
+diff -Naur icecat-3.0.5-g1/modules/plugin/samples/default/unix/Makefile.in icecat-3.0.5-g1-new/modules/plugin/samples/default/unix/Makefile.in
+--- icecat-3.0.5-g1/modules/plugin/samples/default/unix/Makefile.in	2008-11-14 19:04:22.000000000 +0100
++++ icecat-3.0.5-g1-new/modules/plugin/samples/default/unix/Makefile.in	2008-12-31 21:56:45.264711188 +0100
+@@ -94,3 +94,4 @@
+ 	$(SYSINSTALL) $(IFLAGS2) $< $(DESTDIR)$(mozappdir)/plugins 
+ endif
+ 
++LDFLAGS += -lX11 -lXrender -lXrandr
+diff -Naur icecat-3.0.5-g1/modules/plugin/samples/unixprinting/Makefile.in icecat-3.0.5-g1-new/modules/plugin/samples/unixprinting/Makefile.in
+--- icecat-3.0.5-g1/modules/plugin/samples/unixprinting/Makefile.in	2008-11-14 19:04:22.000000000 +0100
++++ icecat-3.0.5-g1-new/modules/plugin/samples/unixprinting/Makefile.in	2008-12-31 21:56:04.401711320 +0100
+@@ -90,3 +90,4 @@
+ 	$(SYSINSTALL) $(IFLAGS2) $< $(DESTDIR)$(mozappdir)/plugins 
+ endif
+ 
++LDFLAGS += -lX11 -lXrender -lXrandr -lXprintUtil -lXprintAppUtil
+diff -Naur icecat-3.0.5-g1/toolkit/library/Makefile.in icecat-3.0.5-g1-new/toolkit/library/Makefile.in
+--- icecat-3.0.5-g1/toolkit/library/Makefile.in	2008-11-14 19:04:27.000000000 +0100
++++ icecat-3.0.5-g1-new/toolkit/library/Makefile.in	2008-12-31 21:26:19.820716646 +0100
+@@ -253,3 +253,5 @@
+ ifneq (,$(filter layout-debug,$(MOZ_EXTENSIONS)))
+ DEFINES += -DMOZ_ENABLE_EXTENSION_LAYOUT_DEBUG
+ endif
++
++LDFLAGS += -lX11 -lXrender
