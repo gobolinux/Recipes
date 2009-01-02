@@ -1,0 +1,161 @@
+Something messed up with DISTRO string, so I left out it.
+
+diff -Naur sox-14.2.0/configure sox-14.2.0-new/configure
+--- sox-14.2.0/configure	2008-11-08 17:46:01.000000000 +0100
++++ sox-14.2.0-new/configure	2009-01-02 14:54:05.000000000 +0100
+@@ -856,9 +856,6 @@
+ HAVE_ALSA_FALSE
+ HAVE_ALSA_TRUE
+ LIBTOOLFLAGS
+-HAVE_DISTRO_FALSE
+-HAVE_DISTRO_TRUE
+-DISTRO
+ WARN_CFLAGS
+ APP_LDFLAGS
+ PKGCONFIGDIR
+@@ -20805,30 +20802,6 @@
+ 
+ 
+ 
+-if test -r /etc/issue; then
+-  { $as_echo "$as_me:$LINENO: checking distro name" >&5
+-$as_echo_n "checking distro name... " >&6; }
+-  DISTRO=`sed -e "s/.0-90-9;*mJH//g" < /etc/issue|tr "\n" " " | sed -e "s/(\\\\?\\\\\\\\.*//" -e "s/  */ /g" -e "s/^ //" -e "s/ $//"`
+-  { $as_echo "$as_me:$LINENO: result: \"$DISTRO\"" >&5
+-$as_echo "\"$DISTRO\"" >&6; }
+-
+-
+-cat >>confdefs.h <<\_ACEOF
+-#define HAVE_DISTRO 1
+-_ACEOF
+-
+-  have_distro=yes
+-fi
+- if test x$have_distro = xyes; then
+-  HAVE_DISTRO_TRUE=
+-  HAVE_DISTRO_FALSE='#'
+-else
+-  HAVE_DISTRO_TRUE='#'
+-  HAVE_DISTRO_FALSE=
+-fi
+-
+-
+-
+  { $as_echo "$as_me:$LINENO: checking whether byte ordering is bigendian" >&5
+ $as_echo_n "checking whether byte ordering is bigendian... " >&6; }
+ if test "${ac_cv_c_bigendian+set}" = set; then
+@@ -32064,14 +32037,6 @@
+ Usually this means the macro was only invoked conditionally." >&2;}
+    { (exit 1); exit 1; }; }
+ fi
+-if test -z "${HAVE_DISTRO_TRUE}" && test -z "${HAVE_DISTRO_FALSE}"; then
+-  { { $as_echo "$as_me:$LINENO: error: conditional \"HAVE_DISTRO\" was never defined.
+-Usually this means the macro was only invoked conditionally." >&5
+-$as_echo "$as_me: error: conditional \"HAVE_DISTRO\" was never defined.
+-Usually this means the macro was only invoked conditionally." >&2;}
+-   { (exit 1); exit 1; }; }
+-fi
+-
+ if test -z "${HAVE_ALSA_TRUE}" && test -z "${HAVE_ALSA_FALSE}"; then
+   { { $as_echo "$as_me:$LINENO: error: conditional \"HAVE_ALSA\" was never defined.
+ Usually this means the macro was only invoked conditionally." >&5
+diff -Naur sox-14.2.0/configure.ac sox-14.2.0-new/configure.ac
+--- sox-14.2.0/configure.ac	2008-11-07 18:54:28.000000000 +0100
++++ sox-14.2.0-new/configure.ac	2009-01-02 14:54:22.000000000 +0100
+@@ -117,17 +117,6 @@
+ AC_SUBST(APP_LDFLAGS)
+ AC_SUBST(WARN_CFLAGS)
+ 
+-dnl Get distro name from /etc/issue
+-if test -r /etc/issue; then
+-  AC_MSG_CHECKING([distro name])
+-  DISTRO=`sed -e "s/.[0-9][0-9;]*[mJH]//g" < /etc/issue|tr "\n" " " | sed -e "s/(\\\\?\\\\\\\\.*//" -e "s/  */ /g" -e "s/^ //" -e "s/ $//"`
+-  AC_MSG_RESULT("$DISTRO")
+-  AC_SUBST(DISTRO)
+-  AC_DEFINE(HAVE_DISTRO, 1, [1 if DISTRO is defined])
+-  have_distro=yes
+-fi
+-AM_CONDITIONAL(HAVE_DISTRO, test x$have_distro = xyes)
+-
+ dnl Check for system dependent features.
+ AC_C_BIGENDIAN
+ AC_C_INLINE
+diff -Naur sox-14.2.0/libgsm/Makefile.in sox-14.2.0-new/libgsm/Makefile.in
+--- sox-14.2.0/libgsm/Makefile.in	2008-11-08 17:46:03.000000000 +0100
++++ sox-14.2.0-new/libgsm/Makefile.in	2009-01-02 14:56:48.000000000 +0100
+@@ -103,7 +103,6 @@
+ CYGPATH_W = @CYGPATH_W@
+ DEFS = @DEFS@
+ DEPDIR = @DEPDIR@
+-DISTRO = @DISTRO@
+ DSYMUTIL = @DSYMUTIL@
+ ECHO = @ECHO@
+ ECHO_C = @ECHO_C@
+diff -Naur sox-14.2.0/lpc10/Makefile.in sox-14.2.0-new/lpc10/Makefile.in
+--- sox-14.2.0/lpc10/Makefile.in	2008-11-08 17:46:03.000000000 +0100
++++ sox-14.2.0-new/lpc10/Makefile.in	2009-01-02 14:57:01.000000000 +0100
+@@ -109,7 +109,6 @@
+ CYGPATH_W = @CYGPATH_W@
+ DEFS = @DEFS@
+ DEPDIR = @DEPDIR@
+-DISTRO = @DISTRO@
+ DSYMUTIL = @DSYMUTIL@
+ ECHO = @ECHO@
+ ECHO_C = @ECHO_C@
+diff -Naur sox-14.2.0/Makefile.in sox-14.2.0-new/Makefile.in
+--- sox-14.2.0/Makefile.in	2008-11-09 00:10:38.000000000 +0100
++++ sox-14.2.0-new/Makefile.in	2009-01-02 14:54:57.000000000 +0100
+@@ -114,7 +114,6 @@
+ CYGPATH_W = @CYGPATH_W@
+ DEFS = @DEFS@
+ DEPDIR = @DEPDIR@
+-DISTRO = @DISTRO@
+ DSYMUTIL = @DSYMUTIL@
+ ECHO = @ECHO@
+ ECHO_C = @ECHO_C@
+diff -Naur sox-14.2.0/src/Makefile.am sox-14.2.0-new/src/Makefile.am
+--- sox-14.2.0/src/Makefile.am	2008-11-07 18:42:21.000000000 +0100
++++ sox-14.2.0-new/src/Makefile.am	2009-01-02 14:55:06.000000000 +0100
+@@ -19,10 +19,6 @@
+ # Pass flags from --enable-silent-libtool
+ LIBTOOL = @LIBTOOL@ @LIBTOOLFLAGS@
+ 
+-if HAVE_DISTRO
+-AM_CPPFLAGS += -DDISTRO="\"@DISTRO@\""
+-endif
+-
+ #########################
+ # SoX - the application #
+ #########################
+diff -Naur sox-14.2.0/src/Makefile.in sox-14.2.0-new/src/Makefile.in
+--- sox-14.2.0/src/Makefile.in	2008-11-08 17:46:05.000000000 +0100
++++ sox-14.2.0-new/src/Makefile.in	2009-01-02 14:55:27.000000000 +0100
+@@ -36,7 +36,6 @@
+ host_triplet = @host@
+ target_triplet = @target@
+ @HAVE_LIBLTDL_TRUE@am__append_1 = -DPKGLIBDIR="\"$(pkglibdir)\""
+-@HAVE_DISTRO_TRUE@am__append_2 = -DDISTRO="\"@DISTRO@\""
+ bin_PROGRAMS = sox$(EXEEXT)
+ EXTRA_PROGRAMS = example0$(EXEEXT) example1$(EXEEXT) example2$(EXEEXT) \
+ 	sox_sample_test$(EXEEXT)
+@@ -857,7 +856,6 @@
+ CYGPATH_W = @CYGPATH_W@
+ DEFS = @DEFS@
+ DEPDIR = @DEPDIR@
+-DISTRO = @DISTRO@
+ DSYMUTIL = @DSYMUTIL@
+ ECHO = @ECHO@
+ ECHO_C = @ECHO_C@
+diff -Naur sox-14.2.0/src/sox.c sox-14.2.0-new/src/sox.c
+--- sox-14.2.0/src/sox.c	2008-11-08 17:45:35.000000000 +0100
++++ sox-14.2.0-new/src/sox.c	2009-01-02 14:56:40.000000000 +0100
+@@ -1496,9 +1496,6 @@
+ 
+   if (sox_globals.verbosity > 3) {
+     fprintf(file, "time:  %s %s\n", __DATE__, __TIME__);
+-#if HAVE_DISTRO
+-    fprintf(file, "issue: %s\n", DISTRO);
+-#endif
+ #if HAVE_SYS_UTSNAME_H
+     if (!uname(&uts))
+       fprintf(file, "uname: %s %s %s %s %s\n", uts.sysname, uts.nodename,
