@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for GThumb by Jonas Karlsson <jonka750@student.liu.se>, on Sat Jan 3 14:43:45 CET 2009
+# Recipe for version 2.10.8 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Jan 3 14:43:45 CET 2009
+compile_version=1.10.0
+url="http://ftp.gnome.org/pub/gnome/sources/gthumb/2.10/gthumb-2.10.8.tar.bz2"
+file_size=2446803
+file_md5=104ca627037ccacf1aff18cc3923b40e
+recipe_type=configure
+
+configure_options=(
+   --disable-scrollkeeper
+)
