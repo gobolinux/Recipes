@@ -1,0 +1,17 @@
+# Recipe for version 2.6.4 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jan. 3., szombat, 01.02.14 CET
+# Recipe (MakeRecipe) for Gimp by roko, <ro.ko@mcnon.com>, on Fri Dec 31 19:34:35 BRST 2004
+compile_version=1.9.0
+url="ftp://ftp.gimp.org/pub/gimp/v2.6/gimp-2.6.4.tar.bz2"
+file_size=16012685
+file_md5=4e8185e40ab06559ce6dd5ef61b3e83b
+recipe_type=configure
+configure_options=(
+    --disable-mp 
+    --enable-gimp-remote 
+    --without-poppler
+#    --disable-print
+)  
+#. GoboPath
+environment=(
+   "PKG_CONFIG_PATH=${goboLibraries}/pkgconfig"
+)
