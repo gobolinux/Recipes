@@ -1,0 +1,58 @@
+Add a HAL policy file and a script to fix permissions for cameras attached through USB
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+
+--- /dev/null	2008-08-14 20:57:38.000000000 +0200
++++ libgphoto2-2.4.3/hal/90-libgphoto2-camera-policy.fdi	2009-01-03 16:22:33.000000000 +0100
+@@ -0,0 +1,13 @@
++<?xml version="1.0" encoding="UTF-8"?> <!-- -*- SGML -*- --> 
++<deviceinfo version="0.2">
++  <device>
++    <match key="info.capabilities" contains="camera">
++      <match key="camera.access_method" string="proprietary">
++        <append key="info.callouts.add" type="strlist">libgphoto2-set-proc-permissions</append>
++      </match>
++      <match key="camera.access_method" string="ptp">
++        <append key="info.callouts.add" type="strlist">libgphoto2-set-proc-permissions</append>
++      </match>
++    </match>
++  </device>
++</deviceinfo>
+--- /dev/null	2008-08-14 20:57:38.000000000 +0200
++++ libgphoto2-2.4.3/hal/libgphoto2-set-proc-permissions	2009-01-03 16:29:18.000000000 +0100
+@@ -0,0 +1,35 @@
++#!/bin/bash
++
++if [ -z "$HAL_PROP_USB_BUS_NUMBER" -o -z "$HAL_PROP_USB_LINUX_DEVICE_NUMBER" ]
++then
++   exit 1
++fi
++  
++if [ $HAL_PROP_USB_BUS_NUMBER -lt 0 -o $HAL_PROP_USB_LINUX_DEVICE_NUMBER -lt 0 ]
++then
++   exit 2
++fi
++  
++bus_num=$(printf %.3u $HAL_PROP_USB_BUS_NUMBER)
++dev_num=$(printf %.3u $HAL_PROP_USB_LINUX_DEVICE_NUMBER)
++NUM_TRIES_LEFT=5
++while [ $NUM_TRIES_LEFT -ge 0 ] && [ ! -c "@%Compile_goboDevices%@/bus/usb/$bus_num/$dev_num" ]
++do
++   sleep 1
++   NUM_TRIES_LEFT=$(($NUM_TRIES_LEFT - 1))
++done
++
++[ -c "@%Compile_goboDevices%@/bus/usb/$bus_num/$dev_num" ] || exit 3
++
++chgrp console "@%Compile_goboDevices%@/bus/usb/$bus_num/$dev_num"
++		
++NUM_TRIES_LEFT=5
++while [ $NUM_TRIES_LEFT -ge 0 ] && [ ! -f "@%Compile_goboStatus%@/bus/usb/$bus_num/$dev_num" ]
++do
++   sleep 1
++   NUM_TRIES_LEFT=$(($NUM_TRIES_LEFT - 1))
++done
++
++[ -f "@%Compile_goboStatus%@/bus/usb/$bus_num/$dev_num" ] || exit 4
++
++chgrp console "@%Compile_goboStatus%@/bus/usb/$bus_num/$dev_num"
