@@ -9,15 +9,15 @@ environment=(
     "LDFLAGS=-lz"
 )
 configure_options=(
-    "--disable-policy-kit"
-    "--disable-docbook-docs"
-    "--with-pid-file=${goboVariable}/run/hald/pid"
-    "--with-socket-dir=${goboVariable}/run/hald"
-    "--with-dbus-sys=${settings_target}/dbus-1/system.d"
-    "--with-hwdata=${goboShared}/hwdata"
-    "--mandir=${target}/man"
-    "--with-eject=${goboExecutables}/eject"
-    "--enable-parted"
+   --libexecdir="${target}/lib"
+   --disable-policy-kit
+   --disable-docbook-docs
+   --with-pid-file="${goboVariable}/run/hald/pid"
+   --with-socket-dir="${goboVariable}/run/hald"
+   --with-dbus-sys="${settings_target}/dbus-1/system.d"
+   --with-hwdata="${goboShared}/hwdata"
+   --with-eject="${goboExecutables}/eject"
+   --enable-parted
 )
 
 unmanaged_files=(
