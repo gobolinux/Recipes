@@ -1,0 +1,16 @@
+Cairo >= 1.2
+Curl >= 7.15 #optional
+Fontconfig >= 2.4
+FreeType >= 2.1.10
+GCC >= 3.4.5
+GLib >= 2.0
+Glibc >= 2.5
+Gnome-VFS >= 2.0 [gnome_vfs]
+GStreamer >= 0.10 [gstreamer]
+GTK+ >= 2.8 #optional
+LibICU4C
+LibXML2 >= 2.6
+LibXSLT >= 1.1.7 #optional
+Pango >= 1.0 [pango]
+SQLite >= 3.0 [sqlite] #optional
+ZLib >= 1.2.3
