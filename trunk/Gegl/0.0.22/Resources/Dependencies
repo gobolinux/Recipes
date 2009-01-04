@@ -1,15 +1,16 @@
-ATK 1.24.0
-Babl 0.0.22
-Cairo 1.8.6
-FFmpeg 20090102-SVN
-Fontconfig 2.6.0
-FreeType 2.3.7
-GLib 2.19.3
+Babl >= 0.0.22
+Cairo
+FFmpeg [ffmpeg]
+GLib >= 2.16.1
 Glibc 2.8
-GTK+ 2.14.6
-JPEG 6b
-LibPNG 1.2.34
-LibRSVG 2.22.3
-Pango 1.22.4
-SDL 1.2.13
+GTK+ >= 2.8.6 [gtk2]
+LibPNG
+LibRSVG >= 2.14.0
+LibSpiro [libspiro]
+Lua >= 5.1.0 [lua]
+OpenEXR [openexr]
+LibOpenRAW >= 0.0.5 [libopenraw]
+Pango
+Ruby [ruby]
+SDL [sdl]
 ZLib 1.2.3
