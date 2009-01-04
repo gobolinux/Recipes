@@ -1,0 +1,20 @@
+Something messed up with this random number seed function, and I hadn't got better solution.
+
+diff -Naur WebKit-r39553/JavaScriptCore/wtf/RandomNumberSeed.h WebKit-r39553-new/JavaScriptCore/wtf/RandomNumberSeed.h
+--- WebKit-r39553/JavaScriptCore/wtf/RandomNumberSeed.h	2009-01-04 07:33:06.000000000 +0100
++++ WebKit-r39553-new/JavaScriptCore/wtf/RandomNumberSeed.h	2009-01-02 21:23:26.000000000 +0100
+@@ -40,10 +40,10 @@
+     // On Windows we use rand_s which intialises itself
+ #elif PLATFORM(UNIX)
+     // srandomdev is not guaranteed to exist on linux so we use this poor seed, this should be improved
+-//    timeval time;
+-//    gettimeofday(&time, 0);
+-//    srandom(static_cast<unsigned>(time.tv_usec * getpid()));
+-// #else
++    timeval time;
++    gettimeofday(&time, 0);
++    srandom(static_cast<unsigned>(time.tv_usec * getpid()));
++#else
+     srand(static_cast<unsigned>(time(0)));
+ #endif
+ }

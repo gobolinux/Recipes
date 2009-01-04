@@ -1,0 +1,14 @@
+# Recipe for version 39553 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jan. 3., szombat, 01.54.27 CET
+# Recipe (MakeRecipe) for WebKit by Daniele Maccari <daniele.maccari@gmail.com>, on Wed Feb 13 11:45:17 CET 2008
+compile_version=1.10.1
+url="http://builds.nightly.webkit.org/files/trunk/src/WebKit-r39553.tar.bz2"
+file_size=9907515
+file_md5=777c6ee3c73193e3b285d8428d014301
+recipe_type=configure
+autogen_before_configure=yes
+makefile='GNUmakefile'
+configure_options=(
+   --enable-fast-malloc
+   --disable-dashboard-support
+)
+with_pango="--with-font-backend=pango"
