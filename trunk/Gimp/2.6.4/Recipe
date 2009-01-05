@@ -9,9 +9,15 @@ configure_options=(
     --disable-mp 
     --enable-gimp-remote 
     --without-poppler
-#    --disable-print
 )  
-#. GoboPath
-environment=(
-   "PKG_CONFIG_PATH=${goboLibraries}/pkgconfig"
+with_poppler="--with-poppler"
+
+build_variables=(
+   gimpplugindir="${goboLibraries}/gimp/2.0"
 )
+
+pre_install() {
+   # Sigh, libtool again...
+   find -name "*.la" | xargs sed -i "s,^libdir='${goboLibraries},libdir='${target}/lib,"
+}
+
