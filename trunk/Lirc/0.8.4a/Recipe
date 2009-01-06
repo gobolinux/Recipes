@@ -1,0 +1,29 @@
+# Recipe for version 0.8.4a by Jonas Karlsson <jonka750@student.liu.se>, on Tue Jan 6 18:44:18 CET 2009
+# Recipe (MakeRecipe) for Lirc by Fabio Mierlo, on Mon May 30 01:19:58 BRT 2005
+compile_version=1.8.0
+url="$httpSourceforge/lirc/lirc-0.8.4a.tar.bz2"
+file_size=695650
+file_md5=606b714ed843d28060163ffc571fc1f7
+recipe_type=configure
+
+configure_options=(
+   --with-devdir="${goboDevices}"
+   --with-kerneldir="${goboModules}/Current/build"
+   --with-moduledir="${goboModules}/$(readlink "${goboModules}/Current")/misc"
+   --with-transmitter
+   --with-x
+   --with-driver=serial
+   --with-major=61
+   --with-port=0x3f8
+   --with-irq=4
+)
+
+unmanaged_files=(
+   "${goboModules}/$(readlink "${goboModules}/Current")/misc/lirc_serial.ko"
+   "${goboModules}/$(readlink "${goboModules}/Current")/misc/lirc_dev.ko"
+   "${goboDevices}/lirc"
+)
+
+pre_link() {
+   mknod ${target}/Resources/Unmanaged${goboDevices}/lirc c 61 0
+}
