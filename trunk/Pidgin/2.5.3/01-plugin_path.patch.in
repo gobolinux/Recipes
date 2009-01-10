@@ -3,40 +3,39 @@ installed plugins
 
 Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
 
-diff -Naur pidgin-2.4.2.old/finch/finch.c pidgin-2.4.2/finch/finch.c
---- pidgin-2.4.2.old/finch/finch.c	2008-07-01 23:51:01.000000000 +0200
-+++ pidgin-2.4.2/finch/finch.c	2008-07-01 23:59:30.000000000 +0200
-@@ -344,6 +344,8 @@
- 
- 	path = g_build_filename(purple_user_dir(), "plugins", NULL);
+diff -Naur pidgin-2.5.3.old/finch/finch.c pidgin-2.5.3/finch/finch.c
+--- pidgin-2.5.3.old/finch/finch.c	2009-01-09 23:16:58.000000000 +0100
++++ pidgin-2.5.3/finch/finch.c	2009-01-09 23:17:18.000000000 +0100
+@@ -348,7 +348,7 @@
  	purple_plugins_add_search_path(path);
-+	purple_plugins_add_search_path("@%Compile_goboLibraries%@/purple-2");
-+	purple_plugins_add_search_path("@%Compile_goboLibraries%@/finch");
  	g_free(path);
  
- 	purple_plugins_add_search_path(LIBDIR);
-diff -Naur pidgin-2.4.2.old/libpurple/plugin.c pidgin-2.4.2/libpurple/plugin.c
---- pidgin-2.4.2.old/libpurple/plugin.c	2008-07-01 23:51:01.000000000 +0200
-+++ pidgin-2.4.2/libpurple/plugin.c	2008-07-02 00:01:00.000000000 +0200
-@@ -1179,6 +1179,9 @@
+-	purple_plugins_add_search_path(LIBDIR);
++	purple_plugins_add_search_path("@%Compile_goboLibraries%@/finch/");
+ 
+ 	if (!purple_core_init(FINCH_UI))
+ 	{
+diff -Naur pidgin-2.5.3.old/libpurple/plugin.c pidgin-2.5.3/libpurple/plugin.c
+--- pidgin-2.5.3.old/libpurple/plugin.c	2009-01-09 23:17:01.000000000 +0100
++++ pidgin-2.5.3/libpurple/plugin.c	2009-01-09 23:21:27.000000000 +0100
+@@ -1180,7 +1180,7 @@
+ purple_plugins_init(void) {
  	void *handle = purple_plugins_get_handle();
  
+-	purple_plugins_add_search_path(LIBDIR);
 +	purple_plugins_add_search_path("@%Compile_goboLibraries%@/purple-2");
-+	purple_plugins_add_search_path("@%Compile_goboLibraries%@/pidgin");
-+	purple_plugins_add_search_path("@%Compile_goboLibraries%@/finch");
- 	purple_plugins_add_search_path(LIBDIR);
  
  	purple_signal_register(handle, "plugin-load",
  						 purple_marshal_VOID__POINTER,
-diff -Naur pidgin-2.4.2.old/pidgin/gtkmain.c pidgin-2.4.2/pidgin/gtkmain.c
---- pidgin-2.4.2.old/pidgin/gtkmain.c	2008-07-01 23:51:01.000000000 +0200
-+++ pidgin-2.4.2/pidgin/gtkmain.c	2008-07-01 23:59:55.000000000 +0200
-@@ -770,6 +770,8 @@
- 	 */
+diff -Naur pidgin-2.5.3.old/pidgin/gtkmain.c pidgin-2.5.3/pidgin/gtkmain.c
+--- pidgin-2.5.3.old/pidgin/gtkmain.c	2009-01-09 23:17:02.000000000 +0100
++++ pidgin-2.5.3/pidgin/gtkmain.c	2009-01-09 23:30:39.000000000 +0100
+@@ -765,7 +765,7 @@
  	search_path = g_build_filename(purple_user_dir(), "plugins", NULL);
  	purple_plugins_add_search_path(search_path);
-+	purple_plugins_add_search_path("@%Compile_goboLibraries%@/purple-2");
-+	purple_plugins_add_search_path("@%Compile_goboLibraries%@/pidgin");
  	g_free(search_path);
- 	purple_plugins_add_search_path(LIBDIR);
+-	purple_plugins_add_search_path(LIBDIR);
++	purple_plugins_add_search_path("@%Compile_goboLibraries%@/pidgin/");
  
+ 	if (!purple_core_init(PIDGIN_UI)) {
+ 		fprintf(stderr,
