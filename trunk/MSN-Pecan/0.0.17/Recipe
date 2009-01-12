@@ -6,7 +6,9 @@ file_size=134172
 file_md5=d0539f835d02c94774d06a7877e575ac
 recipe_type=makefile
 makefile='Makefile'
+install_target="install install_locales"
 make_variables=(
-   prefix="$prefix"
+   PURPLE_PREFIX=""
+   prefix="$target"
 )
 
