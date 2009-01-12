@@ -1,0 +1,53 @@
+Only build and install the actuall arch file and use PREFIX variable
+instead of hardcoded path
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+
+--- pidgin-facebookchat/Makefile.old	2009-01-12 21:35:41.000000000 +0100
++++ pidgin-facebookchat/Makefile	2009-01-12 21:53:18.000000000 +0100
+@@ -14,6 +14,7 @@
+ WIN32_CFLAGS = -I${WIN32_DEV_DIR}/gtk_2_0/include/glib-2.0 -I${WIN32_PIDGIN_DIR}/libpurple/win32 -I${WIN32_DEV_DIR}/gtk_2_0/include -I${WIN32_DEV_DIR}/gtk_2_0/include/glib-2.0 -I${WIN32_DEV_DIR}/gtk_2_0/lib/glib-2.0/include
+ WIN32_LIBS = -L${WIN32_DEV_DIR}/gtk_2_0/lib -L${WIN32_PIDGIN_DIR}/libpurple -lglib-2.0 -lgobject-2.0 -lintl -lpurple -lws2_32
+ 
++PREFIX ?= /usr
+ DEB_PACKAGE_DIR = ./debdir
+ 
+ FACEBOOK_SOURCES = \
+@@ -39,14 +40,29 @@
+ 
+ all:	libfacebook.so libfacebook.dll libfacebook64.so libfacebookarm.so libfacebookppc.so installers sourcepackage
+ 
+-install:
+-	cp libfacebook.so /usr/lib/purple-2/
+-	cp libfacebook64.so /usr/lib64/purple-2/
+-	cp libfacebookarm.so /usr/lib/pidgin/
+-	cp libfacebookppc.so /usr/lib/purple-2/
+-	cp facebook16.png /usr/share/pixmaps/pidgin/protocols/16/facebook.png
+-	cp facebook22.png /usr/share/pixmaps/pidgin/protocols/22/facebook.png
+-	cp facebook48.png /usr/share/pixmaps/pidgin/protocols/48/facebook.png
++install: install-libfacebook.so install-libfacebook64.so install-libfacebookarm.so install-libfacebookppc.so install-data
++
++install-libfacebook.so:
++	install -d --mode=777 $(PREFIX)/lib/purple-2/
++	install --mode=666 libfacebook.so $(PREFIX)/lib/purple-2/
++
++install-libfacebook64.so:
++	install -d --mode=777 $(PREFIX)/lib/purple-2/
++	install --mode=666 libfacebook64.so $(PREFIX)/lib64/purple-2/
++
++install-libfacebookarm.so:
++	install -d --mode=777 $(PREFIX)/lib/purple-2/
++	install --mode=666 libfacebookarm.so $(PREFIX)/lib/pidgin/
++
++install-libfacebookppc.so:
++	install -d --mode=777 $(PREFIX)/lib/purple-2/
++	install --mode=666 libfacebookppc.so $(PREFIX)/lib/purple-2/
++
++install-data:
++	for size in 16 22 48;do \
++	  install -d --mode=777 $(PREFIX)/share/pixmaps/pidgin/protocols/$${size}; \
++	  install --mode=666 facebook$${size}.png $(PREFIX)/share/pixmaps/pidgin/protocols/$${size}/facebook.png; \
++	done
+ 
+ installers:	pidgin-facebookchat.exe pidgin-facebookchat.deb pidgin-facebookchat.tar.bz2
+ 
