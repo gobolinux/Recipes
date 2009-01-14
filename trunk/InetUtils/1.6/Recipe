@@ -1,0 +1,12 @@
+# Recipe for version 1.6 by Michael Homer <michael@gobolinux.org>, on Wed Jan 14 14:48:45 NZDT 2009
+url=$ftpGnu/inetutils/inetutils-1.6.tar.gz
+file_size=1675311
+file_md5=23cc24bc77751bf77d50a07a7395f9b3
+compile_version=1.8.0
+recipe_type=configure
+configure_options=(
+   "--disable-syslogd"
+   "--disable-logger"
+   "--disable-whois"
+   "--disable-servers"
+)
