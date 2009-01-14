@@ -1,0 +1,26 @@
+# Recipe (MakeRecipe) for IPUtils by Michael Homer <michael@gobolinux.org>, on Wed Jan 14 14:56:52 NZDT 2009
+# Recipe for version 20071127 by Michael Homer <michael@gobolinux.org>, on Wed Jan 14 14:56:52 NZDT 2009
+compile_version=1.11.4
+url="http://www.skbuff.net/iputils/iputils-s20071127.tar.bz2"
+file_size=88796
+file_md5=12245e9927d60ff5cf4a99d265bcb7d3
+recipe_type=manifest
+manifest=(
+   "arping:bin"
+   "clockdiff:bin"
+   "ipg:bin"
+   "ping:bin"
+   "ping6:bin"
+   "rarpd:bin"
+   "rdisc:bin"
+   "tftpd:bin"
+   "tracepath:bin"
+   "tracepath6:bin"
+   "traceroute6:bin"
+)
+pre_install() {
+   make
+}
+pre_link() {
+   chmod a+s $target/bin/{ping,ping6,traceroute6,tracepath*}
+}
