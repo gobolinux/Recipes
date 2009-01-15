@@ -1,0 +1,15 @@
+# Recipe for version 0.9.30 by Zbigniew Baniewski <zb@ispid.com.pl>, on ¶ro, 31 gru 2008, 03:57:03 BRST
+# Recipe (MakeRecipe) for UClibc by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sun Dec 19 12:44:30 BRST 2004
+compile_version=1.8.2
+url="http://mirror.lzu.edu.cn/software/embedded/uclibc.org/uClibc-0.9.30.tar.bz2"
+file_size=2291882
+file_md5=e5766e2566e0297adebebbcc0aba1f2d
+recipe_type=makefile
+makefile='Makefile'
+install_variables=(
+	PREFIX=${target}
+)
+
+pre_link() {
+	mkdir -p "$target/include/sys"
+}
