@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Resinstaller by Zbigniew Baniewski <zb@ispid.com.pl>, on nie, 28 gru 2008, 08:02:06 BRST
+# Recipe for version 0.4 by Zbigniew Baniewski <zb@ispid.com.pl>, on nie, 28 gru 2008, 08:02:06 BRST
+compile_version=1.11.4
+url="http://www.maxthegame.de/downloads/resinstaller-0.4.tar.gz"
+file="resinstaller-0.4.tar.gz"
+file_size=698072
+file_md5=2ffdfd41275d04133ed7088212a29dd9
+recipe_type=configure
+
+pre_link() {
+  cp ./src/resinstaller "${target}/bin/resinstaller"
+}
