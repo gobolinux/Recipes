@@ -1,0 +1,18 @@
+# Recipe (MakeRecipe) for PPTP by Fabio Mierlo <geromao@gmail.com>, on Fri Jan 2 16:26:30 BRST 2009
+# Recipe for version 1.7.2 by Fabio Mierlo <geromao@gmail.com>, on Fri Jan 2 16:26:30 BRST 2009
+compile_version=1.11.4
+url="$httpSourceforge/pptpclient/pptp-1.7.2.tar.gz"
+file_size=81113
+file_md5=4c3d19286a37459a632c7128c92a9857
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=(
+  "DESTDIR=$target"
+)
+
+pre_install()
+{
+  ln -nfs $target $target/usr
+  ln -nfs Resources/Defaults/Settings $target/etc
+}
