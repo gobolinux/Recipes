@@ -1,0 +1,17 @@
+# Recipe for version 228.57.2.23 by Michael Homer <michael@gobolinux.org>, on Mon Jan 12 21:23:30 NZDT 2009
+# Recipe (MakeRecipe) for Iwlwifi-4965-ucode by Daniele Maccari, on Tue Jan 8 10:30:06 CET 2008
+compile_version=1.10.0
+url="http://intellinuxwireless.org/iwlwifi/downloads/iwlwifi-4965-ucode-228.57.2.23.tgz"
+file_size=81128
+file_md5=505390a555b88c8b6b23057cebec4ad1
+file="iwlwifi-4965-ucode-228.57.2.23.tgz"
+recipe_type=manifest
+
+manifest=(
+   "iwlwifi-4965-2.ucode:lib/firmware/iwlwifi-4965-2.ucode"
+   "LICENSE.iwlwifi-4965-ucode:lib/firmware/LICENSE.iwlwifi-4965-ucode"
+)
+
+docs=(
+   "LICENSE.iwlwifi-4965-ucode"
+)
