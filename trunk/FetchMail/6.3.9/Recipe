@@ -1,0 +1,8 @@
+# Recipe for version 6.3.9 by Zbigniew Baniewski <zb@ispid.com.pl>, on czw, 1 sty 2009, 18:53:10 BRST
+# by Jason Stubbs
+compile_version=1.8.0
+url="http://download.berlios.de/fetchmail/fetchmail-6.3.9.tar.bz2"
+file_size=1538134
+file_md5=72c20ad2b9629f1a109668b05a84d823
+recipe_type=configure
+configure_options=("--with-ssl")
