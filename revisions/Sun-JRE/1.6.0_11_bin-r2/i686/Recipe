@@ -1,0 +1,20 @@
+# Recipe for JRE version 1.6.0_07 by Riccardo Gregotti <xexos'at'hotmail.com>
+# based on the recipe for JDK by Daniele Maccari <daniele.maccari@gmail.com>
+# and by Mike Hughes (Thanks ;-) )
+
+url="http://javadl.sun.com/webapps/download/AutoDL?BundleId=23103"
+file_size=19754758
+file_md5=ae7295898b19189d06197e29621f9ddc
+
+manifest=(
+    "jre1.6.0_07/bin:bin"
+    "jre1.6.0_07/lib:lib"
+    "jre1.6.0_07/man:man"
+    "jre1.6.0_07/javaws:javaws"
+    "jre1.6.0_07/plugin:plugin"
+    "jre1.6.0_07/COPYRIGHT:COPYRIGHT"
+    "jre1.6.0_07/Welcome.html:Welcome.html"
+    "jre1.6.0_07/README:README"
+    "jre1.6.0_07/LICENSE:LICENSE"
+    "jre1.6.0_07/THIRDPARTYLICENSEREADME.txt:THIRDPARTYLICENSEREADME.txt"
+)
