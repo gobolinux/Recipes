@@ -17,14 +17,14 @@
 # may depend from my machine
 
 url="http://javadl.sun.com/webapps/download/AutoDL?BundleId=26214"
-file_size=20106959
-file_md5=c24b14f4bbae5ed6bb3bcd1d74326bc5
 compile_version=1.10.2
 recipe_type=manifest
 uncompress=no
+file="jre-6u11-linux-i586.bin"
 
 pre_patch() {
-  bash AutoDL?BundleId=26214
+  chmod +x jre-6u11-linux-i586.bin
+  sh jre-6u11-linux-i586.bin
 }
 
 pre_link() {
