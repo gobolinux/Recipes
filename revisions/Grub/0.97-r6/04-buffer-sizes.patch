@@ -1,0 +1,142 @@
+Increase Grub buffer sizes so our verbose path names fit.
+This is actually the first time we ever had to do this.
+
+  -- Hisham Muhammad, Sep.27 2007
+
+diff -Naur grub-0.97-old/stage2/builtins.c grub-0.97/stage2/builtins.c
+--- grub-0.97-old/stage2/builtins.c	2005-02-15 19:58:23.000000000 -0200
++++ grub-0.97/stage2/builtins.c	2007-09-27 07:07:26.000000000 -0300
+@@ -49,6 +49,10 @@
+ # include <md5.h>
+ #endif
+ 
++#define COLORS_COUNT 16
++#define CMD_ARG_SIZE 1024
++#define DEVICE_NAME_SIZE 128
++
+ /* The type of kernel loaded.  */
+ kernel_t kernel_type;
+ /* The boot device.  */
+@@ -571,7 +575,7 @@
+   char *highlight;
+   int new_normal_color;
+   int new_highlight_color;
+-  static char *color_list[16] =
++  static char *color_list[COLORS_COUNT] =
+   {
+     "black",
+     "blue",
+@@ -620,14 +624,14 @@
+ 	}
+       
+       /* Search for the color name.  */
+-      for (i = 0; i < 16; i++)
++      for (i = 0; i < COLORS_COUNT; i++)
+ 	if (grub_strcmp (color_list[i], str) == 0)
+ 	  {
+ 	    color |= i;
+ 	    break;
+ 	  }
+ 
+-      if (i == 16)
++      if (i == COLORS_COUNT)
+ 	return -1;
+ 
+       str = ptr;
+@@ -3485,7 +3489,7 @@
+       else if (grub_memcmp (arg, "--device=", sizeof ("--device=") - 1) == 0)
+ 	{
+ 	  char *p = arg + sizeof ("--device=") - 1;
+-	  char dev[256];	/* XXX */
++	  char dev[DEVICE_NAME_SIZE];
+ 	  char *q = dev;
+ 	  
+ 	  while (*p && ! grub_isspace (*p))
+@@ -3791,8 +3795,8 @@
+   char stage2[64];
+   char config_filename[64];
+   char real_config_filename[64];
+-  char cmd_arg[256];
+-  char device[16];
++  char cmd_arg[CMD_ARG_SIZE];
++  char device[DEVICE_NAME_SIZE];
+   char *buffer = (char *) RAW_ADDR (0x100000);
+   int is_force_lba = 0;
+   char *stage2_arg = 0;
+@@ -3828,17 +3832,17 @@
+ 		    drive & ~0x80);
+       if ((partition & 0xFF0000) != 0xFF0000)
+ 	{
+-	  char tmp[16];
++	  char tmp[DEVICE_NAME_SIZE];
+ 	  grub_sprintf (tmp, ",%d", (partition >> 16) & 0xFF);
+-	  grub_strncat (device, tmp, 256);
++	  grub_strncat (device, tmp, DEVICE_NAME_SIZE);
+ 	}
+       if ((partition & 0x00FF00) != 0x00FF00)
+ 	{
+-	  char tmp[16];
++	  char tmp[DEVICE_NAME_SIZE];
+ 	  grub_sprintf (tmp, ",%c", 'a' + ((partition >> 8) & 0xFF));
+-	  grub_strncat (device, tmp, 256);
++	  grub_strncat (device, tmp, DEVICE_NAME_SIZE);
+ 	}
+-      grub_strncat (device, ")", 256);
++      grub_strncat (device, ")", DEVICE_NAME_SIZE);
+     }
+   
+   int embed_stage1_5 (char *stage1_5, int drive, int partition)
+diff -Naur grub-0.97-old/stage2/terminfo.c grub-0.97/stage2/terminfo.c
+--- grub-0.97-old/stage2/terminfo.c	2004-01-11 06:52:08.000000000 -0200
++++ grub-0.97/stage2/terminfo.c	2007-09-27 07:09:57.000000000 -0300
+@@ -30,6 +30,8 @@
+ #include "tparm.h"
+ #include "serial.h"
+ 
++#define OUT_BUFFER_SIZE 1024
++
+ /* Current terminal capabilities. Default is "vt100".  */
+ struct terminfo term =
+   {
+@@ -54,7 +56,7 @@
+ char *
+ ti_unescape_memory (const char *in, const char *end) 
+ {
+-  static char out_buffer[256];
++  static char out_buffer[OUT_BUFFER_SIZE];
+   char c;
+   char *out;
+ 
+@@ -159,7 +161,7 @@
+ char *
+ ti_escape_memory (const char *in, const char *end) 
+ {
+-  static char out_buffer[256];
++  static char out_buffer[OUT_BUFFER_SIZE];
+   char c;
+   char *out;
+ 
+diff -Naur grub-0.97-old/stage2/tparm.c grub-0.97/stage2/tparm.c
+--- grub-0.97-old/stage2/tparm.c	2003-07-09 08:45:53.000000000 -0300
++++ grub-0.97/stage2/tparm.c	2007-09-27 06:58:43.000000000 -0300
+@@ -60,7 +60,7 @@
+ #ifndef TRUE
+ # define TRUE (!FALSE)
+ #endif
+-#define MAX_FORMAT_LEN 256
++#define MAX_FORMAT_LEN 1024
+ #define max(a,b) ((a) > (b) ? (a) : (b))
+ 
+ //MODULE_ID("$Id: tparm.c,v 1.1 2002/11/29 20:39:24 okuji Exp $")
+@@ -138,8 +138,9 @@
+ static stack_frame stack[STACKSIZE];
+ static int stack_ptr;
+ 
+-static char out_buff[256];
+-static int out_size = 256;
++#define OUT_BUFF_SIZE 1024
++static char out_buff[OUT_BUFF_SIZE];
++static int out_size = OUT_BUFF_SIZE;
+ static int out_used;
+ 
+ static inline void
