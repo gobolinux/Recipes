@@ -1,0 +1,16 @@
+--- tkdvd/TkDVD.sh	2008-08-30 14:04:00.000000000 +0200
++++ tkdvd-new/TkDVD.sh	2009-01-06 04:58:59.000000000 +0100
+@@ -63,12 +63,7 @@
+ set tcl_precision 4
+ 
+ #set fullpath to source scripts (if TkDVD not launch from it install direcotory)
+-set source_directory "[info script]"
+-if { [file pathtype $source_directory] == "absolute" } {
+-	set source_directory [file dirname $source_directory]
+-} else {
+-	set source_directory "[file dirname [pwd]/[info script]]"
+-}
++set source_directory "@%Compile_target%@/lib/tkdvd-4.0.9"
+ 
+ #we need to set a variable to fix compatibility problems between tcl 8.4 and 8.5
+ # 8.5 has a tristate value for checkbuttons which is by default "" that conflits with offvalue for TkDVD advanced options
