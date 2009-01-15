@@ -1,0 +1,5 @@
+[Name] Parse::RecDescent
+[Summary] Generate recursive-descent parsers (a perl module).
+[License] Perl licensing ( http://dev.perl.org/licenses/ )
+[Description] Parse::RecDescent can be used to generate recursive descent parsers. A parser is used to make meaning of an inputs (mostly given in textual form) that follow certain patterns. These patterns are described in a grammar. The grammer consists of a set of rules (called productions). When the parser reads the input, it tries to find a rule that matches and whenever it finds such a rule, it triggers an action. It then goes on to read from the input and to find matching patterns, until the input has finished.
+[Homepage] http://search.cpan.org/dist/Parse-RecDescent/
