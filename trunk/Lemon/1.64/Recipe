@@ -1,0 +1,24 @@
+# Recipe for version 1.64 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jan. 4., vasárnap, 17.53.14 CET
+# --- The version number accords to the SQLite cvstrac.
+compile_version=1.11.4
+urls=(
+    "http://www.sqlite.org/cvstrac/getfile/sqlite/tool/lemon.c"
+    "http://www.sqlite.org/cvstrac/getfile/sqlite/tool/lempar.c"
+)
+file_sizes=(
+    142638
+    26655
+)
+file_md5s=(
+    84d19843d2c45016c42574b8c3e6fa0a
+    1633517864ebe701f27ca10a4880a061
+)
+uncompress=no
+dir=lemon
+recipe_type=manifest
+pre_install() {
+    mkdir -p $target/src
+    cp lempar.c $target/src
+    GrepReplace "\"lempar.c\"" "\"$target/src/lempar.c\"" lemon.c
+    gcc $CFLAGS -v lemon.c -o lemon && cp lemon $target/bin
+}
