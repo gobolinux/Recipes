@@ -1,0 +1,9 @@
+
+pre_build() {
+	if [ ! -f .config ]
+    then
+		cp "$recipedir"/dot-config .config
+		yes "" | make oldconfig
+    fi
+	make menuconfig
+}

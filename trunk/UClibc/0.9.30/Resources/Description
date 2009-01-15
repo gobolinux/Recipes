@@ -1,0 +1,5 @@
+[Name] uClibc
+[Summary] C library optimized for embedded systems
+[Description] uClibc (aka µClibc/pronounced yew-see-lib-see) is a C library for developing embedded Linux systems.  It is much smaller than the GNU C Library, but nearly all applications supported by glibc also work perfectly with uClibc.  Porting applications from glibc to uClibc typically involves just recompiling the source code. uClibc even supports shared libraries and threading.  It currently runs on standard Linux and MMU-less (also known as µClinux) systems with support for alpha, ARM, cris, e1, h8300, i386, i960, m68k, microblaze, mips/mipsel, PowerPC, SH, SPARC, and v850 processors.
+[License] General Public License (GPL) V2+
+[Homepage] http://www.uclibc.org/
