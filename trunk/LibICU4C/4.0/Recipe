@@ -6,6 +6,3 @@ file_size=12326130
 file_md5=29ab09d84b72a74953cbb4d3d5759e14
 dir='icu/source'
 recipe_type=configure
-configure_options=(
-    --disable-64bit-libs
-)
