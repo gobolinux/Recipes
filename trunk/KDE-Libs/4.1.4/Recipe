@@ -1,0 +1,12 @@
+# Recipe for version 4.1.4 by Michael Homer <michael@gobolinux.org>, on Fri Jan 16 21:32:16 NZDT 2009
+# Recipe (MakeRecipe) for KDE-Libs by Giambattista Bloisi <giamby@infinito.it>, on Sat Jan 12 11:13:12 CET 2008
+compile_version=1.10.0
+url="http://download.kde.org/stable/4.1.4/src/kdelibs-4.1.4.tar.bz2"
+file_size=9118858
+file_md5=ffdb0340a72aaf06a0b98f354c0c59ef
+file="kdelibs-4.1.4.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
