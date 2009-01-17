@@ -1,0 +1,15 @@
+# Recipe for version 4.1.4 by Michael Homer <michael@gobolinux.org>, on Fri Jan 16 21:33:26 NZDT 2009
+# Recipe (MakeRecipe) for KDE-Base-Workspace by Giambattista Bloisi <giamby@infinito.it>, on Sat Jan 12 19:19:58 CET 2008
+compile_version=1.10.0
+url="http://download.kde.org/stable/4.1.4/src/kdebase-workspace-4.1.4.tar.bz2"
+file_size=47504097
+file_md5=bdac9ac8055b976845587fe544d568be
+file="kdebase-workspace-4.1.4.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+-DKDE4_COMMON_PAM_SERVICE=kde
+-DKDE4_KDM_PAM_SERVICE=kdm
+-DKDE4_KSCREENSAVER_PAM_SERVICE=kscreensaver
+)
