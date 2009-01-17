@@ -5,3 +5,6 @@ url="http://kde.mirrors.tds.net/pub/kde/unstable/automoc4/0.9.87/automoc4-0.9.87
 file_size=8499
 file_md5=824504508d581e82d5e1a17b01a1d684
 recipe_type=cmake
+environment=(
+   QMAKESPEC="linux-g++"
+)
