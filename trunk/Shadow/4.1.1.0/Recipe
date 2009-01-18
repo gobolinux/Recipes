@@ -9,18 +9,17 @@ dir='shadow-4.1.1'
 configure_options=(
    "--enable-shared"
    "--without-selinux"
-   "--mandir=${target}/man"
 )
-
-using_cracklib(){
-   sed -i 's@DICTPATH.*@DICTPATH\t${goboLibraries}/cracklib/pw_dict@' \
-      ${target}/Resources/Defaults/Settings/login.defs
-}
 
 pre_patch(){
    sed -i -e 's@^HOME=.*$@HOME=/Users@' \
           -e 's@^SHELL=.*$@SHELL=/bin/zsh@' \
 	  -e 's@yes@no@' etc/useradd
+}
+
+using_cracklib_pre_link(){
+   sed -i 's@DICTPATH.*@DICTPATH\t${goboLibraries}/cracklib/pw_dict@' \
+      ${target}/Resources/Defaults/Settings/login.defs
 }
 
 using_pam_pre_link() {
