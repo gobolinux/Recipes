@@ -1,8 +1,8 @@
 # Recipe for version 1.2.28 by Jonas Karlsson <jonka750@student.liu.se>, on Thu May 8 07:16:21 GMT 2008
 compile_version=1.8.5
-url=$httpSourceforge/libpng/libpng-1.2.28.tar.bz2
-file_size=788156
-file_md5=c981a7014fc695e354d2f2cac3a6742e
+url=$httpSourceforge/libpng/libpng-1.2.34.tar.bz2
+file_size=638334
+file_md5=37362876feb21344fd3af1228527db0f
 recipe_type=configure
 configure_options=(
    "--mandir=${target}/man"
