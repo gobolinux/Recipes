@@ -1,0 +1,39 @@
+# Recipe for version 4.1.1.0 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. nov. 29., szombat, 23.36.12 CET
+compile_version=1.8.2
+needs_safe_linking=yes
+url="ftp://ftp.debian.org/debian/pool/main/s/shadow/shadow_4.1.1.orig.tar.gz"
+file_size=2720267
+file_md5=ae893c18fdb0a89bc7991ba1098f1446
+recipe_type=configure
+dir='shadow-4.1.1'
+configure_options=(
+   "--enable-shared"
+   "--without-selinux"
+)
+
+pre_patch(){
+   sed -i -e 's@^HOME=.*$@HOME=/Users@' \
+          -e 's@^SHELL=.*$@SHELL=/bin/zsh@' \
+	  -e 's@yes@no@' etc/useradd
+}
+
+using_cracklib_pre_link(){
+   sed -i 's@DICTPATH.*@DICTPATH\t${goboLibraries}/cracklib/pw_dict@' \
+      ${target}/Resources/Defaults/Settings/login.defs
+}
+
+using_pam_pre_link() {
+   for FUNCTION in LASTLOG_ENAB MAIL_CHECK_ENAB \
+                   PORTTIME_CHECKS_ENAB CONSOLE \
+                   MOTD_FILE NOLOGINS_FILE PASS_MIN_LEN \
+                   SU_WHEEL_ONLY MD5_CRYPT_ENAB \
+                   CONSOLE_GROUPS ENVIRON_FILE \
+                   ULIMIT ENV_TZ ENV_HZ ENV_SUPATH \
+                   ENV_PATH QMAIL_DIR MAIL_DIR MAIL_FILE \
+                   CHFN_AUTH FAILLOG_ENAB QUOTAS_ENAB FTMP_FILE \
+                   OBSCURE_CHECKS_ENAB CRACKLIB_DICTPATH \
+                   PASS_CHANGE_TRIES PASS_ALWAYS_WARN ISSUE_FILE
+   do
+      sed -i "s/^$FUNCTION/# &/" ${target}/Resources/Defaults/Settings/login.defs
+   done
+}
