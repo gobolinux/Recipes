@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for LibCap by Andy Feldman <nereusren@gmail.com>, on Sat Jan 17 21:39:49 CST 2009
+# Recipe for version 2.16 by Andy Feldman <nereusren@gmail.com>, on Sat Jan 17 21:39:49 CST 2009
+compile_version=1.11.3
+url="http://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-2.16.tar.gz"
+file_size=53481
+file_md5=9e075fda242c4070ba76407064c13302
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+)
