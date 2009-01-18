@@ -1,0 +1,21 @@
+# Recipe for version 1.2.28 by Jonas Karlsson <jonka750@student.liu.se>, on Thu May 8 07:16:21 GMT 2008
+compile_version=1.8.5
+url=$httpSourceforge/libpng/libpng-1.2.34.tar.bz2
+file_size=638334
+file_md5=37362876feb21344fd3af1228527db0f
+recipe_type=configure
+configure_options=(
+   "--mandir=${target}/man"
+)
+
+pre_build(){
+   libtoolize --force --copy
+   aclocal
+   autoconf
+   automake --add-missing
+}
+
+pre_link() {
+    ln -sf libpng12 $target/include/libpng
+    ln -sf libpng.so $target/lib/libpng.so.0
+}
