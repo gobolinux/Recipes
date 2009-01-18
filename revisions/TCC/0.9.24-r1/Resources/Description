@@ -1,0 +1,5 @@
+[Name] Tiny C Compiler
+[Summary] The smallest Linux C compiler.
+[License] GNU General Public License (GPL)
+[Description] TCC (Tiny C Compiler) is small, fast, unlimited, and safe. You can compile and execute C code everywhere (e.g., on rescue disks). It generates optimized x86 code, and can compile, assemble, and link several times faster than 'gcc -O0'. Any C dynamic library can be used directly. It includes an optional memory and bounds checker, and bounds-checked code can be mixed freely with standard code. C script is also supported--just add '#!/usr/bin/tcc' at the first line of your C source, and execute it directly from the command line.
+[Homepage] http://www.tinycc.org/
