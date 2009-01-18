@@ -1,17 +1,11 @@
-url=$ftpGnu/non-gnu/flex/flex-2.5.4a.tar.gz
-dir=flex-2.5.4
-compile_version=1.7.1
+# Recipe (MakeRecipe) for Flex by unknown.
+# Recipe for version 2.5.4a by Andy Feldman <nereusren@gmail.com>, on Sat Jan 17 12:48:55 CST 2009
+compile_version=1.11.3
+url="$httpSourceforge/flex/flex-2.5.4a.tar.bz2"
+file_size=284328
+file_md5=c0b8e3dd63bce3f4a6543d845e17ce9a
+dir='flex-2.5.4'
 recipe_type=configure
-
 pre_build() {
    autoconf
-}
-
-post_install() {
-cat $target/bin/lex << EOF
-#!/bin/sh
-exec flex -l "$@"
-EOF
-chmod 755 $target/bin/lex
-ln -nfs $target/bin/lex $goboExecutables
 }
