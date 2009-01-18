@@ -13,3 +13,7 @@ cmake_options=(
 -DKDE4_KDM_PAM_SERVICE=kdm
 -DKDE4_KSCREENSAVER_PAM_SERVICE=kscreensaver
 )
+
+pre_link() {
+   sed -i 's!#Plugins\(Login\|Shutdown\).*!Plugins\1=/Programs/KDE-Base-Workspace/Current/lib/kde4/kgreet_classic.so!ig' $target/Shared/config/kdm/kdmrc
+}
