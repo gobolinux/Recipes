@@ -1,5 +1,11 @@
+# new revision uses $(readlink $goboModules/Current) 
+# instead `uname -r`. This will allow for installation 
+# during a kernel upgrade
+
 make=kBuild/bin/linux.x86/kmk
 # architechture specific build tool
+
+
 
 pre_install() {
     source env.sh
@@ -16,7 +22,7 @@ pre_link() {
     # install kernel module
     if [ -f src/vboxdrv.ko ]
     then
-        dest=$target/Resources/Unmanaged/$goboModules/`uname -r`/misc
+        dest=$target/Resources/Unmanaged/$goboModules/$(readlink $goboModules/Current)/misc
         mkdir -p $dest
         cp src/vboxdrv.ko $dest
     fi
@@ -43,5 +49,5 @@ pre_link() {
 }
 
 unmanaged_files=(
-    $goboModules/`uname -r`/misc/vboxdrv.ko
+    $goboModules/$(readlink $goboModules/Current)/misc/vboxdrv.ko
 )
