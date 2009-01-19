@@ -6,10 +6,10 @@ file_size=1403857
 file_md5=ab54ec1d4ddd836313fdbc0cd5299d6d
 recipe_type=configure
 configure_options=(
-    "--with-default-fonts=$goboPrefix/Files/Fonts/TrueType"
-    "--with-add-fonts=$goboPrefix/Files/Fonts/OpenType,$goboShared/fonts"
-    "--with-cache-dir=$goboVariable/cache/fontconfig"
-    "--with-confdir=$settings_target/fonts"
+    --with-default-fonts="${target}/share/fonts"
+    --with-add-fonts="$goboPrefix/Files/Fonts/OpenType,$goboPrefix/Files/Fonts/TrueType"
+    --with-cache-dir="$goboVariable/cache/fontconfig"
+    --with-confdir="$settings_target/fonts"
 )
 build_target="all fonts.conf"
 
