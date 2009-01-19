@@ -1,0 +1,11 @@
+[Name] FL-COW
+[Summary] LD_PRELOAD library to break hard links
+[Description] The library works by intercepting all file open operations happening inside a configured path list, and by decoupling the hard link with a COW if a write operation is requested. The library is installed using the environment variable LD_PRELOAD and in this way it is able to hook glibc open(2) functions and it is able to perform the COW when necessary. The environment variable FLCOW_PATH control which paths should be subject to COWing. The logic that the library follow to know if a file should be COWed is the following:
+
+   1. Is the file being opened with O_RDWR or O_WRONLY modes?
+   2. Is the file inside one of the paths listed inside the FLCOW_PATH environment variable?
+   3. Is the file being opened a regular file?
+   4. Is the (struct stat)->st_nlink variable greater than one?
+
+[License] GNU General Public License version 2
+[Homepage] http://xmailserver.org/flcow.html
