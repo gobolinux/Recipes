@@ -1,0 +1,31 @@
+# Recipe for version 2.1.0 by Frank Wilson <frank@thefixedpoint.me.uk>, on Thu Jan 15 23:33:44 GMT 2009
+# Recipe (MakeRecipe) for VirtualBox by Lucas C. Villa Real, on Sat Nov 24 12:02:49 PST 2007
+
+compile_version=1.10.1
+url="http://download.virtualbox.org/virtualbox/2.1.0/VirtualBox-2.1.0-OSE.tar.bz2"
+file_size=39382682
+file_md5=4d8f857c9ead892607387656a9e895bb
+file="VirtualBox-2.1.0.tar.bz2"
+recipe_type=configure
+override_default_options=yes
+# vbox configure does not accept --prefix
+
+makefile=Makefile.kmk
+
+configure_options=(
+--disable-qt3 
+--with-qt4-dir=$qt_path 
+--disable-pulse
+)
+
+make_variables=(
+    libIDL_config_cflags="`pkg-config --cflags libIDL-2.0`"
+    libIDL_config_libs="`pkg-config --libs libIDL-2.0`"
+)
+
+pre_build() {
+    GrepReplace "\"PKG_CONFIG_PATH=.*\"" \
+                "\"PKG_CONFIG_PATH=$goboLibraries/pkgconfig $goboExecutables/libIDL-config-2\"" configure
+}
+
+post_install_message="Please load the vboxdrv kernel module.\n If you wish, you may add this to UserDefinedModules in BootOptions to load this module at boot time."
