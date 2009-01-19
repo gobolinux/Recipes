@@ -1,0 +1,10 @@
+# Recipe for version 1.1.5 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Jan 19 17:53:35 BRST 2009
+compile_version=1.8.2
+url=http://luajit.org/download/LuaJIT-1.1.5.tar.gz
+file_size=362411
+file_md5=b99d244ba4fc1979946ae1025368fc5c
+recipe_type=makefile
+build_target=linux
+make_variables=(
+  INSTALL_TOP=$target
+)
