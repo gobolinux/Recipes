@@ -14,7 +14,8 @@ configure_options=(
     --enable-xft
     --enable-safe-browsing
     --enable-jemalloc              # New memory management in 3.0.5
-
+    --enable-webservices
+    
     # Our system libpng does not have  APNG support, which is mandatory, 
     # so disable it for the time being.
     --with-system-zlib             # These options are used so that the Firefox binaries are linked to
@@ -24,6 +25,8 @@ configure_options=(
     --enable-system-lcms
     --enable-system-sqlite
     --enable-system-cairo
+    --with-system-nss
+    --with-system-nspr
 
     --enable-canvas
     --enable-svg
@@ -41,12 +44,11 @@ configure_options=(
     --disable-installer            # This option is added so that the Mozilla Installer program is not built or installed.
     --disable-accessibility        # Disable the a11y support. Comment out this option if you require a11y support.
     --disable-crashreporter
-    
-    --with-system-nss
-    --with-system-nspr
+    --disable-mochitest
+    --disable-pedantic
+    --disable-tests
 
     --enable-updater # enable automatic updates
-
 )
 
 make_variables=(
