@@ -13,10 +13,9 @@ build_variables=(
    NSS_USE_SYSTEM_SQLITE=1
 )
 
-pre_build(){
-   # hack nspr paths
-   echo 'INCLUDES += -I${goboHeaders}/nspr' >> security/coreconf/headers.mk
-}
+build_variables=(
+   NSPR_INCLUDE_DIR="${goboHeaders}/nspr"
+)
 
 pre_link() {
    export NSS_LINUXDIR=$(basename `ls -d $PWD/dist/Linux*`)
@@ -31,12 +30,13 @@ pre_link() {
    pushd ${target}/lib &&
    for i in *.so
    do
-      mv ${i} ${i}.11
-      ln -s ${i}.11 ${i}
+      mv ${i} ${i}.12
+      ln -s ${i}.12 ${i}
    done &&
    popd &&
    install -v -m644 ${NSS_LINUXDIR}/lib/{*.chk,libcrmf.a} ${target}/lib
    install -v -m755 -d ${target}/include/nss
-   install -v -m644 {public,private}/nss/* ${target}/include/nss
+   install -v -m644 public/{dbm,nss}/*.h ${target}/include/nss
+   install -v -m644 private/nss/*.h ${target}/include/nss
    rm -f ${target}/lib/pkgconfig/pkgconfig
 }

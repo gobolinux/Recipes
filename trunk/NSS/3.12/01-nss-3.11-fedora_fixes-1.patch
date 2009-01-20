@@ -24,7 +24,7 @@ diff -Naur nss-3.11-orig/mozilla/security/nss/Makefile nss-3.11/mozilla/security
 diff -Naur nss-3.11-orig/mozilla/security/nss/cmd/config/nss-config nss-3.11/mozilla/security/nss/cmd/config/nss-config
 --- nss-3.11-orig/mozilla/security/nss/cmd/config/nss-config	1970-01-01 00:00:00.000000000 +0000
 +++ nss-3.11/mozilla/security/nss/cmd/config/nss-config	2006-01-20 03:27:43.000000000 +0000
-@@ -0,0 +1,137 @@
+@@ -0,0 +1,146 @@
 +#!/bin/sh
 +
 +prefix=/usr
@@ -60,6 +60,9 @@ diff -Naur nss-3.11-orig/mozilla/security/nss/cmd/config/nss-config nss-3.11/moz
 +lib_ssl=yes
 +lib_smime=yes
 +lib_nss=yes
++lib_nssutil=yes
++lib_ssl=yes
++lib_softokn=yes
 +
 +while test $# -gt 0; do
 +  case "$1" in
@@ -125,7 +128,7 @@ diff -Naur nss-3.11-orig/mozilla/security/nss/cmd/config/nss-config nss-3.11/moz
 +    includedir=${prefix}/include/nss
 +fi
 +if test -z "$libdir"; then
-+    libdir=${prefix}/lib
++    libdir=${prefix}/lib/nss
 +fi
 +
 +if test "$echo_prefix" = "yes"; then
@@ -149,7 +152,7 @@ diff -Naur nss-3.11-orig/mozilla/security/nss/cmd/config/nss-config nss-3.11/moz
 +fi
 +
 +if test "$echo_libs" = "yes"; then
-+      libdirs="-Wl,-rpath-link,$libdir -L$libdir"
++      libdirs="-Wl,-R${libdir} -L$libdir"
 +      if test -n "$lib_ssl"; then
 +	libdirs="$libdirs -lssl${major_version}"
 +      fi
@@ -158,6 +161,12 @@ diff -Naur nss-3.11-orig/mozilla/security/nss/cmd/config/nss-config nss-3.11/moz
 +      fi
 +      if test -n "$lib_nss"; then
 +	libdirs="$libdirs -lnss${major_version}"
++      fi
++      if test -n "$lib_nssutil"; then
++	libdirs="$libdirs -lnssutil${major_version}"
++      fi
++      if test -n "$lib_softokn"; then
++	libdirs="$libdirs -lsoftokn${major_version}"
 +      fi
 +      echo $libdirs
 +fi      
@@ -169,13 +178,13 @@ diff -Naur nss-3.11-orig/mozilla/security/nss/lib/pkgconfig/nss.pc nss-3.11/mozi
 @@ -0,0 +1,12 @@
 +prefix=/usr
 +exec_prefix=${prefix}
-+libdir=${prefix}/lib
++libdir=${prefix}/lib/nss
 +includedir=${prefix}/include
 +
 +Name: NSS
 +Description: Mozilla Network Security Services
 +Version: 3.12.0
-+Requires: nspr >= 4.6.1
-+Libs: -L${libdir} -lnss3 -lsmime3 -lssl3 -lsoftokn3
++Requires: nspr >= 4.7.0
++Libs: -Wl,-R${libdir} -L${libdir} -lnss3 -lsmime3 -lnssutil3 -lssl3 -lsoftokn3
 +Cflags: -I${includedir}/nss
 +
