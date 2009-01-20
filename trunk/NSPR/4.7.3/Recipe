@@ -7,17 +7,17 @@ file_md5=3496d6656f3e02dddc7e29f1b122b744
 recipe_type=configure
 dir="nspr-4.7.3/mozilla/nsprpub"
 
+configure_options=(
+   --enable-optimize
+   --disable-debug
+)
+
 pre_link() {
-    install -v -m755 config/nspr-config \
-                     config/nsinstall \
-                     ${target}/bin &&
-    install -v -m755 -d ${target}/lib/pkgconfig &&
-    install -v -m644 lib/pkgconfig/nspr.pc \
-                    ${target}/lib/pkgconfig &&
-
-    cd dist &&
-    install -v -m755 lib/*.so ${target}/lib &&
-
-    cp -v -RL include/* ${target}/include/nspr &&
-    chmod -v 644 ${target}/include/nspr/prvrsion.h
+   pushd ${target}/lib &&
+   for lib in *.so
+   do
+      mv ${lib} ${lib}.7
+      ln -s ${lib}.7 ${lib}
+   done &&
+   popd
 }
