@@ -1,0 +1,12 @@
+Rationale: This patch is needed for the VirtualBox driver to compile on linux 2.6.28
+diff -Naur VirtualBox-2.1.0.org/src/VBox/Devices/Storage/DrvHostDVD.cpp VirtualBox-2.1.0/src/VBox/Devices/Storage/DrvHostDVD.cpp
+--- VirtualBox-2.1.0.org/src/VBox/Devices/Storage/DrvHostDVD.cpp	2009-01-20 19:05:49.000000000 +0000
++++ VirtualBox-2.1.0/src/VBox/Devices/Storage/DrvHostDVD.cpp	2009-01-20 19:07:13.000000000 +0000
+@@ -48,6 +48,7 @@
+ # define _LINUX_BYTEORDER_GENERIC_H
+ /* This is another hack for not bothering with C++ unfriendly byteswap macros. */
+ # define _LINUX_BYTEORDER_SWAB_H
++# define _LINUX_BYTEORDER_SWABB_H
+ /* Those macros that are needed are defined in the header below */
+ # include "swab.h"
+ # include <linux/cdrom.h>
