@@ -8,4 +8,8 @@ file="soprano-2.1.1.tar.bz2"
 recipe_type=cmake
 environment=(
    QMAKESPEC="linux-g++"
+   # This is necessary to build the Sesame2 backend, which is the only
+   # usably fast one. If sun_jdk_path is undefined, the empty variable
+   # will be fine. Augmenting environment in using_sun_jdk did not work.
+   JAVA_HOME=$sun_jdk_path
 )
