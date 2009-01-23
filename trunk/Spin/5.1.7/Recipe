@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for Spin by Kevin Quick <quick@sparq.org>, on Thu Jan 22 20:53:11 MST 2009
+# Recipe for version 5.1.7 by Kevin Quick <quick@sparq.org>, on Thu Jan 22 20:53:11 MST 2009
+compile_version=1.11.4
+url="http://spinroot.com/spin/Src/spin517.tar.gz"
+file_size=401647
+file_md5=2d069adc30e318b1ba71bdecc1721d97
+dir='Spin/Src5.1.7'
+recipe_type=makefile
+makefile=makefile
+do_install=no
+pre_install()
+{
+   cp spin ${target}/bin
+   cp ../Man/spin.1 ${target}/man/man1/
+}
