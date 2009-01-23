@@ -1,0 +1,14 @@
+# Recipe for version 2.14.7 by Giambattista Bloisi <giamby@infinito.it>, on Mon Jan 19 22:15:08 CET 2009
+# Recipe (MakeRecipe) for GTK+ by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 11:55:54 BRT 2005
+compile_version=1.9.0
+url="ftp://ftp.gnome.org/pub/gnome/sources/gtk+/2.14/gtk+-2.14.7.tar.bz2"
+file_size=17475873
+file_md5=fb1614d4b2adba7b078e2e799b5db604
+recipe_type=configure
+
+configure_options=(
+   --with-xinput=yes
+#   --without-libjasper
+)
+
+with_jpeg2000="--with-libjasper"
