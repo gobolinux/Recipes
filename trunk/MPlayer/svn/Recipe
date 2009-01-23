@@ -11,7 +11,6 @@ configure_options=(
     "--win32codecsdir=$goboLibraries/mplayer-codecs"
     "--xanimcodecsdir=$goboLibraries/mplayer-codecs"
     "--realcodecsdir=$goboLibraries/mplayer-codecs"
-    "--language=hu,en"
 )
 
 environment=(
