@@ -1,0 +1,21 @@
+# Recipe for version 2.3.8 by Giambattista Bloisi <giamby@infinito.it>, on Mon Jan 19 22:22:43 CET 2009
+# by Giusepe Casagrande, Jeremy Vernon
+url=http://download.savannah.gnu.org/releases/freetype/freetype-2.3.8.tar.bz2
+file_size=1343318
+file_md5=6cf31a08826715a0d16ae366da9c7d3b
+compile_version=1.8.5
+recipe_type=configure
+
+# XFree86 also has a FreeType; We want this one to be the dominant FreeType
+symlink_options=(
+   "--conflict overwrite"
+)
+
+make_variables=(
+	C_INCLUDE_PATH=
+)
+
+pre_link() {
+	cd $target/include
+	ln -s freetype2/freetype freetype
+}
