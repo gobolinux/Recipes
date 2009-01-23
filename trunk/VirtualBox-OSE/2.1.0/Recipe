@@ -1,31 +1,53 @@
-# Recipe for version 2.1.0 by Frank Wilson <frank@thefixedpoint.me.uk>, on Thu Jan 15 23:33:44 GMT 2009
+# Recipe for version 2.1.0 by Andy Feldman <nereusren@gmail.com>, on Fri Jan 16 23:51:45 CST 2009
 # Recipe (MakeRecipe) for VirtualBox by Lucas C. Villa Real, on Sat Nov 24 12:02:49 PST 2007
-
 compile_version=1.10.1
-url="http://download.virtualbox.org/virtualbox/2.1.0/VirtualBox-2.1.0-OSE.tar.bz2"
+url="http://dlc.sun.com/virtualbox/2.1.0/VirtualBox-2.1.0-OSE.tar.bz2"
 file_size=39382682
 file_md5=4d8f857c9ead892607387656a9e895bb
-file="VirtualBox-2.1.0.tar.bz2"
-recipe_type=configure
-override_default_options=yes
-# vbox configure does not accept --prefix
+dir="VirtualBox-2.1.0"
+recipe_type=manifest
 
-makefile=Makefile.kmk
-
-configure_options=(
---disable-qt3 
---with-qt4-dir=$qt_path 
---disable-pulse
+unmanaged_files=(
+    $goboModules/`uname -r`/misc/vboxdrv.ko
 )
 
-make_variables=(
-    libIDL_config_cflags="`pkg-config --cflags libIDL-2.0`"
-    libIDL_config_libs="`pkg-config --libs libIDL-2.0`"
-)
-
-pre_build() {
+pre_install() {
     GrepReplace "\"PKG_CONFIG_PATH=.*\"" \
                 "\"PKG_CONFIG_PATH=$goboLibraries/pkgconfig $goboExecutables/libIDL-config-2\"" configure
+    ./configure --with-qt-dir=$qt_path --disable-qt4 --disable-pulse --disable-hardening || exit 1
+
+    source ./env.sh
+    kmk || exit 2
+
+    # compile kernel module
+    Quiet pushd out/$BUILD_TARGET.$BUILD_PLATFORM_ARCH/release/bin/src/vboxdrv
+    make
+    Quiet popd
 }
 
-post_install_message="Please load the vboxdrv kernel module.\n If you wish, you may add this to UserDefinedModules in BootOptions to load this module at boot time."
+pre_link() {
+    source ./env.sh
+    Quiet pushd out/$BUILD_TARGET.$BUILD_PLATFORM_ARCH/release/bin
+    
+    # install kernel module
+    if [ -f src/vboxdrv/vboxdrv.ko ]
+    then
+        dest=$target/Resources/Unmanaged/$goboModules/`uname -r`/misc
+        mkdir -p $dest
+        cp src/vboxdrv/vboxdrv.ko $dest
+    fi
+
+    # install executables, libraries and data
+    mkdir $target/data
+    cp -a * $target/data
+
+    # cleanup...
+    find $target/data -name src -type d | xargs rm -rf
+    rm -f $target/data/*.ko
+
+    # prepare a wrapper
+    echo -e "#!/bin/sh\ncd $target/data\nLD_LIBRARY_PATH=. ./VirtualBox3" > $target/bin/VirtualBox
+    chmod +x $target/bin/VirtualBox
+
+    Quiet popd
+}
