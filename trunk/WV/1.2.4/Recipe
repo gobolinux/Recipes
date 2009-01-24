@@ -1,0 +1,9 @@
+# Recipe for version 1.2.4 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jan. 24., szombat, 23.10.45 CET
+# Recipe (MakeRecipe) for WV by Roko <ro.ko@mcnon.com>, on Thu Sep 30 21:46:16 BRT 2004
+compile_version=1.8.0
+url="$httpSourceforge/wvware/wv-1.2.4.tar.gz"
+file_size=629554
+file_md5=c1861c560491f121e12917fa76970ac5
+recipe_type=configure
+autogen_before_configure=yes
+makefile=GNUmakefile
