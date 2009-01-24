@@ -1,0 +1,24 @@
+commit 19637bc6b985ac81c61e217f61dd49d1302ac81f
+
+From: Ortwin Glück <odi@odi.ch>
+
+Appletouch driver ATP_THRESHOLD fix.
+---
+
+ drivers/input/mouse/appletouch.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+
+diff --git a/drivers/input/mouse/appletouch.c b/drivers/input/mouse/appletouch.c
+index 88177d4..a674984 100644
+--- a/drivers/input/mouse/appletouch.c
++++ b/drivers/input/mouse/appletouch.c
+@@ -142,7 +142,7 @@ MODULE_DEVICE_TABLE (usb, atp_table);
+  * Threshold for the touchpad sensors. Any change less than ATP_THRESHOLD is
+  * ignored.
+  */
+-#define ATP_THRESHOLD	 5
++#define ATP_THRESHOLD	 3
+ 
+ /* Geyser initialization constants */
+ #define ATP_GEYSER_MODE_READ_REQUEST_ID		1
