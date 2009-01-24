@@ -1,0 +1,69 @@
+This patch makes decrypt and key output dependant on the
+CONFIG_IEEE80211_DEBUG config option. If one is interested in this
+output one should enable debug for ieee80211.
+
+Signed-off-by: Jonas Karlsson
+
+--- linux-2.6.25.10/net/ieee80211/ieee80211_crypt_ccmp.c.old	2008-07-05 22:36:45.000000000 +0200
++++ linux-2.6.25.10/net/ieee80211/ieee80211_crypt_ccmp.c	2008-07-05 22:38:30.000000000 +0200
+@@ -307,25 +307,31 @@
+ 	pos = skb->data + hdr_len;
+ 	keyidx = pos[3];
+ 	if (!(keyidx & (1 << 5))) {
++#ifdef CONFIG_IEEE80211_DEBUG
+ 		if (net_ratelimit()) {
+ 			printk(KERN_DEBUG "CCMP: received packet without ExtIV"
+ 			       " flag from %s\n", print_mac(mac, hdr->addr2));
+ 		}
++#endif
+ 		key->dot11RSNAStatsCCMPFormatErrors++;
+ 		return -2;
+ 	}
+ 	keyidx >>= 6;
+ 	if (key->key_idx != keyidx) {
++#ifdef CONFIG_IEEE80211_DEBUG
+ 		printk(KERN_DEBUG "CCMP: RX tkey->key_idx=%d frame "
+ 		       "keyidx=%d priv=%p\n", key->key_idx, keyidx, priv);
++#endif
+ 		return -6;
+ 	}
+ 	if (!key->key_set) {
++#ifdef CONFIG_IEEE80211_DEBUG
+ 		if (net_ratelimit()) {
+ 			printk(KERN_DEBUG "CCMP: received packet from %s"
+ 			       " with keyid=%d that does not have a configured"
+ 			       " key\n", print_mac(mac, hdr->addr2), keyidx);
+ 		}
++#endif
+ 		return -3;
+ 	}
+ 
+@@ -338,6 +344,7 @@
+ 	pos += 8;
+ 
+ 	if (ccmp_replay_check(pn, key->rx_pn)) {
++#ifdef CONFIG_IEEE80211_DEBUG
+ 		if (ieee80211_ratelimit_debug(IEEE80211_DL_DROP)) {
+ 			IEEE80211_DEBUG_DROP("CCMP: replay detected: STA=%s "
+ 				 "previous PN %02x%02x%02x%02x%02x%02x "
+@@ -347,6 +354,7 @@
+ 				 key->rx_pn[3], key->rx_pn[4], key->rx_pn[5],
+ 				 pn[0], pn[1], pn[2], pn[3], pn[4], pn[5]);
+ 		}
++#endif
+ 		key->dot11RSNAStatsCCMPReplays++;
+ 		return -4;
+ 	}
+@@ -371,10 +379,12 @@
+ 	}
+ 
+ 	if (memcmp(mic, a, CCMP_MIC_LEN) != 0) {
++#ifdef CONFIG_IEEE80211_DEBUG
+ 		if (net_ratelimit()) {
+ 			printk(KERN_DEBUG "CCMP: decrypt failed: STA="
+ 			       "%s\n", print_mac(mac, hdr->addr2));
+ 		}
++#endif
+ 		key->dot11RSNAStatsCCMPDecryptErrors++;
+ 		return -5;
+ 	}
