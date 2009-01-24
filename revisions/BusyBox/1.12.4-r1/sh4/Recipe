@@ -1,0 +1,17 @@
+environment=(
+    EXTRA_CFLAGS="-nostdinc"
+)
+
+pre_build() {
+    source "/System/Settings/Compile/Cross/Cross-ResetEnv.conf"
+
+    [ ! -f .config ] && cp "$archsubdir"/dot-config .config
+
+    GrepReplace "PREFIX=\"./_install\"" "PREFIX=\"$target\"" .config
+    GrepReplace "# USING_CROSS_COMPILER is not set" "USING_CROSS_COMPILER=y" .config
+
+    make menuconfig
+
+    GrepReplace "CROSS_COMPILER_PREFIX=/usr/i386-linux-uclibc/bin/i386-uclibc-" \
+                "CROSS_COMPILER_PREFIX=$cross_toolchain_dir/bin/$cross_compiler" .config
+}
