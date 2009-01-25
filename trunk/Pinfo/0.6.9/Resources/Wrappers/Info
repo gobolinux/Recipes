@@ -1,13 +1,15 @@
 #!/bin/sh
 
-function call_pinfo() {
+call_pinfo() {
    pinfo "$@" 2> /dev/null 
 }
 
 case "$1" in
    "--INFO")
+      shift
       /bin/info "$@" ;;
    "--PINFO")
+      shift
       callPinfo "$@" ;;
    *)
       if [ "$TERM" = "xterm" ]
