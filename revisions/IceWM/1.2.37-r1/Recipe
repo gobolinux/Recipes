@@ -1,0 +1,14 @@
+# Recipe for version 1.2.37 by Zbigniew Baniewski <zb@ispid.com.pl>, on pon, 26 sty 2009, 02:59:55 BRST
+# Recipe (MakeRecipe) for IceWM by  Ozgur Ulukir, on Tue Dec 21 21:23:03 EET 2004
+compile_version=1.8.0
+url="$httpSourceforge/icewm/icewm-1.2.37.tar.gz"
+file_size=841879
+file_md5=970a21588d26eb361020fd60a61a482c
+recipe_type=configure
+
+configure_options=(
+   "--enable-gradients"
+   "--enable-antialiasing"
+   "--enable-corefonts"
+)
+
