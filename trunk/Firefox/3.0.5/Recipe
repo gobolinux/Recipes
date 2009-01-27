@@ -57,7 +57,7 @@ make_variables=(
 )
 
 with_startup_notification="--enable-startup-notification"
-with_glitz="--enable-glitz"
+#with_glitz="--enable-glitz" # build failure https://bugzilla.mozilla.org/show_bug.cgi?id=376083
 with_xinerama="--enable-xinerama"
 with_ldap="--enable-ldap"
 with_pango="--enable-pango"
