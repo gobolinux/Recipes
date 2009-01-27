@@ -11,9 +11,6 @@ dir=nss-3.12/mozilla
 build_variables=(
    BUILD_OPT=1
    NSS_USE_SYSTEM_SQLITE=1
-)
-
-build_variables=(
    NSPR_INCLUDE_DIR="${goboHeaders}/nspr"
 )
 
