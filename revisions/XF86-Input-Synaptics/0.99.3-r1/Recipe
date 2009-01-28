@@ -1,0 +1,11 @@
+# Recipe for version 0.99.3 by Jonas Karlsson <jonas@gobolinux.org>, on Wed Jan 28 11:10:12 CET 2009
+# Recipe (MakeRecipe) for XF86-Input-Synaptics by Jonas Karlsson <jonka750@student.liu.se>, on Fri Sep 12 00:59:47 CEST 2008
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/driver/xf86-input-synaptics-0.99.3.tar.bz2"
+file_size=284946
+file_md5=735a798e0f68c65d98e3d6b092b56d29
+recipe_type=configure
+part_of=Xorg-Driver
+install_variables=(
+   sdkdir="${target}/include/xorg"
+)
