@@ -1,0 +1,15 @@
+# Recipe for version 8.1.8 by Zbigniew Baniewski <zb@ispid.com.pl>, on wto, 27 sty 2009, 11:55:26 BRST
+# Recipe (MakeRecipe) for Sysstat by ro.ko@mcnon.com, on Tue Oct 12 01:40:28 BRST 2004
+compile_version=1.8.0
+url="http://pagesperso-orange.fr/sebastien.godard/sysstat-8.1.8.tar.gz"
+file_size=280738
+file_md5=8ea3f44afe6a5691a5cd009ecc4975ab
+recipe_type=configure
+unmanaged_files=(
+ "${goboVariable}/log/sa"
+ )
+install_variables=(
+  SYSCONFIG_DIR="${settings_target}/sysconfig"
+ )
+
+ 
