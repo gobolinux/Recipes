@@ -1,0 +1,11 @@
+# Recipe for version 4.1.4 by Michael Homer <michael@gobolinux.org>, on Sat Jan 17 00:15:04 NZDT 2009
+# Recipe (MakeRecipe) for KDE-Edu by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Mar 10 15:10:31 PDT 2008
+compile_version=1.10.1
+url="ftp://ftp.kde.org/pub/kde/stable/4.2.0/src/kdeedu-4.2.0.tar.bz2"
+file_size=59252322
+file_md5=aaddbdab29e1d284ad8ee67a78b4c597
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
