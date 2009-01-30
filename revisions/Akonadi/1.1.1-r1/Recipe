@@ -1,0 +1,14 @@
+# Recipe for version 1.1.1 by Michael Homer <michael@gobolinux.org>, on Fri Jan 30 18:51:14 NZDT 2009
+# Recipe (MakeRecipe) for Akonadi by Giambattista Bloisi <giamby@infinito.it>, on Sat Oct 25 22:20:43 CEST 2008
+compile_version=1.11.2
+url="http://akonadi.omat.nl/akonadi-1.1.1.tar.bz2"
+file_size=134761
+file_md5=2e98b42cec9ec4e60a2e3c096f1a3106
+recipe_type=cmake
+
+using_mysql() {
+   cmake_options=(
+      ${cmake_options:+"$cmake_options[@]"}
+      "-DMYSQLD_EXECUTABLE=${mysql_path}/libexec/mysqld"
+   )
+}
