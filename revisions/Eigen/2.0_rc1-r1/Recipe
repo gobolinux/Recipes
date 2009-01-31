@@ -1,0 +1,8 @@
+# Recipe for version 2.0_rc1 by Giambattista Bloisi <giamby@infinito.it>, on Sat Jan 31 17:57:29 CET 2009
+# Recipe (MakeRecipe) for Eigen by Giambattista Bloisi <giamby@infinito.it>, on Fri Feb 22 09:39:08 CET 2008
+compile_version=1.10.2
+url="http://download.tuxfamily.org/eigen/eigen-2.0-rc1.tar.bz2"
+file_size=345535
+file_md5=4bfeb40641017bc93df024a20c0d0807
+dir='eigen2'
+recipe_type=cmake
