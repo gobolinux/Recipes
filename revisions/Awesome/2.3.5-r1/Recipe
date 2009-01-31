@@ -1,0 +1,11 @@
+# Recipe for version 2.3.5 by ≈êsi R√≥bert <7szunyu@nordtelekom.hu>, on 2009. jan. 31., szombat, 00.12.50 CET
+# Recipe (MakeRecipe) for Awesome by Viola Zoli; Hungary, violazoli@gmail.com, on 2008. m·rc. 24., hÈtfı, 12.52.3.50 CET
+compile_version=1.10.2
+url="http://awesome.naquadah.org/download/awesome-2.3.5.tar.bz2"
+file_size=196509
+file_md5=9ecb7275d30f36006c92d265696e63d3
+recipe_type=configure
+configure_options=(
+--with-x
+--with-gtk
+)
