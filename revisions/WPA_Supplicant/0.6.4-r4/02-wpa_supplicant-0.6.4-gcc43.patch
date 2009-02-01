@@ -1,0 +1,36 @@
+Description: Make WPA_Supplicant QT3 gui client compile with GCC-4.3.1
+
+diff -Naur wpa_supplicant-0.6.4/wpa_supplicant/wpa_gui/networkconfig.ui.h wpa_supplicant-0.6.4-b2/wpa_supplicant/wpa_gui/networkconfig.ui.h
+--- wpa_supplicant-0.6.4/wpa_supplicant/wpa_gui/networkconfig.ui.h	2007-12-28 01:38:17.000000000 +0100
++++ wpa_supplicant-0.6.4-b2/wpa_supplicant/wpa_gui/networkconfig.ui.h	2008-06-25 20:47:30.000000000 +0200
+@@ -10,6 +10,7 @@
+ ** destructor.
+ *****************************************************************************/
+ 
++#include <cstdlib>
+ 
+ enum {
+     AUTH_NONE = 0,
+diff -Naur wpa_supplicant-0.6.4/wpa_supplicant/wpa_gui/userdatarequest.ui.h wpa_supplicant-0.6.4-b2/wpa_supplicant/wpa_gui/userdatarequest.ui.h
+--- wpa_supplicant-0.6.4/wpa_supplicant/wpa_gui/userdatarequest.ui.h	2005-06-05 18:19:57.000000000 +0200
++++ wpa_supplicant-0.6.4-b2/wpa_supplicant/wpa_gui/userdatarequest.ui.h	2008-06-25 20:45:40.000000000 +0200
+@@ -10,6 +10,8 @@
+ ** destructor.
+ *****************************************************************************/
+ 
++#include <cstdlib>
++
+ int UserDataRequest::setParams(WpaGui *_wpagui, const char *reqMsg)
+ {
+     char *tmp, *pos, *pos2;
+diff -Naur wpa_supplicant-0.6.4/wpa_supplicant/wpa_gui/wpagui.ui.h wpa_supplicant-0.6.4-b2/wpa_supplicant/wpa_gui/wpagui.ui.h
+--- wpa_supplicant-0.6.4/wpa_supplicant/wpa_gui/wpagui.ui.h	2008-02-17 19:26:13.000000000 +0100
++++ wpa_supplicant-0.6.4-b2/wpa_supplicant/wpa_gui/wpagui.ui.h	2008-06-25 20:43:40.000000000 +0200
+@@ -10,6 +10,7 @@
+ ** destructor.
+ *****************************************************************************/
+ 
++#include <cstdlib>
+ 
+ #ifdef __MINGW32__
+ /* Need to get getopt() */
