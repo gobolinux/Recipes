@@ -1,0 +1,22 @@
+# Recipe for version 2.3_014 by Fabio Mierlo <geromao@gmail.com>, on Mon Feb 2 17:34:33 BRST 2009
+# Recipe (MakeRecipe) for ChannelKhomp by Fabio Mierlo <geromao@gmail.com>, on Tue Sep 2 02:12:16 BRT 2008
+compile_version=1.11.2
+url="http://www.khomp.com.br/release/K3L/Linux/Sources/channel_2.3_014.tar.gz"
+file_size=1340577
+file_md5=6c23c6851c6b5ff55235a8b3a4eef2be
+dir='channel_2.3_rev2016'
+recipe_type=scons
+do_install=no
+
+build_variables=(
+  "ASTERISK=$compileSourcesDir/asterisk-$([ $asterisk_path ] && basename $asterisk_path)"
+)
+
+pre_install() {
+  dir=$target/lib/asterisk/modules
+  mkdir -p $dir
+  cp -a chan_khomp.so $dir
+  
+  mkdir -p $target/Resources/Defaults/Settings/asterisk
+  cp -a khomp.conf $target/Resources/Defaults/Settings/asterisk
+}
