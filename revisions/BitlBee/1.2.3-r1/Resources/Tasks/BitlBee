@@ -1,0 +1,11 @@
+#! /bin/sh
+
+case "$1" in
+[Ss]tart)
+	${goboPrograms}/BitlBee/Current/sbin/bitlbee -D 
+	;;
+[Ss]top)
+	killall bitlbee
+	;;
+esac
+
