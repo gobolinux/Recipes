@@ -1,0 +1,39 @@
+# Recipe for version 7.19.3 by Jonas Karlsson <jonka750@student.liu.se>, on Wed Feb 4 22:04:57 CET 2009
+compile_version=1.11.3
+url="http://curl.oc1.mirrors.redwire.net/download/curl-7.19.3.tar.bz2"
+file_size=2238923
+file_md5=10eb8c13350c735eff20d7b4530be8cd
+recipe_type=configure
+
+configure_options=(
+   --disable-debug
+   --disable-verbose
+   --enable-http
+   --enable-ftp
+   --enable-file
+   --enable-proxy
+   --enable-dict
+   --enable-telnet
+   --enable-tftp
+   --enable-manual
+   --enable-ipv6
+   --enable-thread
+   --enable-crypto-auth
+   --enable-cookies
+   --with-gnutls
+   --without-ssl
+   --without-nss
+   --enable-nonblocking
+   --enable-largefile
+   --without-krb4
+   --with-gssapi
+   --enable-versioned-symbols
+)
+
+with_libssh2="--with-libssh2"
+with_openldap=(--enable-ldap --enable-ldaps)
+
+pre_link() {
+   # We're really only interested in the libs
+   rm -rf "${target}/"{include,bin,Shared,share}
+}
