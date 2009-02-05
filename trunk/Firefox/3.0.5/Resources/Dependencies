@@ -9,7 +9,6 @@ GCC 3.2.0
 GConf >= 1.2.1 [gconf,gnome]
 GLib >= 1.3.7
 Glibc 2.3.2
-#Glitz >= 0.4.0 [glitz] # build failure https://bugzilla.mozilla.org/show_bug.cgi?id=376083
 Gnome-VFS >= 2.0 [gnome_vfs,gnome]
 GTK+ >= 2.10.0, != 2.13.1
 LCMS >= 1.17
@@ -25,4 +24,5 @@ Perl >= 5.6
 Startup-Notification >= 0.8 [startup_notification]
 SQLite >= 3.5.9
 Xorg 7.0
+XULRunner >= 1.9, < 1.9.1
 ZLib 1.2.2
