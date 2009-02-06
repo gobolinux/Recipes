@@ -1,0 +1,11 @@
+# Recipe for version 0.2 by Michael Homer <michael@gobolinux.org>, on Fri Feb 6 21:03:56 NZDT 2009
+# Recipe (MakeRecipe) for Urunner by Michael Homer <michael@gobolinux.org>, on Mon Jan 26 22:38:14 NZDT 2009
+compile_version=1.11.4
+url="http://mwh.geek.nz/files/urunner/urunner-0.2.tar.lzma"
+file_size=17375
+file_md5=03185cf1d188b5d50be8f8da84f2476e
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
