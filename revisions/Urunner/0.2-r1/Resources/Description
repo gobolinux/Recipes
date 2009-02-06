@@ -1,0 +1,8 @@
+[Name] Urunner
+[Summary] Daemon to execute tasks within user session
+[Description] urunnerd is a daemon for executing tasks within a user session,
+although the task may have been triggered outside the session. This is
+useful for triggering visible notifications from a cron job and other
+things.
+[License] GNU GPL version 3 or later
+[Homepage] http://mwh.geek.nz/
