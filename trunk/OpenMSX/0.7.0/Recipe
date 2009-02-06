@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for OpenMSX by Leandro Motta Barros <lmb@stackedboxes.org>, on Sun Feb 1 15:43:58 BRST 2009
+# Recipe for version 0.7.0 by Leandro Motta Barros <lmb@stackedboxes.org>, on Sun Feb 1 15:43:58 BRST 2009
+compile_version=1.11.2
+url="$httpSourceforge/openmsx/openmsx-0.7.0.tar.gz"
+file_size=2547029
+file_md5=ea5c07225ee28713c0cda8f8edcfab05
+recipe_type=configure
+make_variables=(
+"INSTALL_SHARE_DIR=$target/share/openmsx"
+)
+install_variables=(
+"INSTALL_BASE=$target"
+"INSTALL_SHARE_DIR=$target/share/openmsx"
+)
+makefile=GNUmakefile
