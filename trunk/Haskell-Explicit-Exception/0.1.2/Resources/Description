@@ -1,0 +1,5 @@
+[Name] Haskell-Explicit-Exception
+[Summary] Exceptions which are explicit in the type signature
+[Description] Synchronous and Asynchronous exceptions which are explicit in the type signature. The first ones are very similar to "Either" and "Control.Monad.Error.ErrorT". The second ones are used for "System.IO.readFile" and "System.IO.hGetContents". This package is a proposal for improved exception handling in Haskell. It strictly separates between handling of exceptional situations (file not found, invalid user input) and (programming) erros (division by zero, index out of range). 
+[License] BSD3
+[Homepage] http://hackage.haskell.org/cgi-bin/hackage-scripts/package/explicit-exception
