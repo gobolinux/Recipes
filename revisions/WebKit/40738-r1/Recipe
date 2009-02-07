@@ -1,0 +1,15 @@
+# Recipe for version 40738 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Feb 7 16:59:34 CET 2009
+# Recipe (MakeRecipe) for WebKit by Daniele Maccari <daniele.maccari@gmail.com>, on Wed Feb 13 11:45:17 CET 2008
+compile_version=1.10.1
+url="http://builds.nightly.webkit.org/files/trunk/src/WebKit-r40738.tar.bz2"
+file_size=10379192
+file_md5=be5f9d5b46ae5f42fe6424aadcac15b4
+recipe_type=configure
+autogen_before_configure=yes
+makefile='GNUmakefile'
+configure_options=(
+   --enable-fast-malloc   
+)
+with_gtk2="--with-font-backend=pango"
+with_html5_media="--enable-video"
+with_gnome="--with-http-backend=soup"
