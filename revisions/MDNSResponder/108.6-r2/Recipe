@@ -1,0 +1,16 @@
+# Recipe for version 108.6 by Giambattista Bloisi <giamby@infinito.it>, on Fri Mar 28 15:49:51 UTC 2008
+# Recipe (MakeRecipe) for MDNSResponder by Maglan C. Diemer, maglan@univates.br, on Seg Dez 5 13:33:29 BRST 2005
+compile_version=1.8.0
+url="http://www.opensource.apple.com/darwinsource/tarballs/other/mDNSResponder-108.6.tar.gz"
+file_size=1377603
+file_md5=6eabe6b57634a58c246c68071a3bc5f4
+recipe_type=makefile
+dir='mDNSResponder-108.6/mDNSPosix'
+makefile='Makefile'
+make_variables=(
+    "os=linux"
+)
+
+symlink_options=(
+    --conflict overwrite
+)
