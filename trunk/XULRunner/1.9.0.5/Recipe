@@ -46,7 +46,7 @@ install_variables=(
    includedir="$target/include/xulrunner-1.9.0"
    idldir="$target/include/idl"
    installdir="$target/lib/xulrunner-1.9.0"
-   sdkdir="$target/lib/xulrunner-1.9.0"
+   sdkdir="$target/lib/xulrunner-sdk-1.9.0"
 )
 
 pre_link() {
