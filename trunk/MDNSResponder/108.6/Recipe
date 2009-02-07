@@ -3,7 +3,7 @@
 compile_version=1.8.0
 url="http://www.opensource.apple.com/darwinsource/tarballs/other/mDNSResponder-108.6.tar.gz"
 file_size=1377603
-file_md5=8e4f03a65aec703f4003f27d19dee87e
+file_md5=6eabe6b57634a58c246c68071a3bc5f4
 recipe_type=makefile
 dir='mDNSResponder-108.6/mDNSPosix'
 makefile='Makefile'
@@ -12,5 +12,5 @@ make_variables=(
 )
 
 symlink_options=(
-    "--conflict overwrite"
+    --conflict overwrite
 )
