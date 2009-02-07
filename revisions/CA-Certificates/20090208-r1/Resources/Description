@@ -1,0 +1,7 @@
+[Name] CA-Certificates
+[Summary] Certificate authority root certificates for SSL
+[Description]  Certificate authority root certificates for SSL, extracted from Mozilla by http://curl.haxx.se/docs/caextract.html
+
+With these installed, applications using OpenSSL will be able to validate 
+certificates issued by these root authorities automatically.
+[License]  GPL 2.0 or LGPL 2.1 or MPL 1.1
