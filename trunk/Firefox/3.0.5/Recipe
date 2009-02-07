@@ -27,7 +27,7 @@ configure_options=(
    --enable-system-cairo
    --with-system-nss
    --with-system-nspr
-   --with-libxul-sdk="${goboLibraries}"/xulrunner-1.9.0
+   --with-libxul-sdk="${goboLibraries}"/xulrunner-sdk-1.9.0
 
    --enable-canvas
    --enable-svg
