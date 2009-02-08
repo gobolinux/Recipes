@@ -1,0 +1,18 @@
+Neverball hardcodes its data directories, so patch them into target.
+diff -urNa neverball-1.5.0.orig/share/base_config.h neverball-1.5.0/share/base_config.h
+--- neverball-1.5.0.orig/share/base_config.h	2009-01-30 11:39:11.000000000 +1300
++++ neverball-1.5.0/share/base_config.h	2009-02-08 19:39:08.000000000 +1300
+@@ -30,11 +30,11 @@
+ #endif
+ 
+ #ifndef CONFIG_DATA
+-#define CONFIG_DATA   "./data"        /* Game data directory */
++#define CONFIG_DATA   "@%Compile_target%@/data"        /* Game data directory */
+ #endif
+ 
+ #ifndef CONFIG_LOCALE
+-#define CONFIG_LOCALE "./locale"      /* Game localisation */
++#define CONFIG_LOCALE "@%Compile_target%@/locale"      /* Game localisation */
+ #endif
+ 
+ /* User config directory */
