@@ -1,0 +1,16 @@
+#!/bin/sh
+
+op="$1"
+[ "$op" ] || op="start"
+
+case "$op" in
+[Ss]tart)
+   # Assert this dir
+   mkdir -p /Mount/Media
+   /bin/hald --daemon=yes
+   ;;
+[Ss]top)
+   killall hald
+   rm -f -- /Mount/Media/.hal-mtab
+   ;;
+esac

@@ -1,0 +1,27 @@
+Don't look inside $target for executables but rather use
+goboExecutables and goboLibraries (for libexec) instead.
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+
+diff -Naur hal-0.5.11.old/hald/hald_runner.c hal-0.5.11/hald/hald_runner.c
+--- hal-0.5.11.old/hald/hald_runner.c	2009-01-03 21:55:37.000000000 +0100
++++ hal-0.5.11/hald/hald_runner.c	2009-01-03 22:45:19.000000000 +0100
+@@ -273,14 +273,14 @@
+ 	hald_runner_path = g_getenv ("HALD_RUNNER_PATH");
+ 	if (hald_runner_path != NULL) {
+ 		env[1] =
+-		    g_strdup_printf ("PATH=%s:" PACKAGE_LIBEXEC_DIR ":"
++		    g_strdup_printf ("PATH=%s:@%Compile_goboLibraries%@:"
+ 				     PACKAGE_SCRIPT_DIR ":"
+-				     PACKAGE_BIN_DIR, hald_runner_path);
++				     "@%Compile_goboExecutables%@", hald_runner_path);
+ 	} else {
+ 		env[1] =
+-		    g_strdup_printf ("PATH=" PACKAGE_LIBEXEC_DIR ":"
++		    g_strdup_printf ("PATH=@%Compile_goboLibraries%@:"
+ 				     PACKAGE_SCRIPT_DIR ":"
+-				     PACKAGE_BIN_DIR);
++				     "@%Compile_goboExecutables%@");
+ 	}
+ 
+ 	/*env[2] = "DBUS_VERBOSE=1"; */
