@@ -1,0 +1,11 @@
+# Recipe for version 3.0.10 by Michael Homer <michael@gobolinux.org>, on Mon Feb 9 17:25:56 NZDT 2009
+url="http://mwh.geek.nz/files/gobo/Freshen/Freshen-3.0.10.tar.bz2"
+file_size=26580
+file_md5=3a2293b002a2f76b0dbeafe1ceb245f6
+compile_version=1.11.0
+recipe_type=manifest
+
+manifest=(
+"bin:bin"
+"lib:lib"
+)
