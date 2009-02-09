@@ -11,5 +11,6 @@ case "$op" in
    ;;
 [Ss]top)
    killall hald
+   rm -f -- /Mount/Media/.hal-mtab
    ;;
 esac
