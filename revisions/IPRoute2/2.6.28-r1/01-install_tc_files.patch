@@ -1,0 +1,41 @@
+diff -Naur iproute2-2.6.26/Makefile iproute2-2.6.26.new/Makefile
+--- iproute2-2.6.26/Makefile	2008-07-25 17:46:07.000000000 -0300
++++ iproute2-2.6.26.new/Makefile	2008-12-26 01:14:30.000000000 -0200
+@@ -1,5 +1,6 @@
+ DESTDIR=/usr/
+ SBINDIR=/sbin
++LIBDIR=/lib
+ CONFDIR=/etc/iproute2
+ DOCDIR=/share/doc/iproute2
+ MANDIR=/share/man
+diff -Naur iproute2-2.6.26/netem/Makefile iproute2-2.6.26.new/netem/Makefile
+--- iproute2-2.6.26/netem/Makefile	2008-07-25 17:46:07.000000000 -0300
++++ iproute2-2.6.26.new/netem/Makefile	2008-12-26 01:15:50.000000000 -0200
+@@ -20,9 +20,9 @@
+ 	$(HOSTCC) $(CCOPTS) -I../include -o $@ $@.c -lm
+ 
+ install: all
+-	mkdir -p $(DESTDIR)/lib/tc
++	mkdir -p $(DESTDIR)$(LIBDIR)/tc
+ 	for i in $(DISTDATA); \
+-	do install -m 755 $$i $(DESTDIR)/lib/tc; \
++	do install -m 755 $$i $(DESTDIR)$(LIBDIR)/tc; \
+ 	done
+ 
+ clean:
+diff -Naur iproute2-2.6.26/tc/Makefile iproute2-2.6.26.new/tc/Makefile
+--- iproute2-2.6.26/tc/Makefile	2008-07-25 17:46:07.000000000 -0300
++++ iproute2-2.6.26.new/tc/Makefile	2008-12-26 01:17:00.000000000 -0200
+@@ -72,10 +72,10 @@
+ 	$(AR) rcs $@ $(TCLIB)
+ 
+ install: all
+-	mkdir -p $(DESTDIR)/lib/tc
++	mkdir -p $(DESTDIR)$(LIBDIR)/tc
+ 	install -m 0755 tc $(DESTDIR)$(SBINDIR)
+ 	for i in $(TCSO); \
+-	do install -m 755 $$i $(DESTDIR)/lib/tc; \
++	do install -m 755 $$i $(DESTDIR)$(LIBDIR)/tc; \
+ 	done
+ 
+ clean:
