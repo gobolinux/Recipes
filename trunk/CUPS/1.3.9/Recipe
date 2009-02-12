@@ -26,7 +26,8 @@ make_variables=(
 )
 
 install_variables=(
-    PAMDIR=$settings_target/pam.d
+    PAMDIR="$settings_target/pam.d"
+    PHPEXTENSIONDIR="$target/$(php-config --extension-dir | sed 's,.*/\(lib/.*\),\1,')"
 )
 
 unmanaged_files=(
@@ -37,7 +38,11 @@ unmanaged_files=(
 )
 
 pre_build() {
-   autoconf
+#   autoconf
+
+   # For some reason they have the same variable name meaning
+   # different things in different parts of the source
+   sed -i 's/PHPDIR/PHPEXTENSIONDIR/g' scripting/php/Makefile
 }
 
 pre_link() {
@@ -46,12 +51,8 @@ pre_link() {
     Quiet popd
 }
 
-post_install() {
-	Log_Normal "=================================================="
-	Log_Normal ""
-	Log_Normal "Note: when upgrading from CUPS 1.1.20 you may need"
-	Log_Normal "      to recreate your printers because of changes"
-	Log_Normal "      in the ppd uri format for usb printers."
-	Log_Normal ""
-	Log_Normal "=================================================="
+pre_install() {
+   mkdir -p "$target/$(php-config --extension-dir | sed 's,.*/\(lib/.*\),\1,')"
 }
+
+post_install_message="=========================================\n\nNote: when upgrading from CUPS 1.1.20 you may need\n      to recreate your printers because of changes\n      in the ppd uri format for usb printers.\n\n=================================================="
