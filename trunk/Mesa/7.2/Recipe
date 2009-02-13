@@ -23,6 +23,7 @@ configure_options=(
     --enable-xcb
     --disable-ttm-api
     --enable-glx-tls
+    --enable-driglx-direct
     
     --with-driver=dri
     --with-dri-driverdir="${goboLibraries}/xorg/modules/dri"
@@ -38,3 +39,6 @@ pre_link() {
       cp progs/xdemos/${p} ${target}/bin
    done
 }
+symlink_options=(
+   --conflict=overwrite
+)
