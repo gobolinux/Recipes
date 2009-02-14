@@ -1,0 +1,18 @@
+# Recipe for version 3.0.1.1 by Michael Homer <michael@gobolinux.org>, on Sat Feb 14 15:22:21 NZDT 2009
+compile_version=1.8.5
+url=http://python.org/ftp/python/3.0.1/Python-3.0.1.tar.bz2
+file_size=9495088
+file_md5=7291eac6a9a7a3642e309c78b8d744e5
+recipe_type=configure
+needs_safe_linking=yes
+
+configure_options=(
+  "--enable-shared"
+#  "--with-cxx=no"
+)
+
+post_install() {
+   # We want to erase this file when exists from the previous version.
+   # It is no longer necessary because of the patch to site.py
+   echo "" > $target/lib/python3.0/sitecustomize.py
+}
