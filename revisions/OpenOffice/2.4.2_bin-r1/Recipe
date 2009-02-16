@@ -1,0 +1,47 @@
+# Recipe for version 2.4.2 by Nick Matteo <kundor@kundor.org>, on Fri Feb 13 04:57:55 EST 2009
+# Recipe (MakeRecipe) for OpenOffice by Giambattista Bloisi, on Sun Oct 28 19:10:17 CET 2007
+compile_version=1.9.0
+recipe_type=manifest
+manifest=(
+   "opt/openoffice.org2.4/program:program"
+   "opt/openoffice.org2.4/help:help"
+   "opt/openoffice.org2.4/presets:presets"
+   "opt/openoffice.org2.4/share:Shared"
+   "opt/openoffice.org2.4/licenses:doc"
+   "opt/openoffice.org2.4/readmes:doc"
+   "usr/share:Shared"
+)
+
+pre_install() {
+   gcc -o rpmoffset "$recipedir/rpmoffset.c"
+   for rpm in *.rpm desktop-integration/openoffice.org-freedesktop-menus-2.4-9268.noarch.rpm
+   do
+      Log_Normal "Processing $(basename $rpm)..."
+      offset=`./rpmoffset < $rpm`
+      rpm=`readlink -f $rpm`
+      dd ibs="$offset" skip=1 if="$rpm" 2>/dev/null | gzip -dc | cpio --extract --preserve-modification-time --make-directories
+   done
+   
+   # These dirs need to be readable (which aren't after extraction)
+   chmod -R a+rX usr opt
+}
+
+pre_link() {
+   for f in base calc draw impress math writer
+   do  ln -s "../program/s$f" "$target/bin/s$f"
+       ln -s "../program/s$f" "$target/bin/oo$f"
+       ln -sf "$target/Shared/xdg/$f.desktop" "$target/Shared/applications/openoffice.org2.4-$f.desktop"
+   done
+   ln -sf ../program/soffice "$target/bin/soffice"
+   ln -sf ../program/soffice "$target/bin/openoffice.org2.4"
+   ln -sf ../program/spadmin "$target/bin/openoffice.org2.4-printeradmin"
+   ln -sf ../program/unopkg "$target/bin/unopkg"
+   ln -sf ../program/pagein "$target/bin/pagein"
+   ln -sf soffice.bin "$target/program/openoffice.org2.4.bin"
+   ln -sf spadmin.bin "$target/program/openoffice.org2.4-printeradmin.bin"
+
+   ln -sf "$target/Shared/xdg/extension.desktop" "$target/Shared/applications/openoffice.org2.4-extension.desktop"
+   ln -sf "$target/Shared/xdg/printeradmin.desktop" "$target/Shared/applications/openoffice.org2.4-printeradmin.desktop"
+   ln -sf "$target/Shared/xdg/qstart.desktop" "$target/Shared/applications/openoffice.org2.4-qstart.desktop"
+}
+
