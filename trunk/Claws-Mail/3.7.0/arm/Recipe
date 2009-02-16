@@ -1,0 +1,19 @@
+configure_options=(
+	--disable-manual
+	--disable-aspell
+	--disable-aspell-test
+	--disable-compface
+	--disable-ldap
+	--disable-jpilot
+	--disable-startup-notification
+	--disable-trayicon-plugin
+	--disable-spamassassin-plugin
+	--disable-bogofilter-plugin
+	--disable-pgpcore-plugin
+	--disable-pgpmime-plugin
+	--disable-pgpinline-plugin
+	--disable-dillo-viewer-plugin
+	--disable-clamav-plugin
+	--disable-libetpan
+	--disable-gnomeprint
+)
