@@ -1,0 +1,10 @@
+# Recipe for version 1.4.0 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. febr. 14., szombat, 05.00.46 CET
+# Recipe (MakeRecipe) for SoundTouch by Peter Eriksen <s022018@student.dtu.dk>, on Tue Nov 9 00:32:47 CET 2004
+compile_version=1.8.0
+url="http://www.surina.net/soundtouch/soundtouch-1.4.0.tar.gz"
+file_size=413183
+file_md5=fc4bb10401624899efe4fb554d4fd3ed
+dir=soundtouch
+recipe_type=configure
+autogen_before_configure=yes
+autogen=bootstrap
