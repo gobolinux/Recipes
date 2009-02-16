@@ -64,7 +64,7 @@ pre_link() {
     # install fdi file for HAL
     install -d ${target}/Resources/Defaults/Settings/X11
     install -d ${target}/Shared/hal/fdi/information/10freedesktop
-    install -D ${dir}/config/x11-input.fdi ${target}/Resources/Defaults/Settings/X11/x11-input.fdi
+    install -D -m644 ${sourcedir}/config/x11-input.fdi ${target}/Resources/Defaults/Settings/X11/x11-input.fdi
     ln -vs ${settings_target}/X11/x11-input.fdi ${target}/Shared/hal/fdi/information/10freedesktop
     # Transfer any keyboard settings from xorg.conf to HAL settings
     if [ -n "$(grep CoreKeyboard "${goboSettings}/X11/xorg.conf" | grep -v "^\W*#")" ]
