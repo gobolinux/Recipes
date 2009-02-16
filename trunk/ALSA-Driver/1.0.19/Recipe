@@ -10,8 +10,7 @@ configure_options=(
    "--with-kernel=$goboModules/`uname -r`/build"
    "--with-redhat=no"
    "--with-suse=no"
-#   "--with-cards=all"
-   "--with-cards=ens1370"
+   "--with-cards=all"
    "--with-sequencer=yes"
    "--with-oss=yes"
 )
