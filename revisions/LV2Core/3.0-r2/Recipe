@@ -1,0 +1,18 @@
+# Recipe (MakeRecipe) for LV2Core by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. febr. 14., szombat, 04.15.46 CET
+# Recipe for version 3.0 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. febr. 14., szombat, 04.15.46 CET
+compile_version=1.11.4
+url="http://lv2plug.in/spec/lv2core-3.0.tar.bz2"
+file_size=104167
+file_md5=382f7d96ff0374c0c495336e1c8bb999
+recipe_type=python
+build_script=waf
+override_default_options=yes
+python_options=(
+    configure
+    --prefix=$target
+)
+do_install=no
+pre_install() {
+    ./waf
+    ./waf install
+}
