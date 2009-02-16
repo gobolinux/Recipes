@@ -1,0 +1,22 @@
+# Recipe for version 1.4 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. febr. 13., péntek, 03.19.30 CET
+# Recipe for PyVorbis 1.4 by Jonatan Liljedahl <lijon@kymatica.com>
+url="http://ekyo.nerim.net/software/pyogg/pyvorbis-1.4.tar.gz"
+file_size=39045
+file_md5=b4921e792c0a74f75b9d3057df10ee7c
+# recipe_type=manifest
+compile_version=1.8.0
+recipe_type=python
+pre_build() {
+	cat > Setup << _EOF_
+ogg_libs = ogg
+vorbis_libs = vorbis vorbisfile vorbisenc
+vorbis_include_dir = $goboHeaders
+ogg_lib_dir = $goboLibraries
+ogg_include_dir = $goboHeaders
+vorbis_lib_dir = $goboLibraries
+_EOF_
+#	python setup.py build
+}
+#pre_link() {
+#	python setup.py install --prefix $target
+#}
