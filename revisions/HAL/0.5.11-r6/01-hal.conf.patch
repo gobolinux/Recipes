@@ -1,0 +1,12 @@
+--- hal-0.5.11/hal.conf.in.orig	2008-10-02 23:32:33.000000000 +0200
++++ hal-0.5.11/hal.conf.in	2008-10-02 23:33:13.000000000 +0200
+@@ -10,7 +10,8 @@
+   <policy user="@HAL_USER@">
+     <allow own="org.freedesktop.Hal"/>
+   </policy>
+-  <policy user="root">
++  <!-- GoboLinux: changed from user="root" to user="0" -->
++  <policy user="0">
+     <allow own="org.freedesktop.Hal"/>
+   </policy>
+ 
