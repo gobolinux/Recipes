@@ -18,6 +18,11 @@ configure_options=(
    --with-hwdata="${goboShared}/hwdata"
    --with-eject="${goboExecutables}/eject"
    --enable-parted
+   --sysconfdir="$goboSettings"
+)
+
+install_variables=(
+   sysconfdir="$settings_target"
 )
 
 unmanaged_files=(
