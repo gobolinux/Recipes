@@ -7,5 +7,7 @@ file_md5=a664819288b98a37f77ab6ae1e14c9d9
 recipe_type=configure
 part_of=Xorg-Driver
 pre_build() {
-   autoconf
+    aclocal
+    libtoolize
+    autoconf
 }
