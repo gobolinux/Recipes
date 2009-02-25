@@ -1,0 +1,33 @@
+# Recipe for version 6.0 by Michael Homer <michael@gobolinux.org>, on Wed Feb 25 14:03:04 NZDT 2009
+# Recipe (MakeRecipe) for Readline by Peter Eriksen <s022018@student.dtu.dk>, on Thu Nov 4 19:52:54 CET 2004
+compile_version=1.8.2
+
+urls=(
+  "$ftpGnu/readline/readline-6.0.tar.gz"
+  "$ftpGnu/readline/readline-doc-5.0.tar.gz"
+)
+unpack_files=inside_first
+
+recipe_type=configure
+
+#This seems to be the minimal solution to the default libreadline.so
+#not listing all libraries it needs.  Without this, newer Parted
+#breaks and apparently uClibc too.  See INSTALL in the source directory
+#for details and the Readline maintainers' rationale for their troublesome
+#default.
+#libtinfo (terminfo) is part of Ncurses, so Ncurses goes in Dependencies.
+#Indeed, it was most likely a runtime dependency already.
+#For my (Isaac's) thread of analyzing this problem, see:
+#http://www.wotfun.com/pipermail/gobolinux-devel/2007-July/002707.html
+build_variables=(
+"SHLIB_LIBS=-ltinfo"
+)
+
+file_sizes=(
+2270818
+1277342
+)
+file_md5s=(
+b7f65a48add447693be6e86f04a63019
+d89e46bee3fe3738fe0ed64c25b45841
+)
