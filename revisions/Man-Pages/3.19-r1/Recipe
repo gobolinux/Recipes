@@ -1,0 +1,14 @@
+# Recipe for version 3.19 by Giambattista Bloisi <giamby@infinito.it>, on Fri Feb 27 23:46:25 CET 2009
+compile_version=1.9.0
+url=ftp://ftp.kernel.org/pub/linux/docs/manpages/man-pages-3.19.tar.bz2
+file_size=1078838
+file_md5=ef57c3e49c42ee6216e1333c16c069f8
+recipe_type=makefile
+do_build=no
+install_variables=(
+   "MANDIR=$target/man"
+)
+pre_link() {
+   # we have our own hier man page.
+   $sudo_exec rm -f $target/man/man7/hier.7
+}
