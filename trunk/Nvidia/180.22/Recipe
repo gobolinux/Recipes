@@ -6,7 +6,7 @@ needs_safe_linking=yes
 uncompress=no
 
 symlink_options=(
-    "--conflict overwrite"
+    "--conflict=overwrite"
 )
 
 pre_install() {
