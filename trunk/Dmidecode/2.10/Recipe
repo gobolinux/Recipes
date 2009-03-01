@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Dmidecode by Michael Homer <michael@gobolinux.org>, on Sun Mar 1 14:38:00 NZDT 2009
+# Recipe for version 2.10 by Michael Homer <michael@gobolinux.org>, on Sun Mar 1 14:38:00 NZDT 2009
+compile_version=1.12.0
+url="http://mirror.dknss.com/nongnu/dmidecode/dmidecode-2.10.tar.bz2"
+file_size=51904
+file_md5=3c9c4d55a40b78600f3b43bfa64616f9
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+#   "DESTDIR=$target"
+   "prefix=$target"
+)
