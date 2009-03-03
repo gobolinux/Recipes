@@ -1,0 +1,17 @@
+# Recipe (MakeRecipe) for LatencyTop by Giambattista Bloisi <giamby@infinito.it>, on Thu Oct 30 23:05:48 CET 2008
+# Recipe for version 0.4 by Giambattista Bloisi <giamby@infinito.it>, on Thu Oct 30 23:05:48 CET 2008
+compile_version=1.11.3
+url="http://www.latencytop.org/download/latencytop-0.4.tar.gz"
+file_size=9606
+file_md5=ad8d107699608b024d697c941371bb37
+recipe_type=makefile
+makefile='Makefile'
+
+install_variables=(
+   "DESTDIR=$target"
+   "SBINDIR=/sbin"
+)
+
+pre_install() {
+    mkdir -p "$target/sbin"
+}
