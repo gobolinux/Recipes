@@ -1,0 +1,10 @@
+# Recipe for version 1.12 by Nick Matteo <kundor@kundor.org>, on Mon Feb 23 00:20:05 EST 2009
+# by Maglan C. Diemer
+compile_version=1.8.2
+url="$ftpGnu/libidn/libidn-1.12.tar.gz"
+file_size=2561839
+file_md5=49db2165868d3ec2af00e0b7d0924dd8
+recipe_type=configure
+configure_options=(
+   "--mandir=${target}/man"
+)
