@@ -1,0 +1,21 @@
+# Recipe for version 1.2.35 by Nick Matteo <kundor@kundor.org>, on Mon Feb 23 00:23:46 EST 2009
+compile_version=1.8.5
+url=$httpSourceforge/libpng/libpng-1.2.35.tar.bz2
+file_size=650154
+file_md5=b8b8d09adf6bee2c5902c8e54c4f2e68
+recipe_type=configure
+configure_options=(
+   "--mandir=${target}/man"
+)
+
+pre_build(){
+   libtoolize --force --copy
+   aclocal
+   autoconf
+   automake --add-missing
+}
+
+pre_link() {
+    ln -sf libpng12 $target/include/libpng
+    ln -sf libpng.so $target/lib/libpng.so.0
+}
