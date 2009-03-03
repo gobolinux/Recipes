@@ -1,0 +1,29 @@
+# Recipe for version 1.54 by Giambattista Bloisi <giamby@infinito.it>, on Sat Feb 28 01:39:36 CET 2009
+# Recipe (MakeRecipe) for Ndiswrapper by Jonas Karlsson <jonka750@student.liu.se>, on Sun Jul 24 00:52:28 CEST 2005
+compile_version=1.9.0
+url="$httpSourceforge/ndiswrapper/ndiswrapper-1.54.tar.gz"
+file_size=197699
+file_md5=fc9ebd3985967727da494ec298ad4487
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+    "DESTDIR=$target"
+    "INST_DIR=$target/Resources/Unmanaged/${goboKernel}/Modules/Current/misc"
+    "KBUILD=$goboModules/Current/build"
+)
+
+unmanaged_files=(
+    "${goboKernel}/Modules/Current/misc/ndiswrapper.ko"
+)
+
+pre_build(){
+    # Ndiswrapper needs version and scripts to be build
+    cd $goboModules/Current/build
+    make prepare
+    make scripts
+    cd -
+    make distclean
+    
+    GrepReplace "/usr/" "/" Makefile
+    GrepReplace "/usr/" "/" utils/Makefile
+}
