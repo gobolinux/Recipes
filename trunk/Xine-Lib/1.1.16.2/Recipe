@@ -1,0 +1,17 @@
+# Recipe for version 1.1.16.2 by Giambattista Bloisi <giamby@infinito.it>, on Sun Mar 1 19:35:46 CET 2009
+# Recipe (MakeRecipe) for XineLib by Michael Farrell <michael@xinomorph.org>, on Sun Oct 24 19:29:17 CST 2004
+compile_version=1.9.0
+url="${httpSourceforge}/xine/xine-lib-1.1.16.2.tar.bz2"
+file_size=7407399
+file_md5=336dd1f6266e9f943430ca6009b7aa7e
+recipe_type=configure
+configure_options=(
+   "--with-xv-path=$goboLibraries"
+   "--with-xvmc-path=$goboLibraries"
+   "--enable-ipv6"
+   "--with-xcb"
+   "--with-external-ffmpeg"
+   "--with-external-libmad"
+   "--without-esound"
+)
+with_esound="--with-esound"
