@@ -1,0 +1,27 @@
+libcrmf needs symbol exported by nss libraries, so -lcrmf has to come
+before any nss library when linking.
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+
+--- mozilla/configure	2008-11-21 20:41:02.000000000 +0100
++++ mozilla/configure.new	2009-01-19 02:18:35.000000000 +0100
+@@ -12310,7 +12310,7 @@
+ fi
+ 
+ if test -n "$MOZ_NATIVE_NSS"; then
+-   NSS_LIBS="$NSS_LIBS -lcrmf"
++   NSS_LIBS=`echo $NSS_LIBS | sed 's/ -l/ -lcrmf &/'`
+ else
+    NSS_CFLAGS='-I$(LIBXUL_DIST)/include/nss'
+    NSS_DEP_LIBS="\
+--- mozilla/configure.in	2008-11-21 20:37:59.000000000 +0100
++++ mozilla/configure.in.new	2009-01-19 02:18:23.000000000 +0100
+@@ -4051,7 +4051,7 @@
+ fi
+ 
+ if test -n "$MOZ_NATIVE_NSS"; then
+-   NSS_LIBS="$NSS_LIBS -lcrmf"
++   NSS_LIBS=`echo $NSS_LIBS | sed 's/ -l/ -lcrmf &/'`
+ else
+    NSS_CFLAGS='-I$(LIBXUL_DIST)/include/nss'
+    NSS_DEP_LIBS="\
