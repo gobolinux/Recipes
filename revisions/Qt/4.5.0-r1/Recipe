@@ -1,0 +1,34 @@
+# Recipe for version 4.5.0 by Mark Kimsal <mark2@mt2009.com>, on Wed Mar 4 19:20:50 EST 2009
+# by Andre Detsch
+
+compile_version=1.9.0
+url="ftp://ftp.trolltech.com/qt/source/qt-x11-opensource-src-4.5.0.tar.gz"
+file_md5=d6d1555b7a074e0a746f6247af402e11
+file_size=123179308
+recipe_type=configure
+
+configure_options=(
+    -release
+    -prefix "$target"
+    -nomake "examples demos docs"
+    -dbus
+    -qt-gif
+    -no-separate-debug-info
+    -sql-sqlite
+    -system-sqlite
+    -optimized-qmake
+)
+
+with_mysql="-plugin-sql-mysql"
+with_odbc="-plugin-sql-odbc"
+with_nas="-system-nas-sound"
+with_webkit="-webkit"
+
+build_variables=(
+   CFLAGS="-D_GNU_SOURCE $CFLAGS"
+)
+
+pre_link() {
+   # clean out debug files
+   find ${target} -name "*.debug" | xargs rm -f
+}
