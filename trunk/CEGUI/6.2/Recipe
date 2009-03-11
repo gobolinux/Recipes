@@ -1,0 +1,9 @@
+# Recipe for version 6.2 by Joshua Sako, on Mon Mar 2 20:22:07 BRT 2009
+# Recipe (MakeRecipe) for CEGUI by Filipe Vieira, on Thu Jan 17 23:23:32 WET 2008
+compile_version=1.2.0
+url="$httpSourceforge/crayzedsgui/CEGUI-0.6.2b.tar.gz"
+file_size=2628081
+file_md5=4fbd95e5a2ac1c7acf2a8f5df3ac6b93
+file="CEGUI-0.6.2b.tar.gz"
+dir='CEGUI-0.6.2'
+recipe_type=configure
