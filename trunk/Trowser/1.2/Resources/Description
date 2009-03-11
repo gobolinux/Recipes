@@ -1,0 +1,5 @@
+[Name] Trowser
+[Summary] Trowser is a browser for large line-oriented text files
+[Description] Trowser is a browser for large line-oriented text files, implemented in Tcl/Tk. It's meant as an alternative to "less". Compared to less, trowser adds color highlighting, a persistent search history, graphical bookmarking, separate search result (i.e. filter) windows and flexible skipping of input from pipes to STDIN. Trowser has a graphical interface, but is designed to allow browsing via the keyboard at least to the same extent as less. Key bindings and the cursor positioning concept are derived from vim.
+[License] GNU General Public License version 3
+[Homepage] http://www.nefkom.net/tomzo/prj/trowser/
