@@ -1,0 +1,12 @@
+# Recipe for version 2.17.2 by ≈êsi R√≥bert <7szunyu@nordtelekom.hu>, on 2009. m√°rc. 7., szombat, 07.15.16 CET
+# Recipe (MakeRecipe) for Worker by Aitor PÈrez Iturri, on s·b abr 1 09:53:10 CEST 2006
+compile_version=1.10.2
+url="http://www.boomerangsworld.de/cms/worker/downloads/worker-2.17.2.tar.bz2"
+file_size=862247
+file_md5=51bf3a2808f8236242d2109709de2969
+recipe_type=configure
+configure_options=(
+--enable-xft
+--with-avfs
+--with-libmagic
+)
