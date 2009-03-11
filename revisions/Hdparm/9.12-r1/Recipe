@@ -1,0 +1,11 @@
+# Recipe for version 9.12 by Laszlo Horvath <soma-sk8@freemail.hu>, on Sun Mar 8 08:09:58 CET 2009
+# Recipe (MakeRecipe) for Hdparm by  Ozgur Ulukir, on Fri Dec 17 22:07:37 EET 2004
+compile_version=1.8.2
+url="$httpSourceforge/hdparm/hdparm-9.12.tar.gz"
+file_size=96536
+file_md5=4064cb2cc60b7bbdcea02ec163631068
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "DESTDIR=$target"
+)
