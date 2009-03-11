@@ -1,0 +1,13 @@
+https://lists.balabit.hu/pipermail/syslog-ng/2009-February/012518.html
+
+--- syslog-ng-3.0.1.orig/src/logmatcher.c	2009-02-19 04:13:41.209445585 +0100
++++ syslog-ng-3.0.1/src/logmatcher.c	2009-02-19 04:13:41.211621282 +0100
+@@ -506,7 +506,7 @@
+   if (self->super.flags & LMF_ICASE)
+     flags |= PCRE_CASELESS;
+   if (self->super.flags & LMF_NEWLINE)
+-    flags |= PCRE_NEWLINE_ANYCRLF;
++    flags |= PCRE_NEWLINE_LF | PCRE_NEWLINE_CRLF;
+   if (self->super.flags & LMF_UTF8)
+     {
+        gint support;
