@@ -1,0 +1,9 @@
+[Name] QuodLibet-Plugins-Thisfred
+[Summary] Two plugins for QuodLibet
+[Description] There are two plugins for now, in order of increasing complexity and interest:
+
+1. autosearch.py: Very simple plugin, searches for the title of the current song in your library: Good for getting rid of duplicates, and finding possible covers.
+
+2. lastfmtagger.py: Useful only if you have a last.fm account and make use of tags there. This will synchronize last.fm tags both ways, saving them in a custom 'tag' id3 field in your local files. Since Quod Libet has a great id3 editing interface (Ex Falso, also usable as a stand alone application,) this makes adding and editing tags to songs, artists and albums on last.fm much easier.
+[License] GNU General Public License version 2 (GPLv2)
+[Homepage] http://code.google.com/p/thisfred-quodlibet-plugins/
