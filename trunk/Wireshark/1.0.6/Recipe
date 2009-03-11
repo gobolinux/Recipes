@@ -1,0 +1,10 @@
+# Recipe for version 1.0.6 by Dominique Juergensen <brokolie@vollbio.de>, on Thu Feb 26 01:18:18 CET 2009
+# Recipe (MakeRecipe) for Wireshark by demian <demianflorentin_æt_gmail.com>, on mar sep 4 15:16:18 PYT 2007
+compile_version=1.8.5
+url="http://download.sourceforge.net/wireshark/wireshark-1.0.6.tar.bz2"
+file_size=13161721
+file_md5=f97041ec73e72fc36e39be2588045578
+recipe_type=configure
+configure_options=(
+   "--enable-threads"
+)
