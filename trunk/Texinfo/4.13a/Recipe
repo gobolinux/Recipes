@@ -1,0 +1,11 @@
+# Recipe for version 4.13a by Nick Matteo <kundor@kundor.org>, on Fri Feb 20 10:21:32 EST 2009
+compile_version=1.11.0
+url="$ftpGnu/texinfo/texinfo-4.13a.tar.lzma"
+file_size=1563777
+file_md5=20b37e49464bd72df4c6cfba33340f87
+recipe_type=configure
+dir='texinfo-4.13'
+install_variables=(
+   "TEXMF=$target/share/texmf"
+)
+install_target="install install-tex"
