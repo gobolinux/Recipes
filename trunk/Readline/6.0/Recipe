@@ -1,12 +1,10 @@
-# Recipe for version 6.0 by Michael Homer <michael@gobolinux.org>, on Wed Feb 25 14:03:04 NZDT 2009
+# Recipe for version 6.0 by Nick Matteo <kundor@kundor.org>, on Sun Feb 22 10:34:41 EST 2009
 # Recipe (MakeRecipe) for Readline by Peter Eriksen <s022018@student.dtu.dk>, on Thu Nov 4 19:52:54 CET 2004
 compile_version=1.8.2
 
-urls=(
-  "$ftpGnu/readline/readline-6.0.tar.gz"
-  "$ftpGnu/readline/readline-doc-5.0.tar.gz"
-)
-unpack_files=inside_first
+url="$ftpGnu/readline/readline-6.0.tar.gz"
+file_size=2270818
+file_md5=b7f65a48add447693be6e86f04a63019
 
 recipe_type=configure
 
@@ -23,11 +21,3 @@ build_variables=(
 "SHLIB_LIBS=-ltinfo"
 )
 
-file_sizes=(
-2270818
-1277342
-)
-file_md5s=(
-b7f65a48add447693be6e86f04a63019
-d89e46bee3fe3738fe0ed64c25b45841
-)
