@@ -1,0 +1,14 @@
+[Name] IcedTea6
+[Summary] The IcedTea project provides a harness to build the source code from
+openjdk.java.net using Free Software tools and dependencies
+[Description] IcedTea addresses two problems: it eliminates the build requirement on
+proprietary build tools and it provides replacements for the
+"encumbered binary plugs".
+This project uses code from GNU Classpath, code generated during a
+build of the openjdk.java.net source code, and stub code written by
+Red Hat, to provide Free Software replacements for these encumbered
+binary plugs.
+IcedTea also provides build scripts and patches that allow the source
+code from openjdk.java.net to be built with IcedTea itself.
+[License] GNU General Public License version 2
+[Homepage] http://icedtea.classpath.org

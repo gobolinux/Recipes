@@ -1,0 +1,7 @@
+private__get_jdk_arch() {
+	echo amd64
+}
+
+private__get_icedtea_arch() {
+	echo amd64
+}

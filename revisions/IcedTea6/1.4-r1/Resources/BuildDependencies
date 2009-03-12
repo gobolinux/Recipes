@@ -1,0 +1,19 @@
+Apache-Ant >= 1.6.5
+Xalan-Java 2.7.1
+
+# Optional features
+[docs] # generate documentation
+Rhino 1.7_r1 [javascript]
+[xrender] # xrender optimized pipeline
+
+# JVM that will be shipped with icedtea
+# if none of this are enabled HotSpot JVM is selected by default
+[cacaovm] # Use CACAO JVM 
+LibFFI 3.0.8 [zero] # Use ZERO VM
+[shark] # Adds experimental JIT support to ZERO VM 
+
+# Supported JDK for bootstrapping
+# only one od the three needs to be enabled
+IcedTea6 >= 1.3 [icedtea6] 
+Sun-JDK 1.6.0_06_bin [sun_jdk]
+Eclipse-ECJ 3.4.0 [gcj] # Requires GCC compiled using gcj flag
