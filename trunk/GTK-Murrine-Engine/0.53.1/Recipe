@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Murrine by Dominique Juergensen <brokolie@vollbio.de>, on Sun Feb 22 15:56:13 CET 2009
+# Recipe for version 0.53.1 by Dominique Juergensen <brokolie@vollbio.de>, on Sun Feb 22 15:56:13 CET 2009
+compile_version=1.12.0
+url="http://www.cimitan.com/murrine/files/murrine-0.53.1.tar.bz2"
+file_size=261530
+file_md5=09f014584ae593b9795f3f6db26005d8
+dir='murrine-0.53.1'
+recipe_type=configure
+configure_options=(
+"--enable-animation"
+)
