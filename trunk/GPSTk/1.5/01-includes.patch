@@ -1,0 +1,116 @@
+Enables compilation with GCC 4.3.3.
+
+diff -ur gpstk1.5/apps/DataAvailability/DataAvailabilityAnalyzer.cpp gpstk1.5-new/apps/DataAvailability/DataAvailabilityAnalyzer.cpp
+--- gpstk1.5/apps/DataAvailability/DataAvailabilityAnalyzer.cpp	2008-03-11 11:47:57.000000000 -0400
++++ gpstk1.5-new/apps/DataAvailability/DataAvailabilityAnalyzer.cpp	2009-02-22 10:13:48.000000000 -0500
+@@ -63,6 +63,7 @@
+ #include <vector>
+ #include <list>
+ #include <algorithm>
++#include <iterator>
+ 
+ #include "StringUtils.hpp"
+ #include "ObsID.hpp"
+diff -ur gpstk1.5/apps/filetools/navdmp.cpp gpstk1.5-new/apps/filetools/navdmp.cpp
+--- gpstk1.5/apps/filetools/navdmp.cpp	2008-03-11 11:47:45.000000000 -0400
++++ gpstk1.5-new/apps/filetools/navdmp.cpp	2009-02-22 09:53:29.000000000 -0500
+@@ -45,7 +45,7 @@
+ 
+ 
+ 
+-
++#include <iterator>
+ #include "CommandOptionWithTimeArg.hpp"
+ #include "FileFilterFrame.hpp"
+ #include "BasicFramework.hpp"
+diff -ur gpstk1.5/apps/reszilla/ordEdit.cpp gpstk1.5-new/apps/reszilla/ordEdit.cpp
+--- gpstk1.5/apps/reszilla/ordEdit.cpp	2008-03-11 11:47:40.000000000 -0400
++++ gpstk1.5-new/apps/reszilla/ordEdit.cpp	2009-02-22 10:05:04.000000000 -0500
+@@ -37,6 +37,7 @@
+ //=============================================================================
+ 
+ #include <EpochClockModel.hpp>
++#include <typeinfo>
+ #include <vector>
+ #include <set>
+ #include "gps_constants.hpp"
+diff -ur gpstk1.5/apps/rfw/TCPStreamBuff.cpp gpstk1.5-new/apps/rfw/TCPStreamBuff.cpp
+--- gpstk1.5/apps/rfw/TCPStreamBuff.cpp	2008-03-11 11:47:45.000000000 -0400
++++ gpstk1.5-new/apps/rfw/TCPStreamBuff.cpp	2009-02-22 10:00:14.000000000 -0500
+@@ -1,5 +1,6 @@
+ #pragma ident "$Id: TCPStreamBuff.cpp 997 2007-12-17 16:53:18Z rickmach $"
+ 
++#include <cstring>
+ #include <sstream>
+ #include <errno.h>
+ #include <stdlib.h>
+diff -ur gpstk1.5/apps/rfw/tcptest.cpp gpstk1.5-new/apps/rfw/tcptest.cpp
+--- gpstk1.5/apps/rfw/tcptest.cpp	2008-03-11 11:47:45.000000000 -0400
++++ gpstk1.5-new/apps/rfw/tcptest.cpp	2009-02-22 10:00:43.000000000 -0500
+@@ -2,7 +2,7 @@
+ 
+ 
+ #include <iostream>
+-#include <string>
++#include <cstring>
+ using std::istream;
+ using std::cout;
+ using std::endl;
+diff -ur gpstk1.5/src/Exception.hpp gpstk1.5-new/src/Exception.hpp
+--- gpstk1.5/src/Exception.hpp	2008-03-11 11:47:02.000000000 -0400
++++ gpstk1.5-new/src/Exception.hpp	2009-02-22 00:46:11.000000000 -0500
+@@ -49,6 +49,7 @@
+ #include <iostream>
+ #include <vector>
+ #include <string>
++#include <cstdlib>
+ 
+ namespace gpstk
+ {
+diff -ur gpstk1.5/src/ObsRngDev.cpp gpstk1.5-new/src/ObsRngDev.cpp
+--- gpstk1.5/src/ObsRngDev.cpp	2008-03-11 11:47:04.000000000 -0400
++++ gpstk1.5-new/src/ObsRngDev.cpp	2009-02-22 00:59:50.000000000 -0500
+@@ -41,6 +41,7 @@
+  * Observed range deviation computation & storage.
+  */
+ 
++#include <typeinfo>
+ #include "EphemerisRange.hpp"
+ #include "EngEphemeris.hpp"
+ #include "GPSEphemerisStore.hpp"
+diff -ur gpstk1.5/src/StringUtils.hpp gpstk1.5-new/src/StringUtils.hpp
+--- gpstk1.5/src/StringUtils.hpp	2008-03-11 11:47:05.000000000 -0400
++++ gpstk1.5-new/src/StringUtils.hpp	2009-02-22 00:56:17.000000000 -0500
+@@ -65,6 +65,8 @@
+ 
+ /// @todo Get rid of the stdio.h dependency if possible.
+ #include <cstdio>
++#include <cstring>
++#include <cstdlib>
+ 
+ #include <regex.h>
+ #include <cctype>
+diff -ur gpstk1.5/src/Vector.hpp gpstk1.5-new/src/Vector.hpp
+--- gpstk1.5/src/Vector.hpp	2008-03-11 11:47:02.000000000 -0400
++++ gpstk1.5-new/src/Vector.hpp	2009-02-22 00:48:27.000000000 -0500
+@@ -33,7 +33,7 @@
+ //============================================================================
+ 
+ #include "VectorBase.hpp"
+-
++#include <limits>
+ namespace gpstk
+ {
+  /** @addtogroup VectorGroup */
+diff -ur gpstk1.5/src/X2Sequence.cpp gpstk1.5-new/src/X2Sequence.cpp
+--- gpstk1.5/src/X2Sequence.cpp	2008-03-11 11:47:03.000000000 -0400
++++ gpstk1.5-new/src/X2Sequence.cpp	2009-02-22 01:05:22.000000000 -0500
+@@ -51,7 +51,7 @@
+ 
+    // Language headers
+ #include <stdio.h>
+-#include <string>
++#include <cstring>
+ 
+    // Project headers
+ #include "Exception.hpp"
