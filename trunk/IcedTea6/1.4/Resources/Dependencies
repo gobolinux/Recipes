@@ -1,0 +1,13 @@
+CUPS 1.3.9
+FreeType 2.3.8
+GCC >= 4.3.0
+Giflib 4.1.6
+Glibc 2.8
+LibPNG 1.2.34
+JPEG 6b
+Xorg-Lib 7.4
+ZLib 1.2.3
+
+# Optional features
+PulseAudio >= 0.9.11 [pulseaudio]
+XULRunner 1.9.0.5 [nsplugin] # Browser java plugin

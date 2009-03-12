@@ -1,0 +1,11 @@
+--- icedtea6-1.4/configure.ac.orig	2009-02-07 18:09:42.000000000 +0100
++++ icedtea6-1.4/configure.ac	2009-02-07 18:09:58.000000000 +0100
+@@ -21,7 +21,7 @@
+ FIND_TOOL([UNZIP], [unzip])
+ FIND_TOOL([CPIO], [cpio])
+ FIND_TOOL([FILE], [file])
+-AC_CHECK_TOOLS([FASTJAR], [fastjar jar])
++AC_CHECK_TOOLS([FASTJAR], [fastjar jar gjar])
+ if test "x$FASTJAR" = x; then
+ 	AC_MSG_ERROR([Can't find fastjar or jar])
+ fi

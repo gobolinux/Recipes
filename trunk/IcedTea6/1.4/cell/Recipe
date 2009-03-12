@@ -1,0 +1,7 @@
+private__get_jdk_arch() {
+	echo ppc
+}
+
+private__get_icedtea_arch() {
+	echo ppc
+}
