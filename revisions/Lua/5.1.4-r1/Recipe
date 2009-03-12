@@ -1,0 +1,13 @@
+# Recipe for version 5.1.4 by Nick Matteo <kundor@kundor.org>, on Thu Feb 19 09:14:49 EST 2009
+compile_version=1.10.2
+url=http://www.lua.org/ftp/lua-5.1.4.tar.gz
+file_size=216679
+file_md5=d0870f2de55d59c1c8419f36e8fac150
+recipe_type=makefile
+build_target=linux
+docs=(
+  "doc/*.html"
+)
+make_variables=(
+  INSTALL_TOP=$target
+)
