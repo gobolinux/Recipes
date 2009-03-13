@@ -1,0 +1,29 @@
+# Recipe for version 5.2.9 by Jonas Karlsson <jonas@gobolinux.org>, on Fri Mar 13 20:06:43 CET 2009
+### PHP 5.2.9
+# GoboLinux Recipe created by Taeber Rapczak <taeber@rapczak.com>
+# June 14, 2004
+
+### Compile Version
+compile_version=1.8.0
+
+### Download Section
+url="http://www.php.net/distributions/php-5.2.9.tar.bz2"
+file_size=10203122
+file_md5=280d6cda7f72a4fc6de42fda21ac2db7
+mirror_urls=(
+	"http://www.php.net/get/php-5.2.9.tar.bz2/from/us2.php.net/mirror"
+	"http://www.php.net/get/php-5.2.9.tar.bz2/from/us4.php.net/mirror"
+)
+
+### File Information
+file="php-5.2.9.tar.bz2"
+
+### Compilation Variables
+recipe_type=configure
+
+configure_options=(
+   --with-openssl
+)
+
+with_openldap=--with-ldap
+with_mysql=--with-mysql
