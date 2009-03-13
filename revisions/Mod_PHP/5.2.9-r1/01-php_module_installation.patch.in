@@ -1,0 +1,50 @@
+Fix paths for installation of mod_php modules inside $target instead
+of in HTTPD's prefix.
+
+-- 
+Jonas Karlsson
+
+--- php-5.1.6.clean/configure	2006-08-23 14:55:02.000000000 +0200
++++ php-5.1.6.mod/configure	2006-09-14 12:27:01.000000000 +0200
+@@ -5548,19 +5548,10 @@
+     { echo "configure: error: Please note that Apache version >= 2.0.40 is required" 1>&2; exit 1; }
+   fi
+ 
+-  APXS_LIBEXECDIR='$(INSTALL_ROOT)'`$APXS -q LIBEXECDIR`
+-  if test -z `$APXS -q SYSCONFDIR`; then
++  APXS_LIBEXECDIR='@%Compile_target%@/lib/httpd/modules'
+     INSTALL_IT="\$(mkinstalldirs) '$APXS_LIBEXECDIR' && \
+                  $APXS -S LIBEXECDIR='$APXS_LIBEXECDIR' \
+                        -i -n php5"
+-  else
+-    APXS_SYSCONFDIR='$(INSTALL_ROOT)'`$APXS -q SYSCONFDIR`
+-    INSTALL_IT="\$(mkinstalldirs) '$APXS_LIBEXECDIR' && \
+-                \$(mkinstalldirs) '$APXS_SYSCONFDIR' && \
+-                 $APXS -S LIBEXECDIR='$APXS_LIBEXECDIR' \
+-                       -S SYSCONFDIR='$APXS_SYSCONFDIR' \
+-                       -i -a -n php5"
+-  fi
+ 
+   case $host_alias in
+   *aix*)
+@@ -6378,19 +6369,10 @@
+     { echo "configure: error: Please note that Apache version >= 2.0.44 is required" 1>&2; exit 1; }
+   fi
+ 
+-  APXS_LIBEXECDIR='$(INSTALL_ROOT)'`$APXS -q LIBEXECDIR`
+-  if test -z `$APXS -q SYSCONFDIR`; then
++  APXS_LIBEXECDIR='@%Compile_target%@/lib/httpd/modules'
+     INSTALL_IT="\$(mkinstalldirs) '$APXS_LIBEXECDIR' && \
+                  $APXS -S LIBEXECDIR='$APXS_LIBEXECDIR' \
+                        -i -n php5"
+-  else
+-    APXS_SYSCONFDIR='$(INSTALL_ROOT)'`$APXS -q SYSCONFDIR`
+-    INSTALL_IT="\$(mkinstalldirs) '$APXS_LIBEXECDIR' && \
+-                \$(mkinstalldirs) '$APXS_SYSCONFDIR' && \
+-                 $APXS -S LIBEXECDIR='$APXS_LIBEXECDIR' \
+-                       -S SYSCONFDIR='$APXS_SYSCONFDIR' \
+-                       -i -a -n php5"
+-  fi
+ 
+   case $host_alias in
+   *aix*)
