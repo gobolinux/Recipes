@@ -1,0 +1,38 @@
+# Recipe for version 1.5.6 by Jonas Karlsson <jonas@gobolinux.org>, on Fri Mar 13 20:02:40 CET 2009
+# Recipe (MakeRecipe) for Subversion by Jonas Karlsson <jonka750@student.liu.se>, on Wed May 11 07:50:33 CEST 2005
+compile_version=1.9.0
+url="http://subversion.tigris.org/downloads/subversion-1.5.6.tar.bz2"
+file_size=4946600
+file_md5=3d1dabbbcacf262e3e0baa3de79220d7
+recipe_type=configure
+configure_options=(
+   --with-apr=${apr_path}
+   --with-apr-util=${apr_util_path}
+   --disable-mod-activation
+)
+
+build_target="swig-pl"
+install_target="install-swig-pl"
+
+# This function takes a perl configuration value and strips the perl program
+# entry and version of the path 
+private__get_perl_path () {
+   perl -V:$1 | sed "s/$1='\(.*\)';/\1/" | Strip_Gobo_Programs | sed "s,Perl/[^/]*/\(.*\),\1,"
+}
+
+install_variables=(
+   swig_pydir=${target}/lib/python2.4/site-packages/libsvn
+   swig_pydir_extra=${target}/lib/python2.4/site-packages/svn
+   
+   # There are a lot of perl install paths to keep track of
+   INSTALLMAN1DIR=${target}/man/man1
+   INSTALLSITEMAN1DIR=${target}/man/man1
+   INSTALLMAN3DIR=${target}/man/man3
+   INSTALLSITEMAN3DIR=${target}/man/man3
+   SITELIBEXP=${target}/$(private__get_perl_path sitelibexp)
+   SITEARCHEXP=${target}/$(private__get_perl_path sitearchexp)
+   INSTALLARCHLIB=${target}/$(private__get_perl_path installarchlib)
+   INSTALLSITELIB=${target}/$(private__get_perl_path installsitelib)
+   INSTALLSITEARCH=${target}/$(private__get_perl_path installsitearch)
+)
+
