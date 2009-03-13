@@ -1,0 +1,21 @@
+# Recipe for version 2.3.9 by Giambattista Bloisi <giamby@infinito.it>, on Sat Mar 14 00:16:03 CET 2009
+# by Giusepe Casagrande, Jeremy Vernon
+url="http://downloads.sourceforge.net/freetype/freetype-2.3.9.tar.bz2"
+file_size=1363190
+file_md5=d76233108aca9c9606cdbd341562ad9a
+compile_version=1.8.5
+recipe_type=configure
+
+# XFree86 also has a FreeType; We want this one to be the dominant FreeType
+symlink_options=(
+   "--conflict=overwrite"
+)
+
+make_variables=(
+	C_INCLUDE_PATH=
+)
+
+pre_link() {
+	cd $target/include
+	ln -s freetype2/freetype freetype
+}
