@@ -1,0 +1,13 @@
+# Recipe for version 4.2.1 by Giambattista Bloisi <giamby@infinito.it>, on Sat Mar 14 17:44:27 CET 2009
+# Recipe (MakeRecipe) for KDE-Toys by Giambattista Bloisi <giamby@infinito.it>, on Thu Jan 17 08:59:50 CET 2008
+compile_version=1.10.0
+url="http://download.kde.org/stable/4.2.1/src/kdetoys-4.2.1.tar.bz2"
+file_size=1307563
+file_md5=78cd751eb92ec2f068c8dc39794175e6
+file="kdetoys-4.2.1.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
+
