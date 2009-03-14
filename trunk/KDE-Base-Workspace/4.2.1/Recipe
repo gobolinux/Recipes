@@ -1,0 +1,22 @@
+# Recipe for version 4.2.1 by Giambattista Bloisi <giamby@infinito.it>, on Sat Mar 14 17:12:40 CET 2009
+# (MakeRecipe) for KDE-Base-Workspace by Giambattista Bloisi <giamby@infinito.it>, on Sat Jan 
+# 12 19:19:58 CET 2008
+compile_version=1.10.0
+url="http://download.kde.org/stable/4.2.1/src/kdebase-workspace-4.2.1.tar.bz2"
+file_size=50777207
+file_md5=5659e3c7c992fab38223b0a467377495
+file="kdebase-workspace-4.2.1.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+#-DDBUS_INTERFACES_SPECS="$goboShared/dbus-1/interfaces/"
+-DCMAKE_LIBRARY_PATH="$goboLibraries"
+-DCMAKE_BUILD_TYPE=Release
+-DKDE4_COMMON_PAM_SERVICE=kde
+-DKDE4_KDM_PAM_SERVICE=kdm
+-DKDE4_KSCREENSAVER_PAM_SERVICE=kscreensaver
+)
+
+pre_link() {
+   sed -i 's!#Plugins\(Login\|Shutdown\).*!Plugins\1=/Programs/KDE-Base-Workspace/Current/lib/kde4/kgreet_classic.so!ig' $target/Shared/config/kdm/kdmrc
+}
