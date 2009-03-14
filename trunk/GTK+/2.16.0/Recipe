@@ -1,0 +1,14 @@
+# Recipe for version 2.16.0 by Giambattista Bloisi <giamby@infinito.it>, on Sat Mar 14 13:42:32 CET 2009
+# Recipe (MakeRecipe) for GTK+ by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 11:55:54 BRT 2005
+compile_version=1.9.0
+url="ftp://ftp.gnome.org/pub/gnome/sources/gtk+/2.16/gtk+-2.16.0.tar.bz2"
+file_size=17978429
+file_md5=139528802794287427fd4d18875b5cf5
+recipe_type=configure
+
+configure_options=(
+   --with-xinput=yes
+#   --without-libjasper
+)
+
+with_jpeg2000="--with-libjasper"
