@@ -1,0 +1,13 @@
+# Recipe for version 4.2.1 by Giambattista Bloisi <giamby@infinito.it>, on Sat Mar 14 17:22:17 CET 2009
+# Recipe (MakeRecipe) for KDE-Admin by Giambattista Bloisi <giamby@infinito.it>, on Mon Jan 14 21:59:29 CET 2008
+compile_version=1.10.0
+url="http://download.kde.org/stable/4.2.1/src/kdeadmin-4.2.1.tar.bz2"
+file_size=1923382
+file_md5=11dde15ee5150357801c245d1290f38d
+file="kdeadmin-4.2.1.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
+
