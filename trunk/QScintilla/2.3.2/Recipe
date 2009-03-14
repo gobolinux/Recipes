@@ -1,0 +1,14 @@
+# Recipe for version 2.3.2 by Giambattista Bloisi <giamby@infinito.it>, on Sat Mar 14 21:40:30 CET 2009
+# Recipe (MakeRecipe) for QScintilla by Giambattista Bloisi <giamby@infinito.it>, on Sun Nov 9 16:14:30 CET 2008
+compile_version=1.11.4rc1
+url="http://www.riverbankcomputing.co.uk/static/Downloads/QScintilla2/QScintilla-gpl-2.3.2.tar.gz"
+file_size=2146902
+file_md5=2e112d01988f2e044c43a1e7f5e1dd87
+recipe_type=makefile
+dir="QScintilla-gpl-2.3.2/Qt4"
+
+pre_build() {
+    sed -i -e "s,target.path = .*,target.path = $target/lib," -e "s,header.path = .*,header.path = $target/include," -e "s,trans.path = .*,trans.path = $target/translations," -e "s,qsci.path = .*,qsci.path = $target," qscintilla.pro
+
+    qmake qscintilla.pro 
+}
