@@ -1,0 +1,12 @@
+# Recipe for version 4.2.1 by Giambattista Bloisi <giamby@infinito.it>, on Sat Mar 14 17:14:36 CET 2009
+# Recipe (MakeRecipe) for KDE-Base by Giambattista Bloisi <giamby@infinito.it>, on Sat Jan 12 17:52:06 CET 2008
+compile_version=1.10.0
+url="http://download.kde.org/stable/4.2.1/src/kdebase-4.2.1.tar.bz2"
+file_size=4255541
+file_md5=a8f391db7b98feaa6ae81b8f1e99ed5a
+file="kdebase-4.2.1.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
