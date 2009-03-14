@@ -1,0 +1,16 @@
+# Recipe for version 0.9.5 by kenneth marken <k-marken@online.no>, on lø. 14. mars 06:02:08 +0100 2009
+# Recipe (MakeRecipe) for Gecko-Mediaplayer by kenneth marken <k-marken@online.no>, on sø. 11. jan. 04:52:56 +0100 2009
+compile_version=1.11.4
+url="http://gecko-mediaplayer.googlecode.com/files/gecko-mediaplayer-0.9.5.tar.gz"
+file_size=220301
+file_md5=95b83f30a41769e14a3c7bbb422b514e
+recipe_type=configure
+
+configure_options=(
+#--with-xulrunner-sdk
+#--exec-prefix=$target
+)
+
+install_variables=(
+install_libexecdir=${target}/lib/browser-plugins
+)
