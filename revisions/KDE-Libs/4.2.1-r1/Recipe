@@ -1,0 +1,13 @@
+# Recipe for version 4.2.1 by Giambattista Bloisi <giamby@infinito.it>, on Sat Mar 14 17:11:54 CET 2009
+# Recipe (MakeRecipe) for KDE-Libs by Giambattista Bloisi <giamby@infinito.it>, on Sat Jan 12 11:13:12 CET 2008
+compile_version=1.10.0
+url="http://download.kde.org/stable/4.2.1/src/kdelibs-4.2.1.tar.bz2"
+file_size=10049614
+file_md5=fa4206dd747890c4e4283c8adb831e6c
+file="kdelibs-4.2.1.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+-DKDE4_DBUS_INTERFACES_DIR="$goboShared/dbus-1/interfaces/"
+)
