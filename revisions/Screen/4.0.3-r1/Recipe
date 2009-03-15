@@ -1,0 +1,13 @@
+# Recipe for version 4.0.3 by Nick Matteo <kundor@kundor.org>, on Sat Mar 14 19:07:37 EDT 2009
+# Recipe (MakeRecipe) for Screen by Volker Wieban <buckoven@gobolinux.de>, on Son Sep 12 12:54:04 BRT 2004
+compile_version=1.8.0
+url="http://ftp.gnu.org/gnu/screen/screen-4.0.3.tar.gz"
+file_size=840602
+file_md5=8506fd205028a96c741e4037de6e3c42
+recipe_type=configure
+
+install_variables=(
+   "TERMINFO=$target/Shared/terminfo"
+)
+
+with_pam="--enable-pam"
