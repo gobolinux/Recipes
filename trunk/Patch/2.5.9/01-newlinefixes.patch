@@ -1,0 +1,50 @@
+Submitted By: Robert Connolly <robert at linuxfromscratch dot org> (ashes)
+Date: 2007-05-17
+Initial Package Version: 2.5.9
+Upstream Status: From upstream
+Origin: Owl Linux's patch-2.5.9-cvs-20030702-p_strip_trailing_cr.diff
+Description:
+
+2003-07-02  Paul Eggert  <eggert@twinsun.com>
+
+        * pch.c (intuit_diff_type): If a unified-diff header line contains
+        trailing CR, strip CR from each body line.  This corrects a bug
+        introduced in the 2003-05-18 patch.  Bug reported by Andreas
+        Gruenbacher.
+
+diff -Naur patch-2.5.9.orig/pch.c patch-2.5.9/pch.c
+--- patch-2.5.9.orig/pch.c	2003-05-20 14:03:17.000000000 +0000
++++ patch-2.5.9/pch.c	2007-05-17 07:04:33.000000000 +0000
+@@ -1,6 +1,6 @@
+ /* reading patches */
+ 
+-/* $Id: pch.c,v 1.44 2003/05/20 14:03:17 eggert Exp $ */
++/* $Id: pch.c,v 1.45 2003/07/02 22:19:21 eggert Exp $ */
+ 
+ /* Copyright (C) 1986, 1987, 1988 Larry Wall
+ 
+@@ -366,10 +366,16 @@
+ 	if (!stars_last_line && strnEQ(s, "*** ", 4))
+ 	    name[OLD] = fetchname (s+4, strippath, &p_timestamp[OLD]);
+ 	else if (strnEQ(s, "+++ ", 4))
++	  {
+ 	    /* Swap with NEW below.  */
+ 	    name[OLD] = fetchname (s+4, strippath, &p_timestamp[OLD]);
++	    p_strip_trailing_cr = strip_trailing_cr;
++	  }
+ 	else if (strnEQ(s, "Index:", 6))
++	  {
+ 	    name[INDEX] = fetchname (s+6, strippath, (time_t *) 0);
++	    p_strip_trailing_cr = strip_trailing_cr;
++	  }
+ 	else if (strnEQ(s, "Prereq:", 7)) {
+ 	    for (t = s + 7;  ISSPACE ((unsigned char) *t);  t++)
+ 	      continue;
+@@ -409,6 +415,7 @@
+ 		    p_timestamp[NEW] = timestamp;
+ 		    p_rfc934_nesting = (t - s) >> 1;
+ 		  }
++		p_strip_trailing_cr = strip_trailing_cr;
+ 	      }
+ 	  }
+ 	if ((diff_type == NO_DIFF || diff_type == ED_DIFF) &&
