@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for Cg by Filipe Vieira, on Wed Jan 16 01:40:13 WET 2008
+# Recipe for version 2.0 by Filipe Vieira, on Wed Jan 16 01:40:13 WET 2008
+compile_version=1.10.0
+url="http://developer.download.nvidia.com/cg/Cg_2.0/2.0.0012/Cg-2.0_Jan2008_x86.tar.gz"
+file_md5="c26a8fd98a4ed8b9a2e418a04554d41a"
+file_size="10598329"
+unpack_files=files_in_root
+recipe_type=manifest
+
+manifest=(
+ "usr/bin:bin"
+ "usr/include:include"
+ "usr/lib:lib"
+ "usr/local:local"
+ "usr/share/man:Shared/man"
+)
