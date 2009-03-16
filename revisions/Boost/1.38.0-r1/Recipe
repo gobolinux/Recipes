@@ -1,0 +1,29 @@
+# Recipe for version 1.38.0 by Nick Matteo <kundor@kundor.org>, on Sun Mar 15 09:32:31 EDT 2009
+compile_version=1.8.2
+url="$httpSourceforge/boost/boost_1_38_0.tar.bz2"
+file_size=29164877
+file_md5=5eca2116d39d61382b8f8235915cb267
+recipe_type=configure
+
+make_variables=(
+	# Don't build debug versions of libraries (default is release and debug)
+	BUILD=release
+	# Install headers directly in include/boost
+	BJAM_CONFIG=--layout=system
+)
+
+configure_options=(
+	# wave is big, and it's an experimental c++ preprocessor; does anyone want it?
+	--without-libraries=wave
+)
+
+pre_link()
+{
+	# Manually install docs
+	mkdir -p $target/doc
+	cp -R doc/html $target/doc
+
+	# Install bjam for use by e.g. BGL-Python
+    arch=$(cd tools/jam/src && ./bootstrap/jam0 -d0 -f build.jam --toolset=$(./build.sh --guess-toolset) --toolset-root= --show-locate-target && cd ../../..)
+	cp tools/jam/src/${arch}/bjam $target/bin
+}
