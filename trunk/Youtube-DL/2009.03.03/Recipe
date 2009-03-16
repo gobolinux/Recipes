@@ -1,0 +1,14 @@
+# Recipe for version 2009.03.03 by Dominique Juergensen <brokolie@vollbio.de>, on Mon Mar 16 11:52:14 CET 2009
+# Recipe (MakeRecipe) for Youtube-DL by Baffo32 <baffo32@gmail.com>, on Sat Oct 11 09:12:38 BRT 2008
+compile_version=1.10.2
+url="http://bitbucket.org/rg3/youtube-dl/raw/8dc1b312077f/youtube-dl"
+file_size=36011
+file_md5=23b878a6d9533e17e69acf4cc570517d
+recipe_type=manifest
+uncompress=no
+manifest=( youtube-dl:bin )
+
+pre_install() {
+	chmod 555 youtube-dl
+}
+
