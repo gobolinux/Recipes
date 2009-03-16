@@ -1,0 +1,11 @@
+# Recipe for version 2.2.14 by Nick Matteo <kundor@kundor.org>, on Sun Mar 15 05:07:15 EDT 2009
+# Recipe (MakeRecipe) for LibSMBIOS by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Feb 3 09:49:07 BRST 2008
+compile_version=1.10.1
+url="http://linux.dell.com/libsmbios/download/libsmbios/libsmbios-2.2.14/libsmbios-2.2.14.tar.gz"
+file_size=1069933
+file_md5=24e5b86099cc42f61a889990f0153c24
+recipe_type=configure
+
+pre_link() {
+    cp -a src/include/* $target/include/
+}
