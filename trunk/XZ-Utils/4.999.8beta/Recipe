@@ -4,7 +4,3 @@ url="http://tukaani.org/xz/xz-4.999.8beta.tar.gz"
 file_size=879382
 file_md5=f00967331a487e88d51207fe17c56f52
 recipe_type=configure
-# This is to replace LZMA-Utils, if it is installed.
-symlink_options=(
-"--conflict overwrite"
-)
