@@ -6,3 +6,14 @@ file_size=2993718
 file_md5=4c6f3eb03ffbd067b6d2fe2344b0d9ad
 recipe_type=configure
 
+using_qt3_pre_build() {
+   sed -i "s@for ac_prog in moc.*@for ac_prog in moc-qt3@" configure
+   sed -i "s@for ac_prog in uic.*@for ac_prog in uic-qt3@" configure
+}
+
+pre_link() {
+   mkdir -p  "${target}/icons/hicolor/"{22x22,32x32,48x48}
+   ln -s "${target}/Shared/djvu/osi/desktop/hi22-djvu.png" "${target}/icons/hicolor/22x22"
+   ln -s "${target}/Shared/djvu/osi/desktop/hi32-djvu.png" "${target}/icons/hicolor/32x32"
+   ln -s "${target}/Shared/djvu/osi/desktop/hi48-djvu.png" "${target}/icons/hicolor/48x48"
+}
