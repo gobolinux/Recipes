@@ -1,0 +1,19 @@
+# Recipe for version 3.5.21 by Leandro Motta Barros <lmb@stackedboxes.org>, on Mon Sep 1 22:41:55 BRT 2008
+# Recipe (MakeRecipe) for DjVuLibre by Harald Klimach, on Mon Mar 6 13:19:29 CET 2006
+compile_version=1.8.0
+url="$httpSourceforge/djvu/djvulibre-3.5.21.tar.gz"
+file_size=2993718
+file_md5=4c6f3eb03ffbd067b6d2fe2344b0d9ad
+recipe_type=configure
+
+using_qt3_pre_build() {
+   sed -i "s@for ac_prog in moc.*@for ac_prog in moc-qt3@" configure
+   sed -i "s@for ac_prog in uic.*@for ac_prog in uic-qt3@" configure
+}
+
+pre_link() {
+   mkdir -p  "${target}/icons/hicolor/"{22x22,32x32,48x48}
+   ln -s "${target}/Shared/djvu/osi/desktop/hi22-djvu.png" "${target}/icons/hicolor/22x22"
+   ln -s "${target}/Shared/djvu/osi/desktop/hi32-djvu.png" "${target}/icons/hicolor/32x32"
+   ln -s "${target}/Shared/djvu/osi/desktop/hi48-djvu.png" "${target}/icons/hicolor/48x48"
+}
