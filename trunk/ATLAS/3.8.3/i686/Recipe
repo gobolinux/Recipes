@@ -1,0 +1,25 @@
+configure_options=(
+    "${configure_options[@]}"
+    "-b 32"
+    "-A 9" #Architecture
+#   6 = 'P5'
+#   7 = 'P5MMX'
+#   8 = 'PPRO'
+#   9 = 'PII'
+#  10 = 'PIII'
+#  11 = 'PM'
+#  12 = 'CoreSolo'
+#  13 = 'CoreDuo'
+#  14 = 'Core2Solo'
+#  15 = 'Core2'
+#  16 = 'Corei7'
+#  17 = 'P4'
+#  18 = 'P4E'
+#  19 = 'Efficeon'
+#  20 = 'K7'
+#  21 = 'HAMMER'
+#  22 = 'AMD64K10h'
+#  23 = 'UNKNOWNx86'
+
+)
+

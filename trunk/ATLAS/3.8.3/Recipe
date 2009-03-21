@@ -1,0 +1,53 @@
+# Recipe for version 3.8.3 by Nick Matteo <kundor@kundor.org>, on Sun Mar 15 16:03:42 EDT 2009
+# Recipe (MakeRecipe) for ATLAS by Lucas C. Villa Real, on Wed Dec 13 16:11:19 BRST 2006
+compile_version=1.12.1
+url="$httpSourceforge/math-atlas/atlas3.8.3.tar.bz2"
+file_size=2527756
+file_md5=6c13be94a87178e7582111c08e9503bc
+dir='ATLAS'
+recipe_type=configure
+needs_build_directory=yes
+
+environment=(
+    "tmpfile=`mktemp $goboTemp/compile.atlas.XXXX`"
+    "sagfile=$goboObjects/devices/system/cpu/cpu0/cpufreq/scaling_available_governors"
+    "sgfile=$goboObjects/devices/system/cpu/cpu0/cpufreq/scaling_governor"
+    "sgfiles=$goboObjects/devices/system/cpu/cpu*/cpufreq/scaling_governor"
+)
+configure_options=(
+    "-Fa alg -fPIC"
+    "-O 1" # operating system Linux
+    "-Si cputhrchk 0"
+    "-C ic `which gcc`"
+    "-F ic \\\"$CFLAGS\\\""
+)
+with_fortran="-C if `which gfortran`"
+
+# According to INSTALL, CPU-Throttling must be disabled during build and install
+pre_build() {
+    if test -e "$sgfile" && grep -q performance "$sagfile"
+    then cat "$sgfile" > "$tmpfile"
+         eval "echo performance > $sgfiles"
+    fi
+}
+
+post_install() {
+    if test -e "$sgfile" && test -f "$tmpfile" && grep -q performance "$sagfile"
+    then eval "cat \"$tmpfile\" > $sgfiles"
+    fi  #If you have more than one CPU, and a different scaling governor on each, then a) oops, they're the same now; b) you're crazy
+    rm -f "$goboTemp"/compile.atlas.* # Apparently, Compile evaluates environment four times before settling on final values
+}
+
+pre_install() {
+    pushd lib
+    make shared
+#    make ptshared
+    popd
+}
+
+pre_link() {
+    cp bin/xatlas_{tee,waitfile} $target/bin
+    cp lib/*.so $target/lib
+    ln -s libcblas.a $target/lib/libblas.a
+}
+
