@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for Gtk2Hs by Kevin Quick <quick@sparq.org>, on Mon Mar 16 21:43:59 MST 2009
+# Recipe for version 0.10.0 by Kevin Quick <quick@sparq.org>, on Mon Mar 16 21:43:59 MST 2009
+compile_version=1.11.4
+url="$httpSourceforge/gtk2hs/gtk2hs-0.10.0.tar.gz"
+file_size=1445881
+file_md5=08df47256cbcd5668e82b9f8beb621ab
+recipe_type=configure
+
+with_doc=(
+   --enable-docs
+)
+do_install() {
+   pkg_dbloc=$(dirname $(ghc-pkg list | head -n 1 | cut -f1 -d:))
+   SandboxInstall $verbose ${unmanagedlist:+--unmanaged-files "${unmanagedlist}"} ${sandboxopts:+"${sandboxopts[@]}"} -a $pkg_dbloc --make "$make" --makefile $makefile --target "$install_target" "$1" "$2" -- "${installmerged[@]}"
+}
