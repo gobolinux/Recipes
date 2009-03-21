@@ -1,0 +1,11 @@
+configure_options=(
+    "${configure_options[@]}"
+    "-A 4" # Architecture:
+#       1 = 'POWER3'
+#       2 = 'POWER4'
+#       3 = 'POWER5'
+#       4 = 'PPCG4'
+#       5 = 'PPCG5'
+
+ )
+

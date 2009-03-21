@@ -1,0 +1,19 @@
+Configure doesn't call its own subprogram properly
+
+--- ATLAS/configure	2009-02-18 13:47:35.000000000 -0500
++++ ATLAS-new/configure	2009-03-15 19:34:04.000000000 -0400
+@@ -181,13 +181,7 @@
+ # 
+ #     If flag have internal spaces, surround it with ''
+ #
+-      flag=`echo "$arg" | sed -e "s/ //"`
+-      if (test "$flag" != "$arg")
+-      then
+-         pass="$pass '`echo "$arg"`'"
+-      else
+-         pass="$pass $arg"
+-      fi
++     pass="$pass $arg"
+    fi
+ done
+ OSGUESS=`uname`

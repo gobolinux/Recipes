@@ -1,0 +1,16 @@
+configure_options=(
+    "${configure_options[@]}"
+    "-b 64"
+    "-A 21" #AMD Hammer
+#     12 = 'CoreSolo'
+#     13 = 'CoreDuo'
+#     14 = 'Core2Solo'
+#     15 = 'Core2'
+#     16 = 'Corei7'
+#     21 = 'HAMMER'
+#     22 = 'AMD64K10h'
+#     24 = 'IA64Itan'
+#     25 = 'IA64Itan2'
+
+)
+
