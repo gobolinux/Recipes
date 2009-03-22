@@ -9,7 +9,6 @@ recipe_type=configure
 with_doc=(
    --enable-docs
 )
-do_install() {
-   pkg_dbloc=$(dirname $(ghc-pkg list | head -n 1 | cut -f1 -d:))
-   SandboxInstall $verbose ${unmanagedlist:+--unmanaged-files "${unmanagedlist}"} ${sandboxopts:+"${sandboxopts[@]}"} -a $pkg_dbloc --make "$make" --makefile $makefile --target "$install_target" "$1" "$2" -- "${installmerged[@]}"
-}
+sandbox_options=(
+   -a $(ghc-pkg list | head -n1 | sed -e 's!/package\.conf:$!!')
+)
