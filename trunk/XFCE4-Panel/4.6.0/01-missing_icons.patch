@@ -1,0 +1,48 @@
+diff --git a/plugins/launcher/launcher.c b/plugins/launcher/launcher.c
+index 8edc66c..1e370c4 100644
+--- a/plugins/launcher/launcher.c
++++ b/plugins/launcher/launcher.c
+@@ -37,6 +37,30 @@
+ #include "launcher-exec.h"
+ #include "launcher-dialog.h"
+ 
++/* for 4.4 settings migration */
++static const gchar *icon_category_map[] = {
++    "applications-other",
++    "accessories-text-editor",
++    "system-file-manager",
++    "applications-accessories",
++    "applications-games",
++    "help-browser",
++    "applications-multimedia",
++    "applications-internet",
++    "applications-graphics",
++    "printer",
++    "office-calendar",
++    "applications-office",
++    "audio-card",
++    "utilities-terminal",
++    "applications-development",
++    "preferences-desktop",
++    "applications-system",
++    "applications-other",
++    "applications-accessories",
++};
++#define ICON_CATEGORY_MAP_MAX  (G_N_ELEMENTS (icon_category_map) - 1)
++
+ /* prototypes */
+ static void            launcher_utility_icon_theme_changed          (GtkIconTheme          *icon_theme,
+                                                                      LauncherPlugin        *launcher);
+@@ -1216,6 +1240,12 @@ launcher_plugin_read (LauncherPlugin *launcher)
+                 entry->name = launcher_plugin_read_entry (rc, "Name");
+                 entry->comment = launcher_plugin_read_entry (rc, "Comment");
+                 entry->icon = launcher_plugin_read_entry (rc, "Icon");
++                if (G_UNLIKELY (!entry->icon))
++                {
++                    gint icon_category = xfce_rc_read_int_entry (rc, "X-XFCE-IconCategory", -1);
++                    if (G_LIKELY (icon_category >= 0 && icon_category <= ICON_CATEGORY_MAP_MAX))
++                        entry->icon = g_strdup (icon_category_map[icon_category]);
++                }
+                 entry->exec = launcher_plugin_read_entry (rc, "Exec");
+                 entry->path = launcher_plugin_read_entry (rc, "Path");
+ 
