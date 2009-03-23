@@ -1,0 +1,11 @@
+# Recipe for version 4.6.0 by Giambattista Bloisi <giamby@infinito.it>, on Sat Mar 21 13:03:48 CET 2009
+# Recipe (MakeRecipe) for LibXFcegui4 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:20:12 CEST 2006
+compile_version=1.8.2
+url="http://www.xfce.org/archive/xfce-4.6.0/src/libxfcegui4-4.6.0.tar.bz2"
+file_size=650464
+file_md5=8627ae4fad26289f55f0afbebe238bf5
+recipe_type=configure
+
+with_libglade=(
+    --with-libglade-module-path=$target/lib/libglade/2.0
+)
