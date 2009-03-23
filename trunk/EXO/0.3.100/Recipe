@@ -1,0 +1,11 @@
+# Recipe for version 0.3.100 by Giambattista Bloisi <giamby@infinito.it>, on Sat Mar 21 13:11:13 CET 2009
+# Recipe (MakeRecipe) for EXO by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:16:44 CEST 2006
+compile_version=1.9.0
+url="http://www.us.xfce.org/archive/xfce-4.6.0/src/exo-0.3.100.tar.bz2"
+file_size=1745489
+file_md5=ebded97ff55f43cd0fe6b16242992ecf
+recipe_type=configure
+configure_options=(
+    --enable-debug=no
+)
+with_pygtk="--enable-python"
