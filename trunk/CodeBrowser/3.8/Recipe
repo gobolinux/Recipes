@@ -1,0 +1,12 @@
+# Recipe for version 3.8 by ≈êsi R√≥bert <7szunyu@nordtelekom.hu>, on 2009. m√°rc. 22., vas√°rnap, 01.15.23 CET
+# Recipe (MakeRecipe) for CodeBrowser by ’si Ω7sz¸ny¸Ω RÛbert, Hungary (7szunyu .at. nordtelekom .dOt. hu), on 2008. ·pr. 29., kedd, 20.42.22 CEST
+compile_version=1.10.2
+url="http://downloads.sourceforge.net/code-browser/code-browser-3.8-src.tar.gz"
+file_size=726387
+file_md5=bf904400d95e41839603daeaf38bb21d
+dir='code-browser-3.8'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+)
