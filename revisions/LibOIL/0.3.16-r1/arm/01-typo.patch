@@ -1,0 +1,11 @@
+--- liboil-0.3.7/liboil/liboilprofile.c.orig	2006-05-16 21:10:56.000000000 -0300
++++ liboil-0.3.7/liboil/liboilprofile.c	2006-05-16 21:10:58.000000000 -0300
+@@ -217,7 +217,7 @@ oil_profile_stamp_mips(void)
+ #if defined(__arm__)
+ /* untested */
+ static unsigned long
+-oil_profile_stamp_xcale255(void)
++oil_profile_stamp_xscale255(void)
+ {
+   unsigned int ts;
+   /* this only works for XScale 255 */
