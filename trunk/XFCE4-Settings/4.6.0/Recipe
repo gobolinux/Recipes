@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for XFCE4-Settings by Giambattista Bloisi <giamby@infinito.it>, on Sat Mar 21 13:21:45 CET 2009
+# Recipe for version 4.6.0 by Giambattista Bloisi <giamby@infinito.it>, on Sat Mar 21 13:21:45 CET 2009
+compile_version=1.12.2
+url="http://www.us.xfce.org/archive/xfce-4.6.0/src/xfce4-settings-4.6.0.tar.bz2"
+file_size=490746
+file_md5=ac538c4ab32e3a91f4567141adc3c898
+recipe_type=configure
+
+with_libcanberra=(--enable-sound-settings)
