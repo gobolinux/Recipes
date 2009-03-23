@@ -1,0 +1,10 @@
+# Recipe for version 4.6.0 by Giambattista Bloisi <giamby@infinito.it>, on Sat Mar 21 13:18:08 CET 2009
+# Recipe (MakeRecipe) for XFWM4 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:30:59 CEST 2006
+compile_version=1.8.2
+url="http://www.xfce.org/archive/xfce-4.6.0/src/xfwm4-4.6.0.tar.bz2"
+file_size=1792953
+file_md5=83cd2f82f2fabfe4ab28a9780fbf309e
+recipe_type=configure
+configure_options=(
+    '--enable-debug=no'
+)
