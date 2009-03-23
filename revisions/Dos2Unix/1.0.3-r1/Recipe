@@ -1,0 +1,14 @@
+# Recipe for version 1.0.3 by Nick Matteo <kundor@kundor.org>, on Mon Mar 23 00:36:31 EDT 2009
+url=http://hany.sk/~hany/_data/hd2u/hd2u-1.0.3.tgz
+file_size=60024
+file_md5=8f6668fafb279aa19f956ec0515717b6
+compile_version=1.8.0
+recipe_type=configure
+pre_link() {
+   ln -nfs dos2unix $target/bin/unix2dos
+   ln -nfs dos2unix $target/bin/mac2unix
+   ln -nfs dos2unix $target/bin/unix2mac
+   ln -nfs dos2unix $target/bin/unix2mac
+   ln -nfs dos2unix $target/bin/dos2mac
+   ln -nfs dos2unix $target/bin/mac2dos
+}
