@@ -1,0 +1,23 @@
+# Recipe for version 2.6.6 by Xavier Pinho <a52363@alunos.uminho.pt>, on Mon Mar 23 17:30:54 WET 2009
+# Recipe (MakeRecipe) for Gimp by roko, <ro.ko@mcnon.com>, on Fri Dec 31 19:34:35 BRST 2004
+compile_version=1.9.0
+url="ftp://ftp.gimp.org/pub/gimp/v2.6/gimp-2.6.6.tar.bz2"
+file_size=16075908
+file_md5=23d880dd09cd62c936ed04666a53f8e4
+recipe_type=configure
+configure_options=(
+    --disable-mp 
+    --enable-gimp-remote 
+    --without-poppler
+)  
+with_poppler="--with-poppler"
+
+build_variables=(
+   gimpplugindir="${goboLibraries}/gimp/2.0"
+)
+
+pre_install() {
+   # Sigh, libtool again...
+   find -name "*.la" | xargs sed -i "s,^libdir='${goboLibraries},libdir='${target}/lib,"
+}
+
