@@ -1,0 +1,11 @@
+[Name] UFRaw
+[Summary] A utility to read and manipulate raw images from digital cameras.
+[Description] The Unidentified Flying Raw (UFRaw) is a utility to read and 
+manipulate raw images from digital cameras. It can be used on its own or as 
+a Gimp plug-in. It reads raw images using Dave Coffin's raw conversion 
+utility - DCRaw. UFRaw supports color management workflow based on Little 
+CMS, allowing the user to apply ICC color profiles. For Nikon users UFRaw 
+has the advantage that it can read the camera's tone curves. Even if you don't 
+own a Nikon, you can still apply a Nikon curve to your images.
+[License] GNU General Public License version 2
+[Homepage] http://ufraw.sourceforge.net/
