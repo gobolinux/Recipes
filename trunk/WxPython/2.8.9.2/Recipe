@@ -1,0 +1,23 @@
+# Recipe for version 2.8.9.2 by Dominique Juergensen <brokolie@vollbio.de>, on Mon Mar 23 22:41:20 CET 2009
+# Recipe (MakeRecipe) for WxPython by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Aug 9 11:10:29 BRT 2005
+compile_version=1.8.0
+url="http://downloads.sourceforge.net/wxpython/wxPython-src-2.8.9.2.tar.bz2"
+file_size=29370216
+file_md5=e3d89746af98b9279e4ff39a57f6dc63
+recipe_type=configure
+
+configure_options=(
+        "--with-gtk"
+#        "--with-opengl"
+        "--with-sdl"
+        "--enable-display"
+        "--enable-geometry"
+        "--enable-intl"
+        "--enable-sound"
+        "--enable-unicode"
+)
+
+pre_link() {
+        cd $target/include
+        ln -s wx-2.8/wx .
+}
