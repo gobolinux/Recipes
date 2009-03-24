@@ -1,0 +1,12 @@
+# Recipe for version 6.2 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. márc. 23., hétfő, 11.04.35 CET
+# Recipe (MakeRecipe) for Fotoxx by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jan. 25., vasárnap, 06.22.33 CET
+compile_version=1.11.4
+url="http://kornelix.squarespace.com/storage/downloads/fotoxx-6.2.tar.gz"
+file_size=403732
+file_md5=a67f88373431c2486915467783dd2872
+dir='fotoxx'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
