@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for DVDisaster by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jan. 31., szombat, 23.53.19 CET
+# Recipe for version 0.70.6 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jan. 31., szombat, 23.53.19 CET
+compile_version=1.11.4
+url="$httpSourceforge/dvdisaster/dvdisaster-0.70.6.tar.bz2"
+file_size=1167208
+file_md5=c6d2215d7dd582475b19593dfa4fbdc2
+recipe_type=configure
+makefile='GNUmakefile'
+configure_options=(
+   -prefix="$target"
+   -mandir="$target/share/man"
+)
+override_default_options=yes
