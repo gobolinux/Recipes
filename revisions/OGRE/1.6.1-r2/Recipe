@@ -1,0 +1,12 @@
+# Recipe for version 1.6.1 by Joshua Sako, on Thu Feb 26 23:50:28 BRT 2009
+# Recipe (MakeRecipe) for OGRE by Filipe Vieira, on Tue Jan 15 03:12:57 WET 2008
+compile_version=1.10.0
+url="$httpSourceforge/ogre/ogre-v1-6-1.tar.bz2"
+file_size=39250556
+file_md5=6fbd72e81dd4c135a2cc4f78d596aeb4
+
+dir='ogre'
+recipe_type=configure
+
+
+
