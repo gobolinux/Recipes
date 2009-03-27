@@ -1,0 +1,33 @@
+# Recipe for version 3.11.0 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. márc. 23., hétfő, 09.35.10 CET
+# Recipe (MakeRecipe) for FreeImage by Filipe Vieira, on Tue Jan 15 08:23:24 WET 2008
+compile_version=1.12.0
+url="http://downloads.sourceforge.net/freeimage/FreeImage3110.zip"
+file_size=4250382
+file_md5=ad1db36414391417654ba7bf1c0277d3
+file="FreeImage3110.zip"
+dir='FreeImage'
+recipe_type=makefile
+install_variables=(
+   INCDIR="${target}/include"
+   INSTALLDIR="${target}/lib"
+)
+
+do_build() {
+   $make && \
+   $make -f Makefile.fip
+}
+
+do_install() {
+   SandboxInstall $verbose ${sandboxopts:+"${sandboxopts[@]}"} --make $make "$1" "$2" -- "${installmerged[@]}" && \
+   SandboxInstall $verbose ${sandboxopts:+"${sandboxopts[@]}"} --make $make --makefile Makefile.fip "$1" "$2" -- "${installmerged[@]}"
+   cp "${basedir}/Source/"*.h "$target/include"
+}
+
+docs=(
+   README.linux
+   Whatsnew.txt
+   Wrapper/FreeImagePlus/WhatsNew_FIP.txt
+   license-fi.txt
+   license-gpl.txt
+   Examples
+)
