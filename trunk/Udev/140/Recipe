@@ -16,6 +16,8 @@ install_variables=(
 )
 
 pre_link() {
+   ln -s "$target/sbin/udevadm" "$target/bin/udevinfo"
+   ln -s "$target/sbin/udevadm" "$target/sbin/udevsettle"
    echo "udev_root=\"${goboDevices}\"" >> "${target}/Resources/Defaults/Settings/udev/udev.conf"
    devices="$target/lib/udev/devices"
    mkdir -p "$devices"/{shm,pts}
