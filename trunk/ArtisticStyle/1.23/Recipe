@@ -1,0 +1,18 @@
+# Recipe for version 1.23 by Xavier Pinho <a52363@alunos.uminho.pt>, on Sat Mar 28 12:15:23 WET 2009
+# Recipe (MakeRecipe) for ArtisticStyle by Baffo32 <baffo32@gmail.com>, on Thu Oct 16 09:59:38 PDT 2008
+compile_version=1.11.2
+url="$httpSourceforge/astyle/astyle_1.23_linux.tar.gz"
+file_size=101917
+file_md5=92945aa2831cb14e38da5e1b8665657e
+dir='astyle/buildgcc'
+recipe_type='makefile'
+
+build_target='shared release'
+
+install_variables=( "prefix=$target" )
+
+pre_install() {
+	cp -f ../bin/*.so "${target}/lib"
+	cp -f ../src/*.h "${target}/include"
+	cp -f ../doc/* "${target}/doc"
+}
