@@ -9,7 +9,7 @@ pre_build() {
 	# -Duseshrplib useful for embeding perl (ie mod_perl)
 	# a DBM would be useful (dbm_opem() for binding hashes to files) would add a dependency
 	# -Dlibspath
-	sh Configure -de -Dcc=gcc -Dusethreads -Duselargefiles -Uusesfio -Dprefix=$target -Duseshrplib -Dlibperl='libperl.so.5.10' -Dotherlibdirs=$goboLibraries/perl5:$goboLibraries/perl5/site_perl -Dlibpth=$goboLibraries cf_by='GoboLinux' |tee /tmp/perl-config.log
+	sh Configure -de -Dcc=gcc -Dusethreads -Duselargefiles -Uusesfio -Dprefix=$target -Duseshrplib -Dlibperl='libperl.so.5.10' -Dotherlibdirs=$goboLibraries/perl5:$goboLibraries/perl5/site_perl -Dlocincpth="$goboHeaders" -Dloclibpth="$goboLibraries" cf_by='GoboLinux' |tee /tmp/perl-config.log
 }
 pre_install() {
 	make test | tee $goboTemp/perl-test.log
