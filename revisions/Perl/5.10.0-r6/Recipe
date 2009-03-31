@@ -1,0 +1,21 @@
+# Recipe for version 5.10.0 by Giambattista Bloisi <giamby@infinito.it>, on Sun Feb 17 00:53:06 CET 2008
+url=http://www.perl.com/CPAN/src/perl-5.10.0.tar.gz
+file_size=15595020
+file_md5=d2c39b002ebfd2c3c5dba589365c5a71
+compile_version=1.8.2
+recipe_type=makefile
+pre_build() {
+	# Configure options to consider:
+	# -Duseshrplib useful for embeding perl (ie mod_perl)
+	# a DBM would be useful (dbm_opem() for binding hashes to files) would add a dependency
+	# -Dlibspath
+	sh Configure -de -Dcc=gcc -Dusethreads -Duselargefiles -Uusesfio -Dprefix=$target -Duseshrplib -Dlibperl='libperl.so.5.10' -Dotherlibdirs=$goboLibraries/perl5:$goboLibraries/perl5/site_perl -Dlocincpth="$goboHeaders" -Dloclibpth="$goboLibraries" cf_by='GoboLinux' |tee /tmp/perl-config.log
+}
+pre_install() {
+	make test | tee $goboTemp/perl-test.log
+}
+pre_link() {
+    eval `${target}/bin/perl -V:archlibexp`
+    ln -s libperl.so.5.10 "${archlibexp}/CORE/libperl.so.5"
+    ln -s libperl.so.5.10 "${archlibexp}/CORE/libperl.so"
+}

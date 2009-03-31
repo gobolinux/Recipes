@@ -1,0 +1,3 @@
+pre_build() {
+	sh Configure -de -Dcc=gcc -Dusethreads -Duselargefiles -Uusesfio -Dprefix=$target -Duseshrplib -Dlibperl='libperl.so.5.10' -Dotherlibdirs=$goboLibraries/perl5:$goboLibraries/perl5/site_perl -Dlocincpth="$goboHeaders" -Dloclibpth="/usr/lib $goboLibraries" cf_by='GoboLinux' | tee /tmp/perl-config.log
+}
