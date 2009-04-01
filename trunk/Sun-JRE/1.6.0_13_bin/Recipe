@@ -1,0 +1,48 @@
+# Recipe for version 1.6.0_13_bin by Hugo Barrocas <barrocas@iol.pt>, on Sex Mar 27 16:10:38 WET 2009
+# based on recipe for JRE version 1.6.0_07 by Riccardo Gregotti <xexos'at'hotmail.com>
+# based on recipe for JDK by Daniele Maccari <daniele.maccari@gmail.com>
+# and by Mike Hughes (Thanks ;-) )
+
+# Open caveat
+# libjavaplugin_oji.so in the directory /System/Links/Libraries/browser-plugins
+# links to libjavaplugin_oji.so -> /Programs/Sun-JRE/1.6.0_07_bin/plugin/i386/ns7/libjavaplugin_oji.so
+# instead to  libjavaplugin_oji.so ->/Programs/Sun-JRE/1.6.0_07_bin/lib/browser-plugins/libjavaplugin_oji.so
+
+# Open caveat: pre_patch
+# Rename the downloaded tar in something better like "jre-6u7-linux-i586.bin" instead of "AutoDL?BundleID=23103" 
+
+# Open caveat:
+# when compile runs this error is displayed: 
+# "Please wait:  */System/Links/Executables/GenBuildInformation: line 116:  /dev/fd/62: No such file or directory"
+# may depend from my machine
+
+url="http://javadl.sun.com/webapps/download/AutoDL?BundleId=29210"
+file_size=20177482
+file_md5=fefd8a2483f5b0508f33bf1031feb8f5
+compile_version=1.10.2
+recipe_type=manifest
+uncompress=no
+
+pre_patch() {
+  bash AutoDL?BundleId=29210
+}
+
+pre_link() {
+  # Create a link to the java plugin in the standard browser-plugins directory
+  mkdir -p ${target}/lib/browser-plugins
+  ln -s ${target}/plugin/i386/ns7/libjavaplugin_oji.so ${target}/lib/browser-plugins
+}
+
+
+manifest=(
+    "jre1.6.0_13/bin:bin"
+    "jre1.6.0_13/lib:lib"
+    "jre1.6.0_13/man:man"
+    "jre1.6.0_13/javaws:javaws"
+    "jre1.6.0_13/plugin:plugin"
+    "jre1.6.0_13/COPYRIGHT:COPYRIGHT"
+    "jre1.6.0_13/Welcome.html:Welcome.html"
+    "jre1.6.0_13/README:README"
+    "jre1.6.0_13/LICENSE:LICENSE"
+    "jre1.6.0_13/THIRDPARTYLICENSEREADME.txt:THIRDPARTYLICENSEREADME.txt"
+)
