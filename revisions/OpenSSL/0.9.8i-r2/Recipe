@@ -1,0 +1,8 @@
+# Recipe for version 0.9.8i by Giambattista Bloisi <giamby@infinito.it>, on Tue Oct 14 23:50:57 CEST 2008
+compile_version=1.8.2
+url=http://www.openssl.org/source/openssl-0.9.8i.tar.gz
+file_size=3459643
+file_md5=561e00f18821c74b2b86c8c7786f9d8b
+recipe_type=configure
+configure=Configure
+build_target="all"
