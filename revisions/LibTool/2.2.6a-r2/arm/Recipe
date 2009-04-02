@@ -1,0 +1,15 @@
+make_variables=(
+    LIBTOOL="./libtool"
+)
+
+pre_link() {
+    # since we're cross-compiling, it's a bad idea to use the host's stdlib path
+	pushd "$target"/bin >& /dev/null
+	GrepReplace "^sys_lib_dlsearch_path_spec=.*" \
+	            "sys_lib_dlsearch_path_spec=\"$goboLibraries\"" \
+				libtool
+	GrepReplace "^sys_lib_search_path_spec=.*" \
+				"sys_lib_search_path_spec=\"$goboLibraries\"" \
+				libtool
+	popd >& /dev/null
+}
