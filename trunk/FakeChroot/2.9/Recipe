@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for FakeChroot by Michael Homer <michael@gobolinux.org>, on Thu Apr 2 13:38:09 NZDT 2009
+# Recipe for version 2.9 by Michael Homer <michael@gobolinux.org>, on Thu Apr 2 13:38:09 NZDT 2009
+compile_version=1.12.2rc1
+url="http://svn.debian.org/wsvn/fakechroot/tags/2.9-1/fakechroot_2.9.orig.tar.gz?op=file"
+file="fakechroot_2.9.orig.tar.gz"
+file_size=490438
+file_md5=7b0048e50a6309acf0dda4e547735022
+dir='fakechroot-2.9'
+recipe_type=configure
