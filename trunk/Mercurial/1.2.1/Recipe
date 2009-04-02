@@ -6,9 +6,6 @@ file_size=1269393
 file_md5=24d6994cc58b353398e11c7a19cf1d19
 build_script="setup.py"
 recipe_type=python
-environment=(
-  "PYTHONPATH=$target/lib/python"   
-)
 
 pre_link() {
   install contrib/hg-relink $target/bin/
