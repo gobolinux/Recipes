@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for LibAIO by Fabio Mierlo <geromao@gmail.com>, on Thu Apr 2 18:55:55 BRT 2009
+# Recipe for version 0.3.107 by Fabio Mierlo <geromao@gmail.com>, on Thu Apr 2 18:55:55 BRT 2009
+compile_version=1.11.4
+url="http://archive.ubuntu.com/ubuntu/pool/main/liba/libaio/libaio_0.3.107.orig.tar.gz"
+file_size=51540
+file_md5=db32c19c61ca937bcb1ba48da9180682
+dir='libaio-0.3.107'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+)
