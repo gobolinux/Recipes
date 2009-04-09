@@ -1,0 +1,5 @@
+[Name] LibAIO-Oracle
+[Summary] Library for accessing AIO system calls for the Linux kernel.
+[Description] This is a library for accessing the new AIO system calls (asynchronous i/o) for the Linux kernel. It is a thin, state-keeping wrapper that conforms to the Single Unix Specification for aio_read, aio_write, aio_error, aio_return and aio_suspend functions, and also implements lio_listio and aio_reap for batch processing.
+[License] GNU Lesser General Public License version 2.1
+[Homepage] http://oss.oracle.com/projects/libaio-oracle/
