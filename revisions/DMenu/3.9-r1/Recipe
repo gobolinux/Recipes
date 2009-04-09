@@ -1,0 +1,11 @@
+# Recipe for version 3.9 by Xavier Pinho <a52363@alunos.uminho.pt>, on Mon Apr 6 22:26:08 WEST 2009
+# Recipe (MakeRecipe) for DMenu by Aitor Perez Iturri, on mar sep 11 01:37:37 CEST 2007
+compile_version=1.9.0
+url="http://code.suckless.org/dl/tools/dmenu-3.9.tar.gz"
+file_size=8582
+file_md5=36d546dd4ac21660b20cdb056f5cb341
+recipe_type=makefile
+makefile='Makefile'
+install_variables=(
+	"PREFIX=$target"
+)
