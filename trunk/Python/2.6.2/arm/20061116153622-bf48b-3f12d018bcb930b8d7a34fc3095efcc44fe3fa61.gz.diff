@@ -1,0 +1,65 @@
+Thu Nov 16 16:36:22 CET 2006  hanwen@lilypond.org
+  * HAVE_{CWAIT,FSYNC,PIPE,SYSTEM,SPAWNV,}
+diff -rN -u old-Python-2.5.cross/pyconfig.h.in new-Python-2.5.cross/pyconfig.h.in
+--- old-Python-2.5.cross/pyconfig.h.in	2006-11-16 17:47:47.000000000 +0100
++++ new-Python-2.5.cross/pyconfig.h.in	2006-11-16 17:47:47.000000000 +0100
+@@ -94,6 +94,9 @@
+ /* Define if you have the 'resize_term' function. */
+ #undef HAVE_CURSES_RESIZE_TERM
+ 
++/* Define to 1 if you have the `cwait' function. */
++#undef HAVE_CWAIT
++
+ /* Define to 1 if you have the device macros. */
+ #undef HAVE_DEVICE_MACROS
+ 
+@@ -158,7 +161,7 @@
+ /* Define to 1 if you have the `fstatvfs' function. */
+ #undef HAVE_FSTATVFS
+ 
+-/* Define if you have the 'fsync' function. */
++/* Define to 1 if you have the `fsync' function. */
+ #undef HAVE_FSYNC
+ 
+ /* Define to 1 if you have the `ftell64' function. */
+@@ -365,6 +368,9 @@
+ /* Define to 1 if you have the `pause' function. */
+ #undef HAVE_PAUSE
+ 
++/* Define to 1 if you have the `pipe' function. */
++#undef HAVE_PIPE
++
+ /* Define to 1 if you have the `plock' function. */
+ #undef HAVE_PLOCK
+ 
+@@ -377,6 +383,9 @@
+ /* Define to 1 if you have the <process.h> header file. */
+ #undef HAVE_PROCESS_H
+ 
++/* Define to 1 if you have the `popen' function. */
++#undef HAVE_POPEN
++
+ /* Define if your compiler supports function prototype */
+ #undef HAVE_PROTOTYPES
+ 
+@@ -491,6 +500,9 @@
+ /* Define if your compiler provides ssize_t */
+ #undef HAVE_SSIZE_T
+ 
++/* Define to 1 if you have the `spawnv' function. */
++#undef HAVE_SPAWNV
++
+ /* Define to 1 if you have the `statvfs' function. */
+ #undef HAVE_STATVFS
+ 
+@@ -562,6 +574,9 @@
+ /* Define to 1 if you have the <sysexits.h> header file. */
+ #undef HAVE_SYSEXITS_H
+ 
++/* Define to 1 if you have the `system' function. */
++#undef HAVE_SYSTEM
++
+ /* Define to 1 if you have the <sys/audioio.h> header file. */
+ #undef HAVE_SYS_AUDIOIO_H
+ 
+
