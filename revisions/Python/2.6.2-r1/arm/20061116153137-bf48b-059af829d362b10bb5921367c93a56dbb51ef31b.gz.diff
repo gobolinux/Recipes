@@ -1,0 +1,17 @@
+Thu Nov 16 16:31:37 CET 2006  hanwen@lilypond.org
+  * take timeval and related definitions from winsock2.h
+diff -rN -u old-Python-2.5.cross/Modules/datetimemodule.c new-Python-2.5.cross/Modules/datetimemodule.c
+--- old-Python-2.5.cross/Modules/datetimemodule.c	2006-11-16 17:47:48.000000000 +0100
++++ new-Python-2.5.cross/Modules/datetimemodule.c	2006-11-16 17:47:48.000000000 +0100
+@@ -8,6 +8,10 @@
+ 
+ #include <time.h>
+ 
++#ifdef MS_WINDOWS
++#include <winsock2.h>
++#endif
++
+ #include "timefuncs.h"
+ 
+ /* Differentiate between building the core module and building extension
+
