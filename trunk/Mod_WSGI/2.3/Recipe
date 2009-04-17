@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Mod_WSGI by Daed Lee <daed@thoughtsofcode.com>, on Thu Apr 9 14:06:32 EDT 2009
+# Recipe for version 2.3 by Daed Lee <daed@thoughtsofcode.com>, on Thu Apr 9 14:06:32 EDT 2009
+compile_version=1.12.2
+url="http://modwsgi.googlecode.com/files/mod_wsgi-2.3.tar.gz"
+file_size=96872
+file_md5=c686e1c498dbe5753fe491c3cf61cff4
+recipe_type=configure
+
+
+make_variables=(
+    "LIBEXECDIR=${target}/lib/httpd/modules"
+)
