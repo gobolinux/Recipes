@@ -1,0 +1,388 @@
+# add default config file
+diff -Nur channel_2.3_rev1728-orig/khomp.conf channel_2.3_rev1728/khomp.conf
+--- channel_2.3_rev1728-orig/khomp.conf	1969-12-31 21:00:00.000000000 -0300
++++ channel_2.3_rev1728/khomp.conf	2008-09-02 19:33:32.000000000 -0300
+@@ -0,0 +1,383 @@
++;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
++;;;;;;;;;;;;;; This is the configuration file for the Khomp ;;;;;;;;;;;;;;;
++;;;;;;;;;;;;;;;;;;;;;;;;;;; channel version 2.3 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
++;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
++
++;;;;
++;;;; Section for main configurations about channels.
++;;;;
++
++[channels]
++
++;;
++;; Enable/disable generalized echo cancellation in the channel, for calls
++;; passing inside Asterisk (disabled for bridged calls).
++
++; echo-canceller = yes
++
++;;
++;; Enable/disable AGC (auto gain control). Should be used carefully, as it
++;; can make line noise really loud.
++
++; auto-gain-control = yes
++
++;;
++;; Enable/disable sending DTMFs out-band as a way to pass detected DTMFs to
++;; Asterisk. Needed if Asterisk generates digits for us in Dial (option 'D')
++;; or is being used for IVR ("URA", in pt_BR).
++
++; out-of-band-dtmfs = yes
++
++;;
++;; Enable/disable DTMF suppression delay. WARNING: if you disable this, DTMFs
++;; will not be suppressed anymore! You should only use this option if
++;; "out-of-band-dtmfs" is "no".
++
++; suppression-delay = yes
++
++;;
++;; Adjust connection automagically if a FAX tone is detected.
++
++; auto-fax-adjustment = yes
++
++;;
++;; Enable/disable pulse detection (reported as DTMF digits).
++
++; pulse-forwarding = yes
++
++;;
++;; Enable correct standard following for R2/MFC protocol. Disabled by default,
++;; as using Asterisk behind a PBX may timeout all outgoing calls without this.
++;; However, you can set this to "yes" if Asterisk is directly connected to a
++;; CO (central office) or to a fast signaling PBX, and have a correct
++;; behaviour for condition obtaining/reporting.
++
++; r2-strict-behaviour = yes
++
++;;
++;; Set the delay (in ms) after sending ringback condition where audio stream
++;; should be opened for the channel. Limited to 25ms min, 500ms max.
++
++; r2-preconnect-wait = 250
++
++;;
++;; Enable/disable native bridge mode (known in pt_BR as "trombone") for calls
++;; in the Khomp channel, passing the audio inside the board when both channels
++;; (incoming and outgoing) are of type Khomp. This reduces the echo and the
++;; audio delay, and frees the host from most audio processing.
++
++; native-bridge = yes
++
++;;
++;; Defines the incoming context for calls on E1 channels. Some wildcards are
++;; accepted, and described in the bottom of this file.
++
++; context-digital = khomp-DD-LL
++
++;;
++;; Defines the incoming context for calls on FXS channels. Some wildcards
++;; are accepted, and described in the bottom of this file.
++
++; context-fxs = khomp-DD-CC
++
++;;
++;; Defines the "alternative" context for calls on FXS channels, which will be
++;; checked if the main context does not match for a call. Some wildcards are
++;; accepted, and described in the bottom of this file.
++
++; context-fxs-alt = khomp-DD
++
++;;
++;; Defines the incoming context for calls on FXO channels. Some wildcards
++;; are accepted, and described in the bottom of this file.
++
++; context-fxo = khomp-DD-CC
++
++;;
++;; Defines the "alternative" context for calls on FXO channels, which will
++;; be checked if the main context does not match for a call. Some wildcards
++;; are accepted, and described in the bottom of this file.
++
++; context-fxo-alt = khomp-DD
++
++;;
++;; Defines the incoming context for calls on GSM channels. Some wildcards
++;; are accepted, and described in the bottom of this file.
++
++; context-gsm-call = khomp-DD-CC
++
++;;
++;; Defines the "alternative" context for calls on GSM channels, which will
++;; be checked if the main context does not match for a call. Some wildcards
++;; are accepted, and described in the bottom of this file.
++
++; context-gsm-call-alt = khomp-DD
++
++;;
++;; Defines the incoming context for messages on GSM channels. Some wildcards
++;; are accepted, and described in the bottom of this file.
++
++; context-gsm-sms = khomp-sms-DD-LL
++
++;;
++;; Set the logging of messages to console. Possible values (to set more than one,
++;; separate the values with comma):
++;;
++;;  errors    -- Error messages, when something goes really wrong.
++;;  warnings  -- Warnings, used when something might not be going as expected.
++;;  messages  -- Generic messages, used to indicate some information.
++;;  events    -- Show received K3L events as console messages.
++;;  commands  -- Show sent K3L commands as console messages.
++;;  audio     -- Enable messages for K3L audio events (very verbose!).
++;;  modem     -- Enable messages for data received from KGSM modems.
++;;  link      -- Enable logging of link status changes.
++;;  standard  -- Special, enable default messages (RECOMMENDED).
++;;  all       -- Special, enable ALL messages (should not be used naively).
++
++; log-to-console = standard
++
++;;
++;; Set the logging of messages to disk. Possible values (to set more than one,
++;; separate the values with comma):
++;;
++;;  errors    -- Error messages, when something goes really wrong.
++;;  warnings  -- Warnings, used when something might not be going as expected.
++;;  messages  -- Generic messages, used to indicate some information.
++;;  events    -- Record received K3L events as log messages.
++;;  commands  -- Record sent K3L commands as log messages.
++;;  audio     -- Enable messages for K3L audio events (very verbose!).
++;;  modem     -- Enable messages for data received from KGSM modems.
++;;  link      -- Enable logging of link status changes.
++;;  functions -- Enable debugging for functions. Should not be used naively!).
++;;  threads   -- Enable debugging for threads. Should not be used naively!).
++;;  locks     -- Enable debugging for locks. Should not be used naively!).
++;;  streams   -- Enable debugging for streams. Should not be used naively!).
++;;  standard  -- Special, enable default messages (RECOMMENDED).
++;;  debugging -- Special, enable debug messages (should not be used naively).
++;;  all       -- Special, enable ALL messages (DO NOT USE THIS!).
++
++; log-to-disk = standard
++
++;;
++;; Set the low level tracing. DO NOT USE THIS UNLESS YOU WERE ADVISED 
++;; TO DO SO. Possible values (to set more than one, separate the 
++;; values with comma):
++;;
++;; k3l  -- Enable the low level tracing of board's API. 
++;;         If you are using 'kserver', this option will take no effect. For
++;;         the k3l tracing to proceed, you will need to (re)start kserver 
++;;         with 'debug' option. E.g. '#> kserver start -debug'.
++;; rdsi -- Enable ISDN low level debugging.
++;; r2   -- Enable r2 protocol low level debugging.
++
++; trace = r2
++
++;;
++;; Set output volume level. Possible values:
++;;
++;;   * '+ N' = increase N times;
++;;   * '- N' = decrease N times.
++;;   *   '0' = leave default.
++
++; output-volume = +2
++
++;;
++;; Set input volume level. Can only be used if AGC (and not pulse detection)
++;; is enabled on the board configuration. Possible values:
++;;
++;;   * '+ N' = increase N times;
++;;   * '- N' = decrease N times.
++;;   *   '0' = leave default.
++
++; input-volume = +2
++
++;;
++;; Sets the default AMA flags, affecting the categorization of entries in 
++;; the call detail records.
++
++; amaflags = default
++
++;;
++;; Defines call groups for calls of all channel.
++
++; callgroup = 0
++
++;;
++;; Set the default group that can pickup fellow workers' calls. 
++
++; pickupgroup = 0
++
++;;
++;; Sets the account code for calls placed on the channel. The account 
++;; code may be any alphanumeric string
++
++; accountcode = KhompBoard
++
++;;
++;; Set the language of the channel (useful for selecting audio messages of a
++;; specific language on answer).
++
++; language = pt-br
++
++;;
++;; Set the music on hold class of the channel (useful for selecting a group
++;; of songs to play on hold).
++
++; mohclass = default
++
++;;
++;; Sets the global orig (CALLERID) base for FXS boards. This number is added
++;; to a sequencial number, which is incremented for each FXS board and FXS
++;; channel in the system.
++
++; fxs-global-orig = 0200
++
++;;
++;; Sets the numbers (separated by comma) in which the 'pbx-dialtone' from FXS
++;; boards will be changed to 'co-dialtone' (public tone), when they are pressed.
++
++; fxs-co-dialtone = 0,90
++
++;;
++;; Enable or disable sending number of A throught BINA DTMF signalization to
++;; a FXS branch.
++
++; fxs-bina = yes
++
++;;
++;; Enable/disable using CTbus for Khomp CTI boards in native bridge.
++;; (WARNING: just used for internal testings!)
++
++; has-ctbus = yes
++
++;;
++;; This is the delay time to really disconnect a channel after the disconnect
++;; event arrive. If a connect event comes up in this interval, then the 
++;; disconnection is ignored and the call keeps going on. Default is zero 
++;; and the values are in milliseconds.
++
++; disconnect-delay = 2500
++
++;;
++;; This timer controls the delay associated with ringback generation in
++;; the Khomp channel, when the other side *does not send audio* - in
++;; other words, this is used when calling peers located at VoIP channels.
++;; Values are in milliseconds.
++
++; delay-ringback-co = 1500
++
++;;
++;; This timer controls the delay associated with ringback generation in
++;; the Khomp channel when the other side *report a continuous stream of
++;; audio in silence* - in other words, this is used when the audio is
++;; present but does not have any tone. Values are in milliseconds.
++
++; delay-ringback-pbx = 2500
++
++;;;;;;;;;;;;;;;;;;;;;; CONTEXTS WILDCARDS ;;;;;;;;;;;;;;;;;;;;;;
++;;
++;; For incoming contexts, you can use the following wildcards:
++;;
++;; 'DD' (device number): the sequence number of the board on the
++;; system (can be checked using "khomp summary", valid for all
++;; board models);
++;;
++;; 'LL' (link number): the sequence number of link where the call
++;; has arrived on the board. valid only for E1 boards.
++;;
++;; 'SSSS' (serial number): the serial number of the board (can
++;; be checked using "khomp summary", and it's valid for all
++;; board models);
++;;
++;; 'CC' (channel number): the channel number on which the call
++;; or message has arrived (valid for FXO, FXS and GSM boards);
++;;
++;; 'CCC' (channel number): same as above, but valid only for E1
++;; channels;
++;;
++
++;;;;
++;;;; Section for configuring allocation groups.
++;;;;
++
++[groups]
++
++;; In this section, you should define options using the following syntax:
++;; 
++;; 'group_name = allocation_string'
++;; 
++;; ex: 'pstn = b0l0 + b1c38' (without quotes)
++;; 
++;; You may define your own groups. In the example above, the group 
++;; called pstn can be used in the Dial string as Dial(Khomp/Gpstn/...)
++;; or Dial(Khomp/gpstn/...). As a result, the allocation string will be
++;; replaced with the one associated with the group "pstn". This is the same
++;; of doing Dial(Khomp/b0l0 + b1c38/...).
++
++;;;;
++;;;; Section for configuring cadences used on FXS boards and the whole
++;;;; channel (fast busy, ringback tones, etc).
++;;;;
++
++[cadences]
++
++;; Default value for cadences. You may define your own cadences, and
++;; also use them in the Dial arguments as "cadence=your_cadence_name".
++;;
++;; "0,0" means a continuous dialtone.
++
++; fast-busy    = 100,100
++; ringback     = 1000,4000
++; pbx-dialtone = 1000,100
++; vm-dialtone  = 1000,100,100,100
++; co-dialtone  = 0,0
++
++;;;;
++;;;; Section for configuring CALLERID's associated with FXS boards.
++;;;;
++
++[fxs-branches]
++
++;; In this section, you should define options using the following syntax:
++;; 
++;; 'orig_prefix = serial number 0, serial number 1, ...'
++;;
++;; ex: '800 = 1234,4535' (without quotes)
++;;
++;; In the example above, assuming both board 1234 and 4535 are of type
++;; FXS-300, the branches will be numbered from 800 to 829 in board 1234,
++;; and from 830 to 859 in board 4535.
++
++;;;;
++;;;; Section for configuring FXS hotlines.
++;;;;
++
++[fxs-hotlines]
++
++;; In this section, you should define options using the following syntax:
++;; 
++;; 'orig_prefix = destination_number'
++;; 
++;; ex: '804 = 32332933' (without quotes)
++;; 
++;; In the example above, the branch numbered 804 will call the number
++;; 3233-2933 (Khomp support number) every time the FXS branch goes off hook.
++
++;;;
++;;; Section for configuring specific options for FXS branches.
++;;;
++
++[fxs-options]
++
++;; In this section, you should define options using the following syntax:
++;; 
++;; 'orig_prefix = option1:value | option2:value | option3:value' ...
++;; 
++;; ex: '804 = pickupgroup:1,4-15 | output-volume:+2' (without quotes)
++;; 
++;; In the example above, the branch numbered 804 will have specific
++;; configuration for 'pickupgroup' and default output volume set to +2.
++;; 
++;; Possible values to options is:
++;; pickupgroup, callgroup, context, input-volume, output-volume language,
++;; mohclass, amaflags, accountcode, calleridnum, calleridname, mailbox.
