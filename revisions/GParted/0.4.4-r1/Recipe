@@ -1,0 +1,12 @@
+# Recipe for version 0.4.4 by Giambattista Bloisi <giamby@infinito.it>, on Wed Apr 15 07:09:09 Local time zone must be set--see zic manual page 2009
+# Recipe (MakeRecipe) for GParted by Andre Detsch <detsch@gobolinux.org>, on Mon Nov 20 21:56:41 BRST 2006
+compile_version=1.8.2
+url="$httpSourceforge/gparted/gparted-0.4.4.tar.bz2"
+file_size=1110345
+file_md5=1fec16c61c76770d2fddd834f0d37997
+recipe_type=configure
+configure_options=(
+    --disable-doc
+    --disable-scrollkeeper
+)
+with_doc=( --enable-doc )
