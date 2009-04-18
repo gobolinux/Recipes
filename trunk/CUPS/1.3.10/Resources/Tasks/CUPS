@@ -1,0 +1,34 @@
+#!/bin/sh
+
+# Task for cups program
+######################
+
+CUPS_BIN="/Programs/CUPS/Current/sbin/cupsd"
+
+function getPid () {
+	pid=`ps ax | awk '{if (match($5, ".*/cupsd$") || $5 == "cupsd") print $1}'`
+	echo $pid
+}
+
+case "$1" in 
+	[sS]tart | [rR]estart)
+		pid=`getPid`
+		if [ ! -z $pid ]; then
+			# kill current process
+			kill -HUP $pid
+		else
+			# launch daemon
+			${CUPS_BIN}
+			if [ $? != 0 ]; then
+				exit 1
+			fi
+		fi 
+		;;
+	[sS]top)
+		pid=`getPid`
+		if [ ! -z $pid ]; then
+			kill $pid
+		fi
+		;;
+	## Status case?¿
+esac
