@@ -1,0 +1,10 @@
+# Recipe for version 4.6.1 by Jonas Karlsson <jonka750@student.liu.se>, on Mon Apr 20 17:29:32 CEST 2009
+# Recipe (MakeRecipe) for XFConf by Giambattista Bloisi <giamby@infinito.it>, on Sat Mar 21 13:13:39 CET 2009
+compile_version=1.12.2
+url="http://mocha.xfce.org/archive/xfce-4.6.1/src/xfconf-4.6.1.tar.bz2"
+file_size=440499
+file_md5=d4d3018767ea9eb4b57cc57d4038023b
+recipe_type=configure
+with_doc=(
+   --enable-gtk-doc
+)
