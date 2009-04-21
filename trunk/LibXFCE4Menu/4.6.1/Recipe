@@ -1,0 +1,13 @@
+# Recipe for version 4.6.1 by Jonas Karlsson <jonka750@student.liu.se>, on Mon Apr 20 14:22:41 CEST 2009
+# Recipe (MakeRecipe) for LibXFCE4Menu by Giambattista Bloisi <giamby@infinito.it>, on Sat Mar 21 13:05:33 CET 2009
+compile_version=1.12.2
+url="http://mocha.xfce.org/archive/xfce-4.6.1/src/libxfce4menu-4.6.1.tar.bz2"
+file_size=404201
+file_md5=5dc9343885c2c6f931318b2a1cdcc9db
+recipe_type=configure
+configure_options=(
+   --enable-debug=no
+)
+with_doc=(
+   --enable-gtk-doc
+)
