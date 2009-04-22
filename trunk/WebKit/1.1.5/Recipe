@@ -1,0 +1,15 @@
+# Recipe for version 1.1.5 by Jonas Karlsson <jonas@gobolinux.org>, on Sun Jan 18 13:41:21 CET 2009
+# Recipe (MakeRecipe) for WebKit by Daniele Maccari <daniele.maccari@gmail.com>, on Wed Feb 13 11:45:17 CET 2008
+compile_version=1.10.1
+svn="http://svn.webkit.org/repository/webkit/releases/WebKitGTK/webkit-1.1.5/"
+recipe_type=configure
+autogen_before_configure=yes
+makefile='GNUmakefile'
+configure_options=(
+   --enable-fast-malloc   
+)
+with_gtk2="--with-font-backend=pango"
+with_html5_media="--enable-video"
+with_gnome=(
+   --enable-gnomekeyring
+)
