@@ -1,0 +1,13 @@
+# Recipe for version 2.26.1 by Jonas Karlsson <jonka750@student.liu.se>, on Wed Apr 22 01:18:53 CEST 2009
+# Recipe (MakeRecipe) for LibSoup by roko, <ro.ko@mcnon.com>, on Fri Nov 19 01:54:22 BRST 2004
+compile_version=1.8.0
+url="ftp://ftp.gnome.org/pub/gnome/sources/libsoup/2.26/libsoup-2.26.1.tar.bz2"
+file_size=736811
+file_md5=94c0495dc8bf213709bdb175ab224c7e
+recipe_type=configure
+configure_options=(
+   --without-gnome
+)
+with_gnome=(
+   --with-gnome
+)
