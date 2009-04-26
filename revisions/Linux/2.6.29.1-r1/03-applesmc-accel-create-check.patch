@@ -1,0 +1,64 @@
+--- linux-2.6.29.1.orig/drivers/hwmon/applesmc.c	2009-04-02 17:55:27.000000000 -0300
++++ linux-2.6.29.1/drivers/hwmon/applesmc.c	2009-04-26 13:08:33.449440992 -0300
+@@ -515,11 +515,20 @@ static struct platform_driver applesmc_d
+  * applesmc_calibrate - Set our "resting" values.  Callers must
+  * hold applesmc_lock.
+  */
+-static void applesmc_calibrate(void)
++static int applesmc_calibrate(void)
+ {
+-	applesmc_read_motion_sensor(SENSOR_X, &rest_x);
+-	applesmc_read_motion_sensor(SENSOR_Y, &rest_y);
++	int ret;
++
++	ret = applesmc_read_motion_sensor(SENSOR_X, &rest_x);
++	if (ret)
++		return ret;
++
++	ret = applesmc_read_motion_sensor(SENSOR_Y, &rest_y);
++	if (ret)
++		return ret;
++
+ 	rest_x = -rest_x;
++	return 0;
+ }
+ 
+ static void applesmc_idev_poll(struct input_polled_dev *dev)
+@@ -1248,6 +1257,13 @@ static int applesmc_create_accelerometer
+ 	struct input_dev *idev;
+ 	int ret;
+ 
++	/* initial calibrate for the input device */
++	ret = applesmc_calibrate();
++	if (ret) {
++		printk(KERN_ERR "applesmc: Cannot calibrate the accelerometer.\n");
++		return ret;
++	}
++
+ 	ret = sysfs_create_group(&pdev->dev.kobj,
+ 					&accelerometer_attributes_group);
+ 	if (ret)
+@@ -1262,9 +1278,6 @@ static int applesmc_create_accelerometer
+ 	applesmc_idev->poll = applesmc_idev_poll;
+ 	applesmc_idev->poll_interval = APPLESMC_POLL_INTERVAL;
+ 
+-	/* initial calibrate for the input device */
+-	applesmc_calibrate();
+-
+ 	/* initialize the input device */
+ 	idev = applesmc_idev->input;
+ 	idev->name = "applesmc";
+@@ -1513,9 +1526,12 @@ static int __init applesmc_init(void)
+ 	}
+ 
+ 	if (applesmc_accelerometer) {
++		/* Try to initialize the accelerometer, not being able to do so
++		 * is not a fatal error. */
++
+ 		ret = applesmc_create_accelerometer();
+ 		if (ret)
+-			goto out_temperature;
++			applesmc_accelerometer = 0;
+ 	}
+ 
+ 	if (applesmc_light) {

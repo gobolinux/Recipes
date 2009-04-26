@@ -1,0 +1,77 @@
+This patch makes decrypt and key output dependant on the
+CONFIG_IEEE80211_DEBUG config option. If one is interested in this
+output one should enable debug for ieee80211.
+
+Signed-off-by: Jonas Karlsson
+
+--- linux-2.6.29.1.orig/drivers/staging/rtl8187se/ieee80211/ieee80211_crypt_ccmp.c	2009-04-02 17:55:27.000000000 -0300
++++ linux-2.6.29.1/drivers/staging/rtl8187se/ieee80211/ieee80211_crypt_ccmp.c	2009-04-26 13:17:31.263436974 -0300
+@@ -334,25 +334,31 @@ static int ieee80211_ccmp_decrypt(struct
+ 	pos = skb->data + hdr_len;
+ 	keyidx = pos[3];
+ 	if (!(keyidx & (1 << 5))) {
++#ifdef CONFIG_IEEE80211_DEBUG
+ 		if (net_ratelimit()) {
+ 			printk(KERN_DEBUG "CCMP: received packet without ExtIV"
+ 			       " flag from " MAC_FMT "\n", MAC_ARG(hdr->addr2));
+ 		}
++#endif
+ 		key->dot11RSNAStatsCCMPFormatErrors++;
+ 		return -2;
+ 	}
+ 	keyidx >>= 6;
+ 	if (key->key_idx != keyidx) {
++#ifdef CONFIG_IEEE80211_DEBUG
+ 		printk(KERN_DEBUG "CCMP: RX tkey->key_idx=%d frame "
+ 		       "keyidx=%d priv=%p\n", key->key_idx, keyidx, priv);
++#endif
+ 		return -6;
+ 	}
+ 	if (!key->key_set) {
++#ifdef CONFIG_IEEE80211_DEBUG
+ 		if (net_ratelimit()) {
+ 			printk(KERN_DEBUG "CCMP: received packet from " MAC_FMT
+ 			       " with keyid=%d that does not have a configured"
+ 			       " key\n", MAC_ARG(hdr->addr2), keyidx);
+ 		}
++#endif
+ 		return -3;
+ 	}
+ 
+@@ -365,6 +371,7 @@ static int ieee80211_ccmp_decrypt(struct
+ 	pos += 8;
+ 
+ 	if (memcmp(pn, key->rx_pn, CCMP_PN_LEN) <= 0) {
++#ifdef CONFIG_IEEE80211_DEBUG
+ 		if (net_ratelimit()) {
+ 			printk(KERN_DEBUG "CCMP: replay detected: STA=" MAC_FMT
+ 			       " previous PN %02x%02x%02x%02x%02x%02x "
+@@ -372,6 +379,7 @@ static int ieee80211_ccmp_decrypt(struct
+ 			       MAC_ARG(hdr->addr2), MAC_ARG(key->rx_pn),
+ 			       MAC_ARG(pn));
+ 		}
++#endif
+ 		key->dot11RSNAStatsCCMPReplays++;
+ 		return -4;
+ 	}
+@@ -397,17 +405,19 @@ static int ieee80211_ccmp_decrypt(struct
+ 	}
+ 
+ 	if (memcmp(mic, a, CCMP_MIC_LEN) != 0) {
++#ifdef CONFIG_IEEE80211_DEBUG
+ 		if (net_ratelimit()) {
+ 			printk(KERN_DEBUG "CCMP: decrypt failed: STA="
+ 			       MAC_FMT "\n", MAC_ARG(hdr->addr2));
+ 		}
++#endif
+ 		key->dot11RSNAStatsCCMPDecryptErrors++;
+ 		return -5;
+ 	}
+ 
+ 	memcpy(key->rx_pn, pn, CCMP_PN_LEN);
+ 
+-#endif
++#endif /* JOHN_CCMP */
+ 	/* Remove hdr and MIC */
+ 	memmove(skb->data + CCMP_HDR_LEN, skb->data, hdr_len);
+ 	skb_pull(skb, CCMP_HDR_LEN);
