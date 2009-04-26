@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for OTS by Jonas Karlsson <jonas@gobolinux.org>, on Sun Apr 26 23:27:56 CEST 2009
+# Recipe for version 0.5.0 by Jonas Karlsson <jonas@gobolinux.org>, on Sun Apr 26 23:27:56 CEST 2009
+compile_version=1.10.0
+url="$httpSourceforge/libots/ots-0.5.0.tar.gz"
+file_size=371126
+file_md5=1e140a4bf9d720b4339a5c2bdf4976e8
+recipe_type=configure
+configure_options=(
+   --disable-gtk-doc
+)
+with_doc=(
+   --enable-gtk-doc
+)
