@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for WmFrog by Rui Andrada <shingonoide@gmail.com>, on Tue Apr 21 05:03:01 BRT 2009
+# Recipe for version 0.1.2 by Rui Andrada <shingonoide@gmail.com>, on Tue Apr 21 05:03:01 BRT 2009
+compile_version=1.12.2
+url="http://dockapps.org/download.php/id/130/wmFrog-0.1.2.tgz"
+file_size=60019
+file_md5=cfe4cbcda2365c0907bf31f29f5c025e
+dir='wmFrog/Src'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
