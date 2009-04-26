@@ -1,0 +1,19 @@
+# Recipe for version 22.3 by Xavier Pinho <a52363@alunos.uminho.pt>, on Mon Apr 20 19:19:50 WEST 2009
+compile_version=1.8.5
+url="$ftpGnu/emacs/emacs-22.3.tar.gz"
+file_size=39587396
+file_md5=aa8ba34f548cd78b35914ae5a7bb87eb
+recipe_type=configure
+
+# Comment out (or change) --with-x-toolkit=gtk if you don't want
+# gtk libraries pulled into your emacs compile.
+# Other valid options are "athena" and "motif"
+# See the file "INSTALL" in the source package for more configure options.
+configure_options=(
+   "--with-x-toolkit=gtk"
+)
+
+unmanaged_files=(
+   $goboVariable/games/emacs
+)
+
