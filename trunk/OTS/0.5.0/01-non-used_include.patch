@@ -1,0 +1,15 @@
+Don't try to include non-existing file (which also is not used)
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+
+--- ots-0.5.0/doc/Makefile.in.old	2009-04-26 23:36:12.000000000 +0200
++++ ots-0.5.0/doc/Makefile.in	2009-04-26 23:36:06.000000000 +0200
+@@ -241,8 +241,6 @@
+ mostlyclean distclean maintainer-clean
+ 
+ 
+-include $(top_srcdir)/gtk-doc.make
+-
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.
+ # Otherwise a system limit (for SysV at least) may be exceeded.
+ .NOEXPORT:
