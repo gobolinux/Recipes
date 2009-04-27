@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Notify-OSD by Rui Andrada <shingonoide@gmail.com>, on Sun Apr 26 20:03:41 BRT 2009
+# Recipe for version 0.9.11 by Rui Andrada <shingonoide@gmail.com>, on Sun Apr 26 20:03:41 BRT 2009
+compile_version=1.12.2
+url="http://launchpad.net/notify-osd/trunk/0.9.11/+download/notify-osd-0.9.11.tar.gz"
+file_size=503932
+file_md5=81197c53c1efbaafe91b523485631188
+recipe_type=configure
+install_variables=(
+   servicedir="$target/share/dbus-1/services"
+)
