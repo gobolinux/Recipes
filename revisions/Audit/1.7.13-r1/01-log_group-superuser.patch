@@ -1,0 +1,11 @@
+--- audit-1.7.4/init.d/auditd.conf.orig	2008-05-20 02:38:56.000000000 -0300
++++ audit-1.7.4/init.d/auditd.conf	2008-05-20 02:39:05.000000000 -0300
+@@ -4,7 +4,7 @@
+ 
+ log_file = /var/log/audit/audit.log
+ log_format = RAW
+-log_group = root
++log_group = 0
+ priority_boost = 4
+ flush = INCREMENTAL
+ freq = 20
