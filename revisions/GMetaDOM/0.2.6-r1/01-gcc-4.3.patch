@@ -1,0 +1,10 @@
+--- gmetadom-0.2.6/src/gdome_cpp_smart/include/GdomeSmartDOMTraits.hh.old	2009-04-27 22:15:30.000000000 +0200
++++ gmetadom-0.2.6/src/gdome_cpp_smart/include/GdomeSmartDOMTraits.hh	2009-04-27 22:22:08.000000000 +0200
+@@ -26,6 +26,7 @@
+  */
+ 
+ #include <string>
++#include <cstring>
+ 
+ #include "GdomeSmartDOMChar.hh"
+ 
