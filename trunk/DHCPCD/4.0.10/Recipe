@@ -12,3 +12,7 @@ make_variables=(
    SYSCONFDIR="$settings_target"
    DBDIR="$variable_target/db"
 )
+
+pre_link() {
+   chmod +x "$settings_target/dhcpc/dhcpcd.exe"
+}
