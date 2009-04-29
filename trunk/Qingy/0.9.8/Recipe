@@ -1,0 +1,11 @@
+# Recipe for version 0.9.8 by Rui Andrada <shingonoide@gmail.com>, on Tue Apr 28 07:29:29 BRT 2009
+# Recipe (MakeRecipe) for Qingy by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Mar 7 04:16:56 BRT 2005
+compile_version=1.8.0
+url="$httpSourceforge/qingy/qingy-0.9.8.tar.bz2"
+file_size=607832
+file_md5=c32bf13240c07ebc24103be4eb3cbcf9
+recipe_type=configure
+
+configure_options=(
+	"--with-pamdir=$settings_target/pam.d"
+)
