@@ -1,0 +1,11 @@
+# Recipe for version 2.6.8 by Jonas Karlsson <jonas@gobolinux.org>, on Wed Apr 29 01:40:19 CEST 2009
+# Recipe (MakeRecipe) for AbiWord-Docs by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jan. 25., vasárnap, 00.53.44 CET
+compile_version=1.11.4
+url="http://www.abisource.com/downloads/abiword/2.6.8/source/abiword-docs-2.6.8.tar.gz"
+file_size=1440398
+file_md5=5698c79cfa179f4b15c82a699d11a309
+recipe_type=configure
+autogen_before_configure=yes
+make_variables=(
+    ABIWORD_EXTRAS_PKGDATADIR=$target/share/abiword-2.6
+)
