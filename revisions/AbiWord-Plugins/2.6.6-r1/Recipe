@@ -1,0 +1,30 @@
+# Recipe (MakeRecipe) for AbiWord-Plugins by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jan. 25., vasárnap, 00.55.06 CET
+# Recipe for version 2.6.6 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jan. 25., vasárnap, 00.55.06 CET
+compile_version=1.11.4
+urls=(
+    "http://www.abisource.com/downloads/abiword/2.6.6/source/abiword-plugins-2.6.6.tar.gz"
+    "http://www.abisource.com/downloads/abiword/2.6.6/source/abiword-2.6.6.tar.gz"
+)
+file_sizes=(
+    1970233
+    9534259
+)
+file_md5s=(
+    45dabc491976e3f21d943817e61b9d89
+    b9de84f03f555d4490b63e5b7f53e2f1
+)
+recipe_type=configure
+makefile="GNUmakefile"
+configure_options=(
+    --with-abiword="${goboPrefix}/Files/Compile/Sources/abiword-2.6.6"
+    --enable-libabiword
+    --with-libpng
+    --disable-abiscan # Currently broken
+#    --disable-abicollab
+)
+with_boost="--with-boost"
+with_gnome="--enable-gnome"
+
+make_variables=(
+    ABIWORD_EXTRAS_PKGDATADIR=$target/share/abiword-2.6
+)
