@@ -1,0 +1,19 @@
+# Recipe for version 2.6.6 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jan. 24., szombat, 22.59.36 CET
+compile_version=1.11.4
+url="http://www.abisource.com/downloads/abiword/2.6.6/source/abiword-2.6.6.tar.gz"
+file_size=9534259
+file_md5=b9de84f03f555d4490b63e5b7f53e2f1
+recipe_type=configure
+makefile="GNUmakefile"
+configure_options=(
+   --enable-libabiword 
+   --enable-extra-optimization
+)
+
+with_printing="--enable-printing"
+with_imagemagick="--with-ImageMagick"
+with_gnomevfs="--enable-gnomevfs"
+with_libgnomeui="--enable-gnomeui"
+make_variables=(
+   ABIWORD_PLUGINSDIR="${goboLibraries}/abiword-2.6/plugins"
+)
