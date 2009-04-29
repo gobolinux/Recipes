@@ -1,0 +1,10 @@
+# Recipe for version 0.36.1 by Rui Andrada <shingonoide@gmail.com>, on Wed Apr 29 04:25:01 BRT 2009
+# Recipe (MakeRecipe) for Po4a by Nathan Middleton <nathan.middleton@gmail.com>, on Sun Nov 9 14:21:27 CST 2008
+compile_version=1.11.3
+url="https://alioth.debian.org/frs/download.php/3003/po4a-0.36.1.tar.gz"
+file_size=1111288
+file_md5=f13b88583ebb4af2a7a5dd9646f2004b
+recipe_type=makefile
+make_variables=(
+   "DESTDIR=$target"
+)
