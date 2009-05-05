@@ -1,0 +1,16 @@
+# Recipe for Squashfs-Tools by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.8.2
+url="http://downloads.sourceforge.net/squashfs/squashfs4.0.tar.gz"
+file_size=103979
+file_md5=a3c23391da4ebab0ac4a75021ddabf96
+recipe_type=makefile
+dir="squashfs4.0/squashfs-tools"
+do_install=no
+
+environment=(
+    PREFIX="$target"
+)
+
+pre_link() {
+    cp mksquashfs unsquashfs $target/bin/
+}
