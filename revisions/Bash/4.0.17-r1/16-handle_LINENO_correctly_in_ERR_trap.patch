@@ -1,0 +1,104 @@
+			     BASH PATCH REPORT
+			     =================
+
+Bash-Release:	4.0
+Patch-ID:	bash40-016
+
+Bug-Reported-by:	Brian J. Murrell" <brian@interlinx.bc.ca>
+Bug-Reference-ID:	<1237564627.7666.12.camel@pc.interlinx.bc.ca>
+Bug-Reference-URL:http://lists.gnu.org/archive/html/bug-bash/2009-03/msg00160.html
+
+Bug-Description:
+
+There are several problems with the handling of $LINENO in an ERR trap.
+
+Patch:
+
+*** ../bash-4.0-patched/trap.c	2009-01-16 17:07:53.000000000 -0500
+--- bash/trap.c	2009-03-20 21:37:00.000000000 -0400
+***************
+*** 756,760 ****
+  
+        flags = SEVAL_NONINT|SEVAL_NOHIST;
+!       if (sig != DEBUG_TRAP && sig != RETURN_TRAP)
+  	flags |= SEVAL_RESETLINE;
+        if (function_code == 0)
+--- 756,760 ----
+  
+        flags = SEVAL_NONINT|SEVAL_NOHIST;
+!       if (sig != DEBUG_TRAP && sig != RETURN_TRAP && sig != ERROR_TRAP)
+  	flags |= SEVAL_RESETLINE;
+        if (function_code == 0)
+*** ../bash-4.0-patched/execute_cmd.c	2009-02-13 16:41:41.000000000 -0500
+--- bash/execute_cmd.c	2009-03-21 14:16:11.000000000 -0400
+***************
+*** 569,572 ****
+--- 569,573 ----
+        /* Fork a subshell, turn off the subshell bit, turn off job
+  	 control and call execute_command () on the command again. */
++       line_number_for_err_trap = line_number;
+        paren_pid = make_child (savestring (make_command_string (command)),
+  			      asynchronous);
+***************
+*** 611,615 ****
+--- 612,619 ----
+  		{
+  		  last_command_exit_value = exec_result;
++ 		  save_line_number = line_number;
++ 		  line_number = line_number_for_err_trap;
+  		  run_error_trap ();
++ 		  line_number = save_line_number;
+  		}
+  
+***************
+*** 767,771 ****
+--- 771,777 ----
+  	{
+  	  last_command_exit_value = exec_result;
++ 	  line_number = line_number_for_err_trap;
+  	  run_error_trap ();
++ 	  line_number = save_line_number;
+  	}
+  
+***************
+*** 2106,2109 ****
+--- 2112,2116 ----
+    COMMAND *tc, *second;
+    int ignore_return, exec_result, was_error_trap, invert;
++   volatile int save_line_number;
+  
+    ignore_return = (command->flags & CMD_IGNORE_RETURN) != 0;
+***************
+*** 2175,2178 ****
+--- 2182,2186 ----
+        ignore_return = (command->flags & CMD_IGNORE_RETURN) != 0;
+  
++       line_number_for_err_trap = line_number;
+        exec_result = execute_pipeline (command, asynchronous, pipe_in, pipe_out, fds_to_close);
+  
+***************
+*** 2180,2184 ****
+--- 2188,2195 ----
+  	{
+  	  last_command_exit_value = exec_result;
++ 	  save_line_number = line_number;
++ 	  line_number = line_number_for_err_trap;
+  	  run_error_trap ();
++ 	  line_number = save_line_number;
+  	}
+  
+*** ../bash-4.0/patchlevel.h	2009-01-04 14:32:40.000000000 -0500
+--- bash/patchlevel.h	2009-02-22 16:11:31.000000000 -0500
+***************
+*** 26,30 ****
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 15
+  
+  #endif /* _PATCHLEVEL_H_ */
+--- 26,30 ----
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 16
+  
+  #endif /* _PATCHLEVEL_H_ */

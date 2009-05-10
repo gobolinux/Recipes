@@ -1,0 +1,43 @@
+			     BASH PATCH REPORT
+			     =================
+
+Bash-Release: 4.0
+Patch-ID: bash40-006
+
+Bug-Reported-by:	Evgeniy Zhemchugov <jini.zh@gmail.com>
+Bug-Reference-ID:	<e7bc8dd30902241016m8bd543ej775717d007df975b@mail.gmail.com>
+Bug-Reference-URL:	http://lists.gnu.org/archive/html/bug-bash/2009-02/msg00202.html
+
+Bug-Description:
+
+Bash did not parse pipelines using the |& construct correctly if the
+pipeline elements were not simple commands.
+
+Patch:
+
+*** ../bash-4.0/parse.y	2009-01-08 08:29:12.000000000 -0500
+--- bash/parse.y	2009-02-25 17:25:56.000000000 -0500
+***************
+*** 4478,4481 ****
+--- 4478,4482 ----
+      case AND_AND:
+      case BANG:
++     case BAR_AND:
+      case DO:
+      case DONE:
+*** ../bash-4.0/patchlevel.h	2009-01-04 14:32:40.000000000 -0500
+--- bash/patchlevel.h	2009-02-22 16:11:31.000000000 -0500
+***************
+*** 26,30 ****
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 5
+  
+  #endif /* _PATCHLEVEL_H_ */
+--- 26,30 ----
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 6
+  
+  #endif /* _PATCHLEVEL_H_ */
+
