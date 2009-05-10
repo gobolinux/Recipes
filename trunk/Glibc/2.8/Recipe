@@ -1,7 +1,7 @@
 # Recipe for version 2.8 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Apr 29 14:43:33 GMT 2008
 # by Guilherme Bedin
 # 02/12/2003
-compile_version=1.11.0
+compile_version=1.12.3
 urls=(
    http://www.gobolinux.org/sources/glibc-2.8.tar.lzma
    http://www.gobolinux.org/sources/glibc-ports-2.8.tar.lzma
@@ -18,9 +18,7 @@ unpack_files=inside_first
 
 recipe_type=configure
 needs_build_directory=yes
-needs_safe_linking=yes
-keep_existing_target=yes
-sandbox_options=("--no-sandbox")
+
 configure_options=(
     --enable-kernel=2.6.18
     --with-headers="${linux_headers_path}/include"
@@ -37,11 +35,14 @@ environment=(
     CFLAGS=
     CXXFLAGS=
     LDFLAGS=
-# This avoids "make install" to interrupt because ld does not find libraries
-    LD_LIBRARY_PATH=$(readlink -f $target/../Current/lib):$goboLibraries
 )
 
 pre_install() {
-   ldconfig -C $target/Resources/Defaults/Settings/ld.so.cache
-   ldconfig
+   mkdir -p "$target/Resources/Defaults/Settings"
+   cp -a "$recipedir"/Resources/Defaults/Settings/* "$target/Resources/Defaults/Settings"
+   
+   # create an up-to-date ld.so.cache in Defaults and make sure
+   # current cache is up-to-date
+   "$goboExecutables"/ldconfig -C $target/Resources/Defaults/Settings/ld.so.cache
+   "$goboExecutables"/ldconfig
 }
