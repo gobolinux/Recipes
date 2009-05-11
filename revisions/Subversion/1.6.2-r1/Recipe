@@ -1,0 +1,25 @@
+# Recipe for version 1.6.2 by Jonas Karlsson <jonas@gobolinux.org>, on Mon May 11 15:34:50 CEST 2009
+# Recipe (MakeRecipe) for Subversion by Jonas Karlsson <jonka750@student.liu.se>, on Wed May 11 07:50:33 CEST 2005
+compile_version=1.9.0
+url="http://subversion.tigris.org/downloads/subversion-1.6.2.tar.bz2"
+file_size=5470969
+file_md5=ebb1cecd313533ca0876f9bfc86bd5d9
+recipe_type=configure
+configure_options=(
+   --with-apr=${apr_path}
+   --with-apr-util=${apr_util_path}
+   --disable-mod-activation
+)
+with_httpd=(
+   --with-apache-libexecdir="${goboLibraries}/modules"
+)
+
+build_target="all"
+install_target="install"
+install_variables=(
+   APACHE_LIBEXECDIR="${target}/lib/modules"
+)
+pre_install() {
+   # Sigh, libtool again...
+   find -name "*.la" | xargs sed -i "s,^libdir='${goboLibraries},libdir='${target}/lib,"
+}
