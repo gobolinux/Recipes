@@ -4,7 +4,4 @@ compile_version=1.11.3
 url="https://alioth.debian.org/frs/download.php/3003/po4a-0.36.1.tar.gz"
 file_size=1111288
 file_md5=f13b88583ebb4af2a7a5dd9646f2004b
-recipe_type=makefile
-make_variables=(
-   "DESTDIR=$target"
-)
+recipe_type=perl
