@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for HawkNL by Leandro Motta Barros <lmb@stackedboxes.org>, on Tue May 12 11:01:43 BRT 2009
+# Recipe for version 1.68 by Leandro Motta Barros <lmb@stackedboxes.org>, on Tue May 12 11:01:43 BRT 2009
+compile_version=1.11.2
+url="http://www.hawksoft.com/cgi/philf/clickcount.pl?action=jump&URL=HawkNL168src.zip"
+file="HawkNL168src.zip"
+file_size=224411
+file_md5=1b5eb1373a4c45dc49ded2c9d89cec93
+dir='HawkNL1.68'
+recipe_type=makefile
+makefile=makefile.linux
+make_variables=(
+   "INCDIR=$target/include"
+   "LIBDIR=$target/lib"
+)
