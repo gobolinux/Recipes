@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Cinpy by Michael Homer <michael@gobolinux.org>, on Wed May 13 11:58:50 NZST 2009
+# Recipe for version 0.10 by Michael Homer <michael@gobolinux.org>, on Wed May 13 11:58:50 NZST 2009
+compile_version=1.12.0
+url="http://www.cs.tut.fi/~ask/cinpy/cinpy-0.10.tar.gz"
+file_size=11797
+file_md5=ec96dec4314d0106f6b8683263dfda72
+dir='cinpy'
+recipe_type=manifest
+
+manifest=(
+   "cinpy.py:lib/python$(python --version 2>&1|awk -F'[. ]' '{print $2"."$3}')/site-packages/"
+)
