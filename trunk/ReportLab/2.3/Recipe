@@ -1,9 +1,8 @@
-# Recipe (MakeRecipe) for ReportLab by Nick Matteo <kundor@kundor.org>, on Fri Mar 20 18:30:09 EDT 2009
-# Recipe for version 2.3 by Nick Matteo <kundor@kundor.org>, on Fri Mar 20 18:30:09 EDT 2009
-compile_version=1.12.2
+# Recipe (MakeRecipe) for ReportLab by Demian Florentin <demianflorentin@gmail.com>, on lun feb 16 18:08:46 PYST 2009
+# Recipe for version 2.3 by Demian Florentin <demianflorentin@gmail.com>, on lun feb 16 18:08:46 PYST 2009
+compile_version=1.11.4
 url="http://www.reportlab.org/ftp/ReportLab_2_3.tar.gz"
 file_size=1857239
 file_md5=057b846bd3b7b2c3498bf14f6a523632
 recipe_type=python
-dir="ReportLab_2_3"
-#autogen_before_configure=yes
+
