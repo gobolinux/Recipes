@@ -5,3 +5,14 @@ url="http://download.savannah.nongnu.org/releases/tinycc/tcc-0.9.24.tar.bz2"
 file_size=364601
 file_md5=24d8442d1f2c0a4c2cafb6859c333b05
 recipe_type=configure
+
+do_build() {
+   configure_do_build "$@"
+   make libtcc.o
+   gcc -shared -Wl,-soname,libtcc.so -o libtcc.so libtcc.o
+}
+
+do_install() {
+   configure_do_install "$@"
+   $sudo_exec cp libtcc.so "$target/lib"
+}
