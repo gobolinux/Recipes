@@ -1,0 +1,15 @@
+# Recipe for version 4.0 by Michael Homer <michael@gobolinux.org>, on Sun Feb 22 09:54:52 NZDT 2009
+url=$ftpGnu/bash/bash-4.0.tar.gz
+file_size=6230779
+file_md5=a90a1b5a6db4838483f05438e05e8eb9
+
+recipe_type=configure
+compile_version=1.8.2
+
+configure_options=(
+    "--with-installed-readline"
+)
+
+pre_link() {
+    ln -s bash ${target}/bin/sh
+}
