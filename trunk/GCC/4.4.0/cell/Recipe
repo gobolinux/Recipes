@@ -1,0 +1,17 @@
+configure_options=(
+	${configure_options[@]}
+	"--enable-altivec"
+	"--enable-targets=powerpc-linux,powerpc64-linux"
+	"--with-cpu=cell"
+	"--with-cpu=default32"
+	"--with-tune=cell"
+	"--with-long-double-128"
+)
+
+private__add_arch_aliases() {
+	ln -s gcc "$target/bin"/ppu-gcc
+	ln -s g++ "$target/bin"/ppu-g++
+    ln -s gcc "$target/bin"/ppu32-gcc
+	ln -s g++ "$target/bin"/ppu32-g++
+}
+
