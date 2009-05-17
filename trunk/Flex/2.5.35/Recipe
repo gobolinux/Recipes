@@ -10,8 +10,11 @@ pre_build() {
 }
 
 pre_link() {
-   pushd ${target}/bin &> /dev/null
-   ln -s flex lex
-   ln -s flex flex++
-   popd &> /dev/null
+   cat > "${target}/bin/lex" << "EOF"
+#!/bin/sh
+exec "${goboExecutables}/flex" -l "$@"
+EOF
+   chmod -v 755 "${target}/bin/lex"
+
+   ln -s flex "${target}/bin/flex++"
 }
