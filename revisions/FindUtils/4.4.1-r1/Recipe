@@ -1,0 +1,11 @@
+# Recipe for version 4.4.1 by Jonas Karlsson <jonas@gobolinux.org>, on Tue May 12 23:30:53 CEST 2009
+# Recipe (MakeRecipe) for FindUtils by roko, <ro.ko@mcnon.com>, , on Fri Oct 22 20:28:10 BRST 2004
+compile_version=1.8.2
+url="$ftpGnu/findutils/findutils-4.4.1.tar.gz"
+file_size=2143440
+file_md5=5883f569dc021eee765f330bb7a3782d
+recipe_type=configure
+
+pre_link() {
+    mkdir -p $variable_target
+}
