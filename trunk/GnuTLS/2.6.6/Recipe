@@ -1,0 +1,8 @@
+# Recipe for version 2.6.6 by Jonas Karlsson <jonas@gobolinux.org>, on Sun May 17 10:02:17 CEST 2009
+# Recipe (MakeRecipe) for Gnutls by Jonas Karlsson <jonka750@student.liu.se>, on Thu Apr 7 23:33:28 CEST 2005
+compile_version=1.9.0
+url="ftp://ftp.gnu.org/pub/gnu/gnutls/gnutls-2.6.6.tar.bz2"
+file_size=5116385
+file_md5=ca2489e29f9dc313a79b9747bb1090e5
+mirror_url="ftp://ftp.gnutls.org/pub/gnutls/attic/gnutls-2.6.6.tar.bz2"
+recipe_type=configure
