@@ -1,0 +1,20 @@
+# Recipe (MakeRecipe) for Flex by Andreas Koehler, on Fri Aug 12 13:57:22 CEST 2005
+compile_version=1.8.2
+url="$httpSourceforge/flex/flex-2.5.35.tar.bz2"
+file_size=1256501
+file_md5=10714e50cea54dc7a227e3eddcd44d57
+recipe_type=configure
+
+pre_build() {
+   touch doc/flex.1
+}
+
+pre_link() {
+   cat > "${target}/bin/lex" << "EOF"
+#!/bin/sh
+exec "${goboExecutables}/flex" -l "$@"
+EOF
+   chmod -v 755 "${target}/bin/lex"
+
+   ln -s flex "${target}/bin/flex++"
+}
