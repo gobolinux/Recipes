@@ -1,0 +1,10 @@
+# Recipe for version 1.0.20 by Jonas Karlsson <jonas@gobolinux.org>, on Sat May 16 00:12:34 CEST 2009
+# Recipe (MakeRecipe) for ALSA-Lib by Peter Eriksen <s022018@student.dtu.dk>, on Sat Jan 15 15:28:29 CET 2005
+compile_version=1.9.0
+url="ftp://ftp.alsa-project.org/pub/lib/alsa-lib-1.0.20.tar.bz2"
+file_size=794728
+file_md5=6e9080ba1faa5d3739d14dd76c62d8dc
+recipe_type=configure
+configure_options=(
+    --enable-symbolic-functions
+)
