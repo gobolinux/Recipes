@@ -1,0 +1,11 @@
+# Recipe for version 2.6.29.1 by Jonas Karlsson <jonas@gobolinux.org>, on Tue May 12 23:39:13 CEST 2009
+# Recipe (MakeRecipe) for IPRoute2 by Giambattista Bloisi <giamby@infinito.it>, on Sun Mar 9 16:47:06 CET 2008
+compile_version=1.10.2
+url="http://devresources.linux-foundation.org/dev/iproute2/download/iproute2-2.6.29-1.tar.bz2"
+file_size=367905
+file_md5=c1bc258a6c345905e79935ac7a3cc582
+recipe_type=configure
+
+make_variables=(
+    "DESTDIR=$target"
+)
