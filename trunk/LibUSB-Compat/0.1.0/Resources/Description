@@ -1,0 +1,17 @@
+[Name] LibUSB-Compat
+[Summary] Compability replacement for LibUSB 0.1
+[Description] LibUSB-Compat is a replacement for LibUSB 0.1.
+However, instead of being an actual implementation, LibUSB-Compat is
+more of a compatibility layer (or wrapper) which just converts LibUSB
+0.1 calls into their LibUSB 1.0 equivalents.
+
+It aims to look, feel and behave exactly like LibUSB 0.1. As it is a
+replacement, you cannot install it alongside LibUSB 0.1 on the same
+system.
+
+As the compatibility layer implements the exact same ABI and API, no
+modifications to existing LibUSB 0.1-based applications are needed.
+You do not even have to recompile them. This compatibility layer is a
+drop-in replacement.
+[License] GNU Lesser General Public License version 2.1
+[Homepage] http://libusb.sourceforge.net/
