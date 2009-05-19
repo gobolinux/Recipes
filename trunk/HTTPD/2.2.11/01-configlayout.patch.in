@@ -1,0 +1,39 @@
+This patch adds a GoboLinux layout to the layout file.
+This is the default placement for files in the GoboLinux
+layout.
+
+-- 
+Jonas Karlsson
+
+--- httpd-2.0.52/config.layout.orig	2004-10-23 01:40:49.000000000 -0200
++++ httpd-2.0.52/config.layout	2004-10-23 02:20:19.000000000 -0200
+@@ -8,6 +8,29 @@
+ ##    `/<target>' suffix where <target> is currently hardcoded to 'apache2'.
+ ##    (This may become a configurable parameter at some point.)
+ ##
++#   GoboLinux layout
++<Layout Gobolinux>
++    prefix:          @%Compile_target%@
++    exec_prefix:     ${prefix}
++    bindir:          ${exec_prefix}/bin
++    sbindir:         ${exec_prefix}/sbin
++    libdir:          ${exec_prefix}/lib
++    libexecdir:      ${prefix}/modules
++    mandir:          ${prefix}/man
++    sysconfdir:      @%Compile_settings_target%@/httpd
++    datadir:         @%Compile_goboPrefix%@/Files/WWW/
++    installbuilddir: ${prefix}/share/httpd/Build
++    errordir:        ${datadir}/ErrorDocuments
++    iconsdir:        ${datadir}/Icons
++    htdocsdir:       ${datadir}/Documents
++    cgidir:          ${datadir}/CGI-Executables
++    manualdir:       ${prefix}/doc/Manual
++    includedir:      ${prefix}/include
++    localstatedir:   @%Compile_variable_target%@/httpd
++    runtimedir:      @%Compile_variable_target%@/run/httpd
++    logfiledir:      @%Compile_variable_target%@/log/httpd
++    proxycachedir:   @%Compile_variable_target%@/httpd/proxycache
++</Layout>
+ 
+ #   Classical Apache path layout.
+ <Layout Apache>
