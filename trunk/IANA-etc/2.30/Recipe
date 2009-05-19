@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for IANA-etc by Jonas Karlsson <jonas@gobolinux.org>, on Wed May 13 00:47:03 CEST 2009
+# Recipe for version 2.30 by Jonas Karlsson <jonas@gobolinux.org>, on Wed May 13 00:47:03 CEST 2009
+compile_version=1.10.0
+url="http://sethwklein.net/iana-etc-2.30.tar.bz2"
+file_size=205618
+file_md5=3ba3afb1d1b261383d247f46cb135ee8
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "DESTDIR=$target"
+   "PREFIX=$target"
+)
