@@ -1,0 +1,7 @@
+# Recipe for version 1.1 by Jonas Karlsson <jonas@gobolinux.org>, on Sun May 17 10:23:09 CEST 2009
+# Recipe (MakeRecipe) for LibSSH2 by Nick Matteo <kundor@kundor.org>, on Sun Mar 15 08:30:21 EDT 2009
+compile_version=1.12.1
+url="$httpSourceforge/libssh2/libssh2-1.1.tar.gz"
+file_size=582185
+file_md5=f8a3eb9bb814e0a5a2bb76a5423f5129
+recipe_type=configure
