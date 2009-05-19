@@ -1,0 +1,13 @@
+# Recipe for version 0.225 by Jonas Karlsson <jonas@gobolinux.org>, on Sat May 16 00:54:07 CEST 2009
+# Recipe (MakeRecipe) for HwData by Lucas C. Villa Real, on Mon Feb 26 00:39:49 BRT 2007
+compile_version=1.9.0
+url="http://www.gobolinux.org/sources/hwdata-0.225.tar.bz2"
+file_size=797791
+file_md5=b6b6b183a74f64e684f47b6dd8fa0942
+#url="http://download.fedora.redhat.com/pub/fedora/linux/development/source/SRPMS/hwdata-0.225-2.fc11.src.rpm"
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+    "prefix=$target"
+    "sysconfdir=$settings_target"
+)
