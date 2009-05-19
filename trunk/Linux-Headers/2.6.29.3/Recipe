@@ -1,0 +1,11 @@
+# Recipe for version 2.6.29.3 by Jonas Karlsson <jonas@gobolinux.org>, on Tue May 12 23:56:28 CEST 2009
+compile_version=1.12.0
+url="http://www.kernel.org/pub/linux/kernel/v2.6/linux-2.6.29.3.tar.bz2"
+file_size=56553508
+file_md5=ff37c696bf0b101620b6a8a7209c57e5
+recipe_type=makefile
+do_build=no
+install_target="headers_install"
+install_variables=(
+    "INSTALL_HDR_PATH=$target"
+)
