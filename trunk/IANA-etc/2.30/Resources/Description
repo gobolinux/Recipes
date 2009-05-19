@@ -1,7 +1,10 @@
 [Name] IANA-etc
-[Summary] Provides the Unix/Linux /etc/services and /etc/protocols
-files.
-[Description] The iana-etc package provides the Unix/Linux
-/etc/services and /etc/protocols files.
+[Summary] Provides the /etc/services and /etc/protocols files.
+[Description] The iana-etc package installs services(5) and
+protocols(5) using data from the Internet Assigned Numbers Authority
+<http://www.iana.org/>. In future, other such files may be added.
+
+Included are snapshots of the data from the IANA, scripts to transform
+that data into the needed formats, and scripts to fetch the latest data.
 [License] Open Software License ("OSL") v. 3.0
 [Homepage] http://sethwklein.net/iana-etc
