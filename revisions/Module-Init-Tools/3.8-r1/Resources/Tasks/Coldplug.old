@@ -1,0 +1,9 @@
+#!/bin/sh
+
+for DEV in /sys/bus/{pci,usb}/devices/*
+do
+  [ -L "${DEV}/driver" ] && continue
+  [ -e "${DEV}/modalias" ] || continue
+  modprobe -v `cat ${DEV}/modalias`
+done
+
