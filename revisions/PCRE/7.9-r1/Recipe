@@ -1,0 +1,12 @@
+# Recipe for version 7.9 by Jonas Karlsson <jonas@gobolinux.org>, on Tue May 12 23:20:57 CEST 2009
+# by Jeremy Vernon
+compile_version=1.12.0
+url="ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-7.9.tar.bz2"
+file_size=861580
+file_md5=b6a9669d1863423f01ea46cdf00f93dc
+recipe_type=configure
+
+configure_options=(
+   "--enable-utf8"
+   #utf-8 support here needed for at least Goffice 0.5.2
+)
