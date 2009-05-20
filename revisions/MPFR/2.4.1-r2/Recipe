@@ -1,0 +1,15 @@
+# Recipe for version 2.4.1 by Nick Matteo <kundor@kundor.org>, on Tue Mar 3 19:07:32 EST 2009
+# Recipe (MakeRecipe) for MPFR by roko, <ro.ko@mcnon.com>, on Mon Mar 21 19:23:18 CET 2005
+compile_version=1.9.0
+url="http://www.mpfr.org/mpfr-2.4.1/mpfr-2.4.1.tar.lzma"
+file_size=903875
+file_md5=22402995cf2496d8faea42c8da02ce1f
+recipe_type=configure
+configure_options=(
+   --enable-thread-safe
+)
+using_doc_pre_link() {
+   make html
+   mkdir -p ${target}/share/doc/mpfr-2.4.1
+   find . -name \*.html -type f -exec cp \{} ${target}/share/doc/mpfr-2.4.1 \;
+}
