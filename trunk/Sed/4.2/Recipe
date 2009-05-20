@@ -1,0 +1,13 @@
+# Recipe for version 4.2 by Jonas Karlsson <jonas@gobolinux.org>, on Wed May 13 00:35:40 CEST 2009
+# by Michael Homer
+# 2004.01.28 04:31
+
+url=$ftpGnu/sed/sed-4.2.tar.gz
+file_size=1054760
+file_md5=31580bee0c109c0fc8f31c4cf204757e
+compile_version=1.12.0
+recipe_type=configure
+with_doc=(
+   --enable-html
+)
+
