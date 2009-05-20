@@ -1,0 +1,31 @@
+# Recipe for version 1.9.2 by Jonas Karlsson <jonas@gobolinux.org>, on Sun May 17 11:42:30 CEST 2009
+# Recipe (MakeRecipe) for NAS by Jonas Karlsson <jonka750@student.liu.se>, on Sat Aug 30 07:37:24 GMT 2008
+compile_version=1.8.0
+url="$httpSourceforge/nas/nas-1.9.2.src.tar.gz"
+file_size=1484369
+file_md5=ed7864f55b384452167959022cfb403b
+dir='nas-1.9.2'
+recipe_type=xmkmf
+make_variables=(
+   INCROOT="${goboHeaders}"
+   ETCDIR="${settings_target}"
+   SHAREDIR="${target}/share"
+)
+build_variables=(
+   USRLIBDIR="${goboLibraries}"
+   SHLIBDIR="${goboLibraries}"
+   BINDIR="${goboExecutables}"
+   LIBDIR="${goboLibraries}/X11"
+   MANPATH="${goboManuals}"
+)
+install_variables=(
+   USRLIBDIR="${target}/lib"
+   SHLIBDIR="${target}/lib"
+   BINDIR="${target}/bin"
+   LIBDIR="${target}/lib/X11"
+   MANPATH="${target}/man"
+   INCDIR="${target}/include/audio"
+)
+
+build_target=World
+install_target="install install.man"
