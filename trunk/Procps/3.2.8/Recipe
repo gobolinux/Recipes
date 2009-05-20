@@ -1,0 +1,20 @@
+# Recipe for version 3.2.8 by Jonas Karlsson <jonas@gobolinux.org>, on Tue May 12 23:10:49 CEST 2009
+url=http://procps.sourceforge.net/procps-3.2.8.tar.gz
+file_size=285758
+file_md5=9532714b6846013ca9898984ba4cd7e0
+compile_version=1.8.0
+recipe_type=makefile
+install_variables=(
+   "DESTDIR=$target/"
+   "usr/bin=$target/bin/"
+   "usr/proc/bin=$target/bin/"
+   "man1=$target/share/man/man1/"
+   "man5=$target/share/man/man5/"
+   "man8=$target/share/man/man8/"
+   "etc/X11/applnk/Utilities=$settings_target/X11/applnk/Utilities/"
+   "usr/X11R6/bin=$target/bin/"
+   "usr/lib=$target/lib/"
+   "usr/include=$target/include/"
+   "install=install"
+   "ldconfig=true"
+)
