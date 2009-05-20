@@ -1,0 +1,38 @@
+--- sysvinit-2.86-ori/src/Makefile	2004-06-09 09:47:45.000000000 -0300
++++ sysvinit-2.86-ori-gobo/src/Makefile	2005-11-05 09:24:31.000000000 -0200
+@@ -43,11 +43,11 @@
+ MAN1	+= wall.1
+ endif
+ 
+-BIN_OWNER	= root
+-BIN_GROUP	= root
++BIN_OWNER	= 0
++BIN_GROUP	= 0
+ BIN_COMBO	= $(BIN_OWNER):$(BIN_GROUP)
+ INSTALL		= install -o $(BIN_OWNER) -g $(BIN_GROUP)
+-MANDIR		= /usr/share/man
++MANDIR		= ${USRDIR}/share/man
+ 
+ # Additional libs for GNU libc.
+ ifneq ($(wildcard /usr/lib/libcrypt.a),)
+@@ -117,7 +117,7 @@
+ 			$(INSTALL) -m 755 $$i $(ROOT)/sbin/; \
+ 		done
+ 		for i in $(USRBIN); do \
+-			$(INSTALL) -m 755 $$i $(ROOT)/usr/bin/; \
++			$(INSTALL) -m 755 $$i $(ROOT)/bin/; \
+ 		done
+ 		# $(INSTALL) -m 755 etc/initscript.sample $(ROOT)/etc/
+ 		ln -sf halt $(ROOT)/sbin/reboot
+@@ -125,9 +125,9 @@
+ 		ln -sf init $(ROOT)/sbin/telinit
+ 		ln -sf ../sbin/killall5 $(ROOT)/bin/pidof
+ 		if [ ! -f $(ROOT)/usr/bin/lastb ]; then \
+-			ln -sf last $(ROOT)/usr/bin/lastb; \
++			ln -sf last $(ROOT)/bin/lastb; \
+ 		fi
+-		$(INSTALL) -m 644 initreq.h $(ROOT)/usr/include/
++		$(INSTALL) -m 644 initreq.h $(ROOT)/include/
+ 		for i in $(MAN1); do \
+ 			$(INSTALL) -m 644 ../man/$$i $(ROOT)$(MANDIR)/man1/; \
+ 		done

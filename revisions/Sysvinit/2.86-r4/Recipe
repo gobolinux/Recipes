@@ -1,0 +1,24 @@
+# Recipe for version 2.86 by Kosh <kosh.linux at gmail.com>, on Sat Nov 5 08:21:45 BRST 2005
+url="ftp://ftp.cistron.nl/pub/people/miquels/sysvinit/sysvinit-2.86.tar.gz"
+file_size="99009"
+file_md5="7d5d61c026122ab791ac04c8a84db967"
+compile_version=1.8.0
+recipe_type=makefile
+build_target="-C src"
+install_target="-C src install"
+make_variables=(
+   "ROOT=$target"
+   "BIN_OWNER=0"
+   "BIN_GROUP=0"
+   "INSTALL=install"
+   "MANDIR=/share/man"
+   "USRDIR=$target"
+)
+symlink_options=(
+    "--conflict overwrite"
+)
+pre_build() {
+   # don't install wall
+   sed -i -e 's/utmpdump wall/utmpdump/' \
+   -e 's/mountpoint.1 wall.1/mountpoint.1/' src/Makefile
+}
