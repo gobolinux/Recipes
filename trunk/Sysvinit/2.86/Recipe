@@ -11,9 +11,14 @@ make_variables=(
    "BIN_OWNER=0"
    "BIN_GROUP=0"
    "INSTALL=install"
-   "MANDIR=/man"
+   "MANDIR=/share/man"
    "USRDIR=$target"
 )
 symlink_options=(
     "--conflict overwrite"
 )
+pre_build() {
+   # don't install wall
+   sed -i -e 's/utmpdump wall/utmpdump/' \
+   -e 's/mountpoint.1 wall.1/mountpoint.1/' src/Makefile
+}
