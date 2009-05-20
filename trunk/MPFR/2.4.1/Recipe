@@ -5,3 +5,11 @@ url="http://www.mpfr.org/mpfr-2.4.1/mpfr-2.4.1.tar.lzma"
 file_size=903875
 file_md5=22402995cf2496d8faea42c8da02ce1f
 recipe_type=configure
+configure_options=(
+   --enable-thread-safe
+)
+using_doc_pre_link() {
+   make html
+   mkdir -p ${target}/share/doc/mpfr-2.4.1
+   find . -name \*.html -type f -exec cp \{} ${target}/share/doc/mpfr-2.4.1 \;
+}
