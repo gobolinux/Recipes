@@ -1,0 +1,35 @@
+# Recipe for version 142 by Hoppar Tamas <htraki@indamail.hu>, on 2009. máj. 13., szerda, 16.11.58 CEST
+compile_version=1.9.0
+url="http://www.kernel.org/pub/linux/utils/kernel/hotplug/udev-142.tar.bz2"
+file_size=433767
+file_md5=3edc4cf383dccb06d866c5156d59ddd5
+recipe_type=configure
+
+configure_options=(
+    --sysconfdir=${goboSettings}
+    --with-udev-prefix=
+)
+
+install_variables=(
+    udev_prefix=$target
+    sysconfdir=$settings_target
+)
+
+pre_link() {
+   echo "udev_root=\"${goboDevices}\"" >> "${target}/Resources/Defaults/Settings/udev/udev.conf"
+   devices="$target/lib/udev/devices"
+   mkdir -p "$devices"/{shm,pts}
+   mknod "$devices/null"    c 1 3
+   mknod "$devices/random"  c 1 8
+   mknod "$devices/urandom" c 1 9
+   mknod "$devices/zero"    c 1 5
+   mknod "$devices/console" c 5 1
+   chmod 666 "$devices"/{null,random,urandom,zero}
+   chmod 600 "$devices"/console
+
+   ln -snf "$goboStatus/self/fd"   "$devices/fd"
+   ln -snf "$goboStatus/self/fd/0" "$devices/stdin"
+   ln -snf "$goboStatus/self/fd/1" "$devices/stdout"
+   ln -snf "$goboStatus/self/fd/2" "$devices/stderr"
+   ln -snf "$goboStatus/kcore"     "$devices/core"
+}
