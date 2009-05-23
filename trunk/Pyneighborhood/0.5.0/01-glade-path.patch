@@ -1,0 +1,20 @@
+--- pyneighborhood-0.5.0/pyneighborhood/misc.py	2009-01-15 19:36:10.000000000 +0100
++++ pyneighborhood-0.5.0/pyneighborhood/misc.py.new	2009-05-14 14:43:00.000000000 +0200
+@@ -62,7 +62,7 @@
+     if localenv():
+         return prefix() + "/icons"
+     else:
+-        return prefix() + "/share/pyneighborhood/icons"
++        return prefix() + "/Shared/pyneighborhood/icons"
+ 
+ def sharepath():
+     """
+@@ -71,7 +71,7 @@
+     if localenv():
+         return prefix()
+     else:
+-        return prefix() + "/share/pyneighborhood"
++        return prefix() + "/Shared/pyneighborhood"
+ 
+ def homeconfdir():
+     """
