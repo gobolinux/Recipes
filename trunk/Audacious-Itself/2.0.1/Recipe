@@ -1,0 +1,12 @@
+# Recipe for version 2.0.1 by Joshua Sako, on Wed May 13 15:20:40 BRT 2009
+# Recipe (MakeRecipe) for Audacious-Itself by Guilherme B. Bedin, on Wed Jan 24 13:54:19 BRST 2007
+compile_version=1.8.2
+url="http://redmine.atheme.org/attachments/download/69/audacious-2.0.1.tgz"
+file_size=1871435
+file_md5=241cd88440fb0c3257a9ba5482af4d7e
+recipe_type=configure
+part_of=Audacious
+
+configure_options=(
+    --disable-rpath
+)
