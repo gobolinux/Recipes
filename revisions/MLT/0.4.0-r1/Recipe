@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for MLT by Mark Kimsal <mark2@mt2009.com>, on Sat May 23 19:38:42 EDT 2009
+# Recipe for version git by Mark Kimsal <mark2@mt2009.com>, on Sat May 23 19:38:42 EDT 2009
+compile_version=1.12.2rc3
+file_md5=30d9fec2097dbdf02051a9589634753a
+
+url="$httpSourceforge/mlt/mlt-0.4.0.tar.gz"
+recipe_type=configure
+
+# this recipe requires FFMpeg, but I don't know how to add it
+# this is needed for kdenlive to function
+# Use ffmpeg libswcale instead of img_convert
+configure_options=("--avformat-swscale")
