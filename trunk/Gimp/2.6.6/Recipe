@@ -9,8 +9,11 @@ configure_options=(
     --disable-mp 
     --enable-gimp-remote 
     --without-poppler
+    --disable-python
 )  
 with_poppler="--with-poppler"
+with_python="--with-python"
+with_pygtk="--with-python"
 
 build_variables=(
    gimpplugindir="${goboLibraries}/gimp/2.0"
