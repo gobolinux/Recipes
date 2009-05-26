@@ -1,0 +1,12 @@
+[Name] LibDRM
+[Summary] Library for accessing the Linux kernel's Direct Rendering Modules
+[Description] The Direct Rendering Infrastructure, also known as the
+DRI, is a framework for allowing direct access to graphics hardware
+under the X Window System in a safe and efficient manner. It includes
+changes to the X server, to several client libraries, and to the
+kernel (DRM, Direct Rendering Manager).
+LibDRM provides core library routines for the X Window System to
+directly interface with video hardware using the Linux kernel's Direct
+Rendering Modules.
+[License] MIT License
+[Homepage] http://dri.freedesktop.org/wiki/

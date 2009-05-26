@@ -1,0 +1,25 @@
+# This patch needed to avoid conflict with Linux-Headers
+diff -Naur libdrm-2.4.4.orig/shared-core/Makefile.am libdrm-2.4.4/shared-core/Makefile.am
+--- libdrm-2.4.4.orig/shared-core/Makefile.am	2009-02-19 19:59:49.000000000 +0100
++++ libdrm-2.4.4/shared-core/Makefile.am	2009-02-19 20:00:03.000000000 +0100
+@@ -22,7 +22,7 @@
+ # however, r300 and via need their reg headers installed in order to build.
+ # better solutions are welcome.
+ 
+-klibdrmincludedir = ${includedir}/drm
++klibdrmincludedir = ${includedir}/xorg/drm
+ klibdrminclude_HEADERS = \
+                          drm.h \
+                          drm_mode.h \
+diff -Naur libdrm-2.4.4.orig/shared-core/Makefile.in libdrm-2.4.4/shared-core/Makefile.in
+--- libdrm-2.4.4.orig/shared-core/Makefile.in	2009-02-19 19:59:49.000000000 +0100
++++ libdrm-2.4.4/shared-core/Makefile.in	2009-02-19 20:58:29.000000000 +0100
+@@ -194,7 +194,7 @@
+ target_alias = @target_alias@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+-klibdrmincludedir = ${includedir}/drm
++klibdrmincludedir = ${includedir}/xorg/drm
+ klibdrminclude_HEADERS = \
+                          drm.h \
+                          drm_mode.h \
