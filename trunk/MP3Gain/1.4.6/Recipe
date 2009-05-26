@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for MP3Gain by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. febr. 12., csütörtök, 05.23.26 CET
+# Recipe for version 1.4.6 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. febr. 12., csütörtök, 05.23.26 CET
+compile_version=1.11.4
+url="$httpSourceforge/mp3gain/mp3gain-1_4_6-src.zip"
+file_size=111408
+file_md5=4327167375dce5bce97625729a95fdb9
+recipe_type=makefile
+make_variables=(
+    INSTALL_PATH=$target/bin
+)
+unpack_files=files_in_root
