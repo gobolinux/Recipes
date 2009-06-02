@@ -1,0 +1,14 @@
+Patch to disable IDN support, which causes "Bad value for ai_flags" errors.
+Root cause of problem is a glibc bug, but patching Whois is less invasive.
+--- whois-4.7.24/whois.c2	2007-11-24 19:55:51.000000000 +1300
++++ whois-4.7.24/whois.c	2007-11-24 19:56:23.000000000 +1300
+@@ -5,9 +5,6 @@
+  * published by the Free Software Foundation.
+  */
+ 
+-/* for AI_IDN */
+-#define _GNU_SOURCE
+-
+ /* System library */
+ #include <stdio.h>
+ #include <stdlib.h>
