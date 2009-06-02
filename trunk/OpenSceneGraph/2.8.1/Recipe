@@ -1,0 +1,12 @@
+# Recipe for version 2.8.1 by Leandro Motta Barros <lmb@stackedboxes.org>, on Thu May 28 09:52:42 BRT 2009
+# Recipe (MakeRecipe) for OpenSceneGraph by Fabio Mierlo <geromao@gmail.com>, on Fri Aug 1 05:24:57 BRT 2008
+compile_version=1.11.1
+url="http://www.openscenegraph.org/downloads/stable_releases/OpenSceneGraph-2.8.1/source/OpenSceneGraph-2.8.1.zip"
+file_size=6465261
+file_md5=18a8d3f01a72b6027147b3918c18c662
+recipe_type=cmake
+
+cmake_options=(
+  "-D BUILD_OSG_EXAMPLES:BOOL=ON"
+  "-D SDL_INCLUDE_DIR=$goboHeaders/SDL"
+)
