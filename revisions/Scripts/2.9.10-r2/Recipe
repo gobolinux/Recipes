@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for Scripts by Hisham Muhammad
+compile_version=1.12.0
+svn=http://svn.gobolinux.org/tools/tags/SCRIPTS_2_9_10
+recipe_type=makefile
+make_variables=(
+   VERSION=$version
+   DESTDIR=$target
+)

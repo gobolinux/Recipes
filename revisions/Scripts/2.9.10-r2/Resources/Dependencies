@@ -1,0 +1,24 @@
+Bash
+Bzip2 # Archive
+CoreUtils
+DiffUtils # UpdateSettings
+File # Archive and CreateRootlessEnvironment
+FindUtils
+Fuse # UnionSandbox with FUSE
+Gawk
+Grep
+Gzip # Archive
+LZMA-Utils # Archive
+MkTemp
+Mtail # ColorMake
+Patch # UpdateSettings
+Perl # mkinitrd.pl
+Procps # UnionSandbox (ps)
+Python
+Sed
+Sudo
+Tar # Archive
+Udev # UnionSandbox with FUSE
+UnionFS-Fuse # UnionSandbox with FUSE
+Unzip # Archive
+Util-Linux-NG # sandboxes (mount)
