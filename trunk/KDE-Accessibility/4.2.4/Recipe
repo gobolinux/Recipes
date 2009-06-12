@@ -1,0 +1,12 @@
+# Recipe for version 4.2.4 by Michael Homer <michael@gobolinux.org>, on Fri Jun 12 18:55:20 NZST 2009
+# Recipe (MakeRecipe) for KDE-Accessibility by Giambattista Bloisi <giamby@infinito.it>, on Thu Jan 17 22:30:03 CET 2008
+compile_version=1.10.0
+url="http://download.kde.org/stable/4.2.4/src/kdeaccessibility-4.2.4.tar.bz2"
+file_size=6602199
+file_md5=602fe3667cdbbf89e7803a2baaa902c4
+file="kdeaccessibility-4.2.4.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
