@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Comment by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jún. 9., kedd, 03.49.07 CEST
+# Recipe for version 0.99.1 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jún. 9., kedd, 03.49.07 CEST
+compile_version=1.12.1
+url="http://www.pldaniels.com/comment/comment-0.99.1.tar.gz"
+file_size=15639
+file_md5=82ef27571d6ca343d0796066b528a59e
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+    PREFIX=$target
+)
