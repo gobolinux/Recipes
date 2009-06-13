@@ -1,0 +1,12 @@
+# Recipe for version 1.3.x by Dominique Juergensen <brokolie@vollbio.de>, on Wed Jun 3 13:21:18 CEST 2009
+# Recipe (MakeRecipe) for FLTK by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. dec. 27., szombat, 22.58.31 CET
+compile_version=1.11.4
+url="http://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub/fltk/snapshots/fltk-1.3.x-r6790.tar.bz2"
+file_size=4948609
+file_md5=df99943a1950c17d691615a4cfb25312
+recipe_type=configure
+configure_options=(
+    --enable-shared 
+    --disable-cairo    # This is a must to compile Dillo2
+    --enable-xshm
+)
