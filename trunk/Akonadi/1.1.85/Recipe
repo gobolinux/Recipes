@@ -6,9 +6,4 @@ file_size=166004
 file_md5=d85ca08d8a0f9726177778c72b7e4c6d
 recipe_type=cmake
 
-using_mysql() {
-   cmake_options=(
-      ${cmake_options:+"$cmake_options[@]"}
-      "-DMYSQLD_EXECUTABLE=${mysql_path}/libexec/mysqld"
-   )
-}
+with_mysql=( "-DMYSQLD_EXECUTABLE=${mysql_path}/libexec/mysqld" )
