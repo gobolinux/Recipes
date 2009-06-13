@@ -1,0 +1,24 @@
+Correction of the Makefile to use PREFIX, BINDIR, MANDIR variables
+
+diff -Naur comment-0.99.1/Makefile comment-0.99.1-new/Makefile
+--- comment-0.99.1/Makefile	2004-06-29 07:00:35.000000000 +0200
++++ comment-0.99.1-new/Makefile	2009-06-09 04:19:43.951425075 +0200
+@@ -5,7 +5,7 @@
+ CFLAGS=-Wall -Werror -g 
+ #CFLAGS=-Wall -O2
+ OBJS=logger.o libcomment.o
+-
++PREFIX=/usr/local
+ 
+ .c.o:
+ 	${CC} ${CFLAGS} -c $*.c
+@@ -17,7 +17,8 @@
+ 
+ install: comment
+ 	strip comment
+-	cp comment /usr/local/bin
++	install -s -m 755 comment $(PREFIX)/bin
++	install -m 644 comment.1 $(PREFIX)/man
+ 
+ clean:
+ 	rm *.o comment
