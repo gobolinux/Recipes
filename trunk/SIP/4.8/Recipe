@@ -1,0 +1,14 @@
+# Recipe for version 4.8 by Rui Andrada <shingonoide@gmail.com>, on Sun Jun 7 22:08:56 BRT 2009
+# on Sat Apr 16 13:31:22 CEST 2005
+
+compile_version=1.8.2
+url="http://www.riverbankcomputing.com/static/Downloads/sip4/sip-4.8.tar.gz"
+file_size=613197
+file_md5=8a28270f2907a8a84a4972457efde476
+
+recipe_type=makefile
+pre_build() {
+   pythonversion=`python --version 2>&1 | awk {'print $2'} | cut -b1-3`
+   sitepackages="$target/lib/python${pythonversion}/site-packages"
+   python configure.py -b $target/bin -e $target/include -d $sitepackages -v $target/share/sip
+}
