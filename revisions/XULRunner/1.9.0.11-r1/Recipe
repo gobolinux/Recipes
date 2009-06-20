@@ -1,0 +1,56 @@
+# Recipe for version 1.9.0.11 by Giambattista Bloisi <giamby@infinito.it>, on Sat Jun 20 17:55:42 CEST 2009
+# Recipe (MakeRecipe) for XULRunner by Jonas Karlsson <jonas@gobolinux.org>, on Mon Jan 19 22:44:18 CET 2009
+compile_version=1.10.0
+url="http://releases.mozilla.org/pub/mozilla.org/firefox/releases/3.0.11/source/firefox-3.0.11-source.tar.bz2"
+file_size=37214869
+file_md5=b509f7c05e9566ed290e2c098316c7c3
+dir='mozilla'
+recipe_type=configure
+configure_options=(
+   --disable-crashreporter
+   --disable-updater
+   --disable-debug
+   --disable-installer
+   --disable-javaxpcom
+   --disable-long-long-warning
+   --disable-mochitest
+   --disable-pedantic
+   --disable-tests
+   --disable-updater
+   --enable-application=xulrunner
+   --enable-libxul
+   --enable-jemalloc
+   --enable-optimize
+   --enable-safe-browsing
+   --enable-strip
+   --enable-svg
+   --enable-system-cairo
+   --enable-system-lcms
+   --enable-webservices
+   --with-system-bz2
+   --with-system-jpeg
+   --with-system-nss
+   --with-system-nspr
+   --with-system-zlib
+   --with-system-sqlite
+   --with-distribution-id=GoboLinux
+)
+
+with_gnome_vfs="--enable-gnomevfs"
+with_openldag="--enable-ldap"
+with_hunspell="--enable-system-hunspell"
+with_startup_notification="--enable-startup-notification"
+
+install_variables=(
+   regdir="$settings_target"/gre.d
+   includedir="$target/include/xulrunner-1.9.0"
+   idldir="$target/include/idl"
+   installdir="$target/lib/xulrunner-1.9.0"
+   sdkdir="$target/lib/xulrunner-sdk-1.9.0"
+)
+
+pre_link() {
+   # Somehow the files are installed with wrong owner and permissions
+   chown -R 0:0 "${target}"
+   chmod -R a+rX "${target}"
+}
