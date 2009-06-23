@@ -1,0 +1,12 @@
+# Recipe for version 3.6.3 by Zbigniew Baniewski <zb@ispid.com.pl>, on Tue, 16 Jun 2009 00:19:19 +0200
+# Recipe (MakeRecipe) for Opal by demian florentin demianflorentin_at_gmail.com, on Sat Sep 22 15:57:54 PYT 2007
+compile_version=1.12.3
+url="$httpSourceforge/opalvoip/opal-3.6.3.tar.bz2"
+file_size=7059304
+file_md5=4f5287e21aeafb0978d76f1ab65f4c68
+recipe_type=configure
+environment=(
+   PWLIBDIR=${goboShared}/pwlib
+   PTLIBDIR=${goboShared}/ptlib
+)
+
