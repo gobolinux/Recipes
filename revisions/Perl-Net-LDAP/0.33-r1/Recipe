@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for Perl-Net-LDAP by Kevin Quick <quick@sparq.org>, on Tue Jun 16 08:12:45 MST 2009
+# Recipe for version 0.33 by Kevin Quick <quick@sparq.org>, on Tue Jun 16 08:12:45 MST 2009
+compile_version=1.12.2
+url="http://search.cpan.org/CPAN/authors/id/G/GB/GBARR/perl-ldap-0.33.tar.gz"
+file_size=227888
+file_md5=7002aedb8bcaa7169a8f0a8e22d34b72
+recipe_type=perl
+perl_options=("EXPATLIBPATH=$expat_path/lib EXPATINCPATH=$expat_path/include")
