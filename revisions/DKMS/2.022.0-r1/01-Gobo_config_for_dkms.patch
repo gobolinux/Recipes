@@ -1,0 +1,29 @@
+Add the settings for DKMS to use in a Gobolinux environment.
+
+diff -Naur dkms-2.0.22.0/dkms_framework.conf dkms-2.0.22.0.new/dkms_framework.conf
+--- dkms-2.0.22.0/dkms_framework.conf	2008-07-08 16:19:41.000000000 +0100
++++ dkms-2.0.22.0.new/dkms_framework.conf	2009-06-23 23:57:55.000000000 +0100
+@@ -2,17 +2,19 @@
+ ## DKMS (Dynamic Kernel Module Support) and is sourced
+ ## in by DKMS every time it is run.
+ 
++source GoboPath
++
+ ## Source Tree Location (default: /usr/src)
+-# source_tree="/usr/src"
++source_tree="$goboVariable/lib/dkms/src"
+ 
+ ## DKMS Tree Location (default: /var/lib/dkms)
+-# dkms_tree="/var/lib/dkms"
++dkms_tree="$goboVariable/lib/dkms"
+ 
+ ## Install Tree Location (default: /lib/modules)
+-# install_tree="/lib/modules"
++install_tree="$goboModules"
+ 
+ ## tmp Location (default: /tmp)
+-# tmp_location="/tmp"
++tmp_location="$goboTemp"
+ 
+ ## verbosity setting (verbose will be active if you set it to a non-null value)
+ # verbose=""
