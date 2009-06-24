@@ -1,0 +1,12 @@
+# Recipe for version 1.41.6 by Ivan Florentin <ivan@sinergetica.com>, on Sun Jun 14 22:42:48 PYT 2009
+url=$httpSourceforge/e2fsprogs/e2fsprogs-1.41.6.tar.gz
+file_size=4422395
+file_md5=732c559db400c8fc994f4f38568c9f1f
+recipe_type=configure
+needs_safe_linking=yes
+compile_version=1.9.0
+configure_options=(
+   "--enable-elf-shlibs"
+   "--disable-libblkid"
+)
+install_target="install install-libs"
