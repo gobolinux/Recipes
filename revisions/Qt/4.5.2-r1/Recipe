@@ -1,0 +1,37 @@
+# Recipe for version 4.5.2 by Michael Homer <michael@gobolinux.org>, on Fri Jun 26 14:17:23 NZST 2009
+# by Andre Detsch
+
+compile_version=1.9.0
+url="ftp://ftp.trolltech.com/qt/source/qt-x11-opensource-src-4.5.2.tar.gz"
+file_size=125803421
+file_md5=d8bcc070a58db25c228b7729ffad4550
+recipe_type=configure
+
+configure_options=(
+    -release
+    -prefix "$target"
+    -nomake "examples demos docs"
+    -dbus
+    -qt-gif
+    -no-separate-debug-info
+    -sql-sqlite
+    -system-sqlite
+    -optimized-qmake
+    -no-phonon
+    -no-phonon-backend
+)
+
+with_mysql="-plugin-sql-mysql"
+with_sqlite=(-plugin-sql-sqlite -system-sqlite)
+with_odbc="-plugin-sql-odbc"
+with_nas="-system-nas-sound"
+with_webkit="-webkit"
+
+build_variables=(
+   CFLAGS="-D_GNU_SOURCE $CFLAGS"
+)
+
+pre_link() {
+   # clean out debug files
+   find ${target} -name "*.debug" | xargs rm -f
+}
