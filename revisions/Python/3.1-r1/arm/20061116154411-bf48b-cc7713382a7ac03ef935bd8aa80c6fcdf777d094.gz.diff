@@ -1,0 +1,19 @@
+Thu Nov 16 16:44:11 CET 2006  hanwen@lilypond.org
+  * use AC_CHECK_TOOL for ranlib and ar, to find <hostspec>-<tool> first.
+diff -rN -u old-Python-2.5.cross/configure.in new-Python-2.5.cross/configure.in
+--- old-Python-2.5.cross/configure.in	2006-11-16 17:47:46.000000000 +0100
++++ new-Python-2.5.cross/configure.in	2006-11-16 17:47:46.000000000 +0100
+@@ -720,9 +720,9 @@
+ 
+ AC_MSG_RESULT($LDLIBRARY)
+ 
+-AC_PROG_RANLIB
+-AC_SUBST(AR)
+-AC_CHECK_PROGS(AR, ar aal, ar)
++# find tools while respecting --host setting
++AC_CHECK_TOOL(RANLIB,ranlib)
++AC_CHECK_TOOLS(AR,ar aal,ar)
+ 
+ AC_SUBST(SVNVERSION)
+ AC_CHECK_PROG(SVNVERSION, svnversion, found, not-found)
+
