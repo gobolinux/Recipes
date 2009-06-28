@@ -1,0 +1,13 @@
+# Recipe for version 3.1 by Michael Homer <michael@gobolinux.org>, on Sun Jun 28 11:54:55 NZST 2009
+compile_version=1.8.5
+url=http://python.org/ftp/python/3.1/Python-3.1.tar.bz2
+file_size=9510460
+file_md5=f64437a24d39f1917aa1878cc70621f6
+recipe_type=configure
+needs_safe_linking=yes
+
+configure_options=(
+  "--enable-shared"
+#  "--with-cxx=no"
+)
+

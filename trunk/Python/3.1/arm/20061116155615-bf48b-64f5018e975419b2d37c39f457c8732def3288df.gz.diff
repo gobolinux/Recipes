@@ -1,0 +1,15 @@
+Thu Nov 16 16:56:15 CET 2006  hanwen@lilypond.org
+  * get SO config var from environment in build_ext.py
+diff -rN -u old-Python-2.5.cross/Lib/distutils/command/build_ext.py new-Python-2.5.cross/Lib/distutils/command/build_ext.py
+--- old-Python-2.5.cross/Lib/distutils/command/build_ext.py	2006-11-16 17:47:45.000000000 +0100
++++ new-Python-2.5.cross/Lib/distutils/command/build_ext.py	2006-11-16 17:47:45.000000000 +0100
+@@ -614,6 +614,8 @@
+             ext_path[len(ext_path) - 1] = ext_path[len(ext_path) - 1][:8]
+         # extensions in debug_mode are named 'module_d.pyd' under windows
+         so_ext = get_config_var('SO')
++        if os.environ.get('CROSS_COMPILING') == 'yes':
++            so_ext = os.environ.get('SO')
+         if os.name == 'nt' and self.debug:
+             return apply(os.path.join, ext_path) + '_d' + so_ext
+         return apply(os.path.join, ext_path) + so_ext
+
