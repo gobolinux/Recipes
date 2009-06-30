@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Meiga by kenneth marken <k-marken@online.no>, on sø. 28. juni 03:31:16 +0200 2009
+# Recipe for version 0.2.0 by kenneth marken <k-marken@online.no>, on sø. 28. juni 03:31:16 +0200 2009
+compile_version=1.12.3
+url="http://meiga.igalia.com/packages/src/meiga_0.2.0.tar.gz"
+file_size=50408
+file_md5=78756bdd5cfa548a6142dfff60055543
+dir='meiga'
+recipe_type=configure
+autogen_before_configure=yes
+install_variables=(
+"serviceentrydir=$target/Shared/dbus-1/services"
+)
