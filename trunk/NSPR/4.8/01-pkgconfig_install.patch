@@ -1,0 +1,51 @@
+Add a .pc file and hooks for it to be generated and installed.
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+
+diff -Naur nspr-4.7.3-orig/mozilla/nsprpub/config/nspr.pc.in nspr-4.7.3/mozilla/nsprpub/config/nspr.pc.in
+--- nspr-4.7.3-orig/mozilla/nsprpub/config/nspr.pc.in	1969-12-31 18:00:00.000000000 -0600
++++ nspr-4.7.3/mozilla/nsprpub/config/nspr.pc.in	2008-11-10 01:26:35.000000000 -0600
+@@ -0,0 +1,10 @@
++prefix=@prefix@
++exec_prefix=@exec_prefix@
++libdir=@libdir@
++includedir=@includedir@
++
++Name: NSPR
++Description: The Netscape Portable Runtime
++Version: @MOD_MAJOR_VERSION@.@MOD_MINOR_VERSION@.@MOD_PATCH_VERSION@
++Libs: -L${libdir} -lplds4 -lplc4 -lnspr4 @OS_LIBS@ -Wl,-R${libdir}
++Cflags: -I${includedir}
+diff -Naur nspr-4.7.3-orig/mozilla/nsprpub/configure nspr-4.7.3/mozilla/nsprpub/configure
+--- nspr-4.7.3-orig/mozilla/nsprpub/configure	2008-11-04 12:07:16.000000000 -0600
++++ nspr-4.7.3/mozilla/nsprpub/configure	2008-11-10 01:26:35.000000000 -0600
+@@ -5899,6 +5899,7 @@
+ config/nsprincl.mk
+ config/nsprincl.sh
+ config/nspr-config
++config/nspr.pc
+ lib/Makefile 
+ lib/ds/Makefile 
+ lib/libc/Makefile 
+diff -Naur nspr-4.7.3-orig/mozilla/nsprpub/config/nspr-config.in nspr-4.7.3/mozilla/nsprpub/config/nspr-config.in
+--- nspr-4.7.3-orig/mozilla/nsprpub/config/nspr-config.in	2005-05-10 19:53:41.000000000 -0500
++++ nspr-4.7.3/mozilla/nsprpub/config/nspr-config.in	2008-11-10 23:27:57.000000000 -0600
+@@ -122,7 +122,7 @@
+ fi
+ 
+ if test "$echo_libs" = "yes"; then
+-      libdirs=-L$libdir
++      libdirs="-Wl,-R$libdir -L$libdir"
+       if test -n "$lib_plds"; then
+ 	libdirs="$libdirs -lplds${major_version}"
+       fi
+--- nspr-4.7.3/mozilla/nsprpub/config/Makefile.in.old	2009-01-19 20:00:39.000000000 +0100
++++ nspr-4.7.3/mozilla/nsprpub/config/Makefile.in	2009-01-19 20:00:30.000000000 +0100
+@@ -146,3 +146,7 @@
+ install:: nspr.m4
+ 	$(NSINSTALL) -D $(DESTDIR)$(datadir)/aclocal
+ 	$(NSINSTALL) -t -m 0644 $< $(DESTDIR)$(datadir)/aclocal
++
++install:: nspr.pc
++	$(NSINSTALL) -D $(DESTDIR)$(libdir)/pkgconfig
++	$(NSINSTALL) -t -m 0644 $< $(DESTDIR)$(libdir)/pkgconfig
