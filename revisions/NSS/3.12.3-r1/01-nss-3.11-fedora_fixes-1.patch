@@ -1,0 +1,190 @@
+Submitted By:            Randy McMurchy <randy_at_linuxfromscratch_dot_org>
+Date:                    2006-01-19
+Initial Package Version: 3.11
+Upstream Status:         Unknown
+Origin:                  Fedora CVS (nspr-config changes by Randy McMurchy)
+Description:             Adds pkgconfig files for NSS and NSPR, adds a
+                         nss-config program, and corrects the nspr-config
+                         program
+
+
+diff -Naur nss-3.11-orig/mozilla/security/nss/Makefile nss-3.11/mozilla/security/nss/Makefile
+--- nss-3.11-orig/mozilla/security/nss/Makefile	2005-04-15 00:28:40.000000000 +0000
++++ nss-3.11/mozilla/security/nss/Makefile	2006-01-20 03:27:43.000000000 +0000
+@@ -130,7 +130,7 @@
+ $(NSPR_CONFIG_STATUS): $(NSPR_CONFIGURE)
+ 	$(NSINSTALL) -D $(CORE_DEPTH)/../nsprpub/$(OBJDIR_NAME)
+ 	cd $(CORE_DEPTH)/../nsprpub/$(OBJDIR_NAME) ; \
+-	$(NSPR_COMPILERS) sh ../configure \
++	$(NSPR_COMPILERS) sh ../configure --prefix=$(prefix) --enable-optimize --disable-debug \
+ 	$(NSPR_CONFIGURE_OPTS) \
+ 	--with-dist-prefix='$(NSPR_PREFIX)' \
+ 	--with-dist-includedir='$(NSPR_PREFIX)/include'
+
+diff -Naur nss-3.11-orig/mozilla/security/nss/cmd/config/nss-config nss-3.11/mozilla/security/nss/cmd/config/nss-config
+--- nss-3.11-orig/mozilla/security/nss/cmd/config/nss-config	1970-01-01 00:00:00.000000000 +0000
++++ nss-3.11/mozilla/security/nss/cmd/config/nss-config	2006-01-20 03:27:43.000000000 +0000
+@@ -0,0 +1,146 @@
++#!/bin/sh
++
++prefix=/usr
++
++major_version=3
++minor_version=12
++patch_version=0
++
++usage()
++{
++	cat <<EOF
++Usage: nss-config [OPTIONS] [LIBRARIES]
++Options:
++	[--prefix[=DIR]]
++	[--exec-prefix[=DIR]]
++	[--includedir[=DIR]]
++	[--libdir[=DIR]]
++	[--version]
++	[--libs]
++	[--cflags]
++Dynamic Libraries:
++	nss
++	ssl
++	smime
++EOF
++	exit $1
++}
++
++if test $# -eq 0; then
++	usage 1 1>&2
++fi
++
++lib_ssl=yes
++lib_smime=yes
++lib_nss=yes
++lib_nssutil=yes
++lib_ssl=yes
++lib_softokn=yes
++
++while test $# -gt 0; do
++  case "$1" in
++  -*=*) optarg=`echo "$1" | sed 's/[-_a-zA-Z0-9]*=//'` ;;
++  *) optarg= ;;
++  esac
++
++  case $1 in
++    --prefix=*)
++      prefix=$optarg
++      ;;
++    --prefix)
++      echo_prefix=yes
++      ;;
++    --exec-prefix=*)
++      exec_prefix=$optarg
++      ;;
++    --exec-prefix)
++      echo_exec_prefix=yes
++      ;;
++    --includedir=*)
++      includedir=$optarg
++      ;;
++    --includedir)
++      echo_includedir=yes
++      ;;
++    --libdir=*)
++      libdir=$optarg
++      ;;
++    --libdir)
++      echo_libdir=yes
++      ;;
++    --version)
++      echo ${major_version}.${minor_version}.${patch_version}
++      ;;
++    --cflags)
++      echo_cflags=yes
++      ;;
++    --libs)
++      echo_libs=yes
++      ;;
++    ssl)
++      lib_ssl=yes
++      ;;
++    smime)
++      lib_smime=yes
++      ;;
++    nss)
++      lib_nss=yes
++      ;;
++    *)
++      usage 1 1>&2
++      ;;
++  esac
++  shift
++done
++
++# Set variables that may be dependent upon other variables
++if test -z "$exec_prefix"; then
++    exec_prefix=${prefix}
++fi
++if test -z "$includedir"; then
++    includedir=${prefix}/include/nss
++fi
++if test -z "$libdir"; then
++    libdir=${prefix}/lib/nss
++fi
++
++if test "$echo_prefix" = "yes"; then
++    echo $prefix
++fi
++
++if test "$echo_exec_prefix" = "yes"; then
++    echo $exec_prefix
++fi
++
++if test "$echo_includedir" = "yes"; then
++    echo $includedir
++fi
++
++if test "$echo_libdir" = "yes"; then
++    echo $libdir
++fi
++
++if test "$echo_cflags" = "yes"; then
++    echo -I$includedir
++fi
++
++if test "$echo_libs" = "yes"; then
++      libdirs="-Wl,-R${libdir} -L$libdir"
++      if test -n "$lib_ssl"; then
++	libdirs="$libdirs -lssl${major_version}"
++      fi
++      if test -n "$lib_smime"; then
++	libdirs="$libdirs -lsmime${major_version}"
++      fi
++      if test -n "$lib_nss"; then
++	libdirs="$libdirs -lnss${major_version}"
++      fi
++      if test -n "$lib_nssutil"; then
++	libdirs="$libdirs -lnssutil${major_version}"
++      fi
++      if test -n "$lib_softokn"; then
++	libdirs="$libdirs -lsoftokn${major_version}"
++      fi
++      echo $libdirs
++fi      
++
+
+diff -Naur nss-3.11-orig/mozilla/security/nss/lib/pkgconfig/nss.pc nss-3.11/mozilla/security/nss/lib/pkgconfig/nss.pc
+--- nss-3.11-orig/mozilla/security/nss/lib/pkgconfig/nss.pc	1970-01-01 00:00:00.000000000 +0000
++++ nss-3.11/mozilla/security/nss/lib/pkgconfig/nss.pc	2006-01-20 03:27:43.000000000 +0000
+@@ -0,0 +1,12 @@
++prefix=/usr
++exec_prefix=${prefix}
++libdir=${prefix}/lib/nss
++includedir=${prefix}/include
++
++Name: NSS
++Description: Mozilla Network Security Services
++Version: 3.12.0
++Requires: nspr >= 4.7.0
++Libs: -Wl,-R${libdir} -L${libdir} -lnss3 -lsmime3 -lnssutil3 -lssl3 -lsoftokn3
++Cflags: -I${includedir}/nss
++

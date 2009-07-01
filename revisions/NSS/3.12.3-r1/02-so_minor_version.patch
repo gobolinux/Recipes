@@ -1,0 +1,36 @@
+--- NSS/mozilla/security/coreconf/Linux.mk.orig	2005-09-16 17:09:23.000000000 +0000
++++ NSS/mozilla/security/coreconf/Linux.mk	2006-02-09 05:27:36.000000000 +0000
+@@ -37,6 +37,8 @@
+ 
+ include $(CORE_DEPTH)/coreconf/UNIX.mk
+ 
++NSS_VERSION_MINOR=12
++
+ #
+ # The default implementation strategy for Linux is now pthreads
+ #
+--- NSS/mozilla/security/coreconf/Linux2.6.mk.orig	2005-09-16 17:09:23.000000000 +0000
++++ NSS/mozilla/security/coreconf/Linux2.6.mk	2006-02-09 05:38:16.000000000 +0000
+@@ -38,8 +38,7 @@
+ include $(CORE_DEPTH)/coreconf/Linux.mk
+ 
+ OS_REL_CFLAGS   += -DLINUX2_1
+-MKSHLIB         = $(CC) $(DSO_LDOPTS) -Wl,-soname -Wl,$(@:$(OBJDIR)/%.so=%.so)
+-
++MKSHLIB         = $(CC) $(DSO_LDOPTS) -Wl,-soname -Wl,$(@:$(OBJDIR)/%.so=%.so).$(NSS_VERSION_MINOR)
+ ifdef MAPFILE
+ 	MKSHLIB += -Wl,--version-script,$(MAPFILE)
+ endif
+--- nss-3.11.9/mozilla/security/coreconf/rules.mk	2008-05-31 10:21:19.000000000 +0000
++++ nss-3.11.9/mozilla/security/coreconf/rules.mk.new	2008-05-31 10:26:19.000000000 +0000
+@@ -113,7 +113,10 @@
+ 	$(INSTALL) -m 664 $(LIBRARY) $(SOURCE_LIB_DIR)
+ endif
+ ifdef SHARED_LIBRARY
++	mv $(SHARED_LIBRARY) $(SHARED_LIBRARY).$(NSS_VERSION_MINOR)
++	ln -s $(shell pwd)/$(SHARED_LIBRARY).$(NSS_VERSION_MINOR) $(shell pwd)/$(SHARED_LIBRARY)
+ 	$(INSTALL) -m 775 $(SHARED_LIBRARY) $(SOURCE_LIB_DIR)
++	$(INSTALL) -m 775 $(SHARED_LIBRARY).$(NSS_VERSION_MINOR) $(SOURCE_LIB_DIR)
+ ifdef MOZ_DEBUG_SYMBOLS
+ ifeq (,$(filter-out _WIN%,$(NS_USE_GCC)_$(OS_TARGET)))
+ 	$(INSTALL) -m 644 $(SHARED_LIBRARY:$(DLL_SUFFIX)=pdb) $(SOURCE_LIB_DIR)
