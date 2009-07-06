@@ -1,0 +1,11 @@
+# Recipe for version 1.2.36 by Jonas Karlsson <jonas@gobolinux.org>, on Sat May 16 00:06:17 CEST 2009
+compile_version=1.8.5
+url=$httpSourceforge/libpng/libpng-1.2.36.tar.bz2
+file_size=661190
+file_md5=325d67a8dd4a1f672d395c339fddd75c
+recipe_type=configure
+
+pre_link() {
+    ln -sf libpng12 $target/include/libpng
+    ln -sf libpng.so $target/lib/libpng.so.0
+}
