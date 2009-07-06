@@ -1,0 +1,10 @@
+# Recipe for version 2.6.4 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 3., péntek, 15.01.16 CEST
+compile_version=1.7.1
+url="http://www.cmake.org/files/v2.6/cmake-2.6.4.tar.gz"
+file_size=3285371
+file_md5=50f387d0436696c4a68b5512a72c9cde
+recipe_type=configure
+
+configure_options=(
+   --prefix=$target
+)
