@@ -1,0 +1,43 @@
+Description: Regenerates configuration files due to updates to configure.ac
+             (in 01-libsndfile_1.0.17_flac.patch and this patch) and
+             acinclude.m4 (this patch only - needed to avoid a
+             _m4_divert_diversion issue).
+
+diff -Naur libsndfile-1.0.17/acinclude.m4 libsndfile-1.0.17-b2/acinclude.m4
+--- libsndfile-1.0.17/acinclude.m4	2006-08-31 06:22:06.000000000 -0300
++++ libsndfile-1.0.17-b2/acinclude.m4	2008-06-12 16:39:35.000000000 -0300
+@@ -266,11 +266,11 @@
+ 	ac_cv_c_big_endian=0
+ 	ac_cv_c_little_endian=0
+ 
+-	AC_MSG_WARN([[*****************************************************************]])
+-	AC_MSG_WARN([[*** Not able to determine endian-ness of target processor.       ]])
+-	AC_MSG_WARN([[*** The constants CPU_IS_BIG_ENDIAN and CPU_IS_LITTLE_ENDIAN in  ]])
+-	AC_MSG_WARN([[*** src/config.h may need to be hand editied.                    ]])
+-	AC_MSG_WARN([[*****************************************************************]])
++#	AC_MSG_WARN([[*****************************************************************]])
++#	AC_MSG_WARN([[*** Not able to determine endian-ness of target processor.       ]])
++#	AC_MSG_WARN([[*** The constants CPU_IS_BIG_ENDIAN and CPU_IS_LITTLE_ENDIAN in  ]])
++#	AC_MSG_WARN([[*** src/config.h may need to be hand editied.                    ]])
++#	AC_MSG_WARN([[*****************************************************************]])
+ 	fi
+ 
+ )# AC_C_FIND_ENDIAN
+diff -Naur libsndfile-1.0.17/autogen.sh libsndfile-1.0.17-b2/autogen.sh
+--- libsndfile-1.0.17/autogen.sh	1969-12-31 21:00:00.000000000 -0300
++++ libsndfile-1.0.17-b2/autogen.sh	2008-06-12 17:25:38.000000000 -0300
+@@ -0,0 +1,2 @@
++#!/bin/sh
++autoreconf -vfi
+diff -Naur libsndfile-1.0.17/configure.ac libsndfile-1.0.17-b2/configure.ac
+--- libsndfile-1.0.17/configure.ac	2008-06-12 16:38:04.000000000 -0300
++++ libsndfile-1.0.17-b2/configure.ac	2008-06-12 16:41:09.000000000 -0300
+@@ -31,6 +31,8 @@
+ SHARED_VERSION_INFO="1:17:0"
+ 
+ AC_PROG_CC
++AM_PROG_CC_C_O
++AC_PROG_CXX
+ AM_PROG_LIBTOOL
+ 
+ AC_CHECK_PROG(autogen, autogen, yes, no)
