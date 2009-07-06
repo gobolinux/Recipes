@@ -1,0 +1,9 @@
+# Recipe for version 1.8.8 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 3., péntek, 14.43.06 CEST
+# Recipe (MakeRecipe) for Cairo by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 10:58:19 BRT 2005
+compile_version=1.8.8
+url="http://www.cairographics.org/releases/cairo-1.8.8.tar.gz"
+file_size=6646082
+file_md5=d3e1a1035ae563812d4dd44a74fb0dd0
+recipe_type=configure
+
+with_glitz="--enable-glitz"
