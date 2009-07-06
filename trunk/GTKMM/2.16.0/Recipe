@@ -1,9 +1,9 @@
-# Recipe for version 2.14.1 by Giambattista Bloisi <giamby@infinito.it>, on Fri Oct 17 20:18:38 CEST 2008
+# Recipe for version 2.16.0 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 3., péntek, 22.45.57 CEST
 # Recipe (MakeRecipe) for GTKMM by Rafael Guterres Jeffman (rafasgj), on Thu Nov 10 15:40:47 BRST 2005
 compile_version=1.9.0
-url="http://ftp.gnome.org/pub/GNOME/sources/gtkmm/2.14/gtkmm-2.14.1.tar.bz2"
-file_size=9162290
-file_md5=0209b424987a74c956ea6b70fddaaa37
+url="ftp://ftp.gnome.org/pub/GNOME/sources/gtkmm/2.16/gtkmm-2.16.0.tar.bz2"
+file_size=9313258
+file_md5=a82e3b5b93008421ff67df16d1e51ec2
 recipe_type=configure
 
 configure_options=(
