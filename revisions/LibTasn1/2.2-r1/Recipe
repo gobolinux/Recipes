@@ -1,0 +1,13 @@
+# Recipe for version 2.2 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 7., kedd, 00.01.53 CEST
+# Recipe (MakeRecipe) for LibTasn1 by Giovani Facchini, on Qui Abr 14 17:14:26 BRT 2005
+compile_version=1.8.0
+url="http://ftp.gnu.org/gnu/gnutls/libtasn1-2.2.tar.gz"
+file_size=1641693
+file_md5=14cc361500d2e768a8a6ec538ce3fecb
+recipe_type=configure
+#pre_build(){
+#   libtoolize --force
+#   aclocal
+#   autoconf
+#   automake --add-missing
+#}
