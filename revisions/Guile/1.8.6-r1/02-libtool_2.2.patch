@@ -1,0 +1,11 @@
+--- guile-1.8.5/configure.in.old	2008-07-13 12:44:18.000000000 +0000
++++ guile-1.8.5/configure.in	2008-07-13 12:42:30.000000000 +0000
+@@ -38,7 +38,7 @@
+ ]),
+         [bug-guile@gnu.org])
+ AC_CONFIG_AUX_DIR([build-aux])
+-AC_CONFIG_MACRO_DIR([m4])
++AC_CONFIG_MACRO_DIR([guile-config])
+ AC_CONFIG_SRCDIR(GUILE-VERSION)
+ 
+ AM_INIT_AUTOMAKE([gnu no-define check-news])

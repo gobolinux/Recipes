@@ -1,0 +1,13 @@
+--- guile-1.8.5/libguile/guile.c.old	2008-07-13 12:28:46.000000000 +0000
++++ guile-1.8.5/libguile/guile.c	2008-07-13 12:28:33.000000000 +0000
+@@ -67,9 +67,7 @@
+ main (int argc, char **argv)
+ {
+ #if !defined (__MINGW32__)
+-  /* libtool automagically inserts this variable into your executable... */
+-  extern const lt_dlsymlist lt_preloaded_symbols[];
+-  lt_dlpreload_default (lt_preloaded_symbols);
++  LTDL_SET_PRELOADED_SYMBOLS ();
+ #endif
+   scm_boot_guile (argc, argv, inner_main, 0);
+   return 0; /* never reached */
