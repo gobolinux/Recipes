@@ -1,0 +1,13 @@
+# Recipe for version 1.3.7 by Rui Andrada <shingonoide@gmail.com>, on Sat Jul 4 14:47:48 BRT 2009
+# Recipe (MakeRecipe) for APR-Util by Kosh <kosh.linux at gmail.com>, on Tue Feb 28 21:59:01 BRT 2006
+compile_version=1.8.2
+url="http://ftp.unicamp.br/pub/apache/apr/apr-util-1.3.7.tar.bz2"
+file_size=587286
+file_md5=2ed3ae6734290296faa193e1177d50e6
+recipe_type=configure
+configure_options=(
+    "--with-apr=$apr_path"
+)
+with_mysql="--with-mysql"
+with_openldap="--with-ldap"
+with_sqlite="--with-sqlite3"
