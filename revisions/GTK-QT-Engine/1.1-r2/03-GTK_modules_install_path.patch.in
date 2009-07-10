@@ -1,0 +1,23 @@
+This changes the installpath to be inside $target
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+
+--- gtk-qt-engine/CMakeLists.txt	2008-03-11 01:30:19.000000000 +0000
++++ gtk-qt-engine/CMakeLists.txt.new	2008-03-29 05:58:42.000000000 +0000
+@@ -56,14 +56,14 @@
+ 	${PKGCONFIG_EXECUTABLE}
+ 	ARGS --variable=gtk_binary_version gtk+-2.0
+ 	OUTPUT_VARIABLE GTK_VERSION)
+-SET(INSTALL_PATH_GTK_ENGINES "${GTK_LIB_DIR}/gtk-2.0/${GTK_VERSION}/engines" CACHE PATH "The directory in which to install the theme engine library (eg. /usr/lib/gtk-2.0/2.4.0/engines)")
++SET(INSTALL_PATH_GTK_ENGINES "@%Compile_target%@/lib/gtk-2.0/${GTK_VERSION}/engines" CACHE PATH "The directory in which to install the theme engine library (eg. /usr/lib/gtk-2.0/2.4.0/engines)")
+ MESSAGE(STATUS "Installing the GTK theme engine library to: ${INSTALL_PATH_GTK_ENGINES}")
+ 
+ EXEC_PROGRAM(
+ 	${PKGCONFIG_EXECUTABLE}
+ 	ARGS --variable=prefix gtk+-2.0
+ 	OUTPUT_VARIABLE GTK_PREFIX)
+-SET(INSTALL_PATH_GTK_THEMES "${GTK_PREFIX}/share/themes" CACHE PATH "The directory in which to install the theme data (eg. /usr/share/themes)")
++SET(INSTALL_PATH_GTK_THEMES "@%Compile_target%@/share/themes" CACHE PATH "The directory in which to install the theme data (eg. /usr/share/themes)")
+ MESSAGE(STATUS "Installing the GTK theme engine data to: ${INSTALL_PATH_GTK_THEMES}")
+ 
+ SET(INSTALL_PATH_KCONTROL_MODULES "${KDE4_LIB_DIR}" CACHE PATH "The directory in which to install KControl plugins (eg. /usr/lib)")

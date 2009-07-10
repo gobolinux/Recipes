@@ -1,0 +1,17 @@
+# Recipe for version 1.1 by Michael Homer <michael@gobolinux.org>, on Fri Jul 10 19:37:04 NZST 2009
+# Recipe (MakeRecipe) for GTK-QT-Engine by Maglan C. Diemer, maglan@univates.br, on Qua Ago 31 11:36:53 BRT 2005
+compile_version=1.10.0
+url="http://gtk-qt.ecs.soton.ac.uk/files/1.1/gtk-qt-engine-1.1.tar.bz2"
+file_size=58079
+file_md5=de8048baef7dfe6c97cd97c463d66152
+recipe_type=cmake
+dir=gtk-qt-engine
+cmake_options=(
+   -DINSTALL_PATH_KCONTROL_MODULES="$target/lib"
+)
+environment=(
+   #QTDIR="$qt_path"
+   QMAKESPEC="linux-g++"
+   # cmake sucks.
+   CXXFLAGS="-I.${CFLAGS:+ "$CFLAGS"}"
+)
