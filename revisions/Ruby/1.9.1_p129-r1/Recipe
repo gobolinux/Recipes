@@ -1,0 +1,20 @@
+# Recipe for version 1.9.1_p129 by Michael Homer <michael@gobolinux.org>, on Sat Jul 11 13:32:10 NZST 2009
+compile_version=1.8.2
+url="ftp://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.1-p129.tar.gz"
+file_size=9034947
+file_md5=c71f413514ee6341c627be2957023a5c
+recipe_type=configure
+makefile=GNUmakefile
+
+configure_options=(
+ "--disable-frame-address"
+ "--enable-shared"
+ "--enable-pthread"
+ "--enable-install-doc"
+)
+
+#do_build() {
+#   # For unknown reasons, the Ruby makefile builds nothing when called with
+#   # `make -f Makefile`, but works with plain `make`.
+#   $make
+#}
