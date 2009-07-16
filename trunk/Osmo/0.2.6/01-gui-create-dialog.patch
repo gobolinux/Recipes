@@ -1,0 +1,14 @@
+This patch fixes a syntax error in notes_items.c
+
+diff -Naur osmo-0.2.6/src/notes_items.c osmo-0.2.6-new/src/notes_items.c
+--- osmo-0.2.6/src/notes_items.c	2009-03-06 20:03:53.000000000 +0100
++++ osmo-0.2.6-new/src/notes_items.c	2009-07-15 01:15:03.000000000 +0200
+@@ -1038,7 +1038,7 @@
+ 		if (check_if_encrypted (current_filename, appGUI) == TRUE) {
+ 
+ 			g_snprintf (tmpbuf, BUFFER_SIZE, "%s\n\n(%s)", _("Cannot open the note."), _("encryption support is disabled"));
+-			gui_create_dialog (GTK_MESSAGE_ERROR, tmpbuf, GTK_WINDOW(appGUI->main_window));
++			utl_gui_create_dialog (GTK_MESSAGE_ERROR, tmpbuf, GTK_WINDOW(appGUI->main_window));
+ 			g_free (current_filename);
+ 			return;
+ 
