@@ -1,0 +1,10 @@
+# Recipe for version 1.15 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 14., kedd, 22.19.28 CEST
+# by Maglan C. Diemer
+compile_version=1.8.2
+url="$ftpGnu/libidn/libidn-1.15.tar.gz"
+file_size=2635155
+file_md5=482a25b7b223e52f967fafd284a1a992
+recipe_type=configure
+configure_options=(
+   "--mandir=${target}/man"
+)
