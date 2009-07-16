@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for TDL by Jordan Wade, on Tue Jul 14 08:40:56 CDT 2009
+# Recipe for version 1.5.2 by Jordan Wade, on Tue Jul 14 08:40:56 CDT 2009
+compile_version=1.12.3
+url="http://www.rpcurnow.force9.co.uk/tdl/tdl-1.5.2.tar.gz"
+file_size=66057
+file_md5=620cb00bf99b7e786e2b54cda6339a1e
+recipe_type=configure
+make_variables=(
+    LDFLAGS="-L$goboLibraries"
+)
