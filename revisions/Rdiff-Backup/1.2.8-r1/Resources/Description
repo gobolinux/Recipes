@@ -1,0 +1,9 @@
+[Name] Rdiff-Backup
+[Summary] rdiff-backup backs up one directory to another, possibly over a network.
+[Description] rdiff-backup backs up one directory to another, possibly over
+a network. The target directory ends up a copy of the source directory, but
+extra reverse diffs are stored in a special subdirectory of that target
+directory, so you can still recover files lost some time ago. The idea is
+to combine the best features of a mirror and an incremental backup.
+[License] GNU General Public License version 2
+[Homepage] http://www.nongnu.org/rdiff-backup/
