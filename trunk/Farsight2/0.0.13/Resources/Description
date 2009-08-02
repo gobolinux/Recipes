@@ -1,0 +1,7 @@
+[Name] Farsight2
+[Summary] Audio/Video Communications Framework
+[Description] The Farsight project is an effort to create a framework to deal with all known audio/video conferencing protocols. On one side it offers a generic API that makes it possible to write plugins for different streaming protocols, on the other side it offers an API for clients to use those plugins.
+
+The main target clients for Farsight are Instant Messaging applications. These applications should be able to use Farsight for all their Audio/Video conferencing needs without having to worry about any of the lower level streaming and NAT traversal issues. 
+[License] GNU Lesser General Public License version 2.1
+[Homepage] http://farsight.freedesktop.org/
