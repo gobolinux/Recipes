@@ -20,3 +20,7 @@ make_variables=(
 	VARRUN=$variable_target/run
 	VARDB=$variable_target/db
 )
+
+unmanaged_files=(
+   $goboVariable/db
+)
