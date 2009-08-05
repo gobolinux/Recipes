@@ -1,0 +1,26 @@
+# Recipe for version 3.0.7 by Fabio Mierlo, on Thu Jul 10 17:18:24 BRT 2008
+# Recipe (MakeRecipe) for DHCP by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue May 16 13:45:44 BRT 2006
+compile_version=1.8.0
+url="http://ftp.isc.org/isc/dhcp/dhcp-3.0.7.tar.gz"
+file_size=888829
+file_md5=426bfa1712ababaff4be6dadee9c1982
+recipe_type=configure
+override_default_options=yes
+
+make_variables=(
+	USERBINDIR=$target/bin
+	BINDIR=$target/sbin
+	CLIENTBINDIR=$target/bin
+	LIBDIR=$target/lib
+	INCDIR=$target/include
+	ADMMANDIR=$target/man/man8
+	FFMANDIR=$target/man/man5
+	LIBMANDIR=$target/man/man3
+	USRMANDIR=$target/man/man1
+	VARRUN=$variable_target/run
+	VARDB=$variable_target/db
+)
+
+unmanaged_files=(
+   $goboVariable/db
+)
