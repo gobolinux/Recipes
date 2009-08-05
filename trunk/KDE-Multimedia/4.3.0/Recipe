@@ -1,0 +1,13 @@
+# Recipe for version 4.3.0 by Michael Homer <michael@gobolinux.org>, on Wed Aug 5 18:26:39 NZST 2009
+# Recipe (MakeRecipe) for KDE-Multimedia by Giambattista Bloisi <giamby@infinito.it>, on Mon Jan 14 09:40:45 CET 2008
+compile_version=1.10.0
+url="http://download.kde.org/stable/4.3.0/src/kdemultimedia-4.3.0.tar.bz2"
+file_size=1585773
+file_md5=75c0c42f22f5ffc98262441751ccb247
+file="kdemultimedia-4.3.0.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
+
