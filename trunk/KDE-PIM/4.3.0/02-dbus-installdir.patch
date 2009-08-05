@@ -1,0 +1,104 @@
+--- kdepim-4.2.0/kontact/plugins/knotes/CMakeLists.txt.orig	2009-02-01 15:54:50.000000000 +0100
++++ kdepim-4.2.0/kontact/plugins/knotes/CMakeLists.txt	2009-02-01 15:56:12.000000000 +0100
+@@ -19,6 +19,6 @@
+ install(TARGETS kontact_knotesplugin  DESTINATION ${PLUGIN_INSTALL_DIR})
+ install(FILES knotes_part.rc  DESTINATION ${DATA_INSTALL_DIR}/knotes)
+ install(FILES knotesplugin.desktop  DESTINATION ${SERVICES_INSTALL_DIR}/kontact)
+-install(FILES org.kde.kontact.KNotes.xml DESTINATION ${KDE4_DBUS_INTERFACES_DIR})
++install(FILES org.kde.kontact.KNotes.xml DESTINATION ${DBUS_INTERFACES_INSTALL_DIR})
+ 
+ install(FILES knotes.setdlg DESTINATION ${DATA_INSTALL_DIR}/kontact/ksettingsdialog)
+--- kdepim-4.2.0/libkdepim/CMakeLists.txt.orig	2009-02-01 15:54:50.000000000 +0100
++++ kdepim-4.2.0/libkdepim/CMakeLists.txt	2009-02-01 15:56:12.000000000 +0100
+@@ -124,4 +124,4 @@
+ 
+ install(FILES kdepimprotocols.h  DESTINATION ${INCLUDE_INSTALL_DIR} COMPONENT Devel)
+ 
+-install(FILES interfaces/org.kde.addressbook.service.xml interfaces/org.kde.mailtransport.service.xml DESTINATION ${KDE4_DBUS_INTERFACES_DIR})
++install(FILES interfaces/org.kde.addressbook.service.xml interfaces/org.kde.mailtransport.service.xml DESTINATION ${DBUS_INTERFACES_INSTALL_DIR})
+--- kdepim-4.2.0/ktimetracker/CMakeLists.txt.orig	2009-02-01 15:54:50.000000000 +0100
++++ kdepim-4.2.0/ktimetracker/CMakeLists.txt	2009-02-01 15:56:12.000000000 +0100
+@@ -88,4 +88,4 @@
+ install( FILES ktimetrackerui.rc  DESTINATION ${DATA_INSTALL_DIR}/ktimetracker )
+ 
+ kde4_install_icons( ${ICON_INSTALL_DIR} )
+-install( FILES org.kde.ktimetracker.ktimetracker.xml DESTINATION ${KDE4_DBUS_INTERFACES_DIR} )
++install( FILES org.kde.ktimetracker.ktimetracker.xml DESTINATION ${DBUS_INTERFACES_INSTALL_DIR} )
+--- kdepim-4.2.0/knotes/CMakeLists.txt.orig	2009-02-01 15:54:50.000000000 +0100
++++ kdepim-4.2.0/knotes/CMakeLists.txt	2009-02-01 15:56:12.000000000 +0100
+@@ -59,5 +59,5 @@
+ install( FILES local.desktop  DESTINATION ${SERVICES_INSTALL_DIR}/kresources/knotes)
+ install( FILES knotes_manager.desktop  DESTINATION ${SERVICES_INSTALL_DIR}/kresources)
+ install( FILES knotesappui.rc knotesui.rc  DESTINATION ${DATA_INSTALL_DIR}/knotes)
+-install( FILES org.kde.KNotes.xml DESTINATION ${KDE4_DBUS_INTERFACES_DIR}) 
++install( FILES org.kde.KNotes.xml DESTINATION ${DBUS_INTERFACES_INSTALL_DIR}) 
+ 
+--- kdepim-4.2.0/kaddressbook/CMakeLists.txt.orig	2009-02-01 15:54:50.000000000 +0100
++++ kdepim-4.2.0/kaddressbook/CMakeLists.txt	2009-02-01 15:56:12.000000000 +0100
+@@ -176,6 +176,6 @@
+ install( FILES zone.tab  DESTINATION ${DATA_INSTALL_DIR}/kaddressbook)
+ install( FILES kaddressbookui.rc kaddressbook_part.rc  DESTINATION ${DATA_INSTALL_DIR}/kaddressbook)
+ install( FILES kaddressbook_view.desktop dbusaddressbook.desktop  DESTINATION ${SERVICETYPES_INSTALL_DIR})
+-install( FILES org.kde.KAddressbook.Core.xml DESTINATION ${KDE4_DBUS_INTERFACES_DIR} )
++install( FILES org.kde.KAddressbook.Core.xml DESTINATION ${DBUS_INTERFACES_INSTALL_DIR} )
+ install( FILES kaddressbook_export.h  DESTINATION ${INCLUDE_INSTALL_DIR}/kaddressbook COMPONENT Devel)
+ 
+--- kdepim-4.2.0/knode/CMakeLists.txt.orig	2009-02-01 15:54:50.000000000 +0100
++++ kdepim-4.2.0/knode/CMakeLists.txt	2009-02-01 15:56:12.000000000 +0100
+@@ -143,7 +143,7 @@
+ install( FILES KNode.desktop  DESTINATION ${XDG_APPS_INSTALL_DIR})
+ install( FILES knode_config_identity.desktop knode_config_accounts.desktop knode_config_appearance.desktop knode_config_read_news.desktop knode_config_post_news.desktop knode_config_privacy.desktop knode_config_cleanup.desktop  DESTINATION ${SERVICES_INSTALL_DIR})
+ install( FILES headers.rc knodeui.rc knreaderui.rc kncomposerui.rc  DESTINATION ${DATA_INSTALL_DIR}/knode)
+-install(FILES org.kde.knode.xml DESTINATION ${KDE4_DBUS_INTERFACES_DIR} )
++install(FILES org.kde.knode.xml DESTINATION ${DBUS_INTERFACES_INSTALL_DIR} )
+ 
+ kde4_install_icons( ${ICON_INSTALL_DIR}   )
+ 
+--- kdepim-4.2.0/kmail/CMakeLists.txt.orig	2009-02-01 15:54:50.000000000 +0100
++++ kdepim-4.2.0/kmail/CMakeLists.txt	2009-02-01 15:56:12.000000000 +0100
+@@ -457,6 +457,6 @@
+   ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmailpart.xml
+   ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml
+   ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml
+-  DESTINATION ${KDE4_DBUS_INTERFACES_DIR}
++  DESTINATION ${DBUS_INTERFACES_INSTALL_DIR}
+ )
+ 
+--- kdepim-4.2.0/akregator/src/CMakeLists.txt.orig	2009-02-01 15:54:50.000000000 +0100
++++ kdepim-4.2.0/akregator/src/CMakeLists.txt	2009-02-01 15:56:12.000000000 +0100
+@@ -120,4 +120,4 @@
+ install( FILES akregator_plugin.desktop  DESTINATION ${SERVICETYPES_INSTALL_DIR})
+ install( FILES akregator_shell.rc  DESTINATION ${DATA_INSTALL_DIR}/akregator)
+ install( FILES feed.protocol  DESTINATION ${SERVICES_INSTALL_DIR})
+-install( FILES org.kde.akregator.part.xml DESTINATION ${KDE4_DBUS_INTERFACES_DIR} )
++install( FILES org.kde.akregator.part.xml DESTINATION ${DBUS_INTERFACES_INSTALL_DIR} )
+--- kdepim-4.2.0/kalarm/CMakeLists.txt.orig	2009-02-01 15:54:50.000000000 +0100
++++ kdepim-4.2.0/kalarm/CMakeLists.txt	2009-02-01 15:56:12.000000000 +0100
+@@ -123,7 +123,7 @@
+ install( FILES kalarm.autostart.desktop DESTINATION ${AUTOSTART_INSTALL_DIR} )
+ install( FILES kalarmconfig.kcfg DESTINATION ${KCFG_INSTALL_DIR})
+ install( FILES kalarmui.rc DESTINATION ${DATA_INSTALL_DIR}/kalarm )
+-install( FILES org.kde.kalarm.kalarm.xml DESTINATION ${KDE4_DBUS_INTERFACES_DIR} )
++install( FILES org.kde.kalarm.kalarm.xml DESTINATION ${DBUS_INTERFACES_INSTALL_DIR} )
+ install( FILES kalarm.upd DESTINATION ${KCONF_UPDATE_INSTALL_DIR})
+ install( PROGRAMS kalarm-version.pl kalarm-1.2.1-general.pl kalarm-1.9.5-defaults.pl kalarm-2.0.2-general.pl DESTINATION ${KCONF_UPDATE_INSTALL_DIR})
+ 
+--- a/korganizer/CMakeLists.txt.orig 2009-08-05 16:45:55.000000000 +1200
++++ a/korganizer/CMakeLists.txt      2009-08-05 16:46:54.000000000 +1200
+@@ -279,7 +279,7 @@
+   install( FILES korganizer.upd  DESTINATION ${KCONF_UPDATE_INSTALL_DIR})
+   install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/ical2vcal DESTINATION ${BIN_INSTALL_DIR})
+
+-  install( FILES org.kde.Korganizer.Calendar.xml org.kde.korganizer.Korganizer.xml DESTINATION ${KDE4_DBUS_INTERFACES_DIR})
++  install( FILES org.kde.Korganizer.Calendar.xml org.kde.korganizer.Korganizer.xml DESTINATION ${DBUS_INTERFACES_INSTALL_DIR})
+
+ else(KMAIL_SUPPORTED)
+   message(STATUS "KOrganizer will NOT be built.")
+--- kdepim-4.2.0/korganizer/korgac/CMakeLists.txt.orig	2009-02-01 15:54:50.000000000 +0100
++++ kdepim-4.2.0/korganizer/korgac/CMakeLists.txt	2009-02-01 15:56:12.000000000 +0100
+@@ -35,4 +35,4 @@
+ ########### install files ###############
+ 
+ install( FILES korgac.desktop  DESTINATION ${AUTOSTART_INSTALL_DIR} )
+-install( FILES org.kde.korganizer.KOrgac.xml DESTINATION ${KDE4_DBUS_INTERFACES_DIR} )
++install( FILES org.kde.korganizer.KOrgac.xml DESTINATION ${DBUS_INTERFACES_INSTALL_DIR} )
