@@ -1,0 +1,54 @@
+Thu Nov 16 16:51:45 CET 2006  hanwen@lilypond.org
+  * @CROSS_COMMENT@ out buildpython dependencies for x-compile.
+diff -rN -u old-Python-2.5.cross/Makefile.pre.in new-Python-2.5.cross/Makefile.pre.in
+--- old-Python-2.5.cross/Makefile.pre.in	2006-11-16 17:47:45.000000000 +0100
++++ new-Python-2.5.cross/Makefile.pre.in	2006-11-16 17:47:45.000000000 +0100
+@@ -74,6 +74,16 @@
+ # C flags used for building the interpreter object files
+ PY_CFLAGS=	$(CFLAGS) $(CPPFLAGS) $(CFLAGSFORSHARED) -DPy_BUILD_CORE
+ 
++# For cross compile: build compiler options
++CC_FOR_BUILD=	@CC_FOR_BUILD@
++CROSS_COMPILING=	@cross_compiling@
++EXEEXT_FOR_BUILD=	@EXEEXT_FOR_BUILD@
++O_FOR_BUILD=	@O_FOR_BUILD@
++
++CFLAGS_FOR_BUILD=	@CFLAGS_FOR_BUILD@
++CPPFLAGS_FOR_BUILD=	@CPPFLAGS_FOR_BUILD@ -I$(srcdir)/Include
++LDFLAGS_FOR_BUILD=	@LDFLAGS_FOR_BUILD@
++LIBS_FOR_BUILD=	@LIBS_FOR_BUILD@
+ 
+ # Machine-dependent subdirectories
+ MACHDEP=	@MACHDEP@
+@@ -359,7 +369,7 @@
+ 
+ 
+ # Build the shared modules
+-sharedmods: $(BUILDPYTHON)
++sharedmods: @CROSS_COMMENT@ $(BUILDPYTHON)
+ 	case $$MAKEFLAGS in \
+ 	*-s*) $(RUNSHARED) CC='$(CC)' LDSHARED='$(BLDSHARED)' OPT='$(OPT)' ./$(BUILDPYTHON) -E $(srcdir)/setup.py -q build;; \
+ 	*) $(RUNSHARED) CC='$(CC)' LDSHARED='$(BLDSHARED)' OPT='$(OPT)' ./$(BUILDPYTHON) -E $(srcdir)/setup.py build;; \
+@@ -732,7 +742,7 @@
+ 		distutils distutils/command distutils/tests $(XMLLIBSUBDIRS) \
+ 		setuptools setuptools/command setuptools/tests setuptools.egg-info \
+ 		curses $(MACHDEPS)
+-libinstall:	$(BUILDPYTHON) $(srcdir)/Lib/$(PLATDIR)
++libinstall: $(srcdir)/Lib/$(PLATDIR) @CROSS_COMMENT@ $(BUILDPYTHON)
+ 	@for i in $(SCRIPTDIR) $(LIBDEST); \
+ 	do \
+ 		if test ! -d $(DESTDIR)$$i; then \
+@@ -809,9 +819,9 @@
+ $(srcdir)/Lib/$(PLATDIR):
+ 	mkdir $(srcdir)/Lib/$(PLATDIR)
+ 	cp $(srcdir)/Lib/plat-generic/regen $(srcdir)/Lib/$(PLATDIR)/regen
+-	export PATH; PATH="`pwd`:$$PATH"; \
+-	export PYTHONPATH; PYTHONPATH="`pwd`/Lib"; \
+-	export DYLD_FRAMEWORK_PATH; DYLD_FRAMEWORK_PATH="`pwd`"; \
++@CROSS_COMMENT@	export PATH; PATH="`pwd`:$$PATH"; \
++@CROSS_COMMENT@	export PYTHONPATH; PYTHONPATH="`pwd`/Lib"; \
++@CROSS_COMMENT@	export DYLD_FRAMEWORK_PATH; DYLD_FRAMEWORK_PATH="`pwd`"; \
+ 	export EXE; EXE="$(BUILDEXE)"; \
+ 	cd $(srcdir)/Lib/$(PLATDIR); ./regen
+ 
+
