@@ -1,0 +1,5 @@
+[Name] DavFs2
+[Summary] davfs2 is a Linux file system driver that allows you to mount a WebDAV server as a local file system
+[Description] davfs2 runs as a daemon in userspace. It uses the kernel file system coda or fuse. Most propably your Linux kernel includes at least one of this file systems. To connect to the WebDAV server it makes use of the neon library. Neon supports TLS/SSL (using OpenSSL or GnuTLS) and access via proxy server.
+[License] GNU General Public License version 2
+[Homepage] http://dav.sourceforge.net/
