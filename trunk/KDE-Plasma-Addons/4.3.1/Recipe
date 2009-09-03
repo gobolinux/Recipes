@@ -1,0 +1,13 @@
+# Recipe for version 4.3.1 by Michael Homer <michael@gobolinux.org>, on Wed Sep 2 20:35:28 NZST 2009
+# Recipe (MakeRecipe) for KDE-Plasma-Addons by Giambattista Bloisi <giamby@infinito.it>, on Sat Nov 1 17:09:32 CET 2008
+compile_version=1.11.3
+url="http://download.kde.org/stable/4.3.1/src/kdeplasma-addons-4.3.1.tar.bz2"
+file_size=1448440
+file_md5=282473836da35a48a6c6bee0b6fa6666
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+# Contrary to how it sounds, this is a search path, not a target
+-DDBUS_INTERFACES_INSTALL_DIR="$goboShared/dbus-1/interfaces/"
+)
