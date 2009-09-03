@@ -1,0 +1,11 @@
+# Recipe for version 4.3.1 by Michael Homer <michael@gobolinux.org>, on Thu Sep 3 19:25:08 NZST 2009
+# Recipe (MakeRecipe) for KDE-SDK by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri May 23 03:15:02 BRT 2008
+compile_version=1.10.1
+url="http://download.kde.org/stable/4.3.1/src/kdesdk-4.3.1.tar.bz2"
+file_size=5611514
+file_md5=e1fda958d1f0a2ac39c0cc04814d1fd7
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
