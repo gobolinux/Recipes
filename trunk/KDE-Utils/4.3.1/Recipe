@@ -1,0 +1,14 @@
+# Recipe for version 4.3.1 by Michael Homer <michael@gobolinux.org>, on Thu Sep 3 19:19:18 NZST 2009
+# Recipe (MakeRecipe) for KDE-Utils by Giambattista Bloisi <giamby@infinito.it>, on Tue Jan 15 23:25:28 CET 2008
+compile_version=1.10.0
+url="http://download.kde.org/stable/4.3.1/src/kdeutils-4.3.1.tar.bz2"
+file_size=2524224
+file_md5=69491ba185ba8ecb2dd4860d7048a88a
+file="kdeutils-4.3.1.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+-DINSTALL_PRINTER_APPLET=TRUE
+)
+
