@@ -1,0 +1,14 @@
+# Recipe for version 7.5 by Michael Homer <michael@gobolinux.org>, on Thu Sep 3 21:17.52 NZST 2009
+url="http://ftp.gnu.org/gnu/coreutils/coreutils-7.5.tar.xz"
+file_size=4499412
+file_md5=ca9219c5b7efa533d552f61a3880f458
+recipe_type=configure
+install_target="install install-root"
+compile_version=1.12.0
+configure_options=(
+   --enable-no-install-program=kill,uptime
+)
+
+pre_link() {
+   mv $target/bin/install $target/bin/real_install
+}
