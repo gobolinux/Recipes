@@ -1,0 +1,50 @@
+# Recipe for version 2.9 by Jonas Karlsson <jonas@gobolinux.org>, on Tue Apr 29 02:21:33 GMT 2009
+# by Guilherme Bedin
+# 02/12/2003
+compile_version=1.11.0
+urls=(
+   "$ftpGnu/glibc/glibc-2.9.tar.bz2"
+   "$ftpGnu/glibc/glibc-libidn-2.9.tar.bz2"
+)
+file_sizes=(
+   16079568
+   101991
+)
+file_md5s=(
+   fc62e989cf31d015f31628609fc3757a
+   99536b508af988e7cc6275944d12b491
+)
+unpack_files=inside_first
+
+recipe_type=configure
+needs_build_directory=yes
+configure_options=(
+    --enable-kernel=2.6.18
+    --with-headers="${linux_headers_path}/include"
+    --disable-profile
+    --enable-add-ons
+    --with-tls
+    --with-__thread
+    --libexecdir="${target}/lib"
+)
+
+install_target="install localedata/install-locales"
+
+environment=(
+    CFLAGS=""
+    CXXFLAGS=""
+    LDFLAGS=""
+# This avoids "make install" to interrupt because ld does not find libraries
+#    LD_LIBRARY_PATH=$(readlink -f $target/../Current/lib):$goboLibraries
+)
+
+pre_build() {
+   sed -i 's|@BASH@|/bin/bash|' "${sourcedir}/elf/ldd.bash.in"
+   [ ! -d "${sourcedir}/glibc-libidn-2.9" ] || mv "${sourcedir}/glibc-libidn-2.9" "${sourcedir}/libidn"
+}
+
+pre_install() {
+   cp -R "${recipedir}/Resources/Defaults/Settings"/* "$target/Resources/Defaults/Settings"
+   ldconfig -C "$target/Resources/Defaults/Settings/ld.so.cache"
+   ldconfig
+}
