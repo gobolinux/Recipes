@@ -1,0 +1,7 @@
+configure_options=(
+    ${configure_options[@]}
+    --enable-add-ons
+)
+environment=(
+   CFLAGS+=" -march=i686 -mtune=native -pipe"
+)
