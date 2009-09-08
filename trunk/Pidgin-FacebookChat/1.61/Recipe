@@ -1,0 +1,12 @@
+# Recipe for version 1.61 by Michael Homer <michael@gobolinux.org>, on Tue Sep 8 17:28:19 NZST 2009
+# Recipe (MakeRecipe) for Pidgin-FacebookChat by Jonas Karlsson <jonka750@student.liu.se>, on Mon Jan 12 21:21:17 CET 2009
+compile_version=1.10.0
+url="http://pidgin-facebookchat.googlecode.com/files/pidgin-facebookchat-source-1.61.tar.bz2"
+file_size=46966
+file_md5=9e78f200710d2dc8134d4e9e5f237618
+dir='pidgin-facebookchat'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   PREFIX="$target"
+)
