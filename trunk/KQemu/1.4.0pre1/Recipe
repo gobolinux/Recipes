@@ -1,0 +1,17 @@
+# Recipe for version 1.4.0pre1 by Lucas C. Villa Real, on Tue Sep 8 20:30:51 BRT 2009
+compile_version=1.8.2
+url="http://www.nongnu.org/qemu/kqemu-1.4.0pre1.tar.gz"
+file_size=168249
+file_md5=d738d8ca7332211ab716ec3213d82ee1
+recipe_type=configure
+
+unmanaged_files=(
+        $goboModules
+)
+
+pre_link () {
+    # Make a note that this is a third part module that needs
+    # recompiling with a new kernel
+    mkdir -p ${target}/Shared/Compile/Recompile/Linux/
+    touch ${target}/Shared/Compile/Recompile/Linux/KQemu
+}
