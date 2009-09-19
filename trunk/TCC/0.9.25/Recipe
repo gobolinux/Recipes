@@ -1,0 +1,18 @@
+# Recipe for version 0.9.25 by Zbigniew Baniewski <zb@ispid.com.pl>, on sob, 19 wrz 2009, 17:03:21 CEST
+# Recipe (MakeRecipe) for TCC by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Wed Jun 15 19:50:34 BRT 2005
+compile_version=1.8.0
+url="http://download.savannah.nongnu.org/releases/tinycc/tcc-0.9.25.tar.bz2"
+file_size=382914
+file_md5=991c2a1986cce15f03ca6ddc86ea5f43
+recipe_type=configure
+
+do_build() {
+   configure_do_build "$@"
+   make libtcc.o
+   gcc -shared -Wl,-soname,libtcc.so -o libtcc.so libtcc.o
+}
+
+do_install() {
+   configure_do_install "$@"
+   $sudo_exec cp libtcc.so "$target/lib"
+}
