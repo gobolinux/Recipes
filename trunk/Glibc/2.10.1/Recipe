@@ -19,6 +19,7 @@ unpack_files=inside_first
 
 recipe_type=configure
 needs_build_directory=yes
+
 configure_options=(
     --enable-kernel=2.6.18
     --with-headers="${linux_headers_path}/include"
@@ -35,8 +36,6 @@ environment=(
    CFLAGS=""
    CXXFLAGS=""
    LDFLAGS=""
-# This avoids "make install" to interrupt because ld does not find libraries
-#    LD_LIBRARY_PATH=$(readlink -f $target/../Current/lib):$goboLibraries
 )
 
 pre_patch() {
@@ -52,7 +51,7 @@ tst-fgetwc-ENV = LOCPATH=$(common-objpfx)localedata' \
 
    # Fix an error in the constants that get passed to the futex system
    # call in some cases, causing certain pthread_mutex operations to fail: 
-   sed -i 
+   sed -i \
    -e 's/FUTEX_WAIT\( | FUTEX_CLOCK_REALTIME, reg\)/FUTEX_WAIT_BITSET\1/' \
    "${sourcedir}/nptl/sysdeps/unix/sysv/linux/i386/i486/lowlevellock.S"
 
@@ -67,4 +66,12 @@ pre_install() {
    # We don't want to run ldconfig from "make install"
    sed -i 's,$(common-objpfx)elf/ldconfig,/bin/true,' \
    "${sourcedir}/Makefile"
+}
+
+pre_link() {
+   echo ${target} >&2
+   for f in "${goboHeaders}"/gnu/stubs-*
+   do
+      [ -e "${target}"/include/gnu/$(basename "${f}") ] || cp -a $(readlink -f "${f}") "${target}"/include/gnu
+   done
 }

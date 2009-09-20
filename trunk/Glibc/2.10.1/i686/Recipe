@@ -3,5 +3,5 @@ configure_options=(
     --enable-add-ons
 )
 environment=(
-   CFLAGS+=" -march=i686 -mtune=native -pipe"
+   CFLAGS="-O2 -pipe -march=i686"
 )
