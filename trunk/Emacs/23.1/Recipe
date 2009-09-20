@@ -1,0 +1,18 @@
+# Recipe for version 23.1 by Michael Homer <michael@gobolinux.org>, on Sun Sep 20 11:52:51 NZST 2009
+compile_version=1.8.5
+url="$ftpGnu/emacs/emacs-23.1.tar.gz"
+file_size=42904117
+file_md5=a620d4452769d04ad8864d662f34f8dd
+recipe_type=configure
+
+unmanaged_files=(
+   $goboVariable/games/emacs
+)
+
+with_gtk=(
+   "--with-x-toolkit=gtk"
+)
+
+with_motif=(
+   "--with-x-toolkit=motif"
+)
