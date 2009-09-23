@@ -1,0 +1,10 @@
+# Recipe for version 2.3.1 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. aug. 3., hétfő, 00.42.27 CEST
+# Recipe for Xdialog 2.3.1 by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.8.0
+url="http://xdialog.free.fr/Xdialog-2.3.1.tar.bz2"
+file_size=457938
+file_md5=0671f8353717513bf1f0ebc80e9710f6
+recipe_type=configure
+with_gtk2=(
+    --with-gtk2
+)
