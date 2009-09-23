@@ -1,0 +1,14 @@
+# Recipe for version 5.0.7 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. aug. 2., vasárnap, 02.23.42 CEST
+compile_version=1.9.0
+url="http://roy.marples.name/downloads/dhcpcd/dhcpcd-5.0.7.tar.bz2"
+file_size=62792
+file_md5=1c85790576deb6106879430b24e1fa9c
+recipe_type=makefile
+
+make_variables=(
+   PREFIX="$target"
+   MANPREFIX="$target/share"
+   CFLAGS="-D RUNDIR=\\\"$variable_target/run\\\""
+   SYSCONFDIR="$settings_target"
+   DBDIR="$variable_target/lib/dhcpcd"
+)
