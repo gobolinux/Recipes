@@ -1,0 +1,16 @@
+# Recipe for version 1.1.11 by Dominique Juergensen <brokolie@vollbio.de>, on Sun Jul 19 16:58:53 CEST 2009
+# Recipe (MakeRecipe) for WebKit by Daniele Maccari <daniele.maccari@gmail.com>, on Wed Feb 13 11:45:17 CET 2008
+compile_version=1.10.1
+url="http://www.webkitgtk.org/webkit-1.1.11.tar.gz"
+file_size=5412492
+file_md5=022a72ba5b7fa9e29553c03bf027215f
+recipe_type=configure
+makefile='GNUmakefile'
+configure_options=(
+   --enable-fast-malloc   
+)
+with_gtk2="--with-font-backend=pango"
+with_html5_media="--enable-video"
+with_gnome=(
+   --enable-gnomekeyring
+)

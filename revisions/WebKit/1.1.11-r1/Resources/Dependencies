@@ -1,0 +1,19 @@
+Cairo >= 1.2
+Enchant >= 1.4
+Fontconfig >= 2.4
+FreeType >= 2.1.10
+GCC >= 3.4.5
+GLib >= 2.0 [gtk2]
+Glibc >= 2.5
+GStreamer >= 0.10 [html5_media]
+GST-Plugins-Base >= 0.10 [html5_media]
+GTK+ >= 2.10 [gtk2] #optional
+JPEG 6b
+LibICU4C
+LibPNG >= 1.2
+LibSoup >= 2.27.4
+LibXML2 >= 2.6
+LibXSLT >= 1.1.7 #optional
+Pango >= 1.0 [gtk2]
+SQLite >= 3.0 # optional - needed for various info storage
+ZLib >= 1.2.3
