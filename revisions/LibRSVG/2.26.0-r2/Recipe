@@ -1,0 +1,11 @@
+# Recipe for version 2.26.0 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 3., péntek, 17.38.20 CEST
+# Recipe (MakeRecipe) for LibRSVG by roko, <ro.ko@mcnon.com>, on Sat Jan 1 10:29:51 BRST 2005
+compile_version=1.8.0
+url="ftp://ftp.gnome.org/pub/GNOME/sources/librsvg/2.26/librsvg-2.26.0.tar.bz2"
+file_size=477499
+file_md5=65dbd726a514fe8b797d26254b8efc1e
+recipe_type=configure
+configure_options=(
+    --disable-mozilla-plugin
+)
+with_libcroco="--with-croco"
