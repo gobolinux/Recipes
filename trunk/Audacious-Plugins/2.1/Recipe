@@ -1,0 +1,12 @@
+# Recipe for version 2.1 by Dominique Juergensen <brokolie@vollbio.de>, on Sun Jul 19 23:01:45 CEST 2009
+# Recipe (MakeRecipe) for Audacious-Plugins by Guilherme B. Bedin, on Wed Jan 24 13:55:32 BRST 2007
+compile_version=1.8.2
+url="http://distfiles.atheme.org/audacious-plugins-2.1.tgz"
+file_size=3610509
+file_md5=087fcb1f6fb8429b267f18ed3e3acb7a
+recipe_type=configure
+part_of=Audacious
+
+make_variables=(
+    "pluginlibdir=$target/lib/audacious"
+)
