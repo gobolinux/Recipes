@@ -1,0 +1,19 @@
+[Name] LibHaru
+[Summary] PDF generating library
+[Description] LibHaru is a free, cross platform, open source library for
+generating PDF files.
+It supports the following features:
+- Generating PDF files with lines, text, images.
+- Outline, text annotation, link annotation.
+- Compressing document with deflate-decode.
+- Embedding PNG, Jpeg images.
+- Embedding Type1 font and TrueType font.
+- Creating encrypted PDF files.
+- Using various character sets (ISO8859-1~16, MSCP1250~8, KOI8-R).
+- Supporting CJK fonts and encodings.
+You can add the feature of PDF creation by using HARU without
+understanding complicated internal structure of PDF.
+LibHaru is written in ANSI C, so theoretically it supports most of the
+modern OSes.
+[License] ZLIB/LIBPNG
+[Homepage] http://libharu.org
