@@ -1,0 +1,19 @@
+# Recipe for version 1.1.26 by Hugo Barrocas <barrocas@iol.pt>, on Seg Ago 3 19:25:07 WEST 2009
+# Recipe (MakeRecipe) for Wine by roko, <ro.ko@mcnon.com>, on Thu Jan 27 22:27:44 CET 2005
+compile_version=1.9.0
+url="http://downloads.sourceforge.net/project/wine/Source Packages/1.1.26/wine-1.1.26.tar.bz2"
+file_size=
+file_md5=
+recipe_type=configure
+configure_options=(
+   "--localstatedir=$goboVariable/wine"
+#"--without-curses"
+)
+
+unmanaged_files=(
+   "$goboVariable/wine/"
+)
+
+install_variables=(
+   "UPDATE_DESKTOP_DATABASE=''"
+)
