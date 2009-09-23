@@ -1,0 +1,23 @@
+# Recipe for version 3.9 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 14., kedd, 02.42.32 CEST
+# Recipe for Module-Init-Tools 3.2-pre9 by Lucas Correia Villa Real
+compile_version=1.8.2
+url="http://www.kernel.org/pub/linux/utils/kernel/module-init-tools/module-init-tools-3.9.tar.bz2"
+file_size=193216
+file_md5=738db2580f664795f05975846e53b298
+recipe_type=configure
+
+configure_options=(
+   --with-moddir="$goboModules"
+   --enable-zlib
+)
+build_variables=(
+   "DOCBOOKTOMAN=''"
+)
+
+install_variables=(
+   INSTALL=install
+)
+
+pre_build(){
+   touch modprobe.conf.5
+}
