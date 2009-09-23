@@ -1,0 +1,11 @@
+# Recipe for version 1.0.0 by Rui Andrada <shingonoide@gmail.com>, on Tue Jul 7 14:04:48 BRT 2009
+# Recipe (MakeRecipe) for VLC by keisangi, on Sun Feb 17 01:23:41 JST 2008
+compile_version=1.10.2
+url="http://download.videolan.org/pub/videolan/vlc/1.0.0/vlc-1.0.0.tar.bz2"
+file_size=19973964
+file_md5=fc78904ab5fa73f518d8fe4e852e7f67
+recipe_type=configure
+configure_options=(
+    "--enable-dvdread"
+    "--disable-swscale"
+)
