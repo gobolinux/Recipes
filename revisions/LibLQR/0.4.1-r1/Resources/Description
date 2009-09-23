@@ -1,0 +1,35 @@
+[Name] LibLQR
+[Summary] A C/C++ API for performing non-uniform resizing of images by the seam-carving technique.
+[Description] The LiquidRescale (lqr) library provides a C/C++ API for performing
+non-uniform resizing of images by the seam-carving technique.
+The library takes images in plain array format as input
+and converts them to a multi-size representation.
+Following is a list of features:
+  * Easy to use and fully documented API
+  * Currently supports 8 bit to 64 bit per channel images
+  * Support for different color models: grayscale, RGB, CMY
+    and their variants, and even custom ones
+  * Areas in the image can be marked for preservation or
+    discard, or for additional seam rigidity
+  * Once the image has been fully processed, the scaling can
+    be done in real-time. In fact, the information can be saved
+    and read out later without any further processing
+  * The resizing is done with a single function which
+    automatically performs all the necessary operations; it
+    can also work in successive steps without wasting
+    computational time
+  * Possibility to tune the carving operation by letting the
+    seams be less connected, or more rigid, or both (the
+    rigidity can be also be modulated through a mask, to get
+    a differnet behaviour in different areas of the image)
+  * Can export and import the visibility map (the seams)
+  * Other images can be attached and undergo the same carving
+    process as the parent image 
+  * The automatic feature detection algorithm can be tuned
+    by selecting among different energy gradient functions,
+    and easily defining custom ones
+  * Reports progress through a customisable interface
+  * A signalling system permits to cleanly handle errors
+  * Portable to all major OS's
+[License] GPL v3.0
+[Homepage] http://liblqr.wikidot.com/
