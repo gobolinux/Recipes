@@ -1,0 +1,28 @@
+# Recipe for version 2.01.01a62 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. aug. 1., szombat, 20.34.57 CEST
+# by Andre Detsch
+# 2004.01.06 16:59
+url="ftp://ftp.berlios.de/pub/cdrecord/alpha/cdrtools-2.01.01a62.tar.bz2"
+file_size=1811974
+file_md5=21507d9cb5469b951123cd61a4f646a7
+dir='cdrtools-2.01.01'
+compile_version=1.9.0
+recipe_type=makefile
+
+pre_build() {
+   GrepReplace -R "DEFINSUSR=.*bin"  "DEFINSUSR= root"  *
+   GrepReplace -R "DEFINSGRP=.*bin"  "DEFINSGPR= root"  *
+   GrepReplace -R "INSUSR_DEF=.*bin" "INSUSR_DEF= root" *
+   GrepReplace -R "INSGRP_DEF=.*bin" "INSGRP_DEF= root" *
+   
+   GrepReplace "INSDIR=.*etc/default" "$settings_target/default" cdrecord/Makefile.dfl
+   GrepReplace "INSDIR=.*etc/default" "$settings_target/default" rscsi/Makefile.dfl
+   
+   GrepReplace "/opt/schily" "$target" DEFAULTS/Defaults.linux
+
+   pushd RULES
+   for t in ppc64 sh4 s390x ; do
+	ln -s i586-linux-cc.rul ${t}-linux-cc.rul
+	ln -s i586-linux-gcc.rul ${t}-linux-gcc.rul
+   done
+   popd
+}
