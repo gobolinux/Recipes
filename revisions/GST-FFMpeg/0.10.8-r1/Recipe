@@ -1,0 +1,10 @@
+# Recipe for version 0.10.8 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 29., szerda, 03.00.34 CEST
+# Recipe (MakeRecipe) for GST-FFMpeg by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jul 17 09:46:18 BRT 2006
+compile_version=1.8.0
+url="http://gstreamer.freedesktop.org/src/gst-ffmpeg/gst-ffmpeg-0.10.8.tar.bz2"
+file_size=3259396
+file_md5=a7177f85c87d404a3c0d511b835129d1
+recipe_type=configure
+configure_options=(
+   --with-system-ffmpeg
+)
