@@ -1,0 +1,12 @@
+# Recipe for version 2.2.14 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 29., szerda, 16.06.07 CEST
+# Recipe (MakeRecipe) for UnixODBC by Maglan C. Diemer, maglan@univates.br, on Seg Jul 11 13:43:32 BRT 2005
+compile_version=1.9.0
+url="http://www.unixodbc.org/unixODBC-2.2.14.tar.gz"
+file_size=2189755
+file_md5=f47c2efb28618ecf5f33319140a7acd0
+recipe_type=configure
+configure_options=(
+    --disable-gui 
+    --enable-fdb 
+#    --enable-ltdllib
+)
