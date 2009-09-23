@@ -1,0 +1,21 @@
+# Recipe for version 1.01 by Zbigniew Baniewski <zb@ispid.com.pl>, on Tue, 22 Sep 2009 18:43:17 +0200
+compile_version=1.12.3
+url="$httpSourceforge/project/sdl-ball/sdl-ball/1.01/sdl-ball-1.01.tar.bz2"
+file_size=3467329
+file_md5=adf6ff4f4e4ffcff63428281f27c96d7
+recipe_type=makefile
+dir='sdl-ball'
+do_install=no
+
+build_variables=(
+        "DATADIR=$target/themes/"
+)
+
+pre_build() {
+        rm -f ./main.o
+}
+
+pre_install() {
+        cp ./sdl-ball $target/bin/sdl-ball
+        cp -r -- ./themes $target
+}
