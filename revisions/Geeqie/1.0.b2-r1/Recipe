@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Geeqie by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. aug. 4., kedd, 22.38.12 CEST
+# Recipe for version 1.0.b2 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. aug. 4., kedd, 22.38.12 CEST
+compile_version=1.12.2
+url="$httpSourceforge/geeqie/geeqie-1.0beta2.tar.gz"
+file_size=1912367
+file_md5=4e4ddc96a83e1d6bc43d478796e0b3c4
+recipe_type=configure
+configure_options=(
+    --disable-doxygen-doc 
+    --enable-lirc
+)
