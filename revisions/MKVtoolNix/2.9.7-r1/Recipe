@@ -1,0 +1,8 @@
+# Recipe for version 2.9.7 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 29., szerda, 21.58.27 CEST
+# Recipe (MakeRecipe) for MKVtoolNix by keisangi, on Sat Feb 16 20:08:31 JST 2008
+compile_version=1.10.2
+url="http://www.bunkus.org/videotools/mkvtoolnix/sources/mkvtoolnix-2.9.7.tar.bz2"
+file_size=1051426
+file_md5=eae428821c69e7a16b690f4eca6bf567
+recipe_type=configure
+autogen_before_configure=yes
