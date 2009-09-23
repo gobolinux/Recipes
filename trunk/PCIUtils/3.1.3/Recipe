@@ -1,0 +1,15 @@
+# Recipe for version 3.1.3 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 14., kedd, 02.38.21 CEST
+# Recipe (MakeRecipe) for PCIUtils by Carlo J. Calica <ccalica@gmail.com>, on Tue Oct 11 20:14:02 PDT 2005
+compile_version=1.8.4
+url="http://kernel.org/pub/software/utils/pciutils/pciutils-3.1.3.tar.bz2"
+file_size=271733
+file_md5=ca1f40e03bea12ac3646e47cefa47f01
+
+recipe_type=makefile
+
+make_variables=(
+   "PREFIX=$target"
+   "SHARED=yes"
+)
+
+install_target="install install-lib"
