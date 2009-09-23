@@ -1,0 +1,9 @@
+[Name] KdeSudo
+[Summary] A graphical sudo frontend for KDE.
+[Description] KdeSudo is a sudo frontend for KDE originaly developed by Robert Gruber, and now maintained by Kubuntu developers.
+KDE's normal KdeSu doesn't deal correctly with sudo, and is only capable of authentication.
+It doesn't deal with sudo specific features like NOPASSWD and so on.
+KdeSudo acts like a wrapper for sudo commands, and therefore, supports all "sudoers" file options.
+It is command line compatible with KdeSu, and can replace it simply with linking /usr/bin/kdesu to /usr/bin/kdesudo (KDE3 version) or ${kde4_path}/lib/kde4/libexec/kdesu to ${kde4_path}/bin/kdesudo
+[License] GPL 3.0
+[Homepage] http://www.kde-apps.org/content/show.php/KdeSudo?content=72106
