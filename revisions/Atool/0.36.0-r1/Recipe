@@ -1,0 +1,9 @@
+# Recipe for version 0.36.0 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 30., csütörtök, 02.46.02 CEST
+compile_version=1.9.0
+url="http://savannah.nongnu.org/download/atool/atool-0.36.0.tar.gz"
+file_size=106622
+file_md5=4eec3e05272e1a0bee6493f2a005adbd
+recipe_type=configure
+pre_install() {
+   GrepReplace ".*$goboExecutables/perl -w" "#! /usr/bin/env perl" atool
+}
