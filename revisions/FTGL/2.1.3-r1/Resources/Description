@@ -1,0 +1,12 @@
+[Name] FTGL
+[Summary] FTGL is a font rendering library for OpenGL applications.
+[Description] FTGL uses the Freetype font library to open and decode standard font files. It then takes that output and stores it in a format most efficient for OpenGL rendering. FTGL is designed to be used in commercial quality software. It has been written with performance, robustness and simplicity in mind.
+Supported rendering modes are:
+    * Bitmaps
+	* Anti-aliased pixmaps
+	* Texture maps
+	* Outlines
+	* Polygon meshes
+	* Extruded polygon meshes
+[License] Own OpenSource license. See COPYING file.
+[Homepage] http://ftgl.wiki.sourceforge.net/
