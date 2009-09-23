@@ -1,0 +1,12 @@
+# Recipe for version 2.24.1 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 7., kedd, 23.24.08 CEST
+# Recipe (MakeRecipe) for LibBonobo by Jonas Karlsson <jonka750@student.liu.se>, on Tue May 10 22:35:31 CEST 2005
+# updated Dependencies by Rotem Zach
+compile_version=1.3.0
+url="http://ftp.gnome.org/pub/gnome/sources/libbonobo/2.24/libbonobo-2.24.1.tar.bz2"
+file_size=1464385
+file_md5=8868b6083392964a6969547ceb8d7cd1
+recipe_type=configure
+
+pre_link() {
+    sed -i "/<searchpath>/a\    <item>${goboLibraries}/bonobo/servers</item>" "${target}/Resources/Defaults/Settings/bonobo-activation/bonobo-activation-config.xml"
+}
