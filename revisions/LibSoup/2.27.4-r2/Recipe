@@ -1,0 +1,13 @@
+# Recipe for version 2.27.4 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 23., csütörtök, 17.32.40 CEST
+# Recipe (MakeRecipe) for LibSoup by roko, <ro.ko@mcnon.com>, on Fri Nov 19 01:54:22 BRST 2004
+compile_version=1.8.0
+url="http://ftp.acc.umu.se/pub/gnome/sources/libsoup/2.27/libsoup-2.27.4.tar.bz2"
+file_size=698080
+file_md5=c9b676621f1b89245ec5cec0c67198b7
+recipe_type=configure
+configure_options=(
+   --without-gnome
+)
+with_gnome=(
+   --with-gnome
+)
