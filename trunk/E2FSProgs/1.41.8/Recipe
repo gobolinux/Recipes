@@ -1,0 +1,12 @@
+# Recipe for version 1.41.8 by Andrew Wygle <awygle@calmail.berkeley.edu>, on Tue Aug 4 09:29:37 PDT 2009
+url=$httpSourceforge/e2fsprogs/e2fsprogs-1.41.8.tar.gz
+file_size=4436913
+file_md5=6708cc8e484809fc5cfb232882e48489
+recipe_type=configure
+needs_safe_linking=yes
+compile_version=1.9.0
+configure_options=(
+   "--enable-elf-shlibs"
+   "--disable-libblkid"
+)
+install_target="install install-libs"
