@@ -1,0 +1,11 @@
+# Recipe for version 10.2 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 23., csütörtök, 18.07.57 CEST
+# Recipe (MakeRecipe) for Cdparanoia-III by Andreas Koehler, on Fri Aug 12 22:12:04 CEST 2005
+compile_version=1.8.0
+url="http://downloads.xiph.org/releases/cdparanoia/cdparanoia-III-10.2.src.tgz"
+file_size=183236
+file_md5=b304bbe8ab63373924a744eac9ebc652
+dir='cdparanoia-III-10.2'
+recipe_type=configure
+pre_build(){
+    autoreconf -ivf
+}
