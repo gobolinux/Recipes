@@ -1,0 +1,28 @@
+Patch to prevent compilation errors with Glibc 2.8 related to ucred only being
+defined if _GNU_SOURCE is defined. The patch simply makes configure define this if ucred is not functional.
+
+Some people claim this is a Glibc bug and ucred is not a GNU extension.
+Glibc people claim that ucred is not in the POSIX namespace:
+http://sourceware.org/bugzilla/show_bug.cgi?id=6545
+
+Contributed Upstream: Not submitted. Patch this was derived from may have been.
+--- cups-1.3.7/configure.in	2007-07-24 20:47:12.000000000 -0300
++++ cups-1.3.7/configure.in.new	2008-06-05 23:27:27.000000000 -0300
+@@ -42,6 +42,17 @@
+ sinclude(config-scripts/cups-pdf.m4)
+ sinclude(config-scripts/cups-scripting.m4)
+ 
++# Check whether ucred is defined without _GNU_SOURCE
++AC_MSG_CHECKING(for struct ucred)
++AC_TRY_LINK([
++#include <sys/ucred.h>
++#include <sys/socket.h>
++],[
++struct ucred sucred; sucred.pid=0;
++],[has_ucred=yes],[has_ucred=no])
++AC_MSG_RESULT($has_ucred)
++if test ${has_ucred} = no ; then CFLAGS="$CFLAGS -D_GNU_SOURCE"; fi
++
+ INSTALL_LANGUAGES=""
+ UNINSTALL_LANGUAGES=""
+ LANGFILES=""

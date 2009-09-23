@@ -1,0 +1,58 @@
+# Recipe for version 1.3.11 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 8., szerda, 02.59.02 CEST
+compile_version=1.9.0
+url="ftp://ftp.easysw.com/pub/cups/1.3.11/cups-1.3.11-source.tar.bz2"
+file_size=3799424
+file_md5=17f3e2bcb3cae3dd9dceb65a2bfd295f
+dir='cups-1.3.11'
+recipe_type=configure
+
+configure_options=(
+    "--with-rcdir=$target"
+    "--with-docdir=$target/doc"
+    "--with-fontpath=/Files/Fonts/Ghostscript"
+    "--with-cups-user=lp"
+    "--with-cups-group=lp"
+    "--with-system-groups=lpadmin"
+    "--with-icondir=$target/Shared/icons"
+    "--with-menudir=$target/Shared/applications"
+    "--with-dbusdir=$settings_target/dbus-1"
+    "--with-python"
+    "--enable-threads"
+    "--enable-libpaper"
+)
+
+make_variables=(
+    SERVERBIN=$target/Shared/cups
+)
+
+install_variables=(
+    PAMDIR="$settings_target/pam.d"
+    PHPEXTENSIONDIR="$target/$(php-config --extension-dir | sed 's,.*/\(lib/.*\),\1,')"
+)
+
+unmanaged_files=(
+    $goboVariable/log/cups
+    $goboVariable/run/cups/certs
+    $goboVariable/cache/cups
+    $goboVariable/spool/cups/tmp
+)
+
+pre_build() {
+#   autoconf
+
+   # For some reason they have the same variable name meaning
+   # different things in different parts of the source
+   sed -i 's/PHPDIR/PHPEXTENSIONDIR/g' scripting/php/Makefile
+}
+
+pre_link() {
+    Quiet pushd $target/lib
+    ln -s ../share/cups .
+    Quiet popd
+}
+
+pre_install() {
+   mkdir -p "$target/$(php-config --extension-dir | sed 's,.*/\(lib/.*\),\1,')"
+}
+
+post_install_message="=========================================\n\nNote: when upgrading from CUPS 1.1.20 you may need\n      to recreate your printers because of changes\n      in the ppd uri format for usb printers.\n\n=================================================="
