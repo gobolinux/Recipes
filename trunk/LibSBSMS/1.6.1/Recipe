@@ -1,0 +1,16 @@
+# Recipe for version 1.6.1 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 30., csütörtök, 14.17.02 CEST
+# Recipe (MakeRecipe) for LibSBSMS by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 30., csütörtök, 13.23.26 CEST
+compile_version=1.12.2
+url="$httpSourceforge/sbsms/libsbsms-1.6.1.tar.gz"
+file_size=552112
+file_md5=391d7e9c707442fe673d478db3e4660e
+recipe_type=configure
+configure_options=(
+    --enable-sndfile 
+    --enable-portaudio
+)
+
+# GCC 4.2.4 doesn't recognise this option (-fasm-blocks)
+pre_build(){
+    GrepReplace "\-fasm\-blocks " "" src/Makefile.in
+}
