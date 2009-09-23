@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for LibURIParser by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 17., péntek, 23.49.00 CEST
+# Recipe for version 0.7.5 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 17., péntek, 23.49.00 CEST
+compile_version=1.12.2
+url="$httpSourceforge/uriparser/uriparser-0.7.5.tar.lzma"
+file_size=311531
+file_md5=a87b79caa1258cf9f232b55fce66ff22
+recipe_type=configure
+configure_options=(
+    --disable-doc
+)
