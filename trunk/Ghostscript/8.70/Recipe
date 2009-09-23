@@ -1,0 +1,34 @@
+# Recipe for version 8.70 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. aug. 1., szombat, 07.47.12 CEST
+# Recipe (MakeRecipe) for GhostScript by Jonas Karlsson <jonka750@student.liu.se>, on Tue Jan 24 11:36:14 CET 2006
+compile_version=1.8.5
+url="http://ghostscript.com/releases/ghostscript-8.70.tar.bz2"
+file_size=17019673
+file_md5=526366f8cb4fda0d3d293597cc5b984b
+recipe_type=configure
+build_target="std so"
+install_target="install soinstall"
+
+configure_options=(
+    "--enable-cups"
+    "--with-drivers=ALL"
+    "--with-fontpath=/Files/Fonts/Ghostscript"
+    "--with-omni"
+    "--enable-dynamic"
+)
+
+make_variables=(
+    "CUPSLIBDIRS=$target/lib"
+    "CUPSSERVERBIN=$target/lib/cups"
+    "CUPSSERVERROOT=$settings_target/cups"
+    "CUPSDATA=$target/share/cups"
+)
+
+pre_link() {
+   # Linking fonts dir so ghostscript can find it.
+   ln -sf ${goboPrefix}/Files/Fonts/Ghostscript ${target}/share/ghostscript/fonts
+   
+   # Making headers dir and copying headers
+   install -v -d -m755 ${target}/include/ps
+   install -v -m644 src/*.h ${target}/include/ps
+   ln -s ${target}/include/ps ${target}/include/ghostscript
+}
