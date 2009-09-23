@@ -1,0 +1,10 @@
+[Name] LibCDDB
+[Summary] Library to access CDDB data
+[Description] libccdb is a C library to access data about Audio CD on a CDDB
+server 
+It allows to search the database for CD matches, get detailed information
+about a CD and submit new CD entries to the database. It supports both the
+custom CDDB protocol and the tunneling of the query over HTTP. HTTP Proxying
+is supported. It also features a cache system.
+[License] GNU Library General Public License version 2
+[Homepage] http://libcddb.sourceforge.net/
