@@ -1,0 +1,22 @@
+# Recipe for version 3.5.22 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 30., csütörtök, 03.42.32 CEST
+# Recipe (MakeRecipe) for DjVuLibre by Harald Klimach, on Mon Mar 6 13:19:29 CET 2006
+compile_version=1.8.0
+url="$httpSourceforge/djvu/djvulibre-3.5.22.tar.gz"
+file_size=3027985
+file_md5=d1513784ce0e4f37d71595dc34c95ec7
+recipe_type=configure
+configure_options=(
+    "--enable-threads"
+)
+
+using_qt3_pre_build() {
+   sed -i "s@for ac_prog in moc.*@for ac_prog in moc-qt3@" configure
+   sed -i "s@for ac_prog in uic.*@for ac_prog in uic-qt3@" configure
+}
+
+pre_link() {
+   mkdir -p  "${target}/icons/hicolor/"{22x22,32x32,48x48}
+   ln -s "${target}/Shared/djvu/osi/desktop/hi22-djvu.png" "${target}/icons/hicolor/22x22"
+   ln -s "${target}/Shared/djvu/osi/desktop/hi32-djvu.png" "${target}/icons/hicolor/32x32"
+   ln -s "${target}/Shared/djvu/osi/desktop/hi48-djvu.png" "${target}/icons/hicolor/48x48"
+}
