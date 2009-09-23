@@ -1,0 +1,25 @@
+# Recipe (MakeRecipe) for PortMIDI by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. aug. 5., szerda, 16.42.12 CEST
+# Recipe for version 1.31 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. aug. 5., szerda, 16.42.12 CEST
+compile_version=1.12.2
+url="$httpSourceforge/portmedia/portmidi-src-131.zip"
+file_size=533376
+file_md5=1715bb3d9f63c6b259720709ef43b534
+dir='portmidi'
+recipe_type=manifest
+pre_patch(){
+    pushd $goboPrefix/Files/Compile/Sources/portmidi
+    find * -type f -exec chmod 644 '{}' \;
+    cp pm_linux/Makefile .
+    make
+    popd
+}
+manifest=(
+    pm_common/pminternal.h:include/pminternal.h
+    pm_common/pmutil.h:include/pmutil.h
+    pm_common/portmidi.h:include/portmidi.h
+    pm_linux/pmlinux.h:include/pmlinux.h
+    pm_linux/pmlinuxalsa.h:include/pmlinuxalsa.h
+    porttime/porttime.h:include/porttime.h
+    pm_linux/libportmidi.a:lib/libportmidi.a
+    porttime/libporttime.a:lib/libporttime.a
+)
