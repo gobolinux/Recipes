@@ -1,0 +1,31 @@
+# Recipe for version 3.0.1 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 14., kedd, 02.58.36 CEST
+# Recipe (MakeRecipe) for XFSProgs by ro.ko@mcnon.com, on Tue Oct 12 00:32:49 BRST 2004
+compile_version=1.8.0
+url="ftp://oss.sgi.com/projects/xfs/cmd_tars/xfsprogs-3.0.1.tar.gz"
+file_size=1270775
+file_md5=d7f879a21692d4f7abc16a20479b0829
+recipe_type=configure
+dir="xfsprogs-3.0.1"
+install_target="install install-dev"
+configure_options=(
+    --libexecdir=$target/lib
+    --enable-shared=yes
+)
+
+build_variables=(
+   DEBUG=-DNDEBUG
+)
+
+environment=(
+   # XFSProgs and related use a custom m4 macro that uses only this
+   # environment variable to locate the libtool binary if it is not
+   # in a standard location.
+   LIBTOOL="${goboExecutables}/libtool"
+)
+
+pre_link() {
+   # Fix broken symlink created by "make install"
+   # Because of the circular reference, ln dies unless it is removed
+   rm "${target}/lib/libhandle.so"
+   ln -s libhandle.so.1.0.3 "${target}/lib/libhandle.so"
+}
