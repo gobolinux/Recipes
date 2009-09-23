@@ -1,0 +1,12 @@
+# Recipe for version 2.17.4 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 12., vasárnap, 02.37.59 CEST
+# Recipe (MakeRecipe) for Worker by Aitor P�rez Iturri, on s�b abr 1 09:53:10 CEST 2006
+compile_version=1.10.2
+url="http://www.boomerangsworld.de/cms/worker/downloads/worker-2.17.4.tar.bz2"
+file_size=916928
+file_md5=55ea186fa564f1e08d6759d2cf5ae705
+recipe_type=configure
+configure_options=(
+--enable-xft
+--with-avfs
+--with-libmagic
+)

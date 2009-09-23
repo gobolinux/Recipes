@@ -1,0 +1,23 @@
+[Name] Worker
+[Summary] Worker is a file manager for X-Window on UNIX.
+[License] GNU General Public License version 2
+[Homepage] http://www.boomerangsworld.de/cms/worker/?lang=en
+[Description] Worker is a file manager for X-Window on UNIX, it depends only on XLib. The dirs and files are shown in two independent panels.
+Features:
+    * requires only the X11 libraries, so it's fast and runs on many platforms
+    * built-in configuration GUI
+    * support for a virtual file system to enter archives, ftp sites, ...
+      Archives currently supported: tar/tgz/tbz, gzip, bzip2, zip, rar, ar and more from the extfs from Midnight Commander (lha, zoo, rpm, iso9660, diff, arj, cpio, ...)
+      Additionally it's possible to access servers using ssh, rsh, ftp, http and webdav.
+    * many built-in functions like:
+	o copy files, move files
+        o rename files
+        o delete files
+	o create directory
+	o create/change symlinks
+	o chmod, chown
+	o text viewer
+	o built-in search
+	o and many more...
+    * assign any external command to buttons, hotkeys or filetypes (e.g. gimp, tar, diff, mount, ...)
+    * UTF8 support
