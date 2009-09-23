@@ -1,0 +1,23 @@
+# Recipe for version 14.3.0 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 31., péntek, 03.44.19 CEST
+# Recipe (MakeRecipe) for Sox by roko, <ro.ko@mcnon.com>, on Thu Dec 23 00:22:52 BRST 2004
+compile_version=1.8.2
+url="$httpSourceforge/sox/sox-14.3.0.tar.gz"
+file_size=1007679
+file_md5=8e3509804e6227273ef84092e1a2fea7
+recipe_type=configure
+configure_options=(
+    --with-distro=GoboLinux
+)
+make_variables=(
+    LIBLTDL=$goboLibraries/libltdl.la
+    LTDLDEPS=$goboLibraries/libltdl.la
+    LTDLINCL=-I$goboHeaders/libltdl
+)
+
+pre_build() {
+   autoreconf -i
+}
+
+pre_link() {
+   ln -s $target/bin/sox $target/bin/soxmix
+}
