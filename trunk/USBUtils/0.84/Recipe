@@ -1,0 +1,18 @@
+# Recipe for version 0.84 by Cosmin Apreutesei <cosmin.apreutesei@gmail.com>, on Tue Sep 22 18:06:42 EEST 2009
+# Recipe (MakeRecipe) for USBUtils by David Smith <dsmith@algonet.se>, on Sun Feb 6 10:19:22 CET 2005
+compile_version=1.8.0
+url="$httpSourceforge/linux-usb/usbutils-0.84.tar.gz"
+file_size=246404
+file_md5=87612c82e66393a395db91361d168c1b
+recipe_type=configure
+
+post_install() {
+	 mount | grep usbfs  >/dev/null 2>&1 || {
+		echo "=============================================================="
+		echo
+		echo "Note: You need to have USB device filesystem compiled into the"
+		echo "      kernel and mount usbfs at /proc/bus/usb to use lsusb."
+		echo
+		echo "=============================================================="
+	}
+}
