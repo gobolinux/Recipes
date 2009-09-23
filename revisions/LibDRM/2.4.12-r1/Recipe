@@ -1,0 +1,13 @@
+# Recipe for version 2.4.12 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 22., szerda, 15.51.19 CEST
+# Recipe (MakeRecipe) for LibDRM by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jan 9 17:56:36 BRST 2.4.126
+compile_version=1.12.0
+url="http://dri.freedesktop.org/libdrm/libdrm-2.4.12.tar.bz2"
+file_size=414175
+file_md5=15d26219c046377d5fcb1cb37e7b03a2
+recipe_type=configure
+symlink_options=(--conflict=overwrite)
+pre_build(){
+   sed -i 's_{includedir}/drm_{includedir}/xorg/drm_' "${sourcedir}/libdrm.pc.in"
+sed -i 's_{includedir}/drm_{includedir}/xorg/drm_' "${sourcedir}/libdrm_intel.pc.in"
+}
+# libdrm.pc.in modification is needed to find the matching headers
