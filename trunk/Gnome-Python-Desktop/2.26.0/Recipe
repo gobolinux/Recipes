@@ -1,0 +1,10 @@
+# Recipe for version 2.26.0 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 8., szerda, 22.44.26 CEST
+# Recipe (MakeRecipe) for Gnome-Python-Desktop by Andreas Köhler <andi5.py@gmx.net>, on Fri Aug 22 02:16:21 CEST 2008
+compile_version=1.11.2
+url="http://ftp.gnome.org/pub/GNOME/sources/gnome-python-desktop/2.26/gnome-python-desktop-2.26.0.tar.bz2"
+file_size=571939
+file_md5=fbcf4ef5ec4a8c4eec4d390c5889c80f
+recipe_type=configure
+make_variables=(
+    PYGTK_CODEGEN=$goboExecutables/pygobject-codegen-2.0
+)
