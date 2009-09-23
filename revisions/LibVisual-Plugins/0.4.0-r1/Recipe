@@ -1,0 +1,14 @@
+# Recipe for version 0.4.0 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 22., szerda, 03.23.49 CEST
+# Recipe (MakeRecipe) for LibVisual-Plugins by roko, <ro.ko@mcnon.com>, on Wed Mar 30 12:54:59 CEST 2005
+compile_version=1.8.0
+url="$httpSourceforge/libvisual/libvisual-plugins-0.4.0.tar.gz"
+file_size=828631
+file_md5=4330e9287f9d6fae02f482f428a1e77b
+recipe_type=configure
+#configure_options=(
+#--with-plugins_base_dir=$target/share/
+#)
+sandbox_options=("--no-sandbox")
+pre_build(){
+    GrepReplace "gstreamer\-0.8" "gstreamer\-0.10" configure
+}
