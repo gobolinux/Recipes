@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for Snack by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 31., péntek, 02.07.08 CEST
+# Recipe for version 2.2.10 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 31., péntek, 02.07.08 CEST
+compile_version=1.12.2
+url="http://www.speech.kth.se/snack/dist/snack2.2.10.tar.gz"
+file_size=1798252
+file_md5=98da0dc73599b3a039cba1b7ff169399
+dir="snack2.2.10/unix"
+recipe_type=configure
+configure_options=(
+    --enable-alsa
+#    --prefix=$target
+#    --exec-prefix=$target/bin
+    --libdir=$target/lib
+#    --datadir=$target/share
+)
