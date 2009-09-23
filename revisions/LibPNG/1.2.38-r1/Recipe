@@ -1,0 +1,11 @@
+# Recipe for version 1.2.38 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 21., kedd, 19.31.59 CEST
+compile_version=1.8.5
+url=$httpSourceforge/libpng/libpng-1.2.38.tar.bz2
+file_size=662908
+file_md5=5401c2586846fca209eba0c02c8ee9e0
+recipe_type=configure
+
+pre_link() {
+    ln -sf libpng12 $target/include/libpng
+    ln -sf libpng.so $target/lib/libpng.so.0
+}
