@@ -1,0 +1,18 @@
+Description: Make fluxbox compile with gcc-4.3
+
+diff -Naur fluxbox-1.0.0/src/main.cc fluxbox-1.0.0-b2/src/main.cc
+--- fluxbox-1.0.0/src/main.cc	2007-08-11 20:22:20.000000000 +0200
++++ fluxbox-1.0.0-b2/src/main.cc	2008-06-25 00:38:41.000000000 +0200
+@@ -45,6 +45,12 @@
+   #include <stdlib.h>
+ #endif
+ 
++#ifdef HAVE_CSTRING
++  #include <cstring>
++#else
++  #include <string.h>
++#endif
++
+ #include <iostream>
+ #include <fstream>
+ #include <stdexcept>
