@@ -1,0 +1,10 @@
+[Name] PyEnchant
+[Summary] A spellchecking library for Python.
+[Description] PyEnchant is a set of language bindings and some wrapper
+classes to make the excellent Enchant spellchecker available as a Python
+module. The bindings are created using ctypes. It includes all the
+functionality of Enchant with the flexibility of Python and a nice
+"Pythonic" object-oriented interface. It also aims to provide some
+higher-level functionality than is available in the C API.
+[License] GNU Lesser General Public License version 2.1
+[Homepage] http://www.rfk.id.au/software/pyenchant/
