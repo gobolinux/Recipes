@@ -1,0 +1,15 @@
+# Recipe for version 7 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 11., szombat, 23.45.32 CEST
+# by Carlo Calica
+# 2004.01.06 16:54
+
+url="http://www.ijg.org/files/jpegsrc.v7.tar.gz"
+file_size=960379
+file_md5=382ef33b339c299b56baf1296cda9785
+dir=jpeg-7
+compile_version=1.8.0
+recipe_type=configure
+#needs_safe_linking=yes
+
+configure_options=(
+   "--enable-shared"
+)
