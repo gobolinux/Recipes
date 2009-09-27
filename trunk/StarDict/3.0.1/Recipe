@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for StarDict by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. szept. 27., vasárnap, 02.14.07 CEST
+# Recipe for version 3.0.1 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. szept. 27., vasárnap, 02.14.07 CEST
+compile_version=1.12.3
+url="http://stardictproject.googlecode.com/files/stardict-3.0.1.tar.bz2"
+file_size=1964195
+file_md5=93bb2d7825bc9d52a4f9ba4c1c506d1d
+recipe_type=configure
+configure_options=(
+    --disable-gucharmap 
+    --disable-festival 
+    --disable-gnome-support 
+    --disable-advertisement
+)
