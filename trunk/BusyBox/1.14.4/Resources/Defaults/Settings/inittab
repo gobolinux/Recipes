@@ -1,0 +1,20 @@
+#
+# Boot-time system configuration/initialization script.
+# This is run first except when booting in single-user mode.
+#
+::sysinit:/System/Links/Executables/BootDriver BootUp
+
+# /bin/sh invocations on selected ttys
+::askfirst:-/System/Links/Executables/sh
+tty2::askfirst:-/System/Links/Executables/sh
+tty3::askfirst:-/System/Links/Executables/sh
+tty4::askfirst:-/System/Links/Executables/sh
+tty5::askfirst:-/System/Links/Executables/sh
+tty6::askfirst:-/System/Links/Executables/sh
+
+# Stuff to do when restarting the init process
+::restart:/System/Links/Executables/init
+
+# Stuff to do before rebooting
+::ctrlaltdel:/System/Links/Executables/BootDriver Reboot
+::shutdown:/System/Links/Executables/BootDriver Halt
