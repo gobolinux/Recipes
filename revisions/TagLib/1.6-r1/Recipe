@@ -1,0 +1,11 @@
+# Recipe for version 1.6 by Demian Florentin <demianflorentin@gmail.com>, on Fri Oct 2 11:06:28 PYT 2009
+# Recipe (MakeRecipe) for TagLib by roko, <ro.ko@mcnon.com>, on Fri Jan 14 20:31:28 BRST 2005
+compile_version=1.8.0
+url="http://developer.kde.org/~wheeler/files/src/taglib-1.6.tar.gz"
+file_size=1098674
+file_md5=5ecad0816e586a954bd676a86237d054
+recipe_type=configure
+
+configure_options=(
+  "--disable-libsuffix"
+)
