@@ -1,0 +1,12 @@
+  Fix for error: 'uint32_t' does not name a type
+diff -Nur kadu.old/kadu-core/protocol.h kadu/kadu-core/protocol.h
+--- kadu.old/kadu-core/protocol.h	2008-05-01 20:18:54.000000000 +0200
++++ kadu/kadu-core/protocol.h	2009-09-28 16:22:39.000000000 +0200
+@@ -1,6 +1,7 @@
+ #ifndef KADU_PROTOCOL_H
+ #define KADU_PROTOCOL_H
+ 
++#include <stdint.h>
+ #include <qobject.h>
+ #include <qstring.h>
+ #include <qdatetime.h>
