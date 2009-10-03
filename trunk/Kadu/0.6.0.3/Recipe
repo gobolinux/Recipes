@@ -1,0 +1,9 @@
+# Recipe for version 0.6.0.3 by Zbigniew Baniewski <zb@ispid.com.pl>, on Mon, 28 Sep 2009 15:39:01 +0200
+compile_version=1.12.3
+url="http://www.kadu.net/download/stable/kadu-0.6.0.3.tar.bz2"
+file_size=1609595
+file_md5=53954a09caf8439589c746e99151dacb
+recipe_type=configure
+dir='kadu'
+
+post_install_message="\n\nWarning: run the program using FULL PATH - not just binary name alone(!)\n"
