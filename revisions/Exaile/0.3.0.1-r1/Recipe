@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for Exaile by Demian Florentin <demianflorentin@gmail.com>, on Thu Sep 24 12:22:30 PYT 2009
+# Recipe for version 0.3.0.1 by Demian Florentin <demianflorentin@gmail.com>, on Thu Sep 24 12:22:30 PYT 2009
+compile_version=1.12.3
+url="http://launchpad.net/exaile/0.3.0/0.3.0.1/+download/exaile-0.3.0.1.tar.gz"
+file_size=1528077
+file_md5=c6bd14cea747a808570b304e647544f1
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
+
+install_variables=(
+    XDGCONFDIR=${settings_target}
+)
