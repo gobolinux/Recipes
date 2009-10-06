@@ -1,0 +1,11 @@
+# Recipe for version 0.8.2 by Joseph Wallace <JosephWallace@letu.edu>, on Mon Oct 5 19:22:51 CDT 2009
+# Recipe (MakeRecipe) for Emerald by Giambattista Bloisi <giamby@infinito.it>, on Sun Nov 4 21:18:05 CET 2007
+compile_version=1.9.0
+url="http://releases.compiz-fusion.org/0.8.2/emerald-0.8.2.tar.bz2"
+file_size=524512
+file_md5=d25bd51f7b7bca075c84fe3a00cbc88a
+recipe_type=configure
+
+configure_options=(
+   --mandir=${target}/man
+)
