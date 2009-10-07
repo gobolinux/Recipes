@@ -1,0 +1,11 @@
+# Recipe for version 4.3.2 by Michael Homer <michael@gobolinux.org>, on Wed Oct 7 14:37:41 NZDT 2009
+# Recipe (MakeRecipe) for KDE-PIM-Libs by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Apr 7 01:40:08 BRT 2008
+compile_version=1.10.0
+url="http://download.kde.org/stable/4.3.2/src/kdepimlibs-4.3.2.tar.bz2"
+file_size=1780884
+file_md5=5206959536c1a7abd58f6d2b6eb1c952
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
