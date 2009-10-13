@@ -1,0 +1,11 @@
+# Recipe for version 4.3.0 by Frank Wilson <frank@thefixedpoint.me.uk>, on Wed Jan 28 20:41:38 GMT 2009
+# Recipe (MakeRecipe) for Phonon by Paul Gideon Dann <pdgiddie+gobo@gmail.com>, on Fri Sep 19 13:16:45 BST 2008
+compile_version=1.11.2
+url="ftp://ftp.kde.org/pub/kde/stable/phonon/4.3.0/phonon-4.3.0.tar.bz2"
+file_size=565443
+file_md5=f851219ec1fb4eadc7904f053b6b498d
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
