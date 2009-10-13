@@ -1,0 +1,17 @@
+# Recipe for version 1.6.2 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. okt. 13., kedd, 05.25.58 CEST
+# Recipe (MakeRecipe) for Aria2 by Nick Matteo <kundor@kundor.org>, on Sat Mar 14 16:35:53 EDT 2009
+compile_version=1.12.1
+url="$httpSourceforge/aria2/aria2-1.6.2.tar.bz2"
+file_size=1343590
+file_md5=aa94152c01a11e75b77a6be6c15e81ff
+recipe_type=configure
+configure_options=(
+    --with-ca-bundle=$goboLibraries/ssl/certs/cacert.pem
+)
+
+# UseFlags
+with_gnutls="--with-gnutls"
+with_openssl="--with-openssl"
+with_sqlite="--with-sqlite3"
+with_libxml2="--with-libxml2"
+with_expat="--with-expat"
