@@ -1,0 +1,15 @@
+This patch makes install use whatever --mandir is set to for ./configure
+
+Signed-off-by: Jonas Karlsson <jonas(at)gobolinux.org>
+
+--- jpeg-6b/makefile.cfg	1998-03-21 20:08:57.000000000 +0100
++++ jpeg-6b/makefile.cfg.new	2008-10-22 19:51:38.000000000 +0200
+@@ -17,7 +17,7 @@
+ binprefix =
+ manprefix =
+ manext = 1
+-mandir = $(prefix)/man/man$(manext)
++mandir = @mandir@/man$(manext)
+ 
+ # The name of your C compiler:
+ CC= @CC@
