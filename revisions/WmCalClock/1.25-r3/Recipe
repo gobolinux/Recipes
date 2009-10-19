@@ -1,0 +1,6 @@
+url=http://www.cs.mun.ca/~gstarkes/wmaker/dockapps/files/wmCalClock-1.25.tar.gz
+mirror_url=http://nis-www.lanl.gov/~mgh/WindowMaker/wmCalClock-1.25.tar.gz
+compile_version=1.8.0
+recipe_type=makefile
+dir="wmCalClock-1.25/Src"
+make_variables=("DESTDIR=$target")
