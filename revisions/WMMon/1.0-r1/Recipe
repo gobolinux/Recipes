@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for WMMon by Lucas C. Villa Real, on Sun Oct 18 19:09:40 BRST 2009
+# Recipe for version 1.0 by Lucas C. Villa Real, on Sun Oct 18 19:09:40 BRST 2009
+compile_version=1.10.1
+url="http://www.cs.mun.ca/~gstarkes/wmaker/dockapps/files/wmmon-1.0b2.tar.gz"
+file_size=21589
+file_md5=1b8c780b8c24a6958c69330fef4171df
+dir='wmmon.app/wmmon'
+recipe_type=makefile
+do_install=no
+
+pre_link() {
+	cp wmmon $target/bin
+}
