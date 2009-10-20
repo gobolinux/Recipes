@@ -1,0 +1,14 @@
+# Recipe for version 1.5.0 by Pedro Flores, on Mon Oct 19 20:46:54 PYST 2009 from a modified version of recipe for JDK version 1.6.0 by Mike Hughes
+compile_version=1.9.0
+recipe_type=manifest
+uncompress=no
+
+pre_patch() {
+  bash jdk-1_5_0_21-linux-i586.bin
+}
+
+pre_link(){
+  # Create a link to the java plugin in the standard browser-plugins directory
+  mkdir -p ${target}/lib/browser-plugins
+  ln -s ${target}/jre/plugin/i386/ns7/libjavaplugin_oji.so ${target}/lib/browser-plugins
+}

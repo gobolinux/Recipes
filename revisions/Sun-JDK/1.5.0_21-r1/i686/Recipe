@@ -1,0 +1,22 @@
+# Recipe for JDK version 1.5.0 by Pedro Flores from a modified version of recipe for JDK version 1.6.0 by Mike Hughes
+url="http://cds.sun.com/is-bin/INTERSHOP.enfinity/WFS/CDS-CDS_Developer-Site/en_US/-/USD/VerifyItem-Start/jdk-1_5_0_21-linux-i586.bin?BundledLineItemUUID=NFlIBe.mM6sAAAEkCMo0qm6k&OrderID=pj5IBe.mp1AAAAEk8ck0qm6k&ProductID=JIZIBe.p48AAAAEjWQNO6HOS&FileName=/jdk-1_5_0_21-linux-i586.bin"
+file_size=49754074
+file_md5=e3d015720335c46cb9c47ac270c2aa85 
+
+manifest=(
+    "jdk1.5.0_21/jre:jre"
+    "jdk1.5.0_21/bin:bin"
+    "jdk1.5.0_21/lib:lib"
+    "jdk1.5.0_21/include:include"
+    "jdk1.5.0_21/man:man"
+    "jdk1.5.0_21/jre/plugin/i386/ns7/libjavaplugin_oji.so:lib/mozilla/plugins/libjavaplugin_oji.so"
+    "jdk1.5.0_21/COPYRIGHT:Shared/doc/Sun-JDK/COPYRIGHT"
+    "jdk1.5.0_21/LICENSE:Shared/doc/Sun-JDK/LICENSE"
+    "jdk1.5.0_21/THIRDPARTYLICENSEREADME.txt:Shared/doc/Sun-JDK/THIRDPARTYLICENSEREADME.txt"
+    "jdk1.5.0_21/README.html:Shared/doc/Sun-JDK/README.html"
+    "jdk1.5.0_21/README_ja.html:Shared/doc/Sun-JDK/README_ja.html"
+    "jdk1.5.0_21/README_zh_CN.html:Shared/doc/Sun-JDK/README_zh_CN.html"
+    "jdk1.5.0_21/src.zip:Shared/doc/Sun-JDK/src.zip"
+    "jdk1.5.0_21/sample:Shared/doc/Sun-JDK/sample"
+    "jdk1.5.0_21/demo:Shared/doc/Sun-JDK/demo"
+)
