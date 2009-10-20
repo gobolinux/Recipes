@@ -1,0 +1,11 @@
+# Recipe for version 018 by Kevin Quick <quick@sparq.org>, on Mon Oct 19 20:27:15 MST 2009
+# Recipe (MakeRecipe) for TXR by Kevin Quick <quick@sparq.org>, on Thu Oct 1 09:44:52 MST 2009
+compile_version=1.12.3
+url="http://download.savannah.gnu.org/releases-noredirect/txr/txr-018.tar.gz"
+file_size=118456
+file_md5=9b7900ad43c1af745dd51ac8736ae452
+recipe_type=makefile
+make_variables=(
+  "DESTDIR=$target"
+)
+makefile='Makefile'
