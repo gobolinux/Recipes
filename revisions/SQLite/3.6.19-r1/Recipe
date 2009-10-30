@@ -1,0 +1,28 @@
+# Recipe for version 3.6.19 by kenneth marken <k-marken@online.no>, on to. 29. okt. 10:23:43 +0100 2009
+compile_version=1.9.0
+url="http://www.sqlite.org/sqlite-3.6.19.tar.gz"
+file_size=2942005
+file_md5=aa03cc24a52851bb204fc1e489e195e8
+recipe_type=configure
+
+configure_options=(
+    --enable-load-extension
+    --disable-readline
+    LIBS="-ldl"
+    CFLAGS="-DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_COLUMN_METADATA=1" 
+)
+
+with_tcl="--enable-tcl"
+with_readline="--enable-readline"
+
+environment=(
+    "TCLLIBDIR=$target/lib/tcl8.5"
+)
+
+pre_build() {
+   sed -i 's/VERSION/RELEASE/' sqlite{,3}.pc.in
+}
+
+pre_link() {
+    ln -s $target/bin/sqlite3 $target/bin/sqlite
+}
