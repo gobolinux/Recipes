@@ -1,12 +1,12 @@
-# Recipe for version 2.0.x-r6671-r6671 by Xavier Pinho <a52363@alunos.uminho.pt>, on Fri Apr 10 20:42:10 WEST 2009
+# Recipe for version 2.0.x-r6921 by Zbigniew Baniewski <zb@ispid.com.pl>, on Fri, 30 Oct 2009 22:16:17 +0100
 # Recipe (MakeRecipe) for FLTK by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. dec. 27., szombat, 22.58.31 CET
-compile_version=1.11.4
-url="http://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub/fltk/snapshots/fltk-2.0.x-r6671.tar.bz2"
-file_size=2527397
-file_md5=6bcef5fd51eb3bc4dd0702f3ae6da6ba
+compile_version=1.12.3
+url="http://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub/fltk/snapshots/fltk-2.0.x-r6921.tar.bz2"
+file_size=2528202
+file_md5=0dd59bf70219f944d1a138f6a8004b27
 recipe_type=configure
 configure_options=(
-    --enable-shared 
+    --enable-shared
     --disable-cairo    # This is a must to compile Dillo2
     --enable-xshm
 )
