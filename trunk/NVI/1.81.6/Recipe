@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for NVI by Karim Belbachir, on Sun Nov 1 00:28:27 GMT 2009
+# Recipe for version 1.81.6 by Karim Belbachir, on Sun Nov 1 00:28:27 GMT 2009
+compile_version=1.12.3
+url="http://www.kotnet.org/~skimo/nvi/devel/nvi-1.81.6.tar.bz2"
+file_size=1758309
+file_md5=88d1e23115ee9f2961186b62e55f5704
+recipe_type=configure
+dir=nvi-1.81.6/build.unix
+configure=../dist/configure
