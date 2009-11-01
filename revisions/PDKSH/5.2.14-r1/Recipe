@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for PDKSH by Karim Belbachir <karim@eml.cc>, on Sun Nov 1 01:31:03 GMT 2009
+# Recipe for version 5.2.14 by Karim Belbachir <karim@eml.cc>, on Sun Nov 1 01:31:03 GMT 2009
+compile_version=1.12.3
+url="ftp://ftp.cs.mun.ca/pub/pdksh/pdksh-5.2.14.tar.gz"
+mirror_urls=(
+"ftp://ftp.demon.net/pub/mirrors/pdksh/pdksh-5.2.14.tar.gz"
+"ftp://ftp.lip6.fr/pub/unix/shells/pdksh/pdksh-5.2.14.tar.gz"
+"http://gd.tuwien.ac.at/utils/shells/pdksh/pdksh-5.2.14.tar.gz"
+)
+file_size=480107
+file_md5=871106b3bd937e1afba9f2ef7c43aef3
+recipe_type=configure
