@@ -1,0 +1,19 @@
+# Recipe for version 1.7 by Lucas C. Villa Real, on Wed Nov 4 02:00:45 BRST 2009
+# Recipe (MakeRecipe) for Kerberos by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Jul 12 09:23:04 BRT 2005
+compile_version=1.8.0
+url="http://web.mit.edu/kerberos/dist/krb5/1.7/krb5-1.7-signed.tar"
+file_size=12226560
+file_md5=9f7b3402b4731a7fa543db193bf1b564
+
+recipe_type=configure
+unpack_files=files_in_root
+configure_options=(
+   --enable-ipv6
+)
+pre_build() {
+   tar -zxvf krb5-1.7.tar.gz
+   chown -R `ls -l krb5-1.7.tar.gz.asc| awk '{print $3}'` krb5-1.7
+   mv krb5-1.7/src/* .
+   mv krb5-1.7/doc .
+   rm -rf krb5-1.7*
+}
