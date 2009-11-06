@@ -1,0 +1,8 @@
+# Recipe for version 6.10.4 by Kevin Quick <quick@sparq.org>, on Thu Nov 5 09:56:17 MST 2009
+# Recipe (MakeRecipe) for GHC by Peter Eriksen <s022018@student.dtu.dk>, on Tue Feb 22 12:51:35 CET 2005
+compile_version=1.8.5
+url="http://www.haskell.org/ghc/dist/6.10.4/ghc-6.10.4-src.tar.bz2"
+file_size=8060565
+file_md5=167687fa582ef6702aaac24e139ec982
+dir='ghc-6.10.4'
+recipe_type=configure
