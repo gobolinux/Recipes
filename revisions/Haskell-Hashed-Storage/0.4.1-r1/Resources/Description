@@ -1,0 +1,7 @@
+[Name] Haskell-Hashed-Storage
+[Summary] Hashed file storage support code.
+[Description] Support code for reading and manipulating hashed file storage (where each file and directory is associated with a cryptographic hash, for corruption-resistant storage and fast comparisons). 
+
+The supported storage formats include darcs hashed pristine, a plain filesystem tree and an indexed plain tree (where the index maintains hashes of the plain files and directories).
+[License] BSD3
+[Homepage] http://hackage.haskell.org/package/hashed-storage
