@@ -1,0 +1,16 @@
+# Recipe for version 1.15.2 by Michael Homer <michael@gobolinux.org>, on Sun Nov 8 14:48:09 NZDT 2009
+# Recipe (MakeRecipe) for BusyBox by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sun Dec 19 13:55:31 BRST 2004
+compile_version=1.8.2
+url="http://www.busybox.net/downloads/busybox-1.15.2.tar.bz2"
+file_size=1987590
+file_md5=d5653e5b74b17dbb1eeecda8b8f22c0a
+recipe_type=makefile
+makefile='Makefile'
+
+pre_link() {
+    mkdir -p $target/Shared/udhcpc
+    cp examples/udhcp/simple.script $target/Shared/udhcpc/default.script
+    chmod +x $target/Shared/udhcpc/default.script
+    cp .config $target/Resources/config && gzip $target/Resources/config
+    cp $recipedir/Resources/mdev_wrapper $target/bin
+}
