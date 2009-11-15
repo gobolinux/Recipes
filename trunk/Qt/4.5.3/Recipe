@@ -1,0 +1,51 @@
+# Recipe for version 4.5.3 by Michael Homer <michael@gobolinux.org>, on Sat Oct 3 22:15:48 NZDT 2009
+# by Andre Detsch
+
+compile_version=1.9.0
+url="http://get.qt.nokia.com/qt/source/qt-x11-opensource-src-4.5.3.tar.gz"
+recipe_type=configure
+file_size=125384668
+file_md5=3988cf9af68be2df8a8000ede231de9b
+
+configure_options=(
+    -release
+    -prefix "$target"
+    -nomake "examples demos docs"
+    -dbus
+    -qt-gif
+    -no-separate-debug-info
+    -sql-sqlite
+    -system-sqlite
+    -optimized-qmake
+    -no-phonon
+    -no-phonon-backend
+    -opensource
+    -confirm-license
+    -hostprefix /usr
+#    -D "QT_BUILD_QMAKE=1"
+)
+
+with_mysql="-plugin-sql-mysql"
+with_sqlite=(-plugin-sql-sqlite -system-sqlite)
+with_odbc="-plugin-sql-odbc"
+with_nas="-system-nas-sound"
+with_webkit="-webkit"
+
+build_variables=(
+   CFLAGS="-D_GNU_SOURCE $CFLAGS"
+)
+
+install_variables=(
+   INSTALL_ROOT="$target"
+)
+
+do_install() {
+   $sudo_exec ln -s . "$target"/usr
+   configure_do_install "$@"
+   $sudo_exec rm "$target"/usr
+}
+
+pre_link() {
+   # clean out debug files
+   find ${target} -name "*.debug" | xargs rm -f
+}
