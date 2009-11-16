@@ -1,0 +1,11 @@
+# Recipe for version 2.2.19 by Dominique Juergensen <brokolie@vollbio.de>, on Mon Nov 16 04:35:48 CET 2009
+# Recipe (MakeRecipe) for LibSMBIOS by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Feb 3 09:49:07 BRST 2008
+compile_version=1.10.1
+url="http://linux.dell.com/libsmbios/download/libsmbios/libsmbios-2.2.19/libsmbios-2.2.19.tar.gz"
+file_size=1076118
+file_md5=c0066f28ed02880e925381b1d741ccfa
+recipe_type=configure
+
+pre_link() {
+    cp -a src/include/* $target/include/
+}
