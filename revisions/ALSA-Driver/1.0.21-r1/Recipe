@@ -1,0 +1,27 @@
+# Recipe for version 1.0.21 by Dominique Juergensen <brokolie@vollbio.de>, on Tue Nov 17 16:39:54 CET 2009
+# Recipe (MakeRecipe) for ALSA-Driver by Peter Eriksen <s022018@student.dtu.dk>, on Sat Jan 15 15:04:12 CET 2005
+compile_version=1.9.0
+url="ftp://ftp.alsa-project.org/pub/driver/alsa-driver-1.0.21.tar.bz2"
+file_size=3112563
+file_md5=3ee5ec5357f237dc78847feb85d8560d
+recipe_type=configure
+configure_options=(
+   "--with-moddir=$goboModules/`uname -r`/kernel/sound"
+   "--with-kernel=$goboModules/`uname -r`/build"
+   "--with-redhat=no"
+   "--with-suse=no"
+   "--with-cards=all"
+   "--with-sequencer=yes"
+)
+unmanaged_files=(
+	$goboModules/`uname -r`/kernel/sound
+)
+
+pre_install () {
+	GrepReplace "\(^install: .*\) install-scripts \(.*\)$" "\\1 \\2" Makefile
+	GrepReplace "\-/sbin/depmod.*" "" Makefile
+}
+
+post_install () {
+	depmod -a `uname -r`
+}
