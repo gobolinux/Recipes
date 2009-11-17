@@ -1,0 +1,17 @@
+Akonadi >= 1.0.0
+GCC 4.3.2
+GLib >= 2.6 [glib2]
+Glibc 2.8
+Gnokii 0.6.27 [nokia]
+GPGME >= 1.1.6
+KDE-Libs >= 4.3.0
+KDE-PIM-Libs >= 4.3.0
+LibGPG-Error >= 1.6
+LibMal 0.44 [libmal]
+#LibOpenSync >= 0.30 [libopensync] # disabled as it causes compile errors
+Phonon >= 4.2.0
+Qt >= 4.5.0
+Soprano >= 2.1 [soprano]
+Strigi >= 0.5.9
+Xorg-Lib 7.3
+ZLib 1.2.3
