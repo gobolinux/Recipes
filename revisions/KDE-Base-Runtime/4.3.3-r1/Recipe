@@ -1,0 +1,12 @@
+# Recipe for version 4.3.3 by Dominique Juergensen <brokolie@vollbio.de>, on Fri Nov 13 01:45:52 CET 2009
+# Recipe (MakeRecipe) for KDE-Base-Runtime by Giambattista Bloisi <giamby@infinito.it>, on Sat Jan 12 18:42:50 CET 2008
+compile_version=1.10.0
+url="http://download.kde.org/stable/4.3.3/src/kdebase-runtime-4.3.3.tar.bz2"
+file_size=7329976
+file_md5=88bf28d42d326c16abceaf3f1c6bffde
+file="kdebase-runtime-4.3.3.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
