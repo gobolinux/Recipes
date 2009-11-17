@@ -1,0 +1,13 @@
+# Recipe for version 4.3.3 by Dominique Juergensen <brokolie@vollbio.de>, on Fri Nov 13 01:49:57 CET 2009
+# Recipe (MakeRecipe) for KDE-Network by Giambattista Bloisi <giamby@infinito.it>, on Sat Jan 19 00:53:44 CET 2008
+compile_version=1.10.0
+url="http://download.kde.org/stable/4.3.3/src/kdenetwork-4.3.3.tar.bz2"
+file_size=7379886
+file_md5=bb9a20da6e18a4952f7001b581aa9a1d
+file="kdenetwork-4.3.3.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
+
