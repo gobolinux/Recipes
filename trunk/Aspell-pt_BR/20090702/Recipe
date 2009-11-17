@@ -1,0 +1,11 @@
+# Recipe for version 20090702 by Leandro Motta Barros <lmb@stackedboxes.org>, on Tue Nov 17 08:32:10 BRST 2009
+# Recipe (MakeRecipe) for Aspell-pt_BR by Lucas C. Villa Real, on Tue Mar 6 10:04:27 BRT 2007
+compile_version=1.8.2
+url="http://ftp.gnu.org/gnu/aspell/dict/pt_BR/aspell6-pt_BR-20090702-0.tar.bz2"
+file_size=865676
+file_md5=e082a8956882eb94a67c12e1b8c4a324
+recipe_type=configure
+install_variables=(
+   "dictdir=$target/lib/aspell"
+   "datadir=$target/lib/aspell"
+)
