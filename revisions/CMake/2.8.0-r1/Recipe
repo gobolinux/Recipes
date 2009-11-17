@@ -1,0 +1,10 @@
+# Recipe for version 2.8.0 by Michael Homer <michael@gobolinux.org>, on Wed Nov 18 12:20:23 NZDT 2009
+compile_version=1.7.1
+url="http://www.cmake.org/files/v2.8/cmake-2.8.0.tar.gz"
+file_size=3553247
+file_md5=3b3679b8a6afaedc38a8c15dd7ff4fcf
+recipe_type=configure
+
+configure_options=(
+   --prefix=$target
+)
