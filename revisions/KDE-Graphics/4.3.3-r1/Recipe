@@ -1,0 +1,12 @@
+# Recipe for version 4.3.3 by Dominique Juergensen <brokolie@vollbio.de>, on Fri Nov 13 01:49:41 CET 2009
+# Recipe (MakeRecipe) for KDE-Graphics by Frank Wilson <frank at thefixedpoint.me.uk>, on Thu Jan 8 18:36:40 GMT 2009
+compile_version=1.11.4
+url="http://download.kde.org/stable/4.3.3/src/kdegraphics-4.3.3.tar.bz2"
+file_size=3621439
+file_md5=e150a9538133a359e3e2e8ccf0c58575
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
+
