@@ -1,0 +1,11 @@
+# Recipe for version 4.3.3 by Dominique Juergensen <brokolie@vollbio.de>, on Fri Nov 13 01:47:43 CET 2009
+# Recipe (MakeRecipe) for KDE-Edu by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Mar 10 15:10:31 PDT 2008
+compile_version=1.10.1
+url="ftp://ftp.kde.org/pub/kde/stable/4.3.3/src/kdeedu-4.3.3.tar.bz2"
+file_size=57944052
+file_md5=9d9d7a34bccb0880d1cdf181f92da217
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
