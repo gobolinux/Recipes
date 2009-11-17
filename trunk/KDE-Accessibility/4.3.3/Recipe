@@ -1,0 +1,12 @@
+# Recipe for version 4.3.3 by Dominique Juergensen <brokolie@vollbio.de>, on Fri Nov 13 01:46:05 CET 2009
+# Recipe (MakeRecipe) for KDE-Accessibility by Giambattista Bloisi <giamby@infinito.it>, on Thu Jan 17 22:30:03 CET 2008
+compile_version=1.10.0
+url="http://download.kde.org/stable/4.3.3/src/kdeaccessibility-4.3.3.tar.bz2"
+file_size=6586467
+file_md5=401e733b42d34580b36a9ffe59e5aeba
+file="kdeaccessibility-4.3.3.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
