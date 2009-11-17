@@ -1,0 +1,12 @@
+# Recipe for version 4.3.3 by Dominique Juergensen <brokolie@vollbio.de>, on Fri Nov 13 01:48:46 CET 2009
+# Recipe (MakeRecipe) for KDE-Games by Giambattista Bloisi <giamby@infinito.it>, on Fri Jan 18 09:17:08 CET 2008
+compile_version=1.10.0
+url="ftp://ftp.kde.org/pub/kde/stable/4.3.3/src/kdegames-4.3.3.tar.bz2"
+file_size=50565670
+file_md5=2e35ec4b2b26b7e7e32712a35cef8912
+file="kdegames-4.3.3.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
