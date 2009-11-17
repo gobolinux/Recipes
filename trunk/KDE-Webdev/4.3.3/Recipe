@@ -1,0 +1,11 @@
+# Recipe for version 4.3.3 by Dominique Juergensen <brokolie@vollbio.de>, on Fri Nov 13 01:50:46 CET 2009
+# Recipe (MakeRecipe) for KDE-Webdev by Giambattista Bloisi <giamby@infinito.it>, on Sun Feb 10 23:09:57 CET 2008
+compile_version=1.10.2
+url="http://download.kde.org/stable/4.3.3/src/kdewebdev-4.3.3.tar.bz2"
+file_size=2527118
+file_md5=df206917f9a19cf636fe5acd1e9ed055
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
