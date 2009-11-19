@@ -1,0 +1,13 @@
+# Recipe for version 1.7.2 by Dominique Juergensen <brokolie@vollbio.de>, on Wed Nov 18 19:12:15 CET 2009
+# Recipe (MakeRecipe) for Conky by Laurent Pelecq (laurent.pelecq at soleil.org), on mer jui 12 21:32:29 CEST 2006
+compile_version=1.8.0
+url="$httpSourceforge/conky/conky-1.7.2.tar.bz2"
+file_size=585099
+file_md5=cf6f5d45d42ad68c618c00271813b80d
+recipe_type=configure
+configure_options=(
+    "--disable-lua"
+    "--enable-curl"
+    "--enable-imlib2"
+    "--enable-wlan"
+)
