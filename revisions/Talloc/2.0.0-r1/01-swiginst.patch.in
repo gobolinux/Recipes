@@ -1,0 +1,14 @@
+diff -Naur talloc-2.0.0-orig/talloc.mk talloc-2.0.0/talloc.mk
+--- talloc-2.0.0-orig/talloc.mk	2009-11-18 15:03:18.000000000 -0700
++++ talloc-2.0.0/talloc.mk	2009-11-18 15:50:48.000000000 -0700
+@@ -23,8 +23,8 @@
+ 	${INSTALLCMD} -m 644 talloc.pc $(DESTDIR)$(libdir)/pkgconfig
+ 	if [ -f talloc.3 ];then ${INSTALLCMD} -d $(DESTDIR)$(mandir)/man3; fi
+ 	if [ -f talloc.3 ];then ${INSTALLCMD} -m 644 talloc.3 $(DESTDIR)$(mandir)/man3; fi
+-	which swig >/dev/null 2>&1 && ${INSTALLCMD} -d $(DESTDIR)`swig -swiglib` || true
+-	which swig >/dev/null 2>&1 && ${INSTALLCMD} -m 644 talloc.i $(DESTDIR)`swig -swiglib` || true
++	which swig >/dev/null 2>&1 && ${INSTALLCMD} -d $(DESTDIR)`swig -swiglib | sed -e 's|^.*/share/|@%Compile_target%@/share/|'` || true
++	which swig >/dev/null 2>&1 && ${INSTALLCMD} -m 644 talloc.i $(DESTDIR)`swig -swiglib | sed -e 's|^.*/share/|@%Compile_target%@/share/|'` || true
+ 
+ doc:: talloc.3 talloc.3.html
+ 
