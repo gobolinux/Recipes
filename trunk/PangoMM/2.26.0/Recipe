@@ -1,0 +1,12 @@
+# Recipe for version 2.26.0 by Dominique Juergensen <brokolie@vollbio.de>, on Wed Nov 18 18:37:26 CET 2009
+# Recipe (MakeRecipe) for PangoMM by Giambattista Bloisi <giamby@infinito.it>, on Fri Oct 17 20:38:37 CEST 2008
+compile_version=1.11.2
+url="http://ftp.gnome.org/pub/gnome/sources/pangomm/2.26/pangomm-2.26.0.tar.bz2"
+file_size=982857
+file_md5=37f54dc8e6cb73ed923b22f313352156
+recipe_type=configure
+
+configure_options=(
+    --disable-docs
+)
+with_docs="--enable-docs"
