@@ -1,0 +1,10 @@
+# Recipe for version 0.98.1 by Demian Florentin <demianflorentin@gmail.com>, on Wed Nov 18 07:00:55 PYST 2009
+url="$httpSourceforge/amsn/amsn-0.98.1.tar.bz2"
+file_size=9024043
+file_md5=2ef1d32324d3f9d85795433414abd51b
+compile_version=1.9.0
+recipe_type=configure
+configure_options=(
+   --with-tcl=$tcl_path/lib
+   --with-tk=$tk_path/lib
+)
