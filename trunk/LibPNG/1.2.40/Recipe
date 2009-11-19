@@ -1,0 +1,11 @@
+# Recipe for version 1.2.40 by Dominique Juergensen <brokolie@vollbio.de>, on Wed Nov 18 18:54:18 CET 2009
+compile_version=1.8.5
+url=$httpSourceforge/libpng/libpng-1.2.40.tar.bz2
+file_size=629950
+file_md5=29bbd1c3cbe54b04bfc2bda43067ccb5
+recipe_type=configure
+
+pre_link() {
+    ln -sf libpng12 $target/include/libpng
+    ln -sf libpng.so $target/lib/libpng.so.0
+}
