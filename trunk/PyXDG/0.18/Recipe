@@ -1,0 +1,11 @@
+# Recipe for version 0.18 by Dominique Juergensen <brokolie@vollbio.de>, on Fri Nov 20 01:26:16 CET 2009
+# Recipe (MakeRecipe) for PyXDG by Nathan Middleton, on Mon Oct 22 15:26:35 CDT 2007
+compile_version=1.9.0
+url="http://www.freedesktop.org/~lanius/pyxdg-0.18.tar.gz"
+file_size=37558
+file_md5=076b57722e91dab8ab83028c6ef9dcea
+recipe_type=python
+
+environment=(
+    "PYTHONPATH=.:${goboLibraries}/python2.5/site-packages"
+)
