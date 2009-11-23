@@ -1,0 +1,13 @@
+Author: John Beshir
+Alters the behaviour of xlib so it always checks assertions and prints a backtrace if they fail, with NDEBUG suppressing aborting from one.
+--- libxcb-1.1/src/xcb_xlib.c       2007-10-23 18:17:31.000000000 +0100
++++ libxcb-1.1/src/xcb_xlib.c.new   2008-02-17 10:46:29.000000000 +0000
+@@ -57,7 +57,7 @@
+ #ifndef NDEBUG
+ #define xcb_assert(c,x) do { if (!(x)) { xcb_xlib_printbt(); if (!(c)->xlib.sloppy_lock) assert(x); } } while(0)
+ #else
+-#define xcb_assert(c,x)
++#define xcb_assert(c,x) do { if (!(x)) { xcb_xlib_printbt(); } } while(0)
+ #endif
+ 
+ unsigned int xcb_get_request_sent(xcb_connection_t *c)
