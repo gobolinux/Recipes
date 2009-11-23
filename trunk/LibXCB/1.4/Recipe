@@ -1,0 +1,13 @@
+# Recipe for version 1.4 by Zbigniew Baniewski <zb@ispid.com.pl>, on pon, 23 lis 2009, 01:45:43 CET
+# Recipe (MakeRecipe) for LibXCB by Lucas C. Villa Real, on Mon Mar 5 16:06:23 BRT 2007
+compile_version=1.8.2
+url="http://xcb.freedesktop.org/dist/libxcb-1.4.tar.bz2"
+file_size=306116
+file_md5=b00fd506c717dea01f595e8da31f6914
+recipe_type=configure
+part_of=Xorg-Lib
+
+# Stop xcb_xlib assertions.
+build_variables=(
+ "CPPFLAGS=-DNDEBUG"
+)
