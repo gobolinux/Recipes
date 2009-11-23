@@ -1,0 +1,26 @@
+This patch fixes the compilation on newer GCCs. These externs are actually
+static arrays defined in xpm files which are included later on by other files.
+There´s just no need to include them as externs.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- asclock-2.0.12/asclock.h.orig	2008-04-06 12:52:13.000000000 -0300
++++ asclock-2.0.12/asclock.h	2008-04-06 12:53:05.000000000 -0300
+@@ -37,17 +37,6 @@ extern symbol config_symbols[];
+ #define MAX_PATH_LEN 512
+ #define INT_TYPE 0;
+ 
+-/* the xpm data */
+-extern char *clock_xpm[];
+-extern char *month_xpm[];
+-extern char *weekday_xpm[];
+-extern char *led_xpm[];
+-extern char *date_xpm[];
+-extern char *hour_xpm[];
+-extern char *minute_xpm[];
+-extern char *second_xpm[];
+-extern char *beats_xpm[];
+-
+ /* the filenames */
+ extern char clock_xpm_fn[MAX_PATH_LEN];
+ extern char month_xpm_fn[MAX_PATH_LEN];
