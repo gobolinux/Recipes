@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for HAL-Addon-AppleSMC by Dominique Juergensen <brokolie@vollbio.de>, on Tue Nov 24 19:05:46 CET 2009
+# Recipe for version git by Dominique Juergensen <brokolie@vollbio.de>, on Tue Nov 24 19:05:46 CET 2009
+compile_version=1.12.4
+git="http://bitmath.org/git/hal-applesmc.git"
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+    "DESTDIR=$target"
+    "DFDI=Shared/hal/fdi/information/10freedesktop"
+    "DBIN=lib/hal"
+)
