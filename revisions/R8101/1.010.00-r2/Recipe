@@ -1,0 +1,16 @@
+# Recipe for version 1.010.00 by Fabio Mierlo <geromao@gmail.com>, on Tue Nov 24 10:54:02 BRST 2009
+# Recipe (MakeRecipe) for R8101 by Fabio Mierlo <geromao@gmail.com>, on Mon Nov 3 22:00:52 BRST 2008
+compile_version=1.11.2
+url="ftp://WebUser:2mG8dBW@202.65.194.212/cn/nic/r8101-1.010.00.tar.bz2"
+file_size=31592
+file_md5=0fd218723ce962a4594e6bd5ca47d56e
+recipe_type=makefile
+makefile='Makefile'
+
+unmanaged_files=(
+  "$goboModules/$(readlink $goboModules/Current)/kernel/drivers/net/r8101.ko"
+)
+
+make_variables=(
+  "KMISC=$target/Resources/Unmanaged/$goboModules/$(readlink $goboModules/Current)/kernel/drivers/net/r8101.ko"
+)
