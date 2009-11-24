@@ -1,0 +1,41 @@
+# fix: bogus prefix and depmod in Makefile
+--- zaptel-1.2.27-orig/Makefile	2008-03-31 21:08:21.000000000 -0300
++++ zaptel-1.2.27/Makefile	2009-11-23 13:24:57.000000000 -0200
+@@ -60,7 +60,7 @@
+ # Set HOTPLUG_FIRMWARE=no to override automatic building with hotplug support
+ # if it is enabled in the kernel.
+ ifeq ($(BUILDVER),linux26)
+-  ifneq (,$(wildcard $(DESTDIR)/etc/udev/rules.d))
++  ifneq (,$(wildcard /etc/udev/rules.d))
+     DYNFS=yes
+     UDEVRULES=yes
+   endif
+@@ -209,8 +209,8 @@
+ LIBTONEZONE_SO_MAJOR_VER:=1
+ LIBTONEZONE_SO_MINOR_VER:=0
+ 
+-LIBDIR			:= $(INSTALL_PREFIX)/lib
+-INCLUDE_DIR		:= $(INSTALL_PREFIX)/include
++LIBDIR			:= /lib
++INCLUDE_DIR		:= /include
+ # Note: Zaptel's use of /sbin is slightly non-standard:
+ SBINDIR			:= /sbin
+ # No better default. If INSTALL_PREFIX != /usr, I'm not sure 
+@@ -468,7 +468,7 @@
+ # Specific to a kernel version:
+ install-modules: modules
+ ifeq ($(BUILDVER),linux26)
+-	@./build_tools/uninstall-modules $(DESTDIR)/lib/modules/$(KVERS) $(MODULES)
++	#@./build_tools/uninstall-modules $(DESTDIR)/lib/modules/$(KVERS) $(MODULES)
+ 	for x in $(MODULESKO); do \
+ 		rm -f $(DESTDIR)/lib/modules/$(KVERS)/extra/$$x ; \
+ 	done
+@@ -481,7 +481,7 @@
+ 	rm -f $(DESTDIR)$(MODS_DIR)/wcfxsusb.o
+ endif
+ 	rm -f $(DESTDIR)$(MODS_DIR)/wcfxs.o
+-	[ `id -u` = 0 ] && /sbin/depmod -a $(KVERS) || :
++#	[ `id -u` = 0 ] && /sbin/depmod -a $(KVERS) || :
+ 
+ install-libs: libs
+ 	install -D -m 755 $(LIBTONEZONE_SO) $(DESTDIR)$(LIBDIR)/$(LIBTONEZONE_SO).$(LIBTONEZONE_SO_MAJOR_VER).$(LIBTONEZONE_SO_MINOR_VER)
