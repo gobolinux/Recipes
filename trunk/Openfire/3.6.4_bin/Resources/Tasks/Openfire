@@ -1,0 +1,9 @@
+
+case "$1" in
+[Ss]tart)
+   openfire start
+   ;;
+[Ss]top)
+   openfire stop
+   ;;
+esac
