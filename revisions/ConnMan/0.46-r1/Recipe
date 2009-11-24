@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for ConnMan by Dominique Juergensen <brokolie@vollbio.de>, on Tue Nov 24 11:01:13 CET 2009
+# Recipe for version 0.46 by Dominique Juergensen <brokolie@vollbio.de>, on Tue Nov 24 11:01:13 CET 2009
+compile_version=1.12.4
+url="http://www.kernel.org/pub/linux/network/connman/connman-0.46.tar.gz"
+file_size=475440
+file_md5=9bcdc528f38bc17ecb92519a28b741f1
+recipe_type=configure
+configure_options=(
+    "--with-dbusconf=$settings_target/dbus-1/system.d/"
+)
