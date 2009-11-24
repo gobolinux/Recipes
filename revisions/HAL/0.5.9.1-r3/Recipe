@@ -1,0 +1,56 @@
+# Recipe for version 0.5.9.1 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Sep 4 23:42:36 CEST 2007
+# Recipe (MakeRecipe) for HAL by Michael Homer <michael@e.geek.nz>, on Tue Mar 20 15:33 NZST 2007
+compile_version=1.8.5
+url="http://hal.freedesktop.org/releases/hal-0.5.9.1.tar.gz"
+file_size=1596347
+file_md5=6a40f49f964e64358e53652038f3059f
+recipe_type=configure
+environment=(
+    "LDFLAGS=-lz"
+)
+configure_options=(
+    "--disable-policy-kit"
+    "--disable-docbook-docs"
+    "--with-pid-file=${goboVariable}/run/hald/pid"
+    "--with-socket-dir=${goboVariable}/run/hald"
+    "--with-dbus-sys=${settings_target}/dbus-1/system.d"
+    "--with-hwdata=${goboShared}/hwdata"
+    "--mandir=${target}/man"
+    "--with-eject=${goboExecutables}/eject"
+)
+unmanaged_files=(
+    "${goboVariable}/run/hald"
+    "${goboVariable}/run/hald/hald-local"
+    "${goboVariable}/run/hald/hald-runner"
+    "${goboVariable}/cache/"
+    "${goboVariable}/lib/hal"
+)
+
+pre_build() {
+   if ! grep -q "haldaemon" $goboSettings/group
+   then
+      Log_Normal "Adding group haldaemon"
+      for ((i=50;i<200;i++))
+      do
+         if grep -q "^[^:]*:[^:]*:$i:.*" ${goboSettings}/group
+	 then continue
+	 else
+            groupadd -g ${i} haldaemon
+	    break
+         fi
+      done
+   fi
+   if ! grep -q "haldaemon:x:" $goboSettings/passwd
+   then
+      Log_Normal "Adding user haldaemon"
+      for ((i=50;i<200;i++))
+      do
+         if grep -q "^[^:]*:[^:]*:$i:.*" ${goboSettings}/passwd
+	 then continue
+	 else
+            useradd -g haldaemon -u ${i} -c 'Added by Compile' -d $goboVariable/empty -s $goboExecutables/false haldaemon
+	    break
+	 fi
+      done
+   fi
+}

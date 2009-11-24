@@ -1,0 +1,32 @@
+Patch to fix compilation with newer kernel headers.
+From HAL Git repo, provided for GoboLinux by rubisher
+
+diff -Naur hal-0.5.9.1.Orig/hald/linux/probing/linux_dvd_rw_utils.c hal-0.5.9.1/hald/linux/probing/linux_dvd_rw_utils.c
+--- hal-0.5.9.1.Orig/hald/linux/probing/linux_dvd_rw_utils.c	2007-04-03 16:38:50.000000000 +0000
++++ hal-0.5.9.1/hald/linux/probing/linux_dvd_rw_utils.c	2007-09-05 08:57:31.000000000 +0000
+@@ -58,6 +58,14 @@
+ 
+ #include "linux_dvd_rw_utils.h"
+ 
++#if !defined(SG_FLAG_LUN_INHIBIT)
++# if defined(SG_FLAG_UNUSED_LUN_INHIBIT)
++#  define SG_FLAG_LUN_INHIBIT SG_FLAG_UNUSED_LUN_INHIBIT
++# else
++#  define SG_FLAG_LUN_INHIBIT 0
++# endif
++#endif
++
+ typedef enum {
+ 	NONE = CGC_DATA_NONE,	// 3
+ 	READ = CGC_DATA_READ,	// 2
+@@ -149,8 +157,8 @@
+ 		errno = EIO;
+ 		ret = -1;
+ 		if (cmd->sg_io.masked_status & CHECK_CONDITION) {
+-			CREAM_ON_ERRNO (cmd->sg_io.sbp);
+-			ret = ERRCODE (cmd->sg_io.sbp);
++			CREAM_ON_ERRNO ((unsigned char*)cmd->sg_io.sbp);
++			ret = ERRCODE ((unsigned char*)cmd->sg_io.sbp);
+ 			if (ret == 0)
+ 				ret = -1;
+ 		}
