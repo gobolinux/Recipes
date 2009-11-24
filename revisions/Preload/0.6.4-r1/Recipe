@@ -1,0 +1,19 @@
+# Recipe for version 0.6.4 by Dominique Juergensen <brokolie@vollbio.de>, on Tue Nov 24 20:18:30 CET 2009
+# Recipe (MakeRecipe) for Preload by Daniele Maccari <daniele.maccari@gmail.com>, on Tue Feb 26 16:55:21 CET 2008
+compile_version=1.10.2
+url="$httpSourceforge/preload/preload-0.6.4.tar.gz"
+file_size=140750
+file_md5=10786287b55afd3a2b433b4f898809f4
+recipe_type=configure
+
+post_install_message="The installation has finished. Please remember to add\nthe Preload task to your ${goboSettings}/BootScripts/BootUp file with\nthe following line\n\nExec 'Starting preload...' Preload Start\n\nYou can also find the default configuration file in ${settings_target}."
+
+unmanaged_files=(
+	"${goboVariable}/log/preload.log"
+	"${goboVariable}/lib/preload/preload.state"
+)
+
+pre_link(){
+	# Copy the settings file over the target directory
+	cp src/preload.conf ${settings_target}
+}

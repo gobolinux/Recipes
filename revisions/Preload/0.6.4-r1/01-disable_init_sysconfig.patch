@@ -1,0 +1,26 @@
+Don't install the init script nor the sysconfig configuration file
+
+--- preload-0.4/Makefile.in	2006-08-02 20:10:20.000000000 +0200
++++ preload-0.4.new/Makefile.in	2008-02-27 13:17:48.000000000 +0100
+@@ -714,9 +714,8 @@
+ 
+ info-am:
+ 
+-install-data-am: install-initdSCRIPTS install-logDATA \
+-	install-logrotateDATA install-pkglocalstateDATA \
+-	install-sysconfigDATA
++install-data-am: install-logDATA \
++	install-logrotateDATA install-pkglocalstateDATA
+ 	@$(NORMAL_INSTALL)
+ 	$(MAKE) $(AM_MAKEFLAGS) install-data-hook
+ 
+@@ -816,9 +815,7 @@
+ 	touch $@
+ 
+ install-data-hook:
+-	@cd "$(DESTDIR)$(initddir)" && mv -f preload.init preload
+ 	@cd "$(DESTDIR)$(logrotatedir)" && mv -f preload.logrotate preload
+-	@cd "$(DESTDIR)$(sysconfigdir)" && mv -f preload.sysconfig preload
+ 
+ uninstall-hook:
+ 	$(RM) "$(DESTDIR)$(initddir)/preload"
