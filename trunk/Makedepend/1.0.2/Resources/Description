@@ -1,0 +1,8 @@
+[Name] Makedepend
+[Summary] Create dependencies in makefiles
+[Description] The makedepend program reads each source file in
+sequence and parses it like a C-preprocessor, processing all C #*
+directives so that it can correctly tell which include directives
+would be used in a compilation.
+[License] BSD
+[Homepage] http://www.x.org
