@@ -1,0 +1,16 @@
+# Recipe for version 2.16.0 by Zbigniew Baniewski <zb@ispid.com.pl>, on pon, 23 lis 2009, 22:45:52 CET
+url="http://ftp.gnome.org/pub/GNOME/sources/pygtk/2.16/pygtk-2.16.0.tar.bz2"
+file_size=2253202
+file_md5=bd0d437fefd6d5390f5d770a495cd50c
+compile_version=1.8.5
+recipe_type=configure
+configure_options=(
+   "--enable-numpy"
+)
+
+pre_link() {
+   pythonversion=$(python --version 2>&1 | awk {'print $2'} | cut -b1-3)
+   echo "$goboLibraries/python2.5/site-packages/gtk-2.0" > $target/lib/python${pythonversion}/site-packages/pygtk.pth
+   echo "$goboLibraries/python2.4/site-packages/gtk-2.0" >> $target/lib/python${pythonversion}/site-packages/pygtk.pth
+   echo "$goboLibraries/python2.3/site-packages/gtk-2.0" >> $target/lib/python${pythonversion}/site-packages/pygtk.pth
+}
