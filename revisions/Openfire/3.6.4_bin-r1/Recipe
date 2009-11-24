@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for Openfire by Fabio Mierlo <geromao@gmail.com>, on Mon Nov 23 21:43:25 BRST 2009
+# Recipe for version 3.6.4 by Fabio Mierlo <geromao@gmail.com>, on Mon Nov 23 21:43:25 BRST 2009
+compile_version=1.12.4
+url="http://www.igniterealtime.org/downloadServlet?filename=openfire/openfire_3_6_4.tar.gz"
+file_size=7359091
+file_md5=e808c15582c88228e8276c043e686c88
+dir='openfire'
+recipe_type=manifest
+
+manifest=(
+  "*:." 
+  ".install4j:.install4j" 
+)
