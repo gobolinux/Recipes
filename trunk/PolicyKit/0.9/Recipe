@@ -6,11 +6,17 @@ file_size=1254318
 file_md5=802fd13ae41f73d79359e5ecb0a98716
 recipe_type=configure
 
-configure_options=(
-   "--disable-man-pages"
-   "--disable-gtk-doc"
+required_users=(
+    "polkituser"
+)
+
+required_groups=(
+    "polkituser"
 )
 
 unmanaged_files=(
-   $goboVariable/lib/misc
+    "$goboVariable/run/PolicyKit"
+    "$goboVariable/lib/PolicyKit"
+    "$goboVariable/lib/PolicyKit-public"
+    "$goboVariable/lib/misc/PolicyKit.reload"
 )
