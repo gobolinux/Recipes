@@ -1,0 +1,26 @@
+# Recipe for version 2.6.7 by Zbigniew Baniewski <zb@ispid.com.pl>, on ¶ro, 25 lis 2009, 14:02:36 CET
+# Recipe (MakeRecipe) for Gimp by roko, <ro.ko@mcnon.com>, on Fri Dec 31 19:34:35 BRST 2004
+compile_version=1.9.0
+url="ftp://ftp.gimp.org/pub/gimp/v2.6/gimp-2.6.7.tar.bz2"
+file_size=16341756
+file_md5=77ed86a8de9b48587efb24f2b115ad38
+recipe_type=configure
+configure_options=(
+    --disable-mp 
+    --enable-gimp-remote 
+    --without-poppler
+    --disable-python
+)  
+with_poppler="--with-poppler"
+with_python="--with-python"
+with_pygtk="--with-python"
+
+build_variables=(
+   gimpplugindir="${goboLibraries}/gimp/2.0"
+)
+
+pre_install() {
+   # Sigh, libtool again...
+   find -name "*.la" | xargs sed -i "s,^libdir='${goboLibraries},libdir='${target}/lib,"
+}
+
