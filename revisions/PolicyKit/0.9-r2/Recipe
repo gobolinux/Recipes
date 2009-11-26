@@ -1,0 +1,22 @@
+# Recipe (MakeRecipe) for PolicyKit by Demian Florentin <demianflorentin@gmail.com>, on Thu Nov 27 03:24:58 PYST 2008
+# Recipe for version 0.9 by Demian Florentin <demianflorentin@gmail.com>, on Thu Nov 27 03:24:58 PYST 2008
+compile_version=1.11.4
+url="http://hal.freedesktop.org/releases/PolicyKit-0.9.tar.gz"
+file_size=1254318
+file_md5=802fd13ae41f73d79359e5ecb0a98716
+recipe_type=configure
+
+required_users=(
+    "polkituser"
+)
+
+required_groups=(
+    "polkituser"
+)
+
+unmanaged_files=(
+    "$goboVariable/run/PolicyKit"
+    "$goboVariable/lib/PolicyKit"
+    "$goboVariable/lib/PolicyKit-public"
+    "$goboVariable/lib/misc/PolicyKit.reload"
+)
