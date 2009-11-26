@@ -1,0 +1,12 @@
+diff -ru orig/coreutils-5.97/lib/regex.c coreutils-5.97/lib/regex.c
+--- orig/coreutils-5.97/lib/regex.c	2005-09-22 08:05:39.000000000 +0200
++++ coreutils-5.97/lib/regex.c	2006-07-30 23:29:45.000000000 +0200
+@@ -51,7 +51,7 @@
+    #undefs RE_DUP_MAX and sets it to the right value.  */
+ #include <limits.h>
+ 
+-#include <regex.h>
++#include "regex.h"
+ #include "regex_internal.h"
+ 
+ #include "regex_internal.c"
