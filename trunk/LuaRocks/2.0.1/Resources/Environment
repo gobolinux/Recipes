@@ -1,0 +1,14 @@
+# LuaRocks Environment
+
+export LUA_PATH="\
+$goboSystem/Aliens/LuaRocks/share/lua/5.1/?.lua;\
+$goboSystem/Aliens/LuaRocks/share/lua/5.1/init.lua;\
+$goboSystem/Aliens/LuaRocks/lib/lua/5.1/?.lua;\
+$goboSystem/Aliens/LuaRocks/lib/lua/5.1/init.lua;\
+$LUA_PATH"
+
+export LUA_CPATH="\
+$goboSystem/Aliens/LuaRocks/lib/lua/5.1/?.so;\
+$goboSystem/Aliens/LuaRocks/lib/lua/5.1/loadall.so;\
+$LUA_CPATH"
+
