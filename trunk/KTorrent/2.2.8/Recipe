@@ -1,0 +1,9 @@
+# Recipe for version 2.2.8 by Joshua Sako <jsako@gmail.com>, on Sat Nov 28 21:35:32 EST 2009
+compile_version=1.9.0
+url="http://ktorrent.org/downloads/2.2.8/ktorrent-2.2.8.tar.bz2"
+file_size=2715406
+file_md5=c0bd753b27bbc3e404b6c59ceafb5f91
+recipe_type=configure
+configure_options=(
+'--disable-libsuffix'
+)
