@@ -6,7 +6,9 @@ recipe_type=manifest
 manifest=(
 	"misc/emacs/go-mode.el:shared/emacs"
 	"misc/emacs/go-mode-load.el:shared/emacs"
-	"pkg:pkg"
+	"pkg:lib/go/pkg"
+	"src/Make.386:lib/go/src/Make.386"
+	"Make.pkg:lib/go/src/Make.pkg"  # as adjusted below in pre_install
 )
 environment=(
 	"GOARCH=386"
@@ -17,9 +19,12 @@ environment=(
 pre_install()
 {
 	cd src && sh ./all.bash
+
         echo "export GOARCH=\"$GOARCH\"" > ${settings_target}/go.rc
         echo "export GOOS=\"$GOOS\"" >> ${settings_target}/go.rc
-        echo "export GOBIN=\"$GOBIN\"" >> ${settings_target}/go.rc
-        echo "export GOROOT=\"$GOROOT\"" >> ${settings_target}/go.rc
+        echo "export GOBIN=\"$`echo gobo`Programs/Golang/Current/bin\"" >> ${settings_target}/go.rc
+        echo "export GOROOT=\"$goboLibraries/go\"" >> ${settings_target}/go.rc
+
+        sed -e's!^pkgdir=$(QUOTED_GOROOT)!pkgdir=\$(target)/lib/go!' Make.pkg > ../Make.pkg
 }
 post_install_message="Include 'source ${settings_target}/go.rc' in your .bashrc or equivalent."
