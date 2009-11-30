@@ -6,6 +6,7 @@ recipe_type=manifest
 manifest=(
 	"misc/emacs/go-mode.el:shared/emacs"
 	"misc/emacs/go-mode-load.el:shared/emacs"
+	"pkg:pkg"
 )
 environment=(
 	"GOARCH=386"
@@ -16,4 +17,9 @@ environment=(
 pre_install()
 {
 	cd src && sh ./all.bash
+        echo "export GOARCH=\"$GOARCH\"" > ${settings_target}/go.rc
+        echo "export GOOS=\"$GOOS\"" >> ${settings_target}/go.rc
+        echo "export GOBIN=\"$GOBIN\"" >> ${settings_target}/go.rc
+        echo "export GOROOT=\"$GOROOT\"" >> ${settings_target}/go.rc
 }
+post_install_message="Include 'source ${settings_target}/go.rc' in your .bashrc or equivalent."
