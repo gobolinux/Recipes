@@ -1,0 +1,25 @@
+# Recipe (MakeRecipe) for Golang by Kevin Quick <quick@sparq.org>, on Fri Nov 20 22:41:55 MST 2009
+# Recipe for version hg by Kevin Quick <quick@sparq.org>, on Fri Nov 20 22:41:55 MST 2009
+compile_version=1.12.3
+hg="https://go.googlecode.com/hg/ -r release"
+recipe_type=manifest
+manifest=(
+	"misc/emacs/go-mode.el:shared/emacs"
+	"misc/emacs/go-mode-load.el:shared/emacs"
+	"pkg:pkg"
+)
+environment=(
+	"GOARCH=386"
+	"GOOS=linux"
+	"GOBIN=$target/bin"
+	"GOROOT=/Files/Compile/Sources/Golang-hg"
+)
+pre_install()
+{
+	cd src && sh ./all.bash
+        echo "export GOARCH=\"$GOARCH\"" > ${settings_target}/go.rc
+        echo "export GOOS=\"$GOOS\"" >> ${settings_target}/go.rc
+        echo "export GOBIN=\"$GOBIN\"" >> ${settings_target}/go.rc
+        echo "export GOROOT=\"$GOROOT\"" >> ${settings_target}/go.rc
+}
+post_install_message="Include 'source ${settings_target}/go.rc' in your .bashrc or equivalent."
