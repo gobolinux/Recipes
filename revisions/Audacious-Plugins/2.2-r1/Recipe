@@ -1,0 +1,12 @@
+# Recipe for version 2.2 by Joshua Sako <jsako@gmail.com>, on Mon Nov 30 04:15:29 EST 2009
+# Recipe (MakeRecipe) for Audacious-Plugins by Guilherme B. Bedin, on Wed Jan 24 13:55:32 BRST 2007
+compile_version=1.8.2
+url="http://distfiles.atheme.org/audacious-plugins-2.2.tgz"
+file_size=3135776
+file_md5=ed6790bf5667c824eda72301f0a886a8
+recipe_type=configure
+part_of=Audacious
+
+make_variables=(
+    "pluginlibdir=$target/lib/audacious"
+)
