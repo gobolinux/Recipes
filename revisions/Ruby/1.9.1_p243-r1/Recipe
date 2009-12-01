@@ -1,0 +1,28 @@
+# Recipe for version 1.9.1_p243 by Michael Homer <michael@gobolinux.org>, on Mon Nov 30 21:42:37 NZDT 2009
+compile_version=1.8.2
+url="ftp://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.1-p243.tar.gz"
+file_size=9043825
+file_md5=515bfd965814e718c0943abf3dde5494
+recipe_type=configure
+makefile=GNUmakefile
+
+configure_options=(
+ "--disable-frame-address"
+ "--enable-shared"
+ "--enable-pthread"
+ "--enable-install-doc"
+)
+
+do_install() {
+   makefile_do_install "$@"
+   $sudo_exec ln -s "$goboSystem/Aliens/RubyGems" "$target"/lib/ruby/gems
+   if ! [ -e "$goboSystem/Aliens/RubyGems/1.9.1/bin" ]
+   then
+      $sudo_exec mkdir -p "$goboSystem/Aliens/RubyGems/1.9.1/bin"
+      $sudo_exec ln -s "$target/bin/ruby" "$goboSystem/Aliens/RubyGems/1.9.1/bin"
+   fi
+}
+
+unmanaged_files=(
+   "$goboSystem/Aliens/RubyGems"
+)

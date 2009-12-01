@@ -1,0 +1,14 @@
+Patch to use /System/Aliens bin path instead of one inside /P/Ruby,
+so that executables from gems don't try to write into the /P tree.
+--- ruby/lib/rubygems.rb	2009-11-30 22:18:38.000000000 +1300
++++ ruby/lib/rubygems.rb	2009-11-30 22:20:50.000000000 +1300
+@@ -174,7 +174,8 @@
+     :EXEEXT => RbConfig::CONFIG["EXEEXT"],
+     :RUBY_SO_NAME => RbConfig::CONFIG["RUBY_SO_NAME"],
+     :arch => RbConfig::CONFIG["arch"],
+-    :bindir => RbConfig::CONFIG["bindir"],
++    :bindir => File.join('@%Compile_goboSystem%@/Aliens/RubyGems/',
++                         ConfigMap[:ruby_version], 'bin'),
+     :datadir => RbConfig::CONFIG["datadir"],
+     :libdir => RbConfig::CONFIG["libdir"],
+     :ruby_install_name => RbConfig::CONFIG["ruby_install_name"],
