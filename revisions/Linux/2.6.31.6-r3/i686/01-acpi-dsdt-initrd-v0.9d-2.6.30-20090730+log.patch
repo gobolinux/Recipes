@@ -1,0 +1,1084 @@
+commit 57d709802ffd9cc62e72cb7b98fa63e6c0109cf6
+Author: Eric Piel <eric@circle.(none)>
+Date:   Thu Jul 2 21:21:58 2009 +0200
+
+    Revert "ACPICA: Allow OS override of all ACPI tables"
+    
+    This reverts commit ac5f98db7be34cefc244026f882cf030debb7431.
+
+commit 97ed32eab16399cb0473f2a97a4fc68d4c6d56eb
+Author: Eric Piel <eric@circle.(none)>
+Date:   Thu Jul 2 21:20:24 2009 +0200
+
+    Revert "ACPICA: Remove extraneous parameter in table manager"
+    
+    This reverts commit 97cbb7d196845ec9a6c0e3cc33ec20503f8c4e73.
+
+commit 53b7d74d0d08b3a380c1d3865cf476f83ca73724
+Author: Eric Piel <eric@circle.(none)>
+Date:   Thu Jul 2 20:59:21 2009 +0200
+
+    Revert "ACPICA: Add override for dynamic tables"
+    
+    This reverts commit d3ccaff827cef5a5c5a0f3c97e1e2e6d99f618cb.
+
+commit 04708d539eda658454685b00acab761014f612da
+Author: Eric Piel <eric@circle.(none)>
+Date:   Thu Jul 2 14:09:26 2009 +0200
+
+    Revert "ACPI: call acpi_scan_init() explicitly rather than as initcall"
+    
+    This reverts commit e747f274951507b5a0850155c3d709e26d20de5b.
+
+commit c0812a927180f1c8a5c40245819251fea69bcb6e
+Author: Eric Piel <eric@circle.(none)>
+Date:   Thu Jul 2 14:09:14 2009 +0200
+
+    Revert "ACPI: call acpi_ec_init() explicitly rather than as initcall"
+    
+    This reverts commit a5f820feb54a59fcdaf4a67a6381ea1ddb36cc6e.
+
+commit 40088dbd416945955401136ea449ad707d371395
+Author: Eric Piel <eric@circle.(none)>
+Date:   Thu Jul 2 14:09:07 2009 +0200
+
+    Revert "ACPI: call acpi_power_init() explicitly rather than as initcall"
+    
+    This reverts commit 44515374cba9e46d5622256b43eb06b9c349cee1.
+
+commit 1c6999729f79e3d686d282cabd516df23fee5f17
+Author: Eric Piel <eric@circle.(none)>
+Date:   Thu Jul 2 14:08:58 2009 +0200
+
+    Revert "ACPI: call acpi_system_init() explicitly rather than as initcall"
+    
+    This reverts commit 141a0af3cab7de690816b17aad1682050219f774.
+
+commit 94db17d8c50de1ff8bf5eef43c3982881a06d3ed
+Author: Eric Piel <eric@circle.(none)>
+Date:   Thu Jul 2 14:08:51 2009 +0200
+
+    Revert "ACPI: call acpi_debug_init() explicitly rather than as initcall"
+    
+    This reverts commit 84f810c33f695e020776ce66c903e0b41872f1b2.
+
+commit 983f312c4ea16863e17d1fa144553d1808cfa0a8
+Author: Eric Piel <eric@circle.(none)>
+Date:   Thu Jul 2 14:06:07 2009 +0200
+
+    Revert "ACPI: call init_acpi_device_notify() explicitly rather than as initcall"
+    
+    This reverts commit 0e46517d9660ee6ae0a0c5d8a4e50451bc84d61d.
+
+commit 7dd6abc851c9e7c77f7bfbd00518f85e9d3cb567
+Author: Eric Piel <eric@circle.(none)>
+Date:   Thu Jul 2 13:59:28 2009 +0200
+
+    revert 9cee43e07940bee13462e63bd75ce4430b155886
+
+commit 796570a086d58c0afd1ae48b4365129f6ab90975
+Author: Eric Piel <eric@circle.(none)>
+Date:   Sat Jun 13 10:40:30 2009 +0200
+
+    remove some debug code
+
+commit 8435c0dddfc94587360af4a7aec89735f078cc50
+Author: Eric Piel <eric@circle.(none)>
+Date:   Tue May 12 23:54:22 2009 +0200
+
+    revert 201b8c655f7a48563f6a0b66f9e388460a1ea611
+
+commit c9bc03d4deb10f150a3f915aa4976f951c2bde5f
+Author: Eric Piel <piel@localhost.(none)>
+Date:   Wed Mar 19 23:00:04 2008 +0100
+
+    ACPI: initramfs DSDT override support
+    
+    Permits to load of DSDT (the main ACPI table) from initramfs. In case this
+    option is selected, the initramfs is parsed at ACPI initialization (very early
+    boot time) to look for a file called "DSDT.aml". This aims at allowing users to
+    override the DSDT without recompiling the kernel.
+    
+    Version 0.9 uses a different approach for reading the initramfs which avoids
+    using the filesystem infrastructure. It leverages the initramfs unpack code to find
+    and unpack the DSDT directly into the memory.
+    
+    v0.9a: Fix compilation on non-ACPI platforms by René Rebe <rene@exactcode.de>
+    v0.9b: Declare more functions __init by Jan Beulich <jbeulich@novell.com>
+    v0.9c: Allow root to be / instead of nothing, bug reported by Robert Hampovcan
+    
+    Signed-off-by: Eric Piel <eric.piel@tremplin-utc.net>
+ Documentation/acpi/dsdt-override.txt     |   12 +++-
+ Documentation/acpi/initramfs-add-dsdt.sh |   43 ++++++++++++
+ Documentation/kernel-parameters.txt      |    3 +
+ drivers/acpi/Kconfig                     |   11 +++
+ drivers/acpi/acpica/acglobal.h           |    1 +
+ drivers/acpi/acpica/actables.h           |    7 +-
+ drivers/acpi/acpica/tbfadt.c             |    7 +-
+ drivers/acpi/acpica/tbinstal.c           |   28 +--------
+ drivers/acpi/acpica/tbutils.c            |   71 +++++--------------
+ drivers/acpi/acpica/tbxface.c            |   34 +++++++++-
+ drivers/acpi/bus.c                       |    9 ---
+ drivers/acpi/debug.c                     |   14 ++--
+ drivers/acpi/ec.c                        |    7 ++-
+ drivers/acpi/glue.c                      |    6 ++-
+ drivers/acpi/internal.h                  |   21 +------
+ drivers/acpi/osl.c                       |   24 +++++++
+ drivers/acpi/power.c                     |    8 ++-
+ drivers/acpi/proc.c                      |    7 ++-
+ drivers/acpi/scan.c                      |    9 ++-
+ drivers/acpi/system.c                    |    9 ++-
+ drivers/acpi/wakeup.c                    |    7 ++-
+ include/acpi/actbl.h                     |    5 +-
+ init/initramfs.c                         |  108 +++++++++++++++++++++++++++++-
+ 23 files changed, 314 insertions(+), 137 deletions(-)
+
+diff -Nurp linux-2.6.31.5.orig/Documentation/acpi/dsdt-override.txt linux-2.6.31.5/Documentation/acpi/dsdt-override.txt
+--- linux-2.6.31.5.orig/Documentation/acpi/dsdt-override.txt	2009-10-22 20:57:56.000000000 -0200
++++ linux-2.6.31.5/Documentation/acpi/dsdt-override.txt	2009-11-10 01:08:02.913149778 -0200
+@@ -1,7 +1,15 @@
+-Linux supports a method of overriding the BIOS DSDT:
++Linux supports two methods of overriding the BIOS DSDT:
+ 
+ CONFIG_ACPI_CUSTOM_DSDT builds the image into the kernel.
+ 
+-When to use this method is described in detail on the
++CONFIG_ACPI_CUSTOM_DSDT_INITRD adds the image to the initrd.
++
++When to use these methods is described in detail on the
+ Linux/ACPI home page:
+ http://www.lesswatts.org/projects/acpi/overridingDSDT.php
++
++Note that if both options are used, the DSDT supplied
++by the INITRD method takes precedence.
++
++Documentation/initramfs-add-dsdt.sh is provided for convenience
++for use with the CONFIG_ACPI_CUSTOM_DSDT_INITRD method.
+diff -Nurp linux-2.6.31.5.orig/Documentation/acpi/initramfs-add-dsdt.sh linux-2.6.31.5/Documentation/acpi/initramfs-add-dsdt.sh
+--- linux-2.6.31.5.orig/Documentation/acpi/initramfs-add-dsdt.sh	1969-12-31 21:00:00.000000000 -0300
++++ linux-2.6.31.5/Documentation/acpi/initramfs-add-dsdt.sh	2009-11-10 01:08:02.913149778 -0200
+@@ -0,0 +1,43 @@
++#!/bin/bash
++# Adds a DSDT file to the initrd (if it's an initramfs)
++# first argument is the name of archive
++# second argument is the name of the file to add
++# The file will be copied as /DSDT.aml
++
++# 20060126: fix "Premature end of file" with some old cpio (Roland Robic)
++# 20060205: this time it should really work
++
++# check the arguments
++if [ $# -ne 2 ]; then
++	program_name=$(basename $0)
++	echo "\
++$program_name: too few arguments
++Usage: $program_name initrd-name.img DSDT-to-add.aml
++Adds a DSDT file to an initrd (in initramfs format)
++
++  initrd-name.img: filename of the initrd in initramfs format
++  DSDT-to-add.aml: filename of the DSDT file to add
++  " 1>&2
++    exit 1
++fi
++
++# we should check it's an initramfs
++
++tempcpio=$(mktemp -d)
++# cleanup on exit, hangup, interrupt, quit, termination
++trap 'rm -rf $tempcpio' 0 1 2 3 15
++
++# extract the archive
++gunzip -c "$1" > "$tempcpio"/initramfs.cpio || exit 1
++
++# copy the DSDT file at the root of the directory so that we can call it "/DSDT.aml"
++cp -f "$2" "$tempcpio"/DSDT.aml
++
++# add the file
++cd "$tempcpio"
++(echo DSDT.aml | cpio --quiet -H newc -o -A -O "$tempcpio"/initramfs.cpio) || exit 1
++cd "$OLDPWD"
++
++# re-compress the archive
++gzip -c "$tempcpio"/initramfs.cpio > "$1"
++
+diff -Nurp linux-2.6.31.5.orig/Documentation/kernel-parameters.txt linux-2.6.31.5/Documentation/kernel-parameters.txt
+--- linux-2.6.31.5.orig/Documentation/kernel-parameters.txt	2009-10-22 20:57:56.000000000 -0200
++++ linux-2.6.31.5/Documentation/kernel-parameters.txt	2009-11-10 01:08:02.916149671 -0200
+@@ -216,6 +216,9 @@ and is between 256 and 4096 characters. 
+ 
+ 	acpi_no_auto_ssdt	[HW,ACPI] Disable automatic loading of SSDT
+ 
++	acpi_no_initrd_override	[KNL,ACPI]
++			Disable loading custom ACPI tables from the initramfs
++
+ 	acpi_os_name=	[HW,ACPI] Tell ACPI BIOS the name of the OS
+ 			Format: To spoof as Windows 98: ="Microsoft Windows"
+ 
+diff -Nurp linux-2.6.31.5.orig/drivers/acpi/acpica/acglobal.h linux-2.6.31.5/drivers/acpi/acpica/acglobal.h
+--- linux-2.6.31.5.orig/drivers/acpi/acpica/acglobal.h	2009-10-22 20:57:56.000000000 -0200
++++ linux-2.6.31.5/drivers/acpi/acpica/acglobal.h	2009-11-10 01:08:02.917149449 -0200
+@@ -376,6 +376,7 @@ ACPI_EXTERN char *acpi_gbl_db_buffer;
+ ACPI_EXTERN char *acpi_gbl_db_filename;
+ ACPI_EXTERN u32 acpi_gbl_db_debug_level;
+ ACPI_EXTERN u32 acpi_gbl_db_console_debug_level;
++ACPI_EXTERN struct acpi_table_header *acpi_gbl_db_table_ptr;
+ ACPI_EXTERN struct acpi_namespace_node *acpi_gbl_db_scope_node;
+ 
+ /*
+diff -Nurp linux-2.6.31.5.orig/drivers/acpi/acpica/actables.h linux-2.6.31.5/drivers/acpi/acpica/actables.h
+--- linux-2.6.31.5.orig/drivers/acpi/acpica/actables.h	2009-10-22 20:57:56.000000000 -0200
++++ linux-2.6.31.5/drivers/acpi/acpica/actables.h	2009-11-10 01:08:02.918149436 -0200
+@@ -49,7 +49,7 @@ acpi_status acpi_allocate_root_table(u32
+ /*
+  * tbfadt - FADT parse/convert/validate
+  */
+-void acpi_tb_parse_fadt(u32 table_index);
++void acpi_tb_parse_fadt(u32 table_index, u8 flags);
+ 
+ void acpi_tb_create_local_fadt(struct acpi_table_header *table, u32 length);
+ 
+@@ -109,8 +109,9 @@ acpi_tb_verify_checksum(struct acpi_tabl
+ 
+ void
+ acpi_tb_install_table(acpi_physical_address address,
+-		      char *signature, u32 table_index);
++		      u8 flags, char *signature, u32 table_index);
+ 
+-acpi_status acpi_tb_parse_root_table(acpi_physical_address rsdp_address);
++acpi_status
++acpi_tb_parse_root_table(acpi_physical_address rsdp_address, u8 flags);
+ 
+ #endif				/* __ACTABLES_H__ */
+diff -Nurp linux-2.6.31.5.orig/drivers/acpi/acpica/tbfadt.c linux-2.6.31.5/drivers/acpi/acpica/tbfadt.c
+--- linux-2.6.31.5.orig/drivers/acpi/acpica/tbfadt.c	2009-10-22 20:57:56.000000000 -0200
++++ linux-2.6.31.5/drivers/acpi/acpica/tbfadt.c	2009-11-10 01:08:02.918149436 -0200
+@@ -205,6 +205,7 @@ acpi_tb_init_generic_address(struct acpi
+  * FUNCTION:    acpi_tb_parse_fadt
+  *
+  * PARAMETERS:  table_index         - Index for the FADT
++ *              Flags               - Flags
+  *
+  * RETURN:      None
+  *
+@@ -213,7 +214,7 @@ acpi_tb_init_generic_address(struct acpi
+  *
+  ******************************************************************************/
+ 
+-void acpi_tb_parse_fadt(u32 table_index)
++void acpi_tb_parse_fadt(u32 table_index, u8 flags)
+ {
+ 	u32 length;
+ 	struct acpi_table_header *table;
+@@ -251,10 +252,10 @@ void acpi_tb_parse_fadt(u32 table_index)
+ 	/* Obtain the DSDT and FACS tables via their addresses within the FADT */
+ 
+ 	acpi_tb_install_table((acpi_physical_address) acpi_gbl_FADT.Xdsdt,
+-			      ACPI_SIG_DSDT, ACPI_TABLE_INDEX_DSDT);
++			      flags, ACPI_SIG_DSDT, ACPI_TABLE_INDEX_DSDT);
+ 
+ 	acpi_tb_install_table((acpi_physical_address) acpi_gbl_FADT.Xfacs,
+-			      ACPI_SIG_FACS, ACPI_TABLE_INDEX_FACS);
++			      flags, ACPI_SIG_FACS, ACPI_TABLE_INDEX_FACS);
+ }
+ 
+ /*******************************************************************************
+diff -Nurp linux-2.6.31.5.orig/drivers/acpi/acpica/tbinstal.c linux-2.6.31.5/drivers/acpi/acpica/tbinstal.c
+--- linux-2.6.31.5.orig/drivers/acpi/acpica/tbinstal.c	2009-10-22 20:57:56.000000000 -0200
++++ linux-2.6.31.5/drivers/acpi/acpica/tbinstal.c	2009-11-10 01:08:02.919149563 -0200
+@@ -103,9 +103,7 @@ acpi_status acpi_tb_verify_table(struct 
+  *
+  * RETURN:      Status
+  *
+- * DESCRIPTION: This function is called to add an ACPI table. It is used to
+- *              dynamically load tables via the Load and load_table AML
+- *              operators.
++ * DESCRIPTION: This function is called to add the ACPI table
+  *
+  ******************************************************************************/
+ 
+@@ -114,7 +112,6 @@ acpi_tb_add_table(struct acpi_table_desc
+ {
+ 	u32 i;
+ 	acpi_status status = AE_OK;
+-	struct acpi_table_header *override_table = NULL;
+ 
+ 	ACPI_FUNCTION_TRACE(tb_add_table);
+ 
+@@ -204,29 +201,6 @@ acpi_tb_add_table(struct acpi_table_desc
+ 		}
+ 	}
+ 
+-	/*
+-	 * ACPI Table Override:
+-	 * Allow the host to override dynamically loaded tables.
+-	 */
+-	status = acpi_os_table_override(table_desc->pointer, &override_table);
+-	if (ACPI_SUCCESS(status) && override_table) {
+-		ACPI_INFO((AE_INFO,
+-			   "%4.4s @ 0x%p Table override, replaced with:",
+-			   table_desc->pointer->signature,
+-			   ACPI_CAST_PTR(void, table_desc->address)));
+-
+-		/* We can delete the table that was passed as a parameter */
+-
+-		acpi_tb_delete_table(table_desc);
+-
+-		/* Setup descriptor for the new table */
+-
+-		table_desc->address = ACPI_PTR_TO_PHYSADDR(override_table);
+-		table_desc->pointer = override_table;
+-		table_desc->length = override_table->length;
+-		table_desc->flags = ACPI_TABLE_ORIGIN_OVERRIDE;
+-	}
+-
+ 	/* Add the table to the global root table list */
+ 
+ 	status = acpi_tb_store_table(table_desc->address, table_desc->pointer,
+diff -Nurp linux-2.6.31.5.orig/drivers/acpi/acpica/tbutils.c linux-2.6.31.5/drivers/acpi/acpica/tbutils.c
+--- linux-2.6.31.5.orig/drivers/acpi/acpica/tbutils.c	2009-10-22 20:57:56.000000000 -0200
++++ linux-2.6.31.5/drivers/acpi/acpica/tbutils.c	2009-11-10 01:08:02.920149411 -0200
+@@ -284,28 +284,22 @@ u8 acpi_tb_checksum(u8 *buffer, u32 leng
+  * FUNCTION:    acpi_tb_install_table
+  *
+  * PARAMETERS:  Address                 - Physical address of DSDT or FACS
++ *              Flags                   - Flags
+  *              Signature               - Table signature, NULL if no need to
+  *                                        match
+  *              table_index             - Index into root table array
+  *
+  * RETURN:      None
+  *
+- * DESCRIPTION: Install an ACPI table into the global data structure. The
+- *              table override mechanism is implemented here to allow the host
+- *              OS to replace any table before it is installed in the root
+- *              table array.
++ * DESCRIPTION: Install an ACPI table into the global data structure.
+  *
+  ******************************************************************************/
+ 
+ void
+ acpi_tb_install_table(acpi_physical_address address,
+-		      char *signature, u32 table_index)
++		      u8 flags, char *signature, u32 table_index)
+ {
+-	u8 flags;
+-	acpi_status status;
+-	struct acpi_table_header *table_to_install;
+-	struct acpi_table_header *mapped_table;
+-	struct acpi_table_header *override_table = NULL;
++	struct acpi_table_header *table;
+ 
+ 	if (!address) {
+ 		ACPI_ERROR((AE_INFO,
+@@ -316,69 +310,41 @@ acpi_tb_install_table(acpi_physical_addr
+ 
+ 	/* Map just the table header */
+ 
+-	mapped_table =
+-	    acpi_os_map_memory(address, sizeof(struct acpi_table_header));
+-	if (!mapped_table) {
++	table = acpi_os_map_memory(address, sizeof(struct acpi_table_header));
++	if (!table) {
+ 		return;
+ 	}
+ 
+-	/* If a particular signature is expected (DSDT/FACS), it must match */
++	/* If a particular signature is expected, signature must match */
+ 
+-	if (signature && !ACPI_COMPARE_NAME(mapped_table->signature, signature)) {
++	if (signature && !ACPI_COMPARE_NAME(table->signature, signature)) {
+ 		ACPI_ERROR((AE_INFO,
+-			    "Invalid signature 0x%X for ACPI table, expected [%s]",
+-			    *ACPI_CAST_PTR(u32, mapped_table->signature),
+-			    signature));
++			    "Invalid signature 0x%X for ACPI table [%s]",
++			    *ACPI_CAST_PTR(u32, table->signature), signature));
+ 		goto unmap_and_exit;
+ 	}
+ 
+-	/*
+-	 * ACPI Table Override:
+-	 *
+-	 * Before we install the table, let the host OS override it with a new
+-	 * one if desired. Any table within the RSDT/XSDT can be replaced,
+-	 * including the DSDT which is pointed to by the FADT.
+-	 */
+-	status = acpi_os_table_override(mapped_table, &override_table);
+-	if (ACPI_SUCCESS(status) && override_table) {
+-		ACPI_INFO((AE_INFO,
+-			   "%4.4s @ 0x%p Table override, replaced with:",
+-			   mapped_table->signature, ACPI_CAST_PTR(void,
+-								  address)));
+-
+-		acpi_gbl_root_table_list.tables[table_index].pointer =
+-		    override_table;
+-		address = ACPI_PTR_TO_PHYSADDR(override_table);
+-
+-		table_to_install = override_table;
+-		flags = ACPI_TABLE_ORIGIN_OVERRIDE;
+-	} else {
+-		table_to_install = mapped_table;
+-		flags = ACPI_TABLE_ORIGIN_MAPPED;
+-	}
+-
+ 	/* Initialize the table entry */
+ 
+ 	acpi_gbl_root_table_list.tables[table_index].address = address;
+-	acpi_gbl_root_table_list.tables[table_index].length =
+-	    table_to_install->length;
++	acpi_gbl_root_table_list.tables[table_index].length = table->length;
+ 	acpi_gbl_root_table_list.tables[table_index].flags = flags;
+ 
+ 	ACPI_MOVE_32_TO_32(&
+ 			   (acpi_gbl_root_table_list.tables[table_index].
+-			    signature), table_to_install->signature);
++			    signature), table->signature);
+ 
+-	acpi_tb_print_table_header(address, table_to_install);
++	acpi_tb_print_table_header(address, table);
+ 
+ 	if (table_index == ACPI_TABLE_INDEX_DSDT) {
+ 
+ 		/* Global integer width is based upon revision of the DSDT */
+ 
+-		acpi_ut_set_integer_width(table_to_install->revision);
++		acpi_ut_set_integer_width(table->revision);
+ 	}
+ 
+       unmap_and_exit:
+-	acpi_os_unmap_memory(mapped_table, sizeof(struct acpi_table_header));
++	acpi_os_unmap_memory(table, sizeof(struct acpi_table_header));
+ }
+ 
+ /*******************************************************************************
+@@ -442,6 +408,7 @@ acpi_tb_get_root_table_entry(u8 *table_e
+  * FUNCTION:    acpi_tb_parse_root_table
+  *
+  * PARAMETERS:  Rsdp                    - Pointer to the RSDP
++ *              Flags                   - Flags
+  *
+  * RETURN:      Status
+  *
+@@ -455,7 +422,7 @@ acpi_tb_get_root_table_entry(u8 *table_e
+  ******************************************************************************/
+ 
+ acpi_status __init
+-acpi_tb_parse_root_table(acpi_physical_address rsdp_address)
++acpi_tb_parse_root_table(acpi_physical_address rsdp_address, u8 flags)
+ {
+ 	struct acpi_table_rsdp *rsdp;
+ 	u32 table_entry_size;
+@@ -605,14 +572,14 @@ acpi_tb_parse_root_table(acpi_physical_a
+ 	 */
+ 	for (i = 2; i < acpi_gbl_root_table_list.count; i++) {
+ 		acpi_tb_install_table(acpi_gbl_root_table_list.tables[i].
+-				      address, NULL, i);
++				      address, flags, NULL, i);
+ 
+ 		/* Special case for FADT - get the DSDT and FACS */
+ 
+ 		if (ACPI_COMPARE_NAME
+ 		    (&acpi_gbl_root_table_list.tables[i].signature,
+ 		     ACPI_SIG_FADT)) {
+-			acpi_tb_parse_fadt(i);
++			acpi_tb_parse_fadt(i, flags);
+ 		}
+ 	}
+ 
+diff -Nurp linux-2.6.31.5.orig/drivers/acpi/acpica/tbxface.c linux-2.6.31.5/drivers/acpi/acpica/tbxface.c
+--- linux-2.6.31.5.orig/drivers/acpi/acpica/tbxface.c	2009-10-22 20:57:56.000000000 -0200
++++ linux-2.6.31.5/drivers/acpi/acpica/tbxface.c	2009-11-10 01:08:02.921149468 -0200
+@@ -150,7 +150,8 @@ acpi_initialize_tables(struct acpi_table
+ 	 * Root Table Array. This array contains the information of the RSDT/XSDT
+ 	 * in a common, more useable format.
+ 	 */
+-	status = acpi_tb_parse_root_table(rsdp_address);
++	status =
++	    acpi_tb_parse_root_table(rsdp_address, ACPI_TABLE_ORIGIN_MAPPED);
+ 	return_ACPI_STATUS(status);
+ }
+ 
+@@ -499,6 +500,7 @@ ACPI_EXPORT_SYMBOL(acpi_get_table_by_ind
+ static acpi_status acpi_tb_load_namespace(void)
+ {
+ 	acpi_status status;
++	struct acpi_table_header *table;
+ 	u32 i;
+ 
+ 	ACPI_FUNCTION_TRACE(tb_load_namespace);
+@@ -522,13 +524,41 @@ static acpi_status acpi_tb_load_namespac
+ 		goto unlock_and_exit;
+ 	}
+ 
+-	/* A valid DSDT is required */
++	/*
++	 * Find DSDT table
++	 */
++	status =
++	    acpi_os_table_override(acpi_gbl_root_table_list.
++				   tables[ACPI_TABLE_INDEX_DSDT].pointer,
++				   &table);
++	if (ACPI_SUCCESS(status) && table) {
++		/*
++		 * DSDT table has been found
++		 */
++		acpi_tb_delete_table(&acpi_gbl_root_table_list.
++				     tables[ACPI_TABLE_INDEX_DSDT]);
++		acpi_gbl_root_table_list.tables[ACPI_TABLE_INDEX_DSDT].pointer =
++		    table;
++		acpi_gbl_root_table_list.tables[ACPI_TABLE_INDEX_DSDT].length =
++		    table->length;
++		acpi_gbl_root_table_list.tables[ACPI_TABLE_INDEX_DSDT].flags =
++		    ACPI_TABLE_ORIGIN_UNKNOWN;
++
++		ACPI_INFO((AE_INFO, "Table DSDT replaced by host OS"));
++		acpi_tb_print_table_header(0, table);
++
++		if (no_auto_ssdt == 0) {
++			printk(KERN_WARNING "ACPI: DSDT override uses original SSDTs unless \"acpi_no_auto_ssdt\"\n");
++		}
++	}
+ 
+ 	status =
+ 	    acpi_tb_verify_table(&acpi_gbl_root_table_list.
+ 				 tables[ACPI_TABLE_INDEX_DSDT]);
+ 	if (ACPI_FAILURE(status)) {
+ 
++		/* A valid DSDT is required */
++
+ 		status = AE_NO_ACPI_TABLES;
+ 		goto unlock_and_exit;
+ 	}
+diff -Nurp linux-2.6.31.5.orig/drivers/acpi/bus.c linux-2.6.31.5/drivers/acpi/bus.c
+--- linux-2.6.31.5.orig/drivers/acpi/bus.c	2009-10-22 20:57:56.000000000 -0200
++++ linux-2.6.31.5/drivers/acpi/bus.c	2009-11-10 01:08:02.922149456 -0200
+@@ -805,7 +805,6 @@ static int __init acpi_init(void)
+ 		acpi_kobj = NULL;
+ 	}
+ 
+-	init_acpi_device_notify();
+ 	result = acpi_bus_init();
+ 
+ 	if (!result) {
+@@ -829,14 +828,6 @@ static int __init acpi_init(void)
+ 	 * will be disabled in the course of device power transistion.
+ 	 */
+ 	dmi_check_system(power_nocheck_dmi_table);
+-
+-	acpi_scan_init();
+-	acpi_ec_init();
+-	acpi_power_init();
+-	acpi_system_init();
+-	acpi_debug_init();
+-	acpi_sleep_proc_init();
+-	acpi_wakeup_device_init();
+ 	return result;
+ }
+ 
+diff -Nurp linux-2.6.31.5.orig/drivers/acpi/debug.c linux-2.6.31.5/drivers/acpi/debug.c
+--- linux-2.6.31.5.orig/drivers/acpi/debug.c	2009-10-22 20:57:56.000000000 -0200
++++ linux-2.6.31.5/drivers/acpi/debug.c	2009-11-10 01:08:02.922149456 -0200
+@@ -292,15 +292,17 @@ acpi_system_write_debug(struct file *fil
+ 
+ 	return count;
+ }
+-#endif
+ 
+-int __init acpi_debug_init(void)
++static int __init acpi_debug_init(void)
+ {
+-#ifdef CONFIG_ACPI_PROCFS
+ 	struct proc_dir_entry *entry;
+ 	int error = 0;
+ 	char *name;
+ 
++
++	if (acpi_disabled)
++		return 0;
++
+ 	/* 'debug_layer' [R/W] */
+ 	name = ACPI_SYSTEM_FILE_DEBUG_LAYER;
+ 	entry =
+@@ -331,7 +333,7 @@ int __init acpi_debug_init(void)
+ 	remove_proc_entry(ACPI_SYSTEM_FILE_DEBUG_LAYER, acpi_root_dir);
+ 	error = -ENODEV;
+ 	goto Done;
+-#else
+-	return 0;
+-#endif
+ }
++
++subsys_initcall(acpi_debug_init);
++#endif
+diff -Nurp linux-2.6.31.5.orig/drivers/acpi/ec.c linux-2.6.31.5/drivers/acpi/ec.c
+--- linux-2.6.31.5.orig/drivers/acpi/ec.c	2009-10-22 20:57:56.000000000 -0200
++++ linux-2.6.31.5/drivers/acpi/ec.c	2009-11-10 01:08:02.923149583 -0200
+@@ -1084,10 +1084,13 @@ static struct acpi_driver acpi_ec_driver
+ 		},
+ };
+ 
+-int __init acpi_ec_init(void)
++static int __init acpi_ec_init(void)
+ {
+ 	int result = 0;
+ 
++	if (acpi_disabled)
++		return 0;
++
+ 	acpi_ec_dir = proc_mkdir(ACPI_EC_CLASS, acpi_root_dir);
+ 	if (!acpi_ec_dir)
+ 		return -ENODEV;
+@@ -1102,6 +1105,8 @@ int __init acpi_ec_init(void)
+ 	return result;
+ }
+ 
++subsys_initcall(acpi_ec_init);
++
+ /* EC driver currently not unloadable */
+ #if 0
+ static void __exit acpi_ec_exit(void)
+diff -Nurp linux-2.6.31.5.orig/drivers/acpi/glue.c linux-2.6.31.5/drivers/acpi/glue.c
+--- linux-2.6.31.5.orig/drivers/acpi/glue.c	2009-10-22 20:57:56.000000000 -0200
++++ linux-2.6.31.5/drivers/acpi/glue.c	2009-11-10 01:08:02.924149780 -0200
+@@ -246,8 +246,10 @@ static int acpi_platform_notify_remove(s
+ 	return 0;
+ }
+ 
+-int __init init_acpi_device_notify(void)
++static int __init init_acpi_device_notify(void)
+ {
++	if (acpi_disabled)
++		return 0;
+ 	if (platform_notify || platform_notify_remove) {
+ 		printk(KERN_ERR PREFIX "Can't use platform_notify\n");
+ 		return 0;
+@@ -256,3 +258,5 @@ int __init init_acpi_device_notify(void)
+ 	platform_notify_remove = acpi_platform_notify_remove;
+ 	return 0;
+ }
++
++arch_initcall(init_acpi_device_notify);
+diff -Nurp linux-2.6.31.5.orig/drivers/acpi/internal.h linux-2.6.31.5/drivers/acpi/internal.h
+--- linux-2.6.31.5.orig/drivers/acpi/internal.h	2009-10-22 20:57:56.000000000 -0200
++++ linux-2.6.31.5/drivers/acpi/internal.h	2009-11-10 01:08:02.924149780 -0200
+@@ -1,19 +1,9 @@
+ /* For use by Linux/ACPI infrastructure, not drivers */
+ 
+-int init_acpi_device_notify(void);
+-int acpi_scan_init(void);
+-int acpi_system_init(void);
+-
+-#ifdef CONFIG_ACPI_DEBUG
+-int acpi_debug_init(void);
+-#else
+-static inline int acpi_debug_init(void) { return 0; }
+-#endif
+-
+ /* --------------------------------------------------------------------------
+                                   Power Resource
+    -------------------------------------------------------------------------- */
+-int acpi_power_init(void);
++
+ int acpi_device_sleep_wake(struct acpi_device *dev,
+                            int enable, int sleep_state, int dev_state);
+ int acpi_enable_wakeup_device_power(struct acpi_device *dev, int sleep_state);
+@@ -22,12 +12,9 @@ int acpi_power_get_inferred_state(struct
+ int acpi_power_transition(struct acpi_device *device, int state);
+ extern int acpi_power_nocheck;
+ 
+-int acpi_wakeup_device_init(void);
+-
+ /* --------------------------------------------------------------------------
+                                   Embedded Controller
+    -------------------------------------------------------------------------- */
+-int acpi_ec_init(void);
+ int acpi_ec_ecdt_probe(void);
+ int acpi_boot_ec_enable(void);
+ 
+@@ -35,9 +22,3 @@ int acpi_boot_ec_enable(void);
+                                   Suspend/Resume
+   -------------------------------------------------------------------------- */
+ extern int acpi_sleep_init(void);
+-
+-#ifdef CONFIG_ACPI_SLEEP
+-int acpi_sleep_proc_init(void);
+-#else
+-static inline int acpi_sleep_proc_init(void) { return 0; }
+-#endif
+diff -Nurp linux-2.6.31.5.orig/drivers/acpi/Kconfig linux-2.6.31.5/drivers/acpi/Kconfig
+--- linux-2.6.31.5.orig/drivers/acpi/Kconfig	2009-10-22 20:57:56.000000000 -0200
++++ linux-2.6.31.5/drivers/acpi/Kconfig	2009-11-10 01:08:02.917149449 -0200
+@@ -233,6 +233,17 @@ config ACPI_CUSTOM_DSDT
+ 	bool
+ 	default ACPI_CUSTOM_DSDT_FILE != ""
+ 
++config ACPI_CUSTOM_DSDT_INITRD
++	bool "Read Custom DSDT from initramfs"
++	depends on BLK_DEV_INITRD
++	default n
++	help
++	  This option supports a custom DSDT by optionally loading it from initrd.
++	  See Documentation/acpi/dsdt-override.txt
++
++	  If you are not using this feature now, but may use it later,
++	  it is safe to say Y here.
++
+ config ACPI_BLACKLIST_YEAR
+ 	int "Disable ACPI for systems before Jan 1st this year" if X86_32
+ 	default 0
+diff -Nurp linux-2.6.31.5.orig/drivers/acpi/osl.c linux-2.6.31.5/drivers/acpi/osl.c
+--- linux-2.6.31.5.orig/drivers/acpi/osl.c	2009-10-22 20:57:56.000000000 -0200
++++ linux-2.6.31.5/drivers/acpi/osl.c	2009-11-10 01:08:02.925154307 -0200
+@@ -96,6 +96,11 @@ static DEFINE_SPINLOCK(acpi_res_lock);
+ #define	OSI_STRING_LENGTH_MAX 64	/* arbitrary */
+ static char osi_additional_string[OSI_STRING_LENGTH_MAX];
+ 
++#ifdef CONFIG_ACPI_CUSTOM_DSDT_INITRD
++static __initdata int acpi_no_initrd_override;
++extern struct acpi_table_header *acpi_find_dsdt_initrd(void);
++#endif
++
+ /*
+  * The story of _OSI(Linux)
+  *
+@@ -363,6 +368,16 @@ acpi_os_table_override(struct acpi_table
+ 	if (strncmp(existing_table->signature, "DSDT", 4) == 0)
+ 		*new_table = (struct acpi_table_header *)AmlCode;
+ #endif
++#ifdef CONFIG_ACPI_CUSTOM_DSDT_INITRD
++	if ((strncmp(existing_table->signature, "DSDT", 4) == 0) &&
++	    !acpi_no_initrd_override) {
++		struct acpi_table_header *initrd_table;
++
++		initrd_table = acpi_find_dsdt_initrd();
++		if (initrd_table)
++			*new_table = initrd_table;
++	}
++#endif
+ 	if (*new_table != NULL) {
+ 		printk(KERN_WARNING PREFIX "Override [%4.4s-%8.8s], "
+ 			   "this is unsafe: tainting kernel\n",
+@@ -373,6 +388,15 @@ acpi_os_table_override(struct acpi_table
+ 	return AE_OK;
+ }
+ 
++#ifdef CONFIG_ACPI_CUSTOM_DSDT_INITRD
++static int __init acpi_no_initrd_override_setup(char *s)
++{
++	acpi_no_initrd_override = 1;
++	return 1;
++}
++__setup("acpi_no_initrd_override", acpi_no_initrd_override_setup);
++#endif
++
+ static irqreturn_t acpi_irq(int irq, void *dev_id)
+ {
+ 	u32 handled;
+diff -Nurp linux-2.6.31.5.orig/drivers/acpi/power.c linux-2.6.31.5/drivers/acpi/power.c
+--- linux-2.6.31.5.orig/drivers/acpi/power.c	2009-10-22 20:57:56.000000000 -0200
++++ linux-2.6.31.5/drivers/acpi/power.c	2009-11-10 01:08:02.925154307 -0200
+@@ -745,10 +745,14 @@ static int acpi_power_resume(struct acpi
+ 	return 0;
+ }
+ 
+-int __init acpi_power_init(void)
++static int __init acpi_power_init(void)
+ {
+ 	int result = 0;
+ 
++
++	if (acpi_disabled)
++		return 0;
++
+ 	INIT_LIST_HEAD(&acpi_power_resource_list);
+ 
+ 	acpi_power_dir = proc_mkdir(ACPI_POWER_CLASS, acpi_root_dir);
+@@ -763,3 +767,5 @@ int __init acpi_power_init(void)
+ 
+ 	return 0;
+ }
++
++subsys_initcall(acpi_power_init);
+diff -Nurp linux-2.6.31.5.orig/drivers/acpi/proc.c linux-2.6.31.5/drivers/acpi/proc.c
+--- linux-2.6.31.5.orig/drivers/acpi/proc.c	2009-10-22 20:57:56.000000000 -0200
++++ linux-2.6.31.5/drivers/acpi/proc.c	2009-11-10 01:08:02.925154307 -0200
+@@ -491,8 +491,11 @@ static u32 rtc_handler(void *context)
+ }
+ #endif				/* HAVE_ACPI_LEGACY_ALARM */
+ 
+-int __init acpi_sleep_proc_init(void)
++static int __init acpi_sleep_proc_init(void)
+ {
++	if (acpi_disabled)
++		return 0;
++
+ #ifdef	CONFIG_ACPI_PROCFS
+ 	/* 'sleep' [R/W] */
+ 	proc_create("sleep", S_IFREG | S_IRUGO | S_IWUSR,
+@@ -519,3 +522,5 @@ int __init acpi_sleep_proc_init(void)
+ 
+ 	return 0;
+ }
++
++late_initcall(acpi_sleep_proc_init);
+diff -Nurp linux-2.6.31.5.orig/drivers/acpi/scan.c linux-2.6.31.5/drivers/acpi/scan.c
+--- linux-2.6.31.5.orig/drivers/acpi/scan.c	2009-10-22 20:57:56.000000000 -0200
++++ linux-2.6.31.5/drivers/acpi/scan.c	2009-11-10 01:08:02.926148986 -0200
+@@ -1567,11 +1567,16 @@ static int acpi_bus_scan_fixed(struct ac
+ 	return result;
+ }
+ 
+-int __init acpi_scan_init(void)
++
++static int __init acpi_scan_init(void)
+ {
+ 	int result;
+ 	struct acpi_bus_ops ops;
+ 
++
++	if (acpi_disabled)
++		return 0;
++
+ 	memset(&ops, 0, sizeof(ops));
+ 	ops.acpi_op_add = 1;
+ 	ops.acpi_op_start = 1;
+@@ -1604,3 +1609,5 @@ int __init acpi_scan_init(void)
+ Done:
+ 	return result;
+ }
++
++subsys_initcall(acpi_scan_init);
+diff -Nurp linux-2.6.31.5.orig/drivers/acpi/system.c linux-2.6.31.5/drivers/acpi/system.c
+--- linux-2.6.31.5.orig/drivers/acpi/system.c	2009-10-22 20:57:56.000000000 -0200
++++ linux-2.6.31.5/drivers/acpi/system.c	2009-11-10 01:08:02.927148695 -0200
+@@ -619,9 +619,12 @@ static int acpi_system_procfs_init(void)
+ }
+ #endif
+ 
+-int __init acpi_system_init(void)
++static int __init acpi_system_init(void)
+ {
+-	int result;
++	int result = 0;
++
++	if (acpi_disabled)
++		return 0;
+ 
+ 	result = acpi_system_procfs_init();
+ 	if (result)
+@@ -631,3 +634,5 @@ int __init acpi_system_init(void)
+ 
+ 	return result;
+ }
++
++subsys_initcall(acpi_system_init);
+diff -Nurp linux-2.6.31.5.orig/drivers/acpi/wakeup.c linux-2.6.31.5/drivers/acpi/wakeup.c
+--- linux-2.6.31.5.orig/drivers/acpi/wakeup.c	2009-10-22 20:57:56.000000000 -0200
++++ linux-2.6.31.5/drivers/acpi/wakeup.c	2009-11-10 01:08:02.927148695 -0200
+@@ -124,10 +124,13 @@ void acpi_disable_wakeup_device(u8 sleep
+ 	}
+ }
+ 
+-int __init acpi_wakeup_device_init(void)
++static int __init acpi_wakeup_device_init(void)
+ {
+ 	struct list_head *node, *next;
+ 
++	if (acpi_disabled)
++		return 0;
++
+ 	mutex_lock(&acpi_device_lock);
+ 	list_for_each_safe(node, next, &acpi_wakeup_device_list) {
+ 		struct acpi_device *dev = container_of(node,
+@@ -146,3 +149,5 @@ int __init acpi_wakeup_device_init(void)
+ 	mutex_unlock(&acpi_device_lock);
+ 	return 0;
+ }
++
++late_initcall(acpi_wakeup_device_init);
+diff -Nurp linux-2.6.31.5.orig/include/acpi/actbl.h linux-2.6.31.5/include/acpi/actbl.h
+--- linux-2.6.31.5.orig/include/acpi/actbl.h	2009-10-22 20:57:56.000000000 -0200
++++ linux-2.6.31.5/include/acpi/actbl.h	2009-11-10 01:08:02.927148695 -0200
+@@ -309,9 +309,8 @@ struct acpi_table_desc {
+ #define ACPI_TABLE_ORIGIN_UNKNOWN       (0)
+ #define ACPI_TABLE_ORIGIN_MAPPED        (1)
+ #define ACPI_TABLE_ORIGIN_ALLOCATED     (2)
+-#define ACPI_TABLE_ORIGIN_OVERRIDE      (4)
+-#define ACPI_TABLE_ORIGIN_MASK          (7)
+-#define ACPI_TABLE_IS_LOADED            (8)
++#define ACPI_TABLE_ORIGIN_MASK          (3)
++#define ACPI_TABLE_IS_LOADED            (4)
+ 
+ /*
+  * Get the remaining ACPI tables
+diff -Nurp linux-2.6.31.5.orig/init/initramfs.c linux-2.6.31.5/init/initramfs.c
+--- linux-2.6.31.5.orig/init/initramfs.c	2009-10-22 20:57:56.000000000 -0200
++++ linux-2.6.31.5/init/initramfs.c	2009-11-10 01:08:02.928149031 -0200
+@@ -8,6 +8,9 @@
+ #include <linux/dirent.h>
+ #include <linux/syscalls.h>
+ #include <linux/utime.h>
++#ifdef ACPI_CONFIG
++#include <acpi/acpi.h>
++#endif
+ 
+ static __initdata char *message;
+ static void __init error(char *x)
+@@ -125,6 +128,12 @@ static __initdata unsigned long body_len
+ static __initdata uid_t uid;
+ static __initdata gid_t gid;
+ static __initdata unsigned rdev;
++#ifdef CONFIG_ACPI_CUSTOM_DSDT_INITRD
++static __initdata char *file_looked_for;
++static __initdata struct acpi_table_header *file_mem;
++#else
++const char *file_looked_for = NULL;
++#endif
+ 
+ static void __init parse_header(char *s)
+ {
+@@ -159,6 +168,7 @@ static __initdata enum state {
+ 	SkipIt,
+ 	GotName,
+ 	CopyFile,
++	CopyFileMem,
+ 	GotSymlink,
+ 	Reset
+ } state, next_state;
+@@ -228,6 +238,10 @@ static int __init do_header(void)
+ 	parse_header(collected);
+ 	next_header = this_header + N_ALIGN(name_len) + body_len;
+ 	next_header = (next_header + 3) & ~3;
++	if (file_looked_for) {
++		read_into(name_buf, N_ALIGN(name_len), GotName);
++		return 0;
++	}
+ 	state = SkipIt;
+ 	if (name_len <= 0 || name_len > PATH_MAX)
+ 		return 0;
+@@ -290,6 +304,54 @@ static void __init clean_path(char *path
+ 
+ static __initdata int wfd;
+ 
++#ifdef CONFIG_ACPI_CUSTOM_DSDT_INITRD
++static __init int is_file_looked_for(char *filename)
++{
++	char *tmp_collected = collected;
++	if (file_looked_for == NULL)
++		return 0;
++	if (!S_ISREG(mode))
++		return 0;
++	/* remove the leading / */
++	while (*tmp_collected == '/')
++		tmp_collected++;
++	return (strcmp(tmp_collected, file_looked_for) == 0);
++}
++
++static int __init do_copy_mem(void)
++{
++	static void *file_current; /* current position in the memory */
++	if (file_mem == NULL) {
++		if (body_len < 4) { /* check especially against empty files */
++			error("file is less than 4 bytes");
++			return 1;
++		}
++		file_mem = kmalloc(body_len, GFP_ATOMIC);
++		if (!file_mem) {
++			error("failed to allocate enough memory");
++			return 1;
++		}
++		file_current = file_mem;
++	}
++	if (count >= body_len) {
++		memcpy(file_current, victim, body_len);
++		eat(body_len);
++		file_looked_for = ""; /* don't find files with same name */
++		state = SkipIt;
++		return 0;
++	} else {
++		memcpy(file_current, victim, count);
++		file_current += count;
++		body_len -= count;
++		eat(count);
++		return 1;
++	}
++}
++#else
++static inline int is_file_looked_for(const char *filename) {return 0;}
++#define do_copy_mem NULL /* because it is used as a pointer */
++#endif
++
+ static int __init do_name(void)
+ {
+ 	state = SkipIt;
+@@ -298,6 +360,10 @@ static int __init do_name(void)
+ 		free_hash();
+ 		return 0;
+ 	}
++	if (is_file_looked_for(file_looked_for))
++		state = CopyFileMem;
++	if (file_looked_for)
++		return 0;
+ 	clean_path(collected, mode);
+ 	if (S_ISREG(mode)) {
+ 		int ml = maybe_link();
+@@ -370,6 +436,7 @@ static __initdata int (*actions[])(void)
+ 	[SkipIt]	= do_skip,
+ 	[GotName]	= do_name,
+ 	[CopyFile]	= do_copy,
++	[CopyFileMem]	= do_copy_mem,
+ 	[GotSymlink]	= do_symlink,
+ 	[Reset]		= do_reset,
+ };
+@@ -422,8 +489,17 @@ static char * __init unpack_to_rootfs(ch
+ 	symlink_buf = kmalloc(PATH_MAX + N_ALIGN(PATH_MAX) + 1, GFP_KERNEL);
+ 	name_buf = kmalloc(N_ALIGN(PATH_MAX), GFP_KERNEL);
+ 
+-	if (!header_buf || !symlink_buf || !name_buf)
+-		panic("can't allocate buffers");
++	if (!header_buf || !symlink_buf || !name_buf) {
++		//panic("can't allocate buffers");
++		error("can't allocate buffers");
++		return message;
++	}
++
++//	if (file_looked_for) {
++//		error("coucou2");
++//		return message;
++//	}
++
+ 
+ 	state = Start;
+ 	this_header = 0;
+@@ -606,3 +682,31 @@ static int __init populate_rootfs(void)
+ 	return 0;
+ }
+ rootfs_initcall(populate_rootfs);
++
++#ifdef CONFIG_ACPI_CUSTOM_DSDT_INITRD
++struct __init acpi_table_header *acpi_find_dsdt_initrd(void)
++{
++	char *err, *ramfs_dsdt_name = "DSDT.aml";
++
++	printk(KERN_INFO "ACPI: Checking initramfs for custom DSDT\n");
++	file_mem = NULL;
++	file_looked_for = ramfs_dsdt_name;
++	err = unpack_to_rootfs((char *)initrd_start,
++			initrd_end - initrd_start);
++	file_looked_for = NULL;
++
++	if (err) {
++		/*
++		 * Even if reading the DSDT file was successful,
++		 * we give up if the initramfs cannot be entirely read.
++		 */
++		kfree(file_mem);
++		printk(KERN_ERR "ACPI: Aborded because %s.\n", err);
++		return NULL;
++	}
++	if (file_mem)
++		printk(KERN_INFO "ACPI: Found DSDT in %s.\n", ramfs_dsdt_name);
++
++	return file_mem;
++}
++#endif
