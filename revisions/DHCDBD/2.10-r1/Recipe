@@ -1,0 +1,13 @@
+# Recipe for version 2.10 by Dominique Juergensen <brokolie@vollbio.de>, on Fri Dec 4 18:36:34 CET 2009
+# Recipe (MakeRecipe) for DHCDBD by Giambattista Bloisi <giamby@infinito.it>, on Sat Jan 12 23:59:39 CET 2008
+compile_version=1.10.0
+url="https://fedorahosted.org/releases/d/h/dhcdbd/dhcdbd-2.10.tar.bz2"
+file_size=57112
+file_md5=d7c6a6107f44b23f958a83cd1bbf4d9b
+file="dhcdbd-2.10.tar.bz2"
+recipe_type=makefile
+makefile='Makefile'
+
+install_variables=(
+    "DESTDIR=$target"
+)
