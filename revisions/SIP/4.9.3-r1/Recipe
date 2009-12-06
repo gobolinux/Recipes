@@ -1,0 +1,14 @@
+# Recipe for version 4.9.3 by Zbigniew Baniewski <zb@ispid.com.pl>, on nie, 6 gru 2009, 01:59:21 CET
+# on Sat Apr 16 13:31:22 CEST 2005
+
+compile_version=1.8.2
+url="http://www.riverbankcomputing.co.uk/static/Downloads/sip4/sip-4.9.3.tar.gz"
+file_size=661144
+file_md5=d60ec6e87c0155df779fd8b529e80706
+
+recipe_type=makefile
+pre_build() {
+   pythonversion=`python --version 2>&1 | awk {'print $2'} | cut -b1-3`
+   sitepackages="$target/lib/python${pythonversion}/site-packages"
+   python configure.py -b $target/bin -e $target/include -d $sitepackages -v $target/share/sip
+}
