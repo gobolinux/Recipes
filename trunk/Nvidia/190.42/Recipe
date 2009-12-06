@@ -34,6 +34,12 @@ pre_install() {
     ln -sf libXvMCNVIDIA.so.190.42 X11R6/lib/libXvMCNVIDIA_dynamic.so.1
     ln -sf libXvMCNVIDIA.so.190.42 X11R6/lib/libXvMCNVIDIA_dynamic.so
     ln -sf libnvidia-wfb.so.190.42 X11R6/lib/modules/libnvidia-wfb.so.1
+    ln -sf libvdpau.so.190.42 lib/libvdpau.so.1
+    ln -sf libvdpau.so.190.42 lib/libvdpau.so
+    ln -sf libvdpau_nvidia.so.190.42 lib/libvdpau_nvidia.so.1
+    ln -sf libvdpau_nvidia.so.190.42 lib/libvdpau_nvidia.so
+    ln -sf libvdpau_trace.so.190.42 lib/libvdpau_trace.so.1
+    ln -sf libvdpau_trace.so.190.42 lib/libvdpau_trace.so
     if [ ! -e $xorg_server_path/lib/xorg/modules/libwfb.so ]; then
         ln -sf libnvidia-wfb.so.190.42 X11R6/lib/modules/libwfb.so
     fi
