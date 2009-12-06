@@ -1,0 +1,73 @@
+# Recipe for version 190.42 by Michael Homer <michael@gobolinux.org>, on Sun Nov 8 10:54:37 NZDT 2009
+# Recipe (MakeRecipe) for Nvidia by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Mar 14 17:39:46 GMT 2007
+compile_version=1.9.0
+recipe_type=manifest
+needs_safe_linking=yes
+uncompress=no
+
+symlink_options=(
+    "--conflict=overwrite"
+)
+
+pre_install() {
+    # Uncompress the contents of 'usr' from the archive.
+    sh $compileArchivesDir/$(basename $url) -x
+    pkgdir=$(basename "$url" | sed 's,\.run$,,g')
+    mv $pkgdir/usr/* .
+    rm -rf $pkgdir
+
+    # Build the kernel module.
+    cd src/nv
+    $sudo_exec make module SYSSRC=$goboModules/Current/build || exit 1
+    cd ../..
+    
+    # Create versioned symlinks for all the libraries in the same manner the
+    # nvidia installer does.
+    ln -sf libcuda.so.190.42 lib/libcuda.so.1
+    ln -sf libcuda.so.190.42 lib/libcuda.so
+    ln -sf libGL.so.190.42 lib/libGL.so.1
+    ln -sf libGL.so.190.42 lib/libGL.so
+    ln -sf libGLcore.so.190.42 lib/libGLcore.so.1
+    ln -sf libGLcore.so.190.42 lib/libGLcore.so
+    ln -sf libnvidia-tls.so.190.42 lib/libnvidia-tls.so.1
+    ln -sf libnvidia-tls.so.190.42 lib/tls/libnvidia-tls.so.1
+    ln -sf libXvMCNVIDIA.so.190.42 X11R6/lib/libXvMCNVIDIA_dynamic.so.1
+    ln -sf libXvMCNVIDIA.so.190.42 X11R6/lib/libXvMCNVIDIA_dynamic.so
+    ln -sf libnvidia-wfb.so.190.42 X11R6/lib/modules/libnvidia-wfb.so.1
+    ln -sf libvdpau.so.190.42 lib/libvdpau.so.1
+    ln -sf libvdpau.so.190.42 lib/libvdpau.so
+    ln -sf libvdpau_nvidia.so.190.42 lib/libvdpau_nvidia.so.1
+    ln -sf libvdpau_nvidia.so.190.42 lib/libvdpau_nvidia.so
+    ln -sf libvdpau_trace.so.190.42 lib/libvdpau_trace.so.1
+    ln -sf libvdpau_trace.so.190.42 lib/libvdpau_trace.so
+    if [ ! -e $xorg_server_path/lib/xorg/modules/libwfb.so ]; then
+        ln -sf libnvidia-wfb.so.190.42 X11R6/lib/modules/libwfb.so
+    fi
+    ln -sf libglx.so.190.42 X11R6/lib/modules/extensions/libglx.so
+
+    # Substitute paths in the desktop file.
+    sed -i "s@__UTILS_PATH__@$target/bin@" share/applications/nvidia-settings.desktop
+    sed -i "s@__PIXMAP_PATH__@$goboShared/pixmaps@" share/applications/nvidia-settings.desktop
+    sed -i "s@__LIBGL_PATH__@$goboLibraries@" lib/libGL.la 
+}
+
+manifest=(
+    "src/nv/nvidia.ko:Resources/Unmanaged/$goboModules/$(readlink $goboModules/Current)/kernel/drivers/video/nvidia.ko"
+    "bin/nvidia-bug-report.sh:bin/nvidia-bug-report.sh"
+    "bin/nvidia-settings:bin/nvidia-settings"
+    "bin/nvidia-xconfig:bin/nvidia-xconfig"
+    "include:include"
+    "lib:lib"
+    "X11R6/lib/libXvMCNVIDIA.a:lib/libXvMCNVIDIA.a"
+    "X11R6/lib/libXvMCNVIDIA.so.190.42:lib/libXvMCNVIDIA.so.190.42"
+    "X11R6/lib/modules:lib/xorg/modules"
+    "share/man:man"
+    "share/applications:Shared/applications"
+    "share/pixmaps:Shared/pixmaps"
+)
+ 
+unmanaged_files=(
+	"$goboModules/$(readlink $goboModules/Current)/kernel/drivers/video/nvidia.ko"
+)
+
+post_install_message="You can now edit $goboSettings/X11/xorg.conf so that the 'nvidia' driver is used, and restart the system or (re)load the nvidia kernel module to start using it."
