@@ -8,5 +8,7 @@ compile_version=1.9.0
 configure_options=(
    "--enable-elf-shlibs"
    "--disable-libblkid"
+   "--disable-libuuid"
+   "--disable-uuid"
 )
 install_target="install install-libs"
