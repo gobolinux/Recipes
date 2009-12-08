@@ -23,7 +23,7 @@ function generate_sshd_keys() {
 case "$1" in
 [Ss]tart)
   generate_sshd_keys
-  ${goboPrograms}/OpenSSH/Current/sbin/sshd
+  ${goboExecutables}/sshd
   ;;
 [Ss]top)
   killall sshd
