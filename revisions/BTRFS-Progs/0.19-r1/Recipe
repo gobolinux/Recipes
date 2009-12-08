@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for BTRFS-Progs by Michael Homer <michael@gobolinux.org>, on Tue Dec 8 15:57:40 NZDT 2009
+# Recipe for version 0.19 by Michael Homer <michael@gobolinux.org>, on Tue Dec 8 15:57:40 NZDT 2009
+compile_version=1.12.0
+url="http://www.kernel.org/pub/linux/kernel/people/mason/btrfs/btrfs-progs-0.19.tar.bz2"
+file_size=118119
+file_md5=5854728d080cc76f21a83bdc99b6ddaa
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+)
+build_target="all convert"
