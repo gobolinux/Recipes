@@ -1,0 +1,11 @@
+# Recipe for version 1.3.9 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Dec 8 13:32:51 BRST 2009
+# Recipe (MakeRecipe) for APR by Kosh <kosh.linux at gmail.com>, on Tue Feb 28 22:02:35 BRT 2006
+compile_version=1.8.2
+url="http://ftp.unicamp.br/pub/apache/apr/apr-1.3.9.tar.bz2"
+file_size=927657
+file_md5=7138ac64d4458eeeaa9b9aefa4e6e51b
+recipe_type=configure
+
+configure_options=(
+    --with-installbuilddir=$target/share/apr/build-1
+)
