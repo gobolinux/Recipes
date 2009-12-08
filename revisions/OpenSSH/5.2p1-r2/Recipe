@@ -1,0 +1,24 @@
+# Recipe for version 5.2p1 by Giambattista Bloisi <giamby@infinito.it>, on Sat Feb 28 00:14:18 CET 2009
+# Recipe for OpenSSH by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.10.2
+url="ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-5.2p1.tar.gz"
+file_size=1016612
+file_md5=ada79c7328a8551bdf55c95e631e7dad
+recipe_type=configure
+install_target=install-nokeys
+configure_options=(
+   "--sysconfdir=$settings_target/ssh"
+   "--mandir=${target}/man"
+)
+
+with_pam="--with-pam"
+
+pre_build() {
+   if ! [ -d $goboVariable/empty ]
+   then 
+   	  mkdir $goboVariable/empty
+   	  chmod 755 $goboVariable/empty
+   fi
+
+   chown 0:sys $goboVariable/empty
+}
