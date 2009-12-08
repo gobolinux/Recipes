@@ -1,0 +1,13 @@
+# Recipe for version 2.16.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Dec  7 16:07:12 BRST 2009
+# Recipe (MakeRecipe) for Util-Linux-NG by Giambattista Bloisi <giamby@infinito.it>, on Thu Jan 17 09:41:27 CET 2008
+compile_version=1.12.0
+url="ftp://ftp.kernel.org/pub/linux/utils/util-linux-ng/v2.16/util-linux-ng-2.16.2.tar.bz2"
+file_size=3521956
+file_md5=edd1f7a82fd388cc0e1e3d2d1e7ea55a
+recipe_type=configure
+
+configure_options=(
+   --enable-arch
+   --enable-partx
+   --enable-write
+)
