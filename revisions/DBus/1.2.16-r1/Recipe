@@ -1,0 +1,19 @@
+# Recipe for version 1.2.16 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Dec 8 17:43:45 BRST 2009
+# Recipe (MakeRecipe) for recipe-store by Carlo J. Calica <ccalica@gmail.com>, on Sat Oct 1 17:29:57 PDT 2005
+compile_version=1.10.2
+url="http://dbus.freedesktop.org/releases/dbus/dbus-1.2.16.tar.gz"
+file_size=1576209
+file_md5=c7a47b851ebe02f6726b65b78d1b730b
+recipe_type=configure
+configure_options=(
+    "--with-x"
+    "--with-xml"
+    "--localstatedir=$variable_target"
+    "--libexecdir=$target/lib"
+#    "--enable-xml-docs"
+)
+
+unmanaged_files=(
+    $goboVariable/run/dbus/
+    $goboVariable/lib/dbus/
+)
