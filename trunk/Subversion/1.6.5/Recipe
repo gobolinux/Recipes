@@ -11,13 +11,13 @@ configure_options=(
    --disable-mod-activation
 )
 with_httpd=(
-   --with-apache-libexecdir="${goboLibraries}/modules"
+   --with-apache-libexecdir="${goboLibraries}/httpd/modules"
 )
 
 build_target="all"
 install_target="install"
 install_variables=(
-   APACHE_LIBEXECDIR="${target}/lib/modules"
+   APACHE_LIBEXECDIR="${target}/lib/httpd/modules"
 )
 pre_install() {
    # Sigh, libtool again...
