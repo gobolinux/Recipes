@@ -5,3 +5,7 @@ url="ftp://alpha.gnu.org/gnu/grub/grub-1.97.1.tar.gz"
 file_size=1242959
 file_md5=66fe18cd9318e3d67a34d7b7a8e7b1f6
 recipe_type=configure
+
+environment=(
+    CFLAGS="-DDEVDIR=\\\"$goboDevices\\\""
+)

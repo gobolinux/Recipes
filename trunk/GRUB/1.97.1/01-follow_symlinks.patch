@@ -1,0 +1,61 @@
+Fix calls to realpath and getcwd so that GRUB doesn't evaluate 
+/System/Kernel/Devices instead of /dev, as the latter is hardcoded 
+on many places in the code.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- grub-1.97.1/util/hostdisk.c.orig	2009-12-07 18:28:13.000000000 -0200
++++ grub-1.97.1/util/hostdisk.c	2009-12-07 18:35:25.000000000 -0200
+@@ -628,7 +628,7 @@ read_device_map (const char *dev_map)
+ 	  continue;
+ 	}
+ 
+-#ifdef __linux__
++#if 0
+       /* On Linux, the devfs uses symbolic links horribly, and that
+ 	 confuses the interface very much, so use realpath to expand
+ 	 symbolic links.  */
+@@ -704,8 +704,8 @@ static char *
+ convert_system_partition_to_system_disk (const char *os_dev)
+ {
+ #if defined(__linux__)
+-  char *path = xmalloc (PATH_MAX);
+-  if (! realpath (os_dev, path))
++  char *path = strdup (os_dev);
++  if (! path)
+     return 0;
+ 
+   if (strncmp ("/dev/", path, 5) == 0)
+--- grub-1.97.1/util/getroot.c.orig	2009-12-07 18:24:45.000000000 -0200
++++ grub-1.97.1/util/getroot.c	2009-12-07 19:40:19.000000000 -0200
+@@ -61,7 +61,7 @@ static char *
+ xgetcwd (void)
+ {
+   size_t size = 10;
+-  char *path;
++  char *path, *devname = NULL;
+ 
+   path = xmalloc (size);
+   while (! getcwd (path, size))
+@@ -69,6 +69,21 @@ xgetcwd (void)
+       size <<= 1;
+       path = xrealloc (path, size);
+     }
++#ifdef DEVDIR
++  devname = strstr (path, DEVDIR);
++  if (devname)
++	{
++      char *altpath = xmalloc (size);
++	  if (altpath)
++        {
++			devname += strlen(DEVDIR);
++			sprintf(altpath, "/dev");
++			strcat(altpath, devname);
++			free(path);
++			path = altpath;
++		}
++	}
++#endif
+ 
+   return path;
+ }
