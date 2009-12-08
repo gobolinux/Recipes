@@ -9,7 +9,7 @@ file_size=5230130
 file_md5=3e98bcb14a7122c274d62419566431bb
 
 unmanaged_files=(
-    $goboPrefix/Files/WWW
+    ${goboData:-/Files}/WWW
     $goboVariable/httpd
     $goboVariable/log/httpd
     $goboVariable/run/httpd
@@ -137,7 +137,10 @@ using_openldap(){
 }
 
 pre_build() {
-   mkdir -p ${goboPrefix}/Files/WWW
+   mkdir -p ${goboData:-/Files}/WWW
+   if [ "$goboData" ]
+   then GrepReplace -B "/Files" "$goboData" config.layout
+   fi
 }
 
 pre_install() {
@@ -145,7 +148,7 @@ pre_install() {
 }
 
 pre_link() {  
-   chown httpd.httpd ${goboPrefix}/Files/WWW
+   chown httpd.httpd ${goboData:-/Files}/WWW
 
    mkdir -p ${variable_target}/httpd/proxycache
    chown -vR httpd:httpd $variable_target/httpd
