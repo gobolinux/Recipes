@@ -5,19 +5,19 @@ file_size=2942005
 file_md5=aa03cc24a52851bb204fc1e489e195e8
 recipe_type=configure
 
+environment=(
+    LIBS="-ldl"
+    CFLAGS="-DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_COLUMN_METADATA=1"
+    TCLLIBDIR="$target/lib/tcl8.5"
+)
+
 configure_options=(
     --enable-load-extension
     --disable-readline
-    LIBS="-ldl"
-    CFLAGS="-DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_COLUMN_METADATA=1" 
 )
 
 with_tcl="--enable-tcl"
 with_readline="--enable-readline"
-
-environment=(
-    "TCLLIBDIR=$target/lib/tcl8.5"
-)
 
 pre_build() {
    sed -i 's/VERSION/RELEASE/' sqlite{,3}.pc.in
