@@ -1,0 +1,14 @@
+# Recipe for version 1.41.9 by Ivan Florentin <ivanflorentin@gmail.com>, on Sat Dec 5 20:16:58 PYST 2009
+url=$httpSourceforge/e2fsprogs/e2fsprogs-1.41.9.tar.gz
+file_size=4452610
+file_md5=52f60a9e19a02f142f5546f1b5681927
+recipe_type=configure
+needs_safe_linking=yes
+compile_version=1.9.0
+configure_options=(
+   "--enable-elf-shlibs"
+   "--disable-libblkid"
+   "--disable-libuuid"
+   "--disable-uuid"
+)
+install_target="install install-libs"
