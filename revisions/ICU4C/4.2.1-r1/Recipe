@@ -1,0 +1,8 @@
+# Recipe for version 4.2.1 by Lucas C. Villa Real, on Tue Dec 8 20:02:03 BRST 2009
+# Recipe (MakeRecipe) for ICU4C by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Feb 15 23:17:46 PST 2008
+compile_version=1.10.1
+url="http://download.icu-project.org/files/icu4c/4.2.1/icu4c-4_2_1-src.tgz"
+file_size=13161131
+file_md5=e3738abd0d3ce1870dc1fd1f22bba5b1
+dir='icu/source'
+recipe_type=configure
