@@ -1,0 +1,169 @@
+# Recipe for version 2.6.32 by Lucas C. Villa Real, on Tue Dec 8 20:49:28 BRST 2009
+compile_version=1.8.5
+url="http://www.kernel.org/pub/linux/kernel/v2.6/linux-2.6.32.tar.bz2"
+file_size=64424138
+file_md5=260551284ac224c3a43c4adac7df4879
+recipe_type=makefile
+build_target="all"
+install_target="modules_install"
+
+install_variables=(
+#   INSTALL_MOD_PATH="$target/Resources/Unmanaged"
+   MODLIB="${target}/Resources/Unmanaged/${goboModules}/${version}-Gobo"
+   INSTALL_FW_PATH="$target/lib/firmware"
+   DEPMOD="true"
+)
+
+# While lib/modules is unmanaged as well that is manually added to the
+# UnmanagedFiles file in pre_link()
+unmanaged_files=(
+   $goboBoot/
+)
+
+do_configuration() {
+   if [ ! -f .config ]
+   then
+      if [ ! -f $goboStatus/config.gz ]
+      then
+         cp "$archsubdir"/dot-config .config
+      else
+         if Ask "Do you want to use a configuration based on the one from the running kernel?"
+         then
+            zcat $goboStatus/config.gz > .config
+            yes "" | make oldconfig
+         else
+            Log_Normal "Using the kernel configuration shipped with the recipe"
+            cp "$archsubdir"/dot-config .config
+         fi
+      fi
+   fi
+
+   GrepReplace "\$(INSTALL_MOD_PATH)/lib/modules/\$(KERNELRELEASE)" \
+               "$target/Resources/Unmanaged/$goboModules/\$(KERNELRELEASE)" \
+               Makefile >& /dev/null
+   
+   # Sanity check to make sure patches are not trying to mess with the version id.
+   local v=`grep "^VERSION =" Makefile | awk '{print $3}'`
+   local p=`grep "^PATCHLEVEL" Makefile | awk '{print $3}'`
+   local s=`grep "^SUBLEVEL" Makefile | awk '{print $3}'`
+   local e=`grep "^EXTRAVERSION" Makefile | awk '{print $3}'`
+   local reported="$v.$p.$s$e"
+   if [ "$reported" != "$version" ]
+   then Die "Reported version ($reported) does not match version ($version). Please fix recipe."
+   fi
+
+   make menuconfig || Die "'menuconfig' failed."
+   [ -z "${SUDO_USER}" ] || chown ${SUDO_USER} -R include/config .config
+}
+
+pre_link() {
+   local simpleversion=`private__calculate_version`
+   local fullversion=`private__calculate_full_version`
+
+   # Copy arch-dependent results to the destination
+   private__copy_kernel_image
+   
+   # Copy sanitized sources to $target/lib/build
+   private__copy_kernel_source $simpleversion
+   Log_Normal "Calculating kernel module dependencies..."
+   depmod -b $target/Resources/Unmanaged ${version}-Gobo
+   # Create System.map and kernel symlinks
+   private__link_at_system_kernel_boot $simpleversion $fullversion
+   # Add lib/modules to UnmanagedFiles
+   echo ${goboModules}/Current >> ${target}/Resources/UnmanagedFiles
+   echo $goboModules/${version}-Gobo/ >> ${target}/Resources/UnmanagedFiles
+}
+
+private__calculate_version() {
+   if grep -q "^CONFIG_LOCALVERSION=" .config
+   then suffix=`grep "^CONFIG_LOCALVERSION=" .config | cut -d= -f2 | tr -d '"' | sed 's/-[0-9]*-//'`
+   fi
+   echo "$version$suffix"
+}
+
+private__calculate_full_version() {
+   local simpleversion=`private__calculate_version`
+   local newsuffix=""
+   local count=`ls $goboBoot/kernel-$version-* 2> /dev/null | sort -n | wc -l | awk '{print $1}'`
+   if [ "$count" -gt "0" ]
+   then
+      let count=$count+1
+      newsuffix="-$count"
+   fi
+   echo "$simpleversion$newsuffix"
+}
+
+private__copy_kernel_source() {
+   simpleversion="$1"
+   rm -f "${target}/Resources/Unmanaged/${goboModules}/${simpleversion}"/{source,build}
+   # Remove links created by 'make module-install'
+   [ -f "${goboModules}/${simpleversion}/build" ] && rm -f "${goboModules}/${simpleversion}/build"
+   [ -f "${goboModules}/${simpleversion}/source" ] && rm -f "${goboModules}/${simpleversion}/source"
+   # Copy sanitized sources to Resources/Unmanaged/Files/Compile/Sources/linux-<version>
+   dest="${target}/lib/modules/${simpleversion}/build"
+   mkdir -p $dest
+   ln -s build "${target}/lib/modules/${simpleversion}/source"
+
+   Log_Normal "Creating a working copy of the kernel sources tree..."
+   Quiet pushd $dir
+   cp .version .config System.map Module.symvers Makefile Kbuild $dest/
+   for i in *
+   do
+      if [ -d $i -a $i = "scripts" ]
+      then
+         cp -a $i $dest/
+      elif [ -d $i ]
+      then
+         dirlist=`find $i -type d`
+         filelist=`find $i \(     \
+            -name "*.h" -or       \
+            -name ".conf" -or     \
+            -name "Makefile*" -or \
+            -name "Kconfig*" -or  \
+            -name "Kbuild*" -or   \
+            -name "asm-offsets.c" -or \
+            -name "asm-offsets_32.c" -or \
+            -name "asm-offsets_64.c" -or \
+			-name "bounds.c" \
+         \)`
+         for dir in $dirlist
+         do mkdir -p "$dest/$dir"
+         done
+         for file in $filelist
+         do cp "$file" "$dest/$file"
+         done
+         for dir in $dirlist
+         do find "$dir" -type d | sort -r | xargs rmdir 2> /dev/null
+         done
+      fi
+   done
+   Quiet popd
+   
+   Quiet pushd $dest
+   make prepare
+   Quiet popd
+}
+
+private__link_at_system_kernel_boot() {
+   local simpleversion="$1"
+   local fullversion="$2"
+   mkdir -p $target/lib/modules
+   mkdir -p $target/Resources/Unmanaged/$goboModules
+   
+   dest=$target/Resources/Unmanaged/$goboBoot
+   ln -s kernel-$fullversion $dest/kernel
+   ln -s System.map-$fullversion $dest/System.map
+   
+   rm -rf $goboModules/Current $goboModules/$fullversion
+   rm -rf $target/Resources/Unmanaged/$goboModules/Current
+   ln -s $simpleversion $target/Resources/Unmanaged/$goboModules/Current
+   ln -s ${target}/lib/modules/${simpleversion}/{source,build} $target/Resources/Unmanaged/$goboModules/$simpleversion/
+   for x in $goboModules/$simpleversion/*
+   do
+      bn=`basename $x`
+      if ! [ -e "$target/lib/modules/$simpleversion/$bn" ]
+      then
+         ln -s $x $target/lib/modules/${simpleversion}/$bn
+      fi
+   done
+}
