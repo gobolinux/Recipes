@@ -1,0 +1,11 @@
+--- linux-2.6.29.1.orig/drivers/input/mouse/appletouch.c	2009-04-02 17:55:27.000000000 -0300
++++ linux-2.6.29.1/drivers/input/mouse/appletouch.c	2009-04-26 13:11:34.001441105 -0300
+@@ -166,7 +166,7 @@ MODULE_DEVICE_TABLE(usb, atp_table);
+  * Threshold for the touchpad sensors. Any change less than ATP_THRESHOLD is
+  * ignored.
+  */
+-#define ATP_THRESHOLD	 5
++#define ATP_THRESHOLD	 3
+ 
+ /* Geyser initialization constants */
+ #define ATP_GEYSER_MODE_READ_REQUEST_ID		1

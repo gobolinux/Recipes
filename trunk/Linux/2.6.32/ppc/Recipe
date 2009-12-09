@@ -1,0 +1,12 @@
+#!/bin/sh
+
+private__copy_kernel_image() {
+   local simpleversion=`private__calculate_version`
+   local fullversion=`private__calculate_full_version`
+
+   # Copy and symlink bzImage and System.map
+   dest=$target/Resources/Unmanaged/$goboBoot
+   mkdir -p $dest
+   cp arch/ppc/boot/bzImage $dest/kernel-$fullversion
+   cp System.map $dest/System.map-$fullversion
+}
