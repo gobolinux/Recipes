@@ -1,0 +1,75 @@
+We always have postprocess.h in the libpostproc subdir
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+
+--- xine-lib-1.1.15/src/post/planar/pp.c.old	2008-09-06 23:36:37.000000000 +0200
++++ xine-lib-1.1.15/src/post/planar/pp.c	2008-09-06 23:36:30.000000000 +0200
+@@ -28,12 +28,7 @@
+ #include "post.h"
+ #include "xineutils.h"
+ #include <pthread.h>
+-
+-#ifdef HAVE_FFMPEG_AVUTIL_H
+-#  include <postprocess.h>
+-#else
+-#  include <libpostproc/postprocess.h>
+-#endif
++#include <libpostproc/postprocess.h>
+ 
+ #define PP_STRING_SIZE 256 /* size of pp mode string (including all options) */
+ 
+--- xine-lib-1.1.15/src/combined/ffmpeg/ffmpeg_decoder.h.old	2008-09-06 23:52:37.000000000 +0200
++++ xine-lib-1.1.15/src/combined/ffmpeg/ffmpeg_decoder.h	2008-09-06 23:52:23.000000000 +0200
+@@ -25,9 +25,7 @@
+ #include "config.h"
+ #endif
+ 
+-#ifdef HAVE_FFMPEG_AVUTIL_H
+-#  include <avcodec.h>
+-#elif defined HAVE_FFMPEG
++#ifdef HAVE_FFMPEG
+ #  include <libavcodec/avcodec.h>
+ #else
+ #  include "../../libffmpeg/libavcodec/avcodec.h"
+--- xine-lib-1.1.15/src/combined/ffmpeg/ff_video_decoder.c.old	2008-09-07 00:19:50.000000000 +0200
++++ xine-lib-1.1.15/src/combined/ffmpeg/ff_video_decoder.c	2008-09-07 00:19:40.000000000 +0200
+@@ -44,12 +44,7 @@
+ #include "xineutils.h"
+ #include "ffmpeg_decoder.h"
+ #include "ff_mpeg_parser.h"
+-
+-#ifdef HAVE_FFMPEG_AVUTIL_H
+-#  include <postprocess.h>
+-#else
+-#  include <libpostproc/postprocess.h>
+-#endif
++#include <libpostproc/postprocess.h>
+ 
+ #define VIDEOBUFSIZE        (128*1024)
+ #define SLICE_BUFFER_SIZE   (1194*1024)
+--- xine-lib-1.1.15/src/combined/ffmpeg/ffmpeg_encoder.c.old	2008-09-07 00:24:22.000000000 +0200
++++ xine-lib-1.1.15/src/combined/ffmpeg/ffmpeg_encoder.c	2008-09-07 00:24:08.000000000 +0200
+@@ -38,9 +38,7 @@
+ 
+ #include "video_out_dxr3.h"
+ 
+-#ifdef HAVE_FFMPEG_AVUTIL_H
+-#  include <avcodec.h>
+-#elif defined HAVE_FFMPEG
++#ifdef HAVE_FFMPEG
+ #  include <libavcodec/avcodec.h>
+ #else
+ #  include "../../libffmpeg/libavcodec/avcodec.h"
+--- xine-lib-1.1.15/src/combined/ffmpeg/ff_dvaudio_decoder.c.old	2008-09-07 00:26:53.000000000 +0200
++++ xine-lib-1.1.15/src/combined/ffmpeg/ff_dvaudio_decoder.c	2008-09-07 00:26:44.000000000 +0200
+@@ -52,9 +52,7 @@
+ #  undef uint64_t
+ #endif
+ 
+-#ifdef HAVE_FFMPEG_AVUTIL_H
+-#  include <avcodec.h>
+-#elif defined HAVE_FFMPEG
++#ifdef HAVE_FFMPEG
+ #  include <libavcodec/avcodec.h>
+ #else
+ #  include "../../libffmpeg/libavcodec/avcodec.h"
