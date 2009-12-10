@@ -1,0 +1,24 @@
+compile_version=1.12.3
+url="$httpSourceforge/project/ireport/iReport%20%28classic%29/iReport-3.0.0/iReport-3.0.0.tar.gz?use_mirror=ufpr"
+file="iReport-3.0.0.tar.gz"
+file_size=48137221
+file_md5=6623bc39959686d9565c7857ad1de486
+#dir='iReport-3.0.0'
+recipe_type=manifest
+manifest=(
+  "bin:bin"
+  "Changelog.txt:Changelog.txt"
+  "docs:docs"
+  "eclipse:eclipse"
+  "fonts:fonts"
+  "iReport.bat:iReport.bat"
+  "iReport.exe:iReport.exe"
+  "iReport.sh:iReport.sh"
+  "lib:lib"
+  "license.txt:license.txt"
+  "notice.txt:notice.txt"
+  "plugins:plugins"
+  "policy.all:policy.all"
+  "relnotes3.0.0.html:relnotes3.0.0.html"
+  "templates:templates"
+)
