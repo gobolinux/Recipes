@@ -1,0 +1,16 @@
+# Recipe for version cvs-1 by Hoppar Tamas <htraki@indamail.hu>, on 2009. febr. 6., p�ntek, 08.30.46 CET
+# Recipe for Squashfs-Tools by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.8.2
+cvs=:pserver:anonymous:@squashfs.cvs.sourceforge.net:/cvsroot/squashfs
+cvs_module=squashfs
+dir="SquashFS-Tools-cvs/squashfs-tools"	
+recipe_type=makefile
+do_install=no
+
+environment=(
+    PREFIX="$target"
+)
+
+pre_link() {
+    cp mksquashfs $target/bin/
+}
