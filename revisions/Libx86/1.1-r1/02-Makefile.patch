@@ -1,0 +1,9 @@
+diff -ruN libx86-1.1/Makefile libx86-1.1.new/Makefile
+--- libx86-1.1/Makefile	2008-05-19 11:28:59.000000000 +0200
++++ libx86-1.1.new/Makefile	2009-12-04 22:56:04.000000000 +0100
+@@ -35,4 +35,4 @@
+ 	install -D libx86.so.1 $(DESTDIR)$(LIBDIR)/libx86.so.1
+ 	install -D libx86.a $(DESTDIR)$(LIBDIR)/libx86.a
+ 	ln -sf libx86.so.1 $(DESTDIR)$(LIBDIR)/libx86.so
+-	install -p -m 0644 -D lrmi.h $(DESTDIR)/usr/include/libx86.h
++	install -p -m 0644 -D lrmi.h $(DESTDIR)/include/libx86.h

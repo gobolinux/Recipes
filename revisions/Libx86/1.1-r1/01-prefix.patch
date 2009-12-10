@@ -1,0 +1,26 @@
+Just add a variable PREFIX instead of having it hard coded.
+
+-- 
+Jonas Karlsson
+
+--- libx86-0.99/Makefile	2006-10-30 01:14:18.000000000 +0100
++++ libx86-0.99/Makefile.new	2007-09-26 20:52:34.000000000 +0200
+@@ -1,5 +1,6 @@
+ OBJECTS = x86-common.o
+ CFLAGS = -O2 -Wall -DDEBUG -g
++PREFIX=/usr
+ 
+ ifeq ($(BACKEND), x86emu)
+ 	OBJECTS += thunk.o x86emu/decode.o x86emu/debug.o x86emu/fpu.o \
+@@ -31,7 +32,7 @@
+ 	rm -f *.so.1 *.a
+ 
+ install: libx86.so.1
+-	install -D libx86.so.1 $(DESTDIR)/usr/lib/libx86.so.1
+-	install -D libx86.a $(DESTDIR)/usr/lib/libx86.a
+-	ln -sf /usr/lib/libx86.so.1 $(DESTDIR)/usr/lib/libx86.so
+-	install -D lrmi.h $(DESTDIR)/usr/include/libx86.h
++	install -D libx86.so.1 $(DESTDIR)$(PREFIX)/lib/libx86.so.1
++	install -D libx86.a $(DESTDIR)$(PREFIX)/lib/libx86.a
++	ln -sf /usr/lib/libx86.so.1 $(DESTDIR)$(PREFIX)/lib/libx86.so
++	install -D lrmi.h $(DESTDIR)$(PREFIX)/include/libx86.h

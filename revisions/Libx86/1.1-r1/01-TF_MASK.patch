@@ -1,0 +1,19 @@
+This patch fixes the IF_MASK compile error.
+
+diff -ruN libx86-1.1/lrmi.c libx86-1.1.new/lrmi.c
+--- libx86-1.1/lrmi.c	2006-10-30 21:10:16.000000000 +0100
++++ libx86-1.1.new/lrmi.c	2009-12-04 22:50:08.000000000 +0100
+@@ -54,6 +54,13 @@
+ #include "lrmi.h"
+ #include "x86-common.h"
+ 
++#if defined(__linux__) && !defined(TF_MASK)
++#define TF_MASK X86_EFLAGS_TF
++#define IF_MASK X86_EFLAGS_IF
++#define VIF_MASK X86_EFLAGS_VIF
++#define IOPL_MASK X86_EFLAGS_IOPL
++#endif
++
+ #if defined(__linux__)
+ #define DEFAULT_VM86_FLAGS 	(IF_MASK | IOPL_MASK)
+ #elif defined(__NetBSD__) || defined(__FreeBSD__)
