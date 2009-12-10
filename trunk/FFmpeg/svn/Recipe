@@ -6,12 +6,12 @@ dir='ffmpeg'
 
 configure_options=(
     # Enabling this makes the package not redistributable 
-    #"--enable-nonfree"
+    "--enable-nonfree"
 
     "--enable-gpl"
     "--enable-shared"
     "--enable-postproc"
-    "--enable-swscale"
+    #"--enable-swscale"
     "--enable-pthreads"
     "--enable-x11grab"
 
@@ -31,8 +31,11 @@ with_xvid="--enable-libxvid"
 pre_link() {
     pushd $target/include
     ln -s libpostproc postproc 
-    mkdir -p ffmpeg
-    cd ffmpeg
-    find .. -type f -exec ln -s {} . \;
+    # With these lines xine-lib >= 1.1.16 does not compile.
+    # ERROR: old & new ffmpeg headers found - please clean up
+    #
+    #mkdir -p ffmpeg
+    #cd ffmpeg
+    #find .. -type f -exec ln -s {} . \;
     popd
 }
