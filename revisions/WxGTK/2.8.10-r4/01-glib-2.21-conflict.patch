@@ -1,0 +1,20 @@
+#GLib starting in version 2.21 introduces support for network addresses and sockets
+#in its I/O library (e.g. it has its own GSocket type) and that creates a symbol
+#conflict with GSocket from src/unix/gsocket.cpp.
+#This issues was during mass rebuild of current Fedora development (post F-11) sources.
+--- 2.8/src/gtk/gsockgtk.cpp (revision 60599)
++++ 2.8/src/gtk/gsockgtk.cpp (working copy)
+@@ -15,8 +15,13 @@
+ #include <stdlib.h>
+ #include <stdio.h>
+
++// newer versions of glib define its own GSocket but we unfortunately use this
++// name in a (semi-)public header and so can't change it -- rename glib
++// one instead
++#define GSocket GlibGSocket
+ #include <gdk/gdk.h>
+ #include <glib.h>
++#undef GSocket
+
+ #include "wx/gsocket.h"
+ #include "wx/unix/gsockunx.h"
