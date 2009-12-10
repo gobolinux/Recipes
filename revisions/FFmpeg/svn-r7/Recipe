@@ -1,0 +1,41 @@
+# Recipe (MakeRecipe) for FFmpeg by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 16:03:06 BRT 2005
+compile_version=1.8.2
+svn="svn://svn.mplayerhq.hu/ffmpeg/trunk"
+recipe_type=configure
+dir='ffmpeg'
+
+configure_options=(
+    # Enabling this makes the package not redistributable 
+    "--enable-nonfree"
+
+    "--enable-gpl"
+    "--enable-shared"
+    "--enable-postproc"
+    #"--enable-swscale"
+    "--enable-pthreads"
+    "--enable-x11grab"
+
+    "--enable-libfaac"
+    "--enable-libfaad"
+    "--enable-libmp3lame"
+    "--enable-libvorbis"
+)
+
+with_theora="--enable-libtheora"
+#with_a52dec="--enable-liba52"
+with_h264="--enable-libx264"
+with_dirac="--enable-libschroedinger"
+with_schroedinger="--enable-libschroedinger"
+with_xvid="--enable-libxvid"
+
+pre_link() {
+    pushd $target/include
+    ln -s libpostproc postproc 
+    # With these lines xine-lib >= 1.1.16 does not compile.
+    # ERROR: old & new ffmpeg headers found - please clean up
+    #
+    #mkdir -p ffmpeg
+    #cd ffmpeg
+    #find .. -type f -exec ln -s {} . \;
+    popd
+}
