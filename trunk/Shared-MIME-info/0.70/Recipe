@@ -1,0 +1,23 @@
+# Recipe for version 0.70 by Pedro Flores <pdavidflores@gmail.com>, on Tue Oct 13 00:47:29 PYT 2009
+# Recipe (MakeRecipe) for Shared-Mime-Info by roko, <ro.ko@mcnon.com>, on Sat Nov 13 23:45:25 BRST 2004
+compile_version=1.8.5
+url="http://freedesktop.org/~hadess/shared-mime-info-0.70.tar.bz2"
+file_size=497575
+file_md5=9032d98f14b8e13e0fea4bf45ca23401
+recipe_type=configure
+
+configure_options=(
+   "--disable-update-mimedb"
+)
+pre_build() {
+   sed -i 's,pkgconfigdir = .*,pkgconfigdir = $(libdir)/pkgconfig,' Makefile*
+}
+
+unmanaged_files=(
+   "${goboVariable}/xdg/mime"
+)
+
+pre_link() {
+   mkdir -p ${target}/Resources/Unmanaged/${goboVariable}/xdg/mime
+   ln -s ${goboShared}/mime/packages ${target}/Resources/Unmanaged/${goboVariable}/xdg/mime
+}
