@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for IPCheck.py by Karim Belbachir <karim@eml.cc>, on Sat Nov 28 00:52:17 GMT 2009
+# Recipe for version ipcheck.py by Karim Belbachir <karim@eml.cc>, on Sat Nov 28 00:52:17 GMT 2009
+compile_version=1.12.3
+url="$httpSourceforge/project/ipcheck/ipcheck.py"
+file_size=188676
+file_md5=297ac4ea00216b13a73646f0d76c267e
+recipe_type=manifest
+uncompress=no
+manifest=("ipcheck.py:bin")
+pre_install() { 
+	chmod +x ipcheck.py 
+}
