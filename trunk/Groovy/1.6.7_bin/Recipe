@@ -1,0 +1,20 @@
+# Recipe for version 1.6.7_bin by Demian Florentin <demianflorentin@gmail.com>, on mié dic 9 20:57:24 PYST 2009
+# Recipe (MakeRecipe) for Groovy by Nathan Middleton, on Thu Nov 15 04:17:52 CST 2007
+compile_version=1.9.0
+recipe_type=manifest
+url="http://dist.groovy.codehaus.org/distributions/groovy-binary-1.6.7.zip"
+file_size=11129718
+file_md5=8373c6c300b8148b258138bdb2f15738
+dir='groovy-1.6.7'
+
+manifest=(
+    "bin:bin"
+    "lib:lib"
+    "conf:conf"
+    "embeddable:embeddable"
+)
+docs=(
+    "LICENSE.txt"
+    "ASM-LICENSE.txt"
+    "NOTICE.txt"
+)
