@@ -1,0 +1,21 @@
+# Recipe for version 2.20 by Jonas Karlsson <jonas@gobolinux.org>, on Sat Dec 12 05:21:30 CET 2009
+url=$ftpGnu/binutils/binutils-2.20.tar.bz2
+file_size=17506655
+file_md5=ee2d3e996e9a2d669808713360fa96f8
+compile_version=1.8.0
+needs_build_directory=yes
+needs_safe_linking=yes
+recipe_type=configure
+configure_options=(
+   "--enable-shared"
+)
+make_variables=(
+   "tooldir=$target"
+)
+install_variables=(
+   target_header_dir="${target}/include"
+)
+
+pre_install() {
+   cp ../include/libiberty.h $target/include
+}
