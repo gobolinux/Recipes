@@ -1,0 +1,15 @@
+# Recipe for version 2.4.2 by Jonas Karlsson <jonas@gobolinux.org>, on Sat Dec 12 05:25:02 CET 2009
+# Recipe (MakeRecipe) for MPFR by roko, <ro.ko@mcnon.com>, on Mon Mar 21 19:23:18 CET 2005
+compile_version=1.9.0
+url="http://www.mpfr.org/mpfr-current/mpfr-2.4.2.tar.bz2"
+file_size=1077886
+file_md5=89e59fe665e2b3ad44a6789f40b059a0
+recipe_type=configure
+configure_options=(
+   --enable-thread-safe
+)
+using_doc_pre_link() {
+   make html
+   mkdir -p ${target}/share/doc/mpfr-2.4.2
+   find . -name \*.html -type f -exec cp \{} ${target}/share/doc/mpfr-2.4.2 \;
+}
