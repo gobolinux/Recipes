@@ -1,20 +1,23 @@
 # Recipe for version 5.7 by Giambattista Bloisi <giamby@infinito.it>, on Sat Nov 8 15:26:34 CET 2008
-compile_version=1.8.2
-urls=(
-   $ftpGnu/ncurses/ncurses-5.7.tar.gz
-)
-recipe_type=configure
-needs_safe_linking=yes
+compile_version=1.12.0
+url="$ftpGnu/ncurses/ncurses-5.7.tar.gz"
+file_size=2445052
+file_md5=cce05daf61a64501ef6cd8da1f727ec6
 
-post_install() {
+recipe_type=configure
+
+configure_options=(
+#   --enable-widec
+   --with-shared
+   --without-debug
+#   --with-termlib
+)
+
+install_variables=(
+   ticdir="${target}/share/terminfo"
+)
+
+pre_link() {
    chmod 755 $target/lib/*.5.7
    chmod 644 $target/lib/libncurses++.a
-   ln -nfs $target/include/ncurses/* $target/include
-   ln -nfs $target/include/ncurses/* $goboHeaders
 }
-file_sizes=(
-2445052
-)
-file_md5s=(
-cce05daf61a64501ef6cd8da1f727ec6
-)
