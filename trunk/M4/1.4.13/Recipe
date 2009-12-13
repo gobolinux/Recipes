@@ -5,6 +5,5 @@ file_size=1008418
 file_md5=28f9ccd3ac4da45409251008b911d677
 recipe_type=configure
 configure_options=(
-   "--mandir=${target}/man"
    "--enable-changeword"
 )
