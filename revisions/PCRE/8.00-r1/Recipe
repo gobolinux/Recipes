@@ -1,0 +1,12 @@
+# Recipe for version 8.00 by Jonas Karlsson <jonas@gobolinux.org>, on Sat Dec 12 05:30:07 CET 2009
+# by Jeremy Vernon
+compile_version=1.12.0
+url="ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.00.tar.bz2"
+file_size=922320
+file_md5=caf564aa69d68e965e9bf0ff2a094c65
+recipe_type=configure
+
+configure_options=(
+   "--enable-utf8"
+   #utf-8 support here needed for at least Goffice 0.5.2
+)
