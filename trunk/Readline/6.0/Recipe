@@ -8,16 +8,7 @@ file_md5=b7f65a48add447693be6e86f04a63019
 
 recipe_type=configure
 
-#This seems to be the minimal solution to the default libreadline.so
-#not listing all libraries it needs.  Without this, newer Parted
-#breaks and apparently uClibc too.  See INSTALL in the source directory
-#for details and the Readline maintainers' rationale for their troublesome
-#default.
-#libtinfo (terminfo) is part of Ncurses, so Ncurses goes in Dependencies.
-#Indeed, it was most likely a runtime dependency already.
-#For my (Isaac's) thread of analyzing this problem, see:
-#http://www.wotfun.com/pipermail/gobolinux-devel/2007-July/002707.html
 build_variables=(
-"SHLIB_LIBS=-ltinfo"
+   "SHLIB_LIBS=-lncurses"
 )
 
