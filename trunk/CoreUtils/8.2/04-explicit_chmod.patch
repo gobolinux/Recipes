@@ -1,0 +1,26 @@
+Make chmod explicitly apply for all user to ignore any umask.
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+
+--- coreutils-7.6/man/Makefile.in	2009-09-11 07:56:44.000000000 +0200
++++ coreutils-7.6/man/Makefile.in.new	2009-09-20 15:38:50.000000000 +0200
+@@ -1380,7 +1380,7 @@
+ 	       }						\
+ 	    && sed 's|$*\.td/||g' $t/$@ > $@-t			\
+ 	    && rm -rf $t					\
+-	    && chmod -w $@-t					\
++	    && chmod a-w $@-t					\
+ 	    && mv $@-t $@					\
+ 	    ;;							\
+ 	esac
+--- coreutils-7.6/man/Makefile.am	2009-09-01 13:01:16.000000000 +0200
++++ coreutils-7.6/man/Makefile.am.new	2009-09-20 15:39:04.000000000 +0200
+@@ -167,7 +167,7 @@
+ 	       }						\
+ 	    && sed 's|$*\.td/||g' $t/$@ > $@-t			\
+ 	    && rm -rf $t					\
+-	    && chmod -w $@-t					\
++	    && chmod a-w $@-t					\
+ 	    && mv $@-t $@					\
+ 	    ;;							\
+ 	esac
