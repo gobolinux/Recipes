@@ -1,0 +1,14 @@
+# Recipe for version 5.03 by Jonas Karlsson <jonas@gobolinux.org>, on Tue May 12 16:29:19 CEST 2009
+# by Michael Homer
+# 2004.01.28 04:31
+compile_version=1.9.0
+url="ftp://ftp.astron.com/pub/file/file-5.03.tar.gz"
+file_size=616266
+file_md5=d05f08a53e5c2f51f8ee6a4758c0cc53
+recipe_type=configure
+
+pre_build() {
+   aclocal
+   libtoolize
+   autoconf
+}
