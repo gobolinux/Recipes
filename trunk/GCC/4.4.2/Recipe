@@ -1,6 +1,6 @@
 # Recipe for version 4.4.2 by Hugo Barrocas <hugobarrocas@iol.pt>, on Dom Nov 1 22:10:38 WET 2009
 # by Hisham Muhammad, Guilherme Bedin
-url="ftp://gcc.gnu.org/pub/gcc/releases/gcc-4.4.2/gcc-4.4.2.tar.bz2"
+url="${ftpGnu}/gcc/gcc-4.4.2/gcc-4.4.2.tar.bz2"
 file_size=62919816
 file_md5=70f5ac588a79e3c9901d5b34f58d896d
 compile_version=1.9.0
@@ -8,7 +8,6 @@ recipe_type=configure
 needs_build_directory=yes
 
 configure_options=(
-   --with-local-prefix="${target}"
    --libexecdir="${target}/lib"
    --with-cpp-install-dir="lib"
    --enable-shared
@@ -20,6 +19,12 @@ configure_options=(
    --disable-bootstrap
 )
 with_gcj=("--enable-languages=java")
+
+install_variables=(
+   itoolsdir="${target}/lib/install-tools"
+   itoolsdatadir="${target}/lib/install-tools"
+   libexecdir="${target}/lib"
+)
 
 pre_link() {
    ln -s gcc "$target/bin"/cc
