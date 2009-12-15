@@ -1,0 +1,2 @@
+mkdir -p "${goboVariable}/lib/cracklib"
+"${target}/sbin/create-cracklib-dict" "${target}/Shared/cracklib"/*
