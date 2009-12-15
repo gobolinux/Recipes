@@ -12,7 +12,11 @@ recipe_type=configure
 install_target="install install-lib install-dev" 
 
 configure_options=(
-    "--libexecdir=$target/lib"
+    "--libexecdir=$target/lib/attr"
+)
+install_variables=(
+   libdir="${target}/lib"
+   libexecdir="${target}/lib/attr"
 )
 
 pre_link() {
