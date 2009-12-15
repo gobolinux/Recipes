@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for CouchDB by Demian Florentin <demianflorentin@gmail.com>, on lun dic 14 22:30:10 PYST 2009
+# Recipe for version 0.10.1 by Demian Florentin <demianflorentin@gmail.com>, on lun dic 14 22:30:10 PYST 2009
+compile_version=1.12.3
+url="http://www.gtlib.gatech.edu/pub/apache/couchdb/0.10.1/apache-couchdb-0.10.1.tar.gz"
+file_size=883259
+file_md5=a34dae8bf402299e378d7e8c13b7ba46
+recipe_type=configure
+unmanaged_files=(
+    "${goboVariable}/lib/couchdb"
+    "${goboVariable}/run/couchdb"
+)
