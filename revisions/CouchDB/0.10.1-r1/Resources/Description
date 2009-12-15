@@ -1,0 +1,10 @@
+[Name] CouchDB
+[Summary] Apache CouchDB is a document-oriented database that can be queried and indexed in a MapReduce fashion using JavaScript.
+[Description] Apache CouchDB is a document-oriented database that can be queried and indexed in a MapReduce fashion using JavaScript. CouchDB also offers incremental replication with bi-directional conflict detection and resolution.
+
+CouchDB provides a RESTful JSON API than can be accessed from any environment that allows HTTP requests. There are myriad third-party client libraries that make this even easier from your programming language of choice. CouchDB?s built in Web administration console speaks directly to the database using HTTP requests issued from your browser.
+
+CouchDB is written in Erlang, a robust functional programming language ideal for building concurrent distributed systems. Erlang allows for a flexible design that is easily scalable and readily extensible. 
+[License] Apache License, Version 2.0
+[Homepage] http://couchdb.apache.org/index.html
+
