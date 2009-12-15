@@ -1,0 +1,38 @@
+# Recipe for version 4.1.4.2.2 by Jonas Karlsson <jonas@gobolinux.org>, on Sun Sep 13 21:55:46 CEST 2009
+compile_version=1.8.2
+needs_safe_linking=yes
+url="ftp://pkg-shadow.alioth.debian.org/pub/pkg-shadow/shadow-4.1.4.2.tar.bz2"
+file_size=1790400
+file_md5=d593a9cab93c48ee0a6ba056db8c1997
+recipe_type=configure
+configure_options=(
+   "--enable-shared"
+   "--without-selinux"
+)
+
+pre_patch(){
+   sed -i -e 's@^HOME=.*$@HOME=/Users@' \
+          -e 's@^SHELL=.*$@SHELL=/bin/zsh@' \
+	  -e 's@yes@no@' etc/useradd
+}
+
+using_cracklib_pre_link(){
+   sed -i 's@DICTPATH.*@DICTPATH\t${goboLibraries}/cracklib/pw_dict@' \
+      ${target}/Resources/Defaults/Settings/login.defs
+}
+
+using_pam_pre_link() {
+   for FUNCTION in LASTLOG_ENAB MAIL_CHECK_ENAB \
+                   PORTTIME_CHECKS_ENAB CONSOLE \
+                   MOTD_FILE NOLOGINS_FILE PASS_MIN_LEN \
+                   SU_WHEEL_ONLY MD5_CRYPT_ENAB \
+                   CONSOLE_GROUPS ENVIRON_FILE \
+                   ULIMIT ENV_TZ ENV_HZ ENV_SUPATH \
+                   ENV_PATH QMAIL_DIR MAIL_DIR MAIL_FILE \
+                   CHFN_AUTH FAILLOG_ENAB QUOTAS_ENAB FTMP_FILE \
+                   OBSCURE_CHECKS_ENAB CRACKLIB_DICTPATH \
+                   PASS_CHANGE_TRIES PASS_ALWAYS_WARN ISSUE_FILE
+   do
+      sed -i "s/^$FUNCTION/# &/" ${target}/Resources/Defaults/Settings/login.defs
+   done
+}
