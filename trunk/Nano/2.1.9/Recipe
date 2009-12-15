@@ -11,16 +11,13 @@ docs=(
 )
 
 configure_options=(
-   "--mandir=${target}/man"
 #  "--with-slang"
    "--enable-color"
    "--enable-multibuffer"
    "--enable-nanorc"
-   "--enable-utf8"
+#   "--enable-utf8"
 )
 
 pre_link() {
-    if [ ! -e $settings_target/nanorc ]
-	then cp $target/doc/nano-2.1.9/nanorc.sample $settings_target/nanorc
-	fi
+   cp "$target/doc/nano-2.1.9/nanorc.sample" "${target}/Resources/Defaults/Settings/nanorc"
 }
