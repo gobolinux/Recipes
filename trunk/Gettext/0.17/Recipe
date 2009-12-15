@@ -1,6 +1,20 @@
 # Recipe for version 0.17 by Giambattista Bloisi <giamby@infinito.it>, on Sun Dec 2 17:29:40 CET 2007
-compile_version=1.9.0
+compile_version=1.12.4
 url="$ftpGnu/gettext/gettext-0.17.tar.gz"
 file_size=11640890
 file_md5=58a2bc6d39c0ba57823034d55d65d606
 recipe_type=configure
+configure_options=(
+   --without-included-gettext
+   --disable-java
+   --with-included-glib
+   --with-included-libcroco
+)
+
+# We need to use distributed libtool because of incompatibility due to
+# old build system files
+install_variables=(
+   LIBTOOL="${sourcedir}/gettext-tools/libtool"
+)
+
+
