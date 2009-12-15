@@ -1,0 +1,12 @@
+# Recipe for version 0.1.3 by Jonas Karlsson <jonas@gobolinux.org>, on Tue Sep 22 18:10:23 CEST 2009
+# Recipe (MakeRecipe) for LibUSB-Compat by Jonas Karlsson <jonas@gobolinux.org>, on Sat May 16 01:01:13 CEST 2009
+compile_version=1.12.0
+url="$httpSourceforge/libusb/libusb-compat-0.1.3.tar.bz2"
+file_size=251218
+file_md5=570ac2ea085b80d1f74ddc7c6a93c0eb
+recipe_type=configure
+pre_link() {
+   cp libusb/usbi.h $target/include
+}
+
+
