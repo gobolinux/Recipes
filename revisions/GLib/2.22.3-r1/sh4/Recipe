@@ -1,0 +1,9 @@
+configure_options=(
+    "--enable-debug=no"
+    "--with-threads=posix"
+)
+
+pre_build() {
+    GrepReplace host_cpu target_cpu configure.in
+    autoconf
+}
