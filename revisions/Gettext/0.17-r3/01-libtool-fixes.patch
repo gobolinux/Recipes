@@ -1,0 +1,15 @@
+Don't exit when configure and install directories mismatch for .la
+files. It's intentional.
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+
+--- gettext-0.17/build-aux/ltmain.sh	2009-12-15 09:16:38.000000000 +0100
++++ gettext-0.17/build-aux/ltmain.sh.new	2009-12-15 09:18:28.000000000 +0100
+@@ -5987,7 +5987,6 @@
+ 	  # but it's something to keep an eye on.
+ 	  if test "$inst_prefix_dir" = "$destdir"; then
+ 	    $echo "$modename: error: cannot install \`$file' to a directory not ending in $libdir" 1>&2
+-	    exit $EXIT_FAILURE
+ 	  fi
+ 
+ 	  if test -n "$inst_prefix_dir"; then
