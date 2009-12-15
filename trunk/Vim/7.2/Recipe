@@ -4,12 +4,19 @@ compile_version=1.8.2
 url="ftp://ftp.vim.org/pub/vim/unix/vim-7.2.tar.bz2"
 file_size=7203291
 file_md5=f0901284b338e448bfd79ccca0041254
-dir='vim72'
+dir='vim72/src'
 recipe_type=configure
 
 configure_options=(
-	"--prefix=$target"
-	"--enable-gui=no"
+   --enable-gui=no
+   --enable-multibyte
+   --disable-selinux
+)
+with_perl=(
+   --enable-perlinterp
+)
+with_python=(
+   --enable-pythoninterp
 )
 
 pre_link() {
