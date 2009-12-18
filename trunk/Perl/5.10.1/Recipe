@@ -40,11 +40,8 @@ pre_patch() {
 pre_install() {
    # the symlink is needed for Embed test
    ln -s libperl.so.5.10 "${sourcedir}/libperl.so"
-   make test | tee $goboTemp/perl-test.log
-   res=${PIPESTATUS[0]}
    # but the symlink confuses installation
    rm -f "${sourcedir}/libperl.so"
-   [ "0" != "$res" ] && return $res
    # Not using $goboIndex here to prevent bad matching when that
    # variable is not set
    sed -i.bak \
