@@ -1,0 +1,71 @@
+url=http://www.perl.com/CPAN/src/5.0/perl-5.10.1.tar.gz
+file_size=14117518
+file_md5=b9b2fdb957f50ada62d73f43ee75d044
+compile_version=1.8.2
+recipe_type=configure
+configure=Configure
+configure_options=(
+   -de
+   -Dcc=gcc
+   -Dusethreads
+   -Duselargefiles
+   -Uusesfio
+   -Dprefix=$target
+   -Dman1dir=$target/share/man/man1
+   -Dman3dir=$target/share/man/man3
+   -Duseshrplib
+   -Dlibperl='libperl.so.5.10'
+   -Dotherlibdirs=$goboSystem/Aliens/CPAN/.cpan:$goboSystem/Aliens/CPAN/lib/perl5:$goboLibraries/perl5:$goboLibraries/perl5/site_perl
+   -Dlocincpth="$goboHeaders"
+   -Dloclibpth="$goboLibraries"
+   -Dlibpth="$goboLibraries"
+   cf_by='GoboLinux'
+   -Dpager="${goboExecutables}/less -isR"
+   # Configure options to consider:
+   # -Duseshrplib useful for embeding perl (ie mod_perl)
+   # a DBM would be useful (dbm_opem() for binding hashes to files) would add a dependency
+   # -Dlibspath
+)
+unmanaged_files=(
+   "${goboSystem}/Aliens/CPAN/.cpan/CPAN/MyConfig.pm"
+)
+
+pre_patch() {
+   sed -i -e "s|BUILD_ZLIB\s*= True|BUILD_ZLIB = False|"    \
+   -e "s|INCLUDE\s*= ./zlib-src|INCLUDE    = /usr/include|" \
+   -e "s|LIB\s*= ./zlib-src|LIB        = /usr/lib|" \
+   ext/Compress-Raw-Zlib/config.in
+}
+
+pre_install() {
+   # the symlink is needed for Embed test
+   ln -s libperl.so.5.10 "${sourcedir}/libperl.so"
+   # but the symlink confuses installation
+   rm -f "${sourcedir}/libperl.so"
+   # Not using $goboIndex here to prevent bad matching when that
+   # variable is not set
+   sed -i.bak \
+       -e "s,\(install[^=]*='\)$goboSystem/Index\(.*\),\1${target}\2," \
+       ${sourcedir}/lib/Config_heavy.pl 
+}
+
+do_install() {
+   configure_do_install "${@}"
+   
+   # Restore Config_heavy.pl
+   eval $("${target}/bin/"perl -V:installarchlib)
+   cp -f "${sourcedir}/lib/Config_heavy.pl.bak" "${installarchlib}/Config_heavy.pl" || Die "Failed restoring Config_heavy.pl"
+   
+   # These symlinks are required for 'ld' to find '-lperl'
+   ln -s libperl.so.5.10 "${installarchlib}/CORE/libperl.so.5"
+   ln -s libperl.so.5.10 "${installarchlib}/CORE/libperl.so"
+}
+
+post_install() {
+   local cpandir="${goboSystem}/Aliens/CPAN"
+   mkdir -p "${cpandir}/.cpan/CPAN"
+   sed '
+      s,HOMEDIRFIX,'${cpandir}',g;
+      s,\([A-Z0-9_]*\)=~,\1='${cpandir}',g;
+   ' ${recipedir}/MyConfig.pm.in > ${cpandir}/.cpan/CPAN/MyConfig.pm   
+}
