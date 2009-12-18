@@ -1,0 +1,13 @@
+--- udev-139/udev/udev-util.c.orig	2009-03-01 18:13:40.000000000 +0100
++++ udev-139/udev/udev-util.c	2009-03-01 18:14:22.000000000 +0100
+@@ -80,8 +80,8 @@
+ 		*pos = '\0';
+ 		pos = strrchr(p, '/');
+ 
+-		/* don't remove the last one */
+-		if ((pos == p) || (pos == NULL))
++		/* don't remove the last one or devfs mount point */
++		if ((pos == p) || (pos == NULL) || strcmp(p, udev_get_dev_path(udev))==0)
+ 			break;
+ 
+ 		/* remove if empty */
