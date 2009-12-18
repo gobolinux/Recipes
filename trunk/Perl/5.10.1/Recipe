@@ -39,7 +39,7 @@ pre_patch() {
 
 pre_install() {
    # the symlink is needed for Embed test
-   ln -s libperl.so.5.10 "${sourcedir}/libperl.so"
+   ln -sf libperl.so.5.10 "${sourcedir}/libperl.so"
    # but the symlink confuses installation
    rm -f "${sourcedir}/libperl.so"
    # Not using $goboIndex here to prevent bad matching when that
@@ -57,8 +57,8 @@ do_install() {
    cp -f "${sourcedir}/lib/Config_heavy.pl.bak" "${installarchlib}/Config_heavy.pl" || Die "Failed restoring Config_heavy.pl"
    
    # These symlinks are required for 'ld' to find '-lperl'
-   ln -s libperl.so.5.10 "${installarchlib}/CORE/libperl.so.5"
-   ln -s libperl.so.5.10 "${installarchlib}/CORE/libperl.so"
+   ln -sf libperl.so.5.10 "${installarchlib}/CORE/libperl.so.5"
+   ln -sf libperl.so.5.10 "${installarchlib}/CORE/libperl.so"
 }
 
 post_install() {
