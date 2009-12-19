@@ -1,5 +1,4 @@
-recipe_type=configure 
 configure_options=( 
+   ${configure_options[@]}
    darwin-i386-cc 
-   shared 
 )
