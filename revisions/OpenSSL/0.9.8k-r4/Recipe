@@ -1,0 +1,17 @@
+# Recipe for version 0.9.8k by Jonas Karlsson <jonas@gobolinux.org>, on Fri Mar 27 13:00:23 CET 2009
+compile_version=1.8.2
+url=http://www.openssl.org/source/openssl-0.9.8k.tar.gz
+file_size=3852259
+file_md5=e555c6d58d276aec7fdc53363e338ab3
+recipe_type=configure
+configure=Configure
+build_target="all"
+configure_options=(
+   --openssldir="${settings_target}/ssl"
+   shared
+   zlib-dynamic
+)
+
+install_variables=(
+   MANDIR="${target}/share/man"
+)
