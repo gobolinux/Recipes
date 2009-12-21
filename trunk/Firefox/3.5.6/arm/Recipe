@@ -1,0 +1,17 @@
+configure_options=(
+    ${configure_options[@]}
+    --target=`echo ${cross_compiler} | sed 's,-$,,g'`
+    --disable-system-cairo
+    --disable-canvas                # This option specifies to include support for the <canvas></canvas> tag.
+    --disable-svg                   # This option is used to enable support for rendering SVG files.
+    --disable-xinerama              # Uncomment this option if you desire support for dual-monitor display using the X-Window Xinerama libraries.
+)
+
+make_variables=(
+	CROSS_COMPILE=1
+	HOST_CFLAGS="$HOSTCFLAGS `PKG_CONFIG_PATH=/lib/pkgconfig pkg-config --cflags glib-2.0 libIDL-2.0`"
+	HOST_LDFLAGS="-L/lib `pkg-config --libs libIDL-2.0`"
+	HOST_CC="$HOSTCC"
+	OS_TEST=arm
+	OS_ARCH=Linux
+)
