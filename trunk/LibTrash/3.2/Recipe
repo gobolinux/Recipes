@@ -1,0 +1,14 @@
+# Recipe for version 3.2 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. dec. 23., szerda, 08.38.54 CET
+# Recipe (MakeRecipe) for LibTrash by Guilherme Balestieri Bedin (gbedin), on Tue Aug 9 09:50:56 BRT 2005
+compile_version=1.8.2
+url="http://pages.stern.nyu.edu/~marriaga/software/libtrash/libtrash-latest.tgz"
+file_size=98363
+file_md5=5abbdd9ec2560b9d512d06ed2efe4a4c
+mirror_url="http://pages.stern.nyu.edu/~marriaga/software/libtrash/libtrash-latest.tgz"
+dir='libtrash-3.2'
+recipe_type=makefile
+makefile='Makefile'
+install_variables=(
+   "INSTLIBDIR=$target/lib"
+   "SYSCONFFILE=$settings_target/libtrash.conf"
+)
