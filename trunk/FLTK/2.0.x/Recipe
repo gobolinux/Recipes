@@ -1,9 +1,9 @@
-# Recipe for version 2.0.x-r6921 by Zbigniew Baniewski <zb@ispid.com.pl>, on Fri, 30 Oct 2009 22:16:17 +0100
+# Recipe for version 2.0.x-r6960 by Zbigniew Baniewski <zb@ispid.com.pl>, on Sat, 12 Dec 2009 03:29:44 +0100
 # Recipe (MakeRecipe) for FLTK by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. dec. 27., szombat, 22.58.31 CET
-compile_version=1.12.3
-url="http://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub/fltk/snapshots/fltk-2.0.x-r6921.tar.bz2"
-file_size=2528202
-file_md5=0dd59bf70219f944d1a138f6a8004b27
+compile_version=1.12.4
+url="http://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub/fltk/snapshots/fltk-2.0.x-r6960.tar.bz2"
+file_size=2528716
+file_md5=b9904cc9858a9d3ccdbf176c7b03a7d8
 recipe_type=configure
 configure_options=(
     --enable-shared
