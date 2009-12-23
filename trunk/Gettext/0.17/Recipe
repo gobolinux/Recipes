@@ -10,11 +10,3 @@ configure_options=(
    --with-included-glib
    --with-included-libcroco
 )
-
-# We need to use distributed libtool because of incompatibility due to
-# old build system files
-install_variables=(
-   LIBTOOL="${sourcedir}/gettext-tools/libtool"
-)
-
-
