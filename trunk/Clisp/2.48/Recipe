@@ -1,0 +1,18 @@
+# Recipe for version 2.48 by Karim Belbachir <karim@eml.cc>, on Mon Dec 14 23:46:11 GMT 2009
+# Recipe (MakeRecipe) for Clisp by Aitor Pérez Iturri, on sáb ene 27 13:35:28 CET 2007
+compile_version=1.8.2
+url="http://kent.dl.sourceforge.net/project/clisp/clisp/2.48/clisp-2.48.tar.bz2"
+file_size=7885098
+file_md5=5e4c4f7cdcf7a1ef4196b9897c287158
+dir='clisp-2.48'
+recipe_type=configure
+do_build=no
+do_install=no
+configure_options=(
+	"--with-dynamic-modules"
+	"--mandir=${target}/man"
+	"--docdir=${target}/doc"
+)
+pre_install() {
+	./configure --install
+}
