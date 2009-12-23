@@ -6,9 +6,3 @@ url="ftp://ftp.astron.com/pub/file/file-5.03.tar.gz"
 file_size=616266
 file_md5=d05f08a53e5c2f51f8ee6a4758c0cc53
 recipe_type=configure
-
-pre_build() {
-   aclocal
-   libtoolize
-   autoconf
-}
