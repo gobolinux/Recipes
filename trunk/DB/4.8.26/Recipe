@@ -1,0 +1,17 @@
+# Recipe for version 4.8.26 by Zbigniew Baniewski <zb@ispid.com.pl>, on ¶ro, 23 gru 2009, 12:59:39 CET
+# Recipe (MakeRecipe) for DB by roko, <ro.ko@mcnon.com>, on Wed Feb 2 15:29:24 CET 2005
+compile_version=1.12.4
+url="http://download.oracle.com/berkeley-db/db-4.8.26.tar.gz"
+file_size=22898132
+file_md5=3476bac9ec0f3c40729c8a404151d5e3
+recipe_type=configure
+dir=db-4.8.26/build_unix
+configure=../dist/configure
+configure_options=(
+   --enable-compat185
+   --enable-cxx        #     Build C++ API.
+#   --enable-java      #     Build Java API.
+#   --enable-rpc       #     Build RPC client/server.
+   --enable-tcl       #     Build Tcl API.
+#   --enable-test      #     Configure to run the test suite.
+)
