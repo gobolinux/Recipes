@@ -28,9 +28,6 @@ install_variables=(
 pre_build(){
    mv cracklib-words-20080507 dicts
    chmod a+x util/cracklib-format
-   aclocal -I m4
-   libtoolize
-   autoconf -I m4
 }
 
 pre_link() {
