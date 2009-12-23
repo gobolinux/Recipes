@@ -1,0 +1,12 @@
+# Recipe for version 2.28.0 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. dec. 23., szerda, 07.12.46 CET
+# Recipe (MakeRecipe) for LibGnome by Rafael Guterres Jeffman (rafasgj), on Thu Sep 8 13:06:36 BRT 2005
+compile_version=1.9.0
+url="http://ftp.gnome.org/pub/GNOME/sources/libgnome/2.28/libgnome-2.28.0.tar.bz2"
+file_size=1407385
+file_md5=5c7efe21dc28c137aa766a77a84c0c29
+recipe_type=configure
+
+configure_options=(
+   "--disable-esd"
+)
+with_esound="--enable-esd"
