@@ -1,0 +1,18 @@
+# Recipe for version 2.0.14 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. dec. 22., kedd, 22.49.53 CET
+# Recipe (MakeRecipe) for Gnupg by Giovani Facchini, on Qui Abr 14 17:00:52 BRT 2005
+compile_version=1.8.5
+url="ftp://ftp.gnupg.org/gcrypt/gnupg/gnupg-2.0.14.tar.bz2"
+file_size=3982080
+file_md5=54732a0a76d59646b7e0b682fb357c22
+recipe_type=configure
+
+configure_options=(
+    --with-pinentry-pgm=$goboExecutables/pinentry
+    --with-dirmngr-pgm=$goboExecutables/dirmngr
+    --with-protect-tool-pgm=$goboExecutables/protect-tool
+)
+
+pre_link(){
+	#Create a symlink to gpg2 named gpg for backward compatibility
+	ln -s -n -f $target/bin/gpg2 $target/bin/gpg
+}
