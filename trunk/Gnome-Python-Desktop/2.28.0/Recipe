@@ -1,0 +1,10 @@
+# Recipe for version 2.28.0 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. dec. 23., szerda, 22.56.54 CET
+# Recipe (MakeRecipe) for Gnome-Python-Desktop by Andreas Köhler <andi5.py@gmx.net>, on Fri Aug 22 02:16:21 CEST 2008
+compile_version=1.11.2
+url="http://ftp.gnome.org/pub/GNOME/sources/gnome-python-desktop/2.28/gnome-python-desktop-2.28.0.tar.bz2"
+file_size=613169
+file_md5=d97bb3d8e1adc00505be060fbc832f44
+recipe_type=configure
+make_variables=(
+    PYGTK_CODEGEN=$goboExecutables/pygobject-codegen-2.0
+)
