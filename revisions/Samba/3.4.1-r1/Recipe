@@ -1,0 +1,55 @@
+# Recipe for version 3.4.1 by Cosmin Apreutesei <cosmin.apreutesei@gmail.com>, on Thu Sep 24 16:15:34 EEST 2009
+# Recipe (MakeRecipe) for Samba by roko, <ro.ko@mcnon.com>, on Sun Dec 26 11:04:52 BRST 2004
+compile_version=1.8.5
+url="http://samba.org/samba/ftp/stable/samba-3.4.1.tar.gz"
+file_size=34977059
+file_md5=f857c534148e28b686996d232da76cec
+mirror_url="ftp://us4.samba.org/pub/samba/old-versions/samba-3.4.1.tar.gz"
+recipe_type=configure
+dir="samba-3.4.1/source3"
+
+post_install_message="To finish the installation, please edit the ${settings_target}/smb.conf.default file and save it as ${settings_target}/smb.conf, then rerun 'SymlinkProgram samba'.\nAlso remember to start the samba daemon at startup by adding the following line to your ${goboSettings}/BootScripts/BootUp if you want to share folders:\n\nExec 'Starting samba service...' StartTask Samba"
+
+configure_options=(
+  "--with-libsmbclient"
+  "--with-automount"
+  "--with-quotas"
+#  "--disable-swat"
+  "--with-configdir=${settings_target}"
+  "--with-lockdir=${variable_target}/locks/samba"
+  "--with-piddir=${variable_target}/run/samba"
+  "--with-logfilebase=${variable_target}/log/samba"
+)
+
+with_acl="--with-acl-support"
+
+install_variables=(
+   exec_prefix=${target}
+)
+
+unmanaged_files=(
+   ${variable_target}/locks/samba
+   ${variable_target}/run/samba
+   ${variable_target}/log/samba
+)
+
+pre_install() {
+   mkdir -p ${variable_target}/{locks,run,log}/samba
+}
+
+pre_link() {
+  mkdir -p ${target}/doc
+  cp -Rv ../examples ${target}/doc 
+  mkdir -p ${target}/Resources/Defaults/Settings
+  cp -v  ../examples/smb.conf.default ${target}/Resources/Defaults/Settings
+  ln -s ${target}/lib/libsmbclient.so ${target}/lib/libsmbclient.so.0
+
+  # for some reason these files aren't copied by "make install"
+  cp -v bin/libwbclient.so.0 ${target}/lib
+  cp -v bin/libtalloc.so.1 ${target}/lib
+  cp -v bin/libtdb.so.1 ${target}/lib
+  
+  #Create a link to smbspool in the cups' backend directory
+  mkdir -p ${target}/share/cups/backend
+  ln -s ${target}/bin/smbspool ${target}/share/cups/backend/smb
+}
