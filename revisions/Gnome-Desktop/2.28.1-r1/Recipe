@@ -1,0 +1,8 @@
+# Recipe for version 2.28.1 by Zbigniew Baniewski <zb@ispid.com.pl>, on pi±, 11 gru 2009, 00:31:25 CET
+# Recipe (MakeRecipe) for Gnome-Desktop by Matthias Wolf, on Tue Jul 26 13:10:11 CEST 2005
+compile_version=1.11.2
+url="ftp://ftp.gnome.org/pub/gnome/sources/gnome-desktop/2.28/gnome-desktop-2.28.1.tar.bz2"
+file_size=1639948
+file_md5=6870b71b564dc902af65ddee176e603f
+recipe_type=configure
+unmanaged_files=( $goboVariable/lib/scrollkeeper/* )
