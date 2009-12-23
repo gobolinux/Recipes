@@ -1,0 +1,38 @@
+# Recipe for version 2.8.15 by Jonas Karlsson <jonas@gobolinux.org>, on Tue Dec 15 16:38:39 CET 2009
+# Recipe (MakeRecipe) for CrackLib by Jonas Karlsson <jonka750@student.liu.se>, on Tue May 6 23:27:33 GMT 2008
+compile_version=1.8.0
+urls=(
+   $httpSourceforge/cracklib/cracklib-2.8.15.tar.gz
+   $httpSourceforge/cracklib/cracklib-words-20080507.gz
+)
+file_sizes=(
+   615849
+   4515718
+)
+file_md5s=(
+   dd745f3daad5d4efa9b0c89d32042c33
+   7fa6ba0cd50e7f9ccaf4707c810b14f1
+)
+
+unpack_files=inside_first
+recipe_type=configure
+
+configure_options=(
+   --with-default-dict="${goboVariable}/lib/cracklib/cracklib"
+)
+
+install_variables=(
+   pythondir="${target}/lib/python$(python -V 2>&1 | sed 's,Python \([0-9]*\.[0-9]*\).*,\1,')/site-packages"
+)
+
+pre_build(){
+   mv cracklib-words-20080507 dicts
+   chmod a+x util/cracklib-format
+}
+
+pre_link() {
+   mkdir -p "${target}/Resources/Defaults/Settings/cracklib/extra-words"
+   echo $(hostname) > "${target}/Resources/Defaults/Settings/cracklib/dict-extra-words"
+   mkdir -p "${target}/share/cracklib"
+   ln -s "${target}/Resources/Defaults/Settings/cracklib/dict-extra-words" "${target}/share/cracklib"
+}

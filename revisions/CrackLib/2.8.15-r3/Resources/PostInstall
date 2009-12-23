@@ -1,0 +1,5 @@
+mkdir -p "${goboVariable}/lib/cracklib"
+if [ -d "${target}/Shared" ]
+then "${target}/sbin/create-cracklib-dict" "${target}/Shared/cracklib"/*
+else "${target}/sbin/create-cracklib-dict" "${target}/share/cracklib"/*
+fi
