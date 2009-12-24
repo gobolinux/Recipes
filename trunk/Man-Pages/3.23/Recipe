@@ -6,7 +6,7 @@ file_md5=153704ffa27160d708e0e8c56c1da58f
 recipe_type=makefile
 do_build=no
 install_variables=(
-   "MANDIR=$target/man"
+   "MANDIR=$target/share/man"
 )
 pre_link() {
    # we have our own hier man page.
