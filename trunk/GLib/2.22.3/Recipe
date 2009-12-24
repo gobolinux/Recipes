@@ -7,7 +7,6 @@ file_md5=25b043b208883194c57219e41a230a29
 recipe_type=configure
 configure_options=(
    "--with-gio-module-dir=${goboLibraries}/gio/modules"
-   "--mandir=${target}/Shared/man"
    "--disable-fam"
 )
 with_fam="--enable-fam"
@@ -15,10 +14,6 @@ with_fam="--enable-fam"
 install_variables=(
    GIO_MODULE_DIR="${target}/lib/gio/modules"
 )
-
-pre_install() {
-   sed -i "s,libdir='${goboLibraries},libdir='${target}/lib," gio/fam/libgiofam.la
-}
 
 pre_link() {
     Quiet pushd $target/lib/pkgconfig
