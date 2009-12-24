@@ -1,0 +1,10 @@
+# Recipe for version 2.7.6 by Jonas Karlsson <jonas@gobolinux.org>, on Sat Dec 12 05:18:19 CET 2009
+# Recipe (MakeRecipe) for LibXML2 by roko, <ro.ko@mcnon.com>, on Sat Dec 25 22:27:16 BRST 2004
+compile_version=1.8.0
+url="ftp://xmlsoft.org/libxml2/libxml2-2.7.6.tar.gz"
+file_size=4854591
+file_md5=7740a8ec23878a2f50120e1faa2730f2
+recipe_type=configure
+pre_link() {
+   mv $target/bin/xmlcatalog $target/bin/real_xmlcatalog
+}
