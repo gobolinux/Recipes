@@ -1,0 +1,9 @@
+# Recipe for version 2.6 by Jonas Karlsson <jonas@gobolinux.org>, on Wed Dec 16 21:26:45 CET 2009
+url="http://ftp.gnu.org/gnu/patch/patch-2.6.tar.bz2"
+file_size=250220
+file_md5=5729b1430ba6c2216e0f3eb18f213c81
+compile_version=1.8.0
+recipe_type=configure
+pre_build() {
+   export CPPFLAGS="$CPPFLAGS -D_GNU_SOURCE"
+}
