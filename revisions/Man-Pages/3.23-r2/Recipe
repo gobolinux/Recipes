@@ -1,0 +1,14 @@
+# Recipe for version 3.23 by Jonas Karlsson <jonas@gobolinux.org>, on Sat Dec 12 05:26:36 CET 2009
+compile_version=1.9.0
+url=ftp://ftp.kernel.org/pub/linux/docs/manpages/man-pages-3.23.tar.bz2
+file_size=1091931
+file_md5=153704ffa27160d708e0e8c56c1da58f
+recipe_type=makefile
+do_build=no
+install_variables=(
+   "MANDIR=$target/share/man"
+)
+pre_link() {
+   # we have our own hier man page.
+   $sudo_exec rm -f $target/man/man7/hier.7
+}
