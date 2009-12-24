@@ -1,0 +1,12 @@
+# Recipe for version 1.12 by Jonas Karlsson <jonas@gobolinux.org>, on Tue Sep 22 22:14:49 CEST 2009
+# by Jeremy Vernon
+# 2004.01.06 16:54
+
+url="ftp://ftp.gnu.org/pub/gnu/wget/wget-1.12.tar.lzma"
+file_size=1200752
+file_md5=e6ee1f02df61c6fb8a076be66983090a
+compile_version=1.8.0
+recipe_type=configure
+configure_options=(
+   "--with-ssl"
+)
