@@ -1,0 +1,12 @@
+# Recipe for version 1.7 by Jonas Karlsson <jonas@gobolinux.org>, on Wed Dec 16 21:23:48 CET 2009
+url=$ftpGnu/inetutils/inetutils-1.7.tar.gz
+file_size=1905523
+file_md5=a1d5a01b0ab8a7e596ac4cff0cce7129
+compile_version=1.8.0
+recipe_type=configure
+configure_options=(
+   "--disable-syslogd"
+   "--disable-logger"
+   "--disable-whois"
+   "--disable-servers"
+)
