@@ -1,0 +1,32 @@
+#!/bin/bash
+# by Maglan C. Diemer
+
+function generate_sshd_keys() {
+   mkdir -p ${goboPrograms}/OpenSSH/Settings/ssh
+   if [ ! -f ${goboPrograms}/OpenSSH/Settings/ssh/ssh_host_key ]
+   then
+      ${goboPrograms}/OpenSSH/Current/bin/ssh-keygen -t rsa1 -b 1024 -f ${goboPrograms}/OpenSSH/Settings/ssh/ssh_host_key -N ''
+      chmod 600 ${goboPrograms}/OpenSSH/Settings/ssh/ssh_host_key
+   fi
+   if [ ! -f ${goboPrograms}/OpenSSH/Settings/ssh/ssh_host_dsa_key ]
+   then
+      ${goboPrograms}/OpenSSH/Current/bin/ssh-keygen -d -f ${goboPrograms}/OpenSSH/Settings/ssh/ssh_host_dsa_key -N ''
+      chmod 600 ${goboPrograms}/OpenSSH/Settings/ssh/ssh_host_dsa_key
+   fi
+   if [ ! -f ${goboPrograms}/OpenSSH/Settings/ssh/ssh_host_rsa_key ]
+   then
+      ${goboPrograms}/OpenSSH/Current/bin/ssh-keygen -t rsa -f ${goboPrograms}/OpenSSH/Settings/ssh/ssh_host_rsa_key -N ''
+      chmod 600 ${goboPrograms}/OpenSSH/Settings/ssh/ssh_host_rsa_key
+   fi
+}
+
+case "$1" in
+[Ss]tart)
+  generate_sshd_keys
+  ${goboPrograms}/OpenSSH/Current/sbin/sshd
+  ;;
+[Ss]top)
+  killall sshd
+  ;;
+esac
+
