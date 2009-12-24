@@ -1,0 +1,41 @@
+# Recipe for version 1.1.1 by Jonas Karlsson <jonas@gobolinux.org>, on Wed Dec 16 21:28:02 CET 2009
+# Recipe (MakeRecipe) for Linux-PAM by Jonas Karlsson <jonka750@student.liu.se>, on Thu Nov 24 13:47:01 CET 2005
+compile_version=1.8.0
+url="ftp://ftp.kernel.org/pub/linux/libs/pam/library/Linux-PAM-1.1.1.tar.bz2"
+file_size=1120055
+file_md5=9b3d952b173d5b9836cbc7e8de108bee
+recipe_type=configure
+needs_safe_linking=yes
+configure_options=(
+   "--includedir=$target/include/security"
+   "--enable-docdir=$target/doc/pam"
+   "--enable-read-both-confs"
+   "--enable-securedir=${goboLibraries}/security"
+   "--enable-sconfigdir=${goboSettings}/security"
+)
+
+install_variables=(
+   prefix="${target}"
+   includedir="${target}/include/security"
+   SECUREDIR="${target}/lib/security"
+   SCONFIGDIR="${settings_target}/security"
+)
+
+unmanaged_files=(
+   ${goboVariable}/run/sepermit/
+)
+
+pre_install(){
+   # this might seem backward, but it's due to %¤#"&# libtool refusing to
+   # install .la files in directories other than 'libdir' given in the .la
+   # file. FixDirReferences will revert this once the .la file is installed 
+   find . -type f -name "*.la" -print0 | xargs -0 sed -i 's,'"$goboLibraries"','"$target/lib"','
+}
+
+pre_link(){                                            
+   # Make unix_chkpwd setuid so that non-root        
+   # processes can read shadow file.             
+   chmod u+s "${target}/sbin/unix_chkpwd"       
+}
+
+post_install_message="You must recompile Shadow to enable PAM support for it."
