@@ -1,0 +1,6 @@
+recipe_type=configure
+configure_options=(
+   "${configure_options[@]}"
+   linux-elf
+   shared
+)
