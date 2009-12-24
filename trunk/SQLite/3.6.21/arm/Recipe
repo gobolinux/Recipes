@@ -1,0 +1,12 @@
+configure_options=(
+	${configure_options[@]}
+	--enable-threadsafe
+	--enable-tempstore=always
+	--disable-readline
+)
+
+pre_build() {
+	C_INCLUDE_PATH= $HOSTCC -o lemon tool/lemon.c
+	cp tool/lempar.c .
+	export CFLAGS="$CFLAGS -DSQLITE_DISABLE_LFS"
+}

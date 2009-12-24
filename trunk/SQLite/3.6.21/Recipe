@@ -1,0 +1,28 @@
+# Recipe for version 3.6.21 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. dec. 24., csütörtök, 06.58.22 CET
+compile_version=1.9.0
+url="http://www.sqlite.org/sqlite-3.6.21.tar.gz"
+file_size=2970751
+file_md5=03a8498828866b407c61c0aaf8ebe66c
+recipe_type=configure
+
+environment=(
+    LIBS="-ldl"
+    CFLAGS="-DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_COLUMN_METADATA=1"
+    TCLLIBDIR="$target/lib/tcl8.5"
+)
+
+configure_options=(
+    --enable-load-extension
+    --disable-readline
+)
+
+with_tcl="--enable-tcl"
+with_readline="--enable-readline"
+
+pre_build() {
+   sed -i 's/VERSION/RELEASE/' sqlite{,3}.pc.in
+}
+
+pre_link() {
+    ln -s $target/bin/sqlite3 $target/bin/sqlite
+}
