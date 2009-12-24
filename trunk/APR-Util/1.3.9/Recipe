@@ -1,4 +1,4 @@
-# Recipe for version 1.3.9 by Cosmin Apreutesei <cosmin.apreutesei@gmail.com>, on Thu Sep 24 23:21:52 EEST 2009
+# Recipe for version 1.3.9 by Jonas Karlsson <jonas@gobolinux.org>, on Tue Sep 22 22:15:59 CEST 2009
 # Recipe (MakeRecipe) for APR-Util by Kosh <kosh.linux at gmail.com>, on Tue Feb 28 21:59:01 BRT 2006
 compile_version=1.8.2
 url="http://ftp.unicamp.br/pub/apache/apr/apr-util-1.3.9.tar.bz2"
@@ -6,7 +6,9 @@ file_size=589942
 file_md5=29dd557f7bd891fc2bfdffcfa081db59
 recipe_type=configure
 configure_options=(
-    "--with-apr=$apr_path"
+   --with-layout=GoboLinux
+   # This is a hack or else ./configure wont find APR
+   --with-apr=/usr
 )
 with_mysql="--with-mysql"
 with_openldap="--with-ldap"
