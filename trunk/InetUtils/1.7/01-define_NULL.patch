@@ -1,0 +1,17 @@
+Define NULL in not defined
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+
+--- inetutils-1.5/libicmp/icmp_timestamp.c	2007-06-28 22:58:23.000000000 +0000
++++ inetutils-1.5/libicmp/icmp_timestamp.c.new	2008-05-01 11:10:29.000000000 +0000
+@@ -33,6 +33,10 @@
+ #include <arpa/inet.h>
+ #include <icmp.h>
+ 
++#ifndef	NULL
++#define NULL 0
++#endif
++
+ int
+ icmp_timestamp_encode (u_char *buffer, size_t bufsize, int ident, int seqno)
+ {
