@@ -1,0 +1,11 @@
+--- lirc-0.7.2/Makefile.in.orig	2006-03-27 16:25:04.000000000 -0300
++++ lirc-0.7.2/Makefile.in	2006-03-27 16:25:18.000000000 -0300
+@@ -113,7 +113,7 @@ AUTOMAKE_OPTIONS = 1.5 check-news dist-b
+ 
+ EXTRA_DIST = setup.sh setup-driver.sh setup.data data2setup.sh ANNOUNCE TODO
+ 
+-SUBDIRS = drivers daemons tools doc
++SUBDIRS = drivers daemons doc
+ 
+ DISTCLEANFILES = configure.sh .setup.config
+ 
