@@ -1,0 +1,12 @@
+# Recipe for version 0.4.0 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. dec. 28., hétfő, 22.46.29 CET
+# Recipe (MakeRecipe) for Poppler-Data by Aitor Perez Iturri, on mar abr 10 20:35:22 CEST 2007
+compile_version=1.8.2
+url="http://poppler.freedesktop.org/poppler-data-0.4.0.tar.gz"
+file_size=4156021
+file_md5=6975bf8e9ea2cfb42b9ecdbcc257cf57
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+	"datadir=/share"
+   "DESTDIR=$target"
+)
