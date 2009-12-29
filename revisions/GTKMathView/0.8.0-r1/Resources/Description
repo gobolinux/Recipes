@@ -1,0 +1,19 @@
+[Name] GTKMathView
+[Summary] Rendering engine for MathML documents
+[Description] GtkMathView is a C++ rendering engine for MathML
+documents. It provides an interactive view that can be used for
+browsing and editing MathML markup. 
+
+GtkMathView reads MathML documents by means of a frontend whose
+purpose is to traverse the MathML document (or part of it) and to
+appropriately instantiate GtkMathView's internal data structures that
+are suitable for rendering it. Currently the following frontends are
+supported: libxml2, libxml2 reader, GMetaDOM, custom. 
+
+GtkMathView renders MathML documents through a backend whose purpose
+is to provide an interface between the portable rendering engine and
+the platform-specific capabilities (like retrieving fonts, drawing on
+the screen, and so on). Currently the following backends are provided:
+GTK+, GTK+ widget, SVG, AbiWord.
+[License] GNU General Public License version 2 (or later)
+[Homepage] http://helm.cs.unibo.it/mml-widget/
