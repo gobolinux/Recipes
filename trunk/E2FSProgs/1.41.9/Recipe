@@ -9,6 +9,6 @@ configure_options=(
    "--enable-elf-shlibs"
    "--disable-libblkid"
    "--disable-libuuid"
-   "--disable-uuid"
+   "--disable-uuidd"
 )
 install_target="install install-libs"
