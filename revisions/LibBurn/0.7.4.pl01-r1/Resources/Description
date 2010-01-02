@@ -1,0 +1,11 @@
+[Name] LibBurn
+[Summary] A library by which preformatted data get onto optical media 
+[Description] libburn a library by which preformatted data get onto optical media.
+It uses either /dev/sgN (e.g. on kernel 2.4 with ide-scsi) or
+/dev/srM or /dev/hdX (e.g. on kernel 2.6).
+libburn is the foundation of cdrecord emulation. Its code is
+independent of cdrecord. Its DVD capabilities are learned from
+studying the code of dvd+rw-tools and MMC-5 specs. No code but only
+the pure SCSI knowledge has been taken from dvd+rw-tools, though.
+[License] GNU General Public License version 2 
+[Homepage] http://libburnia-project.org/wiki/Libburn
