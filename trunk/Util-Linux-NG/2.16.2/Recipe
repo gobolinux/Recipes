@@ -10,4 +10,5 @@ configure_options=(
    --enable-arch
    --enable-partx
    --enable-write
+   --disable-makeinstall-chown
 )
