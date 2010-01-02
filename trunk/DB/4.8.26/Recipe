@@ -13,5 +13,6 @@ configure_options=(
 #   --enable-java      #     Build Java API.
 #   --enable-rpc       #     Build RPC client/server.
    --enable-tcl       #     Build Tcl API.
+   "--with-tcl=$tcl_path/lib"
 #   --enable-test      #     Configure to run the test suite.
 )
