@@ -1,0 +1,11 @@
+# Recipe for version 3.3.0.1 by kenneth marken <k-marken@online.no>, on sø. 03. jan. 21:46:43 +0100 2010
+# Recipe (MakeRecipe) for FileZilla 3.3.0.1 by keisangi, on Fri Feb 1 14:40:25 JST 2008
+compile_version=1.10.1
+url="http://downloads.sourceforge.net/filezilla/FileZilla_3.3.0.1_src.tar.bz2"
+file_size=3113486
+file_md5=f273aef3b8408d0a1c7f0fee39733e9b
+dir='filezilla-3.3.0.1'
+recipe_type=configure
+configure_options=(
+"--enable-locales"
+)
