@@ -4,9 +4,7 @@ compile_version=1.8.5
 url="ftp://oss.sgi.com/projects/xfs/cmd_tars/attr_2.4.43-1.tar.gz"
 file_size=116991
 file_md5=91583a14bcbd637adaa9b07ea49c5d4b
-mirror_url="ftp://oss.sgi.com/projects/xfs/previous/cmd_tars/attr_2.4.41-1.tar.gz"
-needs_safe_linking=yes
-keep_existing_target=yes
+mirror_url="ftp://oss.sgi.com/projects/xfs/previous/cmd_tars/attr_2.4.43-1.tar.gz"
 dir="attr-2.4.43"
 recipe_type=configure
 install_target="install install-lib install-dev" 
@@ -17,6 +15,7 @@ configure_options=(
 install_variables=(
    libdir="${target}/lib"
    libexecdir="${target}/lib/attr"
+   PKG_DEVLIB_DIR="${target}/lib/attr"
 )
 
 pre_link() {
