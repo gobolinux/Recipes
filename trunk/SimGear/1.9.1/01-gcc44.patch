@@ -1,0 +1,15 @@
+diff -NrU5 SimGear-1.9.1.orig/simgear/debug/logstream.hxx SimGear-1.9.1/simgear/debug/logstream.hxx
+--- SimGear-1.9.1.orig/simgear/debug/logstream.hxx	  2009-05-17 02:02:30.000000000 -0600
++++ SimGear-1.9.1/simgear/debug/logstream.hxx		  2009-05-17 02:47:55.000000000 -0600
+@@ -27,9 +27,11 @@
+ 
+ #include <simgear/compiler.h>
+ 
+ #ifdef _MSC_VER
+ #  include <windows.h>
++#else
++#  include <cstdio>
+ #endif
+ 
+ #include <streambuf>
+ #include <ostream>
