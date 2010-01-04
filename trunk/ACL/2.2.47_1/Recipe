@@ -8,11 +8,12 @@ mirror_url="ftp://oss.sgi.com/projects/xfs/previous/cmd_tars/acl_2.2.47-1.tar.gz
 recipe_type=configure
 dir="acl-2.2.47"
 configure_options=(
-   --libexecdir=$target/lib
+   --libexecdir="$target/lib/acl"
 )
 install_variables=(
    libdir="${target}/lib"
-   libexecdir="${target}/lib/attr"
+   libexecdir="${target}/lib/acl"
+   PKG_DEVLIB_DIR="${target}/lib/acl"
 )
 	  
 install_target="install install-lib install-dev" 
