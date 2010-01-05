@@ -1,0 +1,13 @@
+--- fam-2.7.0.new/src/Interest.h	2008-05-08 21:20:25.000000000 +0000
++++ fam-2.7.0.new/src/Interest.h.new	2008-05-08 21:49:04.000000000 +0000
+@@ -30,6 +30,10 @@
+ 
+ #include "Boolean.h"
+ 
++#ifndef NULL
++#define NULL 0
++#endif
++
+ class Event;
+ class FileSystem;
+ class Monitor;

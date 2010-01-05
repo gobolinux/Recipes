@@ -1,0 +1,6 @@
+[Name]  fam
+[Summary]  File Alteration Monitoring Daemon
+[Description]  Fam is a file alteration monitoring service. With it you can receive signals when files are created or changed. This package provides libfam which is used by KDE and GNOME. It also provides a tool for the console called "fileschanged". To use fam via NFS (it can reduce the network load on NFS servers, especially if they host user home directories) you need to run the fam daemon, which can be found in the fam-server package.
+[Suse Category]  System/Daemons
+[License]  GPL, Other License(s), see package
+[Homepage]  http://oss.sgi.com/projects/fam/
