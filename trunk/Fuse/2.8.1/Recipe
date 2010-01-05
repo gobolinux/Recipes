@@ -1,4 +1,4 @@
-# Recipe for version 2.8.1 by Lucas C. Villa Real, on Tue Dec 15 22:57:35 BRST 2009
+# Recipe for version 2.8.1 by Jonas Karlsson <jonas@gobolinux.org>, on Tue Sep 22 22:12:09 CEST 2009
 # Recipe (MakeRecipe) for Fuse by roko, <ro.ko@mcnon.com>, on Wed Mar 23 22:07:09 CET 2005
 compile_version=1.8.2
 url="$httpSourceforge/fuse/fuse-2.8.1.tar.gz"
@@ -7,7 +7,8 @@ file_md5=0e3505ce90155983f1bc995eb2cf6fa7
 recipe_type=configure
 
 install_variables=(
-    INIT_D_PATH="$settings_target/init.d"
+   MOUNT_FUSE_PATH="${target}/sbin"
+   INIT_D_PATH="$settings_target/init.d"
 )
 
 configure_options=(
@@ -16,3 +17,4 @@ configure_options=(
     --enable-lib
     --enable-util
 )
+
