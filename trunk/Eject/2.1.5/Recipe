@@ -1,7 +1,11 @@
 # Recipe for version 2.1.5 by Andre Detsch <detsch@gobolinux.org>, on Wed Jun 21 20:31:42 BRT 2006
 compile_version=1.8.0
-url="http://ca.geocities.com/jefftranter%40rogers.com/eject-2.1.5.tar.gz"
+url="http://sources.openembedded.org/eject-2.1.5.tar.gz"
 file_size="123585"
 file_md5="b96a6d4263122f1711db12701d79f738"
 dir="eject"
 recipe_type=configure
+
+install_variables=(
+    PREFIX=$target
+)
