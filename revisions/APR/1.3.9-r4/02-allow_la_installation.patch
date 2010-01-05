@@ -1,0 +1,10 @@
+--- apr-1.3.8/build/ltmain.sh	2008-08-30 00:27:10.000000000 +0200
++++ apr-1.3.8/build/ltmain.sh.new	2009-12-16 20:47:09.000000000 +0100
+@@ -6010,7 +6010,6 @@
+ 	  # but it's something to keep an eye on.
+ 	  if test "$inst_prefix_dir" = "$destdir"; then
+ 	    $echo "$modename: error: cannot install \`$file' to a directory not ending in $libdir" 1>&2
+-	    exit $EXIT_FAILURE
+ 	  fi
+ 
+ 	  if test -n "$inst_prefix_dir"; then
