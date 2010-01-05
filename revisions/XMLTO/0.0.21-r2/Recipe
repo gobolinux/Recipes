@@ -1,0 +1,10 @@
+# Recipe for version 0.0.21 by Demian Florentin <demianflorentin@gmail.com>, on Sat Nov 29 15:13:22 PYST 2008
+# Recipe (MakeRecipe) for XMLTO by Kosh <kosh.linux at gmail.com, on Thu Nov 23 20:14:10 BRST 2006
+compile_version=1.8.0
+url="https://fedorahosted.org/xmlto/export/1/xmlto-0.0.21.tar.bz2"
+file_size=99554
+file_md5=cc2039dedc81f1a56b06e5fdac6f7570
+recipe_type=configure
+environment=(
+   "XML_CATALOG_FILES=$docbook_xsl_stylesheets_path/Shared/xml/docbook/stylesheet/catalog.xml $goboVariable/lib/xml/catalog"
+)
