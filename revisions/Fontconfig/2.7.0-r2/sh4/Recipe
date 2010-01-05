@@ -1,0 +1,5 @@
+# there are problems compiling applications for the host cpu if we're
+# doing -mtune for the target platform
+make_variables=(
+    CFLAGS=
+)
