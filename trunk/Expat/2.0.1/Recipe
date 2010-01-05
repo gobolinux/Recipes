@@ -6,6 +6,6 @@ file_size=446456
 file_md5=ee8b492592568805593f81f8cdf2a04c
 recipe_type=configure
 
-pre_link() {
-   cd $target/lib
-}
+install_variables=(
+   man1dir="${target}/share/man/man1"
+)
