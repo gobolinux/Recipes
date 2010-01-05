@@ -13,6 +13,10 @@ configure_options=(
 )
 build_target="all fonts.conf"
 
+install_variables=(
+   RUN_FC_CACHE_TEST=false
+)
+
 unmanaged_files=(
    "$goboVariable/cache/fontconfig"
 )
