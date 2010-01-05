@@ -1,0 +1,27 @@
+--- tcp_wrappers_7.6/scaffold.c.orig	2004-11-08 18:32:51.000000000 +1030
++++ tcp_wrappers_7.6/scaffold.c	2004-11-08 18:35:07.000000000 +1030
+@@ -17,6 +17,7 @@
+ #include <arpa/inet.h>
+ #include <netdb.h>
+ #include <stdio.h>
++#include <stdlib.h>
+ #include <syslog.h>
+ #include <setjmp.h>
+ #include <string.h>
+@@ -25,7 +26,15 @@
+ #define	INADDR_NONE	(-1)		/* XXX should be 0xffffffff */
+ #endif
+ 
+-extern char *malloc();
++/*  We don't need to redefine malloc(), stdlib.h defines it.
++This fixed the error:
++
++scaffold.c:28: error: conflicting types for 'malloc'
++scaffold.c:28: error: conflicting types for 'malloc'
++make[1]: *** [scaffold.o] Error 1
++
++*/
++// extern char *malloc();
+ 
+ /* Application-specific. */
+ 
