@@ -1,0 +1,10 @@
+# Recipe for version 0.10.2 by Michael Homer <michael@gobolinux.org>, on Wed Jan 6 10:46:44 NZDT 2010
+# Recipe (MakeRecipe) for Arora by Michael Homer <michael@gobolinux.org>, on Sun Feb 8 15:24:03 NZDT 2009
+compile_version=1.11.4
+url="http://arora.googlecode.com/files/arora-0.10.2.tar.gz"
+file_size=1064208
+file_md5=ccef0f214e0f03828cde8c521f7a5225
+recipe_type=makefile
+pre_build() {
+   qmake "PREFIX=$target"
+}
