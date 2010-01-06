@@ -1,0 +1,44 @@
+# Recipe for version 7.6.1 by Jonas Karlsson <jonas@gobolinux.org>, on Tue Jan 5 17:19:41 CET 2010
+# Recipe (MakeRecipe) for Mesa by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Nov 23 03:32:41 BRST 2004
+compile_version=1.8.5
+urls=(
+   ftp://ftp.freedesktop.org/pub/mesa/7.6.1/MesaLib-7.6.1.tar.bz2
+   ftp://ftp.freedesktop.org/pub/mesa/7.6.1/MesaGLUT-7.6.1.tar.bz2
+   ftp://ftp.freedesktop.org/pub/mesa/7.6.1/MesaDemos-7.6.1.tar.bz2
+)
+recipe_type=configure
+dir='Mesa-7.6.1'
+
+configure_options=(
+    --enable-xcb
+    --disable-ttm-api
+    --enable-glx-tls
+    --enable-driglx-direct
+    
+    --with-driver=dri
+    --with-dri-driverdir="${goboLibraries}/xorg/modules/dri"
+)
+
+install_variables=(
+   DRI_DRIVER_INSTALL_DIR="${target}/lib/xorg/modules/dri"
+)
+
+pre_link() {
+   for p in glxheads glthreads glxcontexts glxdemo glxgears glxgears_fbconfig glxinfo glxpbdemo glxpixmap glxswapcontrol
+   do
+      cp progs/xdemos/${p} ${target}/bin
+   done
+}
+symlink_options=(
+   --conflict=overwrite
+)
+file_sizes=(
+4886995
+321756
+1547790
+)
+file_md5s=(
+7db4617e9e10ad3aca1b64339fd71b7d
+ca9aecb91f05b1da9fd7d5eeb19d47d7
+a4226f06732a02556fcf6be290b86dff
+)
