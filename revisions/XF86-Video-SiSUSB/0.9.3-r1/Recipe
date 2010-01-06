@@ -1,0 +1,8 @@
+# Recipe for version 0.9.3 by Jonas Karlsson <jonas@gobolinux.org>, on Wed Jan 6 06:25:53 CET 2010
+# Recipe (MakeRecipe) for XF86-Video-SiSUSB by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jan 9 17:18:15 BRST 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/driver/xf86-video-sisusb-0.9.3.tar.bz2"
+file_size=321637
+file_md5=be59e9c2d9458cee0b5006549c14a95d
+recipe_type=configure
+part_of=Xorg-Driver
