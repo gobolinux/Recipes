@@ -1,0 +1,35 @@
+--- unzip-5.52/unix/Packaging/prototype	2000-04-28 02:25:04.000000000 +0200
++++ unzip-5.52/unix/Packaging/prototype.new	2010-01-06 05:10:46.000000000 +0100
+@@ -18,13 +18,14 @@
+ f none $PKG/doc/unzipsfx.txt=unzipsfx.txt 0644 root bin
+ f none $PKG/doc/zipgrep.txt=zipgrep.txt 0644 root bin
+ f none $PKG/doc/zipinfo.txt=zipinfo.txt 0644 root bin
+-d none $PKG/man 0755 root bin
+-d none $PKG/man/man1 0755 root bin
+-f none $PKG/man/man1/funzip.1=man/funzip.1 0644 root bin
+-f none $PKG/man/man1/unzip.1=man/unzip.1 0644 root bin
+-f none $PKG/man/man1/unzipsfx.1=man/unzipsfx.1 0644 root bin
+-f none $PKG/man/man1/zipgrep.1=man/zipgrep.1 0644 root bin
+-f none $PKG/man/man1/zipinfo.1=man/zipinfo.1 0644 root bin
++d none $PKG/share 0755 root bin
++d none $PKG/share/man 0755 root bin
++d none $PKG/share/man/man1 0755 root bin
++f none $PKG/share/man/man1/funzip.1=man/funzip.1 0644 root bin
++f none $PKG/share/man/man1/unzip.1=man/unzip.1 0644 root bin
++f none $PKG/share/man/man1/unzipsfx.1=man/unzipsfx.1 0644 root bin
++f none $PKG/share/man/man1/zipgrep.1=man/zipgrep.1 0644 root bin
++f none $PKG/share/man/man1/zipinfo.1=man/zipinfo.1 0644 root bin
+ i pkginfo
+ i prototype
+ i README
+--- unzip-5.52/unix/Makefile	2005-02-26 20:58:34.000000000 +0100
++++ unzip-5.52/unix/Makefile.new	2010-01-06 05:18:15.000000000 +0100
+@@ -104,7 +104,7 @@
+ manext = 1
+ prefix = /usr/local
+ BINDIR = $(prefix)/bin#			where to install executables
+-MANDIR = $(prefix)/man/man$(manext)#	where to install man pages
++MANDIR = $(prefix)/share/man/man$(manext)#	where to install man pages
+ INSTALLEDBIN = $(BINDIR)/funzip$E $(BINDIR)/unzip$E $(BINDIR)/unzipsfx$E \
+ 	$(BINDIR)/zipgrep$E $(BINDIR)/zipinfo$E
+ INSTALLEDMAN = $(MANDIR)/funzip.$(manext) $(MANDIR)/unzip.$(manext) \
