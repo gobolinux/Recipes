@@ -1,0 +1,8 @@
+# Recipe for version 6.8.1 by Jonas Karlsson <jonas@gobolinux.org>, on Wed Jan 6 06:22:26 CET 2010
+# Recipe (MakeRecipe) for XF86-Video-R128 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Sep 12 01:06:06 CEST 2008
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/driver/xf86-video-r128-6.8.1.tar.bz2"
+file_size=418251
+file_md5=2b90854a62a4d45d652062f582dc8d13
+recipe_type=configure
+part_of=Xorg-Driver
