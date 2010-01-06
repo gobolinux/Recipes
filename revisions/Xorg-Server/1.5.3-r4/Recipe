@@ -1,0 +1,87 @@
+# Recipe for version 1.5.3 by Jonas Karlsson <jonas@gobolinux.org>, on Fri Feb 13 21:25:54 CET 2009
+# Recipe (MakeRecipe) for Xorg-Server by Hisham Muhammad <lode@gobolinux.org>, on Fri Aug 19 18:49:06 BRT 2005
+compile_version=1.11.3
+urls=(
+   "http://xorg.freedesktop.org/archive/individual/xserver/xorg-server-1.5.3.tar.bz2"
+   "$httpSourceforge/mesa3d/MesaLib-7.2.tar.bz2"
+)
+
+recipe_type=configure
+symlink_options=(--conflict=overwrite)
+
+configure_options=(
+   "--enable-dri"
+   "--enable-glx"
+   "--enable-glx-tls"
+   "--enable-xorg"
+   "--disable-dmx"
+   "--enable-config-dbus"
+   "--enable-config-hal"
+   "--disable-fontcache"
+   "--disable-secure-rpc"
+   "--enable-multibuffer"
+   "--enable-xorgcfg"
+   --with-module-dir="${goboLibraries}/xorg/modules"
+   --with-dri-driver-path="${goboLibraries}/xorg/modules/dri"
+   --with-mesa-source="${compileSourcesDir}/Mesa-7.2"
+   --with-fontdir="${target}/share/fonts"
+   --with-xkb-output="$goboVariable/lib/xcb"
+   --enable-install-setuid
+)
+with_kdrive="--enable-kdrive"
+with_tslib="--enable-tslib"
+
+install_variables=(
+   appdefaultdir="${target}/share/X11/app-defaults"
+   moduledir="${target}/lib/xorg/modules"
+   SERVER_MISC_CONFIG_PATH="${target}/lib/xorg"
+)
+
+unmanaged_files=(
+   "$goboVariable/lib/xcb"
+)
+
+private__configure_hal_kdb() {
+
+   if [ 1 < $(grep XkbLayout "$1" | grep -vc "^\W*#") ]
+   then
+      sed -i 's|\(XkbLayout[^>]*>\)[^<]*<|\1'"$(grep XkbLayout "$1" | awk '{ print $3 }')"'<|' "$2"
+   fi
+   if [ 1 < $(grep XkbVariant "$1" | grep -vc "^\W*#") ]
+   then
+      sed -i 's|\(XkbVariant[^>]*>\)[^<]*<|\1'"$(grep XkbVariant "$1" | awk '{ print $3 }')"'<|' "$2"
+   fi
+}
+
+pre_install() {
+   mkdir -p "$goboVariable/lib/xcb"
+}
+
+pre_link() {
+    pushd $target/bin >& /dev/null
+    $sudo_exec chmod +s X*
+    popd >& /dev/null
+
+    # install fdi file for HAL
+    install -d ${target}/Resources/Defaults/Settings/X11
+    install -d ${target}/Shared/hal/fdi/information/10freedesktop
+    install -D -m644 ${sourcedir}/config/x11-input.fdi ${target}/Resources/Defaults/Settings/X11/x11-input.fdi
+    ln -vs ${settings_target}/X11/x11-input.fdi ${target}/Shared/hal/fdi/information/10freedesktop
+    # Transfer any keyboard settings from xorg.conf to HAL settings
+    if [ -n "$(grep CoreKeyboard "${goboSettings}/X11/xorg.conf" | grep -v "^\W*#")" ]
+    then
+       private__configure_hal_kdb "${goboSettings}/X11/xorg.conf" "${settings_target}/X11/x11-input.fdi"
+       # Comment out RgbPath, as it doesn't mean anything to
+       # xorg-server 1.5 and stop it from starting.
+       sed -i 's/\(^\W*RgbPath.*\)/#\1/g' "${goboSettings}/X11/xorg.conf"
+    fi
+}
+
+file_sizes=(
+5622625
+3341919
+)
+file_md5s=(
+308971036e25250e7fe3cccfd5a120f8
+04d379292e023df0b0266825cb0dbde5
+)
