@@ -1,0 +1,13 @@
+# Recipe for version 1.5 by Jonas Karlsson <jonas@gobolinux.org>, on Tue Jan 5 15:54:07 CET 2010
+# Recipe (MakeRecipe) for LibXCB by Lucas C. Villa Real, on Mon Mar 5 16:06:23 BRT 2007
+compile_version=1.8.2
+url="http://xcb.freedesktop.org/dist/libxcb-1.5.tar.bz2"
+file_size=333760
+file_md5=d19c0ba6ba42ebccd3d62d8bb147b551
+recipe_type=configure
+part_of=Xorg-Lib
+
+# Stop xcb_xlib assertions.
+build_variables=(
+ "CPPFLAGS=-DNDEBUG"
+)
