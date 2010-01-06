@@ -1,0 +1,56 @@
+# Recipe for version 1.4.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Jan 6 04:16:55 BRST 2010
+compile_version=1.12.4
+url="ftp://ftp.easysw.com/pub/cups/1.4.2/cups-1.4.2-source.tar.bz2"
+file_size=4450466
+file_md5=d95e2d588e3d36e563027a963b117b1b
+dir='cups-1.4.2'
+recipe_type=configure
+
+configure_options=(
+    "--with-rcdir=$target"
+    "--with-docdir=$target/doc"
+    "--with-fontpath=$goboData/Fonts/Ghostscript"
+    "--with-cups-user=lp"
+    "--with-cups-group=lp"
+    "--with-system-groups=lpadmin"
+    "--with-icondir=$target/Shared/icons"
+    "--with-menudir=$target/Shared/applications"
+    "--with-dbusdir=$settings_target/dbus-1"
+    "--with-python"
+    "--enable-threads"
+    "--enable-libpaper"
+)
+
+environment=(
+    LIBTOOL=
+)
+
+make_variables=(
+    SERVERBIN=$target/Shared/cups
+    LIBTOOL=
+)
+
+install_variables=(
+    MANDIR="$target/share/man"
+    PAMDIR="$settings_target/pam.d"
+    PHPEXTENSIONDIR="$target/$(php-config --extension-dir | sed 's,.*/\(lib/.*\),\1,')"
+)
+
+unmanaged_files=(
+    $goboVariable/log/cups
+    $goboVariable/run/cups/certs
+    $goboVariable/cache/cups
+    $goboVariable/spool/cups/tmp
+)
+
+pre_link() {
+    Quiet pushd $target/lib
+    ln -s ../share/cups .
+    Quiet popd
+}
+
+pre_install() {
+   mkdir -p "$target/$(php-config --extension-dir | sed 's,.*/\(lib/.*\),\1,')"
+}
+
+post_install_message="=========================================\n\nNote: when upgrading from CUPS 1.1.20 you may need\n      to recreate your printers because of changes\n      in the ppd uri format for usb printers.\n\n=================================================="

@@ -1,0 +1,12 @@
+--- cups-1.3.8/packaging/cups-dbus.conf.orig	2008-10-03 21:17:15.000000000 +0200
++++ cups-1.3.8/packaging/cups-dbus.conf	2008-10-03 21:17:57.000000000 +0200
+@@ -2,7 +2,8 @@
+  "http://www.freedesktop.org/standards/dbus/1.0/busconfig.dtd">
+ <busconfig>
+   <!-- Only root can send this message -->
+-  <policy user="root">
++  <!-- GoboLinux: changed from user="root" to user="0" -->
++  <policy user="0">
+     <allow send_interface="com.redhat.PrinterSpooler"/>
+   </policy>
+ 
