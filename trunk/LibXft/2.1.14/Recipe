@@ -1,0 +1,8 @@
+# Recipe for version 2.1.14 by Jonas Karlsson <jonas@gobolinux.org>, on Tue Jan 5 16:02:48 CET 2010
+# Recipe (MakeRecipe) for LibXft by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 19:43:52 BRT 2005
+compile_version=1.8.2
+url="http://xorg.freedesktop.org/archive/individual/lib/libXft-2.1.14.tar.bz2"
+file_size=289068
+file_md5=254e62a233491e0e1251636536163e20
+recipe_type=configure
+part_of=Xorg-Lib
