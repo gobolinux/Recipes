@@ -1,0 +1,8 @@
+# Recipe for version 1.0.5 by Jonas Karlsson <jonas@gobolinux.org>, on Tue Jan 5 15:53:46 CET 2010
+# Recipe (MakeRecipe) for LibXau by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 19:43:06 BRT 2005
+compile_version=1.8.2
+url="http://xorg.freedesktop.org/archive/individual/lib/libXau-1.0.5.tar.bz2"
+file_size=249998
+file_md5=993b3185c629e4b89401fca072dcb663
+recipe_type=configure
+part_of=Xorg-Lib
