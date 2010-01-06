@@ -1,0 +1,15 @@
+# Recipe for version 1.1.15.4 by kenneth marken <k-marken@online.no>, on ma. 04. jan. 04:43:47 +0100 2010
+# Recipe (MakeRecipe) for WebKit by Daniele Maccari <daniele.maccari@gmail.com>, on Wed Feb 13 11:45:17 CET 2008
+compile_version=1.10.1
+url="http://webkitgtk.org/webkit-1.1.15.4.tar.gz"
+file_size=6093252
+file_md5=47301fb7120421ac38bf714db8f5d428
+recipe_type=configure
+autogen_before_configure=yes
+makefile='GNUmakefile'
+configure_options=(
+   --enable-fast-malloc   
+)
+with_gtk2="--with-font-backend=pango"
+with_html5_media="--enable-video"
+with_gnome="--with-http-backend=soup"
