@@ -1,0 +1,5 @@
+Xorg-Proto >= 7.5
+LibPthread-Stubs # needed by LibXCB
+LibXSLT >= 1.1.20 # needed by LibXCB
+FreeType >= 2 # Needed by LibXfont, LibXFT
+Fontconfig >= 2.2 # Needed by LibXFT
