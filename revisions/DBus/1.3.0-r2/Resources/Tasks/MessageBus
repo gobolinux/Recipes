@@ -1,0 +1,42 @@
+#!/bin/sh
+#
+# messagebus:   The D-BUS systemwide message bus
+#
+# chkconfig: 345 97 03
+# description:  This is a daemon which broadcasts notifications of system events \
+#               and other messages. See http://www.freedesktop.org/software/dbus/
+#
+# processname: dbus-daemon
+# pidfile: /Programs/DBus/Variable/run/dbus/pid
+#
+
+op="$1"
+[ "$op" ] || op="start"
+
+case "$op" in
+[Ss]tart)
+   # Sanity checks.
+   mkdir -p /System/Variable/run/dbus/
+   if [ -e /System/Variable/run/dbus/pid ]
+   then
+      if ps `cat /System/Variable/run/dbus/pid` &> /dev/null
+      then
+         echo "Already running."
+         exit 1
+      else
+         rm -f /System/Variable/run/dbus/pid
+      fi
+   fi   
+   # so we can rearrange this easily
+   RETVAL=0
+   
+   /bin/dbus-daemon --system
+   RETVAL=$?
+   #sleep 2
+   exit $RETVAL
+   ;;
+[Ss]top)
+   killall dbus-daemon
+   rm -f /System/Variable/run/dbus/pid > /dev/null
+   ;;
+esac
