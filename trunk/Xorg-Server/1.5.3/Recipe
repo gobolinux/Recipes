@@ -13,7 +13,7 @@ configure_options=(
    "--enable-dri"
    "--enable-glx"
    "--enable-glx-tls"
-   --enable-xorg
+   "--enable-xorg"
    "--disable-dmx"
    "--enable-config-dbus"
    "--enable-config-hal"
@@ -34,6 +34,7 @@ with_tslib="--enable-tslib"
 install_variables=(
    appdefaultdir="${target}/share/X11/app-defaults"
    moduledir="${target}/lib/xorg/modules"
+   SERVER_MISC_CONFIG_PATH="${target}/lib/xorg"
 )
 
 unmanaged_files=(
