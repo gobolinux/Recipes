@@ -1,0 +1,6 @@
+# Recipe for version 7.5 by Jonas Karlsson <jonas@gobolinux.org>, on Wed Jan 6 05:55:34 CET 2010
+recipe_type=meta                                     
+compile_version=1.8.5 
+symlink_options=(--conflict=overwrite)
+
+
