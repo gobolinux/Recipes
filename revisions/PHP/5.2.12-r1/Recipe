@@ -1,0 +1,29 @@
+# Recipe for version 5.2.12 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Jan 6 03:51:43 BRST 2010
+### PHP 5.2.12
+# GoboLinux Recipe created by Taeber Rapczak <taeber@rapczak.com>
+# June 14, 2004
+
+### Compile Version
+compile_version=1.8.0
+
+### Download Section
+url="http://www.php.net/distributions/php-5.2.12.tar.bz2"
+file_size=9075161
+file_md5=5b7077e366c7eeab34da31dd860a1923
+mirror_urls=(
+	"http://www.php.net/get/php-5.2.12.tar.bz2/from/us2.php.net/mirror"
+	"http://www.php.net/get/php-5.2.12.tar.bz2/from/us4.php.net/mirror"
+)
+
+### File Information
+file="php-5.2.12.tar.bz2"
+
+### Compilation Variables
+recipe_type=configure
+
+configure_options=(
+   --with-openssl
+)
+
+with_openldap=--with-ldap
+with_mysql=--with-mysql
