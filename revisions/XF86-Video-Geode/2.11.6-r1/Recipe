@@ -1,0 +1,8 @@
+# Recipe for version 2.11.6 by Jonas Karlsson <jonas@gobolinux.org>, on Wed Jan 6 06:13:33 CET 2010
+# Recipe (MakeRecipe) for XF86-Video-Geode by Jonas Karlsson <jonka750@student.liu.se>, on Fri Sep 12 01:12:58 CEST 2008
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/driver/xf86-video-geode-2.11.6.tar.bz2"
+file_size=598142
+file_md5=3ff0dfb4b3bd8872c6efb70371cb6b98
+recipe_type=configure
+part_of=Xorg-Driver
