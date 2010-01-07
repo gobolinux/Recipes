@@ -1,0 +1,113 @@
+			     BASH PATCH REPORT
+			     =================
+
+Bash-Release:	4.0
+Patch-ID:	bash40-014
+
+Bug-Reported-by:	smallnow@gmail.com
+Bug-Reference-ID:	<49C460FE.40307@gmail.com>
+Bug-Reference-URL:	http://lists.gnu.org/archive/html/bug-bash/2009-03/msg00166.html
+
+Bug-Description:
+
+When the fc builtin is run in a command substitution from a shell with history
+enabled, it does not correctly calculate the command on which to operate.
+
+Patch:
+
+*** ../bash-4.0-patched/builtins/fc.def	2009-01-04 14:32:22.000000000 -0500
+--- bash/builtins/fc.def	2009-03-21 14:03:43.000000000 -0400
+***************
+*** 89,92 ****
+--- 89,93 ----
+  extern int literal_history;
+  extern int posixly_correct;
++ extern int subshell_environment, interactive_shell;
+  
+  extern int unlink __P((const char *));
+***************
+*** 173,177 ****
+    register char *sep;
+    int numbering, reverse, listing, execute;
+!   int histbeg, histend, last_hist, retval, opt;
+    FILE *stream;
+    REPL *rlist, *rl;
+--- 174,178 ----
+    register char *sep;
+    int numbering, reverse, listing, execute;
+!   int histbeg, histend, last_hist, retval, opt, rh;
+    FILE *stream;
+    REPL *rlist, *rl;
+***************
+*** 276,279 ****
+--- 277,282 ----
+        fprintf (stderr, "%s\n", command);
+        fc_replhist (command);	/* replace `fc -s' with command */
++       /* Posix says that the re-executed commands should be entered into the
++ 	 history. */
+        return (parse_and_execute (command, "fc", SEVAL_NOHIST));
+      }
+***************
+*** 294,298 ****
+       so we check hist_last_line_added. */
+  
+!   last_hist = i - remember_on_history - hist_last_line_added;
+  
+    if (list)
+--- 297,306 ----
+       so we check hist_last_line_added. */
+  
+!   /* Even though command substitution through parse_and_execute turns off
+!      remember_on_history, command substitution in a shell when set -o history
+!      has been enabled (interactive or not) should use it in the last_hist
+!      calculation as if it were on. */
+!   rh = remember_on_history || ((subshell_environment & SUBSHELL_COMSUB) && enable_history_list);
+!   last_hist = i - rh - hist_last_line_added;
+  
+    if (list)
+***************
+*** 457,461 ****
+       HIST_ENTRY **hlist;
+  {
+!   int sign, n, clen;
+    register int i, j;
+    register char *s;
+--- 465,469 ----
+       HIST_ENTRY **hlist;
+  {
+!   int sign, n, clen, rh;
+    register int i, j;
+    register char *s;
+***************
+*** 473,477 ****
+       so we check hist_last_line_added.  This needs to agree with the
+       calculation of last_hist in fc_builtin above. */
+!   i -= remember_on_history + hist_last_line_added;
+  
+    /* No specification defaults to most recent command. */
+--- 481,490 ----
+       so we check hist_last_line_added.  This needs to agree with the
+       calculation of last_hist in fc_builtin above. */
+!   /* Even though command substitution through parse_and_execute turns off
+!      remember_on_history, command substitution in a shell when set -o history
+!      has been enabled (interactive or not) should use it in the last_hist
+!      calculation as if it were on. */
+!   rh = remember_on_history || ((subshell_environment & SUBSHELL_COMSUB) && enable_history_list);
+!   i -= rh + hist_last_line_added;
+  
+    /* No specification defaults to most recent command. */
+*** ../bash-4.0/patchlevel.h	2009-01-04 14:32:40.000000000 -0500
+--- bash/patchlevel.h	2009-02-22 16:11:31.000000000 -0500
+***************
+*** 26,30 ****
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 13
+  
+  #endif /* _PATCHLEVEL_H_ */
+--- 26,30 ----
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 14
+  
+  #endif /* _PATCHLEVEL_H_ */
