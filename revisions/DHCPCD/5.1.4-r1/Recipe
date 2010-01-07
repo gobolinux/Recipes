@@ -1,0 +1,17 @@
+# Recipe for version 5.1.4 by Jonas Karlsson <jonas@gobolinux.org>, on Wed Jan 6 06:37:46 CET 2010
+compile_version=1.9.0
+url="http://roy.marples.name/downloads/dhcpcd/dhcpcd-5.1.4.tar.bz2"
+file_size=65198
+file_md5=d18afc66efbea9a28e541e9b10fd284f
+recipe_type=configure
+configure_options=(
+   --dbdir="${goboVariable}/lib/dhcpcd"
+   --rundir="${goboVariable}/run"
+)
+install_variables=(
+   SYSCONFDIR="${settings_target}"
+)
+unmanaged_files=(
+   "${goboVariable}/lib/dhcpcd"
+   "${goboVariable}/run"
+)
