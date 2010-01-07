@@ -1,0 +1,78 @@
+			     BASH PATCH REPORT
+			     =================
+
+Bash-Release: 4.0
+Patch-ID: bash40-018
+
+Bug-Reported-by: Dan Price <dp@eng.sun.com>
+Bug-Reference-ID: <20090324171502.GA20582@eng.sun.com>
+Bug-Reference-URL: http://lists.gnu.org/archive/html/bug-bash/2009-03/msg00184.html
+
+Bug-Description:
+
+A missing include file results in an empty function definition and a no-op
+when checking whether or not the window size has changed.
+
+Patch:
+
+*** ../bash-4.0-patched/lib/sh/winsize.c	2008-08-12 13:53:51.000000000 -0400
+--- bash/lib/sh/winsize.c	2009-04-06 10:44:20.000000000 -0400
+***************
+*** 31,44 ****
+  #include <sys/ioctl.h>
+  
+! #if !defined (STRUCT_WINSIZE_IN_SYS_IOCTL)
+! /* For struct winsize on SCO */
+! /*   sys/ptem.h has winsize but needs mblk_t from sys/stream.h */
+! #  if defined (HAVE_SYS_PTEM_H) && defined (TIOCGWINSZ) && defined (SIGWINCH)
+! #    if defined (HAVE_SYS_STREAM_H)
+! #      include <sys/stream.h>
+! #    endif
+  #    include <sys/ptem.h>
+! #  endif /* HAVE_SYS_PTEM_H && TIOCGWINSZ && SIGWINCH */
+! #endif /* !STRUCT_WINSIZE_IN_SYS_IOCTL */
+  
+  #include <stdio.h>
+--- bash/31,57 ----
+  #include <sys/ioctl.h>
+  
+! /* Try to find the definitions of `struct winsize' and TIOGCWINSZ */
+! 
+! #if defined (GWINSZ_IN_SYS_IOCTL) && !defined (TIOCGWINSZ)
+! #  include <sys/ioctl.h>
+! #endif /* GWINSZ_IN_SYS_IOCTL && !TIOCGWINSZ */
+! 
+! #if defined (STRUCT_WINSIZE_IN_TERMIOS) && !defined (STRUCT_WINSIZE_IN_SYS_IOCTL)
+! #  include <termios.h>
+! #endif /* STRUCT_WINSIZE_IN_TERMIOS && !STRUCT_WINSIZE_IN_SYS_IOCTL */
+! 
+! /* Not in either of the standard places, look around. */
+! #if !defined (STRUCT_WINSIZE_IN_TERMIOS) && !defined (STRUCT_WINSIZE_IN_SYS_IOCTL)
+! #  if defined (HAVE_SYS_STREAM_H)
+! #    include <sys/stream.h>
+! #  endif /* HAVE_SYS_STREAM_H */
+! #  if defined (HAVE_SYS_PTEM_H) /* SVR4.2, at least, has it here */
+  #    include <sys/ptem.h>
+! #    define _IO_PTEM_H          /* work around SVR4.2 1.1.4 bug */
+! #  endif /* HAVE_SYS_PTEM_H */
+! #  if defined (HAVE_SYS_PTE_H)  /* ??? */
+! #    include <sys/pte.h>
+! #  endif /* HAVE_SYS_PTE_H */
+! #endif /* !STRUCT_WINSIZE_IN_TERMIOS && !STRUCT_WINSIZE_IN_SYS_IOCTL */
+  
+  #include <stdio.h>
+*** ../bash-4.0/patchlevel.h	2009-01-04 14:32:40.000000000 -0500
+--- bash/patchlevel.h	2009-02-22 16:11:31.000000000 -0500
+***************
+*** 26,30 ****
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 17
+  
+  #endif /* _PATCHLEVEL_H_ */
+--- bash/26,30 ----
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 18
+  
+  #endif /* _PATCHLEVEL_H_ */

@@ -1,0 +1,153 @@
+			     BASH PATCH REPORT
+			     =================
+
+Bash-Release:	4.0
+Patch-ID:	bash40-013
+
+Bug-Reported-by:	jidanni@jidanni.org
+Bug-Reference-ID:
+Bug-Reference-URL:	http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=519165
+
+Bug-Description:
+
+Though references to $@ when there are no positional parameters will now
+cause the shell to exit if the `errexit' option has been enabled, constructs
+such as ${@:-foo} should not cause an exit.
+
+Patch:
+
+*** ../bash-4.0-patched/subst.c	2009-03-08 21:24:39.000000000 -0400
+--- bash/subst.c	2009-03-14 19:04:10.000000000 -0400
+***************
+*** 86,89 ****
+--- 86,90 ----
+  /* Flags for the `pflags' argument to param_expand() */
+  #define PF_NOCOMSUB	0x01	/* Do not perform command substitution */
++ #define PF_IGNUNBOUND	0x02	/* ignore unbound vars even if -u set */
+  
+  /* These defs make it easier to use the editor. */
+***************
+*** 264,268 ****
+  static int chk_arithsub __P((const char *, int));
+  
+! static WORD_DESC *parameter_brace_expand_word __P((char *, int, int));
+  static WORD_DESC *parameter_brace_expand_indir __P((char *, int, int, int *, int *));
+  static WORD_DESC *parameter_brace_expand_rhs __P((char *, char *, int, int, int *, int *));
+--- 265,269 ----
+  static int chk_arithsub __P((const char *, int));
+  
+! static WORD_DESC *parameter_brace_expand_word __P((char *, int, int, int));
+  static WORD_DESC *parameter_brace_expand_indir __P((char *, int, int, int *, int *));
+  static WORD_DESC *parameter_brace_expand_rhs __P((char *, char *, int, int, int *, int *));
+***************
+*** 5196,5202 ****
+     NAME was found inside of a double-quoted expression. */
+  static WORD_DESC *
+! parameter_brace_expand_word (name, var_is_special, quoted)
+       char *name;
+!      int var_is_special, quoted;
+  {
+    WORD_DESC *ret;
+--- 5197,5203 ----
+     NAME was found inside of a double-quoted expression. */
+  static WORD_DESC *
+! parameter_brace_expand_word (name, var_is_special, quoted, pflags)
+       char *name;
+!      int var_is_special, quoted, pflags;
+  {
+    WORD_DESC *ret;
+***************
+*** 5230,5234 ****
+  
+        ret = param_expand (tt, &sindex, quoted, (int *)NULL, (int *)NULL,
+! 			  (int *)NULL, (int *)NULL, 0);
+        free (tt);
+      }
+--- 5231,5235 ----
+  
+        ret = param_expand (tt, &sindex, quoted, (int *)NULL, (int *)NULL,
+! 			  (int *)NULL, (int *)NULL, pflags);
+        free (tt);
+      }
+***************
+*** 5291,5295 ****
+    WORD_DESC *w;
+  
+!   w = parameter_brace_expand_word (name, var_is_special, quoted);
+    t = w->word;
+    /* Have to dequote here if necessary */
+--- 5292,5296 ----
+    WORD_DESC *w;
+  
+!   w = parameter_brace_expand_word (name, var_is_special, quoted, PF_IGNUNBOUND);
+    t = w->word;
+    /* Have to dequote here if necessary */
+***************
+*** 5308,5312 ****
+      return (WORD_DESC *)NULL;
+  
+!   w = parameter_brace_expand_word (t, SPECIAL_VAR(t, 0), quoted);
+    free (t);
+  
+--- 5309,5313 ----
+      return (WORD_DESC *)NULL;
+  
+!   w = parameter_brace_expand_word (t, SPECIAL_VAR(t, 0), quoted, 0);
+    free (t);
+  
+***************
+*** 6659,6663 ****
+      tdesc = parameter_brace_expand_indir (name + 1, var_is_special, quoted, quoted_dollar_atp, contains_dollar_at);
+    else
+!     tdesc = parameter_brace_expand_word (name, var_is_special, quoted);
+  
+    if (tdesc)
+--- 6660,6664 ----
+      tdesc = parameter_brace_expand_indir (name + 1, var_is_special, quoted, quoted_dollar_atp, contains_dollar_at);
+    else
+!     tdesc = parameter_brace_expand_word (name, var_is_special, quoted, PF_IGNUNBOUND);
+  
+    if (tdesc)
+***************
+*** 6990,6994 ****
+        list = list_rest_of_args ();
+  
+!       if (list == 0 && unbound_vars_is_error)
+  	{
+  	  uerror[0] = '$';
+--- 6991,6995 ----
+        list = list_rest_of_args ();
+  
+!       if (list == 0 && unbound_vars_is_error && (pflags & PF_IGNUNBOUND) == 0)
+  	{
+  	  uerror[0] = '$';
+***************
+*** 7052,7056 ****
+        list = list_rest_of_args ();
+  
+!       if (list == 0 && unbound_vars_is_error)
+  	{
+  	  uerror[0] = '$';
+--- 7053,7057 ----
+        list = list_rest_of_args ();
+  
+!       if (list == 0 && unbound_vars_is_error && (pflags & PF_IGNUNBOUND) == 0)
+  	{
+  	  uerror[0] = '$';
+
+
+*** ../bash-4.0/patchlevel.h	2009-01-04 14:32:40.000000000 -0500
+--- bash/patchlevel.h	2009-02-22 16:11:31.000000000 -0500
+***************
+*** 26,30 ****
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 12
+  
+  #endif /* _PATCHLEVEL_H_ */
+--- 26,30 ----
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 13
+  
+  #endif /* _PATCHLEVEL_H_ */

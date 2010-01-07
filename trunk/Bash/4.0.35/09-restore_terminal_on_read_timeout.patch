@@ -1,0 +1,61 @@
+			     BASH PATCH REPORT
+			     =================
+
+Bash-Release: 4.0
+Patch-ID: bash40-009
+
+Bug-Reported-by:	"Chris F.A. Johnson" <cfajohnson@gmail.com>
+Bug-Reference-ID:	<4d6b7$49a88cec$cef88ba3$16813@TEKSAVVY.COM>
+Bug-Reference-URL:	http://lists.gnu.org/archive/html/bug-bash/2009-02/msg00255.html
+
+Bug-Description:
+
+When the read builtin returned due to a timeout supplied with the -t option,
+it did not restore any modified terminal attribtues.
+
+Patch:
+
+*** ../bash-4.0/builtins/read.def	2009-01-15 23:11:21.000000000 -0500
+--- bash/builtins/read.def	2009-03-02 10:15:39.000000000 -0500
+***************
+*** 370,381 ****
+        if (code)
+  	{
+! #if 0
+  	  run_unwind_frame ("read_builtin");
+- 	  return (EXECUTION_FAILURE);
+- #else
+  	  input_string[i] = '\0';	/* make sure it's terminated */
+! 	  retval = 128+SIGALRM;;
+  	  goto assign_vars;
+- #endif
+  	}
+        old_alrm = set_signal_handler (SIGALRM, sigalrm);
+--- 370,381 ----
+        if (code)
+  	{
+! 	  /* Tricky.  The top of the unwind-protect stack is the free of
+! 	     input_string.  We want to run all the rest and use input_string,
+! 	     so we have to remove it from the stack. */
+! 	  remove_unwind_protect ();
+  	  run_unwind_frame ("read_builtin");
+  	  input_string[i] = '\0';	/* make sure it's terminated */
+! 	  retval = 128+SIGALRM;
+  	  goto assign_vars;
+  	}
+        old_alrm = set_signal_handler (SIGALRM, sigalrm);
+*** ../bash-4.0/patchlevel.h	2009-01-04 14:32:40.000000000 -0500
+--- bash/patchlevel.h	2009-02-22 16:11:31.000000000 -0500
+***************
+*** 26,30 ****
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 8
+  
+  #endif /* _PATCHLEVEL_H_ */
+--- 26,30 ----
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 9
+  
+  #endif /* _PATCHLEVEL_H_ */

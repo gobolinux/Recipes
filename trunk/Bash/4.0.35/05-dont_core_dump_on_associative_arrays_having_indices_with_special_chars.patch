@@ -1,0 +1,63 @@
+			     BASH PATCH REPORT
+			     =================
+
+Bash-Release: 4.0
+Patch-ID: bash40-005
+
+Bug-Reported-by:	Pierre Gaston <pierre.gaston@gmail.com>
+Bug-Reference-ID:	<c440c9800902242338n69f594a4nd66b8748def9cf18@mail.gmail.com>
+Bug-Reference-URL:	http://lists.gnu.org/archive/html/bug-bash/2009-02/msg00206.html
+
+Bug-Description:
+
+The `declare' builtin dumped core when attempting to assign associative
+array indices containing some special characters, even when they were
+quoted before being expanded.
+
+Patch:
+
+*** ../bash-4.0/builtins/declare.def	2009-01-04 14:32:22.000000000 -0500
+--- bash/builtins/declare.def	2009-02-26 11:40:16.000000000 -0500
+***************
+*** 296,299 ****
+--- 296,306 ----
+        if (t = strchr (name, '['))	/* ] */
+  	{
++ 	  /* If offset != 0 we have already validated any array reference */
++ 	  if (offset == 0 && valid_array_reference (name) == 0)
++ 	    {
++ 	      sh_invalidid (name);
++ 	      assign_error++;
++ 	      NEXT_VARIABLE ();
++ 	    }
+  	  subscript_start = t;
+  	  *t = '\0';
+***************
+*** 485,489 ****
+  	  /* declare -a name[[n]] or declare name[n] makes name an indexed
+  	     array variable. */
+! 	  else if ((making_array_special || (flags_on & att_array)) && array_p (var) == 0)
+  	    var = convert_var_to_array (var);
+  #endif /* ARRAY_VARS */
+--- 492,496 ----
+  	  /* declare -a name[[n]] or declare name[n] makes name an indexed
+  	     array variable. */
+! 	  else if ((making_array_special || (flags_on & att_array)) && array_p (var) == 0 && assoc_p (var) == 0)
+  	    var = convert_var_to_array (var);
+  #endif /* ARRAY_VARS */
+*** ../bash-4.0/patchlevel.h	2009-01-04 14:32:40.000000000 -0500
+--- bash/patchlevel.h	2009-02-22 16:11:31.000000000 -0500
+***************
+*** 26,30 ****
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 4
+  
+  #endif /* _PATCHLEVEL_H_ */
+--- 26,30 ----
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 5
+  
+  #endif /* _PATCHLEVEL_H_ */
+
