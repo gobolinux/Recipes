@@ -7,7 +7,7 @@ file_md5=e9163df591a6f38f59fdbfe33e73bf20
 recipe_type=configure
 
 configure_options=(
-   --libexecdir="${target}/lib"
+   --libexecdir="${target}/lib/hal"
    --sysconfdir="$goboSettings"
    --disable-docbook-docs
    --with-pid-file="${goboVariable}/run/hald/pid"
@@ -23,9 +23,11 @@ configure_options=(
 with_policy_kit=(--enable-policy-kit)
 with_console_kit=(--enable-console-kit)
 with_doc=(--enable-docbook-docs)
+with_cpufreqd=(--with-cpufreq)
 
 install_variables=(
    sysconfdir="$settings_target"
+   libexecdir="${target}/lib/hal"
 )
 
 unmanaged_files=(

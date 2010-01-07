@@ -1,4 +1,5 @@
 ConsoleKit >= 0.3.0 [consolekit]
+Cpufreqd [cpufreqd]
 DBus >= 0.61
 DBus-GLib >= 0.61
 Eject >= 2.0.0
@@ -7,6 +8,7 @@ GLib >= 2.14.0
 Glibc 2.4
 HAL-Info >= 20070402
 HwData 0.195
+LibSMBIOS [libsmbios]
 LibUSB-Compat >= 0.1.0
 Linux >= 2.6.17
 Parted >= 1.7.1, != 1.8.3, != 1.8.4, != 1.8.5
