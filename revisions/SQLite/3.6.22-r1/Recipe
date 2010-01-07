@@ -1,0 +1,28 @@
+# Recipe for version 3.6.22 by Jonas Karlsson <jonas@gobolinux.org>, on Wed Jan 6 15:11:23 CET 2010
+compile_version=1.9.0
+url="http://www.sqlite.org/sqlite-3.6.22.tar.gz"
+file_size=2999137
+file_md5=a17bd53f1fde11f84adf79c6a1510ce5
+recipe_type=configure
+
+environment=(
+    LIBS="-ldl"
+    CFLAGS="-DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_COLUMN_METADATA=1"
+    TCLLIBDIR="$target/lib/tcl8.5"
+)
+
+configure_options=(
+    --enable-load-extension
+    --disable-readline
+)
+
+with_tcl="--enable-tcl"
+with_readline="--enable-readline"
+
+pre_build() {
+   sed -i 's/VERSION/RELEASE/' sqlite{,3}.pc.in
+}
+
+pre_link() {
+    ln -s $target/bin/sqlite3 $target/bin/sqlite
+}
