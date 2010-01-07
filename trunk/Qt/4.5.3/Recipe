@@ -29,10 +29,6 @@ with_odbc="-plugin-sql-odbc"
 with_nas="-system-nas-sound"
 with_webkit="-webkit"
 
-build_variables=(
-   CFLAGS="-D_GNU_SOURCE $CFLAGS"
-)
-
 pre_link() {
    # clean out debug files
    find ${target} -name "*.debug" | xargs rm -f
