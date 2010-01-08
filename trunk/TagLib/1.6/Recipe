@@ -1,4 +1,4 @@
-# Recipe for version 1.6 by Demian Florentin <demianflorentin@gmail.com>, on Fri Oct 2 11:06:28 PYT 2009
+# Recipe for version 1.6 by Keith Wygant <keith.wygant@gmail.com>, on Thu Sep 24 02:24:07 EDT 2009
 # Recipe (MakeRecipe) for TagLib by roko, <ro.ko@mcnon.com>, on Fri Jan 14 20:31:28 BRST 2005
 compile_version=1.8.0
 url="http://developer.kde.org/~wheeler/files/src/taglib-1.6.tar.gz"
@@ -8,4 +8,6 @@ recipe_type=configure
 
 configure_options=(
   "--disable-libsuffix"
+  "--enable-asf"
+  "--enable-mp4"
 )
