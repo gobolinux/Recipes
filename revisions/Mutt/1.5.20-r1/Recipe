@@ -1,0 +1,16 @@
+# Recipe for version 1.5.20 by Michael Homer <michael@gobolinux.org>, on Sun Jan 10 11:01:39 NZDT 2010
+# Recipe (MakeRecipe) for Mutt by Felix Breuer, on Sun Sep 5 16:25:02 BRT 2004
+compile_version=1.8.2
+url="ftp://ftp.mutt.org/mutt/devel/mutt-1.5.20.tar.gz"
+file_size=3635047
+file_md5=027cdd9959203de0c3c64149a7ee351c
+dir='mutt-1.5.20'
+recipe_type=configure
+configure_options=(
+   --enable-imap
+   --enable-pop
+   --enable-smtp
+   --enable-gpgme
+   --enable-pgp
+   --with-ssl
+)
