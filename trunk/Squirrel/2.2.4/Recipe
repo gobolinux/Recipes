@@ -1,0 +1,19 @@
+# Recipe for version 2.2.4 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. jan. 10., vasárnap, 00.12.53 CET
+# Recipe (MakeRecipe) for Squirrel by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 29., szerda, 23.55.18 CEST
+compile_version=1.12.2
+url="$httpSourceforge/squirrel/squirrel_2.2.4_stable.tar.gz"
+file_size=419567
+file_md5=e411dfd1bcc5220aa80de53e4a5f094d
+dir='SQUIRREL2'
+recipe_type=manifest
+pre_install(){
+    make
+}
+manifest=(
+    "bin:bin"
+    "lib:lib"
+    "include:include"
+    "doc:Shared/squirrel-2.2.4/Documentation"
+    "etc:Shared/squirrel-2.2.4/embedding"
+    "samples:Shared/squirrel-2.2.4/samples"
+)
