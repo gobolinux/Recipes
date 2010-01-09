@@ -1,0 +1,27 @@
+# Recipe for version 1.0.22 by Zbigniew Baniewski <zb@ispid.com.pl>, on sob, 9 sty 2010, 15:24:25 CET
+compile_version=1.13.0
+url="ftp://ftp.alsa-project.org/pub/tools/alsa-tools-1.0.22.tar.bz2"
+file_size=1555768
+file_md5=789d7684065a3d6ff86a3703d1c5fa5f
+recipe_type=makefile
+make="make configure install"
+
+pre_build() {
+  for dir in echomixer envy24control rmedigicontrol; do
+    echo 'AC_DEFUN([AM_PATH_GTK],[])' > $dir/acinclude.m4
+  done
+  echo 'AC_DEFUN([AM_PATH_LD10K1],[])' > qlo10k1/acinclude.m4
+  mv seq seq.orig
+  ln -sf seq.orig/sbiload seq
+}
+
+make_variables=(
+  "CONFIGURE_ARGS=--prefix $target"
+)
+
+unmanaged_files=(
+  $goboSettings/hotplug/usb/tascam_fw.usermap
+  $goboSettings/hotplug/usb/tascam_fw
+  $goboSettings/hotplug/usb/tascam_fpga
+)
+
