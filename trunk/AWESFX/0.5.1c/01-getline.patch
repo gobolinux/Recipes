@@ -1,0 +1,53 @@
+--- awesfx-0.5.1.c.orig/setfx.c	2007-08-29 18:00:23.000000000 +0200
++++ awesfx-0.5.1.c/setfx.c	2009-05-19 22:19:56.140092119 +0200
+@@ -37,7 +37,7 @@
+ /*----------------------------------------------------------------*/
+ 
+ static void usage(void);
+-static int getline(FILE *fp);
++static int awesfx_getline(FILE *fp);
+ static int nextline(FILE *fp);
+ static char *gettok(FILE *fp);
+ static char *divtok(char *src, char *divs, int only_one);
+@@ -126,7 +126,7 @@
+ 	}
+ 
+ 	curline = 0;
+-	if (!getline(fp))
++	if (!awesfx_getline(fp))
+ 		return 0;
+ 
+ 	seq_init(seq_devname, seq_devidx);
+@@ -370,7 +370,7 @@
+  * read a line and parse tokens
+  *----------------------------------------------------------------*/
+ 
+-static int getline(FILE *fp)
++static int awesfx_getline(FILE *fp)
+ {
+ 	char *p;
+ 	curline++;
+@@ -393,12 +393,12 @@
+ {
+ 	if (connected) {
+ 		do {
+-			if (! getline(fp))
++			if (! awesfx_getline(fp))
+ 				return FALSE;
+ 		} while (connected);
+ 		return TRUE;
+ 	} else {
+-		return getline(fp);
++		return awesfx_getline(fp);
+ 	}
+ }
+ 
+@@ -415,7 +415,7 @@
+ 	tok = divtok(NULL, " \t\r\n", FALSE);
+ 	while (tok == NULL || *tok == 0) {
+ 		if (! connected) return NULL;
+-		if (! getline(fp)) return NULL;
++		if (! awesfx_getline(fp)) return NULL;
+ 		tok = divtok(line, " \t\r\n", FALSE);
+ 	}
+ 	return tok;
