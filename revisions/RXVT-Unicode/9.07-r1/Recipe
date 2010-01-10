@@ -1,0 +1,11 @@
+# Recipe for version 9.07 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. jan. 10., vasárnap, 02.40.56 CET
+# Recipe (MakeRecipe) for RXVT-Unicode by Isaac Dupree <id@isaac.cedarswampstudios.org>, on Sun Jul 22 19.07:17 BRT 2007
+compile_version=1.9.0
+url="http://dist.schmorp.de/rxvt-unicode/rxvt-unicode-9.07.tar.bz2"
+file_size=858616
+file_md5=49bb52c99e002bf85eb41d8385d903b5
+mirror_url="http://dist.schmorp.de/rxvt-unicode/Attic/rxvt-unicode-9.07.tar.bz2"
+recipe_type=configure
+configure_options=(
+   --with-terminfo="$target/Shared/terminfo"
+)
