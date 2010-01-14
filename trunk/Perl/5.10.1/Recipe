@@ -54,18 +54,18 @@ do_install() {
    
    # Restore Config_heavy.pl
    eval $("${target}/bin/"perl -V:installarchlib)
-   cp -f "${sourcedir}/lib/Config_heavy.pl.bak" "${installarchlib}/Config_heavy.pl" || Die "Failed restoring Config_heavy.pl"
+   $sudo_exec cp -f "${sourcedir}/lib/Config_heavy.pl.bak" "${installarchlib}/Config_heavy.pl" || Die "Failed restoring Config_heavy.pl"
    
    # These symlinks are required for 'ld' to find '-lperl'
-   ln -sf libperl.so.5.10 "${installarchlib}/CORE/libperl.so.5"
-   ln -sf libperl.so.5.10 "${installarchlib}/CORE/libperl.so"
+   $sudo_exec ln -sf libperl.so.5.10 "${installarchlib}/CORE/libperl.so.5"
+   $sudo_exec ln -sf libperl.so.5.10 "${installarchlib}/CORE/libperl.so"
 }
 
 post_install() {
    local cpandir="${goboSystem}/Aliens/CPAN"
-   mkdir -p "${cpandir}/.cpan/CPAN"
+   $sudo_exec mkdir -p "${cpandir}/.cpan/CPAN"
    sed '
       s,HOMEDIRFIX,'${cpandir}',g;
       s,\([A-Z0-9_]*\)=~,\1='${cpandir}',g;
-   ' ${recipedir}/MyConfig.pm.in > ${cpandir}/.cpan/CPAN/MyConfig.pm   
+   ' ${recipedir}/MyConfig.pm.in | $sudo_exec tee ${cpandir}/.cpan/CPAN/MyConfig.pm >/dev/null
 }
