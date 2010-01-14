@@ -1,0 +1,14 @@
+# Recipe for version 2.18.3 by Hugo Barrocas <hugobarrocas@iol.pt>, on Dom Nov 1 17:56:57 WET 2009
+# Recipe (MakeRecipe) for GTK+ by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 11:55:54 BRT 2005
+compile_version=1.9.0
+url="http://ftp.gnome.org/pub/gnome/sources/gtk+/2.18/gtk+-2.18.3.tar.bz2"
+file_size=19069010
+file_md5=369e173600efc272131b53b1902679e8
+recipe_type=configure
+
+configure_options=(
+   --with-xinput=yes
+#   --without-libjasper
+)
+
+with_jpeg2000="--with-libjasper"
