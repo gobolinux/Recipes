@@ -1,0 +1,42 @@
+# Recipe for version 5.2.12 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Jan 12 21:47:23 BRST 2010
+# ----------------------------------------------------------
+# Recipe for Mod_PHP, the Apache PHP Module Version 5.0.2
+# by Volker Wieban <buckoven@yaklinux.org>
+# 2005-02-07
+# ----------------------------------------------------------
+
+compile_version=1.9.0
+
+url="http://www.php.net/get/php-5.2.12.tar.bz2/from/us3.php.net/mirror"
+file_size=9075161
+file_md5=5b7077e366c7eeab34da31dd860a1923
+mirror_urls=(
+   "http://www.php.net/get/php-5.2.12.tar.bz2/from/us2.php.net/mirror"
+   "http://www.php.net/get/php-5.2.12.tar.bz2/from/us4.php.net/mirror"
+)
+
+file="php-5.2.12.tar.bz2"
+recipe_type=configure
+
+configure_options=(
+   "--with-config-file-path=${settings_target}/mod_php"
+#   "--with-apxs"	               		# build Apache 1.x module
+   "--with-apxs2=$httpd_path/sbin/apxs"  	# build Apache 2.x module (experimental)
+   "--disable-cli"	               		# disable building CLI version of PHP
+   "--disable-pear"	                   	# disable building of PEAR
+   "--enable-force-cgi-redirect"       	# Enable security check for internal server redirects
+   "--enable-discard-path"	           	# with this enabled the PHP CGI binary can safely be placed
+				                       	# outside of the web tree and people will not be able to
+			                    		# circumvent .htaccess security
+   "--enable-magic-quotes"
+   "--with-libxml-dir"
+   "--with-openssl"
+   "--with-zlib"
+   "--with-bz2"
+   "--enable-ftp"
+   "--with-gd"
+   "--without-sqlite"
+)
+
+with_mysql=--with-mysql
+with_openldap=--with-ldap
