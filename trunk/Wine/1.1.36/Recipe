@@ -1,0 +1,20 @@
+# Recipe for version 1.1.36 by Zbigniew Baniewski <zb@ispid.com.pl>, on czw, 14 sty 2010, 15:30:35 CET
+# Recipe (NewVersion) for Wine by Pedro Flores <pdavidflores@gmail.com>, on Thu Nov 26 01:35:33 CET 2009
+# Recipe (MakeRecipe) for Wine by roko, <ro.ko@mcnon.com>, on Thu Jan 27 22:27:44 CET 2005
+compile_version=1.12.4
+url="http://downloads.sourceforge.net/project/wine/Source/wine-1.1.36.tar.bz2"
+file_size=16103537
+file_md5=2afa7846175c7c2ce4c7482aa1d82f0f
+recipe_type=configure
+configure_options=(
+   "--localstatedir=$goboVariable/wine"
+#"--without-curses"
+)
+
+unmanaged_files=(
+   "$goboVariable/wine/"
+)
+
+install_variables=(
+   "UPDATE_DESKTOP_DATABASE=''"
+)
