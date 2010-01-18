@@ -1,0 +1,10 @@
+Glibc 2.5
+GMP 4.2.2
+ZLib 1.2.3
+GHC 6.12.1
+# Installed via bootstrap.sh, which will supply needed dependencies, so not required here.
+#Haskell-Network < 3
+#Haskell-Network-HTTP < 4001
+#Haskell-Zlib < 0.6
+#Haskell-Parsec
+# base, Cabal, filepath, unix are all part of GHC

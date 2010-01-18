@@ -1,0 +1,16 @@
+2010 Jan 15   Kevin Quick  <quick@sparq.org>
+
+  * Remove specific non-Gobo target location for global installs via bootstrap script.
+
+diff -aur cabal-install-0.8.0-orig/bootstrap.sh cabal-install-0.8.0/bootstrap.sh
+--- cabal-install-0.8.0-orig/bootstrap.sh	2010-01-15 13:22:03.000000000 -0700
++++ cabal-install-0.8.0/bootstrap.sh	2010-01-15 14:05:43.000000000 -0700
+@@ -29,7 +29,6 @@
+       shift;;
+     "--global")
+       SCOPE_OF_INSTALLATION=${arg}
+-      PREFIX="/usr/local"
+       shift;;
+     *)
+       echo "Unknown argument or option, quitting: ${arg}"
+Only in cabal-install-0.8.0: bootstrap.sh~
