@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for UML-Utilities by Jonas Karlsson <jonas@gobolinux.org>, on Sat Jan 23 18:49:29 CET 2010
+# Recipe for version 20070815 by Jonas Karlsson <jonas@gobolinux.org>, on Sat Jan 23 18:49:29 CET 2010
+compile_version=1.10.0
+url="http://user-mode-linux.sourceforge.net/uml_utilities_20070815.tar.bz2"
+file_size=50159
+file_md5=b0468ac8b79cef53f36f5f9517907462
+dir='tools-20070815'
+recipe_type=makefile
+makefile='Makefile'
+install_variables=(
+   BIN_DIR="${target}/bin"
+   LIB_DIR="${target}/lib/uml"
+   SBIN_DIR="${target}/sbin"
+)
