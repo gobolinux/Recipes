@@ -1,0 +1,21 @@
+# Recipe for version 4.0_Devel by Zbigniew Baniewski <zb@ispid.com.pl>, on Tue, 19 Jan 2010 10:32:24 +0100
+# Recipe (MakeRecipe) for Foomatic-DB by Lucas C. Villa Real, on Mon Feb 26 14:50:06 GMT 2007
+compile_version=1.13.1
+url="http://www.linuxprinting.org/download/foomatic/foomatic-db-nonfree-current.tar.gz"
+uncompress=no
+dir='foomatic-db-nonfree-20100119'
+recipe_type=configure
+part_of=Foomatic
+
+install_variables=(
+    CUPS_PPDS=$target/share
+    LIBDIR=$target/share/foomatic
+)
+
+pre_build() {
+    # this is the only way to handle tarballs with unstable dirnames after uncompressed
+    tar zxf foomatic-db-nonfree-current.tar.gz
+    mv foomatic-db-*/* .
+    rmdir * 2> /dev/null
+    rm -f foomatic-db-nonfree-current.tar.gz
+}
