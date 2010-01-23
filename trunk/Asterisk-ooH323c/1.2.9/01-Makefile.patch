@@ -1,0 +1,16 @@
+# fix: hardcode paths
+--- asterisk-addons-1.2.9/asterisk-ooh323c/Makefile.in	2010-01-19 00:35:20.000000000 -0200
++++ asterisk-addons-1.2.9/asterisk-ooh323c/Makefile.in	2010-01-19 00:35:59.000000000 -0200
+@@ -1239,10 +1239,10 @@
+ 	$(MAKE) "CFLAGS = -g -DGNU -D_GNU_SOURCE -D_REENTRANT $(DEBUG_THREADS)" all
+ 
+ install: 
+-	cp .libs/libchan_h323.so.1.0.1 $(DESTDIR)/usr/lib/asterisk/modules/chan_ooh323.so
++	cp .libs/libchan_h323.so.1.0.1 $(libdir)/asterisk/modules/chan_ooh323.so
+ 
+ sample:
+-	cp h323.conf.sample $(DESTDIR)/etc/asterisk/ooh323.conf
++	cp h323.conf.sample $(sysconfdir)/asterisk/ooh323.conf
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.
+ # Otherwise a system limit (for SysV at least) may be exceeded.
+ .NOEXPORT:

@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for Asterisk-ooH323c by Fabio Mierlo <geromao@gmail.com>, on Tue Jan 19 00:20:54 BRST 2010
+# Recipe for version 1.2.9 by Fabio Mierlo <geromao@gmail.com>, on Tue Jan 19 00:20:54 BRST 2010
+compile_version=1.12.3
+url="http://downloads.asterisk.org/pub/telephony/asterisk/releases/asterisk-addons-1.2.9.tar.gz"
+file_size=762705
+file_md5=a63b74b3c4204bdf061fb4ce9bde7bcf
+recipe_type=configure
+dir="asterisk-addons-1.2.9/asterisk-ooh323c"
+install_target="install"
+
+pre_install()
+{
+  mkdir -p "$target/lib/asterisk/modules"
+  mkdir -p "$target/Resources/Defaults/Settings/asterisk"
+  cp h323.conf.sample "${settings_target}/asterisk/ooh323.conf"
+}
