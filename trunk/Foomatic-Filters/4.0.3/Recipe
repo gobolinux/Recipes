@@ -1,0 +1,27 @@
+# Recipe for version 4.0.3 by Zbigniew Baniewski <zb@ispid.com.pl>, on Tue, 19 Jan 2010 10:01:00 +0100
+# Recipe (MakeRecipe) for Foomatic-Filters by Lucas C. Villa Real, on Fri Feb 23 17:22:56 GMT 2007
+compile_version=1.13.1
+url="http://www.linuxprinting.org/download/foomatic/foomatic-filters-4.0.3.tar.gz"
+file_size=239548
+file_md5=f2fb7c48cc6b1af6f76dd0529d6dbd98
+recipe_type=configure
+part_of=Foomatic
+
+configure_options=(
+    --with-execpath=$goboExecutables:$goboShared/cups/filter:$goboLibraries/cups/filter
+)
+
+install_variables=(
+    LIBDIR=$target/share/foomatic
+    PPR_INTERFACES=$target/lib/ppr/interfaces
+    PPR_LIB=$target/lib/ppr/lib
+    CUPS_BACKENDS=$target/share/cups/backend
+    CUPS_FILTERS=$target/share/cups/filter
+)
+
+pre_link() {
+    mkdir -p $target/Shared/cups/filter
+    Quiet pushd $target/Shared/cups/filter
+    ln -s $target/bin/foomatic-rip .
+    Quiet popd
+}
