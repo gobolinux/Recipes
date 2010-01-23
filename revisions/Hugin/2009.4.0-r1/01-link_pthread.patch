@@ -1,0 +1,15 @@
+This patch just makes sure that the 'matchpoint' utility will be linked
+against pthread. Linking may fail otherwise.
+
+diff -Naur hugin-2009.4.0-vanilla/src/matchpoint/CMakeLists.txt hugin-2009.4.0-fixed/src/matchpoint/CMakeLists.txt
+--- hugin-2009.4.0-vanilla/src/matchpoint/CMakeLists.txt	2009-12-01 20:39:00.000000000 -0200
++++ hugin-2009.4.0-fixed/src/matchpoint/CMakeLists.txt	2010-01-19 15:06:22.000000000 -0200
+@@ -5,7 +5,7 @@
+ 	TARGET_LINK_LIBRARIES(matchpoint ${image_libs} hugingetopt)
+ #need to link to some other libraries ? just add them here
+ ELSE (MSVC)
+-	TARGET_LINK_LIBRARIES(matchpoint ${image_libs})
++	TARGET_LINK_LIBRARIES(matchpoint ${image_libs} pthread)
+ ENDIF (MSVC)
+ 
+ install(TARGETS matchpoint
