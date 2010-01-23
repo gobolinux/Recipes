@@ -1,0 +1,50 @@
+# fix: compile in kernel >= 2.6.28
+diff -ur zaptel-1.2.27-orig/ztdummy.c zaptel-1.2.27/ztdummy.c
+--- zaptel-1.2.27-orig/ztdummy.c	2008-01-27 13:34:16.000000000 -0200
++++ zaptel-1.2.27/ztdummy.c	2010-01-21 12:48:16.000000000 -0200
+@@ -93,6 +93,18 @@
+ 
+ #include "ztdummy.h"
+ 
++#if defined(USE_HIGHRESTIMER) && ( LINUX_VERSION_CODE < KERNEL_VERSION(2,6,28) )
++/* compatibility with new hrtimer interface */
++static inline ktime_t hrtimer_get_expires(const struct hrtimer *timer)
++{
++       return timer->expires;
++}
++
++static inline void hrtimer_set_expires(struct hrtimer *timer, ktime_t time)
++{
++       timer->expires = time;
++}
++#endif
+ 
+ #ifndef LINUX_VERSION_CODE
+ #  include <linux/version.h>
+@@ -192,7 +204,7 @@
+ 	 * expired.
+ 	 * We should worry if overrun is 2 or more; then we really missed 
+ 	 * a tick */
+-	overrun = hrtimer_forward(&zaptimer, htmr->expires, 
++	overrun = hrtimer_forward(&zaptimer, hrtimer_get_expires(htmr),
+ 			ktime_set(0, ZAPTEL_TIME_NS));
+ 	if(overrun > 1) {
+ 		if(printk_ratelimit())
+@@ -217,7 +229,7 @@
+ {
+     zt_receive(&ztd->span);
+     zt_transmit(&ztd->span);
+-    timer.expires = jiffies + 1;
++ 	hrtimer_set_expires(timer, jiffies + 1);
+     add_timer(&timer);
+ }
+ #endif
+@@ -333,7 +345,7 @@
+ #else
+     init_timer(&timer);
+     timer.function = ztdummy_timer;
+-    timer.expires = jiffies + 1;
++ 	hrtimer_set_expires(timer, jiffies + 1);
+     add_timer(&timer);
+ #endif
+ #else

@@ -1,0 +1,27 @@
+# Recipe for version 1.2.27 by Fabio Mierlo <geromao@gmail.com>, on Mon Nov 23 02:24:24 BRST 2009
+# Recipe (MakeRecipe) for Zaptel by Aitor Pérez Iturri, on lun feb 26 21:42:55 CET 2007
+compile_version=1.8.2
+url="http://downloads.asterisk.org/pub/telephony/zaptel/zaptel-1.2.27.tar.gz"
+file_size=3732992
+file_md5=6e0ccf2a2a805054123b35bf8eb10ae9
+mirror_url="http://ftp.digium.com/pub/zaptel/releases/zaptel-1.2.27.tar.gz"
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=(
+	INSTALL_PREFIX=$target
+	DESTDIR=$target
+	KSRC=$(readlink -f $goboModules/Current/build)
+    MODLIB=$target/Resources/Unmanaged/$goboModules/$(uname -r)
+)
+
+pre_install(){
+    mkdir -p $target/$goboModules/$(uname -r)
+    ln -nfs $target/$goboModules/ $target/lib/modules
+    ln -nfs $target/Resources/Defaults/Settings $target/etc
+    ln -nfs $target/ $target/usr
+}
+
+unmanaged_files=(
+	$goboModules
+)

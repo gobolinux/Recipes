@@ -1,0 +1,80 @@
+# fix: update gobo paths
+--- zaptel-1.2.14_orig/build_tools/genmodconf	2007-01-31 15:06:34.000000000 +0100
++++ zaptel-1.2.14/build_tools/genmodconf	2007-03-02 17:40:44.000000000 +0100
+@@ -32,10 +32,12 @@
+ # we try to determine what version is installed and take advantage of that
+ 
+ if [ "${1}" = "linux24" ]; then
+-    if [ -d ${2}/etc/modutils ]; then
+-	target=${2}/etc/modutils/zaptel
+-    elif [ -f ${2}/etc/modules.conf ]; then
+-	target=${2}/etc/modules.conf
++    if [ -d /etc/modutils ]; then
++	orig=/etc/modutils
++	target=${2}/Resources/Defaults/Settings/modutils/zaptel
++    elif [ -f /etc/modules.conf ]; then
++	orig=/etc/modules.conf
++	target=${2}/Resources/Defaults/Variable/modules.conf
+ 	combined=1
+     else
+ 	echo No suitable location for module rules can be found... exiting.
+@@ -46,15 +48,19 @@
+     if [ ${toolver} -ge 2 ]; then
+ 	cmdopts=\$CMDLINE_OPTS
+     fi
+-    if [ -d ${2}/etc/modprobe.d ]; then
+-	target=${2}/etc/modprobe.d/zaptel
+-    elif [ -d ${2}/etc/modules.d ]; then
+-	target=${2}/etc/modules.d/zaptel
+-    elif [ -f ${2}/etc/modprobe.conf ]; then
+-	target=${2}/etc/modprobe.conf
++    if [ -d /etc/modprobe.d ]; then
++	orig=/etc/modprobe.d
++	target=${2}/Resources/Defaults/Settings/modprobe.d/zaptel
++    elif [ -d /etc/modules.d ]; then
++	orig=/etc/modules.d
++	target=${2}/Resources/Defaults/Settings/modules.d/zaptel
++    elif [ -f /etc/modprobe.conf ]; then
++	orig=/etc/modprobe.conf
++	target=${2}/Resources/Defaults/Settings/modprobe.conf
+ 	combined=1
+-    elif [ -f ${2}/etc/conf.modules ]; then
+-	target=${2}/etc/conf.modules
++    elif [ -f /etc/conf.modules ]; then
++	orig=/etc/conf.modules
++	target=${2}/Resources/Defaults/Settings/conf.modules
+ 	combined=1
+     else
+ 	echo No suitable location for module rules can be found... exiting.
+@@ -66,12 +72,11 @@
+ fi
+ 
+ if [ -n "${combined}" ]; then
+-    if [ -f ${target} ]; then
+-	mv ${target} ${target}.bak
+-	cat ${target}.bak | grep -v "alias char-major-250" | grep -v "alias char-major-196" > ${target}	
++    if [ -f ${orig} ]; then
++	cat ${orig} | grep -v "alias char-major-250" | grep -v "alias char-major-196" > ${target}	
+     fi
+ else
+-    if [ -f ${target} ]; then
++    if [ -f ${orig} ]; then
+ 	mv ${target} ${target}.bak
+     fi
+     echo "# automatically generated file; do not edit" > ${target}
+@@ -81,13 +86,13 @@
+ 
+ if [ "${1}" = "linux24" ]; then
+     for mod in ${3}; do
+-	if ! grep -q "post-install ${mod} " ${target}; then
++	if ! grep -q "post-install ${mod} " ${orig}; then
+ 	    echo "post-install ${mod} /sbin/ztcfg" >> ${target}
+ 	fi
+     done
+ elif [ "${1}" = "linux26" ]; then
+     for mod in ${3}; do
+-	if ! grep -q "install ${mod} " ${target}; then
++	if ! grep -q "install ${mod} " ${orig}; then
+ 	    echo "install ${mod} /sbin/modprobe --ignore-install ${mod} ${cmdopts} && /sbin/ztcfg" >> ${target}
+ 	fi
+     done
