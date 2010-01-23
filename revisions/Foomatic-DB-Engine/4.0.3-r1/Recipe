@@ -1,0 +1,21 @@
+# Recipe for version 4.0.3 by Zbigniew Baniewski, on Tue, 19 Jan 2010 10:15:30 +0100
+# Recipe (MakeRecipe) for Foomatic-DB-Engine by Lucas C. Villa Real, on Mon Feb 26 14:52:22 GMT 2007
+compile_version=1.13.1
+url="http://www.linuxprinting.org/download/foomatic/foomatic-db-engine-4.0.3.tar.gz"
+file_size=343161
+file_md5=fdb02175cc857f63bb06b25ac3b1658b
+recipe_type=configure
+part_of=Foomatic
+
+install_variables=(
+    PERLPREFIX=$target
+    LIBDIR=$target/Shared/foomatic
+    LIB_CUPS=$target/lib/cups
+)
+
+pre_link() {
+    mkdir -p $target/share/cups/driver
+    Quiet pushd $target/share/cups/driver
+    ln -s $target/bin/foomatic-ppdfile foomatic
+    Quiet popd
+}
