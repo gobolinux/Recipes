@@ -1,0 +1,17 @@
+# Recipe for version 0.12.2 by Michael Homer <michael@gobolinux.org>, on Sun Jan 24 13:53:30 NZDT 2010
+# Recipe (MakeRecipe) for QEMU by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sun Oct 17 23:20:23 BRST 2004
+compile_version=1.8.2
+url="http://download.savannah.gnu.org/releases/qemu/qemu-0.12.2.tar.gz"
+file_size=4691757
+file_md5=1d7c2d95acb6d0789de86508c608e26d
+recipe_type=configure
+
+environment=(
+    CFLAGS=
+    CXXFLAGS=
+)
+
+configure_options=(
+    --enable-system
+    --enable-linux-user
+)
