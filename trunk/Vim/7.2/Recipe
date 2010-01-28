@@ -8,9 +8,13 @@ dir='vim72/src'
 recipe_type=configure
 
 configure_options=(
+   --prefix="$target"
+   --exec-prefix="$target"
    --enable-gui=no
    --enable-multibyte
    --disable-selinux
+   --datadir="$target/share"
+   --mandir="$target/Shared/man"
 )
 with_perl=(
    --enable-perlinterp
@@ -18,6 +22,8 @@ with_perl=(
 with_python=(
    --enable-pythoninterp
 )
+
+with_gtk2="--enable-gui=gtk2"
 
 pre_link() {
 	ln -s vim $target/bin/vi
