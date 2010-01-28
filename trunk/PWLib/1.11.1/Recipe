@@ -1,0 +1,15 @@
+# Recipe for version 1.11.0 by Fabio Mierlo <geromao@gmail.com>, on Wed Jan 27 15:44:38 BRST 2010
+# Recipe (MakeRecipe) for PWLib by demian florentin demianflorentin_at_gmail.com, on Sat Sep 22 15:57:41 PYT 2007
+compile_version=1.9.0
+url="http://downloads.sourceforge.net/project/openh323/pwlib/1.11.1/pwlib-v1_11_1-src.tar.gz"
+file_size=2327497
+file_md5=8b7a7a2ed8da6792006922476dd3b2f3
+recipe_type=configure
+dir='pwlib_v1_11_1'
+configure_options=(
+   '--enable-plugins'
+   '--enable-v4l'
+   '--enable-v4l2'
+   '--enable-alsa'
+   '--enable-oss'
+)
