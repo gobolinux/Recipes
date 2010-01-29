@@ -1,0 +1,15 @@
+# Recipe for version 2.8.1 by Tomas Stefano <stefano at @cedo dot cz>, on Thu Jan 28 14:53:18 CET 2010
+compile_version=1.11.4
+url="http://www.abisource.com/downloads/abiword/2.8.1/source/abiword-2.8.1.tar.gz"
+file_size=8618745
+file_md5=284fe25289c160c3797b527a8aacad12
+recipe_type=configure
+configure_options=(
+   --enable-libabiword 
+   --enable-extra-optimization
+)
+
+with_printing="--enable-printing"
+with_imagemagick="--with-ImageMagick"
+with_gnomevfs="--enable-gnomevfs"
+with_libgnomeui="--enable-gnomeui"
