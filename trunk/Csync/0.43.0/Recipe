@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Csync by Michael Homer <michael@gobolinux.org>, on Tue Feb 2 14:38:19 NZDT 2010
+# Recipe for version 0.43.0 by Michael Homer <michael@gobolinux.org>, on Tue Feb 2 14:38:19 NZDT 2010
+compile_version=1.13.0
+url="http://www.csync.org/files/csync-0.43.0.tar.gz"
+file_size=156115
+file_md5=88deba7d2ecc8f0fd679c5bcdf8cc3ce
+dir='csync-0.43.0'
+recipe_type=cmake
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
