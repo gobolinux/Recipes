@@ -1,0 +1,35 @@
+# Recipe for version 4.6.1 by Leandro Motta Barros <lmb@stackedboxes.org>, on Thu Feb 4 13:09:22 BRST 2010
+# by Andre Detsch
+
+compile_version=1.9.0
+url="http://get.qt.nokia.com/qt/source/qt-everywhere-opensource-src-4.6.1.tar.gz"
+file_size=160197277
+file_md5=0542a4be6425451ab5f668c6899cac36
+recipe_type=configure
+
+configure_options=(
+    -release
+    -prefix "$target"
+    -nomake "examples demos docs"
+    -dbus
+    -qt-gif
+    -no-separate-debug-info
+    -sql-sqlite
+    -system-sqlite
+    -opensource
+    -confirm-license
+    -optimized-qmake
+    -no-phonon
+    -no-phonon-backend
+)
+
+with_mysql="-plugin-sql-mysql"
+with_sqlite=(-plugin-sql-sqlite -system-sqlite)
+with_odbc="-plugin-sql-odbc"
+with_nas="-system-nas-sound"
+with_webkit="-webkit"
+
+pre_link() {
+   # clean out debug files
+   find ${target} -name "*.debug" | xargs rm -f
+}
