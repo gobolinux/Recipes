@@ -1,0 +1,11 @@
+# Recipe for version 1.0.1 by Jonas Karlsson <jonas@gobolinux.org>, on Tue Jan 12 02:02:21 CET 2010
+# Recipe (MakeRecipe) for Font-Winitzki-Cyrillic by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jun 4 15:32:39 BRT 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/releases/individual/font/font-winitzki-cyrillic-1.0.1.tar.bz2"
+file_size=91022
+file_md5=92bf4ecb373faac545cef2dcbe40be35
+recipe_type=configure
+part_of=Xorg-Font
+configure_options=(
+   --with-fontrootdir="${target}/share/fonts"
+)
