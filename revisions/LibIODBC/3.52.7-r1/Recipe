@@ -1,0 +1,11 @@
+# Recipe for version 3.52.7 by Michael Homer <michael@gobolinux.org>, on Wed Feb 10 12:20:39 NZDT 2010
+# Recipe (MakeRecipe) for LibIODBC by roko, <ro.ko@mcnon.com>, on Sat Jan 29 01:59:09 CET 2005
+compile_version=1.8.2
+url="http://www.iodbc.org/downloads/iODBC/libiodbc-3.52.7.tar.gz"
+file_size=1038710
+file_md5=ddbd274cb31d65be6a78da58fc09079a
+recipe_type=configure
+configure_options=(
+--with-iodbc-inidir=$goboSettings
+--disable-gui
+)
