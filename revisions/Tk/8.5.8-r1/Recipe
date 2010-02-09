@@ -1,0 +1,14 @@
+# Recipe for version 8.5.8 by Jonas Karlsson <jonas@gobolinux.org>, on Tue Feb 9 23:40:05 CET 2010
+compile_version=1.8.5
+url="$httpSourceforge/tcl/tk8.5.8-src.tar.gz"
+file_size=3789533
+file_md5=13bf90602e16fc530e05196431021dc6
+dir='tk8.5.8/unix'
+recipe_type=configure
+configure_options=(
+   --with-tcl=$tcl_path/lib
+   --enable-xft
+)
+pre_link() {
+   $sudo_exec ln -nfs ${target}/bin/wish8.5 ${target}/bin/wish
+}
