@@ -1,0 +1,11 @@
+# Recipe for version 4.3.80 by Michael Homer <michael@gobolinux.org>, on Wed Feb 10 10:34:18 NZDT 2010
+# Recipe (MakeRecipe) for Phonon by Paul Gideon Dann <pdgiddie+gobo@gmail.com>, on Fri Sep 19 13:16:45 BST 2008
+compile_version=1.11.2
+url="http://kde.mirrors.tds.net/pub/kde/unstable/phonon/phonon-4.3.80.tar.bz2"
+file_size=598739
+file_md5=6b0c5554291615433c14c3c38f741690
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
