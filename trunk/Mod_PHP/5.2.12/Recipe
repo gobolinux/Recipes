@@ -38,5 +38,6 @@ configure_options=(
    "--without-sqlite"
 )
 
-with_mysql=--with-mysql
-with_openldap=--with-ldap
+with_mysql=(--with-mysql --with-mysqli)
+with_postgresql="--with-pgsql"
+with_openldap="--with-ldap"
