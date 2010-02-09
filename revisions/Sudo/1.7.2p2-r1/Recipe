@@ -1,0 +1,62 @@
+# Recipe for version 1.7.2p2 by Jonas Karlsson <jonas@gobolinux.org>, on Wed Jan 6 06:55:34 CET 2010
+# Recipe (MakeRecipe) for Sudo by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sun Feb 27 23:19:34 BRT 2005
+compile_version=1.9.0
+url="http://www.sudo.ws/sudo/dist/sudo-1.7.2p2.tar.gz"
+file_size=772399
+file_md5=2a19cf1ab4afc94fe19d0d0899d4cd45
+mirror_url="http://www.sudo.ws/sudo/dist/OLD/sudo-1.7.2p2.tar.gz"
+needs_safe_linking=yes
+recipe_type=configure
+configure_options=(
+   #Name of the root user is immaterial, number is significant:
+   --with-runas-default="#0"
+   #Unless sudo depends on Sendmail, assuming we use ChrootCompile,
+   #a path to sendmail will not be found at all.
+   #
+   #The default address to send to is "root".  This is not particularly
+   #sensible on a system where user "root" is different from superuser.
+   #
+   #Keeping the configured sendmail from being an actual mail-sending
+   #program's path seems to be the only clean way to disable mail-sending
+   #by default (since there is no sensible default, and we certainly don't
+   #want to risk privilege escalation by sending mail some arbitrary
+   #default way).
+   #
+   #There are be comments in the default sudoers file to help set
+   #up mailing for anyone who wants it.
+   --without-sendmail
+   --with-mailto=""
+   #./configure adds -lpam to link flags unless this option is given, which
+   # breaks compilation if Linux-PAM isn't installed (no autodetection here)
+   # Will be overridden below if pam use flag is defined
+   --without-pam
+
+   --with-logpath="${variable_target}/log/sudo.log"
+   --with-timedir="${variable_target}/run/sudo"
+   #Good for sudo not breaking with our directory/symlink layout:
+   --with-stow
+   #I guess someone just thought this was a good idea?
+   --enable-log-host
+   # Use EDITOR variable for editor to use with visudo
+   --with-env-editor
+)
+
+# This override the "--without-pam" option given in configure_options when
+# pam use flag is set. This should only be used with broken ./configure
+# scripts
+with_pam="--with-pam"
+
+#Don't try to install their default sudoers file, just the stuff we want.
+
+#hmm... this didn't fix the FiboSandbox problems...
+#install_target="install_binaries install_man"
+sandbox_options=("--no-sandbox")
+
+pre_link() {
+   chmod 4111 "${target}/bin/sudo"
+}
+
+post_install() {
+   chmod 0440 "${target}/Resources/Defaults/Settings/sudoers"
+   chmod 0440 "${settings_target}/sudoers"
+}
