@@ -1,0 +1,16 @@
+[Name] ORBit2
+[Summary] High-Performance CORBA Object Request Broker
+[License] GNU Library General Public License (LGPL)
+[Description] ORBit2 is a major revision to the ORBit code base, \
+adding the foundations of threading support, a massively shrunk and \
+genericised code base, and lots more power, completeness, and \
+correctness. \
+ORBit is a high-performance CORBA (Common Object Request Broker \
+Architecture) ORB (Object Request Broker). It allows programs to send \
+requests and receive replies from other programs, regardless of the \
+locations of the two programs. CORBA is an architecture that enables \
+communication between program objects, regardless of the programming \
+language they are written in or the operating system they run on. You \
+will need to install this package if you want to run programs that use \
+the CORBA technology ORBit implementation.
+[Homepage] http://orbit-resource.sourceforge.net/
