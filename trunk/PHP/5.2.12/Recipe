@@ -27,3 +27,7 @@ configure_options=(
 
 with_openldap=--with-ldap
 with_mysql=--with-mysql
+
+install_variables=(
+   PHP_PEAR_SYSCONF_DIR="${settings_target}"
+)
