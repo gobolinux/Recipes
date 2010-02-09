@@ -1,0 +1,11 @@
+# Recipe for version 1.0.2 by Jonas Karlsson <jonas@gobolinux.org>, on Tue Jan 12 01:37:25 CET 2010
+# Recipe (MakeRecipe) for Font-Adobe-Utopia-1000dpi by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jun 4 15:06:08 BRT 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/releases/individual/font/font-adobe-utopia-100dpi-1.0.2.tar.bz2"
+file_size=349250
+file_md5=1c3a2c26bd3f6e406fbadc7380efa369
+recipe_type=configure
+part_of=Xorg-Font
+configure_options=(
+   --with-fontrootdir="${target}/share/fonts"
+)
