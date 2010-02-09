@@ -1,0 +1,11 @@
+# Recipe for version 4.3.2 by Jonas Karlsson <jonas@gobolinux.org>, on Sat Jan 16 16:03:26 CET 2010
+# Recipe (MakeRecipe) for GMP by roko, <ro.ko@mcnon.com>, on Sun Dec 5 19:48:50 BRST 2004
+compile_version=1.9.0
+url="$ftpGnu/gmp/gmp-4.3.2.tar.bz2"
+file_size=1897483
+file_md5=dd60683d7057917e34630b4a787932e8
+recipe_type=configure
+configure_options=(
+   --enable-cxx
+   --enable-mpbsd
+)
