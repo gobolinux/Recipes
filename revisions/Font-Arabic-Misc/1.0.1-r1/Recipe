@@ -1,0 +1,11 @@
+# Recipe for version 1.0.1 by Jonas Karlsson <jonas@gobolinux.org>, on Tue Jan 12 01:38:24 CET 2010
+# Recipe (MakeRecipe) for Font-Arabic-Misc by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jun 4 15:11:29 BRT 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/releases/individual/font/font-arabic-misc-1.0.1.tar.bz2"
+file_size=102626
+file_md5=817ceb99636c873ad7679fe2a468678d
+recipe_type=configure
+part_of=Xorg-Font
+configure_options=(
+   --with-fontrootdir="${target}/share/fonts"
+)
