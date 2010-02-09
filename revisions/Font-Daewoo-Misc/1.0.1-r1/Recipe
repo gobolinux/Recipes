@@ -1,0 +1,11 @@
+# Recipe for version 1.0.1 by Jonas Karlsson <jonas@gobolinux.org>, on Tue Jan 12 01:50:31 CET 2010
+# Recipe (MakeRecipe) for Font-Daewoo-Misc by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jun 4 15:21:09 BRT 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/releases/individual/font/font-daewoo-misc-1.0.1.tar.bz2"
+file_size=735182
+file_md5=05597e2b193a7b7de2ca525468276b1d
+recipe_type=configure
+part_of=Xorg-Font
+configure_options=(
+   --with-fontrootdir="${target}/share/fonts"
+)
