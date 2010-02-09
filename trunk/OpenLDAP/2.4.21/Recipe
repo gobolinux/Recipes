@@ -6,21 +6,21 @@ file_size=5477877
 file_md5=e7128c57b2bacd940e8906057c94ff26
 recipe_type=configure
 configure_options=(
-   --localstatedir=${goboVariable}/openldap
+   --localstatedir="${goboVariable}/lib/openldap"
    --with-cyrus-sasl=no
    --with-tls=no
 )
 with_cyrus_sasl="--with-cyrus-sasl=yes"
 with_openssl="--with-tls=openssl"
 
-pre_build() {
-   autoconf
-}
+make_variables=(
+   LIBTOOL="${goboExecutables}/libtool --tag=CC"
+)
 
 pre_install() {
-   mkdir -p $goboVariable/openldap
+   mkdir -p "${goboVariable}/lib/openldap"
 }
 
 unmanaged_files=(
-    $goboVariable/openldap
+    "${goboVariable}/lib/openldap"
 )
