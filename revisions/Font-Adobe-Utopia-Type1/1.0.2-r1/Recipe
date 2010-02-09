@@ -1,0 +1,14 @@
+# Recipe for version 1.0.2 by Jonas Karlsson <jonas@gobolinux.org>, on Tue Jan 12 01:37:40 CET 2010
+# Recipe (MakeRecipe) for Font-Adobe-Utopia-Type1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jun 4 15:10:17 BRT 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/releases/individual/font/font-adobe-utopia-type1-1.0.2.tar.bz2"
+file_size=261373
+file_md5=ad945b19b2db64dec3a19507848ff63b
+recipe_type=configure
+part_of=Xorg-Font
+configure_options=(
+   --with-fontrootdir="${target}/share/fonts"
+)
+install_variables=(
+   FCCACHE=true
+)
