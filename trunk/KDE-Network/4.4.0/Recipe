@@ -1,0 +1,13 @@
+# Recipe for version 4.4.0 by Michael Homer <michael@gobolinux.org>, on Tue Feb 9 22:29:59 NZDT 2010
+# Recipe (MakeRecipe) for KDE-Network by Giambattista Bloisi <giamby@infinito.it>, on Sat Jan 19 00:53:44 CET 2008
+compile_version=1.10.0
+url="http://download.kde.org/stable/4.4.0/src/kdenetwork-4.4.0.tar.bz2"
+file_size=7841121
+file_md5=a200053df151f17605ffee05f427e959
+file="kdenetwork-4.4.0.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
+
