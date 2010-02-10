@@ -15,3 +15,6 @@ configure_options=(
 #   --enable-tcl       #     Build Tcl API.
 #   --enable-test      #     Configure to run the test suite.
 )
+make_variables=(
+   LIBTOOL="${sourcedir}/libtool"
+)
