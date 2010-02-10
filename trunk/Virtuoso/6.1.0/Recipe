@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Virtuoso by Michael Homer <michael@gobolinux.org>, on Wed Feb 10 11:47:33 NZDT 2010
+# Recipe for version 6.1.0 by Michael Homer <michael@gobolinux.org>, on Wed Feb 10 11:47:33 NZDT 2010
+compile_version=1.13.0
+url="http://distfiles.gentoo.org/virtuoso-opensource-6.1.0.tar.gz"
+file_size=70162123
+file_md5=49135390d27ab3e445f5e9481ab677bb
+recipe_type=configure
+unmanaged_files=(
+   "$goboVariable/lib/virtuoso"
+)
