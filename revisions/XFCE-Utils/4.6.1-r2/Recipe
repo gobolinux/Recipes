@@ -1,0 +1,14 @@
+# Recipe for version 4.6.1 by Jonas Karlsson <jonka750@student.liu.se>, on Mon Apr 20 16:05:53 CEST 2009
+# Recipe (MakeRecipe) for XFCE-Utils by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:23:39 CEST 2006
+compile_version=1.8.2
+url="http://mocha.xfce.org/archive/xfce-4.6.1/src/xfce-utils-4.6.1.tar.bz2"
+file_size=614143
+file_md5=1aa2362b11e79e56d52ce0d265faf1b6
+recipe_type=configure
+
+configure_options=(
+   --with-xsession-prefix=$target
+)
+install_variables=(
+   conffilesdir="${settings_target}/xdg/xfce4"
+)
