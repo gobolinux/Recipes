@@ -1,0 +1,19 @@
+Subject: Make Soprano allow virutoso-t to be a symlink
+Author: Michael Homer <michael@gobolinux.org>
+Bug: https://sourceforge.net/tracker/?func=detail&aid=2948939&group_id=197043&atid=959883
+
+Soprano explicitly checks whether a found virtuoso-t executable is a
+symlink, and ignores it if so. That breaks it entirely for us and
+probably has consequences for others sometimes as well. Remove that
+check, since it doesn't seem to be necessary.
+--- soprano-2.4.0/backends/virtuoso/virtuosocontroller.cpp.orig	2010-02-10 21:45:21.000000000 +1300
++++ soprano-2.4.0/backends/virtuoso/virtuosocontroller.cpp	2010-02-10 21:45:55.000000000 +1300
+@@ -348,7 +348,7 @@
+ #else
+         QFileInfo info( dir + QLatin1String("/virtuoso-t") );
+ #endif
+-        if ( info.isExecutable() && !info.isSymLink() ) {
++        if ( info.isExecutable() ) {
+             return info.absoluteFilePath();
+         }
+     }
