@@ -1,0 +1,16 @@
+# Recipe for version 0.7.6 by Jonas Karlsson <jonas@gobolinux.org>, on Wed Jan 6 06:53:05 CET 2010
+# Recipe (MakeRecipe) for Pinentry by Fernando Santos <kosh.linux at gmail.com>, on Mon Oct 24 15:11:49 BRST 2005
+compile_version=1.8.5
+url="ftp://ftp.gnupg.org/gcrypt/pinentry/pinentry-0.7.6.tar.gz"
+file_size=475101
+file_md5=5a4f676375fa882009da02013d77210f
+recipe_type=configure
+
+using_qt3() {
+   install_variables=(${install_variables:+"${install_variables[@]}"} PINENTRY_DEFAULT=pinentry-qt)
+}
+
+using_qt3_pre_build() {
+   GrepReplace "\$dir/moc" "\$dir/moc-qt3" configure
+   GrepReplace "dummy\ moc" "dummy\ moc-qt3" configure
+}
