@@ -1,0 +1,11 @@
+# Recipe for version 0.3.106 by Jonas Karlsson <jonas@gobolinux.org>, on Mon Jan 11 23:45:06 CET 2010
+# Recipe (MakeRecipe) for EXO by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:16:44 CEST 2006
+compile_version=1.9.0
+url="http://mocha.xfce.org/archive/src/xfce/exo/0.3/exo-0.3.106.tar.bz2"
+file_size=1732898
+file_md5=927905f89252fa397e50d7a4fbf3c9a7
+recipe_type=configure
+configure_options=(
+    --enable-debug=no
+)
+with_pygtk="--enable-python"
