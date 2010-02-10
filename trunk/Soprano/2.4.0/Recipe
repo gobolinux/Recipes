@@ -18,3 +18,10 @@ cmake_options=(
    # The autodetected path of /usr/include causes compile errors
    -DJAVA_INCLUDE_PATH=$sun_jdk_path/include
 )
+# This is an enormous hack that should be removed as soon as it is fixed
+# upstream.
+# XXX FIXME TODO So, so ugly.
+do_install() {
+   cmake_do_install "$@"
+   $sudo_exec ln "$virtuoso_path"/bin/virtuoso-t "$target"/bin
+}
