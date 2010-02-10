@@ -1,0 +1,18 @@
+APR-Util is a Subversion dependency, which in turn is an optional
+dependency to KDE-SDK. However, APR-Util headers are installed under
+/Programs/APR-Util/Current/include/apr-1, which is not included in
+the default search path. This patch adds a harmless $goboHeaders/apr-1
+to the include search path so that the compilation finishes with no
+errors. Well, at least without errors related to APR-Util :-)
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- kdesdk-4.0.4/kioslave/svn/CMakeLists.txt.orig	2008-05-24 02:03:52.216236202 -0300
++++ kdesdk-4.0.4/kioslave/svn/CMakeLists.txt	2008-05-24 02:02:59.360010689 -0300
+@@ -1,5 +1,5 @@
+ if(SUBVERSION14)
+-include_directories(${SVN_INCLUDES})
++include_directories(${SVN_INCLUDES} @%Compile_apr_util_path%@/include/apr-1)
+ else(SUBVERSION14)
+ add_definitions(${SVN_INCLUDES})
+ endif(SUBVERSION14)
