@@ -12,3 +12,6 @@ configure_options=(
    "--disable-uuidd"
 )
 install_target="install install-libs"
+install_variables=(
+   root_sysconfdir="${settings_target}"
+)
