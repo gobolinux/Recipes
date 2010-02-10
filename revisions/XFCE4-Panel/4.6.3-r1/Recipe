@@ -1,0 +1,13 @@
+# Recipe for version 4.6.3 by Jonas Karlsson <jonas@gobolinux.org>, on Mon Jan 11 23:47:21 CET 2010
+# Recipe (MakeRecipe) for XFCE4-Panel by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:27:02 CEST 2006
+compile_version=1.8.2
+url="http://mocha.xfce.org/archive/src/xfce/xfce4-panel/4.6/xfce4-panel-4.6.3.tar.bz2"
+file_size=902086
+file_md5=0b715abb929220f136483ccd7303ff62
+recipe_type=configure
+configure_options=(
+   --enable-debug=no
+)
+with_doc=(
+   --enable-gtk-doc
+)
