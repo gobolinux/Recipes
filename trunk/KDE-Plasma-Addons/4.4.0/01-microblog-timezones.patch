@@ -1,0 +1,19 @@
+Make microblog plasmoid understand timezones.
+
+All the times from the engine are UTC, but the display widget uses local
+time to figure out its timestamps ("11 minutes ago"). In a non-UTC timezone
+all stamps will be in hours and incorrect or fixed at zero. This patch
+makes it consider the times as UTC when calculating, the same change that
+was made in the 4.3 series.
+
+Signed-off-by: Michael Homer <michael@gobolinux.org>
+--- kdeplasma-addons-4.4.0/applets/microblog/postwidget.cpp.orig	2010-02-10 21:20:23.000000000 +1300
++++ kdeplasma-addons-4.4.0/applets/microblog/postwidget.cpp	2010-02-10 21:21:06.000000000 +1300
+@@ -101,6 +101,7 @@
+     m_author->setText(data["User"].toString());
+     QLocale english(QLocale::English, QLocale::UnitedStates);
+     QDateTime dt = english.toDateTime(data.value( "Date" ).toString(), "ddd MMM dd HH:mm:ss +0000 yyyy");
++    dt.setTimeSpec(Qt::UTC);
+     m_from->setText(i18n("%1 from %2",timeDescription( dt ), data.value( "Source" ).toString()));
+ 
+     QString status = data["Status"].toString();
