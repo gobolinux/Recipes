@@ -20,8 +20,8 @@ configure_options=(
    --enable-multibuffer
    --with-module-dir="${goboLibraries}/xorg/modules"
    --with-dri-driver-path="${goboLibraries}/xorg/modules/dri"
-   --with-fontdir="${target}/share/fonts"
-   --with-xkb-output="$goboVariable/lib/xcb"
+   --with-fontdir="${goboShared}/fonts"
+   --with-xkb-output="${goboVariable}/lib/xcb"
    --with-xkb-bin-directory="${goboExecutables}"
    --enable-install-setuid
 )
