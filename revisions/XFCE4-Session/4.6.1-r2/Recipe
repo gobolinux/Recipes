@@ -1,0 +1,10 @@
+# Recipe for version 4.6.1 by Jonas Karlsson <jonka750@student.liu.se>, on Mon Apr 20 17:28:19 CEST 2009
+# Recipe (MakeRecipe) for XFCE4-Session by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:27:30 CEST 2006
+compile_version=1.8.2
+url="http://mocha.xfce.org/archive/xfce-4.6.1/src/xfce4-session-4.6.1.tar.bz2"
+file_size=1365247
+file_md5=7628be41ed3511a20cff5673d9d39858
+recipe_type=configure
+with_gnome_keyring=(
+   --enable-libgnome-keyring
+)
