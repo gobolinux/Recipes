@@ -1,0 +1,11 @@
+# Recipe for version 4.4.0 by Michael Homer <michael@gobolinux.org>, on Tue Feb 9 22:31:24 NZDT 2010
+# Recipe (MakeRecipe) for KDE-Webdev by Giambattista Bloisi <giamby@infinito.it>, on Sun Feb 10 23:09:57 CET 2008
+compile_version=1.10.2
+url="http://download.kde.org/stable/4.4.0/src/kdewebdev-4.4.0.tar.bz2"
+file_size=2175665
+file_md5=2dcc71e90d6592ff88d2f7e983247e02
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
