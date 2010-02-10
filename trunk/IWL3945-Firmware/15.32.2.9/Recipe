@@ -1,0 +1,18 @@
+# Recipe for version 15.32.2.9 by Jonas Karlsson <jonas@gobolinux.org>, on Wed Feb 3 01:43:12 CET 2010
+# Recipe (MakeRecipe) for Iwlwifi-3945-Ucode by Daniele Maccari, on Mon Jan 7 16:07:46 CET 2008
+compile_version=1.10.0
+url="http://intellinuxwireless.org/iwlwifi/downloads/iwlwifi-3945-ucode-15.32.2.9.tgz"
+file_size=66635
+file_md5=d99a75ab1305d1532a09471b2f9a547a
+file="iwlwifi-3945-ucode-15.32.2.9.tgz"
+recipe_type=manifest
+
+manifest=(
+        "iwlwifi-3945-2.ucode:lib/firmware/iwlwifi-3945-2.ucode"
+	"LICENSE.iwlwifi-3945-ucode:lib/firmware/LICENSE.iwlwifi-3945-ucode"
+)
+
+docs=(
+	"LICENSE.iwlwifi-3945-ucode"
+	"README.iwlwifi-5150-ucode"
+)
