@@ -1,0 +1,13 @@
+# Recipe for version 0.4.3 by Jonas Karlsson <jonas@gobolinux.org>, on Tue Jan 12 00:03:00 CET 2010
+# Recipe (MakeRecipe) for Terminal by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:15:19 CEST 2006
+compile_version=1.8.2
+url="http://mocha.xfce.org/archive/src/apps/terminal/0.4/Terminal-0.4.3.tar.bz2"
+file_size=1402717
+file_md5=0ce66b16bcb7ff274d7f93a69993f717
+recipe_type=configure
+configure_options=(
+   --enable-debug=no
+)
+with_doc=(
+   --enable-xsltproc
+)
