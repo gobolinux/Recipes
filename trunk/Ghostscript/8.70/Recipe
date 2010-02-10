@@ -9,18 +9,18 @@ build_target="std so"
 install_target="install soinstall"
 
 configure_options=(
-    "--enable-cups"
-    "--with-drivers=ALL"
-    "--with-fontpath=/Files/Fonts/Ghostscript"
-    "--with-omni"
-    "--enable-dynamic"
+   --enable-cups
+   --with-drivers=ALL
+   --with-fontpath="${target}/share/fonts/Ghostscript"
+   --with-omni
+   --enable-dynamic
 )
 
 make_variables=(
-    "CUPSLIBDIRS=$target/lib"
-    "CUPSSERVERBIN=$target/lib/cups"
-    "CUPSSERVERROOT=$settings_target/cups"
-    "CUPSDATA=$target/share/cups"
+   CUPSLIBDIRS="$target/lib"
+   CUPSSERVERBIN="$target/lib/cups"
+   CUPSSERVERROOT="$settings_target/cups"
+   CUPSDATA="$target/share/cups"
 )
 
 pre_link() {

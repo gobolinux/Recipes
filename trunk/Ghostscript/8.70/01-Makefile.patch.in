@@ -1,6 +1,6 @@
 --- ghostscript-8.61/Makefile.in.orig	2008-01-29 22:09:30.000000000 +0100
 +++ ghostscript-8.61/Makefile.in	2008-01-29 22:10:06.000000000 +0100
-@@ -75,12 +75,12 @@
+@@ -75,13 +75,13 @@
  GS_DOCDIR=$(docdir)
  
  # Define install location for 'cups' device/filter support
@@ -10,12 +10,14 @@
 -CUPSSERVERBIN=@CUPSSERVERBIN@
 -CUPSSERVERROOT=@CUPSSERVERROOT@
 -CUPSDATA=@CUPSDATA@
+-CUPSPDFTORASTER=@CUPSPDFTORASTER@
 +CUPSCFLAGS:=@CUPSCFLAGS@
 +CUPSLIBS:=@CUPSLIBS@
 +CUPSLIBDIRS:=@CUPSLIBDIRS@
 +CUPSSERVERBIN:=@CUPSSERVERBIN@
 +CUPSSERVERROOT:=@CUPSSERVERROOT@
 +CUPSDATA:=@CUPSDATA@
++CUPSPDFTORASTER:=@CUPSPDFTORASTER@
  
  # Define the default directory/ies for the runtime
  # initialization and font files.  Separate multiple directories with a :.
