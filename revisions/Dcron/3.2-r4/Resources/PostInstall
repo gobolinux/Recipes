@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ ! -d ${goboVariable}/spool/cron/crontabs ]
+then
+    install --group=cron --mode=0775 --directory ${goboVariable}/spool/cron/crontabs
+    cat <<EOF > ${goboVariable}/spool/cron/crontabs/$(SuperUserName)
+# MIN HOUR DAY MONTH DAYOFWEEK   COMMAND
+
+  01   *    *    *       *       /usr/sbin/run-cron /etc/cron.hourly
+  02   00   *    *       *       /usr/sbin/run-cron /etc/cron.daily
+  22   00   *    *       0       /usr/sbin/run-cron /etc/cron.weekly
+  42   00   1    *       *       /usr/sbin/run-cron /etc/cron.monthly
+EOF
+
+fi

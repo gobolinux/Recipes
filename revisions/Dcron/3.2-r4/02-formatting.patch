@@ -1,0 +1,31 @@
+--- dcron/subs.c.old	2009-07-12 10:10:58.000000000 +0200
++++ dcron/subs.c	2009-07-12 10:10:46.000000000 +0200
+@@ -79,7 +79,7 @@
+ 
+     buf[0] = 0;
+     if (useDate)
+-	strftime(buf, 128, "%d-%b-%y %H:%M  ", tp);
++	strftime(buf, 128, "%d-%b-%Y %H:%M  ", tp);
+     vsnprintf(buf + strlen(buf), nmax, ctl, va);
+     return(strlen(buf));
+ }
+--- dcron/job.c.old	2009-07-12 10:13:30.000000000 +0200
++++ dcron/job.c	2009-07-12 10:13:20.000000000 +0200
+@@ -213,7 +213,7 @@
+ 	/*
+ 	 * note: 8 is a file descriptor
+ 	 */
+-	logfd(8, "unable to exec %s %s, user %s, output to sink null", 
++	logfd(8, "unable to exec %s %s, user %s, output to sink null\n",
+ 	    SENDMAIL,
+ 	    SENDMAIL_ARGS,
+ 	    file->cf_UserName
+@@ -223,7 +223,7 @@
+ 	/*
+ 	 * PARENT, FORK FAILED
+ 	 */
+-	log9("unable to fork, user %s", file->cf_UserName);
++	log9("unable to fork, user %s\n", file->cf_UserName);
+ 	line->cl_Pid = 0;
+     } else {
+ 	/*
