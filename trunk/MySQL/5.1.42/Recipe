@@ -41,4 +41,9 @@ pre_link() {
    mkdir -p ${target}/Resources/Defaults/Settings/MySQL
    cp support-files/my-*.cnf ${target}/Resources/Defaults/Settings/MySQL
    ln -s my-medium.cnf ${target}/Resources/Defaults/Settings/MySQL/my.cnf
+
+   # libraries should be linked in lib as well as in lib/mysql
+   pushd "$target/lib"
+   ln -sf mysql/*.* .
+   popd
 }
