@@ -9,3 +9,6 @@ recipe_type=configure
 configure_options=(
    --with-xsession-prefix=$target
 )
+install_variables=(
+   conffilesdir="${settings_target}/xdg/xfce4"
+)
