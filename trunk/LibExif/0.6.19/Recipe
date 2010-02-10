@@ -1,0 +1,9 @@
+# Recipe for version 0.6.19 by Jonas Karlsson <jonas@gobolinux.org>, on Sun Jan 17 16:52:14 CET 2010
+url=$httpSourceforge/libexif/libexif-0.6.19.tar.bz2
+file_size=1142963
+file_md5=56144a030a4c875c600b1ccf713f69f7
+compile_version=1.8.0
+recipe_type=configure
+pre_build() {
+    GrepReplace 'SUBDIRS = m4m po libexif test doc binary' 'SUBDIRS = m4m po libexif test binary' Makefile.in
+}
