@@ -1,0 +1,14 @@
+# Recipe for version 2.18.5 by Jonas Karlsson <jonas@gobolinux.org>, on Mon Jan 11 23:19:56 CET 2010
+# Recipe (MakeRecipe) for GTK+ by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 11:55:54 BRT 2005
+compile_version=1.9.0
+url="http://ftp.gnome.org/pub/gnome/sources/gtk+/2.18/gtk+-2.18.5.tar.bz2"
+file_size=18126480
+file_md5=3047875309f7f6030e03b0a95cf99c8c
+recipe_type=configure
+
+configure_options=(
+   --with-xinput=yes
+#   --without-libjasper
+)
+
+with_jpeg2000="--with-libjasper"
