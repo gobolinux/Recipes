@@ -9,4 +9,5 @@ recipe_type=configure
 configure_options=(
     # Required by inkscape
     --enable-xpdf-headers
+    --enable-libopenjpeg
 )
