@@ -1,0 +1,27 @@
+# Recipe for version 2.4.0 by Michael Homer <michael@gobolinux.org>, on Wed Feb 10 08:44:53 NZDT 2010
+# Recipe (MakeRecipe) for Soprano by Giambattista Bloisi <giamby@infinito.it>, on Sat Jan 12 11:21:29 CET 2008
+compile_version=1.10.0
+url="http://downloads.sourceforge.net/soprano/soprano-2.4.0.tar.bz2"
+file_size=1942200
+file_md5=519f1243e558262b9e8cc2827139f117
+file="soprano-2.4.0.tar.bz2"
+recipe_type=cmake
+environment=(
+   QMAKESPEC="linux-g++"
+   # This is necessary to build the Sesame2 backend, which is the only
+   # usably fast one. If sun_jdk_path is undefined, the empty variable
+   # will be fine. Augmenting environment in using_sun_jdk did not work.
+   JAVA_HOME=$sun_jdk_path
+)
+
+cmake_options=(
+   # The autodetected path of /usr/include causes compile errors
+   -DJAVA_INCLUDE_PATH=$sun_jdk_path/include
+)
+# This is an enormous hack that should be removed as soon as it is fixed
+# upstream.
+# XXX FIXME TODO So, so ugly.
+do_install() {
+   cmake_do_install "$@"
+   $sudo_exec ln "$virtuoso_path"/bin/virtuoso-t "$target"/bin
+}
