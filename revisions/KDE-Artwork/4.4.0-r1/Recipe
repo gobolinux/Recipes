@@ -1,0 +1,17 @@
+# Recipe for version 4.4.0 by Michael Homer <michael@gobolinux.org>, on Tue Feb 9 22:15:12 NZDT 2010
+# Recipe (MakeRecipe) for KDE-Artwork by Giambattista Bloisi <giamby@infinito.it>, on Mon Jan 14 08:47:29 CET 2008
+compile_version=1.10.0
+url="http://download.kde.org/stable/4.4.0/src/kdeartwork-4.4.0.tar.bz2"
+file_size=72524130
+file_md5=ee1a736960f47641cc65f7a1b3483445
+file="kdeartwork-4.4.0.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
+
+with_xscreensaver=(
+    "-DXSCREENSAVER_DIR=$xscreensaver_path"
+    "-DXSCREENSAVER_CONFIG_DIR=$xscreensaver_settings_path"
+)
