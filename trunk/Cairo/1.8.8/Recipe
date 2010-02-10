@@ -5,5 +5,8 @@ url="http://www.cairographics.org/releases/cairo-1.8.8.tar.gz"
 file_size=6646082
 file_md5=d3e1a1035ae563812d4dd44a74fb0dd0
 recipe_type=configure
-
+configure_options=(
+   --enable-xcb
+   --enable-ft
+)
 with_glitz="--enable-glitz"
