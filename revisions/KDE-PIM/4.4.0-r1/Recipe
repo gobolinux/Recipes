@@ -1,0 +1,12 @@
+# Recipe for version 4.4.0 by Michael Homer <michael@gobolinux.org>, on Tue Feb 9 22:30:44 NZDT 2010
+# by Maglan C. Diemer && Andre Detsch
+compile_version=1.10.0
+url="http://download.kde.org/stable/4.4.0/src/kdepim-4.4.0.tar.bz2"
+file_size=9356227
+file_md5=a354448eebd4fd4b50739c4f20b90e20
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+-DWITH_Opensync=OFF # disabled as it causes compile errors
+)
