@@ -9,13 +9,5 @@ makefile='Makefile'
 dir='dcron'
 
 make_variables=(
-   "DESTDIR=$target"
+   PREFIX="$target"
 )
-
-pre_link(){
-if [ ! -d ${variable_target}/spool/cron/crontabs ]
-then
-    mkdir -p ${variable_target}/spool/cron/crontabs
-    echo -e "# MIN HOUR DAY MONTH DAYOFWEEK   COMMAND\n" >> ${variable_target}/spool/cron/crontabs/${USER}
-fi
-}

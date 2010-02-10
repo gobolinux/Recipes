@@ -1,0 +1,38 @@
+#!/bin/bash
+SUDO_OK=1
+. ScriptFunctions
+Import Log
+
+pid=$(pidof -o %PPID ${goboPrograms}/Dcron/Curren/sbin/crond)
+pidfile=${goboVariable}/run/dcron.pid
+
+case "$1" in
+[Ss]tart)
+   Log_Normal "Starting Dcron..."
+   crond -c ${goboVariable}/spool/cron/crontabs &>/dev/null || Die "Failed"
+   pidof -o %PPID ${goboPrograms}/Dcron/Curren/sbin/crond > ${pidfile}
+   Log_Normal "OK"
+   ;;
+[Ss]top)
+   Log_Normal "Stopping Dcron..."
+   if [ -n "${pid}" ]
+   then
+      kill ${pid} &>/dev/null || Die "Unable to stop Dcron"
+   else
+      Log_Terse "Dcron is not running"
+   fi
+   [ -e ${pidfile} ] && rm -f ${pidfile}
+   Log_Normal "OK"
+   ;;
+[Rr]estart)
+   $0 stop
+   sleep 1
+   $1 start
+   ;;
+[Ss]tatus)
+   [ -n "${pid}" ] && Log_Normal "Dcron is running" || Log_Normal "Dcron is not running"
+   ;;
+*) 
+   Log_Normal "usage: $0 {start|stop|restart|status}"
+esac
+	  
