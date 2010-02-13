@@ -1,0 +1,22 @@
+# Recipe for version 2.4.44 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. febr. 10., szerda, 02.32.18 CET
+# Recipe (MakeRecipe) for ATTR by ro.ko@mcnon.com, on Tue Oct 12 00:31:42 BRST 2004
+compile_version=1.8.5
+url="http://mirror.lihnidos.org/GNU/savannah/attr/attr-2.4.44.src.tar.gz"
+file_size=316328
+file_md5=d132c119831c27350e10b9f885711adc
+dir="attr-2.4.44"
+recipe_type=configure
+install_target="install install-lib install-dev" 
+
+configure_options=(
+    "--libexecdir=$target/lib/attr"
+)
+install_variables=(
+   libdir="${target}/lib"
+   libexecdir="${target}/lib/attr"
+   PKG_DEVLIB_DIR="${target}/lib/attr"
+)
+
+pre_link() {
+   ln -snf $target/lib/libattr.so.1.1.0 $target/lib/libattr.so
+}
