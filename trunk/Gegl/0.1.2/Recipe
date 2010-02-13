@@ -1,0 +1,10 @@
+# Recipe for version 0.1.2 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. febr. 10., szerda, 17.53.13 CET
+# Recipe (MakeRecipe) for Gegl by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jan. 3., szombat, 00.13.13 CET
+compile_version=1.11.4
+url="ftp://ftp.gimp.org/pub/gegl/0.1/gegl-0.1.2.tar.bz2"
+file_size=3128704
+file_md5=d35ffe17dc042652eca3205488ece262
+recipe_type=configure
+configure_options=(
+    --disable-docs
+)
