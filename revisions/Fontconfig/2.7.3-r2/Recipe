@@ -1,0 +1,23 @@
+# Recipe for version 2.7.3 by Michael Homer <michael@gobolinux.org>, on Sun Sep 20 12:59:58 NZST 2009
+# Recipe (MakeRecipe) for Fontconfig by Michael Farrell <michael@xinomorph.org>, on Sat Oct 23 14:31:12 BRST 2004
+compile_version=1.8.5
+url="http://www.fontconfig.org/release/fontconfig-2.7.3.tar.gz"
+file_size=1542781
+file_md5=747d2c691c66b563c8e8c1784ce8d014
+recipe_type=configure
+configure_options=(
+    --with-default-fonts="${target}/share/fonts"
+    --with-add-fonts="$goboPrefix/Files/Fonts/OpenType,$goboPrefix/Files/Fonts/TrueType"
+    --with-cache-dir="$goboVariable/cache/fontconfig"
+    --with-confdir="$settings_target/fonts"
+)
+build_target="all fonts.conf"
+
+# this is to not run 'fc-cache' from 'make install'
+install_variables=(                                                              
+   RUN_FC_CACHE_TEST=false
+)
+
+unmanaged_files=(
+   "$goboVariable/cache/fontconfig"
+)
