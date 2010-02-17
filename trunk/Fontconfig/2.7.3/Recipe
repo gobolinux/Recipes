@@ -13,6 +13,11 @@ configure_options=(
 )
 build_target="all fonts.conf"
 
+# this is to not run 'fc-cache' from 'make install'
+install_variables=(                                                              
+   RUN_FC_CACHE_TEST=false
+)
+
 unmanaged_files=(
    "$goboVariable/cache/fontconfig"
 )
