@@ -1,0 +1,10 @@
+--- fontconfig-2.3.95/Makefile.in.orig	2006-05-15 21:39:49.000000000 -0300
++++ fontconfig-2.3.95/Makefile.in	2006-05-15 21:40:51.000000000 -0300
+@@ -274,6 +274,7 @@ config_DATA = fonts.dtd
+ @CROSS_COMPILING_FALSE@RUN_FC_CACHE_TEST = test -z "$(DESTDIR)"
+ @CROSS_COMPILING_TRUE@RUN_FC_CACHE_TEST = false
+ all: config.h
++	rm -f fc-lang/Makefile && mv fc-lang/Makefile-hostcc fc-lang/Makefile
+ 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
+ 
+ .SUFFIXES:
