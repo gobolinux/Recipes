@@ -1,0 +1,11 @@
+GCC 4.2.3
+GLib >= 2.16
+Glibc >= 2.5
+GTK+ >= 2.10.0
+LibIDN >= 1.0
+LibRSVG
+LibSoup >= 2.25.2 # needed for persistant cookies
+LibUnique >= 0.9, != 1.0.4
+LibXML2 >= 2.6
+SQLite >= 3.0 [sqlite]
+WebKit >= 1.1.1
