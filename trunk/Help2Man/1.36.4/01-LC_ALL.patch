@@ -1,0 +1,15 @@
+Fixes redefinition of LC_ALL brought out by Perl 5.10 .
+See: http://bugs.gentoo.org/show_bug.cgi?id=237378
+
+diff -Naur help2man-1.36.4.old/help2man.PL help2man-1.36.4/help2man.PL
+--- help2man-1.36.4.old/help2man.PL	2005-10-16 11:38:47.000000000 -0400
++++ help2man-1.36.4/help2man.PL	2010-02-24 19:57:31.733216029 -0500
+@@ -102,7 +102,7 @@
+ BEGIN {
+     eval {
+ 	require Locale::gettext;
+-	Locale::gettext->import;
++	Locale::gettext->import (qw(gettext textdomain));
+ 	$have_gettext = 1;
+     };
+ 
