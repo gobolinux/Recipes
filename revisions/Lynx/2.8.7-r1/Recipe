@@ -1,0 +1,9 @@
+# Recipe for version 2.8.7 by Nick Matteo <kundor@kundor.org>, on Wed Feb 24 14:30:00 EST 2010
+# Recipe for Lynx 2.8.7 by Andre Detsch
+compile_version=1.9.0
+url="http://lynx.isc.org/release/lynx2.8.7.tar.bz2"
+file_size=2432045
+file_md5=493af4c77ef6761e3f0157cd1be033a0
+dir='lynx2-8-7'
+recipe_type=configure
+makefile=makefile
