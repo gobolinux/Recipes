@@ -10,3 +10,8 @@ install_variables=(
    "BINDIR=$target/bin"
    "MANDIR=$target/man/man1"
 )
+# because sash using name-resolution functions, it acquires a dynamic reference to libnss
+# using dietlibc instead makes sash run entirely statically
+build_variables=(
+   "CC=diet gcc"
+)
