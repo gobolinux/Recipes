@@ -1,14 +1,22 @@
 # Recipe (MakeRecipe) for SpiderMonkey by Andy Feldman (nereusren@gmail.com), on Fri Mar 24 19:49:35 CST 2006
 # Recipe for version 1.5 by Andy Feldman (nereusren@gmail.com), on Fri Mar 24 19:49:35 CST 2006
-compile_version=1.8.0
-url="http://ftp.mozilla.org/pub/mozilla.org/js/js-1.5.tar.gz"
-mirror_url="http://ftp.mozilla.org/pub/mozilla.org/js/older-packages/js-1.5.tar.gz"
+compile_version=1.13.2
+url="http://ftp.mozilla.org/pub/mozilla.org/js/older-packages/js-1.5.tar.gz"
 file_size=958135
 file_md5=863bb6462f4ce535399a7c6276ae6776
 dir='js/src'
 recipe_type=makefile
-makefile=Makefile.ref
+makefile=Makefile.gobo
+build_target="all"
 install_target="export"
 install_variables=(
    "DIST=$target"
 )
+
+pre_build() {
+   # Wrapper Makefile to force single job as parallel builds break
+   cat << EOF > Makefile.gobo
+% :
+	\$(MAKE) -f Makefile.ref \$@ -j1
+EOF
+}
