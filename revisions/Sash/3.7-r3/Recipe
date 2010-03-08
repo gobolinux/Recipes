@@ -1,0 +1,17 @@
+# Recipe (MakeRecipe) for Sash by Andreas Koehler, on Sat Aug 13 03:40:20 CEST 2005
+# Recipe for version 3.7 by Andreas Koehler, on Sat Aug 13 03:40:20 CEST 2005
+compile_version=1.8.0
+url="http://www.canb.auug.org.au/~dbell/programs/sash-3.7.tar.gz"
+file_size=50337
+file_md5=ee7c7ed5aad76599974d016a6f201ef4
+recipe_type=makefile
+makefile='Makefile'
+install_variables=(
+   "BINDIR=$target/bin"
+   "MANDIR=$target/man/man1"
+)
+# because sash using name-resolution functions, it acquires a dynamic reference to libnss
+# using dietlibc instead makes sash run entirely statically
+build_variables=(
+   "CC=diet gcc"
+)

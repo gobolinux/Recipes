@@ -1,0 +1,5 @@
+[Name] sash
+[Summary] Stand-alone shell for system recovery
+[License] Freeware
+[Description] Sash is a stand-alone shell for system recovery in Linux. Its purpose is to make system recovery possible in many cases where there are missing shared libraries or executables. It does this by firstly being linked statically, and secondly by including versions of many of the standard utilities within itself. Some of these built-in commands are chattr, chmod, chown, cp, dd, ed, find, grep, gzip, ln, ls, mkdir, mknod, more, mount, mv, rm, and tar.
+[Homepage] http://www.canb.auug.org.au/~dbell/
