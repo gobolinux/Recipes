@@ -1,0 +1,172 @@
+			     BASH PATCH REPORT
+			     =================
+
+Bash-Release:	4.0
+Patch-ID:	bash40-028
+
+Bug-Reported-by:	martin f krafft <madduck@debian.org>
+Bug-Reference-ID:	<4A4E39E7.5080807@debian.org>
+Bug-Reference-URL:	http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=519165
+			http://lists.gnu.org/archive/html/bug-bash/2009-07/msg00011.html
+
+Bug-Description:
+
+bash-4.0 reverted to the historical shell behavior of raising an error
+when $@ or $* was expanded after `set -u' had been executed and there
+were no positional parameters.  The Posix working group has since
+clarified the standard's position on the issue, and $@ and $* are now the
+only variables, parameters, or special parameters that do not raise an
+error when unset if set -u is enabled.
+
+Patch:
+
+*** ../bash-4.0-patched/subst.c	Mon Mar 23 11:34:55 2009
+--- bash/subst.c	Wed Jun 17 18:12:18 2009
+***************
+*** 6768,6778 ****
+  
+      case RBRACE:
+!       if (var_is_set == 0 && unbound_vars_is_error)
+  	{
+  	  err_unboundvar (name);
+  	  FREE (value);
+  	  FREE (temp);
+  	  free (name);
+- 	  last_command_exit_value = EXECUTION_FAILURE;
+  	  return (interactive_shell ? &expand_wdesc_error : &expand_wdesc_fatal);
+  	}
+--- bash/6794,6804 ----
+  
+      case RBRACE:
+!       if (var_is_set == 0 && unbound_vars_is_error && ((name[0] != '@' && name[0] != '*') || name[1]))
+  	{
++ 	  last_command_exit_value = EXECUTION_FAILURE;
+  	  err_unboundvar (name);
+  	  FREE (value);
+  	  FREE (temp);
+  	  free (name);
+  	  return (interactive_shell ? &expand_wdesc_error : &expand_wdesc_fatal);
+  	}
+***************
+*** 6991,6994 ****
+--- bash/7017,7029 ----
+        list = list_rest_of_args ();
+  
++ #if 0
++       /* According to austin-group posix proposal by Geoff Clare in
++ 	 <20090505091501.GA10097@squonk.masqnet> of 5 May 2009:
++ 
++  	"The shell shall write a message to standard error and
++  	 immediately exit when it tries to expand an unset parameter
++  	 other than the '@' and '*' special parameters."
++       */
++ 
+        if (list == 0 && unbound_vars_is_error && (pflags & PF_IGNUNBOUND) == 0)
+  	{
+***************
+*** 6996,7003 ****
+  	  uerror[1] = '*';
+  	  uerror[2] = '\0';
+- 	  err_unboundvar (uerror);
+  	  last_command_exit_value = EXECUTION_FAILURE;
+  	  return (interactive_shell ? &expand_wdesc_error : &expand_wdesc_fatal);
+  	}
+  
+        /* If there are no command-line arguments, this should just
+--- bash/7031,7039 ----
+  	  uerror[1] = '*';
+  	  uerror[2] = '\0';
+  	  last_command_exit_value = EXECUTION_FAILURE;
++ 	  err_unboundvar (uerror);
+  	  return (interactive_shell ? &expand_wdesc_error : &expand_wdesc_fatal);
+  	}
++ #endif
+  
+        /* If there are no command-line arguments, this should just
+***************
+*** 7053,7056 ****
+--- bash/7089,7101 ----
+        list = list_rest_of_args ();
+  
++ #if 0
++       /* According to austin-group posix proposal by Geoff Clare in
++ 	 <20090505091501.GA10097@squonk.masqnet> of 5 May 2009:
++ 
++  	"The shell shall write a message to standard error and
++  	 immediately exit when it tries to expand an unset parameter
++  	 other than the '@' and '*' special parameters."
++       */
++ 
+        if (list == 0 && unbound_vars_is_error && (pflags & PF_IGNUNBOUND) == 0)
+  	{
+***************
+*** 7058,7065 ****
+  	  uerror[1] = '@';
+  	  uerror[2] = '\0';
+- 	  err_unboundvar (uerror);
+  	  last_command_exit_value = EXECUTION_FAILURE;
+  	  return (interactive_shell ? &expand_wdesc_error : &expand_wdesc_fatal);
+  	}
+  
+        /* We want to flag the fact that we saw this.  We can't turn
+--- bash/7103,7111 ----
+  	  uerror[1] = '@';
+  	  uerror[2] = '\0';
+  	  last_command_exit_value = EXECUTION_FAILURE;
++ 	  err_unboundvar (uerror);
+  	  return (interactive_shell ? &expand_wdesc_error : &expand_wdesc_fatal);
+  	}
++ #endif
+  
+        /* We want to flag the fact that we saw this.  We can't turn
+*** ../bash-4.0-patched/doc/bash.1	Wed Feb 18 15:13:56 2009
+--- bash/doc/bash.1	Wed Jun 17 08:51:19 2009
+***************
+*** 8258,8264 ****
+  .TP 8
+  .B \-u
+! Treat unset variables as an error when performing
+  parameter expansion.  If expansion is attempted on an
+! unset variable, the shell prints an error message, and,
+  if not interactive, exits with a non-zero status.
+  .TP 8
+--- bash/8274,8281 ----
+  .TP 8
+  .B \-u
+! Treat unset variables and parameters other than the special
+! parameters "@" and "*" as an error when performing
+  parameter expansion.  If expansion is attempted on an
+! unset variable or parameter, the shell prints an error message, and,
+  if not interactive, exits with a non-zero status.
+  .TP 8
+*** ../bash-4.0-patched/doc/bashref.texi	Wed Feb 18 15:14:43 2009
+--- bash/doc/bashref.texi	Wed Jun 17 08:50:46 2009
+***************
+*** 4139,4143 ****
+  
+  @item -u
+! Treat unset variables as an error when performing parameter expansion.
+  An error message will be written to the standard error, and a non-interactive
+  shell will exit.
+--- bash/4151,4156 ----
+  
+  @item -u
+! Treat unset variables and parameters other than the special parameters
+! @samp{@@} or @samp{*} as an error when performing parameter expansion.
+  An error message will be written to the standard error, and a non-interactive
+  shell will exit.
+*** ../bash-4.0/patchlevel.h	2009-01-04 14:32:40.000000000 -0500
+--- bash/patchlevel.h	2009-02-22 16:11:31.000000000 -0500
+***************
+*** 26,30 ****
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 27
+  
+  #endif /* _PATCHLEVEL_H_ */
+--- bash/26,30 ----
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 28
+  
+  #endif /* _PATCHLEVEL_H_ */
