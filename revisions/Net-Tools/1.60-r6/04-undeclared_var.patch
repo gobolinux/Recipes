@@ -1,0 +1,11 @@
+--- net-tools-1.60/lib/x25_sr.c.orig	2006-06-19 11:48:16.000000000 -0300
++++ net-tools-1.60/lib/x25_sr.c	2006-06-19 11:50:28.000000000 -0300
+@@ -77,7 +77,7 @@ static int X25_setroute(int action, int 
+   rt.sigdigits=sigdigits;
+ 
+   /* x25_route_struct.address isn't type struct sockaddr_x25, Why? */
+-  memcpy(&rt.address, &sx25.sx25_addr, sizeof(x25_address));
++  memcpy(&rt.address, &sx25.sx25_addr, sizeof(sx25.sx25_addr));
+ 
+   while (*args) {
+ 	if (!strcmp(*args,"device") || !strcmp(*args,"dev")) {
