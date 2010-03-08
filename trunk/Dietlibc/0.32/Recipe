@@ -1,0 +1,31 @@
+# Recipe for version 0.32 by Baffo32 <baffo32@gmail.com>, on Sat Mar 6 15:00:13 EST 2010
+# Recipe (MakeRecipe) for Dietlibc by Aitor Pérez Iturri, on Thu Mar 2 19:56:40 CET 2006
+compile_version=1.8.2
+url="http://www.kernel.org/pub/linux/libs/dietlibc/dietlibc-0.32.tar.bz2"
+file_size=593043
+file_md5=0098761c17924c15e21d25acdda4a8b5
+recipe_type=makefile
+recipe_type=makefile
+
+# Libraries should be install on $target/lib/dietlibc-$ARCH
+make_variables=(
+	"prefix=$target"
+	"LIBDIR=$target/lib/dietlibc"
+)
+
+# Build a stupid link to enable the make tool to compile some stuff.
+# This link is neccesary becouse of diet.c, which  was patched to look
+# for dietlib headers under ./include/dietlibc
+# We want at the end to have dietlibc headers under /usr/include/dietlibc
+pre_build () {
+	ln -s ../include ./include/dietlibc
+}
+
+# Puts all headers under $target/include/dietlibc
+# Default install is under $target/include (a stupid place to have modified 
+# versions of glibc headers, true?)
+pre_link () {
+	mv $target/include $target/dietlibc && \
+	mkdir $target/include && mv $target/dietlibc $target/include
+}
+
