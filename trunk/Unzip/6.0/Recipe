@@ -1,0 +1,14 @@
+# Recipe for version 6.0 by Daed Lee <daed@thoughtsofcode.com>, on Thu Feb 25 08:33:34 UTC 2010
+compile_version=1.8.1
+url="http://downloads.sourceforge.net/project/infozip/UnZip%206.x%20%28latest%29/UnZip%206.0/unzip60.tar.gz?use_mirror=cdnetworks-us-2"
+file_size=1376845
+file_md5=62b490407489521db863b523a7f86375
+recipe_type=makefile
+dir="unzip60"
+makefile="unix/Makefile"
+build_target=generic
+
+install_variables=(
+  "prefix=$target"
+)
+
