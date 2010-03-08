@@ -1,0 +1,9 @@
+# Recipe for version 1.1 by Baffo32 <baffo32@gmail.com>, on Fri Feb 26 23:42:35 EST 2010
+# Recipe (MakeRecipe) for VBETool by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Feb 6 02:08:59 PST 2008
+compile_version=1.13.2
+url="http://www.codon.org.uk/~mjg59/vbetool/download/vbetool-1.1.tar.gz"
+file_size="182826"
+file_md5="ffb03b118867a02296d7449019ad8846"
+recipe_type=configure
+autogen_before_configure=yes
+autogen="autoreconf"

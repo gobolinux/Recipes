@@ -1,0 +1,40 @@
+Allow vbetool to link with the shared libpci library,
+which is what PCIUtils installs, rather than requiring
+only the static one.
+
+--- vbetool-1.1/Makefile.am	2008-05-16 08:52:33.000000000 -0400
++++ vbetool-1.1.new/Makefile.am	2010-02-27 00:06:01.110711748 -0500
+@@ -2,8 +2,6 @@
+ 
+ sbin_PROGRAMS = vbetool
+ 
+-vbetool_LDADD = $(libdir)/libpci.a
+-
+ man_MANS = vbetool.1
+ vbetool_SOURCES = vbetool.c $(x86)
+ noinst_HEADERS = vbetool.h
+@@ -14,4 +12,4 @@
+ 	$(RM) Makefile.in aclocal.m4 config.h.in stamp-h.in configure
+ 
+ AM_CFLAGS = -g -Wall -pedantic -std=gnu99
+-AM_LDFLAGS = -lz -lx86
++AM_LDFLAGS = -lz -lx86 -lpci
+--- vbetool-1.1/Makefile.in	2010-02-27 00:11:33.570691012 -0500
++++ vbetool-1.1.new/Makefile.in	2010-02-27 00:13:34.423798529 -0500
+@@ -50,7 +50,6 @@
+ PROGRAMS = $(sbin_PROGRAMS)
+ am_vbetool_OBJECTS = vbetool.$(OBJEXT)
+ vbetool_OBJECTS = $(am_vbetool_OBJECTS)
+-vbetool_DEPENDENCIES = $(libdir)/libpci.a
+ DEFAULT_INCLUDES = -I.@am__isrc@
+ depcomp = $(SHELL) $(top_srcdir)/depcomp
+ am__depfiles_maybe = depfiles
+@@ -165,7 +164,7 @@
+ noinst_HEADERS = vbetool.h
+ EXTRA_DIST = vbetool.1 LRMI
+ AM_CFLAGS = -g -Wall -pedantic -std=gnu99
+-AM_LDFLAGS = -lz -lx86
++AM_LDFLAGS = -lz -lx86 -lpci
+ all: all-am
+ 
+ .SUFFIXES:
