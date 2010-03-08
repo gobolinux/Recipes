@@ -1,5 +1,5 @@
 # Net-Tools 1.60 by Lucas Correia Villa Real <lucasvr@gobolinux.org>
-compile_version=1.8.2
+compile_version=1.13.2
 url=http://www.tazenda.demon.co.uk/phil/net-tools/net-tools-1.60.tar.bz2
 file_size=198520
 file_md5=888774accab40217dde927e21979c165
@@ -7,6 +7,8 @@ recipe_type=makefile
 
 make_variables=(
    "BASEDIR=$target"
+   # mandir defaults to /usr/share/man which makes SymlinkProgram miss the manpages
+   "mandir=/man" 
 )
 
 install_target=update
