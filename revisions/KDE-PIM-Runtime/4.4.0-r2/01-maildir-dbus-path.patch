@@ -1,0 +1,8 @@
+--- x/resources/maildir/CMakeLists.txt.orig	2010-02-10 19:57:46.000000000 +1300
++++ x/resources/maildir/CMakeLists.txt	2010-02-10 19:58:10.000000000 +1300
+@@ -39,4 +39,4 @@
+ 
+ install(TARGETS akonadi_maildir_resource ${INSTALL_TARGETS_DEFAULT_ARGS})
+ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/org.kde.Akonadi.Maildir.Settings.xml
+-        DESTINATION ${KDE4_DBUS_INTERFACES_DIR})
++        DESTINATION ${DBUS_INTERFACES_INSTALL_DIR})
