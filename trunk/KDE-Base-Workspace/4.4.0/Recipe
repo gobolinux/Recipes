@@ -15,10 +15,11 @@ cmake_options=(
 -DKDE4_KDM_PAM_SERVICE=kdm
 -DKDE4_KSCREENSAVER_PAM_SERVICE=kscreensaver
 -DKDE4WORKSPACE_SYSCONF_DIR="$settings_target"
+-DPYTHON_SITE_PACKAGES_DIR="${target}/lib/python$(python --version 2>&1|cut -d' ' -f2 | cut -d. -f1-2)/site-packages"
 )
 
 pre_link() {
-   sed -i 's!#Plugins\(Login\|Shutdown\).*!Plugins\1='"${goboLibraries}"'/kde4/kgreet_classic.so!ig' $target/Shared/config/kdm/kdmrc
+   sed -i 's!#Plugins\(Login\|Shutdown\).*!Plugins\1='"${goboLibraries}"'/kde4/kgreet_classic.so!ig' "$target/share/config/kdm/kdmrc"
 }
 
 do_install() {
