@@ -1,7 +1,7 @@
 # Recipe for version 2.11.1 by Jonas Karlsson <jonas@gobolinux.org>, on Thu Jan 14 22:18:57 CET 2010
 # by Guilherme Bedin
 # 02/12/2003
-compile_version=1.11.0
+compile_version=1.13.2
 url="$ftpGnu/glibc/glibc-2.11.1.tar.bz2"
 file_size=15669361
 file_md5=6856d5d8b1239556687f0d1217f3f266
@@ -59,8 +59,10 @@ post_install(){
       grep ${locale} "${target}/lib/locale/SUPPORTED" | tr " " "\n" | while read avail_locale
       do
          lang=$(echo ${avail_locale} | cut -d/ -f1)
+         # UTF8 codepages are additionally appended to lang with a '.' and must be removed
+         src=$(echo ${lang} | cut -d. -f1)
 	 codepage=$(echo ${avail_locale} | cut -d/ -f2)
-	 localedef --no-archive -i ${lang} -f ${codepage} ${lang}
+	 localedef --no-archive -i ${src} -f ${codepage} ${lang}
       done
    done
 }
