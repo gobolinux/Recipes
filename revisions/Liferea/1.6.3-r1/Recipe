@@ -1,0 +1,10 @@
+# Recipe for version 1.6.3 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. márc. 7., vasárnap, 19.34.27 CET
+# Recipe (MakeRecipe) for Liferea by kenneth marken <k-marken@online.no>, on Wed Oct 8 20:11:35 CEST 2008
+compile_version=1.11.2
+url="http://prdownloads.sourceforge.net/liferea/liferea-1.6.3.tar.gz"
+file_size=1743574
+file_md5=ca354e526bd4e22da0b90083a68b8530
+recipe_type=configure
+configure_options=(
+--disable-gecko
+)
