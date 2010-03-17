@@ -1,0 +1,19 @@
+--- libtasn1-1.4/configure.in.old	2008-07-14 14:19:16.000000000 +0000
++++ libtasn1-1.4/configure.in	2008-07-14 14:19:01.000000000 +0000
+@@ -59,6 +59,16 @@
+ 	if test "$_gcc_psign" != "yes"; then
+           CFLAGS="$_gcc_cflags_save"
+ 	fi
++	
++	AC_MSG_CHECKING([whether gcc supports -fgnu89-inline])
++	_gcc_cflags_save="$CFLAGS"
++	CFLAGS="${CFLAGS} -fgnu89-inline"
++	AC_COMPILE_IFELSE(AC_LANG_PROGRAM([]), _gcc_gnu89_inline=yes, _gcc_gnu89_inline=no)
++	AC_MSG_RESULT($_gcc_gnu89_inline)
++	if test "x$_gcc_gnu89_inline" != "xyes"; then
++          CFLAGS="$_gcc_cflags_save"
++	fi
++
+ fi
+ 
+ AC_MSG_NOTICE([Detecting system's parameters])
