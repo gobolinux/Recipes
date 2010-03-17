@@ -5,3 +5,7 @@ url="ftp://invisible-island.net/xterm/xterm-229.tgz"
 file_size=841542
 file_md5=f7b04a66dc401dc22f5ddb7f345be229
 recipe_type=configure
+configure_options=(
+   # otherwise uxterm is broken!
+   --enable-wide-chars
+)
