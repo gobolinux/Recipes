@@ -1,0 +1,14 @@
+# Recipe for version 1.1.7 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. márc. 2., kedd, 21.57.37 CET
+compile_version=1.12.2
+url="http://effbot.org/downloads/Imaging-1.1.7.tar.gz"
+file_size=498749
+file_md5=fc14a54e1ce02a0225be8854bfba478e
+recipe_type=python
+build_target="build_ext -i"
+
+pre_install(){
+    python selftest.py
+    # At least Sketch needs these header, not included in the standard installation.
+    mkdir -p $target/include
+    cp "${sourcedir}/libImaging/"{Imaging.h,ImPlatform.h} $target/include
+}
