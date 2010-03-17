@@ -1,0 +1,18 @@
+# Recipe for version 9.5 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. febr. 21., vasárnap, 00.48.35 CET
+# Recipe (MakeRecipe) for Fotoxx by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jan. 25., vasárnap, 09.52.33 CET
+compile_version=1.11.4
+url="http://kornelix.squarespace.com/storage/downloads/fotoxx-9.5.tar.gz"
+file_size=478865
+file_md5=2c46fd82e90887ca7c6caaeb5916f687
+dir='fotoxx-9.5'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+   "DESKTOP=$target/share/applications/Kornelix-Fotoxx.desktop"
+)
+pre_install(){
+    GrepReplace "/usr/share" "\\$\(PREFIX\)/share" Makefile
+    rm -f fotoxx.1.gz
+    mkdir -p $target/share/man/man1
+}
