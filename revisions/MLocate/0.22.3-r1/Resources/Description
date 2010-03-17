@@ -1,0 +1,14 @@
+[Name] MLocate
+[Summary] Find files in the system using a generated database
+[Description] MLocate is a new locate implementation a tool to find
+files anywhere in the filesystem based on their name, using a fixed
+pattern or a regular expression. Unlike other tools like find(1),
+locate uses a previously created database to perform the search,
+allowing queries to execute much faster. This database is updated
+periodically from cron.
+
+The locate(1) utility is intended to be completely compatible to
+slocate. It also attempts to be compatible to GNU locate, when it does
+not conflict with slocate compatibility.
+[License] GNU General Public License version 2
+[Homepage] http://carolina.mff.cuni.cz/~trmac/blog/mlocate/
