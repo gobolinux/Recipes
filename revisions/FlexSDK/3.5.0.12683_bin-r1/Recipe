@@ -1,0 +1,38 @@
+# Recipe (MakeRecipe) for FlexSDK by Baffo32 <baffo32@gmail.com>, on Wed Mar 17 09:56:22 EDT 2010
+# Recipe for version 3.5.0.12683_bin by Baffo32 <baffo32@gmail.com>, on Wed Mar 17 09:56:22 EDT 2010
+compile_version=1.13.2
+url="http://fpdownload.adobe.com/pub/flex/sdk/builds/flex3/flex_sdk_3.5.0.12683.zip"
+file_size=125824140
+file_md5=c9dcdc5db45e50af7d96ede1421ddbde
+unpack_files='files_in_root'
+recipe_type='manifest'
+
+docs=(
+   *eadme*
+   *license*
+)  
+
+manifest=(
+   ant:ant
+   asdoc:asdoc
+   bin/*:bin
+   frameworks/*:frameworks
+   lib:lib
+   templates:templates
+   flex-sdk-description.xml:.
+)
+
+
+
+do_install() {
+   # PrepareProgram didn't make this
+   $sudo_exec mkdir "$target"/frameworks || Die
+
+   # Fix root-only permissions
+   chmod -R a+rX .
+
+   # don't install windows files or library sources
+   GLOBIGNORE='*.exe:*.bat:frameworks/projects'
+
+   manifest_do_install
+}
