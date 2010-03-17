@@ -1,0 +1,15 @@
+# Recipe for version 2.18.6 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. febr. 10., szerda, 03.16.39 CET
+# Recipe (MakeRecipe) for GTK+ by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 11:55:54 BRT 2005
+compile_version=1.9.0
+url="http://ftp.gnome.org/pub/gnome/sources/gtk+/2.18/gtk+-2.18.6.tar.bz2"
+file_size=18137401
+file_md5=3b32073cf1fad755f7c2b2db71aebe90
+recipe_type=configure
+
+configure_options=(
+    --with-xinput=yes
+    --disable-gtk-doc-html
+    --without-libjasper
+)
+
+with_jpeg2000="--with-libjasper"
