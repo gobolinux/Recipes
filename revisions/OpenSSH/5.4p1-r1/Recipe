@@ -1,0 +1,25 @@
+# Recipe for version 5.4p1 by Jonas Karlsson <jonas@gobolinux.org>, on Wed Mar 17 08:27:13 CET 2010
+# Recipe for OpenSSH by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.10.2
+url="ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-5.4p1.tar.gz"
+file_size=1094604
+file_md5=da10af8a789fa2e83e3635f3a1b76f5e
+recipe_type=configure
+install_target=install-nokeys
+configure_options=(
+   "--sysconfdir=$settings_target/ssh"
+)
+install_variables=(
+   sysconfdir="${settings_target}/ssh"
+)
+unmanaged_files=(
+   "${goboVariable}/empty"
+)
+
+with_pam="--with-pam"
+
+pre_link() {
+   mkdir -p "${target}/Resources/Unmanaged/${goboVariable}/empty"
+   chmod 755 "${target}/Resources/Unmanaged/${goboVariable}/empty"
+   chown 0:sys "${target}/Resources/Unmanaged/${goboVariable}/empty"
+}
