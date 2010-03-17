@@ -1,3 +1,16 @@
 # Recipe for version 2.61 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Nov 21 07:50:31 CET 2006
 url=$ftpGnu/autoconf/autoconf-2.61.tar.bz2
+file_size=1042439
+file_md5=36d3fe706ad0950f1be10c46a429efe0
+compile_version=1.13.2
 recipe_type=configure
+build_target=all
+makefile=Makefile.gobo
+
+pre_build() {
+   # Wrapper Makefile to force single job as parallel builds break
+   cat << EOF > Makefile.gobo
+% :
+	\$(MAKE) -j1 -f Makefile \$@
+EOF
+}
