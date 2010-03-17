@@ -1,0 +1,11 @@
+# Recipe for version 2.19 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. febr. 22., hétfő, 02.49.06 CET
+# Recipe (MakeRecipe) for LibCap by Andy Feldman <nereusren@gmail.com>, on Sat Jan 17 21:39:49 CST 2009
+compile_version=1.11.3
+url="http://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-2.19.tar.bz2"
+file_size=53099
+file_md5=eb1ff04d39bfa2342b8e78b0fd60dc2d
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+)
