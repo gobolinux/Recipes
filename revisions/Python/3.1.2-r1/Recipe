@@ -1,0 +1,13 @@
+# Recipe for version 3.1.2 by Michael Homer <michael@gobolinux.org>, on Mon Mar 22 18:08:27 NZDT 2010
+compile_version=1.8.5
+url=http://python.org/ftp/python/3.1.2/Python-3.1.2.tar.bz2
+file_size=9719769
+file_md5=45350b51b58a46b029fb06c61257e350
+recipe_type=configure
+needs_safe_linking=yes
+
+configure_options=(
+  "--enable-shared"
+#  "--with-cxx=no"
+)
+
