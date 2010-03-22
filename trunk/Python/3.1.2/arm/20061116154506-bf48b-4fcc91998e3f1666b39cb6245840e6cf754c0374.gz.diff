@@ -1,0 +1,44 @@
+Thu Nov 16 16:45:06 CET 2006  hanwen@lilypond.org
+  * Document x-compile in README.
+diff -rN -u old-Python-2.5.cross/README new-Python-2.5.cross/README
+--- old-Python-2.5.cross/README	2006-11-16 17:47:46.000000000 +0100
++++ new-Python-2.5.cross/README	2006-11-16 17:47:46.000000000 +0100
+@@ -1196,6 +1196,37 @@
+ do this.
+ 
+ 
++Cross Compiling
++---------------
++
++Python can be cross compiled by supplying different --build and --host
++parameters to configure.  Python is compiled on the "build" system and
++executed on the "host" system.  Cross compiling python requires a
++native Python on the build host, and a natively compiled tool `Pgen'.
++
++Before cross compiling, Python must first be compiled and installed on
++the build host.  The configure script will use `cc' and `python', or
++environment variables CC_FOR_BUILD or PYTHON_FOR_BUILD, eg:
++
++   CC_FOR_BUILD=gcc-3.3 \
++   PYTHON_FOR_BUILD=python2.4 \
++   .../configure --build=i686-linux --host=i586-mingw32
++
++Cross compiling has been tested under linux, mileage may vary for
++other platforms.
++
++A few reminders on using configure to cross compile:
++- Cross compile tools must be in PATH,
++- Cross compile tools must be prefixed with the host type
++  (ie i586-mingw32-gcc, i586-mingw32-ranlib, ...),
++- CC, CXX, AR, and RANLIB must be undefined when running configure,
++  they will be auto-detected.
++
++If you need a cross compiler, Debian ships several several (eg: avr,
++m68hc1x, mingw32), while dpkg-cross easily creates others.  Otherwise,
++check out Dan Kegel's crosstool: http://www.kegel.com/crosstool .
++
++
+ Miscellaneous issues
+ ====================
+ 
+
