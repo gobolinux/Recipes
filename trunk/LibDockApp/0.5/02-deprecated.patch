@@ -1,0 +1,25 @@
+Remove deprecated calls from Makefile.am and configure.in
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- dockapp/src/Makefile.am.orig	2010-03-28 01:44:51.000000000 -0300
++++ dockapp/src/Makefile.am	2010-03-28 01:45:02.000000000 -0300
+@@ -22,7 +22,7 @@ libdockapp_la_SOURCES = \
+ # Include these in a distribution, but don't install
+ noinst_HEADERS = dautil.h
+ 
+-CPPFLAGS = @X_CFLAGS@ @CPPFLAGS@ @DFLAGS@
++AM_CPPFLAGS = @X_CFLAGS@ @CPPFLAGS@ @DFLAGS@
+ 
+ LIBLIST = libdockapp.la @XLIBS@
+ 
+--- dockapp/configure.in.orig	2010-03-28 01:45:59.000000000 -0300
++++ dockapp/configure.in	2010-03-28 01:46:07.000000000 -0300
+@@ -27,7 +27,6 @@ AM_CONDITIONAL(COND_EXAMPLES, [test "$wi
+ 
+ 
+ dnl Checks for programs.
+-AC_PROG_RANLIB
+ AC_PROG_LIBTOOL
+ AC_PROG_CC
+ AC_PROG_CXX

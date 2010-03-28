@@ -1,0 +1,21 @@
+# Recipe (MakeRecipe) for LibDockApp by Lucas C. Villa Real, on Sun Mar 28 01:31:49 BRT 2010
+# Recipe for version 0.5 by Lucas C. Villa Real, on Sun Mar 28 01:31:49 BRT 2010
+compile_version=1.13.1
+url="http://himi.org/wmacpi/download/libdockapp-0.5.0.tar.bz2"
+file_size=131091
+file_md5=918693a30bdff72e629ef8b85a3f6779
+dir='dockapp'
+recipe_type=configure
+
+make_variables=(
+	LIBTOOL=$goboExecutables/libtool
+)
+
+install_variables=(
+	SHAREDIR=$target/share
+	XFONTDIR=$target/share/fonts
+)
+
+pre_build() {
+	[ ! -e .bootstrapped ] && autoreconf -i && touch .bootstrapped
+}
