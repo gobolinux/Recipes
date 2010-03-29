@@ -1,0 +1,30 @@
+#Reactivate the installation of the documentation
+--- ecl-10.3.1/src/Makefile.in	2010-03-05 14:00:36.000000000 +0000
++++ ecl-10.3.1/src/Makefile.in.new	2010-03-26 13:14:37.000000000 +0000
+@@ -123,7 +123,7 @@
+ 	echo "#" `uname -a` > $@
+ 	head -8 config.log | tail -6 >> $@
+ install: install-base
+-#	cd doc; $(MAKE) prefix=$(prefix) DESTDIR=$(DESTDIR) install
++	cd doc; $(MAKE) prefix=$(prefix) DESTDIR=$(DESTDIR) install
+ install-base:
+ 	# Here we would use the option -s but the install program in sourceforge-solaris
+ 	# is broken.
+@@ -177,7 +177,7 @@
+ flatinstall: BUILD-STAMP
+ 	$(MAKE) DESTDIR=$(DESTDIR) bindir=$(prefix) libdir=$(prefix) \
+ 	  includedir=$(prefix) ecldir=$(prefix) install-base
+-#	cd doc; $(MAKE) DESTDIR=$(DESTDIR) prefix=$(prefix) docdir=$(prefix)/doc flatinstall
++	cd doc; $(MAKE) DESTDIR=$(DESTDIR) prefix=$(prefix) docdir=$(prefix)/doc flatinstall
+ 
+ uninstall:
+ 	for i in $(TARGETS) ecl-config; do $(RM) $(DESTDIR)$(bindir)/$$i; done
+@@ -185,7 +185,7 @@
+ 	for i in $(LSP_LIBRARIES) $(LIBRARIES); do \
+ 	  $(RM) $(DESTDIR)$(libdir)/$$i || : ; \
+ 	done
+-#	cd doc; $(MAKE) uninstall
++	cd doc; $(MAKE) uninstall
+ 
+ doc: $(TARGETS)
+ 	cd doc; $(MAKE)
