@@ -1,0 +1,9 @@
+#!/bin/sh
+breakchars="(){}[],^%$#@\"\";:''|\\"
+CLOJURE_JAR="/usr/share/clojure.jar"
+if [ $# -eq 0 ]; then 
+	exec rlwrap --remember -c -b "$breakchars" \
+	java -cp "$CLOJURE_JAR" clojure.main --repl
+else
+	exec java -cp "$CLOJURE_JAR" clojure.main $1 -- "$@"
+fi
