@@ -1,0 +1,15 @@
+# Recipe for version 1.6.0_19_bin by Michael Homer <michael@gobolinux.org>, on Thu Apr 8 11:23:00 NZST 2010
+# Recipe for JDK version 1.6.0 by Mike Hughes
+compile_version=1.9.0
+recipe_type=manifest
+uncompress=no
+
+pre_patch() {
+  bash jdk-6u19-linux-i586.bin
+}
+
+pre_link(){
+  # Create a link to the java plugin in the standard browser-plugins directory
+  mkdir -p ${target}/lib/browser-plugins
+  ln -s ${target}/jre/lib/i386/libnpjp2.so ${target}/lib/browser-plugins
+}
