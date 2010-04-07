@@ -1,0 +1,21 @@
+# Recipe for JDK version 1.6.0 by Mike Hughes
+url="http://gytha.org/gobo/archives/jdk-6u19-linux-i586.bin"
+file_size=84796753
+file_md5=890a4688dc51d6a234970a57adfce54f
+
+manifest=(
+    "jdk1.6.0_19/jre:jre"
+    "jdk1.6.0_19/bin:bin"
+    "jdk1.6.0_19/lib:lib"
+    "jdk1.6.0_19/include:include"
+    "jdk1.6.0_19/man:man"
+    "jdk1.6.0_19/COPYRIGHT:Shared/doc/Sun-JDK/COPYRIGHT"
+    "jdk1.6.0_19/LICENSE:Shared/doc/Sun-JDK/LICENSE"
+    "jdk1.6.0_19/THIRDPARTYLICENSEREADME.txt:Shared/doc/Sun-JDK/THIRDPARTYLICENSEREADME.txt"
+    "jdk1.6.0_19/README.html:Shared/doc/Sun-JDK/README.html"
+    "jdk1.6.0_19/README_ja.html:Shared/doc/Sun-JDK/README_ja.html"
+    "jdk1.6.0_19/README_zh_CN.html:Shared/doc/Sun-JDK/README_zh_CN.html"
+    "jdk1.6.0_19/src.zip:Shared/doc/Sun-JDK/src.zip"
+    "jdk1.6.0_19/sample:Shared/doc/Sun-JDK/sample"
+    "jdk1.6.0_19/demo:Shared/doc/Sun-JDK/demo"
+)
