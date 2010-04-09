@@ -1,0 +1,12 @@
+# Recipe for version 4.4.2 by Michael Homer <michael@gobolinux.org>, on Fri Apr 9 10:42:51 NZST 2010
+# Recipe (MakeRecipe) for KDE-Games by Giambattista Bloisi <giamby@infinito.it>, on Fri Jan 18 09:17:08 CET 2008
+compile_version=1.10.0
+url="ftp://ftp.kde.org/pub/kde/stable/4.4.2/src/kdegames-4.4.2.tar.bz2"
+file_size=68915560
+file_md5=f56919a0c610072041bd49b7f2eaac0e
+file="kdegames-4.4.2.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
