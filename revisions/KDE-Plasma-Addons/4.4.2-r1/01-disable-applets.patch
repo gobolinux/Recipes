@@ -1,0 +1,21 @@
+The clock applets do not build in 4.4.2, so disable them.
+
+Author: Michael Homer <michael@gobolinux.org>
+--- kdeplasma-addons-4.4.2/applets/CMakeLists.txt.orig	2010-04-09 18:32:22.000000000 +1200
++++ kdeplasma-addons-4.4.2/applets/CMakeLists.txt	2010-04-09 18:32:33.000000000 +1200
+@@ -9,7 +9,6 @@
+ endif(KDE4_PLASMA_OPENGL_FOUND)
+ 
+ add_subdirectory(bball)
+-add_subdirectory(binary-clock)
+ add_subdirectory(blackboard)
+ add_subdirectory(bubblemon)
+ add_subdirectory(calculator)
+@@ -18,7 +17,6 @@
+ add_subdirectory(fifteenPuzzle)
+ add_subdirectory(fileWatcher)
+ add_subdirectory(frame)
+-add_subdirectory(fuzzy-clock)
+ add_subdirectory(kolourpicker)
+ add_subdirectory(konqprofiles)
+ add_subdirectory(konsoleprofiles)
