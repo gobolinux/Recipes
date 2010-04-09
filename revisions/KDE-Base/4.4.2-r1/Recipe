@@ -1,0 +1,12 @@
+# Recipe for version 4.4.2 by Michael Homer <michael@gobolinux.org>, on Fri Apr 9 10:39:06 NZST 2010
+# Recipe (MakeRecipe) for KDE-Base by Giambattista Bloisi <giamby@infinito.it>, on Sat Jan 12 17:52:06 CET 2008
+compile_version=1.10.0
+url="http://download.kde.org/stable/4.4.2/src/kdebase-4.4.2.tar.bz2"
+file_size=4048565
+file_md5=06e60e3fb229df5c9e399157a852b4d6
+file="kdebase-4.4.2.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
