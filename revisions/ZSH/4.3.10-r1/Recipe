@@ -1,0 +1,9 @@
+# Recipe for version 4.3.10 by Hisham Muhammad <hisham@gobolinux.org>, on Thu Apr 8 14:11:02 BRT 2010
+url="ftp://ftp.zsh.org/pub/zsh-4.3.10.tar.bz2"
+file_size=2735665
+file_md5=74c5b275544400082a1cde806c98682a
+mirror_url="ftp://ftp.zsh.org/pub/old/zsh-4.3.10.tar.bz2"
+compile_version=1.8.0
+recipe_type=configure
+
+post_install_message="In ZSH 4.3.10, 'promptinit' no longer autoloads 'colors' function. You may need to add a 'autoload -U colors' statement in your '${goboSettings}/zshrc' file."
