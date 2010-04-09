@@ -1,0 +1,71 @@
+--- kdebase-workspace-4.4.0/mkpamserv.orig	2010-02-10 09:42:42.000000000 +1300
++++ kdebase-workspace-4.4.0/mkpamserv	2010-02-10 09:47:30.000000000 +1300
+@@ -11,7 +11,7 @@
+     exit 1
+ fi
+ 
+-if test -r /etc/pam.d/$1 || grep "^[ 	]*$1[ 	]" /etc/pam.conf >/dev/null 2>&1; then
++if test -r @%Compile_settings_target%@/pam.d/$1 || grep "^[ 	]*$1[ 	]" @%Compile_settings_target%@/pam.conf >/dev/null 2>&1; then
+     echo "PAM service \"$1\" already configured."
+     exit 0
+ fi
+@@ -19,42 +19,43 @@
+ oi_mods="pam_(access|env|group|limits|listfile|mkhomedir|nologin|shells|tally|time)"
+ oo_mods="pam_(securetty|mail|motd|issue|lastlog)"
+ 
+-if test -d /etc/pam.d; then
+-    if test ! -w /etc/pam.d; then
+-	echo "Error: need write access to /etc/pam.d/ to install PAM service definition!" >&2
++if true; then
++    mkdir -p @%Compile_settings_target%@/pam.d
++    if test ! -w @%Compile_settings_target%@/pam.d; then
++	echo "Error: need write access to @%Compile_settings_target%@/pam.d/ to install PAM service definition!" >&2
+ 	exit 1
+     fi
+     for sv in kde login; do
+-	if test -r /etc/pam.d/$sv; then
++	if test -r @%Compile_settings_target%@/pam.d/$sv; then
+ 	    echo "Copying PAM service definition file \"$sv\" to \"$1\"."
+ 	    if $permit; then
+-		echo "auth	required	pam_permit.so" > /etc/pam.d/$1
+-		perl -p -e "if (/^([ \\t]*\\@include[ \\t]+([^ \\t]+)[ \\t]*)\\n/) { \$l=\$1; \$p=\$2; \$p=~m,^/, || (\$p='/etc/pam.d/'.\$p); print \"#\$l -- start\\n\"; system \"cat \$p\"; \$_ = \"#\$l -- end\\n\"; }" < /etc/pam.d/$sv |
+-		    perl -p -e "s/^([ \\t]*auth[ \\t]+[a-z]+[ \\t]+([^ \\t]+\\/)?(?!$oi_mods)\\w+\\.so)/#\$1/" >> /etc/pam.d/$1
++		echo "auth	required	pam_permit.so" > @%Compile_settings_target%@/pam.d/$1
++		perl -p -e "if (/^([ \\t]*\\@include[ \\t]+([^ \\t]+)[ \\t]*)\\n/) { \$l=\$1; \$p=\$2; \$p=~m,^/, || (\$p='@%Compile_settings_target%@/pam.d/'.\$p); print \"#\$l -- start\\n\"; system \"cat \$p\"; \$_ = \"#\$l -- end\\n\"; }" < @%Compile_settings_target%@/pam.d/$sv |
++		    perl -p -e "s/^([ \\t]*auth[ \\t]+[a-z]+[ \\t]+([^ \\t]+\\/)?(?!$oi_mods)\\w+\\.so)/#\$1/" >> @%Compile_settings_target%@/pam.d/$1
+ 	    else
+-		perl -p -e "s/^([ \\t]*[^#].*[ \\t\\/]$oo_mods\\.so)/#\\1/" < /etc/pam.d/$sv > /etc/pam.d/$1
++		perl -p -e "s/^([ \\t]*[^#].*[ \\t\\/]$oo_mods\\.so)/#\\1/" < @%Compile_settings_target%@/pam.d/$sv > @%Compile_settings_target%@/pam.d/$1
+ 	    fi
+ 	    exit 0
+ 	fi
+     done
+     echo "Error: no template PAM service file for \"$1\" found!" >&2
+     exit 1
+-elif test -f /etc/pam.conf; then
+-    if test ! -w /etc/pam.conf; then
+-	echo "Error: need write access to /etc/pam.conf to install PAM service definition!" >&2
++elif test -f @%Compile_settings_target%@/pam.conf; then
++    if test ! -w @%Compile_settings_target%@/pam.conf; then
++	echo "Error: need write access to @%Compile_settings_target%@/pam.conf to install PAM service definition!" >&2
+ 	exit 1
+     fi
+     for sv in kde login; do
+-	serv=`grep "^[ 	]*$sv[ 	]" /etc/pam.conf`
++	serv=`grep "^[ 	]*$sv[ 	]" @%Compile_settings_target%@/pam.conf`
+ 	if test -n "$serv"; then
+ 	    echo "Copying service definition entry \"$sv\" to \"$1\"."
+-	    echo >>/etc/pam.conf
++	    echo >>@%Compile_settings_target%@/pam.conf
+ 	    sb="s/^[ \\t]*$sv([ \\t])/$1\$1/"
+ 	    if $permit; then
+-		echo "$1	auth	required	pam_permit.so" >>/etc/pam.conf
+-		echo "$serv" | perl -p -e "$sb;s/^($1[ \\t]+auth[ \\t]+[a-z]+[ \\t]+([^ \\t]+\\/)?(?!$oi_mods)\\w+\\.so)/#\$1/" >>/etc/pam.conf
++		echo "$1	auth	required	pam_permit.so" >>@%Compile_settings_target%@/pam.conf
++		echo "$serv" | perl -p -e "$sb;s/^($1[ \\t]+auth[ \\t]+[a-z]+[ \\t]+([^ \\t]+\\/)?(?!$oi_mods)\\w+\\.so)/#\$1/" >>@%Compile_settings_target%@/pam.conf
+ 	    else
+-		echo "$serv" | perl -p -e "$sb;s/^(.*[ \\t\\/]$oo_mods\\.so)/#\$1/" >>/etc/pam.conf
++		echo "$serv" | perl -p -e "$sb;s/^(.*[ \\t\\/]$oo_mods\\.so)/#\$1/" >>@%Compile_settings_target%@/pam.conf
+ 	    fi
+ 	    exit 0
+ 	fi
