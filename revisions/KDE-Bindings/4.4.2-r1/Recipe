@@ -1,0 +1,41 @@
+# Recipe for version 4.4.2 by Michael Homer <michael@gobolinux.org>, on Fri Apr 9 10:42:05 NZST 2010
+# Recipe (MakeRecipe) for KDE-Bindings by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Mar 10 15:07:09 PDT 2008
+compile_version=1.10.1
+url="http://download.kde.org/stable/4.4.2/src/kdebindings-4.4.2.tar.bz2"
+file_size=5090793
+file_md5=50ac156078e5069b8400033653b59382
+recipe_type=cmake
+
+cmake_options=(
+    -DPYTHON_SITE_PACKAGES_INSTALL_DIR="$target/lib/python$(python --version 2>&1 | awk {'print $2'} | cut -b1-3)/site-packages"
+    -Dkdeincdir="$goboHeaders"
+)
+
+do_install() {
+   # This is supposed to be this hacky and it's all cmake's fault
+   $sudo_exec mkdir -p "$target/$(dirname $target)"
+   $sudo_exec ln -s "$target" "$target/$target"
+   $sudo_exec ln -s "$target" "$target/usr"
+   
+   # because sometimes Current just ain't enough
+   for pkg in ruby python
+   do
+      pkgpath="$(eval echo \$${pkg}_path)"
+      [ -n "$pkgpath" ] || continue
+      for dir in "$(dirname ${pkgpath})/"*
+      do
+         [ "${dir##*/}" = "Settings" -o "${dir##*/}" = "Current" ] && continue
+         $sudo_exec mkdir -p "$target/$(dirname ${pkgpath})"
+	 $sudo_exec ln -s "${target}" "${target}/${dir}"
+      done
+   done
+   read foo
+   DESTDIR="$target" makefile_do_install "${1}" "${2}"
+   
+   $sudo_exec rm -f "$target/usr"
+   $sudo_exec rm -f "$target/$goboPrograms/"*/*
+   $sudo_exec rmdir "$target/$goboPrograms/"*
+   $sudo_exec rmdir "$target/$goboPrograms"
+   $sudo_exec mv "$target/$builddir/csharp" "$target/doc"
+   $sudo_exec rm -rf "$target/Files"
+}
