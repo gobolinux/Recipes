@@ -1,0 +1,14 @@
+# Recipe for version 4.4.2 by Michael Homer <michael@gobolinux.org>, on Fri Apr 9 10:45:46 NZST 2010
+# Recipe (MakeRecipe) for KDE-Utils by Giambattista Bloisi <giamby@infinito.it>, on Tue Jan 15 23:25:28 CET 2008
+compile_version=1.10.0
+url="http://download.kde.org/stable/4.4.2/src/kdeutils-4.4.2.tar.bz2"
+file_size=2691221
+file_md5=c923ca61e295d073bdebd90b41827b03
+file="kdeutils-4.4.2.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+-DINSTALL_PRINTER_APPLET=TRUE
+)
+
