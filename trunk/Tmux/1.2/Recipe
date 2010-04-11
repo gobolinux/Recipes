@@ -1,0 +1,14 @@
+# Recipe for version 1.2 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. ápr. 10., szombat, 18.51.45 CEST
+# Recipe (MakeRecipe) for Tmux by Jonas Karlsson <jonas@gobolinux.org>, on Sun May 10 22:15:01 CEST 2009
+compile_version=1.12.0
+url="$httpSourceforge/tmux/tmux-1.2.tar.gz"
+file_size=241779
+file_md5=748fbe7bb5f86812e19bd6005ff21a5a
+recipe_type=makefile
+makefile='GNUmakefile'
+make_variables=(
+   "PREFIX=$target"
+)
+pre_build(){
+    configure
+}
