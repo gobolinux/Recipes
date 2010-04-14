@@ -1,0 +1,30 @@
+# Recipe for version 7.2 by Giambattista Bloisi <giamby@infinito.it>, on Tue Oct 14 22:43:17 CEST 2008
+# Recipe (MakeRecipe) for Vim by Matthias Wolf, on Tue Sep 21 12:10:37 CEST 2004
+compile_version=1.8.2
+url="ftp://ftp.vim.org/pub/vim/unix/vim-7.2.tar.bz2"
+file_size=7203291
+file_md5=f0901284b338e448bfd79ccca0041254
+dir='vim72/src'
+recipe_type=configure
+
+configure_options=(
+   --prefix="$target"
+   --exec-prefix="$target"
+   --enable-gui=no
+   --enable-multibyte
+   --disable-selinux
+   --datadir="$target/share"
+   --mandir="$target/Shared/man"
+)
+with_perl=(
+   --enable-perlinterp
+)
+with_python=(
+   --enable-pythoninterp
+)
+
+with_gtk2="--enable-gui=gtk2"
+
+pre_link() {
+	ln -s vim $target/bin/vi
+}
