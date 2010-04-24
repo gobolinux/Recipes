@@ -1,0 +1,15 @@
+# Recipe for version 8a by Baffo32 <baffo32@gmail.com>, on Fri Apr 23 12:34:52 EDT 2010
+# by Carlo Calica
+# 2004.01.06 16:54
+
+url="http://www.ijg.org/files/jpegsrc.v8a.tar.gz"
+file_size=962018
+file_md5=5146e68be3633c597b0d14d3ed8fa2ea
+dir=jpeg-8a
+compile_version=1.8.0
+recipe_type=configure
+#needs_safe_linking=yes
+
+configure_options=(
+   "--enable-shared"
+)
