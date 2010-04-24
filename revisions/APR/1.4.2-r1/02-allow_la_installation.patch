@@ -1,0 +1,11 @@
+--- apr-1.4.2/build/ltmain.sh	2010-01-21 02:59:41.000000000 -0500
++++ apr-1.4.2/build/ltmain.sh.new	2010-04-22 12:51:23.189383190 -0400
+@@ -2019,7 +2019,7 @@
+ 	  # are installed into $libdir/../bin (currently, that works fine)
+ 	  # but it's something to keep an eye on.
+ 	  test "$inst_prefix_dir" = "$destdir" && \
+-	    func_fatal_error "error: cannot install \`$file' to a directory not ending in $libdir"
++	    func_error "error: cannot install \`$file' to a directory not ending in $libdir"
+ 
+ 	  if test -n "$inst_prefix_dir"; then
+ 	    # Stick the inst_prefix_dir data into the link command.
