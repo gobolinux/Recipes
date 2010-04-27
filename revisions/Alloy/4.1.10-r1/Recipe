@@ -1,0 +1,26 @@
+# Recipe (MakeRecipe) for Alloy by Michael Homer <michael@gobolinux.org>, on Tue Apr 27 13:03:43 NZST 2010
+# Recipe for version 4.1.10 by Michael Homer <michael@gobolinux.org>, on Tue Apr 27 13:03:43 NZST 2010
+compile_version=1.13.1
+url="http://alloy.mit.edu/alloy4/old/2009.03.19_02.02_EDT.jar"
+file_size=4253920
+file_md5=5893b41934de4d339f9b15e2c254e10c
+recipe_type=manifest
+uncompress=no
+
+do_build() {
+   cat <<EOF > alloy
+#!/bin/sh
+
+jarfile="$(basename "$url")"
+this="\$(readlink -f \$0)"
+dir="\$(dirname \$this)/../share/alloy"
+
+java -jar "\$dir/\$jarfile"
+EOF
+   chmod a+x alloy
+}
+
+manifest=(
+   "2009.03.19_02.02_EDT.jar:Shared/alloy/"
+   "alloy:bin"
+)
