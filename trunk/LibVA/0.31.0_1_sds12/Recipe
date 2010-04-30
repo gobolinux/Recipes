@@ -1,0 +1,18 @@
+# Recipe (MakeRecipe) for LibVA by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Apr 30 17:24:56 BRT 2010
+# Recipe for version 0.31.0-1+sds12 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Apr 30 17:24:56 BRT 2010
+compile_version=1.13.1
+url="http://www.splitted-desktop.com/~gbeauchesne/libva/libva_0.31.0-1+sds12.tar.gz"
+file_size=598771
+file_md5=b75a850320eb61a34eb2ee41b0d90954
+dir='libva-0.31.0'
+recipe_type=configure
+
+configure_options=(
+    --enable-i965-driver
+    --enable-glx
+)
+
+pre_build() {
+    for i in debian/patches/*.patch; do patch -p1 < $i; done
+    autoreconf
+}
