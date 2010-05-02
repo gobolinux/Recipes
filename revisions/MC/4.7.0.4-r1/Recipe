@@ -1,0 +1,13 @@
+# Recipe for version 4.7.0.4 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. máj. 1., szombat, 23.38.54 CEST
+url="http://www.midnight-commander.org/downloads/mc-4.7.0.4.tar.lzma"
+file_size=2051195
+file_md5=e1a4673a58a2ff534ce63f3acae5d49d
+file=mc-4.7.0.4.tar.lzma
+compile_version=1.10.2
+recipe_type=configure
+configure_options=(
+    --enable-extcharset
+    --enable-charset
+    --without-x
+    --with-search-engine=glib
+)
