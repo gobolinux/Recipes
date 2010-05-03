@@ -1,0 +1,20 @@
+--- systemtap-1.2/git_version.sh.orig	2010-05-03 12:33:21.000000000 -0300
++++ systemtap-1.2/git_version.sh	2010-05-03 12:40:08.000000000 -0300
+@@ -355,7 +355,7 @@ then
+     if [ -f "$outfile" ]; then
+         if [ "x$keep_if_no_repo" = "xyes" ] && [ "x$git_repo" = "xno" ]; then
+             "$quiet" || echo "$self: Not a git repo, keeping existing $outfile" >&2
+-            rm -f "$outfilenew"
++            rm -f -- "$outfilenew"
+         elif cmp "$outfile" "$outfilenew" > /dev/null; then
+             "$quiet" || echo "$self: Output is unchanged, keeping $outfile" >&2
+             rm -f "$outfilenew"
+@@ -367,7 +367,7 @@ then
+         echo "$self: Output is new file, creating $outfile" >&2
+         mv -f "$outfilenew" "$outfile"
+     fi
+-    rmdir "$newdir"
++    rm -rf -- "$newdir"
+ fi
+ 
+ # THE END.

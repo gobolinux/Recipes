@@ -1,0 +1,10 @@
+[Name] SystemTap
+[Summary] A scripting interface to deeply examine the activities of a live Linux system.
+[Description]
+SystemTap provides free software (GPL) infrastructure to simplify the gathering of information about the running Linux system. This assists diagnosis of a performance or functional problem. SystemTap eliminates the need for the developer to go through the tedious and disruptive instrument, recompile, install, and reboot sequence that may be otherwise required to collect data.
+
+SystemTap provides a simple command line interface and scripting language for writing instrumentation for a live running kernel. We are publishing samples, as well as enlarging the internal "tapset" script library to aid reuse and abstraction. We also plan to support probing userspace applications. We are investigating interfacing Systemtap with similar tools such as Frysk, Oprofile and LTT.
+
+Current project members include Red Hat, IBM, Intel, Hitachi, and Oracle.
+[License] GNU General Public License version 2
+[Homepage] http://sourceware.org/systemtap
