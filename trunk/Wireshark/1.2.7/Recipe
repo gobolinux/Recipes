@@ -1,0 +1,10 @@
+# Recipe for version 1.2.7 by Lucas C. Villa Real, on Tue May 4 18:50:13 BRT 2010
+# Recipe (MakeRecipe) for Wireshark by demian <demianflorentin_æt_gmail.com>, on mar sep 4 15:16:18 PYT 2007
+compile_version=1.8.5
+url="http://media-2.cacetech.com/wireshark/src/wireshark-1.2.7.tar.bz2"
+file_size=15368816
+file_md5=cff6b18aa47a7e3eb973efe62c676b50
+recipe_type=configure
+configure_options=(
+   "--enable-threads"
+)
