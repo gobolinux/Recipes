@@ -1,0 +1,15 @@
+# Recipe for version 2010.3.6 by Michael Homer <michael@gobolinux.org>, on Sat May 8 21:56:45 NZST 2010
+# Recipe (MakeRecipe) for NTFS-3G by Lucas C. Villa Real, on Thu Feb 22 02:10:40 BRT 2007
+compile_version=1.8.2
+url="http://tuxera.com/opensource/ntfs-3g-2010.3.6.tgz"
+file_size=837069
+file_md5=12ce21aa044c6068a4df6e8cbd3c5cfa
+recipe_type=configure
+
+configure_options=(
+    "--disable-ldconfig"
+)
+
+make_variables=(
+    DESTDIR=$target
+)
