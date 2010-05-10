@@ -6,6 +6,10 @@ file_size=382914
 file_md5=991c2a1986cce15f03ca6ddc86ea5f43
 recipe_type=configure
 
+configure_options=(
+	--mandir=$target/Shared/man
+)
+
 do_build() {
    configure_do_build "$@"
    make libtcc.o
