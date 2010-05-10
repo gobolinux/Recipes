@@ -1,0 +1,11 @@
+# Recipe for version 1.2.6 by Michael Homer <michael@gobolinux.org>, on Mon May 10 20:42:38 NZST 2010
+# Recipe (MakeRecipe) for Redis by Michael Homer <michael@gobolinux.org>, on Sun Oct 4 14:30:36 NZDT 2009
+compile_version=1.12.0
+url="http://redis.googlecode.com/files/redis-1.2.6.tar.gz"
+file_size=213341
+file_md5=0c5355e57606523f9e8ce816db5e542f
+recipe_type=makefile
+
+do_install() {
+   $sudo_exec cp redis-{benchmark,cli,server,stat} "$target"/bin
+}
