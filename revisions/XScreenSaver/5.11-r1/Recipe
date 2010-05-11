@@ -1,0 +1,28 @@
+# Recipe for version 5.11 by Leandro Motta Barros <lmb@stackedboxes.org>, on Mon May 10 15:45:21 BRT 2010
+# By Leandro Motta Barros, 02005.11-02
+compile_version=1.8.0
+url="http://www.jwz.org/xscreensaver/xscreensaver-5.11.tar.gz"
+file_size=5585001
+file_md5=80f981b86734ccb31c5b3b24af3930ae
+recipe_type=configure
+
+make_variables=(
+   "GTK_DATADIR=$target/share"
+   "PAM_DIR=$settings_target/pam.d"
+   "PAM_CONF=$settings_target/pam.conf"
+   "KDEDIR=$target"
+   "datadir=$target/share"
+   "gnulocaledir=$target/share/locale"
+)
+
+configure_options=(
+"--enable-locking"
+"--libexecdir=$target/lib"
+"--with-configdir=$settings_target/xscreensaver-hacks"
+"--with-x-app-defaults=$settings_target"
+"--with-gl"
+"--with-gle"
+"--with-randr-ext"
+"--with-dpms-ext"
+"--with-proc-interrupts"
+)
