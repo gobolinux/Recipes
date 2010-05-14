@@ -1,0 +1,8 @@
+# Recipe for version 0.7.0 by Zbigniew Baniewski <zb@ispid.com.pl>, on Thu May 13 12:51:13 CEST 2010
+# Recipe (MakeRecipe) for GForth by Samuel A. Falvo II, on Sat Apr 7 01:50:03 PDT 2007
+compile_version=1.8.2
+url="http://mirrors.kernel.org/gnu/gforth/gforth-0.7.0.tar.gz"
+file_size=2277918
+file_md5=2979ae86ede73ce2b3576dae957f4098
+recipe_type=configure
+environment=(HOME=$goboTemp)
