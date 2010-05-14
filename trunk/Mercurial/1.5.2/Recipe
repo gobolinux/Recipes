@@ -1,0 +1,13 @@
+# Recipe for version 1.5.2 by Leandro Motta Barros <lmb@stackedboxes.org>, on Tue May 11 15:18:24 BRT 2010
+# Recipe for mercurial by Frederico Recsky frederico at gmail.com
+compile_version=1.13.0
+url="http://www.selenic.com/mercurial/release/mercurial-1.5.2.tar.gz"
+file_size=2022729
+file_md5=deafaaf017fc3c8a9deef39e566aec80
+build_script="setup.py"
+recipe_type=python
+
+pre_link() {
+  install contrib/hgk $target/bin/
+  install contrib/hgdiff $target/bin/
+}
