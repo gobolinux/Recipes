@@ -1,0 +1,12 @@
+# Recipe for version 5.0.3 by Lucas C. Villa Real, on Mon May 17 11:00:33 BRT 2010
+# Recipe (MakeRecipe) for Crash by Andre Detsch <detsch@gobolinux.org>, on Tue Sep 5 15:20:36 BRT 2006
+compile_version=1.8.0
+url="http://people.redhat.com/anderson/crash-5.0.3.tar.gz"
+file_size=24323343
+file_md5=fc03b253adbe04b8bcd6e817831a9ed4
+recipe_type=makefile
+makefile='Makefile'
+
+pre_build() {
+   GrepReplace '${DESTDIR}/usr/' "$target/" Makefile
+}
