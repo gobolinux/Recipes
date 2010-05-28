@@ -6,7 +6,11 @@ file_size=1178238
 file_md5=0efb8fcedf0a8acf6f423dfdb0658fdd
 recipe_type=makefile
 dir=wpa_supplicant-0.6.9/wpa_supplicant
-#makefile='Makefile'
+
+build_target="all"
+using_qt4() {
+   build_target="${build_target} wpa_gui"
+}
 
 environment=(
    QMAKESPEC="linux-g++"
@@ -14,14 +18,16 @@ environment=(
 
 make_variables=(
    "DESTDIR=$target"
-   "INSTALLDIR="
+   # if these are not set, files are installed in /usr/local/... which SymlinkProgram misses
+   "BINDIR=/sbin"
+   "LIBDIR=/lib"
 )
-pre_build(){
-   make mkconfig
+pre_build() {
+   if [ ! -e .config ]; then
+      cp defconfig .config
+      Log_Error You may alter wpa_supplicant build time configuration by modifying $(pwd)/.config
+   fi
 }
-pre_install(){
-   make wpa_gui
-}
-pre_link(){
+using_qt4_pre_link(){
    cp wpa_gui/wpa_gui $target/sbin
 }
