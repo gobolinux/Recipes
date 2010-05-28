@@ -1,0 +1,18 @@
+diff -aur extcalc-0.9.3-1-vanilla/CMakeLists.txt extcalc-0.9.3-1-patched/CMakeLists.txt
+--- extcalc-0.9.3-1-vanilla/CMakeLists.txt	2010-04-10 08:03:21.000000000 -0300
++++ extcalc-0.9.3-1-patched/CMakeLists.txt	2010-04-12 19:48:08.000000000 -0300
+@@ -160,14 +160,12 @@
+ 
+ 
+ 
+-SET(CMAKE_INSTALL_PREFIX "/usr/local")
+ SET(SHAREDIR "share/extcalc/data")
+ SET(DOCDIR "share/extcalc/doc")
+ SET(DESKTOPDIR "share/applications")
+ SET(ICONDIR "share/icons")
+ SET(MANDIR "/usr/man")
+ SET(BINDIR "bin")
+-ADD_DEFINITIONS(-DINSTALLDIR=\"\\\"${CMAKE_INSTALL_PREFIX}/share/extcalc\\\"\")
+ 
+ 
+ #installer data
