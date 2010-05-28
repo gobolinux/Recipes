@@ -1,0 +1,11 @@
+# Recipe for version 0.9.0 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. máj. 28., péntek, 19.38.42 CEST
+# Recipe (MakeRecipe) for LibMatroska by Jonas Karlsson <jonka750@student.liu.se>, on Tue Mar 21 00:05:50 CET 2006
+compile_version=1.8.0
+url="http://dl.matroska.org/downloads/libmatroska/libmatroska-0.9.0.tar.bz2"
+file_size=83444
+file_md5=1900b63866ac41a25bd536fdc5ce08c7
+recipe_type=makefile
+dir=libmatroska-0.9.0/make/linux
+install_variables=(
+    prefix=${target}
+)
