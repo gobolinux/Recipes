@@ -1,0 +1,10 @@
+# Recipe for version 1.9.2 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. máj. 1., szombat, 17.33.32 CEST
+# Recipe (MakeRecipe) for Aria2 by Nick Matteo <kundor@kundor.org>, on Sat Mar 14 16:35:53 EDT 2009
+compile_version=1.12.1
+url="$httpSourceforge/aria2/aria2-1.9.2.tar.bz2"
+file_size=1440547
+file_md5=70ba78851ea62d2f694fb65160d884ad
+recipe_type=configure
+configure_options=(
+    --with-ca-bundle=$goboLibraries/ssl/certs/cacert.pem
+)
