@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for MongoDB by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. márc. 21., vasárnap, 02.16.19 CET
+# Recipe for version 1.2.4 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. márc. 21., vasárnap, 02.16.19 CET
+compile_version=1.13.2
+url="http://downloads.mongodb.org/src/mongodb-src-r1.2.4.tar.gz"
+file_size=3879698
+file_md5=cb08571b77ec12454e89c9f43bdc3936
+recipe_type=scons
+scons_variables=(
+   "--prefix=$target"
+   "--usesm"
+   "--recstore"
+)
