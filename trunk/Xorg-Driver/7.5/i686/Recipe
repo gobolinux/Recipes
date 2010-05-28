@@ -51,9 +51,9 @@ include=(
 	xf86-video-mach64--6.8.2
 	xf86-video-mga--1.4.11
 	xf86-video-neomagic--1.2.4
-	xf86-video-newport--0.2.3
+#	xf86-video-newport--0.2.3 # uses deprecated loader api, breaking Xorg -configure
 #	xf86-video-nsc--2.8.3
-	xf86-video-nv--2.1.16
+	xf86-video-nv--2.1.17
 	xf86-video-r128--6.8.1
 #	xf86-video-radeonhd--1.3.0
 	xf86-video-rendition--4.2.3
@@ -83,6 +83,6 @@ include=(
 	xf86-video-vmware--10.16.9
 	xf86-video-voodoo--1.2.3
 #	xf86-video-wsfb--0.3.0 # For *BSD
-	xf86-video-xgi--1.5.1
-	xf86-video-xgixp--1.7.99.4
+#	xf86-video-xgi--1.5.1 # uses deprecated loader api, breaking Xorg -configure
+#	xf86-video-xgixp--1.7.99.4 # uses deprecated loader api, breaking Xorg -configure
 )
