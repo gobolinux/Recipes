@@ -1,0 +1,9 @@
+# Recipe for version 2.3.0 by Hugo Barrocas <hugobarrocas@iol.pt>, on Sáb Abr 17 13:58:30 WEST 2010
+# Recipe (MakeRecipe) for Audacious by Dominique Juergensen <brokolie@vollbio.de>, on Qua Jul 19 22:57:23 CEST 2009
+compile_version=1.12.3
+recipe_type=meta
+
+include=(
+   "Audacious-Itself--2.3.0"
+   "Audacious-Plugins--2.3.0"
+)
