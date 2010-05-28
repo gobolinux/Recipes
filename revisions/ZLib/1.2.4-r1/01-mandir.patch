@@ -1,0 +1,26 @@
+Use man instead of share/man to install manual pages
+
+diff -Naur zlib-1.2.3/Makefile zlib-1.2.3.new/Makefile
+--- zlib-1.2.3/Makefile	2005-07-18 04:25:21.000000000 +0200
++++ zlib-1.2.3.new/Makefile	2007-03-10 23:36:26.000000000 +0100
+@@ -43,7 +43,7 @@
+ exec_prefix = ${prefix}
+ libdir = ${exec_prefix}/lib
+ includedir = ${prefix}/include
+-mandir = ${prefix}/share/man
++mandir = ${prefix}/man
+ man3dir = ${mandir}/man3
+ 
+ OBJS = adler32.o compress.o crc32.o gzio.o uncompr.o deflate.o trees.o \
+diff -Naur zlib-1.2.3/Makefile.in zlib-1.2.3.new/Makefile.in
+--- zlib-1.2.3/Makefile.in	2005-07-18 04:25:21.000000000 +0200
++++ zlib-1.2.3.new/Makefile.in	2007-03-10 23:31:11.000000000 +0100
+@@ -43,7 +43,7 @@
+ exec_prefix = ${prefix}
+ libdir = ${exec_prefix}/lib
+ includedir = ${prefix}/include
+-mandir = ${prefix}/share/man
++mandir = ${prefix}/man
+ man3dir = ${mandir}/man3
+ 
+ OBJS = adler32.o compress.o crc32.o gzio.o uncompr.o deflate.o trees.o \

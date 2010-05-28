@@ -1,0 +1,14 @@
+# Recipe for version 1.2.4 by Hugo Barrocas <hugobarrocas@iol.pt>, on Sáb Abr 17 15:22:23 WEST 2010
+# Recipe (MakeRecipe) for ZLib by roko, <ro.ko@mcnon.com>, , on Fri Oct 22 21:07:02 BRST 2004
+compile_version=1.8.2
+url="http://zlib.net/zlib-1.2.4.tar.bz2"
+file_size=483564
+file_md5=763c6a0b4ad1cdf5549e3ab3f140f4cb
+recipe_type=configure
+configure_options=(
+   --shared
+)
+
+make_variables=(
+   LIBS="libz.a libz.so.1.2.4"
+)
