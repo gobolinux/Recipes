@@ -1,0 +1,39 @@
+# Recipe for version 2.043_bin by Vincent Thorn, based on recipe by Leandro Motta Barros <lmb@stackedboxes.org>, on Sat Dec 5 09:47:35 BRST 2009
+# Recipe (MakeRecipe) for DMD by Leandro Motta Barros <lmb@stackedboxes.org>, on Sat Oct 25 15:01:04 BRST 2008
+compile_version=1.13.2
+recipe_type=manifest
+url="http://ftp.digitalmars.com/dmd.2.043.zip"
+file_size=10190202
+dir=dmd2
+
+manifest=(
+    "linux/bin/dmd:bin"
+    "linux/bin/dumpobj:bin"
+    "linux/bin/obj2asm:bin"
+    "linux/bin/rdmd:bin"
+    "linux/lib/libdruntime.a:lib"
+    "linux/lib/libphobos2.a:lib"
+    "man:man"
+    "src:src"
+    "samples:samples"
+    "html:html"
+    "license.txt:license.txt"
+    "src/dmd/backendlicense.txt:backendlicense.txt"
+    "README.TXT:README.TXT"
+)
+
+do_install() {
+  # Do the regular installation
+  manifest_do_install "$@"
+
+  # Make executables executable
+  chmod 755 ${target}/bin/*
+
+  # Create config file
+  mkdir -p ${target}/Resources/Defaults/Settings
+  cat <<EOF > ${target}/Resources/Defaults/Settings/dmd.conf
+[Environment]
+
+DFLAGS=-I%@P%/../src/phobos -I%@P%/../src/druntime/import -I${target}/src/phobos -I/${target}/src/druntime/import -L-L%@P%/../lib
+EOF
+}
