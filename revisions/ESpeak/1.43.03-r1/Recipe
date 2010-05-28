@@ -1,0 +1,18 @@
+# Recipe for version 1.43.03.03 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. márc. 28., vasárnap, 00.51.33 CET
+# Recipe (MakeRecipe) for ESpeak by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. dec. 28., vasárnap, 02.24.22 CET
+compile_version=1.11.4
+url="http://prdownloads.sf.net/espeak/espeak-1.43.03-source.zip"
+file_size=1584275
+file_md5=2c9f8479acb524209329e595d6ca7e2a
+recipe_type=makefile
+dir="espeak-1.43.03-source/src"
+make_variables=(
+    PREFIX=$target
+)
+pre_build() {
+    rm -f portaudio*.h
+}
+do_install() {
+    makefile_do_install "$@"
+    install -m 755 ${compileSourcesDir}/espeak-1.43.03-source/src/speak $target/bin
+}
