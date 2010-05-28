@@ -1,0 +1,40 @@
+#!/bin/bash
+
+source GoboPath
+source ${goboSettings}/BootOptions
+if [ -r "${goboSettings}/NetworkOptions" ]; then
+   source ${goboSettings}/NetworkOptions 2> /dev/null
+fi
+
+#
+# DHCP support for NetworkInterface
+# Intended to be called by the Network task, not directly by the user.
+# Hacked by Guilherme Bedin, Hisham Muhammad and many others - 26/07/2003,2004...
+#
+
+interface="$2"
+
+# For command-line convenience
+[ "$3" ] && DHCPTimeout="$3"
+
+[ "$DHCPTimeout" ] || DHCPTimeout=5
+
+# The following is the Stop action.
+# Always executing Stop before Start ensures that no client daemon is servicing this interface
+# and cleans up any PID locks from an improper shutdown.
+if [ -f "/var/run/dhcpcd-${interface}.pid" ]
+   then
+      DHCPCDPID=`cat "/var/run/dhcpcd-${interface}.pid"`
+      #ps u -p $DHCPCDPID | grep "dhcpcd.*${interface}" > /dev/null 2>&1 && kill -TERM $DHCPCDPID
+      cat /proc/${DHCPCDPID}/cmdline | grep "dhcpcd.*${interface}" > /dev/null 2>&1 && kill -TERM $DHCPCDPID
+      rm -rf "/var/run/dhcpcd-${interface}.pid" >/dev/null
+fi
+
+case "$1" in
+   [Ss]tart)
+      dhcpcd -h "$HostName" -t "$DHCPTimeout" "$interface"
+      ;;
+   [Ss]top)
+        # Stop action is always executed above
+      ;;
+esac
