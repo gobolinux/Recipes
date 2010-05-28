@@ -1,0 +1,11 @@
+# Recipe for version 1.9.1 by Leandro Motta Barros <lmb@stackedboxes.org>, on Mon Apr 19 14:41:37 BRT 2010
+# Recipe (MakeRecipe) for Workrave by Leandro Motta Barros <lmb@stackedboxes.org>, on Mon Oct 6 19:40:42 BRT 2008
+compile_version=1.11.2
+url="http://downloads.sourceforge.net/project/workrave/workrave/1.9.1/workrave-1.9.1.tar.gz"
+file_size=6594737
+file_md5=065775ee4fdb3e21e12cbf0907d31b88
+dir='workrave-1.9.1'
+recipe_type=configure
+configure_options=(
+   "--disable-gnome"
+)
