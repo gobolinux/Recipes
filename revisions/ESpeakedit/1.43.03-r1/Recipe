@@ -1,0 +1,18 @@
+# Recipe for version 1.43.03.03 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. márc. 28., vasárnap, 00.55.06 CET
+# Recipe (MakeRecipe) for ESpeakedit by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. dec. 28., vasárnap, 02.26.08 CET
+compile_version=1.11.4
+url="http://prdownloads.sf.net/espeak/espeakedit-1.43.03.zip"
+file_size=7888243
+file_md5=17d389f8e0ae2603e93781cb7501abc2
+recipe_type=manifest
+dir="espeakedit-1.43.03/src"
+do_build() {
+    rm -f portaudio*.h
+    GrepReplace 2.6 2.8 Makefile
+    make
+}
+manifest=(
+    "espeakedit:bin"
+    "../phsource:share/espeak-data/phsource"
+    "../docs:share/doc/espeakedit-1.43.03"
+)
