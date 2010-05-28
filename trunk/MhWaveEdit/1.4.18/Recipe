@@ -1,0 +1,16 @@
+# Recipe for version 1.4.18 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. márc. 27., szombat, 19.11.43 CET
+# Recipe (MakeRecipe) for MhWaveEdit by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 31., péntek, 03.27.50 CEST
+compile_version=1.12.2
+url="http://download.gna.org/mhwaveedit/mhwaveedit-1.4.18.tar.bz2"
+file_size=568317
+file_md5=ea09f01cb7ad942eb961385bc494a367
+recipe_type=configure
+
+# Portaudio support is broken.
+configure_options=(
+    --without-portaudio
+    --without-pulse
+    --without-esound
+    --without-sun
+    --without-arts
+)
