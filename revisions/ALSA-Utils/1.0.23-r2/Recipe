@@ -1,0 +1,11 @@
+# Recipe for version 1.0.23 by Hugo Barrocas <hugobarrocas@iol.pt>, on Sáb Abr 17 13:29:50 WEST 2010
+# Recipe (MakeRecipe) for ALSA-Utils by Peter Eriksen <s022018@student.dtu.dk>, on Sat Jan 15 15:34:38 CET 2005
+compile_version=1.9.0
+url="ftp://ftp.alsa-project.org/pub/utils/alsa-utils-1.0.23.tar.bz2"
+file_size=1076937
+file_md5=cb0cf46029ac9549cf3a31bff6a4f4e1
+recipe_type=configure
+
+configure_options=(
+    --disable-xmlto
+)
