@@ -7,6 +7,7 @@ recipe_type=configure
 configure_options=(
    --dbdir="${goboVariable}/lib/dhcpcd"
    --rundir="${goboVariable}/run"
+   --mandir="${target}/Shared/man"
 )
 install_variables=(
    SYSCONFDIR="${settings_target}"
