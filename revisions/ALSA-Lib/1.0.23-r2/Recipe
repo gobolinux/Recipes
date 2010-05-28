@@ -1,0 +1,16 @@
+# Recipe for version 1.0.23 by Hugo Barrocas <hugobarrocas@iol.pt>, on Sáb Abr 17 13:10:27 WEST 2010
+# Recipe (MakeRecipe) for ALSA-Lib by Peter Eriksen <s022018@student.dtu.dk>, on Sat Jan 15 15:28:29 CET 2005
+compile_version=1.9.0
+url="ftp://ftp.alsa-project.org/pub/lib/alsa-lib-1.0.23.tar.bz2"
+file_size=808271
+file_md5=f48b50421d8a69d2d806d9c47e534f0d
+recipe_type=configure
+configure_options=(
+    --enable-symbolic-functions
+)
+
+install_variables=(
+   alsaconfigdir="${target}/share/alsa"
+   alsaplugindir="${target}/lib/alsa-lib"
+   exec_prefix="${target}"
+)
