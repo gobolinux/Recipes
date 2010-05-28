@@ -1,0 +1,16 @@
+This patch file was improperly brought forward from Gzip 1.3 .
+Gzip 1.4 already incorporates a prefix for futimens.
+
+The following is a simple no-op patch.
+
+--- gzip-1.3.12.orig/gzip.c
++++ gzip-1.3.12/gzip.c
+@@ -1637,7 +1642,7 @@
+ 	}
+       }
+ 
+-    if (gl_futimens (ofd, ofname, timespec) != 0)
++    if (gl_futimens (ofd, ofname, timespec) != 0)
+       {
+ 	int e = errno;
+ 	WARN ((stderr, "%s: ", program_name));
