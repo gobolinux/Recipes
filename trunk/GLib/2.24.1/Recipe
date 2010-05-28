@@ -1,4 +1,4 @@
-# Recipe for version 2.24.1 by Hugo Barrocas <hugobarrocas@iol.pt>, on Ter Mai 25 22:52:10 WEST 2010
+# Recipe for version 2.24.1 by Hugo Barrocas <barrocas@iol.pt>, on Sáb Mai 15 19:05:26 WEST 2010
 # Recipe (MakeRecipe) for GLib by  Ozgur Ulukir, on Mon Dec 20 01:48:37 EET 2004
 compile_version=1.8.2
 url="http://ftp.gnome.org/pub/gnome/sources/glib/2.24/glib-2.24.1.tar.bz2"
@@ -14,6 +14,10 @@ with_fam="--enable-fam"
 install_variables=(
    GIO_MODULE_DIR="${target}/lib/gio/modules"
 )
+
+pre_install() {
+   sed -i "s,libdir='${goboLibraries},libdir='${target}/lib," gio/fam/libgiofam.la
+}
 
 pre_link() {
     Quiet pushd $target/lib/pkgconfig
