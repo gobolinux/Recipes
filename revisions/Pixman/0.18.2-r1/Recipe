@@ -1,0 +1,19 @@
+# Recipe for version 0.18.2 by Hugo Barrocas <barrocas@iol.pt>, on S�b Mai 15 18:57:49 WEST 2010
+# Recipe (MakeRecipe) for Pixman by Jonas Karlsson <jonka750@student.liu.se>, on Mon Sep 10 08:59:22 CEST 2007
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/lib/pixman-0.18.2.tar.bz2"
+file_size=421621
+file_md5=8f0c47bbb12a0d9c0d14242596bf6bf9
+recipe_type=configure
+
+configure_options=(
+    --disable-sse2
+)
+with_gtk2="--enable-gtk"
+
+pre_link() {
+   # Force link to not fail if link already exist
+   # (old pixman exist inside Xorg-Lib)
+   ln -v -sf pixman-1/pixman.h $target/include
+}
+
