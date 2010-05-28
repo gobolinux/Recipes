@@ -1,0 +1,19 @@
+# Recipe for version 1.8.1 by Hugo Barrocas <hugobarrocas@iol.pt>, on Sáb Abr 17 13:42:24 WEST 2010
+# Recipe (MakeRecipe) for Kerberos by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Jul 12 09:23:04 BRT 2005
+compile_version=1.8.0
+url="http://web.mit.edu/kerberos/dist/krb5/1.8/krb5-1.8.1-signed.tar"
+file_size=11632640
+file_md5=e29a78b108c4687f7e7937110d1d0415
+
+recipe_type=configure
+unpack_files=files_in_root
+configure_options=(
+   --enable-ipv6
+)
+pre_build() {
+   tar -zxvf krb5-1.8.1.tar.gz
+   chown -R `ls -l krb5-1.8.1.tar.gz.asc| awk '{print $3}'` krb5-1.8.1
+   mv krb5-1.8.1/src/* .
+   mv krb5-1.8.1/doc .
+   rm -rf krb5-1.8.1*
+}
