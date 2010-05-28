@@ -1,15 +1,18 @@
-# Recipe for version 1.6.0_20_bin by Hugo Barrocas <barrocas@iol.pt>, on Sáb Mai 15 22:30:55 WEST 2010
+# Recipe for version 1.6.0_20_bin by Hugo Barrocas <barrocas@iol.pt>, on Sáb Mai 15 23:15:36 WEST 2010
 # based on recipe for JRE version 1.6.0_07 by Riccardo Gregotti <xexos'at'hotmail.com>
 # based on recipe for JDK by Daniele Maccari <daniele.maccari@gmail.com>
 # and by Mike Hughes (Thanks ;-) )
 
-url="http://cds.sun.com/is-bin/INTERSHOP.enfinity/WFS/CDS-CDS_Developer-Site/en_US/-/USD/VerifyItem-Start/jre-6u20-linux-i586.bin?BundledLineItemUUID=RIyJ_hCwvl4AAAEoWWJsZ52i&OrderID=npuJ_hCwB1QAAAEoQmJsZ52i&ProductID=5pJIBe.pRakAAAEnvXoZAPYl&FileName=/jre-6u20-linux-i586.bin"
+url="http://javadl.sun.com/webapps/download/AutoDL?BundleId=39485"
+file_size=21079390
+file_md5=a6d7381cbca6ffcb1670f5e7eea1d41b
 
 compile_version=1.10.2
 recipe_type=manifest
 uncompress=no
 
 pre_patch() {
+  mv AutoDL?BundleId=39485 jre-6u20-linux-i586.bin
   bash jre-6u20-linux-i586.bin
 }
 
