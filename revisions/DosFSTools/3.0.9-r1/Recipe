@@ -1,0 +1,12 @@
+# Recipe for version 3.0.9 by Baffo32 <baffo32@gmail.com>, on Wed Apr 14 14:12:49 EDT 2010
+url="http://www.daniel-baumann.ch/software/dosfstools/dosfstools-3.0.9.tar.bz2"
+file_size=69186
+file_md5=7f159ec44d3b9c502904bab0236050e4
+dir=dosfstools-3.0.9
+compile_version=1.8.0
+recipe_type=makefile
+make_variables=(
+   "PREFIX=$target"
+   "DOCDIR=$target/doc"
+   "MANDIR=$target/man"
+)
