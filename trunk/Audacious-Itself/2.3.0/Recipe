@@ -1,0 +1,12 @@
+# Recipe for version 2.3.0 by Hugo Barrocas <hugobarrocas@iol.pt>, on Sáb Abr 17 13:55:18 WEST 2010
+# Recipe (MakeRecipe) for Audacious-Itself by Guilherme B. Bedin, on Wed Jan 24 13:54:19 BRST 2007
+compile_version=1.8.2
+url="http://distfiles.atheme.org/audacious-2.3.tgz"
+file_size=1564114
+file_md5=b65753880c6762cdad6423df48590304
+recipe_type=configure
+part_of=Audacious
+
+configure_options=(
+    --disable-rpath
+)
