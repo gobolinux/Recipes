@@ -1,0 +1,13 @@
+# Recipe for version 0.8.0 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. máj. 28., péntek, 19.38.07 CEST
+# Recipe (MakeRecipe) for LibEBML by Jonas Karlsson <jonka750@student.liu.se>, on Mon Mar 20 23:54:41 CET 2006
+compile_version=1.8.0
+url="http://dl.matroska.org/downloads/libebml/libebml-0.8.0.tar.bz2"
+file_size=60039
+file_md5=e99f95eaac49958f0a962e67bc4ac4f2
+recipe_type=makefile
+dir=libebml-0.8.0/make/linux
+install_variables=(
+    prefix=${target}
+)
+#make_target=staticlib
+#install_target=install_staticlib
