@@ -1,0 +1,19 @@
+# Recipe for version 2.0-r8-r8 by Hugo Barrocas <hugobarrocas@iol.pt>, on Ter Mai 25 22.0-r87:49 WEST 2010
+# Recipe (MakeRecipe) for WiFi-Radar by Giambattista Bloisi <giamby@infinito.it>, on Sun Nov 4 14:53:20 CET 2.0-r8-r87
+compile_version=1.9.0
+url="http://download.berlios.de/wifi-radar/wifi-radar-2.0.s08.tar.bz2"
+file_size=62781
+file_md5=cbad24805d5dc6696e38dc1df619c819
+
+
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "sysconfdir=$settings_target"
+   "sbindir=$target/sbin"
+   "initdir=$target/etc/init.g"
+   "sysconfdir=$settings_target/wifi-radar"
+   "mandir=$target/share/man"
+   "pixmapsdir=$target/share/pixmaps"
+   "appsdir=$target/share/applications"
+)
