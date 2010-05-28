@@ -1,0 +1,13 @@
+# on Sat Apr 16 13:31:22 CEST 2005
+
+compile_version=1.8.2
+url="http://www.riverbankcomputing.co.uk/static/Downloads/sip4/sip-4.10.2.tar.gz"
+file_size=646683
+file_md5=52d11ca9c1a0d0cddc9b89268bff5929
+
+recipe_type=makefile
+pre_build() {
+   pythonversion=`python --version 2>&1 | awk {'print $2'} | cut -b1-3`
+   sitepackages="$target/lib/python${pythonversion}/site-packages"
+   python configure.py -b $target/bin -e $target/include -d $sitepackages -v $target/share/sip
+}
