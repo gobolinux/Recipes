@@ -1,0 +1,10 @@
+# Recipe for version 0.5.9 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. márc. 27., szombat, 18.13.12 CET
+# Recipe (MakeRecipe) for Mp3splt-gtk by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. jan. 27., szerda, 19.10.25 CET
+compile_version=1.12.4
+url="http://prdownloads.sf.net/mp3splt/mp3splt-gtk-0.5.9.tar.gz"
+file_size=304691
+file_md5=9579e3d8ce992057d9fd64dd8ffb2066
+recipe_type=configure
+configure_options=(
+    --disable-audacious
+)
