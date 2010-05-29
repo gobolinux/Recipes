@@ -1,0 +1,94 @@
+#!/bin/sh
+#
+# Music Player Daemon System V Script
+# 
+# Copyright (C) 2005 Henrik Gebauer <mailto:henrik.gebauerATweb.de>
+# This software may be distributed under the terms of the GNU General Public License,
+# version 2 or any later version
+
+# <CONFIG>
+wrapper=               # soundwrapper (leave blank if none)
+mpdconf=/System/Settings/mpd.conf
+autoplay=1             # play automatically
+forceplay=0            # play even if music was stopped at shutdown
+# </CONFIG>
+
+. /etc/rc.d/init.d/functions
+PATH=/usr/bin:/usr/local/bin:$PATH
+
+# Verzeichnis mit Playlists
+pldir=$(grep playlist_directory $mpdconf|sed "s/^ *\\w\\+ \\+//"|xargs echo)
+
+case "$1" in
+  start)
+      echo -n "Starte Music-Player-Daemon: " #action
+      if $wrapper mpd > /dev/null; then
+          echo $(ps -C mpd --format "%p" --no-headers) > /var/run/mpd.pid
+          touch /var/lock/subsys/mpd
+          # Musik starten
+          mpc load .current > /dev/null
+          pos=$(head -n1 "$pldir/.mpd.pos")
+          mpc play "$pos" > /dev/null
+          # wenn nicht gespielt werden soll
+          [ $autoplay -eq 0 -o "$(tail -n1 $pldir/.mpd.pos)" = "stop" ] && mpc stop > /dev/null
+      else
+          echo_failure
+      fi
+      echo
+      ;;
+  stop)
+      echo -n "Stoppe Music-Player-Daemon: "
+      if mpc > /dev/null 2> /dev/null; then
+          # Playlist speichern
+          [ -f $pldir/.current.m3u ] && rm $pldir/.current.m3u
+          mpc save .current > /dev/null 2> /dev/null 
+
+          # Wird gespielt?
+          tmp=$(mpc|head -n2|tail -n1|sed "s/^.\+\#\([0-9]\+\)\/.\+$/\\1/"|grep volume)
+          if [ "$tmp" = "" ]; then
+              spielt=1
+          else
+              spielt=0
+              # Damit mpc weitere Informationen ausgibt:
+              mpc play > /dev/null 2> /dev/null
+          fi 
+
+          # aktuelle Position
+          pos=$(mpc|head -n2|tail -n1|sed "s/^.\+\#\([0-9]\+\)\/.\+$/\\1/")
+          echo $pos > $pldir/.mpd.pos
+          if [ $forceplay -eq 0 -a $spielt -eq 0 ]; then
+              echo "stop" >> $pldir/.mpd.pos
+          else
+              echo "play" >> $pldir/.mpd.pos
+          fi  
+
+          # PID feststellen
+          pid=
+          read line < /var/run/mpd.pid
+          for p in $line; do 
+              [ -d /proc/$p ] && pid="$pid $p"
+          done
+
+          # Prozess beenden
+          kill $pid
+
+          # PID- und Lock-Dateien lschen
+          rm -f /var/run/mpd.pid
+          rm -f /var/lock/subsys/mpd
+          echo_success
+      else
+          echo_failure
+      fi
+      echo
+      ;;
+  restart)
+      $0 stop
+      $0 start
+      ;;
+  *)
+      gprintf "Usage: %s {start|stop|restart}\n" "$0"
+      exit 1
+      ;;
+esac
+
+exit 0
