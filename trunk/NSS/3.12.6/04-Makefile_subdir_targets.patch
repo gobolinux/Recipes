@@ -1,0 +1,8 @@
+diff -Naur nss-3.12.4.old/mozilla/Makefile nss-3.12.4/mozilla/Makefile
+--- nss-3.12.4.old/mozilla/Makefile	1970-01-01 01:00:00.000000000 +0100
++++ nss-3.12.4/mozilla/Makefile	2006-09-24 20:24:36.000000000 +0200
+@@ -0,0 +1,4 @@
++all:
++	make -C security/coreconf
++	make -C security/dbm
++	make -C security/nss
