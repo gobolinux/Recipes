@@ -1,0 +1,25 @@
+# Recipe for version 5.5p1 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. jún. 6., vasárnap, 21.41.54 CEST
+# Recipe for OpenSSH by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.10.2
+url="ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-5.5p1.tar.gz"
+file_size=1097574
+file_md5=88633408f4cb1eb11ec7e2ec58b519eb
+recipe_type=configure
+install_target=install-nokeys
+configure_options=(
+   "--sysconfdir=$settings_target/ssh"
+)
+install_variables=(
+   sysconfdir="${settings_target}/ssh"
+)
+unmanaged_files=(
+   "${goboVariable}/empty"
+)
+
+with_pam="--with-pam"
+
+pre_link() {
+   mkdir -p "${target}/Resources/Unmanaged/${goboVariable}/empty"
+   chmod 755 "${target}/Resources/Unmanaged/${goboVariable}/empty"
+   chown 0:sys "${target}/Resources/Unmanaged/${goboVariable}/empty"
+}
