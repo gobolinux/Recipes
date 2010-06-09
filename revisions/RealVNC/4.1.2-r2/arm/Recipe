@@ -1,0 +1,3 @@
+pre_build() {
+	echo "Running autoconf..." && ( autoconf; cd ../common; autoconf )
+}

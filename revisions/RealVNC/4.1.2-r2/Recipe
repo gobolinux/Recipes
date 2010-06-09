@@ -1,0 +1,17 @@
+# Recipe (MakeRecipe) for RealVNC by Lucas C. Villa Real, on Wed Jan 17 21:54:54 BRST 2007
+# Recipe for version 4.1.2 by Lucas C. Villa Real, on Wed Jan 17 21:54:54 BRST 2007
+compile_version=1.8.0
+url="http://ltsp.mirrors.tds.net/pub/ltsp/tarballs/vnc-4_1_2-unixsrc.tar.gz"
+file_size=537713
+file_md5=cf9a6fe8f592286b5e0fdde686504ffb
+recipe_type=configure
+dir='vnc-4_1_2-unixsrc/unix'
+do_install=no
+
+configure_options=(
+    --with-installed-zlib
+)
+
+pre_install() {
+    ./vncinstall $target/bin $target/man $target/lib/xorg/modules/extensions
+}

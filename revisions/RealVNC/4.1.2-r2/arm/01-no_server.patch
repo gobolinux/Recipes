@@ -1,0 +1,8 @@
+--- vnc-4_1_2-unixsrc/unix/Makefile.in.orig	2007-01-17 22:40:33.000000000 -0200
++++ vnc-4_1_2-unixsrc/unix/Makefile.in	2007-01-17 22:40:46.000000000 -0200
+@@ -1,4 +1,4 @@
+ 
+-SUBDIRS = ../common tx vncviewer vncconfig vncpasswd x0vncserver
++SUBDIRS = ../common tx vncviewer vncconfig vncpasswd 
+ 
+ # followed by boilerplate.mk
