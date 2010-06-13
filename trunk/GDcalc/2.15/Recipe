@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for GDcalc by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. jún. 13., vasárnap, 01.36.27 CEST
+# Recipe for version 2.15 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. jún. 13., vasárnap, 01.36.27 CEST
+compile_version=1.13.3
+url="http://bhepple.freeshell.org/dcalc/unix/gdcalc-2.15.tar.gz"
+file_size=334845
+file_md5=0a9d2d8f03df472b971e0ff0331bd0fd
+recipe_type=configure
+pre_build(){
+    autoreconf -ivf
+}
