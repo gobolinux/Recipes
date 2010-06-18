@@ -1,0 +1,11 @@
+# Recipe for version 1.7.1 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. jún. 18., péntek, 18.09.05 CEST
+# Recipe (MakeRecipe) for OGRE by Filipe Vieira, on Tue Jan 15 03:12:57 WET 2008
+compile_version=1.10.0
+url="http://prdownloads.sf.net/ogre/ogre_src_v1-7-1.tar.bz2"
+file_size=62959218
+file_md5=85083083dc65d49572654ea8c8b5c552
+dir='ogre_src_v1-7-1'
+recipe_type=cmake
+cmake_options=(
+    -DCMAKE_BUILD_TYPE="Release"
+)
