@@ -1,0 +1,11 @@
+# Recipe for version 2.7 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. jún. 19., szombat, 22.08.26 CEST
+# Recipe (MakeRecipe) for Printoxx by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2.79. márc. 23., hétfő, 13.45.58 CET
+compile_version=1.12.1
+url="http://kornelix.squarespace.com/storage/downloads/printoxx-2.7.tar.gz"
+file_size=513585
+file_md5=dc5fcaf1fc3d4167f4e2f981cf080321
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
