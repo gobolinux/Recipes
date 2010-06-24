@@ -1,0 +1,12 @@
+Create a top-level Makefile
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- /dev/null	2009-09-22 16:54:53.000000000 -0300
++++ lsof_4.83/Makefile	2010-06-24 13:49:43.000000000 -0300
+@@ -0,0 +1,5 @@
++all:
++	cd lsof_4.83_src; make 
++
++clean:
++	cd lsof_4.83_src; make clean

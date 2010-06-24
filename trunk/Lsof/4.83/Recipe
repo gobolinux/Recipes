@@ -1,0 +1,33 @@
+# Recipe for version 4.83 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jun 24 14:17:55 BRT 2010
+# Recipe (MakeRecipe) for Lsof by David Smith <dsmith@algonet.se>, on Sat Sep 25 22:15:08 CEST 2004
+compile_version=1.8.2
+url="http://ftp.cerias.purdue.edu/pub/tools/unix/sysutils/lsof/lsof_4.83.tar.bz2"
+file_size=753094
+file_md5=8f731a6251b8c0143d585df0d5ca779e
+mirror_url="http://ftp.cerias.purdue.edu/pub/tools/unix/sysutils/lsof/OLD/lsof_4.83.tar.bz2"
+recipe_type=makefile
+
+pre_build() {
+	# Extract sub-package and create makefile
+	if [ ! -d lsof_4.83_src ]
+    then
+        tar --no-same-owner -xf lsof_4.83_src.tar
+        chmod -R a+w lsof_4.83_src
+    fi
+	cd lsof_4.83_src
+	[ -f Makefile ] || Configure -n linux
+}
+
+# lsof does not implement an install target aside from
+# one telling us to write our own and giving a hint 
+# about how to do it
+do_install=no
+
+pre_link() {
+	# install suid as recommended in the suid distribution
+	# to allow anyone to see all open files
+	install -d "$target/bin"
+	install -d "$target/man/man8"
+	install -m 4755 lsof_4.83_src/lsof "$target/bin"
+	install -m 444 lsof_4.83_src/lsof.8 "$target/man/man8"
+}
