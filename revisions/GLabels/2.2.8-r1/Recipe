@@ -1,0 +1,11 @@
+# Recipe for version 2.2.8 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. jún. 26., szombat, 01.37.09 CEST
+# Recipe (MakeRecipe) for GLabels by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. jan. 28., csütörtök, 03.41.51 CET
+compile_version=1.12.4
+url="http://prdownloads.sf.net/glabels/glabels-2.2.8.tar.gz"
+file_size=3842721
+file_md5=0038e6a1a1e8d941061093d1edace492
+recipe_type=configure
+configure_options=(
+    --disable-scrollkeeper
+    --without-libebook
+)
