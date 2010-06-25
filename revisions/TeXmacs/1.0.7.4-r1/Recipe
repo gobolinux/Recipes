@@ -1,0 +1,10 @@
+# Recipe for version 1.0.7.4 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. jún. 25., péntek, 22.40.17 CEST
+# Recipe (MakeRecipe) for TeXmacs by roko, <ro.ko@mcnon.com>, , on Sat Oct 9 02:47:56 BRT 2004
+compile_version=1.6.0
+url="ftp://ftp.texmacs.org/pub/TeXmacs/targz/TeXmacs-1.0.7.4-src.tar.gz"
+file_size=5300518
+file_md5=9d3b1e25348ae5603c06712d9ffe04e5
+recipe_type=configure
+configure_options=(
+    --with-imlib2
+)
