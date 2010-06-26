@@ -4,10 +4,4 @@ compile_version=1.10.1
 url="http://podgorny.cz/unionfs-fuse/releases/unionfs-fuse-0.24.tar.bz2"
 file_size=30381
 file_md5=ab00f252c55a9a7252fca13a53260bf5
-recipe_type=makefile
-makefile='Makefile'
-do_install=no
-
-pre_install() {
-	cp src/unionfs $target/bin
-}
+recipe_type=cmake
