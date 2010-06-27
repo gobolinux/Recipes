@@ -1,0 +1,23 @@
+# Recipe for version 2.4.9 by Hugo Barrocas <hugobarrocas@iol.pt>, on Dom Jun 27 12:40:32 WEST 2010
+compile_version=1.8.2
+url=$httpSourceforge/gphoto/libgphoto2-2.4.9.tar.gz
+file_size=6828643
+file_md5=26e0d7cff6c6f0be453d7612309d80a6
+recipe_type=configure
+
+#pre_build() {
+#   mkdir gphoto2
+#   for i in libgphoto2/* libgphoto2_port/libgphoto2_port/* 
+#   do 
+#      ln -sfn `readlink -f $i` gphoto2/
+#   done
+#}
+
+pre_link() {
+   mkdir -p "${target}/Shared/hal/fdi/policy/20thirdparty"
+   mkdir -p "${target}/Shared/hal/scripts"
+   install -m644 hal/90-libgphoto2-camera-policy.fdi "${target}/Shared/hal/fdi/policy/20thirdparty"
+   install -m755 hal/libgphoto2-set-proc-permissions "${target}/Shared/hal/scripts"
+   $target/lib/libgphoto2/print-camera-list hal-fdi > "${target}/Shared/hal/fdi/policy/20thirdparty/10-camera-libgphoto2.fdi"
+   $target/lib/libgphoto2/print-camera-list hal-fdi-device > "${target}/Shared/hal/fdi/policy/20thirdparty/10-camera-libgphoto2-device.fdi"
+}
