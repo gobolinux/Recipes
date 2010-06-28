@@ -1,0 +1,11 @@
+# Recipe for version 4.4.0 by Hisham Muhammad <hisham@gobolinux.org>, on Sun Jun 27 01:00:22 BRT 2010
+# Recipe for Gnuplot 4.4.0 by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.8.0
+url="$httpSourceforge/gnuplot/gnuplot-4.4.0.tar.gz"
+file_size=3291622
+file_md5=e708665bd512153ad5c35252fe499059
+recipe_type=configure
+
+configure_options=(
+    "--enable-history-file"
+)
