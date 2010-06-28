@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for AOEUI by Hisham Muhammad <hisham@gobolinux.org>, on Sat Jun 26 02:13:48 BRT 2010
+# Recipe for version 1.4 by Hisham Muhammad <hisham@gobolinux.org>, on Sat Jun 26 02:13:48 BRT 2010
+compile_version=1.9.0
+url="http://aoeui.googlecode.com/files/aoeui-1.4.tgz"
+file_size=84694
+file_md5=8df4615fdf854838fe6c8ca773d0a6ea
+recipe_type=makefile
+makefile='Makefile'
+install_variables=(INST_DIR="$target")
