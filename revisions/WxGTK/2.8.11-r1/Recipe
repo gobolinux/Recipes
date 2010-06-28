@@ -1,0 +1,24 @@
+# Recipe for version 2.8.11 by Hisham Muhammad <hisham@gobolinux.org>, on Sun Jun 27 21:31:11 BRT 2010
+# from a patched recipe for version 2.8.11 by Giambattista Bloisi <giamby@infinito.it>, on Sat Apr 25 18:05:44 CEST 2009
+# Recipe (MakeRecipe) for WxGTK by Guilherme Balestieri Bedin [gbedin], on Fri Aug 26 23:52:45 BRT 2005
+compile_version=1.8.5
+url="$httpSourceforge/wxwindows/wxGTK-2.8.11.tar.gz"
+file_size=13078779
+file_md5=d1b9db394499e24ceabe911e8b30f8b0
+recipe_type=configure
+configure_options=(
+   --enable-unicode
+)
+
+with_mesa=( --with-opengl )
+
+pre_link() {
+    Quiet pushd $target/include
+    ln -s wx-2.8/* .
+    Quiet popd
+    
+    Quiet pushd $target/bin
+    rm -f wx-config
+    cp ../lib/wx/config/gtk2-ansi-release-2.8 wx-config
+    Quiet popd
+}
