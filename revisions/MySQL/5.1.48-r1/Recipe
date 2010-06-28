@@ -1,0 +1,49 @@
+# Recipe for version 5.1.48 by Hisham Muhammad <hisham@gobolinux.org>, on Sat Jun 26 01:54:22 BRT 2010
+# Recipe (MakeRecipe) for MySQL by Maglan C. Diemer, maglan@univates.br, on Qui Dez 8 20:53:16 BRST 2005
+compile_version=1.10.0
+url="http://mysql.he.net/Downloads/MySQL-5.1/mysql-5.1.48.tar.gz"
+file_size=23362742
+file_md5=d04c54d1cfbd8c6c8650c8d078f885b2
+recipe_type=configure
+
+# This recipe enables the new mysql embedded library
+# This is used in amarok 2.0+
+
+unmanaged_files=(
+   "$goboPrefix/Files/MySQL"
+)
+
+configure_options=(
+   "--localstatedir=$goboPrefix/Files/MySQL"
+   "--enable-shared"
+   "--enable-thread-safe-client"
+   "--with-ssl"
+   "--with-embedded-server" # embedded mysql
+)
+
+# embedded mysql library recquires -fPIC
+environment=(
+   CXXFLAGS="-fPIC $CXXFLAGS" 
+   CFLAGS="-fPIC -D_GNU_SOURCE $CFLAGS"
+)
+
+pre_install() {
+   mkdir -p "$goboPrefix/Files/MySQL"
+}
+
+pre_link() {
+   # task file
+   mkdir -p $target/Resources/Tasks
+   cp support-files/mysql.server $target/Resources/Tasks/MySQL
+   chmod +x $target/Resources/Tasks/MySQL
+    
+   # settings files
+   mkdir -p ${target}/Resources/Defaults/Settings/MySQL
+   cp support-files/my-*.cnf ${target}/Resources/Defaults/Settings/MySQL
+   ln -s my-medium.cnf ${target}/Resources/Defaults/Settings/MySQL/my.cnf
+
+   # libraries should be linked in lib as well as in lib/mysql
+   pushd "$target/lib"
+   ln -sf mysql/*.* .
+   popd
+}
