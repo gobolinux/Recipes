@@ -1,0 +1,13 @@
+# Recipe for version 3.0 by Pedro Flores <pdavidflores@gmail.com>, on Tue Nov 17 02:53:26 PYST 2009
+# by Jeremy Vernon
+url="${httpSourceforge}/project/infozip/Zip%203.x%20%28latest%29/3.0/zip30.tar.gz"
+file_size=1118845
+file_md5=7b74551e63f8ee6aab6fbc86676c0d37
+compile_version=1.8.2
+recipe_type=makefile
+makefile=unix/Makefile
+build_target=generic_gcc
+dir=zip30
+install_variables=(
+   "prefix=$target"
+)
