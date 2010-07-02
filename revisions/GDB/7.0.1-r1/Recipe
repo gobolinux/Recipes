@@ -1,0 +1,11 @@
+# Recipe for version 7.0.1.1 by Lucas C. Villa Real, on Tue Feb 2 04:45:36 BRST 2010
+# Recipe (MakeRecipe) for GDB by roko, <ro.ko@mcnon.com>, on Sun Dec 5 18:47:25 BRST 2004
+compile_version=1.9.0
+url="http://ftp.gnu.org/gnu/gdb/gdb-7.0.1.tar.bz2"
+file_size=17614682
+file_md5=53ebade39bfdc1d06744e5188b6438b1
+recipe_type=configure
+configure_options=(
+    --disable-werror
+    --with-system-readline
+)
