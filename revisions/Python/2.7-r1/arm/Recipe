@@ -1,0 +1,31 @@
+#
+# Check here for information on cross-compiling Python
+# http://mail.python.org/pipermail/patches/2006-November/021023.html
+#
+
+#environment=(
+#    C_INCLUDE_PATH=
+#    CC_FOR_BUILD=$HOSTCC
+#    PYTHON_FOR_BUILD=/bin/python
+#)
+
+#build_variables=(
+#    EXTRA_CFLAGS="-L$goboLibraries"
+#)
+
+pre_build() {
+	[ ! -f .bootstrapped ] && echo "Running autoconf..." && autoconf && touch .bootstrapped
+	touch config.sub
+	chmod +x config.sub
+
+    # Do not take headers from the build's operating system
+    GrepReplace "/usr/include" "$goboHeaders" Tools/scripts/h2py.py
+    GrepReplace "/usr/include" "$goboHeaders" Lib/plat-linux2/regen
+    GrepReplace "/usr/include" "$goboHeaders" Lib/plat-generic/regen
+    GrepReplace "^python"      "/bin/python"  Lib/plat-generic/regen
+    GrepReplace "config_args = \[\]" "config_args = [ \"--build=$cross_configure_build\", \"--host=$cross_configure_host\", \"--cache-file=$cross_cache_file\" ]" setup.py
+    GrepReplace "GOBOLINUX_INCLUDE_DIR" "$goboHeaders" setup.py
+    GrepReplace "GOBOLINUX_LIB_DIR" "$goboLibraries" setup.py
+    GrepReplace " lib_dirs = \[\]" " lib_dirs = [ \"$goboLibraries\",  \"$compileSourcesDir/Python2.7\" ] " setup.py
+    GrepReplace " inc_dirs = \[\]" " inc_dirs = [ \"$goboHeaders\" ] " setup.py
+}
