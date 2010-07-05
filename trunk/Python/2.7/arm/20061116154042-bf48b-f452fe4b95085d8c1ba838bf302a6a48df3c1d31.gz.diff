@@ -1,0 +1,54 @@
+Thu Nov 16 16:40:42 CET 2006  hanwen@lilypond.org
+  * mingw DLL settings/flags.
+diff -rN -u old-Python-2.5.cross/configure.in new-Python-2.5.cross/configure.in
+--- old-Python-2.5.cross/configure.in	2006-11-16 17:47:46.000000000 +0100
++++ new-Python-2.5.cross/configure.in	2006-11-16 17:47:47.000000000 +0100
+@@ -642,6 +642,10 @@
+           LDLIBRARY='libpython$(VERSION).dll.a'
+           DLLLIBRARY='libpython$(VERSION).dll'
+           ;;
++    mingw*)
++          LDLIBRARY='libpython$(VERSION).dll.a'
++          DLLLIBRARY='libpython$(VERSION).dll'
++          ;;
+     SunOS*)
+ 	  LDLIBRARY='libpython$(VERSION).so'
+ 	  BLDLIBRARY='-Wl,-R,$(LIBDIR) -L. -lpython$(VERSION)'
+@@ -1424,6 +1428,7 @@
+ 		esac
+ 		;;
+ 	CYGWIN*)   SO=.dll;;
++	mingw*)    SO=.dll;;
+ 	*)	   SO=.so;;
+ 	esac
+ else
+@@ -1547,6 +1552,8 @@
+ 	SCO_SV*) LDSHARED='$(CC) -Wl,-G,-Bexport';;
+ 	Monterey*) LDSHARED="cc -G -dy -Bdynamic -Bexport -L/usr/lib/ia64l64";;
+ 	CYGWIN*) LDSHARED="gcc -shared -Wl,--enable-auto-image-base";;
++	mingw*) LDSHARED='$(CC) -mdll'
++		BLDSHARED='$(CC) -mdll libpython$(VERSION).dll';;
+ 	atheos*) LDSHARED="gcc -shared";;
+ 	*)	LDSHARED="ld";;
+ 	esac
+@@ -1637,6 +1644,11 @@
+ 		then
+ 			LINKFORSHARED='-Wl,--out-implib=$(LDLIBRARY)'
+ 		fi;;
++	mingw*)
++		if test $enable_shared = "no"
++		then
++			LINKFORSHARED='-Wl,--out-implib=$(LDLIBRARY)'
++		fi;;
+ 	esac
+ fi
+ AC_MSG_RESULT($LINKFORSHARED)
+@@ -2251,6 +2263,7 @@
+ 	# Use dynload_next.c only on 10.2 and below, which don't have native dlopen()
+ 	Darwin/@<:@0156@:>@\..*) DYNLOADFILE="dynload_next.o";;
+ 	atheos*) DYNLOADFILE="dynload_atheos.o";;
++	mingw*) DYNLOADFILE="dynload_win.o";;
+ 	*)
+ 	# use dynload_shlib.c and dlopen() if we have it; otherwise stub
+ 	# out any dynamic loading
+
