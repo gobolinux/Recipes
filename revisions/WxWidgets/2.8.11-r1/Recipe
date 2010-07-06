@@ -1,0 +1,9 @@
+# Recipe for version 2.8.11 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Jul 6 18:42:26 BRT 2010
+# Recipe (MakeRecipe) for WxWidgets by Valentin Churavy, on Mi 16. Jul 19:08:57 CEST 2008
+compile_version=1.11.0
+url="$httpSourceforge/wxwindows/wxWidgets-2.8.11.tar.gz"
+file_size=19464848
+file_md5=ce80389e1b70d6a518c80b7b715b763e
+recipe_type=configure
+
+configure_options=("--disable-unicode") 
