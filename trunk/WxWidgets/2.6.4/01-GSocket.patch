@@ -1,0 +1,21 @@
+Fixes a build error due to conflicts with 'GSocket' in new versions of GLib.
+Refs http://trac.wxwidgets.org/ticket/10883.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- wxWidgets-2.6.4/src/gtk/gsockgtk.cpp.orig	2010-07-06 19:17:05.000000000 -0300
++++ wxWidgets-2.6.4/src/gtk/gsockgtk.cpp	2010-07-06 19:17:28.000000000 -0300
+@@ -14,8 +14,13 @@
+ #include <stdlib.h>
+ #include <stdio.h>
+ 
++// newer versions of glib define its own GSocket but we unfortunately use this
++// name in our own (semi-)public header and so can't change it -- rename glib
++// one instead
++#define GSocket GlibGSocket
+ #include <gdk/gdk.h>
+ #include <glib.h>
++#undef GSocket
+ 
+ #include "wx/gsocket.h"
+ #include "wx/unix/gsockunx.h"

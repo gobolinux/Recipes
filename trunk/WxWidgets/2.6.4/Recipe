@@ -1,0 +1,9 @@
+# Recipe for version 2.6.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Jul 6 19:10:52 BRT 2010
+# Recipe (MakeRecipe) for WxWidgets by Valentin Churavy, on Mi 16. Jul 19:08:57 CEST 2008
+compile_version=1.11.0
+url="$httpSourceforge/wxwindows/wxWidgets-2.6.4.tar.gz"
+file_size=17835261
+file_md5=43cbe5c7508f7dc3e141c346a897fbe7
+recipe_type=configure
+
+configure_options=("--disable-unicode") 
