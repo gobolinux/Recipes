@@ -1,0 +1,9 @@
+# Recipe for version 1.4.14 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. júl. 4., vasárnap, 16.57.58 CEST
+compile_version=1.10.2
+url="$ftpGnu/m4/m4-1.4.14.tar.bz2"
+file_size=1125670
+file_md5=e6fb7d08d50d87e796069cff12a52a93
+recipe_type=configure
+configure_options=(
+   "--enable-changeword"
+)
