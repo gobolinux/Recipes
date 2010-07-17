@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for CLooG-PPL by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. júl. 9., péntek, 23.27.52 CEST
+# Recipe for version 0.15.9 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. júl. 9., péntek, 23.27.52 CEST
+compile_version=1.13.3
+url="ftp://gcc.gnu.org/pub/gcc/infrastructure/cloog-ppl-0.15.9.tar.gz"
+file_size=767694
+file_md5=806e001d1b1a6b130069ff6274900af5
+recipe_type=configure
+configure_options=(
+    --with-gnu-ld
+    --with-ppl
+    --with-bits=32
+    --with-gmp
+)
