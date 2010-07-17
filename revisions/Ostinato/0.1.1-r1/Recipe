@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for Ostinato-SRC by Kevin Quick <quick@sparq.org>, on Tue Jun 29 13:25:37 MST 2010
+# Recipe for version 0.1.1 by Kevin Quick <quick@sparq.org>, on Tue Jun 29 13:25:37 MST 2010
+compile_version=1.13.0
+url="http://ostinato.googlecode.com/files/ostinato-src-0.1.1.tar.gz"
+file_size=187817
+file_md5=737dcc7857ff5bda06799218c117f7c5
+dir='ostinato-0.1.1'
+recipe_type=manifest
+manifest=(
+	"client/ostinato:bin"
+	"server/drone:bin"
+)
+pre_install() {
+	  qmake
+	  make
+}
