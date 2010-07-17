@@ -1,0 +1,22 @@
+# Recipe (MakeRecipe) for Maven by Kevin Quick <quick@sparq.org>, on Mon Jul 12 11:30:24 MST 2010
+# Recipe for version 2.2.1 by Kevin Quick <quick@sparq.org>, on Mon Jul 12 11:30:24 MST 2010
+compile_version=1.13.0
+url="http://www.devlib.org/apache/maven/source/apache-maven-2.2.1-src.tar.gz"
+file_size=1332909
+file_md5=1197900ced670d0a62211f67aa8a3b68
+dir='apache-maven-2.2.1'
+recipe_type=manifest
+pre_install() {
+  export M2_HOME=$target/apache-maven-2.2.1
+  export PATH=${M2_HOME}/bin:$PATH
+  ant
+}
+environment=(
+  M2_HOME=$target/apache-maven-2.2.1
+)
+manifest=(
+  "$target/apache-maven-2.2.1/bin/*:bin"
+  "$target/apache-maven-2.2.1/boot/*:boot"
+  "$target/apache-maven-2.2.1/lib/*:lib"
+  "$target/apache-maven-2.2.1/conf/*:$target_settings"
+)
