@@ -1,0 +1,10 @@
+# Recipe for version 1.7.3 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. júl. 4., vasárnap, 17.24.58 CEST
+# Recipe (MakeRecipe) for C-Ares by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jan. 14., szerda, 00.40.12 CET
+compile_version=1.11.4
+url="http://c-ares.haxx.se/c-ares-1.7.3.tar.gz"
+file_size=634080
+file_md5=97ebef758804a6e9b6c0bc65d3c2c25a
+recipe_type=configure
+configure_options=(
+    --enable-shared
+)
