@@ -1,0 +1,10 @@
+# Recipe for version 5.30.2 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. júl. 4., vasárnap, 18.01.13 CEST
+# Recipe (MakeRecipe) for GCalctool by Andreas Köhler <andi5.py@gmx.net>, on Thu Aug 28 01:32:18 CEST 2008
+compile_version=1.11.2
+url="http://ftp.gnome.org/pub/GNOME/sources/gcalctool/5.30/gcalctool-5.30.2.tar.bz2"
+file_size=1126899
+file_md5=9357de6835da305ee4f0ebad509b509a
+recipe_type=configure
+configure_options=(
+   --disable-scrollkeeper
+)
