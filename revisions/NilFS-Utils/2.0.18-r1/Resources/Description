@@ -1,0 +1,11 @@
+[Name] NilFS-Utils
+[Summary] New Implementation of a Log-structured File System
+[Description] NILFS is a new implementation of a log-structured file system (LFS) supporting continuous snapshotting. In addition to versioning capability of the entire file system, users can even restore files mistakenly overwritten or destroyed just a few seconds ago. Since NILFS can keep consistency like conventional LFS, it achieves quick recovery after system crashes.
+
+NILFS creates a number of checkpoints every few seconds or per synchronous write basis (unless there is no change). Users can select significant versions among continuously created checkpoints, and can change them into snapshots which will be preserved until they are changed back to checkpoints.
+
+There is no limit on the number of snapshots until the volume gets full. Each snapshot is mountable as a read-only file system. It is mountable concurrently with a writable mount and other snapshots, and this feature is convenient for online backup.
+
+Snapshot administration is easy and quickly performable. NILFS will make snapshotting or versioning of the POSIX filesystem much familiar to you. The possible use of NILFS includes, versioning, tamper detection, SOX compliance logging, and so forth. It can serve as an alternative filesystem for Linux desktop environment, or as a basis of advanced storage appliances. 
+[License] GNU General Public License version 2
+[Homepage] http://www.nilfs.org/
