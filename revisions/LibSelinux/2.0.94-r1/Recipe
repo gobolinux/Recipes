@@ -1,0 +1,11 @@
+# Recipe for version 2.0.94 by Hugo Barrocas <barrocas@iol.pt>, on Dom Jul 11 18:44:18 WEST 2010
+# Recipe (MakeRecipe) for LibSelinux by Demian Florentin <demianflorentin@gmail.com>, on Sat Nov 21 12:02:56 PYST 2009
+compile_version=1.12.3
+url="http://userspace.selinuxproject.org/releases/20100525/devel/libselinux-2.0.94.tar.gz"
+file_size=205804
+file_md5=544f75aab11c2af352facc51af12029f
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(PREFIX="$target")
+install_variables=(DESTDIR="$target")
+
