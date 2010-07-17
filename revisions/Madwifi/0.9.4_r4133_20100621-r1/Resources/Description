@@ -1,0 +1,10 @@
+[Name] Multiband Atheros Driver for Wireless Fidelity
+[Summary] Linux kernel device driver for Atheros-based Wireless LAN \
+devices
+[License] GNU General Public License version 2 (or later)
+[Description] A Linux kernel device driver for Atheros-based Wireless \
+LAN devices. The driver works such that your WLAN card will appear as \
+a normal network interface in the system. Additionally there is \
+support for the Wireless Extensions API. This allows you to configure \
+the device using common wireless tools (ifconfig, iwconfig and friends).
+[Homepage] http://madwifi-project.org/
