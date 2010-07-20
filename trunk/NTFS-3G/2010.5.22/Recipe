@@ -1,0 +1,15 @@
+# Recipe for version 2010.5.22 by Fabio Mierlo <geromao@gmail.com>, on Sun Jul 18 19:01:19 BRT 2010
+# Recipe (MakeRecipe) for NTFS-3G by Lucas C. Villa Real, on Thu Feb 22 02:10:40 BRT 2007
+compile_version=1.8.2
+url="http://tuxera.com/opensource/ntfs-3g-2010.5.22.tgz"
+file_size=864151
+file_md5=caa08c73220a7106c76f697b7a7915ec
+recipe_type=configure
+
+configure_options=(
+    "--disable-ldconfig"
+)
+
+make_variables=(
+    DESTDIR=$target
+)
