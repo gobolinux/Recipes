@@ -1,0 +1,21 @@
+# Recipe for version 1.7.2 by Michael Homer <michael@gobolinux.org>, on Thu Jul 22 10:18:40 NZST 2010
+# Recipe (MakeRecipe) for Git by Jonas Karlsson <jonka750@student.liu.se>, on Sat Apr 15 18:45:06 CEST 2006
+compile_version=1.9.0
+url="http://www.kernel.org/pub/software/scm/git/git-1.7.2.tar.bz2"
+file_size=2559741
+file_md5=652f861ae161e48979ef834707e2dc4c
+recipe_type=makefile
+makefile='Makefile'
+build_target="all doc"
+install_target="install install-doc"
+environment=(
+   "XML_CATALOG_FILES=$docbook_xsl_stylesheets_path/Shared/xml/docbook/stylesheet/catalog.xml $goboVariable/lib/xml/catalog $goboVariable/lib/xml/docbook"
+)
+make_variables=(
+   "prefix=$target"
+   "ASCIIDOC8=YesPlease"
+)
+
+pre_link() {
+   cp -a Documentation/* $target/doc
+}
