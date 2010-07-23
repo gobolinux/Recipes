@@ -1,0 +1,11 @@
+# Recipe for version 0.1.9 by Hugo Barrocas <barrocas@iol.pt>, on Qui Jul 22 21:30:07 WEST 2010
+# Recipe (MakeRecipe) for LibKDcraw by Michael Homer, on Mon Oct 15 12:22:15 NZDT 2007
+compile_version=1.9.0
+url="$httpSourceforge/kipi/libkdcraw-0.1.9.tar.bz2"
+file_size=708121
+file_md5=e1183c5a6b8e17d1e240f63b93d977ec
+recipe_type=configure
+configure_options=(
+ '--disable-libsuffix'
+)
+
