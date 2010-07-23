@@ -1,0 +1,18 @@
+ALSA-Lib >= 1.0.17 [alsa]
+Atomic_ops 1.2
+Avahi >= 0.6.0 [avahi]
+Bluez-Libs >= 3.0 [bluez]
+DBus >= 1.0.0 [dbus]
+GConf >= 2.4.0 [gconf]
+GDBM 1.8.3
+Glib >= 2.4.0 [glib2]
+Glibc >= 2.8			# Linking with earlier Glibc-2.5 fails
+HAL >= 0.5.7 [hal]
+Jack >= 0.100 [jack]
+LibOIL >= 0.3.14 		# Earlier LibOIL makes PulseAudio server segfault
+LibSamplerate >= 0.1.0 [samplerate]
+LibSndfile >= 1.0.10
+LibTool 2.2.4
+Lirc 0.7.2 [lirc]
+Speex 1.2rc1
+TCPWrappers 7.6 [tcpwrap]
