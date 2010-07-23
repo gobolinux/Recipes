@@ -1,0 +1,10 @@
+# Recipe for version 0.1.6 by Hugo Barrocas <barrocas@iol.pt>, on Qui Jul 22 23:47:02 WEST 2010
+# Recipe (MakeRecipe) for LibKipi by Andre Detsch, on Mon May 2 17:14:09 BRT 2005
+compile_version=1.9.0
+url="$httpSourceforge/kipi/libkipi-0.1.6.tar.bz2"
+file_size=556980
+file_md5=6fd010aa8eab7039143f69543e806c65
+recipe_type=configure
+configure_options=(
+ '--disable-libsuffix'
+)
