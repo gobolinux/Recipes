@@ -1,0 +1,11 @@
+# Recipe for version 1.5.5 by Joshua Sako <jginsu@gmail.com>, on Wed Jul 21 20:20:25 EDT 2010
+# Recipe (MakeRecipe) for GLEW by Leandro Motta Barros <lmb@stackedboxes.org>, on Tue Jan 19 14:31:23 BRST 2010
+compile_version=1.12.3
+url="$httpSourceforge/glew/glew/1.5.5/glew-1.5.5.tgz"
+file_size=467907
+file_md5=3621f27cfd3e33d5dbcc1111ecb5b762
+recipe_type=makefile
+makefile='Makefile'
+install_variables=(
+   GLEW_DEST=$target
+)
