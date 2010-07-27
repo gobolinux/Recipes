@@ -1,0 +1,49 @@
+# Recipe for version 3.2.1_bin by Fabio Mierlo <geromao@gmail.com>, on Mon Jul 26 02:12:05 BRT 2010
+# modified version of 3.0.1 by Nick Matteo <kundor@kundor.org>, on Fri Feb 13 05:42:37 EST 2009
+# Recipe (MakeRecipe) for OpenOffice by Giambattista Bloisi, on Sun Oct 28 19:10:17 CET 2007
+compile_version=1.9.0
+recipe_type=manifest
+manifest=(
+   "usr/share:Shared"
+   "opt/openoffice.org3/licenses:doc"
+   "opt/openoffice.org3/program:program"
+   "opt/openoffice.org3/readmes:doc"
+   "opt/openoffice.org3/share:Shared"
+   "opt/openoffice.org/basis3.2:basis3.2"
+   "opt/openoffice.org/ure:ure"
+)
+
+pre_install() {
+   gcc -o rpmoffset "$recipedir/rpmoffset.c"
+   for rpm in *.rpm desktop-integration/openoffice.org3.2-freedesktop-menus-3.2-9502.noarch.rpm
+   do
+      Log_Normal "Processing $(basename $rpm)..."
+      offset=`./rpmoffset < $rpm`
+      rpm=`readlink -f $rpm`
+      dd ibs="$offset" skip=1 if="$rpm" 2>/dev/null | gzip -dc | cpio --extract --preserve-modification-time --make-directories
+   done
+   
+   # These dirs need to be readable (which aren't after extraction)
+   chmod -R a+rX usr opt
+}
+
+pre_link() {
+   for f in base calc draw impress math writer
+   do  ln -s "../program/s$f" "$target/bin/s$f"
+       ln -s "../program/s$f" "$target/bin/oo$f"
+       ln -sf "$target/Shared/xdg/$f.desktop" "$target/Shared/applications/openoffice.org3.2-$f.desktop"
+   done
+   ln -sf ../program/soffice "$target/bin/soffice"
+   ln -sf ../program/soffice "$target/bin/openoffice.org3.2"
+   ln -sf ../program/spadmin "$target/bin/openoffice.org3.2-printeradmin"
+   ln -sf ../program/unopkg "$target/bin/unopkg"
+   ln -sf ../basis-link/program/pagein "$target/bin/pagein"
+   ln -sf soffice.bin "$target/program/openoffice.org3.2.bin"
+   ln -sf ../basis-link/program/spadmin.bin "$target/program/openoffice.org3.2-printeradmin.bin"
+
+   ln -sf "$target/Shared/xdg/printeradmin.desktop" "$target/Shared/applications/openoffice.org3.2-printeradmin.desktop"
+   ln -sf "$target/Shared/xdg/qstart.desktop" "$target/Shared/applications/openoffice.org3.2-qstart.desktop"
+
+   ln -sf basis3.2 "$target/basis-link"
+}
+
