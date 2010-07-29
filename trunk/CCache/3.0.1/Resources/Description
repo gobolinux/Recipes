@@ -1,0 +1,9 @@
+[Name] ccache
+[Summary] A fast compiler cache.
+[License] GNU General Public License (GPL)
+[Description] ccache is a fast compiler cache. It is used as a
+front end to your compiler to safely cache
+compilation output. When the same code is compiled
+again the cached output is used giving a
+significant speedup (typically 5x).
+[Homepage] http://ccache.samba.org/
