@@ -1,0 +1,34 @@
+# Recipe for version 1.2.8 by Olle Lundberg <olle.lundberg@gmail.com>, on Fri Jul 30 12:50:46 CEST 2010
+# Recipe (MakeRecipe) for BitlBee by Olle Lundberg <olle.lundberg@gmail.com>, on Tue Nov 11 01:05:25 CET 2008
+compile_version=1.11.3
+url="http://get.bitlbee.org/src/bitlbee-1.2.8.tar.gz"
+file_size=513768
+file_md5=e1fbbd9d96ec7c2377b1b286689c1b83
+recipe_type=configure
+
+configure_options=(
+   --etcdir="$settings_target"
+   --plugindir="$goboLibraries/bitlbee"
+)
+
+with_openssl="--ssl=openssl"
+with_gnutls="--ssl=gnutls"
+with_nss="--ssl=nss"
+
+install_target="install install-etc"
+
+unmanaged_files=(
+   "$goboVariable/lib/bitlbee/"
+)
+
+post_install() {
+   if ! [ -d $goboVariable/lib/bitlbee ]
+   then
+      mkdir -p $goboVariable/lib/bitlbee
+   fi
+
+   chown bitlbee:0 $goboVariable/lib/bitlbee
+   chmod 700 $goboVariable/lib/bitlbee
+}
+
+
