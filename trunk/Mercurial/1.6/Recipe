@@ -1,0 +1,12 @@
+# Recipe for version 1.6 by Olle Lundberg <olle.lundberg@gmail.com>, on Fri Jul 30 13:57:16 CEST 2010
+# Recipe for mercurial by Frederico Recsky frederico at gmail.com
+compile_version=1.13.0
+url="http://www.selenic.com/mercurial/release/mercurial-1.6.tar.gz"
+file_size=2192032
+file_md5=e97772cb424d29d9382c41daafa6f92d
+build_script="setup.py"
+recipe_type=python
+
+pre_link() {
+  install contrib/hgk $target/bin/
+}
