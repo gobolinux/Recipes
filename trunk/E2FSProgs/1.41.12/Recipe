@@ -1,0 +1,17 @@
+# Recipe for version 1.41.12 by Joshua Sako <jginsu@gmail.com>, on Fri Aug 6 10:52:23 EDT 2010
+url=$httpSourceforge/e2fsprogs/e2fsprogs-1.41.12.tar.gz
+file_size=4496194
+file_md5=1b24a21fc0c2381ef420961cbfec733f
+recipe_type=configure
+needs_safe_linking=yes
+compile_version=1.9.0
+configure_options=(
+   "--enable-elf-shlibs"
+   "--disable-libblkid"
+   "--disable-libuuid"
+   "--disable-uuidd"
+)
+install_target="install install-libs"
+install_variables=(
+   root_sysconfdir="${settings_target}"
+)
