@@ -1,0 +1,23 @@
+Need the following in order to build on Mac OS X.
+
+--
+Daed Lee
+
+diff -Naur tree-1.5.2.2/Makefile tree-1.5.2.2.patched/Makefile
+--- tree-1.5.2.2/Makefile	2009-04-10 08:45:34.000000000 -0400
++++ tree-1.5.2.2.patched/Makefile	2009-04-10 08:46:15.000000000 -0400
+@@ -42,10 +42,10 @@
+ #XOBJS=strverscmp.o
+ 
+ # Uncomment for OS X:
+-#CC=cc
+-#CFLAGS=-O2 -Wall -fomit-frame-pointer -no-cpp-precomp
+-#LDFLAGS=
+-#XOBJS=strverscmp.o
++CC=cc
++CFLAGS=-O2 -Wall -fomit-frame-pointer -no-cpp-precomp
++LDFLAGS=
++XOBJS=strverscmp.o
+ 
+ # Uncomment for HP/UX:
+ #CC=cc
