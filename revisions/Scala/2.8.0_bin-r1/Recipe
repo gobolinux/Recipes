@@ -1,0 +1,26 @@
+# NewVersion to 2.8.0 by Michael Homer, August 8 2010
+# Recipe for Scala by Nathan Middleton, on Tue Apr 29 21:41:14 CDT 2008
+compile_version=1.10.2
+url="http://www.scala-lang.org/downloads/distrib/files/scala-2.8.0.final.tgz"
+file_size=19406847
+file_md5=f250015d178f05b08bd53baba55c5d46
+recipe_type=manifest
+
+manifest=(
+    bin/fsc:bin/fsc
+    bin/sbaz:bin/sbaz
+    bin/scala:bin/scala
+    bin/scaladoc:bin/scaladoc
+    bin/sbaz-setup:bin/sbaz-setup
+    bin/scalac:bin/scalac
+    bin/scalap:bin/scalap
+    lib:lib
+    man:man
+    meta:meta
+    misc:misc
+)
+
+docs=(
+    doc/*
+    src
+)
