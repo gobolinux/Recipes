@@ -5,3 +5,7 @@ url="http://www.kernel.org/pub/linux/libs/ieee1394/libraw1394-2.0.4.tar.gz"
 file_size=376058
 file_md5=38d6dad9c90dcb776574af0ee93bda33
 recipe_type=configure
+
+configure_options=(
+	--with-fw-dir=$goboModules/Current/source/include
+)
