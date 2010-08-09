@@ -1,0 +1,43 @@
+Fix compilation issues. 
+Information taken from http://www.linuxforums.org/forum/linux-programming-scripting/124273-cveyetracker-install-errors.html
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- cvEyeTracker-1.2.5/cvEyeTracker.c.orig	2010-08-09 02:31:20.000000000 -0300
++++ cvEyeTracker-1.2.5/cvEyeTracker.c	2010-08-09 02:33:25.000000000 -0300
+@@ -157,7 +157,7 @@ float centx, centy;                     
+ float cmx[4], cmy[4];                           // corner correctioncoefficients 
+ int inx, iny;                                   // translation to center pupil data before biquadratics
+ 
+-int White,Red,Green,Blue,Yellow;
++CvScalar White,Red,Green,Blue,Yellow;
+ int frame_number=0;
+ 
+ #define FRAMEW 640
+@@ -643,7 +643,7 @@ int CalculateCalibration(void)
+ }
+ 
+ 
+-void Draw_Cross(IplImage *image, int centerx, int centery, int x_cross_length, int y_cross_length, double color)
++void Draw_Cross(IplImage *image, int centerx, int centery, int x_cross_length, int y_cross_length, CvScalar color)
+ {
+   CvPoint pt1,pt2,pt3,pt4;
+ 
+@@ -788,7 +788,7 @@ void Activate_Calibration() 
+ }
+ 
+ 
+-void on_mouse_scene( int event, int x, int y, int flags )
++void on_mouse_scene( int event, int x, int y, int flags, void *data )
+ {
+    int i;
+ 
+@@ -809,7 +809,7 @@ void on_mouse_scene( int event, int x, i
+    }
+ }
+ 
+-void on_mouse_eye( int event, int x, int y, int flags )
++void on_mouse_eye( int event, int x, int y, int flags, void *data )
+ {
+    int i;
+    static bool start = 0;

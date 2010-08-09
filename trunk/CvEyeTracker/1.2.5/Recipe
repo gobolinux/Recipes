@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for CvEyeTracker by Lucas C. Villa Real, on Sun Aug 8 00:59:56 BRT 2010
+# Recipe for version 1.2.5 by Lucas C. Villa Real, on Sun Aug 8 00:59:56 BRT 2010
+compile_version=1.10.1
+url="http://thirtysixthspan.com/openEyes/cvEyeTracker-1.2.5.tar.gz"
+file_size=28031
+file_md5=a8ac3c1e56f93c8bb8fdd188cc133086
+recipe_type=makefile
+makefile='Makefile'
+do_install=no
+
+pre_install()
+{
+	cp cvEyeTracker $target/bin
+}
