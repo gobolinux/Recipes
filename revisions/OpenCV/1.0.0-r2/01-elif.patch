@@ -1,0 +1,11 @@
+--- opencv-1.0.0/cxcore/include/cxmisc.h.orig	2010-08-08 03:04:25.000000000 -0300
++++ opencv-1.0.0/cxcore/include/cxmisc.h	2010-08-08 03:04:47.000000000 -0300
+@@ -130,7 +130,7 @@
+     #include <alloca.h>
+ #elif defined HAVE_ALLOCA
+     #include <stdlib.h>
+-#elif
++#else
+     #error
+ #endif
+ 

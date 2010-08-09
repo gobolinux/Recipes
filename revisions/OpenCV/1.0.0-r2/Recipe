@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for OpenCV by Fabio Mierlo <geromao@gmail.com>, on Tue Sep 23 18:04:25 BRT 2008
+# Recipe for version 1.0.0 by Fabio Mierlo <geromao@gmail.com>, on Tue Sep 23 18:04:25 BRT 2008
+compile_version=1.11.2
+url="$httpSourceforge/opencvlibrary/opencv-1.0.0.tar.gz"
+file_size=11146334
+file_md5=146a05005f2d2c16c4ee10ebd7f1dd58
+recipe_type=configure
+
+environment=(
+  "CXXFLAGS=-D__STDC_CONSTANT_MACROS -DINT64_C"
+)
