@@ -1,0 +1,13 @@
+# Recipe for version 1.8.0 by JPaul Hatungimana jhatungimana@netscape.net, on Sun Aug 8 19:28:21 CEST 2010
+# Recipe (MakeRecipe) for Conky by Laurent Pelecq (laurent.pelecq at soleil.org), on mer jui 12 21:32:29 CEST 2006
+compile_version=1.8.0
+url="$httpSourceforge/conky/conky-1.8.0.tar.bz2"
+file_size=610545
+file_md5=494cbaf1108cfdb977fc80454d9b13e2
+recipe_type=configure
+configure_options=(
+    "--disable-lua"
+    "--enable-curl"
+    "--enable-imlib2"
+    "--enable-wlan"
+)
