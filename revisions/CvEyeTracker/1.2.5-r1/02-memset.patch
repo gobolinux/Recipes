@@ -1,0 +1,13 @@
+Fixes a compilation error due to a missing declaration.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+--- cvEyeTracker-1.2.5/ransac_ellipse.cpp.orig	2010-08-09 02:34:13.000000000 -0300
++++ cvEyeTracker-1.2.5/ransac_ellipse.cpp	2010-08-09 02:34:23.000000000 -0300
+@@ -30,6 +30,7 @@
+ 
+ #include <stdlib.h>
+ #include <stdio.h>
++#include <string.h>
+ #include <math.h>
+ #include "ransac_ellipse.h"
+ #include "svd.h"
