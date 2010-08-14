@@ -1,0 +1,14 @@
+# Recipe for version 1.0.6 by Fabio Mierlo <geromao@gmail.com>, on Tue Jul 6 00:51:11 BRT 2010
+# Recipe (MakeRecipe) for FreeSWITCH by Fabio Mierlo <geromao@gmail.com>, on Sun Aug 10 16:53:58 BRT 2008
+compile_version=1.13.3
+url="http://files.freeswitch.org/freeswitch-1.0.6.tar.bz2"
+file_size=29877326
+file_md5=5c04ea0bab7e6346be5c3fba4372a096
+recipe_type=configure
+
+build_target="all"
+install_target="install samples sounds-install moh-install"
+
+pre_install() {
+  mkdir -p "${variable_target}/freeswitch"
+}

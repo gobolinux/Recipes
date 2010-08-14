@@ -1,0 +1,35 @@
+# This patch make freeswitch install state files in localstatedir
+--- freeswitch-1.0.6/configure.in	2010-04-06 15:05:27.000000000 -0300
++++ freeswitch-1.0.6/configure.in	2010-08-12 01:01:36.000000000 -0300
+@@ -40,15 +40,19 @@
+ 
+ # Where to put pidfile
+ AC_ARG_WITH([rundir],
+-	[AS_HELP_STRING([--with-rundir=DIR], [Put pidfile into this location (default: $prefix/run)])], [runtimedir="$withval"], [runtimedir="${prefix}/run"])
++	[AS_HELP_STRING([--with-rundir=DIR], [Put pidfile into this location (default: $localstatedir/freeswitch/run)])], [runtimedir="$withval"], [runtimedir="${localstatedir}/freeswitch/run"])
+ AC_SUBST(runtimedir)
+ AC_DEFINE_UNQUOTED([SWITCH_RUN_DIR],"${runtimedir}",[where to put pidfile to])
+ 
+-logfiledir="${prefix}/log"
++logfiledir="${localstatedir}/freeswitch/log"
+ AC_SUBST(logfiledir)
+ AC_DEFINE_UNQUOTED([SWITCH_LOG_DIR],"${logfiledir}",[where to put log files])
+ 
+-dbdir="${prefix}/db"
++storagedir="${localstatedir}/freeswitch/storage"
++AC_SUBST(storagedir)
++AC_DEFINE_UNQUOTED([SWITCH_STORAGE_DIR],"${storagedir}",[where to put storage files])
++
++dbdir="${localstatedir}/freeswitch/db"
+ AC_SUBST(dbdir)
+ AC_DEFINE_UNQUOTED([SWITCH_DB_DIR],"${dbdir}",[where to put db files])
+ 
+@@ -68,7 +72,7 @@
+ AC_SUBST(scriptdir)
+ AC_DEFINE_UNQUOTED([SWITCH_SCRIPT_DIR],"${scriptdir}",[where to put script files])
+ 
+-recordingsdir="${prefix}/recordings"
++recordingsdir="${localstatedir}/freeswitch/recordings"
+ AC_SUBST(recordingsdir)
+ AC_DEFINE_UNQUOTED([SWITCH_RECORDINGS_DIR],"${recordingsdir}",[where to put recording files])
+ 
