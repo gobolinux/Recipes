@@ -1,0 +1,11 @@
+# Recipe for version 0.8.6 by Joseph Wallace <JosephWallace@letu.edu>, on Sun Aug 15 23:15:03 CDT 2010
+# Recipe (MakeRecipe) for Compiz-Fusion-Plugins-Extra by Giambattista Bloisi <giamby@infinito.it>, on Sun Nov 4 23:36:48 CET 2007
+compile_version=1.9.0
+url="http://releases.compiz.org/components/plugins-extra/compiz-plugins-extra-0.8.6.tar.bz2"
+file_size=2699385
+file_md5=fdeec3e437e70d7f68900c031f3165d5
+recipe_type=configure
+
+environment=(
+    COMPIZ_CFLAGS="`pkg-config --cflags compiz` -I$goboHeaders/compiz"
+)
