@@ -1,0 +1,11 @@
+# Recipe for version 0.8.4 by Joseph Wallace <JosephWallace@letu.edu>, on Sun Aug 15 23:12:21 CDT 2010
+# Recipe (MakeRecipe) for CCSM by Giambattista Bloisi <giamby@infinito.it>, on Sun Nov 4 23:52:46 CET 2007
+compile_version=1.9.0
+url="http://releases.compiz-fusion.org/0.8.4/ccsm-0.8.4.tar.bz2"
+file_size=475864
+file_md5=6bad7a02a91cc8fc9c4c48f83e91c08c
+recipe_type=makefile
+makefile='Makefile'
+environment=(
+    "PREFIX=$target"
+)
