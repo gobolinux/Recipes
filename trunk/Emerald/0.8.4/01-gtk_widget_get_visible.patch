@@ -1,0 +1,11 @@
+--- broken-emerald-0.8.4/src/main.c	2010-08-16 01:40:50.000000000 -0500
++++ emerald-0.8.4/src/main.c	2010-08-16 01:46:40.000000000 -0500
+@@ -3757,7 +3757,7 @@
+ 
+ static void hide_tooltip(void)
+ {
+-    if (GTK_WIDGET_VISIBLE(tip_window))
++    if (gtk_widget_get_visible(tip_window))
+ 	g_get_current_time(&tooltip_last_popdown);
+ 
+     gtk_widget_hide(tip_window);
