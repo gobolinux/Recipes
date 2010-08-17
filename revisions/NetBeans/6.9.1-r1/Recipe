@@ -1,0 +1,37 @@
+# Recipe (MakeRecipe) for NetBeans by Andre Luiz Ferreira Pinto <andreluizferreirapinto+gobo@gmail.com>, on Fri Aug 13 22:48:56 BRT 2010
+# Recipe for version 6.9.1 by Andre Luiz Ferreira Pinto <andreluizferreirapinto+gobo@gmail.com>, on Fri Aug 13 22:48:56 BRT 2010
+compile_version=1.13.3
+url="http://download.netbeans.org/netbeans/6.9.1/final/zip/netbeans-6.9.1-201007282301-ml.zip"
+file_size=261676411
+file_md5=c31060abc6d33cf82b17e255c100fe40
+dir='netbeans'
+recipe_type=manifest
+
+manifest=(
+    apisupport:apisupport
+    bin/netbeans:bin/netbeans
+    cnd:cnd
+    dlight:dlight
+    enterprise:enterprise
+    ergonomics:ergonomics
+    etc:etc
+    groovy:groovy
+    harness:harness
+    ide:ide
+    identity:identity
+    java:java
+    javacard:javacard
+    mobility:mobility
+    nb:nb
+    php:php
+    platform:platform
+    profiler:profiler
+    ruby:ruby
+    websvccommon:websvccommon
+)
+
+docs=(
+    *.html
+    *.txt
+    netbeans.css
+)
