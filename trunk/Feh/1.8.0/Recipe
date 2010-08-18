@@ -1,0 +1,11 @@
+# Recipe for version 1.8.0 by Joseph Wallace <JosephWallace@letu.edu>, on Wed Aug 18 01:47:09 CDT 2010
+# Recipe (MakeRecipe) for Feh by  Ozgur Ulukir, on Mon Dec 20 03:19:56 EET 2004
+compile_version=1.8.0
+url="http://derf.homelinux.org/projects/feh/feh-1.8.tar.bz2"
+file_size=358172
+file_md5=fe81334805f4da9b5f1e35b45c444a1a
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
