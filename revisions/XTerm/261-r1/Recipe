@@ -1,0 +1,11 @@
+# Recipe for version 261 by JPaul Hatungimana <jhatungimana@netscape.net>, on Tue Aug 17 12:33:27 CEST 2010
+# Recipe (MakeRecipe) for XTerm by Hisham Muhammad, on Thu Feb 23 14:45:58 BRT 2006
+compile_version=1.9.0
+url="ftp://invisible-island.net/xterm/xterm-261.tgz"
+file_size=926486
+file_md5=10d211f6986c4b279cfa9530b2361457
+recipe_type=configure
+configure_options=(
+   # otherwise uxterm is broken!
+   --enable-wide-chars
+)
