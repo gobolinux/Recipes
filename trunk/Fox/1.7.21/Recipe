@@ -1,0 +1,10 @@
+# Recipe for version 1.7.21 by JPaul Hatungimana <jhatungimana@netscape.net>, on Fri Aug 20 12:46:47 CEST 2010
+compile_version=1.8.0
+url="http://www.fox-toolkit.org/ftp/fox-1.7.21.tar.gz"
+file_size=4901051
+file_md5=dd390cc87d653fe76ff925eed0561186
+recipe_type=configure
+configure_options=(
+ --enable-release
+ --with-xft         #     enable Xft support
+ )
