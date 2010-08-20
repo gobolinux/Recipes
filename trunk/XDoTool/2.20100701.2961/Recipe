@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for XDoTool by Joseph Wallace <JosephWallace@letu.edu>, on Tue Aug 17 23:54:32 CDT 2010
+# Recipe for version 2.20100701.2961 by Joseph Wallace <JosephWallace@letu.edu>, on Tue Aug 17 23:54:32 CDT 2010
+compile_version=1.13.3
+url="http://semicomplete.googlecode.com/files/xdotool-2.20100701.2961.tar.gz"
+file_size=113319
+file_md5=f66ded5c7aa6df4971aef15c5f83e787
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
