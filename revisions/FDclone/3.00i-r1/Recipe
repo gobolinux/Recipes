@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for FDclone by JPaul Hatungimana <jhatungimana@netscape.net>, on Sat Aug 21 12:32:10 CEST 2010
+# Recipe for version 3.00i by JPaul Hatungimana <jhatungimana@netscape.net>, on Sat Aug 21 12:32:10 CEST 2010
+compile_version=1.13.3
+url="ftp://ftp.unixusers.net/src/fdclone/FD-3.00i.tar.gz"
+file_size=924400
+file_md5=68fbbe57576dab810006292d0300f942
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
