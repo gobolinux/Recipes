@@ -1,0 +1,15 @@
+libvpx-0.9.1 --prefix support is broken by default. It always rests the prefix to "/usr/local". It lies. LIES!
+
+--- libvpx-0.9.1/build/make/configure.sh	2010-08-22 23:57:26.000000000 -0400
++++ libvpx-0.9.1/build/make/configure.sh.new	2010-08-22 23:57:07.000000000 -0400
+@@ -471,8 +471,8 @@
+ 
+ 
+ post_process_common_cmdline() {
+-    prefix="${prefix:-/usr/local}"
+-    prefix="${prefix%/}"
++#    prefix="${prefix:-/usr/local}"
++#    prefix="${prefix%/}"
+     libdir="${libdir:-${prefix}/lib}"
+     libdir="${libdir%/}"
+     if [ "${libdir#${prefix}}" = "${libdir}" ]; then
