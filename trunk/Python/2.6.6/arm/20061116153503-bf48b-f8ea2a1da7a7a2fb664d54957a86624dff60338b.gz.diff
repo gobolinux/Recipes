@@ -1,0 +1,21 @@
+Thu Nov 16 16:35:03 CET 2006  hanwen@lilypond.org
+  * deal with ; separated paths on mingw
+diff -rN -u old-Python-2.5.cross/Modules/Setup.dist new-Python-2.5.cross/Modules/Setup.dist
+--- old-Python-2.5.cross/Modules/Setup.dist	2006-11-16 17:47:48.000000000 +0100
++++ new-Python-2.5.cross/Modules/Setup.dist	2006-11-16 17:47:48.000000000 +0100
+@@ -91,12 +91,12 @@
+ TESTPATH=
+ 
+ # Path components for machine- or system-dependent modules and shared libraries
+-MACHDEPPATH=:plat-$(MACHDEP)
++MACHDEPPATH=$(DELIM)plat-$(MACHDEP)
+ EXTRAMACHDEPPATH=
+ 
+ # Path component for the Tkinter-related modules
+ # The TKPATH variable is always enabled, to save you the effort.
+-TKPATH=:lib-tk
++TKPATH=$(DELIM)lib-tk
+ 
+ COREPYTHONPATH=$(DESTPATH)$(SITEPATH)$(TESTPATH)$(MACHDEPPATH)$(EXTRAMACHDEPPATH)$(TKPATH)
+ PYTHONPATH=$(COREPYTHONPATH)
+
