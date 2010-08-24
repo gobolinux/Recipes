@@ -1,0 +1,91 @@
+# Recipe for version 256.44 by Michael Homer <michael@gobolinux.org>, on Tue Aug 24 16:49:27 NZST 2010
+# Recipe (MakeRecipe) for Nvidia by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Mar 14 17:39:46 GMT 2007
+compile_version=1.9.0
+recipe_type=manifest
+needs_safe_linking=yes
+uncompress=no
+
+symlink_options=(
+    "--conflict=overwrite"
+)
+
+pre_install() {
+    # Uncompress the contents of 'usr' from the archive.
+    sh $compileArchivesDir/$(basename $url) -x
+    pkgdir=$(basename "$url" | sed 's,\.run$,,g')
+    mv $pkgdir/* .
+    #rm -rf $pkgdir
+
+    # Build the kernel module.
+    cd kernel
+    $sudo_exec make module SYSSRC=$goboModules/Current/build || exit 1
+    cd ..
+
+    mkdir vdpau
+    mv libvdpau_*.so.256.44 vdpau
+
+    mkdir -p xorg/modules/{extensions,drivers}
+    mv libglx* xorg/modules/extensions
+    mv nvidia_drv.so xorg/modules/drivers
+    mv libnvidia-wfb.so.256.44 xorg/modules
+
+    mkdir -p lib/
+    mv *.256.44 lib
+    mv *.a lib
+    mv tls lib
+    mv libGL.la lib
+
+    mkdir -p include/{cuda,GL,vdpau}
+    mv cudaGL.h cuda.h include/cuda
+    mv gl*.h include/GL
+    mv vdpau*.h include/vdpau
+    
+    # Create versioned symlinks for all the libraries in the same manner the
+    # nvidia installer does.
+    ln -sf libcuda.so.256.44 lib/libcuda.so.1
+    ln -sf libcuda.so.256.44 lib/libcuda.so
+    ln -sf libGL.so.256.44 lib/libGL.so.1
+    ln -sf libGL.so.256.44 lib/libGL.so
+    ln -sf libnvidia-glcore.so.256.44 lib/libGLcore.so.1
+    ln -sf libnvidia-glcore.so.256.44 lib/libGLcore.so
+    ln -sf libnvidia-tls.so.256.44 lib/libnvidia-tls.so.1
+    ln -sf libnvidia-tls.so.256.44 lib/tls/libnvidia-tls.so.1
+    ln -sf libXvMCNVIDIA.so.256.44 lib/libXvMCNVIDIA_dynamic.so.1
+    ln -sf libXvMCNVIDIA.so.256.44 lib/libXvMCNVIDIA_dynamic.so
+    ln -sf libnvidia-wfb.so.256.44 xorg/modules/libnvidia-wfb.so.1
+    ln -sf libvdpau.so.256.44 lib/libvdpau.so.1
+    ln -sf libvdpau.so.256.44 lib/libvdpau.so
+    ln -sf vdpau/libvdpau_nvidia.so.256.44 lib/libvdpau_nvidia.so.1
+    ln -sf vdpau/libvdpau_nvidia.so.256.44 lib/libvdpau_nvidia.so
+    ln -sf vdpau/libvdpau_trace.so.256.44 lib/libvdpau_trace.so.1
+    ln -sf vdpau/libvdpau_trace.so.256.44 lib/libvdpau_trace.so
+    if [ ! -e $xorg_server_path/lib/xorg/modules/libwfb.so ]; then
+        ln -sf libnvidia-wfb.so.256.44 xorg/modules/libwfb.so
+    fi
+    ln -sf libglx.so.256.44 xorg/modules/extensions/libglx.so
+
+    mv vdpau xorg lib/
+
+    # Substitute paths in the desktop file.
+    sed -i "s@__UTILS_PATH__@$target/bin@" nvidia-settings.desktop
+    sed -i "s@__PIXMAP_PATH__@$goboShared/pixmaps@" nvidia-settings.desktop
+    sed -i "s@__LIBGL_PATH__@$goboLibraries@" lib/libGL.la 
+}
+
+manifest=(
+    "kernel/nvidia.ko:Resources/Unmanaged/$goboModules/$(readlink $goboModules/Current)/kernel/drivers/video/nvidia.ko"
+    "nvidia-bug-report.sh:bin/nvidia-bug-report.sh"
+    "nvidia-settings:bin/nvidia-settings"
+    "nvidia-xconfig:bin/nvidia-xconfig"
+    "include:include"
+    "lib:lib/"
+    "*.1.gz:man/man1/"
+    "nvidia-settings.desktop:Shared/applications/"
+    "nvidia-settings.png:Shared/pixmaps/"
+)
+ 
+unmanaged_files=(
+	"$goboModules/$(readlink $goboModules/Current)/kernel/drivers/video/nvidia.ko"
+)
+
+post_install_message="You can now edit $goboSettings/X11/xorg.conf so that the 'nvidia' driver is used, and restart the system or (re)load the nvidia kernel module to start using it."
