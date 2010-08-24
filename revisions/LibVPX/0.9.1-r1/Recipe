@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for LibVPX by Joshua Sako <jginsu@gmail.com>, on Sun Aug 22 23:13:50 EDT 2010
+# Recipe for version 0.9.1 by Joshua Sako <jginsu@gmail.com>, on Sun Aug 22 23:13:50 EDT 2010
+compile_version=1.13.3
+url="http://webm.googlecode.com/files/libvpx-0.9.1.tar.bz2"
+file_size=1191203
+file_md5=e1442e74d0cca228785083fa520735a2
+recipe_type=configure
+
+configure_options=(
+	"--prefix=${target}"
+)
