@@ -1,0 +1,10 @@
+# Recipe for version 0.10.11 by Joshua Sako <jginsu@gmail.com>, on Tue Aug 24 15:55:45 EDT 2010
+# Recipe (MakeRecipe) for GST-FFMpeg by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jul 17 09:46:18 BRT 2006
+compile_version=1.8.0
+url="http://gstreamer.freedesktop.org/src/gst-ffmpeg/gst-ffmpeg-0.10.11.tar.gz"
+file_size=5081404
+file_md5=41c6e16b5b171736241fb01f72d9bf9f
+recipe_type=configure
+#configure_options=(
+#   --with-system-ffmpeg
+#)
