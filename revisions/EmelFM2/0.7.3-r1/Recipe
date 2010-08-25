@@ -1,0 +1,11 @@
+# Recipe for version 0.7.3 by JPaul Hatungimana <jhatungimana@netscape.net>, on Tue Aug 24 21:45:15 CEST 2010
+# Recipe (MakeRecipe) for EmelFM2 by Felix Breuer <felix@fbreuer.de>, on Sun Sep 5 22:17:33 CEST 2004
+compile_version=1.8.2
+url="http://emelfm2.net/rel/emelfm2-0.7.3.tar.bz2"
+file_size=1060580
+file_md5=57873c6bb74e25cf661bc41d629dc138
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+	"PREFIX=$target"
+)
