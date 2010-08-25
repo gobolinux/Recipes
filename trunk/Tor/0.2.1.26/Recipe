@@ -1,0 +1,8 @@
+# Recipe for version 0.2.1.26 by JPaul Hatungimana <jhatungimana@netscape.net>, on Tue Aug 24 22:17:28 CEST 2010
+# Recipe (MakeRecipe) for Tor by roko, <ro.ko@mcnon.com>, on Wed Feb 16 01:02:14 CET 2005
+compile_version=1.8.5
+url="http://www.torproject.org/dist/tor-0.2.1.26.tar.gz"
+file_size=2405749
+file_md5=f7b30a144e1da41aa43f496bd47ffba7
+recipe_type=configure
+configure_options=( "--with-libevent-dir=${goboPrograms}/LibEvent/Current/" "--with-openssl-dir=${goboPrograms}/OpenSSL/Current/" )
