@@ -1,0 +1,43 @@
+# Recipe for version 0.8.7 by Lucas C. Villa Real, on Sat Aug 21 20:27:10 BRT 2010
+# Recipe (MakeRecipe) for Gnash by Lucas C. Villa Real, on Tue May 15 21:20:17 BRT 2007
+compile_version=1.10.1
+url="http://ftpmirror.gnu.org/gnash/0.8.7/gnash-0.8.7.tar.gz"
+file_size=4899174
+file_md5=3a7c7b6e59fbca21375a22b886c78293
+recipe_type=configure
+
+sandbox_options=(
+	--no-sandbox
+)
+
+configure_options=(
+    --enable-renderer=agg    # Use the specified GUI toolkit (default=ogl,agg,cairo)
+    --enable-gui=gtk         # Use the specified GUI toolkit (default=gtk,kde (experimental: dump, fb, fltk, sdl, qtopia, hildon, alp, riscos, aqua.))
+    --enable-avm2           # Enable support for AS3
+    --enable-python         # Enable python for the python wrapper
+    --enable-jemalloc       # Enable jemalloc instead of system malloc
+    --disable-testsuite     # Disable the testsuite, maintainers option only
+    --enable-write          # Makes the Mozilla plugin write the currently playing SWF movie to /tmp.
+    --enable-cygnal         # Disable support for the Cygnal server.
+    --enable-cgibins        # Enable building of the CGIs for Cygnal
+    --enable-media=ffmpeg   # Enable media handling support using the specified
+                            # handler: gst, ffmpeg or none (no sound) [gst]
+    --enable-lirc           # Disable support for Lirc
+    --enable-glext           # Disable support for GTK OpenGL extension
+    --disable-docbook        # Disable support for building documentation
+    --disable-ghelp
+    --enable-extensions=dbus,fileio,lirc,gtk
+    --disable-cassert
+    --enable-shared
+    --with-shm=sysv
+    --with-npapi-plugindir=$target/lib/browser-plugins
+)
+
+environment=(
+	LIBTOOL=libtool
+)
+
+pre_link() {
+	make install-plugin  FIREFOX_PLUGINS="$target/lib/browser-plugins"
+	make install-plugins FIREFOX_PLUGINS="$target/lib/browser-plugins"
+}
