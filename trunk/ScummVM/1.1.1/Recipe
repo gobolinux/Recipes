@@ -1,0 +1,10 @@
+# Recipe for version 1.1.1 by Fabio Mierlo <geromao@gmail.com>, on Fri Aug 27 19:26:47 BRT 2010
+# Recipe (MakeRecipe) for ScummVM by Matthias Wolf, on Wed Sep 15 22:13:47 CEST 2004
+compile_version=1.8.0
+url="$httpSourceforge/scummvm/scummvm-1.1.1.tar.bz2"
+file_size=8668735
+file_md5=ed9098a78022d07fa1482f14325e3ab8
+recipe_type=configure
+configure_options=(
+  "--mandir=$target/Shared/man"
+)
