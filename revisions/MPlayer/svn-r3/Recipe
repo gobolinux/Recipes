@@ -1,0 +1,34 @@
+# Recipe update by Joseph Wallace <JosephWallace@letu.edu>, on Sat Aug 28 04:10:10 CDT 2010
+# Recipe (MakeRecipe) for MPlayer-svn by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jan. 4., vasárnap, 02.35.09 CET
+compile_version=1.11.4
+svn="svn://svn.mplayerhq.hu/mplayer/trunk"
+recipe_type=configure
+dir='mplayer-trunk'
+
+configure_options=(
+    "--enable-gui"
+    "--extra-libs=-lxcb -lxcb-shape"
+    "--codecsdir=$target/lib/mplayer-codecs"
+#    Seem to be gone now:
+#    "--win32codecsdir=$goboLibraries/mplayer-codecs"
+#    "--xanimcodecsdir=$goboLibraries/mplayer-codecs"
+#    "--realcodecsdir=$goboLibraries/mplayer-codecs"
+)
+
+environment=(
+    CFLAGS=""
+)
+
+pre_install() {
+    skindir="$target/Shared/mplayer/skins"
+    mkdir -p ${skindir}
+    Quiet pushd ${skindir}
+#    wget -c -N -O - "http://www1.mplayerhq.hu/MPlayer/skins/plastik-2.0.tar.bz2" | tar -xjvf -
+#    ln -snf plastik default
+    Quiet popd
+#   ln -sfn /Files/Fonts/TrueType/DejaVuSans.ttf ${target}/Shared/mplayer/subfont.ttf
+}
+
+pre_link() {
+    ln -snf $target/bin/mplayer $target/bin/gmplayer
+}
