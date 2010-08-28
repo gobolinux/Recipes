@@ -1,3 +1,4 @@
+# Recipe update by Joseph Wallace <JosephWallace@letu.edu>, on Sat Aug 28 04:10:10 CDT 2010
 # Recipe (MakeRecipe) for MPlayer-svn by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jan. 4., vasárnap, 02.35.09 CET
 compile_version=1.11.4
 svn="svn://svn.mplayerhq.hu/mplayer/trunk"
@@ -8,9 +9,10 @@ configure_options=(
     "--enable-gui"
     "--extra-libs=-lxcb -lxcb-shape"
     "--codecsdir=$target/lib/mplayer-codecs"
-    "--win32codecsdir=$goboLibraries/mplayer-codecs"
-    "--xanimcodecsdir=$goboLibraries/mplayer-codecs"
-    "--realcodecsdir=$goboLibraries/mplayer-codecs"
+#    Seem to be gone now:
+#    "--win32codecsdir=$goboLibraries/mplayer-codecs"
+#    "--xanimcodecsdir=$goboLibraries/mplayer-codecs"
+#    "--realcodecsdir=$goboLibraries/mplayer-codecs"
 )
 
 environment=(
