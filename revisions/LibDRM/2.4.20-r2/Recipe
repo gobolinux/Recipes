@@ -1,0 +1,16 @@
+# Recipe for version 2.4.20 by Hugo Barrocas <hugobarrocas@iol.pt>, on Qua Mai 26 00:59:00 WEST 2010
+# Recipe (MakeRecipe) for LibDRM by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jan 9 17:56:36 BRST 2.4.206
+compile_version=1.12.0
+url="http://dri.freedesktop.org/libdrm/libdrm-2.4.20.tar.bz2"
+file_size=400812
+file_md5=3c56e03172b236e14905ef9a68ba2f97
+recipe_type=configure
+symlink_options=(--conflict=overwrite)
+configure_options=(
+   --enable-intel
+   --enable-nouveau-experimental-api
+   --enable-radeon-experimental-api
+)
+with_udev=(
+   --enable-udev
+)
