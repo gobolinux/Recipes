@@ -1,0 +1,11 @@
+# Recipe for version 9.3.4_bin-r1 by Andre Luiz Ferreira Pinto <andreluizferreirapinto+gobo@gmail.com>, on Mon Aug 16 18:20:33 BRT 2010
+# Recipe (MakeRecipe) for Adobe-Reader by Giambattista Bloisi <giamby@infinito.it>, on Sat Nov 24 23:19:15 CET 2007
+compile_version=1.9.0
+url=http://ardownload.adobe.com/pub/adobe/reader/unix/9.x/9.3.4/enu/AdbeRdr9.3.4-1_i486linux_enu.tar.bz2
+file_size=60166581
+file_md5=fc5acf558e2817f2c633a075a398b26b
+recipe_type=manifest
+
+pre_install() {
+    ./INSTALL --install_path=$target
+}
