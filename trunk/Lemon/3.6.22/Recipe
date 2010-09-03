@@ -1,0 +1,14 @@
+# Recipe for version 3.6.22 by Lucas C. Villa Real, on Fri Sep 3 11:49:38 BRT 2010
+compile_version=1.8.2
+url="http://www.sqlite.org/sqlite-3.6.22.tar.gz"
+file_size=2999137
+file_md5=a17bd53f1fde11f84adf79c6a1510ce5
+dir=sqlite-3.6.22/tool
+recipe_type=manifest
+
+pre_install() {
+    mkdir -p $target/src
+    cp lempar.c $target/src
+    GrepReplace "\"lempar.c\"" "\"$target/src/lempar.c\"" lemon.c
+    gcc -v lemon.c -o lemon && cp lemon $target/bin
+}
