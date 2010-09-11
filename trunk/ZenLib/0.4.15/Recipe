@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for ZenLib by Fabio Mierlo <geromao@gmail.com>, on Sat Sep 11 17:59:55 BRT 2010
+# Recipe for version 0.4.15 by Fabio Mierlo <geromao@gmail.com>, on Sat Sep 11 17:59:55 BRT 2010
+compile_version=1.13.1
+url="$httpSourceforge/zenlib/libzen_0.4.15.tar.bz2"
+file_size=134032
+file_md5=1333f304742ec4fd05caf3db73dc3c18
+dir='ZenLib/Project/GNU/Library'
+autogen_before_configure=yes
+autogen=autogen
+recipe_type=configure
