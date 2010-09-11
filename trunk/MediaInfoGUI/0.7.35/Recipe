@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for MediaInfo by Fabio Mierlo <geromao@gmail.com>, on Sat Sep 11 19:03:18 BRT 2010
+# Recipe for version 0.7.35 by Fabio Mierlo <geromao@gmail.com>, on Sat Sep 11 19:03:18 BRT 2010
+compile_version=1.13.1
+url="$httpSourceforge/mediainfo/mediainfo_0.7.35.tar.bz2"
+file_size=1205274
+file_md5=60323db7b0f8fe3ab7fb6c9888371e05
+dir='MediaInfo/Project/GNU/GUI'
+autogen_before_configure=yes
+autogen=autogen
+recipe_type=configure
