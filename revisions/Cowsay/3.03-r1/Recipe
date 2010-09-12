@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Cowsay by Michael Homer <michael@gobolinux.org>, on Mon Sep 13 10:55:17 NZST 2010
+# Recipe for version 3.03 by Michael Homer <michael@gobolinux.org>, on Mon Sep 13 10:55:17 NZST 2010
+compile_version=1.13.0
+url="http://www.nog.net/~tony/warez/cowsay-3.03.tar.gz"
+file_size=15189
+file_md5=b29169797359420dadb998079021a494
+recipe_type=manifest
+
+do_install() {
+   $sudo_exec sh install.sh $target
+}
