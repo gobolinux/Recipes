@@ -1,0 +1,13 @@
+Some functions use memset and memcpy, so memory.h have to be included.
+
+diff -Naur openexr-1.7.0/exrenvmap/blurImage.cpp openexr-1.7.0-new/exrenvmap/blurImage.cpp
+--- openexr-1.7.0/exrenvmap/blurImage.cpp	2009-02-26 00:39:27.000000000 +0100
++++ openexr-1.7.0-new/exrenvmap/blurImage.cpp	2010-09-17 16:51:46.353756342 +0200
+@@ -45,6 +45,7 @@
+ #include "Iex.h"
+ #include <iostream>
+ #include <algorithm>
++#include <memory.h>
+ 
+ using namespace std;
+ using namespace Imf;

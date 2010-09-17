@@ -1,0 +1,10 @@
+--- openexr-1.6.1/exrenvmap/main.cpp.orig	2008-04-08 20:11:05.000000000 +0000
++++ openexr-1.6.1/exrenvmap/main.cpp	2008-04-08 20:11:24.000000000 +0000
+@@ -45,6 +45,7 @@
+ #include <iostream>
+ #include <exception>
+ #include <stdlib.h>
++#include <cstring>
+ 
+ using namespace Imf;
+ using namespace std;
