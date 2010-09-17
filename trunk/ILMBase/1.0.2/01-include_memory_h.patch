@@ -1,0 +1,13 @@
+Some functions use memset and memcpy, so memory.h have to be included.
+
+diff -Naur ilmbase-1.0.2/Imath/ImathMatrix.h ilmbase-1.0.2-new/Imath/ImathMatrix.h
+--- ilmbase-1.0.2/Imath/ImathMatrix.h	2010-07-17 00:48:40.000000000 +0200
++++ ilmbase-1.0.2-new/Imath/ImathMatrix.h	2010-09-17 16:54:31.152756871 +0200
+@@ -51,6 +51,7 @@
+ 
+ #include <iostream>
+ #include <iomanip>
++#include <memory.h>
+ 
+ #if (defined _WIN32 || defined _WIN64) && defined _MSC_VER
+ // suppress exception specification warnings
