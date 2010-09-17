@@ -1,0 +1,11 @@
+# fake a make file
+diff -Nur mkvtoolnix-4.3.0-orig/Makefile mkvtoolnix-4.3.0/Makefile
+--- mkvtoolnix-4.3.0-orig/Makefile	1969-12-31 21:00:00.000000000 -0300
++++ mkvtoolnix-4.3.0/Makefile	2010-09-16 01:03:19.000000000 -0300
+@@ -0,0 +1,6 @@
++
++build:
++	rake
++
++install:
++	rake install
