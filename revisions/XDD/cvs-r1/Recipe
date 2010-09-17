@@ -1,0 +1,19 @@
+# Recipe (MakeRecipe) for XDD by Lucas C. Villa Real, on Thu Sep 16 19:00:58 BRT 2010
+# Recipe for version cvs by Lucas C. Villa Real, on Thu Sep 16 19:00:58 BRT 2010
+compile_version=1.10.1
+cvs=":pserver:anonymous:@xdd.cvs.sourceforge.net:/cvsroot/xdd"
+cvs_module=xdd
+recipe_type=makefile
+makefile=linux.makefile
+dir="XDD-cvs"
+
+do_install=no
+
+pre_build() {
+	mkdir -p bin
+	chmod a+rwx bin
+}
+
+pre_link() {
+	cp xdd timeserver gettime $target/bin
+}
