@@ -1,0 +1,41 @@
+# Recipe for version 1.6.0_21_bin by JPaul Hatungimana <jhatungimana@netscape.net>, on Sun Sep 19 10:48:18 CEST 2010
+# Recipe for JDK version 1.6.0 by Mike Hughes
+url="http://download.java.net/dlj/binaries/jdk-6u21-dlj-linux-i586.bin"
+file_size=83916252
+file_md5=b3fbbe55bafedb3f8f93e91d4e809390
+manifest=(
+    "jdk1.6.0_21/bin:bin"
+    "jdk1.6.0_21/lib:lib"
+    "jdk1.6.0_21/include:include"
+    "jdk1.6.0_21/man:man"
+    "jdk1.6.0_21/COPYRIGHT:Shared/doc/Sun-JDK/COPYRIGHT"
+    "jdk1.6.0_21/LICENSE:Shared/doc/Sun-JDK/LICENSE"
+    "jdk1.6.0_21/THIRDPARTYLICENSEREADME.txt:Shared/doc/Sun-JDK/THIRDPARTYLICENSEREADME.txt"
+    "jdk1.6.0_21/README.html:Shared/doc/Sun-JDK/README.html"
+    "jdk1.6.0_21/README_ja.html:Shared/doc/Sun-JDK/README_ja.html"
+    "jdk1.6.0_21/README_zh_CN.html:Shared/doc/Sun-JDK/README_zh_CN.html"
+    "jdk1.6.0_21/src.zip:Shared/doc/Sun-JDK/src.zip"
+    "jdk1.6.0_21/sample:Shared/doc/Sun-JDK/sample"
+    "jdk1.6.0_21/demo:Shared/doc/Sun-JDK/demo"
+    "jdk1.6.0_21/jre/bin:jre/bin"
+    "jdk1.6.0_21/jre/lib:jre/lib"
+    "jdk1.6.0_21/jre/javaws:jre/javaws"
+    "jdk1.6.0_21/jre/plugin:jre/plugin"
+    "jdk1.6.0_21/jre/README:Shared/doc/Sun-JDK-JRE/README"
+    "jdk1.6.0_21/jre/LICENSE:Shared/doc/Sun-JDK-JRE/LICENSE"
+    "jdk1.6.0_21/jre/COPYRIGHT:Shared/doc/Sun-JDK-JRE/COPYRIGHT"
+    "jdk1.6.0_21/jre/Welcome.html:Shared/doc/Sun-JDK-JRE/Welcome.html"
+    "jdk1.6.0_21/jre/THIRDPARTYLICENSEREADME.txt:Shared/doc/Sun-JDK-JRE/THIRDPARTYLICENSEREADME.txt"
+
+    "jdk1.6.0_21/db/bin:db/bin"
+    "jdk1.6.0_21/db/lib:db/lib"
+    "jdk1.6.0_21/db/LICENSE:Shared/doc/Sun-JDK-DB/LICENSE"
+    "jdk1.6.0_21/db/3RDPARTY:Shared/doc/Sun-JDK-DB/3RDPARTY"
+    "jdk1.6.0_21/db/demo:Shared/doc/Sun-JDK-DB/demo"
+    "jdk1.6.0_21/db/docs:Shared/doc/Sun-JDK-DB/docs"
+    "jdk1.6.0_21/db/NOTICE:Shared/doc/Sun-JDK-DB/NOTICE"
+    "jdk1.6.0_21/db/javadoc:Shared/doc/Sun-JDK-DB/javadoc"
+    "jdk1.6.0_21/db/RELEASE-NOTES.html:Shared/doc/Sun-JDK-DB/RELEASE-NOTES.html"
+    "jdk1.6.0_21/db/index.html:Shared/doc/Sun-JDK-DB/index.html"
+    "jdk1.6.0_21/db/register.html:Shared/doc/Sun-JDK-DB/register.html"
+)
