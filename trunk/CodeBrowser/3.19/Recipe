@@ -1,0 +1,12 @@
+# Recipe for version 3.19 by JPaul Hatungimana <jhatungimana@netscape.net>, on Tue Sep 21 11:49:50 CEST 2010
+# Recipe (MakeRecipe) for CodeBrowser by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. ápr. 29., kedd, 20.42.22 CEST
+compile_version=1.10.2
+url="http://tibleiz.net/download/code-browser-3.19-src.tar.gz"
+file_size=736583
+file_md5=7ad2a04367d656796e14c0878b7678f1
+dir='code-browser-3.19'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+)
