@@ -1,0 +1,23 @@
+# Recipe for version 4.8.1 by JPaul Hatungimana <jhatungimana@netscape.net>, on Wed Sep 22 11:46:42 CEST 2010
+# Recipe (MakeRecipe) for JUnit by Daniele Maccari <daniele.maccari@gmail.com>, on Mon May 12 17:46:42 CEST 2008
+compile_version=1.11.0
+url="$httpSourceforge/junit/junit4.8.1.zip"
+file_size=1590118
+file_md5=86aae1041d5f36ab9b2fd7f53fb531c6
+recipe_type=manifest
+dir='junit4.8.1'
+
+manifest=(
+  "junit-4.8.1.jar:lib"
+)
+
+docs=(
+  "doc/*"
+  "javadoc"
+  "cpl-v10.html"  
+  "junit-4.8.1-src.jar"
+)
+
+pre_link() {
+   ln -s junit-4.8.1.jar "${target}/lib/junit.jar"
+}
