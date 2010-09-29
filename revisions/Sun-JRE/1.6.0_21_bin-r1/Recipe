@@ -1,0 +1,37 @@
+# Recipe for version 1.6.0_21_bin by Hugo Barrocas <hugobarrocas@iol.pt>, on Ter Set 28 13:37:44 WEST 2010
+# based on recipe for JRE version 1.6.0_07 by Riccardo Gregotti <xexos'at'hotmail.com>
+# based on recipe for JDK by Daniele Maccari <daniele.maccari@gmail.com>
+# and by Mike Hughes (Thanks ;-) )
+
+url="http://javadl.sun.com/webapps/download/AutoDL?BundleId=40907"
+file_size=21235371
+file_md5=0ec057531db8999802190cb8d453f0bd
+
+compile_version=1.10.2
+recipe_type=manifest
+uncompress=no
+
+pre_patch() {
+  mv AutoDL?BundleId=40907 jre-6u21-linux-i586.bin
+  bash jre-6u21-linux-i586.bin
+}
+
+pre_link() {
+  # Create a link to the java plugin in the standard browser-plugins directory
+  mkdir -p ${target}/lib/browser-plugins
+  ln -s ${target}/plugin/i386/ns7/libjavaplugin_oji.so ${target}/lib/browser-plugins
+}
+
+
+manifest=(
+    "jre1.6.0_21/bin:bin"
+    "jre1.6.0_21/lib:lib"
+    "jre1.6.0_21/man:man"
+    "jre1.6.0_21/javaws:javaws"
+    "jre1.6.0_21/plugin:plugin"
+    "jre1.6.0_21/COPYRIGHT:COPYRIGHT"
+    "jre1.6.0_21/Welcome.html:Welcome.html"
+    "jre1.6.0_21/README:README"
+    "jre1.6.0_21/LICENSE:LICENSE"
+    "jre1.6.0_21/THIRDPARTYLICENSEREADME.txt:THIRDPARTYLICENSEREADME.txt"
+)
