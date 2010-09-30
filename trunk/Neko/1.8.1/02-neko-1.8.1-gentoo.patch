@@ -1,0 +1,109 @@
+See http://www.mail-archive.com/neko@lists.motion-twin.com/msg02153.html
+
+> For the sake of completeness, I'm attaching this one also. It doesn't work
+> out well from a package manager's perspective if the program you're trying
+> to install waits for user's input. This removes the lines that ask where a
+> missing file can be found.
+
+diff -ur neko-1.8.1-orig/Makefile neko-1.8.1/Makefile
+--- neko-1.8.1-orig/Makefile	2009-12-12 21:26:44.000000000 -0600
++++ neko-1.8.1/Makefile	2009-12-12 21:30:07.000000000 -0600
+@@ -7,6 +7,7 @@
+ MAKESO = $(CC) -shared -WBsymbolic
+ LIBNEKO_NAME = libneko.so
+ LIBNEKO_LIBS = -ldl -lgc -lm
++LIBNEKO_FLAGS = -Wl,-soname,libneko.so
+ NEKOVM_FLAGS = -Lbin -lneko
+ STD_NDLL_FLAGS = ${NEKOVM_FLAGS}
+ INSTALL_FLAGS =
+@@ -117,7 +118,7 @@
+ 	(cd src; ${NEKO_EXEC} nekoc -link ../boot/nekoml.n nekoml/Main)
+ 
+ bin/${LIBNEKO_NAME}: ${LIBNEKO_OBJECTS}
+-	${MAKESO} ${EXTFLAGS} -o $@ ${LIBNEKO_OBJECTS} ${LIBNEKO_LIBS}
++	${MAKESO} ${LIBNEKO_FLAGS} ${EXTFLAGS} -o $@ ${LIBNEKO_OBJECTS} ${LIBNEKO_LIBS}
+ 
+ bin/neko: $(VM_OBJECTS)
+ 	${CC} ${CFLAGS} ${EXTFLAGS} -o $@ ${VM_OBJECTS} ${NEKOVM_FLAGS}
+diff -ur neko-1.8.1-orig/src/tools/install.neko neko-1.8.1/src/tools/install.neko
+--- neko-1.8.1-orig/src/tools/install.neko	2009-12-12 21:26:44.000000000 -0600
++++ neko-1.8.1/src/tools/install.neko	2009-12-12 21:30:42.000000000 -0600
+@@ -39,11 +39,6 @@
+ // LIBS DATAS
+ 
+ libs = {
+-	mod_neko => {
+-		src => $array("../../vm/stats","mod_neko","cgi"),
+-		inc => "httpd.h",
+-		incname => "Apache 1.3.x"
+-	},
+ 	mod_neko2 => {
+ 		src => $array("../../vm/stats","mod_neko","cgi"),
+ 		inc => $array("httpd.h","apr.h"),
+@@ -213,33 +208,6 @@
+ 	return arr2;
+ }
+ 
+-readline = function() {
+-	$print("> ");
+-	var b = buffer_new();
+-	do {
+-		var c = read_char(stdin);
+-		if( c == 10 )
+-			break;
+-		buffer_add_char(b,c);
+-	} while(true);
+-	return buffer_string(b);
+-}
+-
+-request_include = function(incl) {
+-	var s = readline();
+-	if( s == "s" )
+-		return null;
+-	return append(incl,s);
+-}
+-
+-request_lib = function() {
+-	var s = readline();
+-	if( s == "s" )
+-		return false;
+-	libraries = append(libraries,s);
+-	return true;
+-}
+-
+ find_file = function(f,arr) {
+ 	var i = 0;
+ 	while( i < $asize(arr) ) {
+@@ -310,13 +278,9 @@
+ 
+ loop_include = function(data,i,incl) {
+ 	var dir;
+-	while( (dir = find_file(data.inc[i],incl)) == null ) {
+-		$print("The file "+data.inc[i]+" provided when installing "+data.incname+" was not found\n");
+-		$print("Please enter a valid include path to look for it\n");
+-		$print("Or 's' to skip this library\n");
+-		incl = request_include(incl);
+-		if( incl == null )
+-			return null;
++	if( (dir = find_file(data.inc[i],incl)) == null ) {
++		$print("The file "+data.inc[i]+" provided when installing "+data.incname+" was not found (ignored)\n");
++		return null;
+ 	}
+ 	return dir;
+ }
+@@ -341,12 +305,9 @@
+ 	if( linklib == null )
+ 		linklib = "";
+ 	else {
+-		while( (dir = find_file(linklib,libraries)) == null ) {
+-			$print("The file "+linklib+" provided when installing "+data.incname+" was not found\n");
+-			$print("Please enter a valid include path to look for it\n");
+-			$print("Or 's' to skip this library\n");
+-			if( $not(request_lib()) )
+-				return;
++		if( (dir = find_file(linklib,libraries)) == null ) {
++			$print("The file "+linklib+" provided when installing "+data.incname+" was not found (ignored)\n");
++			return;
+ 		}
+ 		linklib = dir + "/" + linklib;
+ 	}

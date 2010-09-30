@@ -1,0 +1,48 @@
+See http://www.mail-archive.com/neko@lists.motion-twin.com/msg02153.html
+
+> You're missing a few dependencies in the makefile, so as it stands, you must
+> build neko with only one process running at a time, ie. make -j1. This patch
+> adds the missing dependencies (mainly just bin/neko and bin/std.ndll when
+> they're being used as part of a command) so that builds can be done in
+> parallel.
+
+diff -ur neko-1.8.1-orig/Makefile neko-1.8.1/Makefile
+--- neko-1.8.1-orig/Makefile	2009-12-13 17:02:49.000000000 -0600
++++ neko-1.8.1/Makefile	2009-12-13 17:11:36.000000000 -0600
+@@ -95,15 +95,15 @@
+ 
+ libneko: bin/${LIBNEKO_NAME}
+ 
+-libs:
++libs: bin/neko bin/std.ndll
+ 	(cd src; ${NEKO_EXEC} nekoc tools/install.neko)
+ 	(cd src; ${NEKO_EXEC} tools/install ${INSTALL_FLAGS})
+ 
+-doc:
++doc: bin/neko bin/std.ndll
+ 	(cd src; ${NEKO_EXEC} nekoc tools/makedoc.neko)
+ 	(cd src; ${NEKO_EXEC} tools/makedoc)
+ 
+-test:
++test: bin/neko bin/std.ndll
+ 	(cd src; ${NEKO_EXEC} nekoc tools/test.neko)
+ 	(cd src; ${NEKO_EXEC} tools/test)
+ 
+@@ -111,7 +111,7 @@
+ 
+ std: bin/std.ndll
+ 
+-compiler:
++compiler: bin/neko bin/std.ndll
+ 	(cd src; ${NEKO_EXEC} nekoml -nostd neko/Main.nml nekoml/Main.nml)
+ 	(cd src; ${NEKO_EXEC} nekoc -link ../boot/nekoc.n neko/Main)
+ 	(cd src; ${NEKO_EXEC} nekoc -link ../boot/nekoml.n nekoml/Main)
+@@ -123,7 +123,7 @@
+ 	${CC} ${CFLAGS} ${EXTFLAGS} -o $@ ${VM_OBJECTS} ${NEKOVM_FLAGS}
+ 	strip bin/neko
+ 
+-bin/std.ndll: ${STD_OBJECTS}
++bin/std.ndll: ${STD_OBJECTS} bin/neko
+ 	${MAKESO} -o $@ ${STD_OBJECTS} ${STD_NDLL_FLAGS}
+ 
+ clean:
