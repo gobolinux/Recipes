@@ -1,0 +1,8 @@
+[Name] Atomic_ops
+[Summary] Provides implementations for atomic memory update operations on a number of architectures.
+[Description] Provides implementations for atomic memory update operations on a number of 
+architectures. This allows direct use of these in reasonably portable code. Unlike earlier 
+similar packages, this one explicitly considers memory barrier semantics, and allows the 
+construction of code that involves minimum overhead across a variety of architectures.
+[License] GPL, MIT-style license.
+[Homepage] http://www.hpl.hp.com/research/linux/atomic_ops
