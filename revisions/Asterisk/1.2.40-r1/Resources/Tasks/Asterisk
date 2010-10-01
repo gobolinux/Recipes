@@ -1,0 +1,35 @@
+#!/bin/sh
+
+# Asterisk Task
+###############
+
+ASTERISK_BIN=/Programs/Asterisk/Current/bin/asterisk
+ASTERISK_PID=/System/Variable/run/asterisk.pid
+ASTERISK_CTL=/System/Variable/run/asterisk.ctl
+
+
+function getPid () {
+	if [ -r ${ASTERISK_PID} ]; then
+		echo `cat ${ASTERISK_PID}`
+	else
+		echo ""
+	fi
+}
+
+case $1 in
+	[sS]tart)
+		pid=`getPid`
+		if [ -z $pid ]; then
+			# Start asterisk daemon
+			${ASTERISK_BIN}
+		fi
+		;;
+	[sS]top)
+		pid=`getPid`
+		if [ ! -z $pid ]; then
+			kill -9 $pid
+			rm -rf ${ASTERISK_PID}
+			rm -rf ${ASTERISK_CTL}
+		fi
+		;;
+esac
