@@ -1,3 +1,4 @@
+# Fix hardcode paths
 --- asterisk-1.2.15_orig/build_tools/make_defaults_h	2005-06-20 19:26:08.000000000 +0200
 +++ asterisk-1.2.15/build_tools/make_defaults_h	2007-02-19 00:04:36.000000000 +0100
 @@ -4,22 +4,22 @@
@@ -8,10 +9,10 @@
 -#define AST_RUN_DIR    "${INSTALL_PATH}${ASTVARRUNDIR}"
 -#define AST_SOCKET     "${INSTALL_PATH}${ASTVARRUNDIR}/asterisk.ctl"
 -#define AST_PID        "${INSTALL_PATH}${ASTVARRUNDIR}/asterisk.pid"
-+#define AST_CONFIG_DIR "/System/Settings/asterisk/"
-+#define AST_RUN_DIR    "/System/Variable/run/"
-+#define AST_SOCKET     "/System/Variable/run/asterisk.ctl"
-+#define AST_PID        "/System/Variable/run/asterisk.pid"
++#define AST_CONFIG_DIR "@%Compile_settings_target%@/asterisk/"
++#define AST_RUN_DIR    "@%Compile_variable_target%@/run/"
++#define AST_SOCKET     "@%Compile_variable_target%@/run/asterisk.ctl"
++#define AST_PID        "@%Compile_variable_target%@/run/asterisk.pid"
  #define AST_MODULE_DIR "${INSTALL_PATH}${MODULES_DIR}"
 -#define AST_SPOOL_DIR  "${INSTALL_PATH}${ASTSPOOLDIR}"
 -#define AST_VAR_DIR    "${INSTALL_PATH}${ASTVARLIBDIR}"
@@ -20,20 +21,20 @@
 -#define AST_KEY_DIR    "${INSTALL_PATH}${ASTVARLIBDIR}/keys"
 -#define AST_DB         "${INSTALL_PATH}${ASTVARLIBDIR}/astdb"
 -#define AST_TMP_DIR    "${INSTALL_PATH}${ASTSPOOLDIR}/tmp"
-+#define AST_SPOOL_DIR  "/System/Variable/spool/asterisk/"
-+#define AST_VAR_DIR    "/System/Variable/lib/asterisk/"
-+#define AST_LOG_DIR    "/System/Variable/log/asterisk/"
-+#define AST_AGI_DIR    "/System/Variable/lib/asterisk/agi-bin/"
-+#define AST_KEY_DIR    "/System/Variable/lib/asterisk/keys/"
-+#define AST_DB         "/System/Variable/lib/asterisk/astdb/"
-+#define AST_TMP_DIR    "/System/Variable/spool/asterisk/tmp/"
++#define AST_SPOOL_DIR  "@%Compile_variable_target%@/spool/asterisk/"
++#define AST_VAR_DIR    "@%Compile_variable_target%@/lib/asterisk/"
++#define AST_LOG_DIR    "@%Compile_variable_target%@/log/asterisk/"
++#define AST_AGI_DIR    "@%Compile_variable_target%@/lib/asterisk/agi-bin/"
++#define AST_KEY_DIR    "@%Compile_variable_target%@/lib/asterisk/keys/"
++#define AST_DB         "@%Compile_variable_target%@/lib/asterisk/astdb/"
++#define AST_TMP_DIR    "@%Compile_variable_target%@/spool/asterisk/tmp/"
  
 -#define AST_CONFIG_FILE "${INSTALL_PATH}${ASTCONFPATH}"
-+#define AST_CONFIG_FILE "/System/Settings/asterisk/asterisk.conf"
++#define AST_CONFIG_FILE "@%Compile_settings_target%@/asterisk/asterisk.conf"
  
 -#define AST_SOUNDS     "${INSTALL_PATH}${ASTVARLIBDIR}/sounds"
 -#define AST_IMAGES     "${INSTALL_PATH}${ASTVARLIBDIR}/images"
-+#define AST_SOUNDS     "/System/Variable/lib/asterisk/sounds"
-+#define AST_IMAGES     "/System/Variable/lib/asterisk/images"
++#define AST_SOUNDS     "@%Compile_variable_target%@/lib/asterisk/sounds"
++#define AST_IMAGES     "@%Compile_variable_target%@/lib/asterisk/images"
  
  END

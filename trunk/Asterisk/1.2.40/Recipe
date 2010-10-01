@@ -1,0 +1,11 @@
+# Recipe for version 1.2.40 by Fabio Mierlo <geromao@gmail.com>, on Fri Oct 1 04:59:48 BRT 2010
+# Recipe (MakeRecipe) for Asterisk by Aitor Pérez Iturri, on vie feb 16 18:13:32 CET 2007
+compile_version=1.8.2
+url="http://downloads.asterisk.org/pub/telephony/asterisk/old-releases/asterisk-1.2.40.tar.gz"
+file_size=29903514
+file_md5=bafeaaed88114ee8061a18ff402ce6f3
+recipe_type=makefile
+make_variables=(
+	"INSTALL_PREFIX=$target"
+)
+install_target="install samples"

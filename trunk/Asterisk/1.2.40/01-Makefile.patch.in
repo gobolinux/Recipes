@@ -1,3 +1,4 @@
+# Fix hardcode paths
 --- asterisk-1.2.15_orig/Makefile	2007-01-10 03:16:45.000000000 +0100
 +++ asterisk-1.2.15/Makefile	2007-02-19 09:15:58.000000000 +0100
 @@ -111,17 +111,18 @@
@@ -34,18 +35,30 @@
  		( \
  		echo "[directories]" ; \
 -		echo "astetcdir => $(ASTETCDIR)" ; \
-+		echo "astetcdir => /System/Settings/asterisk/" ; \
- 		echo "astmoddir => $(MODULES_DIR)" ; \
+-		echo "astmoddir => $(MODULES_DIR)" ; \
 -		echo "astvarlibdir => $(ASTVARLIBDIR)" ; \
 -		echo "astagidir => $(AGI_DIR)" ; \
 -		echo "astspooldir => $(ASTSPOOLDIR)" ; \
 -		echo "astrundir => $(ASTVARRUNDIR)" ; \
 -		echo "astlogdir => $(ASTLOGDIR)" ; \
-+		echo "astvarlibdir => /System/Variable/lib/asterisk/" ; \
-+		echo "astagidir => /System/Variable/lib/asterisk/agi-bin/" ; \
-+		echo "astspooldir => /System/Variable/spool/asterisk/" ; \
-+		echo "astrundir => /System/Variable/run/" ; \
-+		echo "astlogdir => /System/Variable/log/asterisk/" ; \
++		echo "astetcdir => @%Compile_settings_target%@/asterisk/" ; \
++		echo "astmoddir => @%Compile_goboLibraries%@/asterisk/modules/" ; \
++		echo "astvarlibdir => @%Compile_variable_target%@/lib/asterisk/" ; \
++		echo "astagidir => @%Compile_variable_target%@/lib/asterisk/agi-bin/" ; \
++		echo "astspooldir => @%Compile_variable_target%@/spool/asterisk/" ; \
++		echo "astrundir => @%Compile_variable_target%@/run/" ; \
++		echo "astlogdir => @%Compile_variable_target%@/log/asterisk/" ; \
  		echo "" ; \
  		echo "; Changing the following lines may compromise your security." ; \
  		echo ";[files]" ; \
+--- asterisk-1.2.30/Makefile-orig	2008-08-29 15:38:14.000000000 -0300
++++ asterisk-1.2.30/Makefile	2008-08-29 15:39:05.000000000 -0300
+@@ -552,7 +552,7 @@
+ 	$(MAKE) -C stdtime clean
+ 
+ datafiles: all
+-	if [ x`$(ID) -un` = xroot ]; then sh mkpkgconfig $(DESTDIR)/usr/lib/pkgconfig; fi
++	if [ x`$(ID) -un` = xroot ]; then sh mkpkgconfig $(INSTALL_PREFIX)/lib/pkgconfig; fi
+ 	mkdir -p $(DESTDIR)$(ASTVARLIBDIR)/sounds/digits
+ 	mkdir -p $(DESTDIR)$(ASTVARLIBDIR)/sounds/silence
+ 	mkdir -p $(DESTDIR)$(ASTVARLIBDIR)/sounds/priv-callerintros
