@@ -1,0 +1,17 @@
+# Recipe (MakeRecipe) for Tolua++ by Hisham Muhammad <hisham@gobolinux.org>, on Sat Oct 2 19:48:27 BRT 2010
+# Recipe for version 1.0.93 by Hisham Muhammad <hisham@gobolinux.org>, on Sat Oct 2 19:48:27 BRT 2010
+compile_version=1.9.0
+url="http://www.codenix.com/~tolua/tolua++-1.0.93.tar.bz2"
+file_size=163956
+file_md5=100aa6907b8108582080b37d79c0afd7
+recipe_type=scons
+pre_build() {
+cat <<EOF > custom.py
+CCFLAGS = ['-I$lua_path/include', '-O2', '-ansi']
+LIBPATH = ['$goboLibraries']
+LIBS = ['lua', 'dl', 'm']
+tolua_bin = 'tolua++'
+tolua_lib = 'tolua++'
+TOLUAPP = 'tolua++'
+EOF
+}
