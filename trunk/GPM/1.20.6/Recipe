@@ -1,0 +1,22 @@
+# Recipe for version 1.20.6 by JPaul Hatungimana <jhatungimana@netscape.net>, on Fri Oct 8 11:44:19 CEST 2010
+# GPM 1.20.6 Recipe by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.8.0
+url="http://www.nico.schottelius.org/software/gpm/archives/gpm-1.20.6.tar.lzma"
+file_size=1280871
+file_md5=9dcb5d3a7db1686adb0974a55098b9e3
+recipe_type=configure
+needs_safe_linking=yes
+
+pre_build(){
+   autoreconf -vfi
+}
+
+make_variables=(
+    LDFLAGS="$LDFLAGS -lm"
+)
+
+pre_link() {
+	pushd "$target/lib"
+	ln -sf libgpm.so.1.20.0 libgpm.so.1
+	popd
+}
