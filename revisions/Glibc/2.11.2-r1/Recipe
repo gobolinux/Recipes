@@ -1,0 +1,68 @@
+# Recipe for version 2.11.2 by JPaul Hatungimana <jhatungimana@netscape.net>, on Thu Oct 7 23:25:33 CEST 2010
+# by Guilherme Bedin
+# 02/12/2003
+compile_version=1.13.2
+url="$ftpGnu/glibc/glibc-2.11.2.tar.bz2"
+file_size=15675392
+file_md5=414fc1bad64c0e34ead0bb3d0f191456
+recipe_type=configure
+needs_build_directory=yes
+
+configure_options=(
+    --enable-kernel=2.6.18
+    --with-headers="${linux_headers_path}/include"
+    --disable-profile
+    --enable-add-ons
+    --with-tls
+    --with-__thread
+)
+
+install_target="install"
+install_variables=(
+   zonedir="${target}/share/zoneinfo"
+)
+
+environment=(
+   CFLAGS=""
+   CXXFLAGS=""
+   LDFLAGS=""
+)
+
+pre_patch() {
+   # The ldd shell script contains Bash-specific syntax.
+   sed -i 's|@BASH@|/bin/bash|' "${sourcedir}/elf/ldd.bash.in"
+}
+
+pre_install() {
+   cp -R "${recipedir}/Resources/Defaults/Settings"/* "$target/Resources/Defaults/Settings"
+   ldconfig -C "$target/Resources/Defaults/Settings/ld.so.cache"
+   ldconfig
+   
+   # We don't want to run ldconfig from "make install"
+   sed -i 's,$(common-objpfx)elf/ldconfig,/bin/true,' \
+   "${sourcedir}/Makefile"
+}
+
+pre_link() {
+   install -d -m 755 "${target}/lib/locale"
+   install -m 644 "${sourcedir}/localedata/SUPPORTED" "${target}/lib/locale"
+   for f in "${goboHeaders}"/gnu/stubs-*
+   do
+      [ -e "${target}"/include/gnu/$(basename "${f}") ] || cp -a $(readlink -f "${f}") "${target}"/include/gnu
+   done
+}
+
+post_install(){
+   Log_Normal "Generating default locales"
+   for locale in en_US pt_BR hu_HU de_DE
+   do
+      grep ${locale} "${target}/lib/locale/SUPPORTED" | tr " " "\n" | while read avail_locale
+      do
+         lang=$(echo ${avail_locale} | cut -d/ -f1)
+         # UTF8 codepages are additionally appended to lang with a '.' and must be removed
+         src=$(echo ${lang} | cut -d. -f1)
+	 codepage=$(echo ${avail_locale} | cut -d/ -f2)
+	 localedef --no-archive -i ${src} -f ${codepage} ${lang}
+      done
+   done
+}
