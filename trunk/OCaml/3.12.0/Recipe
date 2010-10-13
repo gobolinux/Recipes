@@ -1,0 +1,31 @@
+# Recipe for version 3.12.0 by Baffo32 <baffo32@gmail.com>, on Wed Sep 29 19:12:06 EDT 2010
+# Recipe (MakeRecipe) for OCaml by  Ozgur Ulukir, on Mon Dec 20 17:41:24 EET 2004
+
+url="http://caml.inria.fr/pub/distrib/ocaml-3.12/ocaml-3.12.0.tar.bz2"
+file_size=2639049
+file_md5=bd92c8970767f412bc1e9a6c625b5ccf
+compile_version=1.8.2
+recipe_type=configure
+build_target=world.opt
+
+# configure accepts 'prefix' but does not like the '=' delimiter used by PrepareProgram
+override_default_options=yes
+configure_options=(
+   --prefix "$target"
+)
+
+# Wrapper Makefile to force single job
+makefile=Makefile.build
+pre_build() {
+   cat << EOF > Makefile.build
+% :
+	\$(MAKE) -j1 \$@
+EOF
+}
+
+# If Emacs is present install the Emacs mode.
+using_emacs_pre_link() {
+   cd emacs
+   make install
+}
+
