@@ -1,0 +1,12 @@
+# Recipe for version 1.7.2 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. okt. 15., péntek, 02.28.18 CEST
+# Recipe (MakeRecipe) for Doxygen by roko, <ro.ko@mcnon.com>, on Mon Dec 6 00:03:33 BRST 2004
+compile_version=1.9.0
+url="ftp://ftp.stack.nl/pub/users/dimitri/doxygen-1.7.2.src.tar.gz"
+file_size=4130092
+file_md5=d5f3e32474186abc64288db6b8ffd7f0
+dir='doxygen-1.7.2'
+recipe_type=makefile
+pre_build () {
+    ./configure --prefix $target 
+    #--with-doxywizard
+}
