@@ -1,0 +1,11 @@
+# Recipe for version 1.4.4 by Baffo32 <baffo32@gmail.com>, on Thu Oct 14 09:23:04 EDT 2010
+compile_version=1.8.5
+url=$httpSourceforge/libpng/libpng-1.4.4.tar.bz2
+file_size=635027
+file_md5=e6446d6cc10621ce0ed27ff82a70a7e8
+recipe_type=configure
+
+pre_link() {
+    ln -sf libpng12 $target/include/libpng
+    ln -sf libpng.so $target/lib/libpng.so.0
+}
