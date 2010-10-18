@@ -1,0 +1,13 @@
+# Recipe for version 4.2.1.1 by Dominique Juergensen <brokolie@vollbio.de>, on Sun Oct 17 15:48:14 CEST 2010
+# by Michael Homer
+# 2004.01.28 04:31
+
+url=$ftpGnu/sed/sed-4.2.1.tar.gz
+file_size=1152453
+file_md5=f0fd4d7da574d4707e442285fd2d3b86
+compile_version=1.12.0
+recipe_type=configure
+with_doc=(
+   --enable-html
+)
+
