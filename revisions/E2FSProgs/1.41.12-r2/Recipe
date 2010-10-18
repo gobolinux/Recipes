@@ -1,0 +1,13 @@
+# Recipe for version 1.41.12 by Dominique Juergensen <brokolie@vollbio.de>, on Sun Oct 17 16:18:14 CEST 2010
+url=$httpSourceforge/e2fsprogs/e2fsprogs-1.41.12.tar.gz
+file_size=4496194
+file_md5=1b24a21fc0c2381ef420961cbfec733f
+recipe_type=configure
+needs_safe_linking=yes
+compile_version=1.9.0
+configure_options=(
+   "--enable-elf-shlibs"
+   "--disable-libblkid"
+   "--disable-libuuid"
+)
+install_target="install install-libs"
