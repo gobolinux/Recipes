@@ -1,0 +1,10 @@
+# Recipe for version 1.10.5 by JPaul Hatungimana <jhatungimana@netscape.net>, on Thu Oct 21 22:44:14 CEST 2010
+# Recipe (MakeRecipe) for Aria2 by Nick Matteo <kundor@kundor.org>, on Sat Mar 14 16:35:53 EDT 2009
+compile_version=1.12.1
+url="$httpSourceforge/aria2/aria2-1.10.5.tar.bz2"
+file_size=1499411
+file_md5=3ed99540ee86b2089b2cab119550dc15
+recipe_type=configure
+configure_options=(
+    --with-ca-bundle=$goboLibraries/ssl/certs/cacert.pem
+)
