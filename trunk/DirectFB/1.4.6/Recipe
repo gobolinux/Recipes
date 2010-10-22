@@ -1,0 +1,11 @@
+# Recipe for version 1.4.6 by JPaul Hatungimana <jhatungimana@netscape.net>, on Fri Oct 22 23:43:44 CEST 2010
+# Recipe (MakeRecipe) for DirectFB by roko, <ro.ko@mcnon.com>, on Wed Oct 27 01:25:07 BRST 2004
+compile_version=1.8.2
+url="http://www.directfb.org/downloads/Core/DirectFB-1.4/DirectFB-1.4.6.tar.gz"
+file_size=2939234
+file_md5=dbe1957932f81790742b58b94c1c7b84
+recipe_type=configure
+configure_options=(
+    "--with-gfxdrivers=all"
+    "--enable-multi"
+)
