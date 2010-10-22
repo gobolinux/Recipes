@@ -1,0 +1,15 @@
+# Recipe for version 2.3 by Zbigniew Baniewski <zb@ispid.com.pl>, on Fri Oct 22.33:38:52 CEST 2.30
+# Recipe (MakeRecipe) for Minicom by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Feb 15 12:59:11 BRST 2005
+compile_version=1.13.0
+url="http://alioth.debian.org/frs/download.php/2332/minicom-2.3.tar.gz"
+file_size=789162
+file_md5=0ebe7a91898384ca906787cc4e2c3f25
+recipe_type=configure
+
+configure_options=(
+    --enable-lock-dir=$goboVariable/lock
+)
+
+post_install() {
+	mkdir -p $settings_target
+}
