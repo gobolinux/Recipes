@@ -1,0 +1,19 @@
+# Recipe for version 5.1.4 by JPaul Hatungimana <jhatungimana@netscape.net>, on Mon Oct 25 01:10:08 CEST 2010
+# Recipe (MakeRecipe) for MPEd by Nathan Middleton, on Mon Nov 5 00:12:46 CST 2007
+compile_version=1.9.0
+url="http://triptico.com/download/mp-5.1.4.tar.gz"
+file_size=485831
+file_md5=c388fc63f95c982177592bb8fddf384a
+file="mp-5.1.4.tar.gz"
+recipe_type=configure
+configure=config.sh
+
+pre_link() {
+    for dest in $(find $goboShared/icons/hicolor | grep apps | sed "s,$goboShared/,,")
+    do
+        install -d ${target}/Shared/${dest}
+        install ${dir}/mp.png ${target}/Shared/${dest}
+        install ${dir}/mp.xpm ${target}/Shared/${dest}
+    done
+    ln -s ${target}/bin/mp-5 ${target}/bin/mped
+}
