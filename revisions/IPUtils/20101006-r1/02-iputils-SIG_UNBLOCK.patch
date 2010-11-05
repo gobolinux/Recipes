@@ -1,0 +1,48 @@
+Don't rely on the parent signal mask. If that process has blocked SIGALRM 
+then chances are high that arping and rdisc will execute forever, as that
+signal will never be delivered and the globals, such as 'count' and 'timeout',
+won't be updated or checked.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@us.ibm.com>
+
+diff -urp iputils-s20101006.orig/arping.c iputils-s20101006/arping.c
+--- iputils-s20101006.orig/arping.c	2010-10-06 08:59:20.000000000 -0300
++++ iputils-s20101006/arping.c	2010-11-05 16:12:42.000000000 -0200
+@@ -346,6 +346,7 @@ main(int argc, char **argv)
+ {
+ 	int socket_errno;
+ 	int ch;
++	sigset_t sset, osset;
+ 	uid_t uid = getuid();
+ 
+ 	s = socket(PF_PACKET, SOCK_DGRAM, 0);
+@@ -544,13 +545,17 @@ main(int argc, char **argv)
+ 		exit(2);
+ 	}
+ 
++	sigemptyset(&sset);
++	sigaddset(&sset, SIGALRM);
++	sigaddset(&sset, SIGINT);
++	sigprocmask(SIG_UNBLOCK, &sset, NULL);
++
+ 	set_signal(SIGINT, finish);
+ 	set_signal(SIGALRM, catcher);
+ 
+ 	catcher();
+ 
+ 	while(1) {
+-		sigset_t sset, osset;
+ 		unsigned char packet[4096];
+ 		struct sockaddr_storage from;
+ 		socklen_t alen = sizeof(from);
+diff -urp iputils-s20101006.orig/rdisc.c iputils-s20101006/rdisc.c
+--- iputils-s20101006.orig/rdisc.c	2010-10-06 08:59:20.000000000 -0300
++++ iputils-s20101006/rdisc.c	2010-11-05 16:14:33.000000000 -0200
+@@ -449,6 +449,7 @@ next:
+ 	sigaddset(&sset, SIGHUP);
+ 	sigaddset(&sset, SIGTERM);
+ 	sigaddset(&sset, SIGINT);
++	sigprocmask(SIG_UNBLOCK, &sset, NULL);
+ 
+ 	init();
+ 	if (join(s, &joinaddr) < 0) {
