@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for QLandkarte-GT by Lucas C. Villa Real, on Wed Nov 10 13:41:48 BRST 2010
+# Recipe for version 0.20.1 by Lucas C. Villa Real, on Wed Nov 10 13:41:48 BRST 2010
+compile_version=1.10.1
+url="$httpSourceforge/project/qlandkartegt/qlandkartegt/QLandkarteGT%200.20.1/qlandkartegt-0.20.1.tar.gz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fqlandkartegt%2F&ts=1289403810&use_mirror=ufpr"
+file="qlandkartegt-0.20.1.tar.gz"
+file_size=3751020
+file_md5=3bc2bea11d2febb4485d8fda8808e281
+dir='qlandkartegt-0.20.1'
+recipe_type=cmake
