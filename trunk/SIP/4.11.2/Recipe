@@ -1,0 +1,14 @@
+# Recipe for version 4.11.2 by Demian Florentin <demianflorentin@gmail.com>, on Fri Nov 12 16:05:48 PYST 2010
+# on Sat Apr 16 13:31:22 CEST 2005
+
+compile_version=1.8.2
+url="http://www.riverbankcomputing.co.uk/static/Downloads/sip4/sip-4.11.2.tar.gz"
+file_size=665000
+file_md5=d799804ca0a88bd76c6c2cdf8935c3cb
+
+recipe_type=makefile
+pre_build() {
+   pythonversion=`python --version 2>&1 | awk {'print $2'} | cut -b1-3`
+   sitepackages="$target/lib/python${pythonversion}/site-packages"
+   python configure.py -b $target/bin -e $target/include -d $sitepackages -v $target/share/sip
+}
