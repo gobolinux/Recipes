@@ -1,0 +1,24 @@
+# Recipe for version 2.88dsf by Hisham Muhammad <hisham@gobolinux.org>, on Fri Nov 12 13:57:22 BRST 2010
+url="http://download.savannah.gnu.org/releases/sysvinit/sysvinit-2.88dsf.tar.bz2"
+file_size=105551
+file_md5=6eda8a97b86e0a6f59dabbf25202aa6f
+compile_version=1.8.0
+recipe_type=makefile
+build_target="-C src"
+install_target="-C src install"
+make_variables=(
+   "ROOT=$target"
+   "BIN_OWNER=0"
+   "BIN_GROUP=0"
+   "INSTALL=install"
+   "MANDIR=/share/man"
+   "USRDIR=$target"
+)
+symlink_options=(
+    "--conflict overwrite"
+)
+pre_build() {
+   # don't install wall
+   sed -i -e 's/utmpdump wall/utmpdump/' \
+   -e 's/mountpoint.1 wall.1/mountpoint.1/' src/Makefile
+}

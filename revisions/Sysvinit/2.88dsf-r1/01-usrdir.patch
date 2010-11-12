@@ -1,0 +1,57 @@
+
+diff -Naur sysvinit-2.88dsf-orig/src/Makefile sysvinit-2.88dsf/src/Makefile
+--- sysvinit-2.88dsf-orig/src/Makefile	2010-04-11 06:30:27.000000000 -0300
++++ sysvinit-2.88dsf/src/Makefile	2010-11-12 14:03:42.000000000 -0200
+@@ -65,7 +65,8 @@
+   INSTALL_DATA	= install -m 644
+ endif
+ INSTALL_DIR	= install -m 755 -d
+-MANDIR		= /usr/share/man
++USRDIR		= /usr
++MANDIR		= $(USRDIR)/share/man
+ 
+ ifeq ($(WITH_SELINUX),yes)
+   SELINUX_DEF	=  -DWITH_SELINUX
+@@ -78,7 +79,7 @@
+ endif
+ 
+ # Additional libs for GNU libc.
+-ifneq ($(wildcard /usr/lib*/libcrypt.a),)
++ifneq ($(wildcard /usr/lib*/libcrypt.a),)
+   SULOGINLIBS	+= -lcrypt
+ endif
+ 
+@@ -139,7 +140,7 @@
+ 
+ install:
+ 		$(INSTALL_DIR) $(ROOT)/bin/ $(ROOT)/sbin/
+-		$(INSTALL_DIR) $(ROOT)/usr/bin/
++		$(INSTALL_DIR) $(ROOT)$(USRDIR)/bin/
+ 		for i in $(BIN); do \
+ 			$(INSTALL_EXEC) $$i $(ROOT)/bin/ ; \
+ 		done
+@@ -147,7 +148,7 @@
+ 			$(INSTALL_EXEC) $$i $(ROOT)/sbin/ ; \
+ 		done
+ 		for i in $(USRBIN); do \
+-			$(INSTALL_EXEC) $$i $(ROOT)/usr/bin/ ; \
++			$(INSTALL_EXEC) $$i $(ROOT)$(USRDIR)/bin/ ; \
+ 		done
+ 		# $(INSTALL_DIR) $(ROOT)/etc/
+ 		# $(INSTALL_EXEC) initscript.sample $(ROOT)/etc/
+@@ -155,11 +156,11 @@
+ 		ln -sf halt $(ROOT)/sbin/poweroff
+ 		ln -sf init $(ROOT)/sbin/telinit
+ 		ln -sf /sbin/killall5 $(ROOT)/bin/pidof
+-		if [ ! -f $(ROOT)/usr/bin/lastb ]; then \
+-			ln -sf last $(ROOT)/usr/bin/lastb; \
++		if [ ! -f $(ROOT)$(USRDIR)/bin/lastb ]; then \
++			ln -sf last $(ROOT)$(USRDIR)/bin/lastb; \
+ 		fi
+-		$(INSTALL_DIR) $(ROOT)/usr/include/
+-		$(INSTALL_DATA) initreq.h $(ROOT)/usr/include/
++		$(INSTALL_DIR) $(ROOT)$(USRDIR)/include/
++		$(INSTALL_DATA) initreq.h $(ROOT)$(USRDIR)/include/
+ 		$(INSTALL_DIR) $(ROOT)$(MANDIR)/man1/
+ 		$(INSTALL_DIR) $(ROOT)$(MANDIR)/man5/
+ 		$(INSTALL_DIR) $(ROOT)$(MANDIR)/man8/
