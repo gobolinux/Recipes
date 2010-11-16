@@ -1,0 +1,11 @@
+# Recipe for version 1.1.5 by Michael Homer <michael@gobolinux.org>, on Tue Nov 16 18:46:03 NZDT 2010
+# Recipe (MakeRecipe) for VLC by keisangi, on Sun Feb 17 01:23:41 JST 2008
+compile_version=1.10.2
+url="http://cdnetworks-kr-2.dl.sourceforge.net/project/vlc/1.1.5/vlc-1.1.5.tar.bz2"
+file_size=24111723
+file_md5=fdc23693351ed57af9f4c85ea885b536
+recipe_type=configure
+configure_options=(
+   "--with-kde-solid=$target/share/apps/solid/actions"
+   "--disable-lua" # Causes segmentation faults in 1.1.5
+)
