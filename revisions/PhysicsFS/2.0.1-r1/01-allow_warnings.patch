@@ -1,0 +1,13 @@
+Don't treat warnings as errors, otherwise compilation will most likely fail.
+diff -Naur physfs-2.0.1-vanilla/CMakeLists.txt physfs-2.0.1-modified/CMakeLists.txt
+--- physfs-2.0.1-vanilla/CMakeLists.txt	2010-03-25 00:51:40.000000000 -0300
++++ physfs-2.0.1-modified/CMakeLists.txt	2010-11-17 17:47:14.000000000 -0200
+@@ -44,7 +44,7 @@
+ # Add some gcc-specific command lines.
+ IF(CMAKE_COMPILER_IS_GNUCC)
+     # Always build with debug symbols...you can strip it later.
+-    ADD_DEFINITIONS(-g -pipe -Werror -fsigned-char)
++    ADD_DEFINITIONS(-g -pipe -fsigned-char)
+ 
+     # Stupid BeOS generates warnings in the system headers.
+     IF(NOT BEOS)
