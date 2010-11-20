@@ -1,0 +1,34 @@
+# Recipe for version 1.0.5 by Michael Homer <michael@gobolinux.org>, on Sun Nov 21 10:27:01 NZDT 2010
+# Recipe (MakeRecipe) for OpenTTD by Michael Homer, on Fri Apr 4 20:06:34 NZDT 2008
+compile_version=1.10.2
+url="http://binaries.openttd.org/releases/1.0.5/openttd-1.0.5-source.tar.bz2"
+file_size=5684796
+file_md5=fc79f788e2be140948b972c32b0f1eec
+dir='openttd-1.0.5'
+recipe_type=configure
+
+configure_options=(
+   "--prefix-dir=$target"
+   "--binary-dir=bin"
+   "--data-dir=Shared/openttd"
+   "--icon-dir=Shared/openttd/icons"
+   "--personal-dir=" # Must be unset, or it tries to install scenarios into ~
+   "--shared-dir=Shared"
+)
+
+pre_link() {
+   for dir in "$goboShared/openttd/data" "$target/../0.5.3/Share/openttd/data" "$target/../0.4.8/Share/openttd/data" "$target/../0.4.7/Share/openttd/data"
+   do
+      if [ -e "$dir/sample.cat" ]
+      then # Try to copy the data files across
+         echo -n "Copying game data files from previous version, found in $(readlink -f "$dir")..."
+         for file in trg1r.grf trgcr.grf trghr.grf trgir.grf trgtr.grf trg1.grf trgc.grf trgh.grf trgi.grf trgt.grf sample.cat
+         do
+            [ -e "$dir/$file" ] && cp "$dir/$file" "$target/Shared/openttd/data"
+         done
+         return 0
+      fi
+   done
+}
+
+post_install_message="If this is your first OpenTTD install, you will need to copy the data files from your TTD CD into $target/Shared/openttd/data before the game will function.\nNeeded files are: trg1r.grf, trgcr.grf, trghr.grf, trgir.grf, trgtr.grf, sample.cat from Windows TTD, or trg1.grf, trgc.grf, trgh.grf, trgi.grf, trgt.grf, sample.cat from DOS TTD.\nYou can also use the Open[GSM]FX distributions from openttd.sf.net."
