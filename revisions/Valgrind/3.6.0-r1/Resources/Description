@@ -1,0 +1,14 @@
+[Name] Valgrind
+[Summary] A memory debugger.
+[License] GNU General Public License (GPL)
+[Description] Valgrind is a tool that helps you find memory management problems in
+programs. When a program is run under Valgrind's supervision, all
+reads and writes of memory are checked, and calls to
+malloc/new/free/delete are intercepted. As a result, Valgrind can
+detect problems such as use of uninitialized memory, reading/writing
+of memory after it has been freed, reading/writing off the end of
+malloced blocks, reading/writing inappropriate areas on the stack,
+memory leaks in which pointers to malloced blocks are lost forever,
+passing of uninitialized and/or unaddressable memory to system calls,
+and mismatched use of malloc/new/new [] vs. free/delete/delete [].
+[Homepage] http://valgrind.kde.org
