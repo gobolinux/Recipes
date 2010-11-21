@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Transset-DF by Michael Homer <michael@gobolinux.org>, on Sun Nov 21 15:11:31 NZDT 2010
+# Recipe for version 6 by Michael Homer <michael@gobolinux.org>, on Sun Nov 21 15:11:31 NZDT 2010
+compile_version=1.13.0
+url="http://forchheimer.se/transset-df/transset-df-6.tar.gz"
+file_size=10395
+file_md5=3375d570adc9d875d7fc476d1a50d5a5
+recipe_type=makefile
+makefile='Makefile'
+pre_build() {
+   GrepReplace /usr/bin $target/bin Makefile
+}
