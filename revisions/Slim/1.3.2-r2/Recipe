@@ -1,0 +1,15 @@
+# Recipe for version 1.3.2 by JPaul Hatungimana <jhatungimana@netscape.net>, on Thu Aug 26 19:21:05 CEST 2010
+# Recipe (MakeRecipe) for Slim by Michael Homer, on Mon Jan 7 10:52:39 NZDT 2008
+compile_version=1.9.0
+url="http://download.berlios.de/slim/slim-1.3.2.tar.gz"
+file_size=220592
+file_md5=ca1ae6120e6f4b4969f2d6cf94f47b42
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "DESTDIR="
+   "PREFIX=$target"
+   "MANDIR=$target/man"
+   "CFGDIR=$settings_target"
+   "USE_PAM=1"
+)
