@@ -11,4 +11,5 @@ make_variables=(
    "PREFIX=$target"
    "MANDIR=$target/man"
    "CFGDIR=$settings_target"
+   "USE_PAM=1"
 )
