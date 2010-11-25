@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for UnionFS-Fuse by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Apr 10 01:43:58 BRT 2008
+# Recipe for version hg by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Apr 10 01:43:58 BRT 2008
+compile_version=1.10.3
+hg="http://hg.podgorny.cz/unionfs-fuse"
+recipe_type=makefile
+makefile='Makefile'
+do_install=no
+
+pre_install() {
+	cp src/unionfs $target/bin
+}
