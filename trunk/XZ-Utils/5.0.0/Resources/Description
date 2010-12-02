@@ -1,0 +1,10 @@
+[Name] XZ-Utils
+[Summary] Data compression programs for the LZMA algorithm
+[License] GNU General Public License (GPL)
+[Description] LZMA is the compression algorithm of 7zip without
+the archiving or header features, thus comparable to gzip or bzip2.
+Average compression ratio of LZMA is about 30% better than that
+of gzip, and 15% better than that of bzip2. Decompression speed is only
+a little slower than that of gzip, being two to five times faster than bzip2.
+Very similar command line interface to gzip and bzip2.
+[Homepage] http://tukaani.org/xz/
