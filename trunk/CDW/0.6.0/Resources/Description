@@ -1,0 +1,14 @@
+[Name] CDW
+[Summary] CDW is a Curses-based CD-writer software
+[License] GNU General Public License v2.0
+[Homepage] http://cdw.sf.net
+[Description] cdw is a front-end for some command-line tools used for 
+burning data CD and DVD discs and for related tasks. The tools are: 
+cdrecord/wodim, mkisofs/genisoimage, growisofs, dvd+rw-mediainfo, 
+dvd+rw-format. You can also use cdw to rip tracks from your audio 
+CD to raw audio files. Limited support for copying content of CD 
+discs to image files is also provided.
+cdw uses ncurses library to build user-friendly interface and 
+it can be used in UNIX terminal window and in terminal emulator 
+(like konsole, rxvt or gnome-console) in X environment.
+cdw is developed and tested on my Debian 'lenny' GNU/Linux x64 machine.
