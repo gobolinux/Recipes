@@ -1,0 +1,18 @@
+# Recipe for version 23.2 by Leandro Motta Barros <lmb@stackedboxes.org>, on Fri Dec 3 10:58:44 BRST 2010
+compile_version=1.8.5
+url="$ftpGnu/emacs/emacs-23.2.tar.gz"
+file_size=46831697
+file_md5=b6691852dae0bc142b3c12749f6b7ade
+recipe_type=configure
+
+unmanaged_files=(
+   $goboVariable/games/emacs
+)
+
+with_gtk=(
+   "--with-x-toolkit=gtk"
+)
+
+with_motif=(
+   "--with-x-toolkit=motif"
+)
