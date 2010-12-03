@@ -1,0 +1,9 @@
+# Recipe for version 0.60.7 by Zbigniew Baniewski <zb@ispid.com.pl>, on Fri, 03 Dec 2010 21:11:00 +0100
+compile_version=1.13.1
+url="$httpSourceforge/bristol/bristol/0.60/bristol-0.60.7.tar.gz"
+file_size=4270174
+file_md5=21c3fa8ebe9ba4bab3704b91a70ed7cb
+recipe_type=configure
+configure_options=(
+  --disable-version-check
+)
