@@ -1,0 +1,41 @@
+# Recipe for version 0.7.3 by Lucas C. Villa Real, on Tue Dec 14 21:24:10 BRST 2010
+# Recipe (MakeRecipe) for WPA_Supplicant by Jonas Karlsson <jonka750@student.liu.se>, on Sun Jul 24 09:52:31 CEST 2005
+compile_version=1.9.0
+url="http://hostap.epitest.fi/releases/wpa_supplicant-0.7.3.tar.gz"
+file_size=1638224
+file_md5=f516f191384a9a546e3f5145c08addda
+recipe_type=makefile
+dir=wpa_supplicant-0.7.3/wpa_supplicant
+
+build_target="all"
+using_qt4() {
+   build_target="${build_target} wpa_gui"
+}
+
+environment=(
+   QMAKESPEC="linux-g++"
+)
+
+make_variables=(
+   "DESTDIR=$target"
+   # if these are not set, files are installed in /usr/local/... which SymlinkProgram misses
+   "BINDIR=/sbin"
+   "LIBDIR=/lib"
+)
+
+pre_build() {
+   if [ ! -e .config ]; then
+      cp defconfig .config
+	  GrepReplace -B "^#CONFIG_EAP_SIM=y" "CONFIG_EAP_SIM=y" .config
+	  GrepReplace -B "^#CONFIG_EAP_AKA=y" "CONFIG_EAP_AKA=y" .config
+	  GrepReplace -B "^#CONFIG_EAP_PSK=y" "CONFIG_EAP_PSK=y" .config
+	  GrepReplace -B "^#CONFIG_EAP_PAX=y" "CONFIG_EAP_PAX=y" .config
+	  GrepReplace -B "^#CONFIG_EAP_AKA_PRIME=y" "CONFIG_EAP_AKA_PRIME=y" .config
+	  GrepReplace -B "^#CONFIG_WPS=y" "CONFIG_WPS=y" .config
+	  GrepReplace -B "^#CONFIG_PCSC=y" "CONFIG_PCSC=y" .config
+      Log_Error You may alter wpa_supplicant build time configuration by modifying $(pwd)/.config
+   fi
+}
+using_qt4_pre_link(){
+   cp wpa_gui/wpa_gui $target/sbin
+}
