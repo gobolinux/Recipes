@@ -1,0 +1,14 @@
+# Recipe for version 7.19.0 by Lucas C. Villa Real, on Mon Dec 20 10:39:04 BRST 2010
+# Update 7.19.0 by Nathan Middleton, on Mon Dec 10 20:03:21 CST 2007
+# Recipe for Pycurl 7.19.0 by Jonatan Liljedahl <lijon@kymatica.com>
+compile_version=1.8.0
+url="http://pycurl.sourceforge.net/download/pycurl-7.19.0.tar.gz"
+file_size=71346
+file_md5=919d58fe37e69fe87ce4534d8b6a1c7b
+recipe_type=manifest
+pre_install() {
+    python setup.py build
+}
+pre_link() {
+    python setup.py install --prefix $target
+}
