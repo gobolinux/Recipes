@@ -1,0 +1,13 @@
+--- qemu-0.8.2/vl.c.orig	2006-10-11 21:34:24.000000000 -0200
++++ qemu-0.8.2/vl.c	2006-10-11 21:34:55.000000000 -0200
+@@ -536,6 +536,10 @@ static int64_t get_clock(void)
+ 
+ #else
+ 
++#ifndef CLOCK_MONOTONIC
++# define CLOCK_MONOTONIC 1 /* according to linux-2.6.17.11/include/linux/time.h */
++#endif
++
+ static int use_rt_clock;
+ 
+ static void init_get_clock(void)
