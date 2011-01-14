@@ -1,0 +1,9 @@
+# Recipe for version 1.0.0 by Leandro Motta Barros <lmb@stackedboxes.org>, on Thu Jan 13 22:27:06 BRST 2011
+# Recipe (MakeRecipe) for QLandkarte-GT by Lucas C. Villa Real, on Wed Nov 10 13:41:48 BRST 2010
+compile_version=1.10.1
+url="$httpSourceforge/project/qlandkartegt/qlandkartegt/QLandkarteGT%201.0.0/qlandkartegt-1.0.0.tar.gz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fqlandkartegt%2F&ts=1289403810&use_mirror=ufpr"
+file_size=3799397
+file_md5=1dc0a1800f936a0fb16de407c792834a
+file="qlandkartegt-1.0.0.tar.gz"
+dir='qlandkartegt-1.0.0'
+recipe_type=cmake
