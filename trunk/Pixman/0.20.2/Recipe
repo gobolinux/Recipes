@@ -1,0 +1,28 @@
+# Recipe for version 0.20.2 by Travis Evans <travisgevans@gmail.com>, on Sat Jan 22 07:53:09 CST 2011
+# Recipe (MakeRecipe) for Pixman by Jonas Karlsson <jonka750@student.liu.se>, on Mon Sep 10 08:59:22 CEST 2007
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/lib/pixman-0.20.2.tar.bz2"
+file_size=446620
+file_md5=7ed10a0f0fde6853613105a99735e7e7
+recipe_type=configure
+
+configure_options=(
+    --disable-sse2
+)
+
+# Adding the --enable-gtk option activates some GTK-related tests according to
+# 'configure --help', and requires Pixman to have already been compiled and
+# installed in order to rebuild it.  In other words, this causes configure to
+# fail if Pixman is being built for the first time when GTK 2 is installed.
+# The configure script seems to automatically determine the proper course of
+# action on its own just fine, so it's probably best not to enable the following
+# line.
+
+# with_gtk2="--enable-gtk"
+
+pre_link() {
+   # Force link to not fail if link already exist
+   # (old pixman exist inside Xorg-Lib)
+   ln -v -sf pixman-1/pixman.h $target/include
+}
+
