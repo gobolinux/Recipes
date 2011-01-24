@@ -1,0 +1,14 @@
+# Recipe for version 3.32 by Diogo Lima, on Seg Jan 24 10:46:18 BRST 2011
+compile_version=1.9.0
+url="http://www.kernel.org/pub/linux/docs/man-pages/man-pages-3.32.tar.gz"
+file_size=1667965
+file_md5=cc6c2d4d4eb364fd8da718c412db09d4
+recipe_type=makefile
+do_build=no
+install_variables=(
+   "MANDIR=$target/man"
+)
+pre_link() {
+   # we have our own hier man page.
+   $sudo_exec rm -f $target/man/man7/hier.7
+}
