@@ -1,0 +1,12 @@
+# Recipe for version 5.45 by Diogo Lima, on Seg Jan 24 09:31:41 BRST 2011
+# Recipe (MakeRecipe) for Expect by Jonas Karlsson <jonka750@student.liu.se>, on Tue Oct 17 19:02:35 CEST 2006
+compile_version=1.8.2
+url="http://sourceforge.net/projects/expect/files/Expect/5.45/expect5.45.tar.gz"
+file_size=628808
+file_md5=44e1a4f4c877e9ddc5a542dfa7ecc92b
+recipe_type=configure
+
+configure_options=(
+   "--exec-prefix=${target}"
+   "--with-tclinclude=${tcl_path}/include/"
+)
