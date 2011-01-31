@@ -1,0 +1,27 @@
+Avoid installing the vim configuration files in /etc/vim.
+-- 
+Daed Lee
+
+diff -Naur asciidoc-8.4.3/Makefile.in asciidoc-8.4.3.patched/Makefile.in
+--- asciidoc-8.4.3/Makefile.in	2009-03-26 16:44:56.000000000 -0400
++++ asciidoc-8.4.3.patched/Makefile.in	2009-04-20 16:09:34.000000000 -0400
+@@ -127,8 +127,7 @@
+ 	done
+ 
+ install-vim:
+-	@for d in $(DESTDIR)/$(vimdir) /etc/vim; do \
+-		if ! test -d $$d; then continue; fi ; \
++	@for d in $(vimdir); do \
+ 		echo "installing Vim files in $$d" ; \
+ 		$(INSTALL) -d $$d/syntax ; \
+ 		$(INSTALL_DATA) vim/syntax/asciidoc.vim $$d/syntax ; \
+@@ -137,8 +136,7 @@
+ 	done
+ 
+ uninstall-vim:
+-	@for d in $(DESTDIR)/$(vimdir) /etc/vim; do \
+-		if ! test -d $$d; then continue; fi ; \
++	@for d in $(vimdir); do \
+ 		echo "uninstalling Vim files in $$d" ; \
+ 		rm -f $$d/syntax/asciidoc.vim ; \
+ 		rm -f $$d/ftdetect/asciidoc_filetype.vim ; \
