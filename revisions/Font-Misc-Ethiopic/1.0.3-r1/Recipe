@@ -1,0 +1,11 @@
+# Recipe for version 1.0.3 by Diogo Lima <diogo.urb@gmail.com>, on Sat Jan 29 09:17:59 BRST 2011
+# Recipe (MakeRecipe) for Font-Misc-Ethiopic by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jun 4 15:28:23 BRT 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/releases/individual/font/font-misc-ethiopic-1.0.3.tar.bz2"
+file_size=245606
+file_md5=6306c808f7d7e7d660dfb3859f9091d2
+recipe_type=configure
+part_of=Xorg-Font
+configure_options=(
+   --with-fontrootdir="${target}/share/fonts"
+)
