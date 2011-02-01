@@ -1,0 +1,62 @@
+# Recipe for version 1.9.3 by Diogo Lima <diogo.urb@gmail.com>, on Fri Jan 28 16:16:03 BRST 2011
+# Recipe (MakeRecipe) for Xorg-Server by Hisham Muhammad <lode@gobolinux.org>, on Fri Aug 19 18:49:06 BRT 2005
+compile_version=1.11.3
+url="http://xorg.freedesktop.org/archive/individual/xserver/xorg-server-1.9.3.tar.bz2"
+file_size=5287061
+file_md5=5bef6839a76d029204ab31aa2fcb5201
+
+recipe_type=configure
+symlink_options=(--conflict=overwrite)
+
+configure_options=(
+   --enable-dmx
+   --enable-kdrive
+   --enable-kdrive-kbd
+   --enable-kdrive-mouse
+   --enable-kdrive-evdev
+   --disable-tslib
+   --enable-xvfb
+   --enable-xnest
+   --enable-record
+   --enable-xfree86-utils
+   --enable-install-libxf86config
+   --enable-dri
+   --enable-dri2
+   --enable-glx
+   --enable-xorg
+   --enable-glx-tls
+   --enable-config-udev
+   --disable-config-dbus
+   --disable-config-hal
+   --enable-install-setuid
+
+   --without-fop
+   --without-dtrace
+   --with-os-vendor=GoboLinux
+   --with-module-dir="${goboLibraries}/xorg/modules"
+   --with-dri-driver-path="${goboLibraries}/xorg/modules/dri"
+   --with-fontdir="${goboShared}/fonts"
+   --with-xkb-output="${goboVariable}/lib/xkb"
+   --with-xkb-bin-directory="${goboExecutables}"
+)
+
+install_variables=(
+   appdefaultdir="${target}/share/X11/app-defaults"
+   moduledir="${target}/lib/xorg/modules"
+   miscconfigdir="${target}/lib/xorg"
+)
+
+unmanaged_files=(
+   "$goboVariable/lib/xkb"
+)
+
+pre_build() {
+   # little modifications that has no need for patches
+   sed -i -e 's/hi = 37.9/hi = 48.4/' hw/xfree86/common/xf86Mode.c # expand default sync ranges to allow XGA in qemu and vmware
+   sed -i -e 's/"nv"/"nouveau"/' hw/xfree86/common/xf86pciBus.c # use nouveau instead of the deprecated nv during autoconfig
+   sed -i -e '/^install-data-am:/s/ install-xorgconfdDATA//' config/Makefile.in # don't install xf86-input-evdev.conf, instead let evdev input driver install the config file
+}
+
+pre_install() {
+   mkdir -p "$goboVariable/lib/xkb"
+}
