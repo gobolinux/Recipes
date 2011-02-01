@@ -1,0 +1,11 @@
+# Recipe for version 1.0.3 by Diogo Lima <diogo.urb@gmail.com>, on Sat Jan 29 09:17:19 BRST 2011
+# Recipe (MakeRecipe) for Font-Micro-Misc by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jun 4 15:27:28 BRT 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/releases/individual/font/font-micro-misc-1.0.3.tar.bz2"
+file_size=98366
+file_md5=143c228286fe9c920ab60e47c1b60b67
+recipe_type=configure
+part_of=Xorg-Font
+configure_options=(
+   --with-fontrootdir="${target}/share/fonts"
+)
