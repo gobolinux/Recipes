@@ -1,0 +1,11 @@
+# Recipe for version 1.2.1 by Diogo Lima <diogo.urb@gmail.com>, on Fri Jan 28 13:38:55 BRST 2011
+# Recipe (MakeRecipe) for DamageProto by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 20:13:55 BRT 2005
+compile_version=1.8.5
+url="http://xorg.freedesktop.org/releases/individual/proto/damageproto-1.2.1.tar.bz2"
+file_size=98392
+file_md5=998e5904764b82642cc63d97b4ba9e95
+part_of=Xorg-Proto
+recipe_type=configure
+configure_options=(
+	--without-fop
+)
