@@ -1,0 +1,11 @@
+# Recipe for version 1.0.4 by Diogo Lima <diogo.urb@gmail.com>, on Fri Jan 28 21:52:51 BRST 2011
+# Recipe (MakeRecipe) for XConsole by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 18:42:20 BRT 2005
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/releases/individual/app/xconsole-1.0.4.tar.bz2"
+file_size=115082
+file_md5=8665c037032e5f6a3acd4b341749aa17
+recipe_type=configure
+part_of=Xorg-App
+install_variables=(
+   appdefaultdir=${target}/Shared/X11/app-defaults
+)
