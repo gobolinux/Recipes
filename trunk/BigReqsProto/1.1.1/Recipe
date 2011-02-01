@@ -1,0 +1,11 @@
+# Recipe for version 1.1.1 by Diogo Lima <diogo.urb@gmail.com>, on Fri Jan 28 13:37:55 BRST 2011
+# Recipe (MakeRecipe) for BigReqsProto by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 20:13:45 BRT 2005
+compile_version=1.7.1
+url="http://xorg.freedesktop.org/releases/individual/proto/bigreqsproto-1.1.1.tar.bz2"
+file_size=102069
+file_md5=6f6c24436c2b3ab235eb14a85b9aaacf
+part_of=Xorg-Proto
+recipe_type=configure
+configure_options=(
+	--without-fop
+)
