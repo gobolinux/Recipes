@@ -1,0 +1,107 @@
+# Recipe for version 260.19.36 by Diogo Lima <diogo.urb@gmail.com>, on Sat Jan 29 11:12:10 BRST 2011
+# Recipe (MakeRecipe) for Nvidia by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Mar 14 17:39:46 GMT 2007
+compile_version=1.9.0
+recipe_type=manifest
+needs_safe_linking=yes
+uncompress=no
+
+symlink_options=(
+    "--conflict=overwrite"
+)
+
+pre_install() {
+    # Uncompress the contents of 'usr' from the archive.
+    sh $compileArchivesDir/$(basename $url) -x
+    pkgdir=$(basename "$url" | sed 's,\.run$,,g')
+    mv $pkgdir/* .
+    #rm -rf $pkgdir
+
+    # Build the kernel module.
+    cd kernel
+    $sudo_exec make module SYSSRC=$goboModules/Current/build || exit 1
+    cd ..
+
+    mkdir vdpau
+    mv libvdpau_*.so.260.19.36 vdpau
+
+    mkdir -p xorg/modules/{extensions,drivers}
+    mv libglx* xorg/modules/extensions
+    mv nvidia_drv.so xorg/modules/drivers
+    mv libnvidia-wfb.so.260.19.36 xorg/modules
+
+    mkdir -p lib/
+    mv *.260.19.36 lib
+    mv *.a lib
+    mv tls lib
+    mv libGL.la lib
+
+    mkdir -p include/{cuda,GL,vdpau}
+    mv cudaGL.h cuda.h include/cuda
+    mv gl*.h include/GL
+    mv vdpau*.h include/vdpau
+    
+    # Create versioned symlinks for all the libraries in the same manner the
+    # nvidia installer does.
+    ln -sf libcuda.so.260.19.36 lib/libcuda.so.1
+    ln -sf libcuda.so.260.19.36 lib/libcuda.so
+    ln -sf libGL.so.260.19.36 lib/libGL.so.1
+    ln -sf libGL.so.260.19.36 lib/libGL.so
+    ln -sf libnvidia-glcore.so.260.19.36 lib/libGLcore.so.1
+    ln -sf libnvidia-glcore.so.260.19.36 lib/libGLcore.so
+    ln -sf libnvidia-tls.so.260.19.36 lib/libnvidia-tls.so.1
+    ln -sf libnvidia-tls.so.260.19.36 lib/tls/libnvidia-tls.so.1
+    ln -sf libXvMCNVIDIA.so.260.19.36 lib/libXvMCNVIDIA_dynamic.so.1
+    ln -sf libXvMCNVIDIA.so.260.19.36 lib/libXvMCNVIDIA_dynamic.so
+    ln -sf libnvidia-wfb.so.260.19.36 xorg/modules/libnvidia-wfb.so.1
+    ln -sf libvdpau.so.260.19.36 lib/libvdpau.so.1
+    ln -sf libvdpau.so.260.19.36 lib/libvdpau.so
+    ln -sf vdpau/libvdpau_nvidia.so.260.19.36 lib/libvdpau_nvidia.so.1
+    ln -sf vdpau/libvdpau_nvidia.so.260.19.36 lib/libvdpau_nvidia.so
+    ln -sf vdpau/libvdpau_trace.so.260.19.36 lib/libvdpau_trace.so.1
+    ln -sf vdpau/libvdpau_trace.so.260.19.36 lib/libvdpau_trace.so
+    if [ ! -e $xorg_server_path/lib/xorg/modules/libwfb.so ]; then
+        ln -sf libnvidia-wfb.so.260.19.36 xorg/modules/libwfb.so
+    fi
+    ln -sf libglx.so.260.19.36 xorg/modules/extensions/libglx.so
+
+    mv vdpau xorg lib/
+
+    # Substitute paths in the desktop file.
+    sed -i "s@__UTILS_PATH__@$target/bin@" nvidia-settings.desktop
+    sed -i "s@__PIXMAP_PATH__@$goboShared/pixmaps@" nvidia-settings.desktop
+    sed -i "s@__LIBGL_PATH__@$goboLibraries@" lib/libGL.la 
+}
+
+pre_link() {
+    # Install Udev xorg.conf.d file to allow it to be loaded
+    mkdir -p ${target}/Shared/X11/xorg.conf.d
+    cat > ${target}/Shared/X11/xorg.conf.d/05-nvidia.conf << EOF
+Section "Device"
+	Identifier "Device0"
+	Driver "nvidia"
+	VendorName "NVIDIA Corporation"
+EndSection
+EOF
+
+    # Blacklist nouveau to remove conflict with nvidia
+    mkdir -p ${settings_target}/modprobe.d
+    echo "blacklist nouveau" > ${settings_target}/modprobe.d/blacklist-nouveau.conf
+}
+
+manifest=(
+    "kernel/nvidia.ko:Resources/Unmanaged/$goboModules/$(readlink $goboModules/Current)/kernel/drivers/video/nvidia.ko"
+    "nvidia-bug-report.sh:bin/nvidia-bug-report.sh"
+    "nvidia-settings:bin/nvidia-settings"
+    "nvidia-xconfig:bin/nvidia-xconfig"
+    "include:include"
+    "lib:lib/"
+    "*.1.gz:man/man1/"
+    "nvidia-settings.desktop:Shared/applications/"
+    "nvidia-settings.png:Shared/pixmaps/"
+)
+ 
+unmanaged_files=(
+	"$goboModules/$(readlink $goboModules/Current)/kernel/drivers/video/nvidia.ko"
+)
+
+post_install_message="You can now edit $goboSettings/X11/xorg.conf so that the 'nvidia' driver is used, and restart the system or (re)load the nvidia kernel module to start using it."
