@@ -1,0 +1,11 @@
+# Recipe for version 7.0.20 by Diogo Lima <diogo.urb@gmail.com>, on Fri Jan 28 13:52:34 BRST 2011
+# Recipe (MakeRecipe) for XProto by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 20:16:13 BRT 2005
+compile_version=1.8.5
+url="http://xorg.freedesktop.org/releases/individual/proto/xproto-7.0.20.tar.bz2"
+file_size=277229
+file_md5=65633168e5315c19defb4652cd3d83c1
+part_of=Xorg-Proto
+recipe_type=configure
+configure_options=(
+	--without-fop
+)
