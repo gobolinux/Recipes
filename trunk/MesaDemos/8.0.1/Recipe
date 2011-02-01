@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for MesaDemos by Diogo Lima <diogo.urb@gmail.com>, on Mon Jan 31 12:43:14 BRST 2011
+# Recipe for version 8.0.1 by Diogo Lima <diogo.urb@gmail.com>, on Mon Jan 31 12:43:14 BRST 2011
+compile_version=1.13.3
+url="ftp://ftp.freedesktop.org/pub/mesa/demos/8.0.1/mesa-demos-8.0.1.tar.bz2"
+file_size=9999864
+file_md5=320c2a4b6edc6faba35d9cb1e2a30bf4
+part_of=Xorg-App
+recipe_type=configure
+pre_link() {
+    # We need to move clear binary to another name before linking, or it will overwrite the system default making clear rely on X server and not working on ttys anymore
+    mv -v ${target}/bin/clear ${target}/bin/mesa-clear
+}
