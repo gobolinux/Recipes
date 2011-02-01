@@ -1,0 +1,691 @@
+diff -Nurp linux-2.6.31.5.orig/fs/gobohide.c linux-2.6.31.5/fs/gobohide.c
+--- linux-2.6.31.5.orig/fs/gobohide.c	1969-12-31 21:00:00.000000000 -0300
++++ linux-2.6.31.5/fs/gobohide.c	2009-11-10 00:57:03.870898878 -0200
+@@ -0,0 +1,396 @@
++/*
++ * Copyright (C) 2002-2008 GoboLinux.org
++ *
++ * These modifications are released under the GNU General Public License
++ * version 2 or later, incorporated herein by reference.
++ * Modifications/features/bug fixes based on or derived from this code 
++ * fall under the GPL and must retain the authorship, copyright and license 
++ * notice.  This file is not a complete program and may only be used when 
++ * the entire operating system is licensed under the GPL. 
++ *
++ * See the file COPYING in this distribution for more information.
++ *
++ * Author: Felipe W Damasio <felipewd@gmail.com>.
++ * Original idea: Lucas C. Villa Real <lucasvr@gobolinux.org>
++ *
++ * Changes:
++ * 18-May-2007 - Lucas C. Villa Real
++ *               Added support to unionfs.
++ *
++ * 04-Jul-2006 - Lucas C. Villa Real
++ *               Added GoboHide support to all filesystems through the VFS.
++ *               
++ * 21-Feb-2004 - Lucas C. Villa Real
++ *               Added an extra check for the inode's VFS root, so that
++ *               the same inode number on different partitions don't get
++ *               hidden mistakenly.
++ *              
++ * 11-Nov-2003 - Lucas C. Villa Real
++ *               Removed the spinlocks from gobolinux_show_hidden(), since
++ *               we were already working with list_for_each_safe(), which
++ *               iterates safely against removal of list entries.
++ *
++ * 05-May-2003 - Felipe W Damasio
++ *               Using read-write locks instead of spinlocks,
++ *               improving quite a bit read operations
++ *               (allow concurrent readers, but only a single writer)
++ *
++ * 28-Apr-2003 - Lucas C. Villa Real
++ *               Centralized checks for UID on gobolinux/fs/ioctl.c.
++ *               Fixed get_free_page() to work on 64-bit archs as well.
++ *
++ * 12-Apr-2003 - Lucas C. Villa Real
++ *               Removed support for UID's different than 0 hide inodes.
++ *              
++ * 24-Mar-2003 - Lucas C. Villa Real
++ *               Modified struct hide and calls so we have pathnames related
++ *               to the "real" root dir and not the the mount point.
++ *              
++ * 17-Mar-2003 - Lucas C. Villa Real
++ *               Added support for full pathname, rather than dealing only
++ *               with inode numbers.
++ *
++ * 10-Jan-2003 - Lucas C. Villa Real
++ *               Added statistics support.
++ */
++#include <linux/fs.h>
++#include <linux/namei.h>
++#include <linux/sched.h>
++#include <linux/mm.h>
++#include <linux/slab.h>
++#include <linux/file.h>
++#include <linux/kernel.h>
++#include <linux/module.h>
++#include <linux/gobohide.h>
++#include <linux/spinlock.h>
++#include <linux/proc_fs.h>
++#include <linux/stat.h>
++#include <linux/mount.h>
++#include <linux/path.h>
++
++#ifdef CONFIG_UNION_FS
++#include "unionfs/union.h"
++#endif
++
++#include <asm/uaccess.h>
++
++static LIST_HEAD(inode_list);
++static rwlock_t inode_rwlock = RW_LOCK_UNLOCKED;
++
++struct file *gobolinux_get_filp(ino_t ino, const char *pathname, struct path *path, int *ret);
++static int gobolinux_resolve_path(struct hide *inode);
++
++/** 
++ * gobolinux_fs_ioctl - Handle fs-related ioctls 
++ * @inode: inode number being added/removed from the hide-list
++ * @hide: structure containing the user's request 
++ */
++int gobolinux_fs_ioctl(struct inode *inode, struct gobolinux_hide *hide)
++{
++   int error = 0;
++   
++   if (!hide) {
++       error = -EFAULT;
++       goto out;
++   }
++
++   /* We only support symbolic links and directories */
++   if (hide->inode && !S_ISREG(inode->i_mode) && !S_ISDIR(inode->i_mode)) {
++       error = -EINVAL;
++       goto out;
++   }
++
++   /* We only allow process with admin privileges 
++    * to use the fs-related gobo ioctls 
++    */
++   if (current->cred->uid != 0 && current->cred->euid != 0) {
++       error = -EPERM;
++       goto out;
++   }
++
++   switch (hide->operation) {
++       case GOBOLINUX_HIDEINODE:
++           error = gobolinux_inode_add(hide->inode, hide->pathname);
++           break;
++       case GOBOLINUX_UNHIDEINODE:
++		   do {
++			   int len, ret = 0;
++			   struct hide n;
++
++			   n.filp = gobolinux_get_filp(hide->inode, hide->pathname, &n.path, &ret);
++			   if (!n.filp) {
++				   error = -ENOENT;
++				   goto out;
++			   }
++			   len = gobolinux_resolve_path(&n);
++			   if (len < 0) {
++				   path_put(&n.path);
++				   error = -ENOENT;
++				   goto out;
++			   }
++			   error = gobolinux_inode_del(n.filp->f_dentry->d_inode);
++		   } while(0);
++           break;
++       case GETSTATSUIDNUMBER:
++           error = gobolinux_count_hidden(hide);
++           break;
++       case GETSTATSUID:
++           error = gobolinux_show_hidden(hide);
++           break;
++       default:
++           return -EOPNOTSUPP;
++   }
++
++out:
++   return error;
++}
++
++/** 
++ * gobolinux_resolve_path - Resolves the pathname of a given dentry
++ * @inode: structure holding the dentry structure and the destination buffer
++ */
++static int gobolinux_resolve_path(struct hide *inode)
++{
++   int len;
++   struct file *filp = inode->filp;
++   struct path path = { .mnt = filp->f_vfsmnt, .dentry = filp->f_dentry };
++  
++   inode->page = __get_free_page(GFP_USER);
++   if (! inode->page)
++       return -ENOMEM;
++   
++   inode->pathname = d_path(&path, (char *) inode->page, PAGE_SIZE);
++   len = PAGE_SIZE + inode->page - (unsigned long) inode->pathname;
++
++   return len < PATH_MAX ? len : PATH_MAX;
++}
++
++/**
++ * gobolinux_count_hidden - Counts how many inodes are hidden.
++ * @hide: the structure containing a pointer to store the number of inodes 
++ *        hidden.
++ */
++int gobolinux_count_hidden(struct gobolinux_hide *hide)
++{
++   struct list_head *p, *next;
++   struct hide *inode;
++   unsigned long flags;
++   
++   hide->stats.hidden_inodes = 0;
++   
++   read_lock_irqsave(&inode_rwlock, flags);
++   list_for_each_safe(p, next, &inode_list) {
++       inode = list_entry(p, struct hide, head);
++       if (inode)
++           hide->stats.hidden_inodes++;
++   }
++   read_unlock_irqrestore(&inode_rwlock, flags);
++   return 0;
++}
++
++/**
++ * gobolinux_show_hidden - Lists the currently hidden inodes.
++ * @hide: the structure containing a pointer to a previous-allocated array
++ *        of no more than @hide->stats.hidden_inodes elements of unsigned long. 
++ *
++ * This array is filled with the directories being hidden.
++ */
++int gobolinux_show_hidden(struct gobolinux_hide *hide)
++{
++   struct list_head *p, *next;
++   struct hide *inode;
++   struct gobolinux_hide_stats *stats;
++   
++   hide->stats.filled_size = 0;
++   
++   list_for_each_safe(p, next, &inode_list) {
++       inode = list_entry(p, struct hide, head);
++       stats = &hide->stats;
++       if (inode && (stats->filled_size < stats->hidden_inodes)) { 
++           if (copy_to_user(stats->hidden_list[stats->filled_size++],
++               inode->pathname, strlen(inode->pathname))) {
++               return -EFAULT;
++           }
++       } 
++   }
++   return 0;
++}
++
++/**
++ * gobolinux_get_filp - Returns the struct file related to a given descriptor.
++ * @ino: the inode number
++ * @pathname: the pathname associated with @ino
++ * @ret: a pointer which holds the result of the user_lpath operation
++ */
++struct file *gobolinux_get_filp(ino_t ino, const char *pathname, struct path *path, int *ret)
++{
++   *ret = user_lpath(pathname, path);
++   if (*ret)
++       return NULL;
++
++   if (path->dentry->d_inode->i_ino == ino)
++       return dentry_open(path->dentry, path->mnt, 0, current_cred());
++   
++   return NULL;
++}
++
++ino_t gobolinux_translate_inode_nr(struct inode *inode)
++{
++   ino_t ino = inode->i_ino;
++#ifdef CONFIG_UNION_FS
++   if (inode->i_sb->s_op == &unionfs_sops) {
++	   /* we must take the inode number from the underlying filesystem */
++	   struct inode *lower_inode = unionfs_lower_inode(inode);
++	   ino = lower_inode ? lower_inode->i_ino : inode->i_ino;
++   }
++#endif
++   return ino;
++}
++
++/**
++ * gobolinux_inode_add - Add the inode to the "must hide" list 
++ * @ino: inode to be added
++ * @pathname: the pathname associated with @ino
++ */
++int gobolinux_inode_add(ino_t ino, const char *pathname)
++{
++   int len, ret = 0;
++   struct hide *n;
++   struct dentry *dentry;
++   unsigned long flags;
++   
++   n = kmalloc(sizeof(struct hide), GFP_KERNEL);
++   if (!n)
++       return -ENOMEM;
++   
++   n->filp = gobolinux_get_filp(ino, pathname, &n->path, &ret);
++   if (!n->filp) 
++       return ret;
++
++   len = gobolinux_resolve_path(n);
++   if (len < 0) {
++       ret = len;
++       goto out_put;
++   }
++
++   dentry = n->filp->f_dentry;
++   if (! dentry)
++	   goto out_put;
++
++   n->i_ino = gobolinux_translate_inode_nr(dentry->d_inode);
++   if (gobolinux_hidden(n->i_ino, dentry->d_name.name, dentry->d_name.len+1, dentry)) {
++       ret = -EEXIST;
++       goto out_put;
++   }
++   
++   write_lock_irqsave(&inode_rwlock, flags);
++   INIT_LIST_HEAD(&n->head);
++   
++   list_add(&n->head, &inode_list);
++   write_unlock_irqrestore(&inode_rwlock, flags);
++   return 0;
++out_put:
++   path_put(&n->path);
++   return ret;
++}
++
++/**
++ * gobolinux_do_remove - Effectively removes the inode from the inode_list.
++ * @hide: struct hide to be removed
++ */
++int gobolinux_do_remove(struct hide *hide)
++{
++	list_del(&hide->head);
++	free_page(hide->page);
++	filp_close(hide->filp, current->files);
++	path_put(&hide->path);
++	kfree(hide);
++	return 0;
++}
++
++/**
++ * gobolinux_inode_del - Remove the inode from the "must hide" list 
++ * @ino: inode to be removed
++ */
++int gobolinux_inode_del(struct inode *inode)
++{
++   struct hide *entry, *aux;
++   unsigned long flags;
++
++   ino_t ino = gobolinux_translate_inode_nr(inode);
++
++   write_lock_irqsave(&inode_rwlock, flags);
++   list_for_each_entry_safe(entry, aux, &inode_list, head) {
++       if (entry->i_ino == ino) {
++		   gobolinux_do_remove(entry);
++           break;
++       }
++   }
++
++   write_unlock_irqrestore(&inode_rwlock, flags);
++   return 0;
++}
++
++/** 
++ * gobolinux_hidden - Test if the inode is in the "must hide" list,
++ *       comparing against the inode number and the superblock.
++ *
++ * @i_ino: inode being readdir'd
++ * @filename: inode's filename
++ * @namelen: inodes's filename length in bytes
++ * @dentry: the root's dentry for the given inode.
++ *
++ * If the inode number is in the inode_list, returns a pointer to its entry
++ * in the inode_list or NULL if it isn't there.
++ */
++struct hide *gobolinux_hidden(ino_t i_ino, const char *filename, int namelen, struct dentry *dentry)
++{
++   struct hide *ret = NULL, *inode = NULL;
++   struct dentry *hidden_dentry, *i_dentry;
++   unsigned long flags;
++
++   if (! i_ino)
++       goto out;
++
++   read_lock_irqsave(&inode_rwlock, flags);
++   list_for_each_entry(inode, &inode_list, head) {
++	   hidden_dentry = inode->filp->f_dentry;
++       if (inode->i_ino == i_ino && hidden_dentry->d_sb == dentry->d_sb) {
++		   if (hidden_dentry->d_name.len != namelen)
++			   break;
++		   
++		   hidden_dentry = hidden_dentry->d_parent;
++	       i_dentry = dentry;
++   		   while(hidden_dentry && i_dentry) {
++   		       if (hidden_dentry->d_name.len != i_dentry->d_name.len)
++				   break;
++			   if (strncmp(hidden_dentry->d_name.name, i_dentry->d_name.name, i_dentry->d_name.len))
++				   break;
++		       if (hidden_dentry->d_parent == hidden_dentry || i_dentry->d_parent == i_dentry)
++				   break;
++			   hidden_dentry = hidden_dentry->d_parent;
++			   i_dentry = i_dentry->d_parent;
++		   }	
++		   if (hidden_dentry == i_dentry) {
++			   ret = inode;
++			   break;
++		   }
++       }
++   }
++   read_unlock_irqrestore(&inode_rwlock, flags );
++out:
++   return ret;
++}
++
++/* We need to export this function to add support on the VFS */
++EXPORT_SYMBOL(gobolinux_hidden);
++EXPORT_SYMBOL(gobolinux_do_remove);
++
++/**
++ * These are only exported for the ioctl handler's sake 
++ */
++EXPORT_SYMBOL(gobolinux_fs_ioctl);
++EXPORT_SYMBOL(gobolinux_inode_add);
++EXPORT_SYMBOL(gobolinux_inode_del);
++EXPORT_SYMBOL(gobolinux_show_hidden);
++EXPORT_SYMBOL(gobolinux_count_hidden);
+diff -Nurp linux-2.6.31.5.orig/fs/ioctl.c linux-2.6.31.5/fs/ioctl.c
+--- linux-2.6.31.5.orig/fs/ioctl.c	2009-10-22 20:57:56.000000000 -0200
++++ linux-2.6.31.5/fs/ioctl.c	2009-11-10 00:57:33.777899908 -0200
+@@ -16,6 +16,7 @@
+ #include <linux/writeback.h>
+ #include <linux/buffer_head.h>
+ #include <linux/falloc.h>
++#include <linux/gobohide.h>
+ 
+ #include <asm/ioctls.h>
+ 
+@@ -596,6 +597,18 @@ int do_vfs_ioctl(struct file *filp, unsi
+ 		return put_user(inode->i_sb->s_blocksize, p);
+ 	}
+ 
++#ifdef CONFIG_GOBOHIDE_FS
++	case FIGOBOLINUX:
++	do {
++		struct inode *inode = filp->f_dentry->d_inode;
++		if (!arg) {
++			error = -EINVAL;
++			break;
++		}
++		error = gobolinux_fs_ioctl(inode, (struct gobolinux_hide *) arg);
++	} while (0);
++	break;
++#endif
+ 	default:
+ 		if (S_ISREG(filp->f_path.dentry->d_inode->i_mode))
+ 			error = file_ioctl(filp, cmd, arg);
+diff -Nurp linux-2.6.31.5.orig/fs/Kconfig linux-2.6.31.5/fs/Kconfig
+--- linux-2.6.31.5.orig/fs/Kconfig	2009-10-22 20:57:56.000000000 -0200
++++ linux-2.6.31.5/fs/Kconfig	2009-11-10 00:57:11.214899093 -0200
+@@ -92,6 +92,16 @@ source "fs/udf/Kconfig"
+ endmenu
+ endif # BLOCK
+ 
++config GOBOHIDE_FS
++	bool "GoboHide support on file systems"
++	default y
++	help
++	  GoboHide is a general interface for providing real hidden files in
++	  a filesystem. GoboHide supports all filesystems sitting on the VFS, 
++	  such as EXT3, SquashFS and JFFS2.
++	  To use it, see the documentation of the gobohide userspace tool at
++	  <http://gobolinux.org/?page=doc/articles/gobohide>.
++
+ if BLOCK
+ menu "DOS/FAT/NT Filesystems"
+ 
+diff -Nurp linux-2.6.31.5.orig/fs/Makefile linux-2.6.31.5/fs/Makefile
+--- linux-2.6.31.5.orig/fs/Makefile	2009-10-22 20:57:56.000000000 -0200
++++ linux-2.6.31.5/fs/Makefile	2009-11-10 00:57:13.261899130 -0200
+@@ -50,6 +50,7 @@ obj-$(CONFIG_FS_MBCACHE)	+= mbcache.o
+ obj-$(CONFIG_FS_POSIX_ACL)	+= posix_acl.o xattr_acl.o
+ obj-$(CONFIG_NFS_COMMON)	+= nfs_common/
+ obj-$(CONFIG_GENERIC_ACL)	+= generic_acl.o
++obj-$(CONFIG_GOBOHIDE_FS)	+= gobohide.o
+ 
+ obj-y				+= quota/
+ 
+diff -Nurp linux-2.6.31.5.orig/fs/namei.c linux-2.6.31.5/fs/namei.c
+--- linux-2.6.31.5.orig/fs/namei.c	2009-10-22 20:57:56.000000000 -0200
++++ linux-2.6.31.5/fs/namei.c	2009-11-10 00:57:13.263898896 -0200
+@@ -33,6 +33,7 @@
+ #include <linux/fcntl.h>
+ #include <linux/device_cgroup.h>
+ #include <linux/fs_struct.h>
++#include <linux/gobohide.h>
+ #include <asm/uaccess.h>
+ 
+ #define ACC_MODE(x) ("\000\004\002\006"[(x)&O_ACCMODE])
+@@ -2178,6 +2179,10 @@ void dentry_unhash(struct dentry *dentry
+ 
+ int vfs_rmdir(struct inode *dir, struct dentry *dentry)
+ {
++#ifdef CONFIG_GOBOHIDE_FS
++	ino_t ino = dentry->d_inode ? gobolinux_translate_inode_nr(dentry->d_inode) : 0;
++	struct hide *hidden = ino ? gobolinux_hidden(ino, dentry->d_name.name, dentry->d_name.len, dentry->d_parent) : NULL;
++#endif
+ 	int error = may_delete(dir, dentry, 1);
+ 
+ 	if (error)
+@@ -2202,6 +2207,10 @@ int vfs_rmdir(struct inode *dir, struct 
+ 	}
+ 	mutex_unlock(&dentry->d_inode->i_mutex);
+ 	if (!error) {
++#ifdef CONFIG_GOBOHIDE_FS
++		if (hidden)
++			gobolinux_do_remove(hidden);
++#endif
+ 		d_delete(dentry);
+ 	}
+ 	dput(dentry);
+@@ -2265,6 +2274,10 @@ SYSCALL_DEFINE1(rmdir, const char __user
+ 
+ int vfs_unlink(struct inode *dir, struct dentry *dentry)
+ {
++#ifdef CONFIG_GOBOHIDE_FS
++	ino_t ino = dentry->d_inode ? gobolinux_translate_inode_nr(dentry->d_inode) : 0;
++	struct hide *hidden = ino ? gobolinux_hidden(ino, dentry->d_name.name, dentry->d_name.len, dentry->d_parent) : NULL;
++#endif
+ 	int error = may_delete(dir, dentry, 0);
+ 
+ 	if (error)
+@@ -2287,6 +2300,10 @@ int vfs_unlink(struct inode *dir, struct
+ 
+ 	/* We don't d_delete() NFS sillyrenamed files--they still exist. */
+ 	if (!error && !(dentry->d_flags & DCACHE_NFSFS_RENAMED)) {
++#ifdef CONFIG_GOBOHIDE_FS
++		if (hidden)
++			gobolinux_do_remove(hidden);
++#endif
+ 		fsnotify_link_count(dentry->d_inode);
+ 		d_delete(dentry);
+ 	}
+diff -Nurp linux-2.6.31.5.orig/fs/readdir.c linux-2.6.31.5/fs/readdir.c
+--- linux-2.6.31.5.orig/fs/readdir.c	2009-10-22 20:57:56.000000000 -0200
++++ linux-2.6.31.5/fs/readdir.c	2009-11-10 00:57:14.280899170 -0200
+@@ -16,6 +16,7 @@
+ #include <linux/security.h>
+ #include <linux/syscalls.h>
+ #include <linux/unistd.h>
++#include <linux/gobohide.h>
+ 
+ #include <asm/uaccess.h>
+ 
+@@ -68,6 +69,9 @@ struct old_linux_dirent {
+ struct readdir_callback {
+ 	struct old_linux_dirent __user * dirent;
+ 	int result;
++#ifdef CONFIG_GOBOHIDE_FS
++	struct dentry *dentry;
++#endif
+ };
+ 
+ static int fillonedir(void * __buf, const char * name, int namlen, loff_t offset,
+@@ -116,6 +120,9 @@ SYSCALL_DEFINE3(old_readdir, unsigned in
+ 
+ 	buf.result = 0;
+ 	buf.dirent = dirent;
++#ifdef CONFIG_GOBOHIDE_FS
++	buf.dentry = file->f_dentry;
++#endif
+ 
+ 	error = vfs_readdir(file, fillonedir, &buf);
+ 	if (buf.result)
+@@ -144,6 +151,9 @@ struct getdents_callback {
+ 	struct linux_dirent __user * previous;
+ 	int count;
+ 	int error;
++#ifdef CONFIG_GOBOHIDE_FS
++	struct dentry *dentry;
++#endif
+ };
+ 
+ static int filldir(void * __buf, const char * name, int namlen, loff_t offset,
+@@ -164,10 +174,18 @@ static int filldir(void * __buf, const c
+ 	}
+ 	dirent = buf->previous;
+ 	if (dirent) {
++#ifdef CONFIG_GOBOHIDE_FS
++		if (gobolinux_hidden(d_ino, name, namlen, buf->dentry))
++			return 0;
++#endif
+ 		if (__put_user(offset, &dirent->d_off))
+ 			goto efault;
+ 	}
+ 	dirent = buf->current_dir;
++#ifdef CONFIG_GOBOHIDE_FS
++	if (gobolinux_hidden(d_ino, name, namlen, buf->dentry))
++		return 0;
++#endif
+ 	if (__put_user(d_ino, &dirent->d_ino))
+ 		goto efault;
+ 	if (__put_user(reclen, &dirent->d_reclen))
+@@ -209,6 +227,9 @@ SYSCALL_DEFINE3(getdents, unsigned int, 
+ 	buf.previous = NULL;
+ 	buf.count = count;
+ 	buf.error = 0;
++#ifdef CONFIG_GOBOHIDE_FS
++	buf.dentry = file->f_dentry;
++#endif
+ 
+ 	error = vfs_readdir(file, filldir, &buf);
+ 	if (error >= 0)
+@@ -230,6 +251,9 @@ struct getdents_callback64 {
+ 	struct linux_dirent64 __user * previous;
+ 	int count;
+ 	int error;
++#ifdef CONFIG_GOBOHIDE_FS
++	struct dentry *dentry;
++#endif
+ };
+ 
+ static int filldir64(void * __buf, const char * name, int namlen, loff_t offset,
+@@ -244,10 +268,18 @@ static int filldir64(void * __buf, const
+ 		return -EINVAL;
+ 	dirent = buf->previous;
+ 	if (dirent) {
++#ifdef CONFIG_GOBOHIDE_FS
++		if (gobolinux_hidden(ino, name, namlen, buf->dentry))
++			return 0;
++#endif
+ 		if (__put_user(offset, &dirent->d_off))
+ 			goto efault;
+ 	}
+ 	dirent = buf->current_dir;
++#ifdef CONFIG_GOBOHIDE_FS
++	if (gobolinux_hidden(ino, name, namlen, buf->dentry))
++		return 0;
++#endif
+ 	if (__put_user(ino, &dirent->d_ino))
+ 		goto efault;
+ 	if (__put_user(0, &dirent->d_off))
+@@ -291,6 +323,9 @@ SYSCALL_DEFINE3(getdents64, unsigned int
+ 	buf.previous = NULL;
+ 	buf.count = count;
+ 	buf.error = 0;
++#ifdef CONFIG_GOBOHIDE_FS
++	buf.dentry = file->f_dentry;
++#endif
+ 
+ 	error = vfs_readdir(file, filldir64, &buf);
+ 	if (error >= 0)
+diff -Nurp linux-2.6.31.5.orig/include/linux/fs.h linux-2.6.31.5/include/linux/fs.h
+--- linux-2.6.31.5.orig/include/linux/fs.h	2009-10-22 20:57:56.000000000 -0200
++++ linux-2.6.31.5/include/linux/fs.h	2009-11-10 00:57:14.281899158 -0200
+@@ -306,6 +306,7 @@ struct inodes_stat_t {
+ #define FIGETBSZ   _IO(0x00,2)	/* get the block size used for bmap */
+ #define FIFREEZE	_IOWR('X', 119, int)	/* Freeze */
+ #define FITHAW		_IOWR('X', 120, int)	/* Thaw */
++#define FIGOBOLINUX _IOW(0x00, 0x22, size_t) /* gobolinux-fs ioctl */
+ 
+ #define	FS_IOC_GETFLAGS			_IOR('f', 1, long)
+ #define	FS_IOC_SETFLAGS			_IOW('f', 2, long)
+diff -Nurp linux-2.6.31.5.orig/include/linux/gobohide.h linux-2.6.31.5/include/linux/gobohide.h
+--- linux-2.6.31.5.orig/include/linux/gobohide.h	1969-12-31 21:00:00.000000000 -0300
++++ linux-2.6.31.5/include/linux/gobohide.h	2009-11-10 00:57:14.305899136 -0200
+@@ -0,0 +1,51 @@
++#ifndef _LINUX_GOBOLINUX_H
++#define _LINUX_GOBOLINUX_H
++
++#ifdef CONFIG_GOBOHIDE_FS
++#include <linux/fs.h>
++#include <linux/dcache.h>
++
++/* Gobolinux internal ioctls */
++
++#define GOBOLINUX_HIDEINODE   0x0000001 /* Hide a given inode number */
++#define GOBOLINUX_UNHIDEINODE 0x0000002 /* Unhide a given inode number */
++#define GETSTATSUIDNUMBER     0x0000003 /* Get the _number_ of inodes 
++                                           being hidden */
++#define GETSTATSUID           0x0000004 /* Get the inodes hidden */
++
++struct hide {
++   ino_t i_ino;            /* shortcut to inode number */
++   struct file *filp;      /* used to recover the inode's pathname */
++   struct path path;       /* stores the path after a call to user_lpath */
++   char *pathname;         /* a fresh cache of the inode's pathname */
++   unsigned long page;     /* page on which pathname has been copied to */
++   struct list_head head;  /* a simple doubly linked list */
++};
++
++struct gobolinux_hide_stats {
++   int hidden_inodes;      /* how many inodes we're hiding */
++   int filled_size;        /* how many inodes we filled in hidden_list */
++   char **hidden_list;     /* the hidden list */
++};
++
++struct gobolinux_hide {
++   ino_t inode;                        /* the inode number */
++   const char *pathname;               /* the pathname being submitted */
++   char symlink;                       /* is inode a symlink? */
++   char operation;                     /* the operation to be performed */
++   struct gobolinux_hide_stats stats;  /* holds statistics */
++};
++
++struct dentry *gobolinux_get_dentry(ino_t ino, const char *pathname);
++int  gobolinux_count_hidden(struct gobolinux_hide *hide);
++int  gobolinux_show_hidden(struct gobolinux_hide *hide);
++ino_t gobolinux_translate_inode_nr(struct inode *inode);
++struct hide *gobolinux_hidden(ino_t i_ino, const char *filename, int namelen, struct dentry *dentry);
++int  gobolinux_hidden_simple(ino_t ino, struct super_block *sb);
++int  gobolinux_inode_add(ino_t ino, const char *pathname);
++int  gobolinux_inode_del(struct inode *inode);
++int  gobolinux_do_remove(struct hide *hide);
++int  gobolinux_fs_ioctl(struct inode *inode, struct gobolinux_hide *hide);
++
++#endif  /* CONFIG_GOBOHIDE_FS */
++#endif  /* _LINUX_GOBOLINUX_H */
