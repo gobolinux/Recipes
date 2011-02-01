@@ -1,0 +1,11 @@
+# Recipe for version 2.1.1 by Diogo Lima <diogo.urb@gmail.com>, on Fri Jan 28 13:42:33 BRST 2011
+# Recipe (MakeRecipe) for FontsProto by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 20:14:19 BRT 2.1.15
+compile_version=1.7.1
+url="http://xorg.freedesktop.org/releases/individual/proto/fontsproto-2.1.1.tar.bz2"
+file_size=131040
+file_md5=37102ffcaa73f77d700acd6f7a25d8f0
+part_of=Xorg-Proto
+recipe_type=configure
+configure_options=(
+	--without-fop
+)
