@@ -1,0 +1,11 @@
+# Recipe for version 0.11.1.1 by Diogo Lima <diogo.urb@gmail.com>, on Fri Jan 28 13:47:47 BRST 2011
+# Recipe (MakeRecipe) for RenderProto by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 20:14:59 BRT 2005
+compile_version=1.8.5
+url="http://xorg.freedesktop.org/releases/individual/proto/renderproto-0.11.1.tar.bz2"
+file_size=105741
+file_md5=a914ccc1de66ddeb4b611c6b0686e274
+part_of=Xorg-Proto
+recipe_type=configure
+configure_options=(
+	--without-fop
+)
