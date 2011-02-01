@@ -1,0 +1,12 @@
+# Recipe for version 1.0.4 by Diogo Lima <diogo.urb@gmail.com>, on Sat Jan 29 09:07:37 BRST 2011
+# Recipe (MakeRecipe) for Encodings by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jun 4 14:55:43 BRT 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/font/encodings-1.0.4.tar.bz2"
+file_size=665087
+file_md5=0f2d6546d514c5cc4ecf78a60657a5c1
+recipe_type=configure
+part_of=Xorg-Font
+
+configure_options=(
+    --with-encodingsdir="$target/share/fonts/encodings"
+)
