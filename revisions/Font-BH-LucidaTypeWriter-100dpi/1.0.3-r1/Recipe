@@ -1,0 +1,11 @@
+# Recipe for version 1.0.3 by Diogo Lima <diogo.urb@gmail.com>, on Sat Jan 29 09:12:07 BRST 2011
+# Recipe (MakeRecipe) for Font-BH-LucidaTypeWriter-100dpi by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jun 4 15:14:20 BRT 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/releases/individual/font/font-bh-lucidatypewriter-100dpi-1.0.3.tar.bz2"
+file_size=245807
+file_md5=c8b73a53dcefe3e8d3907d3500e484a9
+recipe_type=configure
+part_of=Xorg-Font
+configure_options=(
+   --with-fontrootdir="${target}/share/fonts"
+)
