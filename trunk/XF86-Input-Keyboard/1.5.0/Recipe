@@ -1,0 +1,11 @@
+# Recipe for version 1.5.0 by Diogo Lima <diogo.urb@gmail.com>, on Fri Jan 28 16:53:05 BRST 2011
+# Recipe (MakeRecipe) for XF86-Input-Keyboard by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jan 9 17:14:13 BRST 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/driver/xf86-input-keyboard-1.5.0.tar.bz2"
+file_size=301181
+file_md5=b74d7162db5ce7899c17927c6cfa9522
+recipe_type=configure
+part_of=Xorg-Driver
+install_variables=(
+   sdkdir="${target}/include/xorg"
+)
