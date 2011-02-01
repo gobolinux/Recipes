@@ -1,0 +1,8 @@
+pre_build() {
+	if [ ! -f .bootstrapped ]
+	then
+		echo "Running aclocal..."  && aclocal -I $goboShared/aclocal
+		echo "Running autoconf..." && autoconf
+		echo "Running automake..." && automake && touch .bootstrapped
+	fi
+}
