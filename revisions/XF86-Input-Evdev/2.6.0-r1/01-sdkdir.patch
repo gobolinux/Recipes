@@ -1,0 +1,24 @@
+pkg-config --variable=sdkir xorg-server will be "/usr//include/xorg" on Gobosystems.
+
+--- xf86-input-evdev-2.3.3/configure	2010-08-26 22:12:14.000000000 -0400
++++ xf86-input-evdev-2.3.3/configure.new	2010-08-26 22:14:04.000000000 -0400
+@@ -12767,7 +12767,7 @@
+ if test "${with_sdkdir+set}" = set; then
+   withval=$with_sdkdir; sdkdir="$withval"
+ else
+-  sdkdir=`$PKG_CONFIG --variable=sdkdir xorg-server`
++  sdkdir="${prefix}/include/xorg"
+ fi
+ 
+ 
+#@@ -13916,7 +13916,8 @@
+ #if test -n "$CONFIG_FILES"; then
+ #
+# 
+#-ac_cr='
+#-'
+#+ac_cr='
+#+'
+# ac_cs_awk_cr=`$AWK 'BEGIN { print "a\rb" }' </dev/null 2>/dev/null`
+# if test "$ac_cs_awk_cr" = "a${ac_cr}b"; then
+#   ac_cs_awk_cr='\\r'
