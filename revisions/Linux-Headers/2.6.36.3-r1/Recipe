@@ -1,0 +1,11 @@
+# Recipe for version 2.6.36.3 by Diogo Lima <diogo.urb@gmail.com>, on Fri Jan 28 12:29:49 BRST 2011
+compile_version=1.12.0
+url="http://www.kernel.org/pub/linux/kernel/v2.6/linux-2.6.36.3.tar.bz2"
+file_size=70235064
+file_md5=e23fd2fa5268300038e179919c590f69
+recipe_type=makefile
+do_build=no
+install_target="headers_install"
+install_variables=(
+    "INSTALL_HDR_PATH=$target"
+)

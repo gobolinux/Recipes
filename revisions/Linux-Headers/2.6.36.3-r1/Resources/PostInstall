@@ -1,0 +1,5 @@
+#!/bin/bash
+# Take back <scsi/scsi.h> from glibc
+[ -L "${goboInclues}/scsi/scsi.h" ] && ln -fs "${target}/include/scsi/scsi.h" "${goboInclues}/scsi/scsi.h"
+[ -L "${goboInclues}/scsi" ] && ln -fs "${target}/include/scsi" "${goboInclues}/scsi"
+
