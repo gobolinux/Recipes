@@ -1,0 +1,11 @@
+# Recipe for version 2.3.1 by Diogo Lima <diogo.urb@gmail.com>, on Fri Jan 28 13:49:26 BRST 2011
+# Recipe (MakeRecipe) for VideoProto by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 20:15:20 BRT 2005
+compile_version=1.7.1
+url="http://xorg.freedesktop.org/releases/individual/proto/videoproto-2.3.1.tar.bz2"
+file_size=100391
+file_md5=c3b348c6e2031b72b11ae63fc7f805c2
+part_of=Xorg-Proto
+recipe_type=configure
+configure_options=(
+	--without-fop
+)
