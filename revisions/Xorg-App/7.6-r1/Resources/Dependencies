@@ -1,0 +1,5 @@
+LibDRM >= 2.4.20 # Temp dep
+LibPNG >= 1.4 # Needed by xcursorgen
+Linux-PAM [pam] # Needed by xdm
+Mesa >= 7.6 # Needed by xdriinfo
+Xorg-Lib >= 7.6
