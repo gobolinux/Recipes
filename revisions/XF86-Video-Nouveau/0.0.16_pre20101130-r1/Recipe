@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for XF86-Video-Nouveau by Diogo Lima <diogo.urb@gmail.com>, on Mon Jan 31 14:02:48 BRST 2011
+# Recipe for version 0.0.16_pre20101130 by Diogo Lima <diogo.urb@gmail.com>, on Mon Jan 31 14:02:48 BRST 2011
+compile_version=1.13.3
+url="http://ftp.ucsb.edu/pub/mirrors/linux/gentoo/distfiles/xf86-video-nouveau-0.0.16_pre20101130.tar.bz2"
+file_size=123072
+file_md5=7ec618204f5c771dc74d2e2c8d3d4792
+#git="git://anongit.freedesktop.org/nouveau/xf86-video-nouveau"
+recipe_type=configure
+autogen_before_configure=yes
+part_of=Xorg-Driver
