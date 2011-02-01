@@ -1,0 +1,12 @@
+# Recipe for version 1.0.4 by Diogo Lima <diogo.urb@gmail.com>, on Fri Jan 28 22:15:41 BRST 2011
+# Recipe (MakeRecipe) for XMag by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 19:01:41 BRT 2005
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/releases/individual/app/xmag-1.0.4.tar.bz2"
+file_size=125290
+file_md5=2a76128511214bde973258baef537be3
+recipe_type=configure
+part_of=Xorg-App
+
+make_variables=(
+    "appdefaultdir=$target/Shared/X11/app-defaults"
+)
