@@ -1,0 +1,13 @@
+# Recipe for version 1.2.0 by Diogo Lima <diogo.urb@gmail.com>, on Sat Jan 29 09:06:49 BRST 2011
+# Recipe (MakeRecipe) for Font-Util by Jonas Karlsson <jonka750@student.liu.se>, on Sun Jun 1 18:19:42 GMT 2008
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/font/font-util-1.2.0.tar.bz2"
+file_size=134588
+file_md5=1bdd8ed070e02b2165d7b0f0ed93280b
+recipe_type=configure
+part_of=Xorg-Font
+
+configure_options=(
+    --with-mapdir="$target/share/fonts/util"
+    --with-fontrootdir="$target/share/fonts"
+)
