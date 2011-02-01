@@ -1,0 +1,11 @@
+# Recipe for version 1.0.4 by Diogo Lima <diogo.urb@gmail.com>, on Fri Jan 28 21:28:22 BRST 2011
+# Recipe (MakeRecipe) for Beforelight by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 18:26:56 BRT 2005
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/releases/individual/app/beforelight-1.0.4.tar.bz2"
+file_size=108254
+file_md5=e248acedcc95d44bdd140bdb861fdcee
+recipe_type=configure
+part_of=Xorg-App
+install_variables=(
+   "appdefaultdir=${target}/share/X11/app-defaults"
+)
