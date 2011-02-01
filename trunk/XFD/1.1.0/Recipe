@@ -1,0 +1,11 @@
+# Recipe for version 1.1.0 by Diogo Lima <diogo.urb@gmail.com>, on Fri Jan 28 22:01:11 BRST 2011
+# Recipe (MakeRecipe) for XFD by Jonas Karlsson <jonka750@student.liu.se>, on Tue Dec 5 18:25:25 CET 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/releases/individual/app/xfd-1.1.0.tar.bz2"
+file_size=121204
+file_md5=17d8ef0d490301158f8abf7641cca243
+recipe_type=configure
+part_of=Xorg-App
+install_variables=(
+   appdefaultdir=${target}/Shared/X11/app-defaults
+)
