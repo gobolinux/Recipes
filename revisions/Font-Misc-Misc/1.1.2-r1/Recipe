@@ -1,0 +1,11 @@
+# Recipe for version 1.1.2 by Diogo Lima <diogo.urb@gmail.com>, on Sat Jan 29 09:18:39 BRST 2011
+# Recipe (MakeRecipe) for Font-Misc-Misc by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jun 4 14:50:22 BRT 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/releases/individual/font/font-misc-misc-1.1.2.tar.bz2"
+file_size=1933789
+file_md5=c88eb44b3b903d79fb44b860a213e623
+recipe_type=configure
+part_of=Xorg-Font
+configure_options=(
+   --with-fontrootdir="${target}/share/fonts"
+)
