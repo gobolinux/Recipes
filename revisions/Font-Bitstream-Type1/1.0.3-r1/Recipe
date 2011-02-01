@@ -1,0 +1,11 @@
+# Recipe for version 1.0.3 by Diogo Lima <diogo.urb@gmail.com>, on Sat Jan 29 09:14:30 BRST 2011
+# Recipe (MakeRecipe) for Font-Bitstream-Type1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jun 4 15:19:38 BRT 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/releases/individual/font/font-bitstream-type1-1.0.3.tar.bz2"
+file_size=415980
+file_md5=5e0c9895d69d2632e2170114f8283c11
+recipe_type=configure
+part_of=Xorg-Font
+configure_options=(
+   --with-fontrootdir="${target}/share/fonts"
+)
