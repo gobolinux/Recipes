@@ -1,0 +1,12 @@
+# Recipe for version 2.13.0 by Diogo Lima <diogo.urb@gmail.com>, on Fri Jan 28 17:01:00 BRST 2011
+# Recipe (MakeRecipe) for XF86-Video-Intel by K Lowe, on Fri Mar 13 20:17:26 GMT 2009
+compile_version=1.12.0
+url="http://xorg.freedesktop.org/archive/individual/driver/xf86-video-intel-2.13.0.tar.gz"
+file_size=1215699
+file_md5=df7e3644a34e97ead09f083ab48d4457
+recipe_type=configure
+part_of=Xorg-Driver
+configure_options=(
+    --enable-dri
+    --enable-xvmc
+)
