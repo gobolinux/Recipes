@@ -1,0 +1,12 @@
+# Recipe for version 1.0.2 by Diogo Lima <diogo.urb@gmail.com>, on Fri Jan 28 22:25:02 BRST 2011
+# Recipe (MakeRecipe) for XVidTune by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 19:23:36 BRT 2005
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/releases/individual/app/xvidtune-1.0.2.tar.bz2"
+file_size=113117
+file_md5=e40eeb4454f2a7cdde3a14f5dfd3aadd
+recipe_type=configure
+part_of=Xorg-App
+
+make_variables=(
+    "appdefaultdir=$target/Shared/X11/app-defaults"
+)
