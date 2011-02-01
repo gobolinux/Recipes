@@ -1,0 +1,12 @@
+# Recipe for version 1.0.3 by Diogo Lima <diogo.urb@gmail.com>, on Fri Jan 28 22:17:09 BRST 2011
+# Recipe (MakeRecipe) for XMessage by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 19:03:05 BRT 2005
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/releases/individual/app/xmessage-1.0.3.tar.bz2"
+file_size=110604
+file_md5=76ac52710234ebb9d0e2762bb5d11ea1
+recipe_type=configure
+part_of=Xorg-App
+
+make_variables=(
+    "appdefaultdir=$target/Shared/X11/app-defaults"
+)
