@@ -1,0 +1,11 @@
+# Recipe for version 1.0.4.1 by Diogo Lima <diogo.urb@gmail.com>, on Fri Jan 28 21:49:50 BRST 2011
+# Recipe (MakeRecipe) for XCalc by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 18:40:16 BRT 2005
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/releases/individual/app/xcalc-1.0.4.1.tar.bz2"
+file_size=124184
+file_md5=052c59f7d917b1302e7142bbd888d808
+recipe_type=configure
+part_of=Xorg-App
+install_variables=(
+   appdefaultdir=${target}/Shared/X11/app-defaults
+)
