@@ -1,0 +1,11 @@
+# Recipe for version 1.2.1 by Diogo Lima <diogo.urb@gmail.com>, on Fri Jan 28 13:49:03 BRST 2011
+# Recipe (MakeRecipe) for ScrnSaverProto by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 20:15:10 BRT 2005
+compile_version=1.7.1
+url="http://xorg.freedesktop.org/releases/individual/proto/scrnsaverproto-1.2.1.tar.bz2"
+file_size=107997
+file_md5=6af0f2e3369f5f74e69345e214f5fd0d
+part_of=Xorg-Proto
+recipe_type=configure
+configure_options=(
+	--without-fop
+)
