@@ -1,0 +1,61 @@
+# Recipe for version 1.4.5 by Diogo Lima <diogo.urb@gmail.com>, on Tue Feb 1 13:14:31 BRST 2011
+compile_version=1.12.4
+url="ftp://ftp.easysw.com/pub/cups/1.4.5/cups-1.4.5-source.tar.bz2"
+file_size=4513924
+file_md5=50729f6fc46ba54223e0eaf5009f3419
+dir='cups-1.4.5'
+recipe_type=configure
+
+configure_options=(
+   --with-rcdir="$target"
+   --with-docdir="$target/doc"
+   --with-fontpath="${goboShared}/Fonts/Ghostscript"
+   --with-cups-user=lp
+   --with-cups-group=lp
+   --with-system-groups=lpadmin
+   --with-icondir="$target/share/icons"
+   --with-menudir="$target/share/applications"
+   --with-dbusdir="$settings_target/dbus-1"
+   --with-python
+   --enable-threads
+   --enable-libpaper
+)
+
+environment=(
+   LIBTOOL=
+)
+
+make_variables=(
+   LIBTOOL=
+)
+
+
+install_variables=(
+   PAMDIR="${settings_target}/pam.d"
+   PHPEXTENSIONDIR="${target}/$(php-config --extension-dir | sed 's,.*/\(lib/.*\),\1,')"
+   SERVERROOT="${settings_target}/cups"
+)
+
+unmanaged_files=(
+   ${goboVariable}/log/cups
+   ${goboVariable}/run/cups/certs
+   ${goboVariable}/cache/cups
+   ${goboVariable}/spool/cups/tmp
+)
+
+pre_build() {
+   # Fix installation of php extension inside the target directory
+   sed -i 's/PHPDIR/PHPEXTENSIONDIR/g' scripting/php/Makefile
+}
+
+pre_link() {
+   Quiet pushd $target/lib
+   ln -s ../share/cups .
+   Quiet popd
+}
+
+pre_install() {
+   mkdir -p "$target/$(php-config --extension-dir | sed 's,.*/\(lib/.*\),\1,')"
+}
+
+post_install_message="=========================================\n\nNote: when upgrading from CUPS 1.1.20 you may need\n      to recreate your printers because of changes\n      in the ppd uri format for usb printers.\n\n=================================================="
