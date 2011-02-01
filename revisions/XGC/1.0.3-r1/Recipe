@@ -1,0 +1,12 @@
+# Recipe for version 1.0.3 by Diogo Lima <diogo.urb@gmail.com>, on Fri Jan 28 22:04:43 BRST 2011
+# Recipe (MakeRecipe) for XGC by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 18:54:11 BRT 2005
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/releases/individual/app/xgc-1.0.3.tar.bz2"
+file_size=165871
+file_md5=f9addda7d1e157fc7d17ff87b1e360f8
+recipe_type=configure
+part_of=Xorg-App
+
+make_variables=(
+    "appdefaultdir=$target/Shared/X11/app-defaults"
+)
