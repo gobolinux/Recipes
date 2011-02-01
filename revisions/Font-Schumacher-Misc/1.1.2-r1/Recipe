@@ -1,0 +1,11 @@
+# Recipe for version 1.1.2 by Diogo Lima <diogo.urb@gmail.com>, on Sat Jan 29 09:19:18 BRST 2011
+# Recipe (MakeRecipe) for Font-Schumacher-Misc by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jun 4 15:30:03 BRT 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/releases/individual/font/font-schumacher-misc-1.1.2.tar.bz2"
+file_size=141170
+file_md5=e805feb7c4f20e6bfb1118d19d972219
+recipe_type=configure
+part_of=Xorg-Font
+configure_options=(
+   --with-fontrootdir="${target}/share/fonts"
+)
