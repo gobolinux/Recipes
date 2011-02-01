@@ -1,0 +1,11 @@
+# Recipe for version 1.2.1 by Diogo Lima <diogo.urb@gmail.com>, on Fri Jan 28 13:49:45 BRST 2011
+# Recipe (MakeRecipe) for XCMiscProto by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 20:15:27 BRT 2005
+compile_version=1.7.1
+url="http://xorg.freedesktop.org/releases/individual/proto/xcmiscproto-1.2.1.tar.bz2"
+file_size=101926
+file_md5=cd7372cd827bfd7ca7e9238f2ce274b1
+part_of=Xorg-Proto
+recipe_type=configure
+configure_options=(
+	--without-fop
+)
