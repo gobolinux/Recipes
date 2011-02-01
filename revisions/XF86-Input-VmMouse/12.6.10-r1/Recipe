@@ -1,0 +1,14 @@
+# Recipe for version 12.6.10 by Diogo Lima <diogo.urb@gmail.com>, on Fri Jan 28 16:54:41 BRST 2011
+# Recipe (MakeRecipe) for XF86-Input-VmMouse by Jonas Karlsson <jonka750@student.liu.se>, on Sun Sep 9 21:32:21 CEST 2007
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/driver/xf86-input-vmmouse-12.6.10.tar.bz2"
+file_size=272214
+file_md5=49c6e77851e9f7bc5cb7d85f061992f8
+recipe_type=configure
+part_of=Xorg-Driver
+configure_options=(
+   --with-xorg-conf-dir="${target}/share/X11/xorg.conf.d"
+)
+install_variables=(
+   sdkdir="${target}/include/xorg"
+)
