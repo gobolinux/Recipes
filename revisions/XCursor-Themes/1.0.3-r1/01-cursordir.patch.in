@@ -1,0 +1,44 @@
+--- xcursor-themes-1.0.2/whiteglass/Makefile.in.orig	2010-05-24 00:16:08.000000000 -0300
++++ xcursor-themes-1.0.2/whiteglass/Makefile.in	2010-05-24 00:17:30.000000000 -0300
+@@ -118,7 +118,7 @@ am__untar = @am__untar@
+ bindir = @bindir@
+ build_alias = @build_alias@
+ builddir = @builddir@
+-cursordir = @cursordir@/whiteglass/cursors
++cursordir = @%Compile_target%@/Shared/icons/whiteglass/cursors
+ datadir = @datadir@
+ datarootdir = @datarootdir@
+ distcleancheck_listfiles = @distcleancheck_listfiles@
+--- xcursor-themes-1.0.2/Makefile.in.orig	2010-05-24 00:16:08.000000000 -0300
++++ xcursor-themes-1.0.2/Makefile.in	2010-05-24 00:17:30.000000000 -0300
+@@ -144,7 +144,7 @@ am__untar = @am__untar@
+ bindir = @bindir@
+ build_alias = @build_alias@
+ builddir = @builddir@
+-cursordir = @cursordir@
++cursordir = @%Compile_target%@/Shared/icons
+ datadir = @datadir@
+ datarootdir = @datarootdir@
+ distcleancheck_listfiles = @distcleancheck_listfiles@
+--- xcursor-themes-1.0.2/handhelds/Makefile.in.orig	2010-05-24 00:16:08.000000000 -0300
++++ xcursor-themes-1.0.2/handhelds/Makefile.in	2010-05-24 00:17:30.000000000 -0300
+@@ -120,7 +120,7 @@ am__untar = @am__untar@
+ bindir = @bindir@
+ build_alias = @build_alias@
+ builddir = @builddir@
+-cursordir = @cursordir@/handhelds/cursors
++cursordir = @%Compile_target%@/Shared/icons/handhelds/cursors
+ datadir = @datadir@
+ datarootdir = @datarootdir@
+ distcleancheck_listfiles = @distcleancheck_listfiles@
+--- xcursor-themes-1.0.2/redglass/Makefile.in.orig	2010-05-24 00:16:08.000000000 -0300
++++ xcursor-themes-1.0.2/redglass/Makefile.in	2010-05-24 00:17:30.000000000 -0300
+@@ -118,7 +118,7 @@ am__untar = @am__untar@
+ bindir = @bindir@
+ build_alias = @build_alias@
+ builddir = @builddir@
+-cursordir = @cursordir@/redglass/cursors
++cursordir = @%Compile_target%@/Shared/icons/redglass/cursors
+ datadir = @datadir@
+ datarootdir = @datarootdir@
+ distcleancheck_listfiles = @distcleancheck_listfiles@
