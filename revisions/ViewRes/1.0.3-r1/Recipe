@@ -1,0 +1,11 @@
+# Recipe for version 1.0.3 by Diogo Lima <diogo.urb@gmail.com>, on Fri Jan 28 21:46:25 BRST 2011
+# Recipe (MakeRecipe) for ViewRes by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 18:38:22 BRT 2005
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/releases/individual/app/viewres-1.0.3.tar.bz2"
+file_size=114933
+file_md5=c9d15462c0190dce61d04a6717dd7622
+recipe_type=configure
+part_of=Xorg-App
+install_variables=(
+   appdefaultdir=${target}/Shared/X11/app-defaults
+)
