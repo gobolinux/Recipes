@@ -1,0 +1,12 @@
+# Recipe for version 1.0.2 by Diogo Lima <diogo.urb@gmail.com>, on Fri Jan 28 22:18:27 BRST 2011
+# Recipe (MakeRecipe) for XMore by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 19:20:05 BRT 2005
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/releases/individual/app/xmore-1.0.2.tar.bz2"
+file_size=107340
+file_md5=e66f16684e92d3ca035c27003157cdbd
+recipe_type=configure
+part_of=Xorg-App
+
+make_variables=(
+    "appdefaultdir=$target/Shared/X11/app-defaults"
+)
