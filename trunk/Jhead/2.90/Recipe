@@ -1,0 +1,11 @@
+# Recipe for version 2.90 by Leandro Motta Barros <lmb@stackedboxes.org>, on Fri Feb 4 13:34:45 BRST 2011
+# Recipe (MakeRecipe) for Jhead by Leandro Motta Barrros, on Sun Jul 3 19:11:47 BRT 2005
+compile_version=1.8.0
+url="http://www.sentex.net/~mwandel/jhead/jhead-2.90.tar.gz"
+file_size=64390
+file_md5=661effa9420bb92cb99ced697c5a177f
+recipe_type=makefile
+makefile='makefile'
+make_variables=(
+   DESTDIR=$target
+)
