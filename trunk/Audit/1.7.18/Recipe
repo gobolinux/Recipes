@@ -1,0 +1,8 @@
+# Recipe for version 1.7.18 by Lucas C. Villa Real, on Mon Jan 31 21:56:25 BRST 2011
+# Recipe (MakeRecipe) for Audit by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue May 20 00:41:36 BRT 2008
+compile_version=1.10.1
+url="http://people.redhat.com/sgrubb/audit/audit-1.7.18.tar.gz"
+file_size=1566698
+file_md5=f6797c9d5f89cc39b9d3386e1d9dd3af
+recipe_type=configure
+autogen_before_configure=yes

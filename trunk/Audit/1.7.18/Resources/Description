@@ -1,0 +1,10 @@
+[Name] Audit
+[Summary] The Linux Auditing Framework
+[Description] The main LAF goals are to provide system call auditing with 
+1) as low overhead as possible, and 2) without duplicating functionality 
+that is already provided by SELinux (and/or other security infrastructures).
+
+This framework will work "stand-alone", but is not designed to provide,
+e.g., CAPP functionality without another security component in place.
+[License] GNU General Public License version 2
+[Homepage] http://people.redhat.com/sgrubb/audit
