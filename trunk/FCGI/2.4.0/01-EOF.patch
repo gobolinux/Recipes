@@ -1,0 +1,17 @@
+Fixes a build error with GCC 4.5.1.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- fcgi-2.4.0/libfcgi/fcgio.cpp.orig	2011-02-02 18:11:29.000000000 -0200
++++ fcgi-2.4.0/libfcgi/fcgio.cpp	2011-02-02 18:12:38.000000000 -0200
+@@ -25,6 +25,10 @@
+ #include <limits.h>
+ #include "fcgio.h"
+ 
++#ifndef EOF
++#define EOF -1
++#endif
++
+ using std::streambuf;
+ using std::istream;
+ using std::ostream;
