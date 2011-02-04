@@ -1,0 +1,14 @@
+Quick hack to get dbus installed in the local folder (LOF fix).
+
+--- PyQt-x11-gpl-4.4.2/configure.py.orig	2008-06-11 21:43:42.000000000 -0300
++++ PyQt-x11-gpl-4.4.2/configure.py	2008-06-11 22:09:15.000000000 -0300
+@@ -1054,7 +1054,8 @@
+         return
+ 
+     global pydbusmoddir
+-    pydbusmoddir = dbus.mainloop.__path__[0]
++    pydbusmoddir = os.path.join(opts.pyqtmoddir, "dbus", "mainloop")
++	# pydbusmoddir = dbus.mainloop.__path__[0]
+ 
+     # Try and find dbus-python.h.  We don't use pkg-config because it is broken
+     # for dbus-python (at least for versions up to and including v0.81.0).

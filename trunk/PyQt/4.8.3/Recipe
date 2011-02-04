@@ -1,0 +1,15 @@
+# Recipe for version 4.8.3 by Lucas C. Villa Real, on Wed Feb 2 17:00:26 BRST 2011
+# on Sat Apr 16 12:56:40 CEST 2005
+
+compile_version=1.9.0
+url="http://www.riverbankcomputing.com/static/Downloads/PyQt4/PyQt-x11-gpl-4.8.3.tar.gz"
+file_size=9770929
+file_md5=d54fd1c37a74864faf42709c8102f254
+
+recipe_type=makefile
+pre_build() {
+    pythonversion=`python --version 2>&1 | awk {'print $2'} | cut -b1-3`
+    sitepackages="$target/lib/python${pythonversion}/site-packages"
+    echo yes | python configure.py -b $target/bin -v $target/Shared/sip -d $sitepackages -p $target/plugins 
+    chmod -R a+rw .
+}
