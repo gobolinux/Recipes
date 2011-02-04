@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for QWT by Lucas C. Villa Real, on Wed Feb 2 16:19:02 BRST 2011
+# Recipe for version 5.2.1 by Lucas C. Villa Real, on Wed Feb 2 16:19:02 BRST 2011
+compile_version=1.10.1
+url="$httpSourceforge/project/qwt/qwt/5.2.1/qwt-5.2.1.tar.bz2?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fqwt%2Ffiles%2Fqwt%2F5.2.1%2F&ts=1296670697&use_mirror=softlayer"
+file="qwt-5.2.1.tar.bz2"
+file_size=1926453
+file_md5=4a595b8db0ec3856b117836c1d60cb27
+dir='qwt-5.2.1'
+recipe_type=makefile
+
+pre_build() {
+    GrepReplace -B "INSTALLBASE    = /usr/local/qwt-5.2.1" "INSTALLBASE = $target" qwtconfig.pri
+	GrepReplace -B "QwtBase    = /usr/local/qwt-\$\${QwtVersion}" "QwtBase = $target" qwt.prf
+	qmake
+}
