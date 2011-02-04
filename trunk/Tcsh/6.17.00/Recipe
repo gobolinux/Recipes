@@ -1,0 +1,18 @@
+# Recipe for version 6.17.00 by Lucas C. Villa Real, on Tue Feb 1 17:45:39 BRST 2011
+compile_version=1.8.0
+urls=(
+  "ftp://ftp.astron.com/pub/tcsh/tcsh-6.17.00.tar.gz"
+#  "ftp://ftp.gw.com/pub/unix/tcsh/tcsh-6.17.00.tar.gz"
+#  "ftp://ftp.funet.fi/pub/unix/shells/tcsh/tcsh-6.17.00.tar.gz"
+)
+recipe_type=configure
+
+pre_link() {
+   ln -s tcsh $target/bin/csh
+}
+file_sizes=(
+890084
+)
+file_md5s=(
+c47de903e3d52f6824c8dd0c91eeb477
+)
