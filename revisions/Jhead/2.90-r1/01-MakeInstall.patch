@@ -1,0 +1,13 @@
+Replaces the broken 'make install' target with one that actually works with GoboLinux.
+diff -Naur jhead-2.90-vanilla/makefile jhead-2.90-modified/makefile
+--- jhead-2.90-vanilla/makefile	2010-02-05 13:43:09.000000000 -0200
++++ jhead-2.90-modified/makefile	2011-02-04 13:40:33.000000000 -0200
+@@ -19,5 +19,7 @@
+ clean:
+ 	rm -f $(objs) jhead
+ 
+ install:
+-	cp jhead ${DESTDIR}/usr/bin/
++	cp jhead $(DESTDIR)/bin
++	cp jhead.1 $(DESTDIR)/man/man1
++	cp readme.txt usage.html changes.txt $(DESTDIR)/doc
