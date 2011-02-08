@@ -1,0 +1,11 @@
+# Recipe for version 0.98.1 by kenneth marken <k-marken@online.no>, on ti. 08. feb. 12:52:13 +0100 2011
+# Recipe (MakeRecipe) for Murrine by Dominique Juergensen <brokolie@vollbio.de>, on Sun Feb 22 15:56:13 CET 2009
+compile_version=1.12.0
+url="http://ftp.acc.umu.se/pub/GNOME/sources/murrine/0.98/murrine-0.98.1.tar.bz2"
+file_size=300632
+file_md5=fb8481dd068e27425acf7e91a1250107
+dir='murrine-0.98.1'
+recipe_type=configure
+configure_options=(
+"--enable-animation"
+)
