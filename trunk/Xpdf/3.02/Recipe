@@ -7,3 +7,6 @@ url="ftp://ftp.foolabs.com/pub/xpdf/xpdf-3.02.tar.gz"
 file_size=674912
 file_md5=599dc4cc65a07ee868cf92a667a913d2
 recipe_type=configure
+configure_options=(
+  --without-libpaper-library
+)

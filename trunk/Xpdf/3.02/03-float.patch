@@ -1,0 +1,25 @@
+description: fix a floating point quirk that is exposed by gcc 4.4
+ (this was leading to slow pdf document scrolling on i386)
+author: Michael Gilbert <michael.s.gilbert@gmail.com>
+bug-debian: http://bugs.debian.org/577031
+--- xpdf-3.02.orig/xpdf/PDFCore.h
++++ xpdf-3.02/xpdf/PDFCore.h
+@@ -40,6 +40,7 @@ class PDFCore;
+ #define zoomPage  -1
+ #define zoomWidth -2
+ #define defZoom   125
++#define EPSILON   1.0e-7	// 32-bit floating point machine precision
+ 
+ //------------------------------------------------------------------------
+ 
+--- xpdf-3.02.orig/xpdf/PDFCore.cc
++++ xpdf-3.02/xpdf/PDFCore.cc
+@@ -445,7 +445,7 @@ void PDFCore::update(int topPageA, int s
+   // object
+   if (force || pages->getLength() == 0 ||
+       (!continuousMode && topPageA != topPage) ||
+-      zoomA != zoom || dpiA != dpi || rotateA != rotate) {
++      zoomA != zoom || fabs( dpiA - dpi ) > EPSILON || rotateA != rotate) {
+     needUpdate = gTrue;
+     setSelection(0, 0, 0, 0, 0);
+     while (pages->getLength() > 0) {
