@@ -1,0 +1,12 @@
+# Recipe for version 3.02 by Lucas C. Villa Real, on Wed Mar 7 00:56:02 BRT 2007
+# Recipe (MakeRecipe) for XPDF by roko, <ro.ko@mcnon.com>, on Fri Dec 10 01:41:17 BRST 2004
+# Security patch pl2 and freetype patch added, configure options removed as they are not
+# needed, david <dsmith@algonet.se>, 2005-01-06
+compile_version=1.8.2
+url="ftp://ftp.foolabs.com/pub/xpdf/xpdf-3.02.tar.gz"
+file_size=674912
+file_md5=599dc4cc65a07ee868cf92a667a913d2
+recipe_type=configure
+configure_options=(
+  --without-libpaper-library
+)
