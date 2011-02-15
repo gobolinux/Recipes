@@ -1,0 +1,37 @@
+--- dx-4.4.4/configure.ac.orig	2011-02-10 15:25:07.000000000 -0200
++++ dx-4.4.4/configure.ac	2011-02-10 15:36:25.000000000 -0200
+@@ -760,32 +760,13 @@ fi
+ # Check for NETCDF
+ #
+ have_netcdf='no'
+-LIB_NETCDF=''
+ if test "$with_netcdf" != 'no'
+ then
+     AS_MESSAGE([checking for NETCDF support ......])
+-    failed=0;
+-    passed=0;
+-    AC_CHECK_HEADER(netcdf.h,passed=`expr $passed + 1`,failed=`expr $failed + 1`)
+-    AC_CHECK_LIB(netcdf,nc_copy_att,passed=`expr $passed + 1`,failed=`expr $failed + 1`,)
+-    AC_MSG_CHECKING(if NETCDF package is complete)
+-    if test $passed -gt 0
+-    then
+-    if test $failed -gt 0
+-    then
+-	AC_MSG_RESULT(no -- some components failed test)
+-        have_netcdf='no (failed tests)'
+-    else
+-	LIB_NETCDF='-lnetcdf'
+-	LIBS="$LIB_NETCDF $LIBS"
++    PKG_CHECK_MODULES([NETCDF_MODULE], [netcdf])
++	LIBS="${NETCDF_MODULE_LIBS} $LIBS"
+ 	FMT_LIBS="$FMT_LIBS libnetcdf.a"
+ 	AC_DEFINE(HAVE_LIBNETCDF, 1, [Define to 1 if you have the NetCDF libraries])
+-	AC_MSG_RESULT(yes)
+-        have_netcdf='yes'
+-    fi
+-    else
+-        AC_MSG_RESULT(no)
+-    fi
+ fi
+ 
+ 
