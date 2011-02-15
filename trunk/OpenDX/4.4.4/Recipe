@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for OpenDX by Lucas C. Villa Real, on Tue Feb 8 17:42:04 BRST 2011
+# Recipe for version 4.4.4 by Lucas C. Villa Real, on Tue Feb 8 17:42:04 BRST 2011
+compile_version=1.12.3
+url="http://opendx.informatics.jax.org/source/dx-4.4.4.tar.gz"
+file_size=9676049
+file_md5=6da0c4cd21d3c08f97b7662e3aee5b7b
+recipe_type=configure
+
+environment=(
+    LIBTOOL=$goboExecutables/libtool
+)
+
+pre_build() {
+    autoreconf -i
+}
