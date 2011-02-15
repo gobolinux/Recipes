@@ -1,0 +1,19 @@
+# Recipe for version 1.8.2 by Lucas C. Villa Real, on Tue Feb 8 11:41:45 BRST 2011
+# Recipe (MakeRecipe) for Apache-Ant by Hisham Muhammad, on Mon Aug 30 15:40:45 BRT 2004
+compile_version=1.8.0
+url="http://apache.opensourceresources.org/ant/binaries/apache-ant-1.8.2-bin.tar.bz2"
+file_size=6740047
+file_md5=9e9ae9fc7352960191489a1286fb0928
+dir='apache-ant-1.8.2'
+recipe_type=manifest
+
+environment=(
+  JAVA_HOME=$(dirname $(dirname $(which java)))
+  CLASSPATH=${CLASSPATH:+${CLASSPATH}:}${junit_path}/lib/junit.jar
+)
+
+manifest=(
+  "bin/*:bin"
+  "lib/*:lib"
+  "docs/*:doc"
+)
