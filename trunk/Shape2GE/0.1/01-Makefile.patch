@@ -1,0 +1,19 @@
+--- shape2ge-0.1/Makefile.orig	2011-02-04 15:32:43.000000000 -0200
++++ shape2ge-0.1/Makefile	2011-02-04 15:34:10.000000000 -0200
+@@ -1,3 +1,5 @@
++PREFIX = /usr/local
++
+ all: ./standalone/shape2ge-frontend.py ./standalone/shape2ge-engine.py
+ 
+ ./standalone/shape2ge-frontend.py: ./src/xmlwriter.py ./src/styles.py ./src/frontend.py
+@@ -10,6 +12,10 @@ all: ./standalone/shape2ge-frontend.py .
+ 	cat ./src/xmlwriter.py ./src/styles.py ./src/vec.py ./src/shapeobjects.py ./src/engine.py | grep -v "AUTO_REMOVED" >> ./standalone/shape2ge-engine.py
+ 	chmod +x ./standalone/shape2ge-engine.py
+ 
++install:
++	@cp -v ./standalone/shape2ge-engine.py $(PREFIX)/bin
++	@cp -v ./standalone/shape2ge-frontend.py $(PREFIX)/bin
++
+ clean:
+ 	rm ./standalone/shape2ge-engine.py
+ 	rm ./standalone/shape2ge-frontend.py
