@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Shape2GE by Lucas C. Villa Real, on Fri Feb 4 15:19:23 BRST 2011
+# Recipe for version 0.1 by Lucas C. Villa Real, on Fri Feb 4 15:19:23 BRST 2011
+compile_version=1.12.3
+url="http://shape2ge.googlecode.com/files/shape2ge-0.1.tar.bz2"
+file_size=16924
+file_md5=ba7c4b20a88d90e7091268695afaa06c
+recipe_type=makefile
+makefile='Makefile'
+
+install_variables=(
+    PREFIX=$target
+)
