@@ -1,0 +1,27 @@
+--- pyshapelib-0.3/setup.py.orig	2011-02-04 15:45:18.000000000 -0200
++++ pyshapelib-0.3/setup.py	2011-02-04 15:45:35.000000000 -0200
+@@ -20,7 +20,7 @@ from distutils.util import convert_path
+ # the files with os.path functions. distutils, OTOH, uses posix-style
+ # filenames exclusively, so we use posix conventions when making
+ # filenames for distutils.
+-for shp_dir in ["..", "../shapelib", "../../../../../../shapelib"]:
++for shp_dir in ["..", "../shapelib", "../../../../../../shapelib", "shapelib"]:
+     if (os.path.isdir(convert_path(shp_dir))
+         and os.path.exists(os.path.join(convert_path(shp_dir), "shpopen.c"))):
+         # shp_dir contains shpopen.c, so assume it's the directory with
+@@ -50,6 +50,7 @@ def dbf_macros():
+ extensions = [Extension("shapelibc",
+                         ["shapelib_wrap.c",
+                          shp_dir + "/shpopen.c",
++                         shp_dir + "/safileio.c",
+                          shp_dir + "/shptree.c"],
+                         include_dirs = [shp_dir]),
+               Extension("shptree",
+@@ -57,6 +58,7 @@ extensions = [Extension("shapelibc",
+                         include_dirs = [shp_dir]),
+               Extension("dbflibc",
+                         ["dbflib_wrap.c",
++                         shp_dir + "/safileio.c",
+                          shp_dir + "/dbfopen.c"],
+                         include_dirs = [shp_dir],
+                         define_macros = dbf_macros())]
