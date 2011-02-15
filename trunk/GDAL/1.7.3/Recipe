@@ -6,3 +6,12 @@ file_size=7757684
 file_md5=c4673970bd2285032de9ae9bbd82754a
 recipe_type=configure
 makefile=GNUmakefile
+
+environment=(
+    LDFLAGS="-lcurl $LDFLAGS"
+)
+
+configure_options=(
+    --with-netcdf
+    --with-curl
+)
