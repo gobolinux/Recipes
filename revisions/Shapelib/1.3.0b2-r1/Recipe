@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Shapelib by Lucas C. Villa Real, on Fri Feb 4 14:23:40 BRST 2011
+# Recipe for version 1.3.0b2 by Lucas C. Villa Real, on Fri Feb 4 14:23:40 BRST 2011
+compile_version=1.12.3
+url="http://download.osgeo.org/shapelib/shapelib-1.3.0b2.tar.gz"
+file_size=182558
+file_md5=708ea578bc299dcd9f723569d12bee8d
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=(
+    PREFIX=$target
+)

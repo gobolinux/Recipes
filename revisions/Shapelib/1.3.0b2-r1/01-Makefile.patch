@@ -1,0 +1,42 @@
+--- shapelib-1.3.0b2/Makefile.orig	2011-02-04 14:39:39.000000000 -0200
++++ shapelib-1.3.0b2/Makefile	2011-02-04 14:40:48.000000000 -0200
+@@ -9,7 +9,7 @@ LD = /usr/bin/ld
+ 
+ default:	all
+ 
+-all:	shpcreate shpadd shpdump shprewind dbfcreate dbfadd dbfdump shptest
++all:	shpcreate shpadd shpdump shprewind dbfcreate dbfadd dbfdump shptest lib
+ 
+ shpopen.o:	shpopen.c shapefil.h
+ 	$(CC) $(CFLAGS) -c shpopen.c
+@@ -134,17 +134,17 @@ lib:
+ 	rm -fr .libs/libshp.lax
+ 	(cd .libs && rm -f libshp.la && ln -s ../libshp.la libshp.la)
+ 
+-lib_install:
++install:
+ 	cp .libs/libshp.la .libs/libshp.lai
+-	/bin/sh ./mkinstalldirs /usr/local/lib
+-	/bin/sh ./libtool  --mode=install $(INSTALL) -c libshp.la /usr/local/lib/libshp.la
+-	$(INSTALL) -c .libs/libshp.so.$(LIBSHP_VERSION) /usr/local/lib/libshp.so.$(LIBSHP_VERSION)
+-	(cd /usr/local/lib && rm -f libshp.so.1 && ln -s libshp.so.$(LIBSHP_VERSION) libshp.so.1)
+-	(cd /usr/local/lib && rm -f libshp.so && ln -s libshp.so.$(LIBSHP_VERSION) libshp.so)
+-	chmod +x /usr/local/lib/libshp.so.$(LIBSHP_VERSION)
+-	$(INSTALL) -c .libs/libshp.la /usr/local/lib/libshp.la
+-	$(INSTALL) -c .libs/libshp.a /usr/local/lib/libshp.a
+-	ranlib /usr/local/lib/libshp.a
+-	chmod 644 /usr/local/lib/libshp.a
+-	/bin/sh ./mkinstalldirs /usr/local/include/libshp
+-	$(INSTALL) -c -m 644 shapefil.h /usr/local/include/libshp/shapefil.h
++	/bin/sh ./mkinstalldirs $(PREFIX)/lib
++	/bin/sh ./libtool  --mode=install $(INSTALL) -c libshp.la $(PREFIX)/lib/libshp.la
++	$(INSTALL) -c .libs/libshp.so.$(LIBSHP_VERSION) $(PREFIX)/lib/libshp.so.$(LIBSHP_VERSION)
++	(cd $(PREFIX)/lib && rm -f libshp.so.1 && ln -s libshp.so.$(LIBSHP_VERSION) libshp.so.1)
++	(cd $(PREFIX)/lib && rm -f libshp.so && ln -s libshp.so.$(LIBSHP_VERSION) libshp.so)
++	chmod +x $(PREFIX)/lib/libshp.so.$(LIBSHP_VERSION)
++	$(INSTALL) -c .libs/libshp.la $(PREFIX)/lib/libshp.la
++	$(INSTALL) -c .libs/libshp.a $(PREFIX)/lib/libshp.a
++	ranlib $(PREFIX)/lib/libshp.a
++	chmod 644 $(PREFIX)/lib/libshp.a
++	/bin/sh ./mkinstalldirs $(PREFIX)/include/libshp
++	$(INSTALL) -c -m 644 shapefil.h $(PREFIX)/include/libshp/shapefil.h
