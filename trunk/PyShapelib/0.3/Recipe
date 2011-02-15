@@ -1,0 +1,24 @@
+# Recipe (MakeRecipe) for PyShapelib by Lucas C. Villa Real, on Fri Feb 4 15:21:52 BRST 2011
+# Recipe for version 0.3 by Lucas C. Villa Real, on Fri Feb 4 15:21:52 BRST 2011
+compile_version=1.12.3
+urls=(
+    "http://ftp.intevation.de/users/bh/pyshapelib/pyshapelib-0.3.tar.gz"
+    "http://download.osgeo.org/shapelib/shapelib-1.3.0b2.tar.gz"
+)
+file_sizes=(
+    40427
+    182558
+)
+file_md5s=(
+    41372e56f96167ed8202eb6f747360a4
+    708ea578bc299dcd9f723569d12bee8d
+)
+unpack_files=inside_first
+recipe_type=python
+
+pre_build() {
+    if [ -d shapelib-1.3.0b2 ]
+    then mv shapelib-1.3.0b2 shapelib
+    else true
+    fi
+}
