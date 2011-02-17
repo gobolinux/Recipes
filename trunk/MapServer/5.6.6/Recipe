@@ -16,3 +16,8 @@ configure_options=(
     --with-cairo
     --with-httpd=$goboExecutables/httpd
 )
+
+pre_install() {
+    mkdir -p $target/bin
+    cp mapserv $target/bin
+}
