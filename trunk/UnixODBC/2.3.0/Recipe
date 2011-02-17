@@ -1,0 +1,12 @@
+# Recipe for version 2.3.0 by Lucas C. Villa Real, on Thu Feb 17 14:32:44 BRST 2011
+# Recipe (MakeRecipe) for UnixODBC by Maglan C. Diemer, maglan@univates.br, on Seg Jul 11 13:43:32 BRT 2005
+compile_version=1.9.0
+url="ftp://ftp.unixodbc.org/pub/unixODBC/unixODBC-2.3.0.tar.gz"
+file_size=1804749
+file_md5=f2ad22cbdffe836c58987ed2332c2e99
+recipe_type=configure
+configure_options=(
+    --disable-gui 
+    --enable-fdb 
+#    --enable-ltdllib
+)
