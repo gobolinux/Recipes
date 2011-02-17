@@ -1,0 +1,18 @@
+# Recipe (MakeRecipe) for MapServer by Lucas C. Villa Real, on Thu Feb 17 13:29:09 BRST 2011
+# Recipe for version 5.6.6 by Lucas C. Villa Real, on Thu Feb 17 13:29:09 BRST 2011
+compile_version=1.12.3
+url="http://download.osgeo.org/mapserver/mapserver-5.6.6.tar.gz"
+file_size=2326652
+file_md5=1ef0d0cd2bfef9919c1a2d310e95b706
+recipe_type=configure
+
+configure_options=(
+    --with-pdf
+    --with-proj
+    --with-threads
+    --with-geos
+    --with-gdal
+    --with-tiff
+    --with-cairo
+    --with-httpd=$goboExecutables/httpd
+)
