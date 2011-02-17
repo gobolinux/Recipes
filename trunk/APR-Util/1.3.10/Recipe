@@ -1,0 +1,15 @@
+# Recipe for version 1.3.10 by Lucas C. Villa Real, on Thu Feb 17 14:01:12 BRST 2011
+# Recipe (MakeRecipe) for APR-Util by Kosh <kosh.linux at gmail.com>, on Tue Feb 28 21:59:01 BRT 2006
+compile_version=1.8.2
+url="http://ftp.unicamp.br/pub/apache/apr/apr-util-1.3.10.tar.bz2"
+file_size=607912
+file_md5=6a6f501a1b2a45166b8ffd6df29204bb
+recipe_type=configure
+configure_options=(
+   --with-layout=GoboLinux
+   # This is a hack or else ./configure wont find APR
+   --with-apr=/usr
+)
+with_mysql="--with-mysql"
+with_openldap="--with-ldap"
+with_sqlite="--with-sqlite3"
