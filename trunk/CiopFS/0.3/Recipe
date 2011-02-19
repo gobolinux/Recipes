@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for CiopFS by Michael Homer <michael@gobolinux.org>, on Sat Feb 19 20:15:56 NZDT 2011
+# Recipe for version 0.3 by Michael Homer <michael@gobolinux.org>, on Sat Feb 19 20:15:56 NZDT 2011
+compile_version=1.13.0
+url="http://www.brain-dump.org/projects/ciopfs/ciopfs-0.3.tar.gz"
+file_size=7924
+file_md5=2cd06659ddb9350a6a6fce7b267b6a54
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   DESTDIR="$target"
+   PREFIX=""
+)
