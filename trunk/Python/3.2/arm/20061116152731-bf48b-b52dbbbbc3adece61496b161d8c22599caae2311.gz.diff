@@ -1,0 +1,64 @@
+Thu Nov 16 16:27:31 CET 2006  hanwen@lilypond.org
+  * mingw patches for Python/
+diff -rN -u old-Python-2.5.cross/Python/dynload_shlib.c new-Python-2.5.cross/Python/dynload_shlib.c
+--- old-Python-2.5.cross/Python/dynload_shlib.c	2006-11-16 17:47:49.000000000 +0100
++++ new-Python-2.5.cross/Python/dynload_shlib.c	2006-11-16 17:47:49.000000000 +0100
+@@ -32,7 +32,7 @@
+ 
+ 
+ const struct filedescr _PyImport_DynLoadFiletab[] = {
+-#ifdef __CYGWIN__
++#if defined(__CYGWIN__) || defined(__MINGW32__)
+ 	{".dll", "rb", C_EXTENSION},
+ 	{"module.dll", "rb", C_EXTENSION},
+ #else
+diff -rN -u old-Python-2.5.cross/Python/dynload_win.c new-Python-2.5.cross/Python/dynload_win.c
+--- old-Python-2.5.cross/Python/dynload_win.c	2006-11-16 17:47:49.000000000 +0100
++++ new-Python-2.5.cross/Python/dynload_win.c	2006-11-16 17:47:49.000000000 +0100
+@@ -31,6 +31,9 @@
+ /* Case insensitive string compare, to avoid any dependencies on particular
+    C RTL implementations */
+ 
++#ifdef __MINGW32__
++#define strcasecmp py_strcasecmp
++#endif
+ static int strcasecmp (char *string1, char *string2)
+ { 
+ 	int first, second;
+diff -rN -u old-Python-2.5.cross/Python/frozenmain.c new-Python-2.5.cross/Python/frozenmain.c
+--- old-Python-2.5.cross/Python/frozenmain.c	2006-11-16 17:47:49.000000000 +0100
++++ new-Python-2.5.cross/Python/frozenmain.c	2006-11-16 17:47:49.000000000 +0100
+@@ -3,7 +3,7 @@
+ 
+ #include "Python.h"
+ 
+-#ifdef MS_WINDOWS
++#if defined (MS_WINDOWS) && ! defined (__MINGW32__)
+ extern void PyWinFreeze_ExeInit(void);
+ extern void PyWinFreeze_ExeTerm(void);
+ extern int PyInitFrozenExtensions(void);
+@@ -32,12 +32,12 @@
+ 		setbuf(stderr, (char *)NULL);
+ 	}
+ 
+-#ifdef MS_WINDOWS
++#if defined (MS_WINDOWS) && ! defined (__MINGW32__)
+ 	PyInitFrozenExtensions();
+ #endif /* MS_WINDOWS */
+ 	Py_SetProgramName(argv[0]);
+ 	Py_Initialize();
+-#ifdef MS_WINDOWS
++#if defined (MS_WINDOWS) && ! defined (__MINGW32__)
+ 	PyWinFreeze_ExeInit();
+ #endif
+ 
+@@ -60,7 +60,7 @@
+ 	if (inspect && isatty((int)fileno(stdin)))
+ 		sts = PyRun_AnyFile(stdin, "<stdin>") != 0;
+ 
+-#ifdef MS_WINDOWS
++#if defined (MS_WINDOWS) && ! defined (__MINGW32__)
+ 	PyWinFreeze_ExeTerm();
+ #endif
+ 	Py_Finalize();
+

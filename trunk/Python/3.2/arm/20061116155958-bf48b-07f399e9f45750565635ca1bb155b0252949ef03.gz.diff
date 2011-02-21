@@ -1,0 +1,25 @@
+Thu Nov 16 16:59:58 CET 2006  hanwen@lilypond.org
+  * use CROSS_TARGET for platform if CROSS_COMPILING
+diff -rN -u old-Python-2.5.cross/setup.py new-Python-2.5.cross/setup.py
+--- old-Python-2.5.cross/setup.py	2006-11-16 17:47:44.000000000 +0100
++++ new-Python-2.5.cross/setup.py	2006-11-16 17:47:44.000000000 +0100
+@@ -247,11 +247,14 @@
+                           level=3)
+ 
+     def get_platform(self):
+-        # Get value of sys.platform
+-        for platform in ['cygwin', 'beos', 'darwin', 'atheos', 'osf1']:
+-            if sys.platform.startswith(platform):
++        # Get value of target's sys.platform
++        p = sys.platform
++        if os.environ.get('CROSS_COMPILING') == 'yes':
++            p = os.environ.get('CROSS_TARGET')
++        for platform in ['cygwin', 'mingw', 'beos', 'darwin', 'atheos', 'osf1']:
++            if p.startswith(platform):
+                 return platform
+-        return sys.platform
++        return p
+ 
+     def detect_modules(self):
+         # Ensure that /usr/local is always used
+

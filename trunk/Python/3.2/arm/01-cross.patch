@@ -1,0 +1,601 @@
+diff -Nurp Python-2.5.orig/Lib/distutils/command/build_ext.py Python-2.5/Lib/distutils/command/build_ext.py
+--- Python-2.5.orig/Lib/distutils/command/build_ext.py	2006-05-23 08:47:16.000000000 -0300
++++ Python-2.5/Lib/distutils/command/build_ext.py	2007-06-18 19:24:30.000000000 -0300
+@@ -614,6 +614,8 @@ class build_ext (Command):
+             ext_path[len(ext_path) - 1] = ext_path[len(ext_path) - 1][:8]
+         # extensions in debug_mode are named 'module_d.pyd' under windows
+         so_ext = get_config_var('SO')
++        if os.environ.get('CROSS_COMPILING') == 'yes':
++            so_ext = os.environ.get('SO')
+         if os.name == 'nt' and self.debug:
+             return apply(os.path.join, ext_path) + '_d' + so_ext
+         return apply(os.path.join, ext_path) + so_ext
+diff -Nurp Python-2.5.orig/Makefile.pre.in Python-2.5/Makefile.pre.in
+--- Python-2.5.orig/Makefile.pre.in	2006-07-30 13:20:10.000000000 -0300
++++ Python-2.5/Makefile.pre.in	2007-06-18 19:27:15.000000000 -0300
+@@ -27,6 +27,7 @@ MODLIBS=        _MODLIBS_
+ VERSION=	@VERSION@
+ srcdir=		@srcdir@
+ VPATH=		@srcdir@
++export srcdir
+ 
+ CC=		@CC@
+ CXX=		@CXX@
+@@ -72,6 +73,16 @@ CFLAGSFORSHARED=@CFLAGSFORSHARED@
+ # C flags used for building the interpreter object files
+ PY_CFLAGS=	$(CFLAGS) $(CPPFLAGS) $(CFLAGSFORSHARED) -DPy_BUILD_CORE
+ 
++# For cross compile: build compiler options
++CC_FOR_BUILD=	@CC_FOR_BUILD@
++CROSS_COMPILING=	@cross_compiling@
++EXEEXT_FOR_BUILD=	@EXEEXT_FOR_BUILD@
++O_FOR_BUILD=	@O_FOR_BUILD@
++
++CFLAGS_FOR_BUILD=	@CFLAGS_FOR_BUILD@
++CPPFLAGS_FOR_BUILD=	@CPPFLAGS_FOR_BUILD@ -I$(srcdir)/Include
++LDFLAGS_FOR_BUILD=	@LDFLAGS_FOR_BUILD@
++LIBS_FOR_BUILD=	@LIBS_FOR_BUILD@
+ 
+ # Machine-dependent subdirectories
+ MACHDEP=	@MACHDEP@
+@@ -169,7 +180,8 @@ MACHDEP_OBJS=	@MACHDEP_OBJS@
+ UNICODE_OBJS=   @UNICODE_OBJS@
+ 
+ PYTHON=		python$(EXE)
+-BUILDPYTHON=	python$(BUILDEXE)
++BUILDPYTHON=	python$(EXE)
++PYTHON_FOR_BUILD=	@PYTHON_FOR_BUILD@
+ 
+ # === Definitions added by makesetup ===
+ 
+@@ -195,7 +207,7 @@ GRAMMAR_INPUT=	$(srcdir)/Grammar/Grammar
+ 
+ ##########################################################################
+ # Parser
+-PGEN=		Parser/pgen$(EXE)
++PGEN_FOR_BUILD=	Parser/pgen$(EXEEXT_FOR_BUILD)
+ 
+ POBJS=		\
+ 		Parser/acceler.o \
+@@ -212,14 +224,27 @@ POBJS=		\
+ 
+ PARSER_OBJS=	$(POBJS) Parser/myreadline.o Parser/tokenizer.o
+ 
+-PGOBJS=		\
+-		Objects/obmalloc.o \
+-		Python/mysnprintf.o \
+-		Parser/tokenizer_pgen.o \
+-		Parser/printgrammar.o \
+-		Parser/pgenmain.o
++POBJS_FOR_BUILD=		\
++		Parser/acceler.$(O_FOR_BUILD) \
++		Parser/grammar1.$(O_FOR_BUILD) \
++		Parser/listnode.$(O_FOR_BUILD) \
++		Parser/node.$(O_FOR_BUILD) \
++		Parser/parser.$(O_FOR_BUILD) \
++		Parser/parsetok.$(O_FOR_BUILD) \
++		Parser/bitset.$(O_FOR_BUILD) \
++		Parser/metagrammar.$(O_FOR_BUILD) \
++		Parser/firstsets.$(O_FOR_BUILD) \
++		Parser/grammar.$(O_FOR_BUILD) \
++		Parser/pgen.$(O_FOR_BUILD)
++
++PGOBJS_FOR_BUILD=		\
++		Objects/obmalloc.$(O_FOR_BUILD) \
++		Python/mysnprintf.$(O_FOR_BUILD) \
++		Parser/tokenizer_pgen.$(O_FOR_BUILD) \
++		Parser/printgrammar.$(O_FOR_BUILD) \
++		Parser/pgenmain.$(O_FOR_BUILD)
+ 
+-PGENOBJS=	$(PGENMAIN) $(POBJS) $(PGOBJS)
++PGENOBJS=	$(POBJS_FOR_BUILD) $(PGOBJS_FOR_BUILD)
+ 
+ ##########################################################################
+ # AST
+@@ -338,15 +363,15 @@ $(BUILDPYTHON):	Modules/python.o $(LIBRA
+ 			Modules/python.o \
+ 			$(BLDLIBRARY) $(LIBS) $(MODLIBS) $(SYSLIBS) $(LDLAST)
+ 
+-platform: $(BUILDPYTHON)
+-	$(RUNSHARED) ./$(BUILDPYTHON) -E -c 'import sys ; from distutils.util import get_platform ; print get_platform()+"-"+sys.version[0:3]' >platform
++platform: $(PYTHON_FOR_BUILD)
++	$(RUNSHARED) $(PYTHON_FOR_BUILD) -E -c 'import sys ; from distutils.util import get_platform ; print get_platform()+"-"+sys.version[0:3]' >platform
+ 
+ 
+ # Build the shared modules
+-sharedmods: $(BUILDPYTHON)
++sharedmods: $(PYTHON_FOR_BUILD)
+ 	case $$MAKEFLAGS in \
+-	*-s*) $(RUNSHARED) CC='$(CC)' LDSHARED='$(BLDSHARED)' OPT='$(OPT)' ./$(BUILDPYTHON) -E $(srcdir)/setup.py -q build;; \
+-	*) $(RUNSHARED) CC='$(CC)' LDSHARED='$(BLDSHARED)' OPT='$(OPT)' ./$(BUILDPYTHON) -E $(srcdir)/setup.py build;; \
++	*-s*) $(RUNSHARED) CROSS_COMPILING=$(CROSS_COMPILING) CC='$(CC)' LDSHARED='$(BLDSHARED)' OPT='$(OPT)' $(PYTHON_FOR_BUILD) -E $(srcdir)/setup.py -q build;; \
++	*) $(RUNSHARED) CROSS_COMPILING=$(CROSS_COMPILING) CC='$(CC)' LDSHARED='$(BLDSHARED)' OPT='$(OPT)' $(PYTHON_FOR_BUILD) -E $(srcdir)/setup.py build;; \
+ 	esac
+ 
+ # Build static library
+@@ -469,11 +494,11 @@ Modules/python.o: $(srcdir)/Modules/pyth
+ 	$(MAINCC) -c $(PY_CFLAGS) -o $@ $(srcdir)/Modules/python.c
+ 
+ 
+-$(GRAMMAR_H) $(GRAMMAR_C): $(PGEN) $(GRAMMAR_INPUT)
+-		-$(PGEN) $(GRAMMAR_INPUT) $(GRAMMAR_H) $(GRAMMAR_C)
++$(GRAMMAR_H) $(GRAMMAR_C): $(PGEN_FOR_BUILD) $(GRAMMAR_INPUT)
++		-$(PGEN_FOR_BUILD) $(GRAMMAR_INPUT) $(GRAMMAR_H) $(GRAMMAR_C)
+ 
+-$(PGEN):	$(PGENOBJS)
+-		$(CC) $(OPT) $(LDFLAGS) $(PGENOBJS) $(LIBS) -o $(PGEN)
++$(PGEN_FOR_BUILD):	$(PGENOBJS)
++		$(CC_FOR_BUILD) $(OPT) $(LDFLAGS_FOR_BUILD) $(PGENOBJS) $(LIBS_FOR_BUILD) -o $(PGEN_FOR_BUILD)
+ 
+ Parser/grammar.o:	$(srcdir)/Parser/grammar.c \
+ 				$(srcdir)/Include/token.h \
+@@ -500,6 +525,14 @@ Objects/unicodectype.o:	$(srcdir)/Object
+ 				$(srcdir)/Objects/unicodetype_db.h
+ 
+ ############################################################################
++# Cross compile rules
++
++# .x is a native object files during cross-compile. 
++.SUFFIXES: .x 
++.c.x:
++	$(CC_FOR_BUILD) -c $(CPPFLAGS_FOR_BUILD) $(CFLAGS_FOR_BUILD) -o $@ $<
++
++############################################################################
+ # Header files
+ 
+ PYTHON_HEADERS= \
+@@ -572,7 +605,7 @@ $(LIBRARY_OBJS) $(MODOBJS) Modules/pytho
+ 
+ TESTOPTS=	-l $(EXTRATESTOPTS)
+ TESTPROG=	$(srcdir)/Lib/test/regrtest.py
+-TESTPYTHON=	$(RUNSHARED) ./$(BUILDPYTHON) -E -tt
++TESTPYTHON=	$(RUNSHARED) $(PYTHON_FOR_BUILD) -E -tt
+ test:		all platform
+ 		-find $(srcdir)/Lib -name '*.py[co]' -print | xargs rm -f
+ 		-$(TESTPYTHON) $(TESTPROG) $(TESTOPTS)
+@@ -593,7 +626,7 @@ testuniversal:	all platform
+ 		-find $(srcdir)/Lib -name '*.py[co]' -print | xargs rm -f
+ 		-$(TESTPYTHON) $(TESTPROG) $(TESTOPTS) -uall
+ 		$(TESTPYTHON) $(TESTPROG) $(TESTOPTS) -uall
+-		$(RUNSHARED) /usr/libexec/oah/translate ./$(BUILDPYTHON) -E -tt $(TESTPROG) $(TESTOPTS) -uall
++		$(RUNSHARED) /usr/libexec/oah/translate $(PYTHON_FOR_BUILD) -E -tt $(TESTPROG) $(TESTOPTS) -uall
+ 
+ 
+ # Like testall, but with a single pass only
+@@ -716,7 +749,7 @@ LIBSUBDIRS=	lib-tk site-packages test te
+ 		distutils distutils/command distutils/tests $(XMLLIBSUBDIRS) \
+ 		setuptools setuptools/command setuptools/tests setuptools.egg-info \
+ 		curses $(MACHDEPS)
+-libinstall:	$(BUILDPYTHON) $(srcdir)/Lib/$(PLATDIR)
++libinstall: $(srcdir)/Lib/$(PLATDIR) $(PYTHON_FOR_BUILD)
+ 	@for i in $(SCRIPTDIR) $(LIBDEST); \
+ 	do \
+ 		if test ! -d $(DESTDIR)$$i; then \
+@@ -773,19 +806,19 @@ libinstall:	$(BUILDPYTHON) $(srcdir)/Lib
+ 	done
+ 	$(INSTALL_DATA) $(srcdir)/LICENSE $(DESTDIR)$(LIBDEST)/LICENSE.txt
+ 	PYTHONPATH=$(DESTDIR)$(LIBDEST)  $(RUNSHARED) \
+-		./$(BUILDPYTHON) -Wi -tt $(DESTDIR)$(LIBDEST)/compileall.py \
++		$(PYTHON_FOR_BUILD) -Wi -tt $(DESTDIR)$(LIBDEST)/compileall.py \
+ 		-d $(LIBDEST) -f \
+ 		-x 'bad_coding|badsyntax|site-packages' $(DESTDIR)$(LIBDEST)
+ 	PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
+-		./$(BUILDPYTHON) -Wi -tt -O $(DESTDIR)$(LIBDEST)/compileall.py \
++		$(PYTHON_FOR_BUILD) -Wi -tt -O $(DESTDIR)$(LIBDEST)/compileall.py \
+ 		-d $(LIBDEST) -f \
+ 		-x 'bad_coding|badsyntax|site-packages' $(DESTDIR)$(LIBDEST)
+ 	-PYTHONPATH=$(DESTDIR)$(LIBDEST)  $(RUNSHARED) \
+-		./$(BUILDPYTHON) -Wi -t $(DESTDIR)$(LIBDEST)/compileall.py \
++		$(PYTHON_FOR_BUILD) -Wi -t $(DESTDIR)$(LIBDEST)/compileall.py \
+ 		-d $(LIBDEST)/site-packages -f \
+ 		-x badsyntax $(DESTDIR)$(LIBDEST)/site-packages
+ 	-PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
+-		./$(BUILDPYTHON) -Wi -t -O $(DESTDIR)$(LIBDEST)/compileall.py \
++		$(PYTHON_FOR_BUILD) -Wi -t -O $(DESTDIR)$(LIBDEST)/compileall.py \
+ 		-d $(LIBDEST)/site-packages -f \
+ 		-x badsyntax $(DESTDIR)$(LIBDEST)/site-packages
+ 
+@@ -885,8 +918,9 @@ libainstall:	all
+ # Install the dynamically loadable modules
+ # This goes into $(exec_prefix)
+ sharedinstall:
+-	$(RUNSHARED) ./$(BUILDPYTHON) -E $(srcdir)/setup.py install \
+-	   	--prefix=$(prefix) \
++	CC='$(CC)' LDSHARED='$(BLDSHARED)' OPT='$(OPT)' CROSS_COMPILING='$(CROSS_COMPILING)' \
++		$(RUNSHARED) $(PYTHON_FOR_BUILD) -E $(srcdir)/setup.py install \
++		--prefix=$(prefix) \
+ 		--install-scripts=$(BINDIR) \
+ 		--install-platlib=$(DESTSHARED) \
+ 		--root=/$(DESTDIR)
+@@ -958,8 +992,8 @@ frameworkinstallextras:
+ 
+ # This installs a few of the useful scripts in Tools/scripts
+ scriptsinstall:
+-	SRCDIR=$(srcdir) $(RUNSHARED) \
+-	./$(BUILDPYTHON) $(srcdir)/Tools/scripts/setup.py install \
++	$(RUNSHARED) \
++	$(PYTHON_FOR_BUILD) $(srcdir)/Tools/scripts/setup.py install \
+ 	--prefix=$(prefix) \
+ 	--install-scripts=$(BINDIR) \
+ 	--root=/$(DESTDIR)
+@@ -1020,11 +1054,12 @@ clean: pycremoval
+ 	find $(srcdir)/build -name 'fficonfig.py' -exec rm -f {} ';' || true
+ 
+ clobber: clean
+-	-rm -f $(BUILDPYTHON) $(PGEN) $(LIBRARY) $(LDLIBRARY) $(DLLLIBRARY) \
++	-rm -f $(BUILDPYTHON) $(PGEN_FOR_BUILD) $(LIBRARY) $(LDLIBRARY) $(DLLLIBRARY) \
+ 		tags TAGS \
+ 		config.cache config.log pyconfig.h Modules/config.c
+ 	-rm -rf build platform
+ 	-rm -rf $(PYTHONFRAMEWORKDIR)
++	-rm -rf buildpython
+ 
+ # Make things extra clean, before making a distribution:
+ # remove all generated files, even Makefile[.pre]
+diff -Nurp Python-2.5.orig/README Python-2.5/README
+--- Python-2.5.orig/README	2006-09-18 03:51:50.000000000 -0300
++++ Python-2.5/README	2007-06-18 19:24:30.000000000 -0300
+@@ -1196,6 +1196,40 @@ release-build performance).  The Unix, W
+ do this.
+ 
+ 
++Cross Compiling
++---------------
++
++Python can be cross compiled by supplying different --build and --host
++parameters to configure.  Python is compiled on the "build" system and
++executed on the "host" system.  Cross compiling python requires a
++native Python on the build host, and a natively compiled tool `Pgen'.
++
++Before cross compiling, Python must first be compiled and installed on
++the build host.  The configure script will use `cc' and `python', or
++environment variables CC_FOR_BUILD or PYTHON_FOR_BUILD, eg:
++
++   CC_FOR_BUILD=gcc-3.3 \
++   PYTHON_FOR_BUILD=python2.4 \
++   .../configure --build=i686-linux --host=i586-mingw32
++
++Cross compiling has been tested under linux, mileage may vary for
++other platforms.
++
++A few reminders on using configure to cross compile:
++- Cross compile tools must be in PATH,
++- Cross compile tools must be prefixed with the host type
++  (ie i586-mingw32-gcc, powerpc-darwin8-ranlib, ...),
++- CC, CXX, AR, and RANLIB must be undefined when running configure,
++  they will be auto-detected.
++- Autoconf must be stopped from autodetecting definitions for the
++  build machine.  This is easiest done by creating a config.cache
++  that overrides ac_cv_* variables appropriately.
++
++If you need a cross compiler, Debian ships several several (eg: avr,
++m68hc1x, mingw32), while dpkg-cross easily creates others.  Otherwise,
++check out Dan Kegel's crosstool: http://www.kegel.com/crosstool .
++
++
+ Miscellaneous issues
+ ====================
+ 
+diff -Nurp Python-2.5.orig/configure.in Python-2.5/configure.in
+--- Python-2.5.orig/configure.in	2006-09-04 23:54:42.000000000 -0300
++++ Python-2.5/configure.in	2007-06-18 19:28:53.000000000 -0300
+@@ -9,6 +9,11 @@ AC_INIT(python, PYTHON_VERSION, http://w
+ AC_CONFIG_SRCDIR([Include/object.h])
+ AC_CONFIG_HEADER(pyconfig.h)
+ 
++# find compiler while respecting --host setting
++AC_CANONICAL_HOST()
++AC_CHECK_TOOLS(CC,gcc cc)
++AC_CHECK_TOOLS(CXX,g++ c++)
++
+ dnl This is for stuff that absolutely must end up in pyconfig.h.
+ dnl Please use pyport.h instead, if possible.
+ AH_TOP([
+@@ -163,8 +168,8 @@ AC_SUBST(FRAMEWORKUNIXTOOLSPREFIX)
+ # Set name for machine-dependent library files
+ AC_SUBST(MACHDEP)
+ AC_MSG_CHECKING(MACHDEP)
+-if test -z "$MACHDEP"
+-then
++if test -z "$MACHDEP"; then
++    if test "$cross_compiling" = "no"; then
+ 	ac_sys_system=`uname -s`
+ 	if test "$ac_sys_system" = "AIX" -o "$ac_sys_system" = "Monterey64" \
+ 	-o "$ac_sys_system" = "UnixWare" -o "$ac_sys_system" = "OpenUNIX"; then
+@@ -172,6 +177,23 @@ then
+ 	else
+ 		ac_sys_release=`uname -r`
+ 	fi
++    else
++	m=`$CC -dumpmachine`
++ 	changequote(<<, >>)#dnl
++	ac_sys_system=`expr "$m" : "[^-]*-\([^-]*\)"`
++ 	changequote([, ])#dnl
++
++
++	case $ac_sys_system in
++	cygwin*) ac_sys_system=`echo $ac_sys_system | sed s/cygwin/CYGWIN/g `;;
++	darwin*) ac_sys_system=`echo $ac_sys_system | sed s/darwin/Darwin/g `;;
++	freebsd*) ac_sys_system=`echo $ac_sys_system | sed s/freebsd/FreeBSD/g `;;
++	linux*) ac_sys_system=`echo $ac_sys_system | sed s/linux/Linux/g `;;
++	esac
++	
++
++    fi
++    
+ 	ac_md_system=`echo $ac_sys_system |
+ 			   tr -d '[/ ]' | tr '[[A-Z]]' '[[a-z]]'`
+ 	ac_md_release=`echo $ac_sys_release |
+@@ -475,9 +497,11 @@ if test -d casesensitivetestdir
+ then
+     AC_MSG_RESULT(yes)
+     BUILDEXEEXT=.exe
++    case_sensitive=no
+ else
+-	AC_MSG_RESULT(no)
+-	BUILDEXEEXT=$EXEEXT
++    AC_MSG_RESULT(no)
++    BUILDEXEEXT=$EXEEXT
++    case_sensitive=yes
+ fi
+ rmdir CaseSensitiveTestDir
+ 
+@@ -676,9 +700,9 @@ fi
+ 
+ AC_MSG_RESULT($LDLIBRARY)
+ 
+-AC_PROG_RANLIB
+-AC_SUBST(AR)
+-AC_CHECK_PROGS(AR, ar aal, ar)
++# find tools while respecting --host setting
++AC_CHECK_TOOL(RANLIB,ranlib)
++AC_CHECK_TOOLS(AR,ar aal,ar)
+ 
+ AC_SUBST(SVNVERSION)
+ AC_CHECK_PROG(SVNVERSION, svnversion, found, not-found)
+@@ -3346,7 +3370,8 @@ AC_CHECK_FILE(/dev/ptmx, AC_DEFINE(HAVE_
+ AC_CHECK_FILE(/dev/ptc, AC_DEFINE(HAVE_DEV_PTC, 1, [Define if we have /dev/ptc.]))
+ 
+ AC_MSG_CHECKING(for %zd printf() format support)
+-AC_TRY_RUN([#include <stdio.h>
++AC_CACHE_VAL(ac_cv_printf_zd_format,
++  AC_TRY_RUN([#include <stdio.h>
+ #include <stddef.h>
+ #include <string.h>
+ 
+@@ -3364,7 +3389,7 @@ int main()
+ }],
+ [AC_MSG_RESULT(yes)
+  AC_DEFINE(PY_FORMAT_SIZE_T, "z", [Define to printf format modifier for Py_ssize_t])],
+- AC_MSG_RESULT(no))
++ AC_MSG_RESULT(no)))
+ 
+ AC_CHECK_TYPE(socklen_t,,
+   AC_DEFINE(socklen_t,int,
+@@ -3394,6 +3419,63 @@ for dir in $SRCDIRS; do
+ done
+ AC_MSG_RESULT(done)
+ 
++# Cross compiling
++AC_SUBST(cross_compiling)
++
++if test "$cross_compiling" = "yes"; then
++    AC_MSG_CHECKING(cc for build)
++    CC_FOR_BUILD="${CC_FOR_BUILD-cc}"
++else
++    CC_FOR_BUILD="${CC_FOR_BUILD-$CC}"
++fi   
++     
++if test "$cross_compiling" = "yes"; then
++   AC_MSG_RESULT($CC_FOR_BUILD)
++fi
++
++AC_ARG_VAR(CC_FOR_BUILD,[build system C compiler (default: cc)])
++	
++if test "$cross_compiling" = "yes"; then
++    AC_MSG_CHECKING(python for build)
++    PYTHON_FOR_BUILD="${PYTHON_FOR_BUILD-python}"
++    PYTHON_FOR_BUILD=`which $PYTHON_FOR_BUILD`
++else
++    PYTHON_FOR_BUILD='./$(BUILDPYTHON)'
++fi   
++
++if test "$cross_compiling" = "yes"; then
++    AC_MSG_RESULT($PYTHON_FOR_BUILD)
++fi
++AC_ARG_VAR(PYTHON_FOR_BUILD,[build system python (default: python)])
++AC_SUBST(PYTHON_FOR_BUILD)
++
++if test "$cross_compiling" = "yes"; then
++    CFLAGS_FOR_BUILD=${CFLAGS_FOR_BUILD-}
++    CPPFLAGS_FOR_BUILD=${CPPFLAGS_FOR_BUILD- -I.}
++    CROSS_COMMENT=#
++    if test "$case_sensitive" = "yes"
++    then
++        EXEEXT_FOR_BUILD=
++    else
++        EXEEXT_FOR_BUILD=.exe
++    fi
++    LDFLAGS_FOR_BUILD=${LDFLAGS_FOR_BUILD-}
++    LIBS_FOR_BUILD=${LIBS_FOR_BUILD-}
++    O_FOR_BUILD=x
++    RUNSHARED="CROSS_TARGET=$ac_sys_system SRCDIR=$srcdir SO=${SO}"
++else
++    CROSS_COMMENT=
++    EXEEXT_FOR_BUILD=$BUILDEXEEXT
++    O_FOR_BUILD=o
++fi
++AC_SUBST(CFLAGS_FOR_BUILD)
++AC_SUBST(CPPFLAGS_FOR_BUILD)
++AC_SUBST(CROSS_COMMENT)
++AC_SUBST(EXEEXT_FOR_BUILD)
++AC_SUBST(LDFLAGS_FOR_BUILD)
++AC_SUBST(LIBS_FOR_BUILD)
++AC_SUBST(O_FOR_BUILD)
++
+ # generate output files
+ AC_CONFIG_FILES(Makefile.pre Modules/Setup.config)
+ AC_OUTPUT
+diff -Nurp Python-2.5.orig/setup.py Python-2.5/setup.py
+--- Python-2.5.orig/setup.py	2006-08-09 20:42:18.000000000 -0300
++++ Python-2.5/setup.py	2007-06-18 19:24:30.000000000 -0300
+@@ -17,6 +17,15 @@ from distutils.command.install_lib impor
+ # This global variable is used to hold the list of modules to be disabled.
+ disabled_module_list = []
+ 
++import os
++
++if os.environ.get('CROSS_COMPILING') == 'yes':
++    sysconfig.get_config_vars()
++    sysconfig._config_vars.update (os.environ)
++else:
++    sysconfig.get_config_vars()
++    sysconfig._config_vars['srcdir'] = os.environ['srcdir']
++    
+ def add_dir_to_list(dirlist, dir):
+     """Add the directory 'dir' to the list 'dirlist' (at the front) if
+     1) 'dir' is not already in 'dirlist'
+@@ -203,6 +212,10 @@ class PyBuildExt(build_ext):
+             self.announce('WARNING: skipping import check for Cygwin-based "%s"'
+                 % ext.name)
+             return
++        if os.environ.get('CROSS_COMPILING') == 'yes':
++            self.announce('WARNING: skipping import check for cross compiled "%s"'
++                % ext.name)
++            return
+         ext_filename = os.path.join(
+             self.build_lib,
+             self.get_ext_filename(self.get_ext_fullname(ext.name)))
+@@ -236,16 +249,21 @@ class PyBuildExt(build_ext):
+                           level=3)
+ 
+     def get_platform(self):
+-        # Get value of sys.platform
+-        for platform in ['cygwin', 'beos', 'darwin', 'atheos', 'osf1']:
+-            if sys.platform.startswith(platform):
++        # Get value of target's sys.platform
++        p = sys.platform
++        if os.environ.get('CROSS_COMPILING') == 'yes':
++            p = os.environ.get('CROSS_TARGET')
++        for platform in ['cygwin', 'mingw', 'beos', 'darwin', 'atheos', 'osf1']:
++            if p.startswith(platform):
+                 return platform
+-        return sys.platform
++        return p
+ 
+     def detect_modules(self):
+         # Ensure that /usr/local is always used
+-        add_dir_to_list(self.compiler.library_dirs, '/usr/local/lib')
+-        add_dir_to_list(self.compiler.include_dirs, '/usr/local/include')
++
++        if os.environ.get('CROSS_COMPILING') != 'yes':
++            add_dir_to_list(self.compiler.library_dirs, '/usr/local/lib')
++            add_dir_to_list(self.compiler.include_dirs, '/usr/local/include')
+ 
+         # Add paths specified in the environment variables LDFLAGS and
+         # CPPFLAGS for header and library files.
+@@ -293,11 +311,15 @@ class PyBuildExt(build_ext):
+         # lib_dirs and inc_dirs are used to search for files;
+         # if a file is found in one of those directories, it can
+         # be assumed that no additional -I,-L directives are needed.
+-        lib_dirs = self.compiler.library_dirs + [
+-            '/lib64', '/usr/lib64',
+-            '/lib', '/usr/lib',
+-            ]
+-        inc_dirs = self.compiler.include_dirs + ['/usr/include']
++        lib_dirs = []
++        inc_dirs = []
++        if os.environ.get('CROSS_COMPILING') != 'yes':
++            lib_dirs = self.compiler.library_dirs + [
++                '/lib64', '/usr/lib64',
++                '/lib', '/usr/lib',
++                ]
++            inc_dirs = self.compiler.include_dirs + ['/usr/include']
++            
+         exts = []
+ 
+         config_h = sysconfig.get_config_h_filename()
+@@ -531,6 +553,7 @@ class PyBuildExt(build_ext):
+                                ['/usr/kerberos/include'])
+             if krb5_h:
+                 ssl_incs += krb5_h
++
+         ssl_libs = find_library_file(self.compiler, 'ssl',lib_dirs,
+                                      ['/usr/local/ssl/lib',
+                                       '/usr/contrib/ssl/lib/'
+@@ -612,6 +635,7 @@ class PyBuildExt(build_ext):
+ 
+         # construct a list of paths to look for the header file in on
+         # top of the normal inc_dirs.
++        
+         db_inc_paths = [
+             '/usr/include/db4',
+             '/usr/local/include/db4',
+@@ -622,6 +646,7 @@ class PyBuildExt(build_ext):
+             '/opt/sfw/include/db3',
+             '/sw/include/db3',
+         ]
++        
+         # 4.x minor number specific paths
+         for x in (0,1,2,3,4):
+             db_inc_paths.append('/usr/include/db4%d' % x)
+@@ -638,6 +663,11 @@ class PyBuildExt(build_ext):
+             db_inc_paths.append('/pkg/db-3.%d/include' % x)
+             db_inc_paths.append('/opt/db-3.%d/include' % x)
+ 
++
++        
++        if os.environ.get('CROSS_COMPILING') == 'yes':
++            db_inc_paths = []
++
+         # Add some common subdirectories for Sleepycat DB to the list,
+         # based on the standard include directories. This way DB3/4 gets
+         # picked up when it is installed in a non-standard prefix and
+@@ -757,6 +787,10 @@ class PyBuildExt(build_ext):
+         MIN_SQLITE_VERSION = ".".join([str(x)
+                                     for x in MIN_SQLITE_VERSION_NUMBER])
+ 
++        if os.environ.get('CROSS_COMPILING') == 'yes':
++            sqlite_inc_paths = []
++
++
+         # Scan the default include directories before the SQLite specific
+         # ones. This allows one to override the copy of sqlite on OSX,
+         # where /usr/include contains an old version of sqlite.
+@@ -837,7 +871,12 @@ class PyBuildExt(build_ext):
+         # accidentally building this module with a later version of the
+         # underlying db library.  May BSD-ish Unixes incorporate db 1.85
+         # symbols into libc and place the include file in /usr/include.
++
++
+         f = "/usr/include/db.h"
++        if os.environ.get('CROSS_COMPILING') == 'yes':
++            f = ''
++
+         if os.path.exists(f):
+             data = open(f).read()
+             m = re.search(r"#s*define\s+HASHVERSION\s+2\s*", data)
+@@ -1347,6 +1386,7 @@ class PyBuildExt(build_ext):
+             ext.sources.extend(fficonfig['ffi_sources'])
+             ext.include_dirs.extend(include_dirs)
+             ext.extra_compile_args.extend(extra_compile_args)
++
+         return True
+ 
+     def detect_ctypes(self, inc_dirs, lib_dirs):
+@@ -1495,6 +1535,7 @@ def main():
+     # turn off warnings when deprecated modules are imported
+     import warnings
+     warnings.filterwarnings("ignore",category=DeprecationWarning)
++    
+     setup(# PyPI Metadata (PEP 301)
+           name = "Python",
+           version = sys.version.split()[0],
+@@ -1513,7 +1554,6 @@ def main():
+           # The struct module is defined here, because build_ext won't be
+           # called unless there's at least one extension module defined.
+           ext_modules=[Extension('_struct', ['_struct.c'])],
+-
+           # Scripts to install
+           scripts = ['Tools/scripts/pydoc', 'Tools/scripts/idle',
+                      'Lib/smtpd.py']
