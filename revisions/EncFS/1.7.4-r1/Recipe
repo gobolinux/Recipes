@@ -1,0 +1,8 @@
+# Recipe for version 1.7.4 by Michael Homer <michael@gobolinux.org>, on Sat Feb 26 20:26:40 NZDT 2011
+# Recipe (MakeRecipe) for ENCFS by Jonas Karlsson <jonka750@student.liu.se>, on Wed Nov 23 22:01:06 CET 2005
+compile_version=1.8.0
+url="http://encfs.googlecode.com/files/encfs-1.5-2.tgz"
+file_size=923047
+file_md5=b07008545545b4a57cf2bf65f08a14ad
+dir='encfs-1.5'
+recipe_type=configure
