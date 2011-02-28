@@ -1,0 +1,22 @@
+# Recipe for version 1.6.2.13 by Fabio Mierlo <geromao@gmail.com>, on Sun Feb 27 06:10:59 BRT 2011
+# Recipe (MakeRecipe) for Asterisk by Aitor Pérez Iturri, on vie feb 16 18:13:32 CET 2007
+compile_version=1.10.2
+url="http://downloads.asterisk.org/pub/telephony/asterisk/old-releases/asterisk-1.6.2.13.tar.gz"
+file_size=23679304
+file_md5=1e184a4d9301e2e4b9de3bc98b507d4f
+recipe_type=configure
+
+configure_options=(
+  --with-sounds-cache="$sourcedir/tmp"
+)
+unmanaged_files=(
+	"$goboVariable"
+)
+
+install_target="install samples"
+
+#do_build=no
+#pre_install () {
+#	make menuselect
+#	make
+#}
