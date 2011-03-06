@@ -1,0 +1,20 @@
+# Recipe for version 4.8.0 by Guilherme B. Bedin <gbedin@gobolinux.org>, on Sat Mar 5 17:18:14 BRT 2011
+# Recipe (MakeRecipe) for LibXFcegui4 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:20:12 CEST 2006
+compile_version=1.8.2
+url="http://archive.xfce.org/xfce/4.8/src/libxfcegui4-4.8.0.tar.bz2"
+file_size=674799
+file_md5=74fe7b81051450785fa8270aed1e6e5c
+recipe_type=configure
+configure_options=(
+   --enable-debug=no
+)
+with_libglade=(
+   --with-libglade-module-path=$target/lib/libglade/2.0
+)
+with_glade=(
+   --with-gladeui-data-root="$target/share/glade3"
+   --with-gladeui-module-path="$target/lib/glade3/modules"
+)
+with_doc=(
+   --enable-gtk-doc
+)
