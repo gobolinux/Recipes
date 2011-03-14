@@ -1,0 +1,11 @@
+# Recipe for version 1.97 by kenneth marken <k-marken@online.no>, on ma. 14. mars 16:29:03 +0100 2011
+# Recipe (MakeRecipe) for Ytree by Andreas Koehler, on Don Sep 15 23:58:31 CEST 2005
+compile_version=1.8.0
+url="http://www.han.de/~werner/ytree-1.97.tar.gz"
+file_size=121571
+file_md5=2d5a7388feca60f5955fa9033c46ce47
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "DESTDIR=$target"
+)
