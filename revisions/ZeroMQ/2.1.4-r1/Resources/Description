@@ -1,0 +1,9 @@
+[Name] ZeroMQ
+[Summary] socket library that acts as a concurrency framework
+[Description] ZeroMQ is a library that acts as a concurrency framework.
+It carries messages across inproc, IPC, TCP, and multicast.
+It is able to connect N-to-N via fanout, pubsub, pipeline, request-reply.
+It's fast enough for clustered products and supercomputing
+and provides asynch I/O for scalable multicore message-passing apps.
+[License] GNU General Public License v3, GNU Lesser General Public License v3
+[Homepage] http://www.zeromq.org
