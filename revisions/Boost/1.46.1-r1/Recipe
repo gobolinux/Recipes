@@ -1,0 +1,29 @@
+# Recipe for version 1.46.1 by Lucas C. Villa Real, on Mon Apr 18 12:47:52 BRT 2011
+compile_version=1.8.2
+url="http://downloads.sourceforge.net/project/boost/boost/1.46.1/boost_1_46_1.tar.bz2"
+file_size=42001335
+file_md5=7375679575f4c8db605d426fc721d506
+recipe_type=makefile
+
+# Sadly, Boost 1.45 no longer provides a configure script, so we need to
+# resort to a very procedural recipe using Boost's completely nonstandard
+# build system.
+
+do_configuration() {
+   ./bootstrap.sh --prefix=$target
+}
+
+do_build() {
+   ./bjam variant=release threading=multi stage
+}
+
+do_install() {
+   ./bjam install
+
+   # Manually install docs
+   mkdir -p $target/doc
+   cp -R doc/html $target/doc
+
+   # Install bjam for use by e.g. BGL-Python
+   cp bjam $target/bin
+}
