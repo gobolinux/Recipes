@@ -1,0 +1,28 @@
+# Recipe for version 5.13 by Hisham Muhammad <hisham@gobolinux.org>, on Sat Apr 23 23:45:50 BRT 2011
+# By Leandro Motta Barros, 02005.13-02
+compile_version=1.8.0
+url="http://www.jwz.org/xscreensaver/xscreensaver-5.13.tar.gz"
+file_size=5923496
+file_md5=a1a55b763e17c5c83a2b7cb5ddf23560
+recipe_type=configure
+
+make_variables=(
+   "GTK_DATADIR=$target/share"
+   "PAM_DIR=$settings_target/pam.d"
+   "PAM_CONF=$settings_target/pam.conf"
+   "KDEDIR=$target"
+   "datadir=$target/share"
+   "gnulocaledir=$target/share/locale"
+)
+
+configure_options=(
+"--enable-locking"
+"--libexecdir=$target/lib"
+"--with-configdir=$settings_target/xscreensaver-hacks"
+"--with-x-app-defaults=$settings_target"
+"--with-gl"
+"--with-gle"
+"--with-randr-ext"
+"--with-dpms-ext"
+"--with-proc-interrupts"
+)
