@@ -1,0 +1,20 @@
+# Recipe for version 1.21 by Hisham Muhammad <hisham@gobolinux.org>, on Sat Apr 23 23:22:20 BRT 2011
+# Revised by Hisham Muhammad based on tip by MJ Ray
+url=$ftpGnu/groff/groff-1.21.tar.gz
+file_size=3863837
+file_md5=8b8cd29385b97616a0f0d96d0951c5bf
+compile_version=1.8.0
+recipe_type=configure
+configure_options=(
+   "--with-appresdir=$target/lib/X11/app-defaults"
+)
+make_variables=(
+   PAGE=A4
+)
+pre_link() {
+   pushd $target/bin
+   ln -s soelim zsoelim
+   ln -s eqn geqn
+   ln -s tbl gtbl
+   popd
+}
