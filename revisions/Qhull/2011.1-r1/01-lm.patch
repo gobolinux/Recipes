@@ -1,0 +1,22 @@
+This ensures that libm is linked to Qhull. Build breaks without -lm.
+
+diff -Naur qhull-2011.1_vanilla/CMakeLists.txt qhull-2011.1_modified/CMakeLists.txt
+--- qhull-2011.1_vanilla/CMakeLists.txt	2011-04-17 21:38:33.000000000 -0300
++++ qhull-2011.1_modified/CMakeLists.txt	2011-04-27 14:41:09.000000000 -0300
+@@ -188,7 +188,7 @@
+     COMPILE_DEFINITIONS "qh_QHpointer"
+     VERSION ${qhull_VERSION})
+ 
+-#target_link_libraries(${qhull_SHARED} m)
++target_link_libraries(${qhull_SHARED} m)
+ 
+ if(UNIX)
+     if(APPLE)
+@@ -209,6 +209,7 @@
+ add_library(${qhull_STATIC} STATIC ${libqhull_SOURCES})
+ set_target_properties(${qhull_STATIC} PROPERTIES
+     VERSION ${qhull_VERSION})
++target_link_libraries(${qhull_STATIC} m)
+ 
+ add_library(${qhull_STATICP} STATIC ${libqhull_SOURCES})
+ set_target_properties(${qhull_STATICP} PROPERTIES
