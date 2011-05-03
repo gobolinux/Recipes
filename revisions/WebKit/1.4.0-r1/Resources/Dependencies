@@ -1,0 +1,19 @@
+Cairo >= 1.2
+Curl >= 7.15 # Curl has less issues than libsoup
+Fontconfig >= 2.4
+FreeType >= 2.1.10
+GCC >= 3.4.5
+GLib >= 2.28.3 [gtk2]
+Glibc >= 2.5
+GStreamer >= 0.10
+GST-Plugins-Base >= 0.10
+GTK+ >= 2.8 [gtk2] #optional
+LibICU4C
+LibXML2 >= 2.6
+LibXSLT >= 1.1.7 #optional
+LibSoup >= 2.33.6 # To unify desktop we use libsoup for gnome
+Pango >= 1.12
+Enchant >= 0.22
+Gail >= 1.8
+SQLite >= 3.0 # optional - needed for various info storage
+ZLib >= 1.2.3
