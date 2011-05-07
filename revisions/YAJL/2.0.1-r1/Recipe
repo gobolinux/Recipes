@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for YAJL by Hisham Muhammad <hisham@gobolinux.org>, on Sat May 7 17:02:02 BRT 2011
+# Recipe for version 2.0.1 by Hisham Muhammad <hisham@gobolinux.org>, on Sat May 7 17:02:02 BRT 2011
+compile_version=1.9.0
+url="http://github.com/lloyd/yajl/tarball/2.0.1"
+file='yajl-2.0.1.tar.gz'
+file_size=82102
+file_md5=df6a751e7797b9c2182efd91b5d64017
+dir='lloyd-yajl-f4b2b1a'
+recipe_type=cmake
