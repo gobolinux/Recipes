@@ -1,0 +1,11 @@
+# Recipe for version 2.05 by Joshua Sako <jginsu@gmail.com>, on Sun May 15 06:55:17 EST 2011
+# Recipe (MakeRecipe) for LZO by Roko <ro.ko@mcnon.com>, on Thu Sep 30 21:46:16 BRT 2004
+compile_version=1.8.0
+url="http://www.oberhumer.com/opensource/lzo/download/lzo-2.05.tar.gz"
+file_size=587694
+file_md5=c67cda5fa191bab761c7cb06fe091e36
+recipe_type=configure
+
+configure_options=(
+    "--enable-shared=yes"
+)
