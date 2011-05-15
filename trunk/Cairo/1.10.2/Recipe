@@ -1,0 +1,13 @@
+# Recipe for version 1.10.2 by Joshua Sako <jginsu@gmail.com>, on Sun May 15 00:54:47 EST 2011
+# Recipe (MakeRecipe) for Cairo by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 10:58:19 BRT 2005
+compile_version=1.10.2
+url="http://www.cairographics.org/releases/cairo-1.10.2.tar.gz"
+file_size=23558405
+file_md5=f101a9e88b783337b20b2e26dfd26d5f
+recipe_type=configure
+configure_options=(
+   --enable-xcb
+   --enable-ft
+   --enable-tee
+)
+with_glitz="--enable-glitz"
