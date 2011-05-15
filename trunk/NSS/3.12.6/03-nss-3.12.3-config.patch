@@ -1,3 +1,39 @@
+--- nss/mozilla/security/nss/lib/ckfw/capi/config.mk.orig	2005-11-04 02:05:04.000000000 +0000
++++ nss/mozilla/security/nss/lib/ckfw/capi/config.mk	2006-01-15 05:13:52.000000000 +0000
+@@ -69,3 +69,9 @@
+ MKSHLIB += -R '$$ORIGIN'
+ endif
+ 
++ifeq ($(OS_TARGET),Linux)
++# The -R '$ORIGIN' linker option instructs this library to search for its
++# dependencies in the same directory where it resides.
++DSO_LDOPTS += -Wl,-R,'$$ORIGIN'
++endif
++
+--- nss/mozilla/security/nss/lib/freebl/Makefile.orig	2005-11-22 07:13:32.000000000 +0000
++++ nss/mozilla/security/nss/lib/freebl/Makefile	2006-01-15 05:16:05.000000000 +0000
+@@ -132,6 +132,7 @@
+ endif
+ 
+ ifeq ($(OS_TARGET),Linux)
++DSO_LDOPTS += -Wl,-R,'$$ORIGIN'
+ ifeq ($(CPU_ARCH),x86_64)
+     ASFILES  = arcfour-amd64-gas.s mpi_amd64_gas.s
+     ASFLAGS += -march=opteron -m64 -fPIC
+--- nss/mozilla/security/nss/lib/nss/config.mk.orig	2005-07-21 23:48:28.000000000 +0000
++++ nss/mozilla/security/nss/lib/nss/config.mk	2006-01-15 05:11:58.000000000 +0000
+@@ -122,6 +122,11 @@
+ endif
+ endif
+ 
++ifeq ($(OS_TARGET),Linux)
++# The -R '$ORIGIN' linker option instructs this library to search for its
++# dependencies in the same directory where it resides.
++DSO_LDOPTS += -Wl,-R,'$$ORIGIN'
++endif
+ 
+ ifeq (,$(filter-out WINNT WIN95,$(OS_TARGET)))
+ ifndef NS_USE_GCC
 --- nss/mozilla/security/nss/lib/softoken/config.mk.orig	2005-10-19 01:03:31.000000000 +0000
 +++ nss/mozilla/security/nss/lib/softoken/config.mk	2006-01-15 05:07:15.000000000 +0000
 @@ -93,6 +93,12 @@
@@ -28,3 +64,35 @@
  endif
  
  # indicates dependency on freebl static lib
+diff -urNa nss-3.12.3-orig/mozilla/security/nss/lib/ckfw/builtins/config.mk nss-3.12.3/mozilla/security/nss/lib/ckfw/builtins/config.mk
+--- nss-3.12.3-orig/mozilla/security/nss/lib/ckfw/builtins/config.mk	2009-07-01 12:13:50.000000000 +1200
++++ nss-3.12.3/mozilla/security/nss/lib/ckfw/builtins/config.mk	2009-07-01 17:07:02.000000000 +1200
+@@ -65,6 +65,12 @@
+ endif
+ endif
+ 
++ifeq ($(OS_TARGET),Linux)
++# The -R '$ORIGIN' linker option instructs this library to search for its
++# dependencies in the same directory where it resides.
++DSO_LDOPTS += -Wl,-R,'$$ORIGIN'
++endif
++
+ ifeq ($(OS_TARGET),SunOS)
+ # The -R '$ORIGIN' linker option instructs this library to search for its
+ # dependencies in the same directory where it resides.
+diff -urNa nss-3.12.3-orig/mozilla/security/nss/lib/smime/config.mk nss-3.12.3/mozilla/security/nss/lib/smime/config.mk
+--- nss-3.12.3-orig/mozilla/security/nss/lib/smime/config.mk	2009-07-01 12:13:50.000000000 +1200
++++ nss-3.12.3/mozilla/security/nss/lib/smime/config.mk	2009-07-01 17:08:32.000000000 +1200
+@@ -97,6 +97,12 @@
+ MKSHLIB += -R '$$ORIGIN'
+ endif
+ 
++ifeq ($(OS_TARGET),Linux)
++# The -R '$ORIGIN' linker option instructs this library to search for its
++# dependencies in the same directory where it resides.
++DSO_LDOPTS += -Wl,-R,'$$ORIGIN'
++endif
++
+ ifeq ($(OS_ARCH), HP-UX) 
+ ifneq ($(OS_TEST), ia64)
+ # pa-risc
