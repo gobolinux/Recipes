@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for PostGIS by Lucas C. Villa Real, on Tue May 17 12:54:32 BRT 2011
+# Recipe for version 1.5.2 by Lucas C. Villa Real, on Tue May 17 12:54:32 BRT 2011
+compile_version=1.12.1
+url="http://postgis.refractions.net/download/postgis-1.5.2.tar.gz"
+file_size=3749293
+file_md5=772ec1d0f04d6800cd7e2420a97a7483
+recipe_type=configure
+
+configure_options=(
+    --with-gui
+    --disable-gtktest
+)
+
+install_variables=(
+    bindir=$target/bin
+)
