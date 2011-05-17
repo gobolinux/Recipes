@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for OSM2PGSQL by Lucas C. Villa Real, on Tue May 17 12:39:06 BRT 2011
+# Recipe for version svn by Lucas C. Villa Real, on Tue May 17 12:39:06 BRT 2011
+compile_version=1.12.1
+svn="http://svn.openstreetmap.org/applications/utils/export/osm2pgsql"
+recipe_type=configure
+autogen_before_configure=yes
+
+configure_options=(
+    --with-zlib=yes
+    --with-bzip2=yes
+    --with-geos=yes
+    --with-proj=yes
+)
