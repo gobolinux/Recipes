@@ -1,0 +1,12 @@
+# Recipe for version 1.8.4 by Michael Homer <michael@gobolinux.org>, on Mon Jun 13 11:30:15 NZST 2011
+# Recipe for mercurial by Frederico Recsky frederico at gmail.com
+compile_version=1.13.0
+url="http://www.selenic.com/mercurial/release/mercurial-1.8.4.tar.gz"
+file_size=2554592
+file_md5=b3dcc3de473e003dd1cc0500dcd9de47
+build_script="setup.py"
+recipe_type=python
+
+pre_link() {
+  install contrib/hgk $target/bin/
+}
