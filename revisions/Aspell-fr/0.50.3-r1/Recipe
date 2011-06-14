@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Aspell-fr Leandro Motta Barros, on Mon Jun 13 18:25:36 BRT 2011
+compile_version=1.13.1
+url="$ftpGnu/aspell/dict/fr/aspell-fr-0.50-3.tar.bz2"
+file_size=283086
+file_md5=53a2d05c4e8f7fabd3cefe24db977be7
+recipe_type=configure
+install_variables=(
+	"dictdir=$target/lib/aspell"
+	"datadir=$target/lib/aspell"
+)
