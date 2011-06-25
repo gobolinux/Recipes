@@ -1,0 +1,11 @@
+# Recipe for version 10.3.181.26_bin by Leandro Motta Barros <lmb@stackedboxes.org>, on Fri Jun 24 23:49:55 BRT 2011
+compile_version=1.10.2
+url="http://fpdownload.macromedia.com/get/flashplayer/current/install_flash_player_10_linux.tar.gz"
+file_size=5456694
+file_md5=f057d0dc4b6239c447410dc99797e270
+unpack_files=files_in_root
+
+recipe_type=manifest
+manifest=(
+ 'libflashplayer.so:lib/browser-plugins/libflashplayer.so'
+)
