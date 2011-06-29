@@ -1,0 +1,14 @@
+# Recipe for version 4.12.3 by Leandro Motta Barros <lmb@stackedboxes.org>, on Wed Jun 29 12:47:43 BRT 2011
+# on Sat Apr 16 13:31:22 CEST 2005
+
+compile_version=1.8.2
+url="http://www.riverbankcomputing.co.uk/static/Downloads/sip4/sip-4.12.3.tar.gz"
+file_size=725415
+file_md5=d0f1fa60494db04b4d115d4c2d92f79e
+
+recipe_type=makefile
+pre_build() {
+   pythonversion=`python --version 2>&1 | awk {'print $2'} | cut -b1-3`
+   sitepackages="$target/lib/python${pythonversion}/site-packages"
+   python configure.py -b $target/bin -e $target/include -d $sitepackages -v $target/share/sip
+}
