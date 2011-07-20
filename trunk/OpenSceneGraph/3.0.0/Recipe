@@ -1,0 +1,12 @@
+# Recipe for version 3.0.0 by Leandro Motta Barros <lmb@stackedboxes.org>, on Wed Jul 20 11:24:27 BRT 2011
+# Recipe (MakeRecipe) for OpenSceneGraph by Fabio Mierlo <geromao@gmail.com>, on Fri Aug 1 05:24:57 BRT 2008
+compile_version=1.11.1
+url="http://www.openscenegraph.org/downloads/stable_releases/OpenSceneGraph-3.0/source/OpenSceneGraph-3.0.0.zip"
+file_size=6776156
+file_md5=121829b854349a9e9d1aebc25cf3e52d
+recipe_type=cmake
+
+cmake_options=(
+  "-D BUILD_OSG_EXAMPLES:BOOL=ON"
+  "-D SDL_INCLUDE_DIR=$goboHeaders/SDL"
+)
