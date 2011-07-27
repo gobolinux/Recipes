@@ -1,0 +1,13 @@
+# Recipe for version 0.7.1 by John Robert Beshir <namegduf@fudgeman.org>, on Tue Jun 3 19:16:09 BRT 2008
+# Recipe (MakeRecipe) for LibMCS by Lucas C. Villa Real, on Thu Mar 8 19:16:48 BRT 2007
+compile_version=1.9.0
+url="http://distfiles.atheme.org/libmcs-0.7.1.tgz"
+file_size=107684
+file_md5=1611a7bd7e7b07df3d889012d133c440
+recipe_type=configure
+
+configure_options=(
+
+	"--disable-kconfig"
+
+)
