@@ -1,0 +1,14 @@
+# Recipe for version 3.7 by Lucas C. Villa Real, on Mon Aug 8 00:05:08 BRT 2011
+# Recipe (MakeRecipe) for Premake by Hisham Muhammad, on Fri Sep 21 22:32:54 BRT 2007
+compile_version=1.9.0
+url="http://downloads.sourceforge.net/premake/premake-src-3.7.zip"
+file_size=427727
+file_md5=8d30dc5bbc52aad81abb1509c1dd7d8f
+file="premake-src-3.7.zip"
+dir='Premake-3.7'
+recipe_type=makefile
+makefile='Makefile'
+do_install=no
+pre_install() {
+   cp bin/premake $target/bin
+}
