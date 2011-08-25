@@ -1,0 +1,15 @@
+# Recipe for version 1.3.12 by Baffo32 <baffo32@gmail.com>, on Thu Aug 25 10:51:47 EDT 2011
+# Recipe (MakeRecipe) for APR-Util by Kosh <kosh.linux at gmail.com>, on Tue Feb 28 21:59:01 BRT 2006
+compile_version=1.8.2
+url="http://archive.apache.org/dist/apr/apr-util-1.3.12.tar.bz2"
+file_size=607646
+file_md5=0f671b037ca62751a8a7005578085560
+recipe_type=configure
+configure_options=(
+   --enable-layout=GoboLinux
+   --with-apr="$apr_path"
+)
+with_mysql="--with-mysql"
+with_openldap="--with-ldap"
+with_sqlite="--with-sqlite3"
+with_db="--with-berkeley-db=$db_path"
