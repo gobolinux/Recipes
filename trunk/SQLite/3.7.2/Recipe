@@ -1,18 +1,17 @@
-# Recipe for version 3.7.2 by JPaul Hatungimana <jhatungimana@netscape.net>, on Thu Sep 16 13:24:22 CEST 2010
+# Recipe for version 3.7.7.1 by Baffo32 <baffo32@gmail.com>, on Thu Aug 25 11:31:43 EDT 2011
 compile_version=1.9.0
-url="http://www.sqlite.org/sqlite-3.7.2.tar.gz"
-file_size=3309139
-file_md5=5f1853c4c1eba3330b6104f274918673
+url="http://www.sqlite.org/sqlite-autoconf-3070701.tar.gz"
+file_size=1748837
+file_md5=554026fe7fac47b1cf61c18d5fe43419
 recipe_type=configure
 
 environment=(
-    LIBS="-ldl"
     CFLAGS="-DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_COLUMN_METADATA=1"
     TCLLIBDIR="$target/lib/tcl8.5"
 )
 
 configure_options=(
-    --enable-load-extension
+    --enable-dynamic-extensions
     --disable-readline
 )
 
@@ -20,7 +19,7 @@ with_tcl="--enable-tcl"
 with_readline="--enable-readline"
 
 pre_build() {
-   sed -i 's/VERSION/RELEASE/' sqlite{,3}.pc.in
+   sed -i 's/VERSION/RELEASE/' sqlite3.pc.in
 }
 
 pre_link() {
