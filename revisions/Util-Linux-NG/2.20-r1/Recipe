@@ -1,0 +1,14 @@
+# Recipe for version 2.20 by Michael Homer <michael@gobolinux.org>, on Tue Aug 30 22:12:23 NZST 2011
+# Recipe (MakeRecipe) for Util-Linux-NG by Giambattista Bloisi <giamby@infinito.it>, on Thu Jan 17 09:41:27 CET 2008
+compile_version=1.12.0
+url="http://www.kernel.org/pub/linux/utils/util-linux-ng/v2.20/util-linux-2.20.tar.bz2"
+file_size=4615091
+file_md5=4dcacdbdafa116635e52b977d9d0e879
+recipe_type=configure
+
+configure_options=(
+   --enable-arch
+   --enable-partx
+   --enable-write
+   --disable-makeinstall-chown
+)
