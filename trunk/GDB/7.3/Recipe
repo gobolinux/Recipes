@@ -1,0 +1,12 @@
+# Recipe for version 7.3 by Michael Homer <michael@gobolinux.org>, on Tue Aug 30 22:04:51 NZST 2011
+# Recipe (MakeRecipe) for GDB by roko, <ro.ko@mcnon.com>, on Sun Dec 5 18:47.35 BRST 2004
+compile_version=1.9.0
+url="http://ftp.gnu.org/gnu/gdb/gdb-7.3a.tar.bz2"
+file_size=19503041
+file_md5=d69b0e57535df36fd33f967435a13ad9
+recipe_type=configure
+dir=gdb-7.3
+configure_options=(
+    --disable-werror
+    --with-system-readline
+)
