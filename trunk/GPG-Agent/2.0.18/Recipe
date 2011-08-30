@@ -1,0 +1,10 @@
+# Recipe for version 2.0.18 by Michael Homer <michael@gobolinux.org>, on Tue Aug 30 22:39:47 NZST 2011
+# Recipe (MakeRecipe) for GPG-Agent by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:50:31 CEST 2006
+compile_version=1.8.5
+url="ftp://ftp.gnupg.org/gcrypt/gnupg/gnupg-2.0.18.tar.bz2"
+file_size=4016606
+file_md5=2f37e0722666a0fedbe4d9f9227ac4d7
+recipe_type=configure
+configure_options=(
+    '--enable-agent-only'
+)
