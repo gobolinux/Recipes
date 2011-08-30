@@ -1,0 +1,19 @@
+# Recipe for version 6.7.2_1 by Michael Homer <michael@gobolinux.org>, on Wed Aug 31 11:35:06 NZST 2011
+# Recipe (MakeRecipe) for ImageMagick by Seb Haezebrouck, on Wed Mar 19 14:19:20 CET 2008
+compile_version=1.10.2
+url="ftp://ftp.imagemagick.org/pub/ImageMagick/ImageMagick-6.7.2-1.tar.xz"
+file_size=7758572
+file_md5=9c307f0ab49ce6905cc97b7328fa25f8
+recipe_type=configure
+make_variables=(
+    INSTALLPRIVLIB=$target/lib/perl5/5.10.0
+    INSTALLSITELIB=$target/lib/perl5/site_perl/5.10.0
+    INSTALLARCHLIB=$target/lib/perl5/5.10.0/i686-linux-thread-multi
+    INSTALLSITEARCH=$target/lib/perl5/site_perl/5.10.0/i686-linux-thread-multi
+    INSTALLSITEBIN=$target/bin
+    INSTALLSCRIPT=$target/bin
+    INSTALLMAN1DIR=$target/man/man1
+    INSTALLSITEMAN1DIR=$target/man/man1
+    INSTALLMAN3DIR=$target/man/man3
+    INSTALLSITEMAN3DIR=$target/man/man3
+)
