@@ -5,13 +5,14 @@ url="$ftpGnu/pth/pth-2.0.7.tar.gz"
 file_size="652640"
 file_md5="9cb4a25331a4c4db866a31cbe507c793"
 recipe_type=configure
-makefile=Makefile.gobo
-pre_build() {
-   # Wrapper Makefile as installation isn't parallell safe
-   cat << EOF > Makefile.gobo
-install :
-	\$(MAKE) -j1 \$@
-% :
-	\$(MAKE) \$@
-EOF
+configure_options=(
+   --datadir="$target/Shared"
+)
+do_build() {
+   make
+}
+
+do_install() {
+   # Install is not parallel-safe
+   $sudo_exec make -j1 install
 }
