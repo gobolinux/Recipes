@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Figlet by Thomas Johannes <thomasundmarion@nexgo.de>, on Mi 31. Aug 19:55:51 CEST 2011
+# Recipe for version 2.2.4 by Thomas Johannes <thomasundmarion@nexgo.de>, on Mi 31. Aug 19:55:51 CEST 2011
+compile_version=1.13.3
+url="ftp://ftp.figlet.org/pub/figlet/program/unix/figlet-2.2.4.tar.gz"
+file_size=229245
+file_md5=ea048d8d0b56f9c58e55514d4eb04203
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+)
