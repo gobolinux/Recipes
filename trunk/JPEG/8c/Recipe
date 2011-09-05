@@ -1,0 +1,14 @@
+# Recipe for version 8c by Michael Homer <michael@gobolinux.org>, on Tue Aug 30 13:45:56 NZST 2011
+# by Carlo Calica
+# 2004.01.06 16:54
+
+url="http://www.ijg.org/files/jpegsrc.v8c.tar.gz"
+file_size=986681
+file_md5=a2c10c04f396a9ce72894beb18b4e1f9
+dir=jpeg-8c
+compile_version=1.8.0
+recipe_type=configure
+
+configure_options=(
+   "--enable-shared"
+)
