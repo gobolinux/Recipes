@@ -1,0 +1,10 @@
+# Recipe for version 2.8.5 by Fowl Mouth, on Tue Sep 6 06:00:08 CDT 2011
+compile_version=1.7.1
+url="http://www.cmake.org/files/v2.8/cmake-2.8.5.tar.gz"
+file_size=5517977
+file_md5=3c5d32cec0f4c2dc45f4c2e84f4a20c5
+recipe_type=configure
+
+configure_options=(
+   --prefix=$target
+)
