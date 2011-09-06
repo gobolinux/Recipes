@@ -1,0 +1,12 @@
+# Recipe for version 1.9.2 by Fowl Mouth, on Fri Sep 2 21:00:47 CDT 2011
+# Recipe for mercurial by Frederico Recsky frederico at gmail.com
+compile_version=1.13.0
+url="http://www.selenic.com/mercurial/release/mercurial-1.9.2.tar.gz"
+file_size=2972849
+file_md5=0bda8040e2626e70d3d1a0654b0b03f2
+build_script="setup.py"
+recipe_type=python
+
+pre_link() {
+  install contrib/hgk $target/bin/
+}
