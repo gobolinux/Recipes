@@ -1,0 +1,5 @@
+[Name] Xdelta
+[Summary] Library and application for computing and applying file deltas
+[Description] Xdelta 3 creates and applies binary diffs/patches/deltas between files, that are in a compressed format: VCDIFF (RFC 3284) delta compression standard. Xdelta is a complete system for managing delta-compressed storage and network transport. Using the Xdelta system, you can easily incorporate this functionality into your application. The system offers improvements over the use of RCS for back-end delta-compressed storage, common in version control systems, and also provides primitive support for delta-compressed transport in a manner similar to CVSup.
+[License] GNU General Public License (GPL) version 2 or later
+[Homepage] http://xdelta.org/
