@@ -1,0 +1,26 @@
+# Recipe for version 3.0.0 by Michael Homer <michael@gobolinux.org>, on Wed Sep 7 16:03:05 NZST 2011
+# Recipe (MakeRecipe) for XDelta(version 3) by Isaac Dupree <id@isaac.cedarswampstudios.org>, on Mon Aug 27 09:27:24 BRT 2007
+compile_version=1.8.5
+url="http://xdelta.googlecode.com/files/xdelta3.0.0.tar.gz"
+file_size=282201
+file_md5=5fe038be3a266d2a7913e10d1cec6d88
+#there's no install target in current xdelta, you're just expected
+#to use it as ./xdelta !  Furthermore there's some python and setup.py
+#that I don't understand.  No INSTALL documentation, even anywhere on
+#the Web, that I could find.
+
+#recipe_type=makefile
+#makefile='Makefile'
+
+#somewhat hack?
+recipe_type=manifest
+pre_install() {
+  make
+}
+manifest=(
+"xdelta3:bin"
+"xdelta3-debug:bin"
+#anything else?
+)
+
+
