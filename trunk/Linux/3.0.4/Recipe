@@ -56,6 +56,11 @@ do_configuration() {
    [ -z "${SUDO_USER}" ] || chown ${SUDO_USER} -R include/config .config
 }
 
+do_install() {
+   $sudo_exec mkdir -p "$target"/lib/firmware
+   makefile_do_install "$@"
+}
+
 pre_link() {
    local simpleversion=`private__calculate_version`
    local fullversion=`private__calculate_full_version`
@@ -117,7 +122,7 @@ private__copy_kernel_source() {
          dirlist=`find $i -type d`
          filelist=`find $i \(     \
             -name "*.h" -or       \
-            -name ".conf" -or     \
+            -name "*.conf" -or     \
             -name "Makefile*" -or \
             -name "Kconfig*" -or  \
             -name "Kbuild*" -or   \
