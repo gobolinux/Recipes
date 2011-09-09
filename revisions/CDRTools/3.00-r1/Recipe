@@ -1,0 +1,28 @@
+# Recipe for version 3.00 by Michael Homer <michael@gobolinux.org>, on Fri Sep 9 18:20:10 NZST 2011
+# by Andre Detsch
+# 2004.01.06 16:59
+url="ftp://ftp.berlios.de/pub/cdrecord/cdrtools-3.00.tar.bz2"
+file_size=1978563
+file_md5=f9fbab08fbd458b0d2312976d8c5f558
+dir='cdrtools-3.00'
+compile_version=1.9.0
+recipe_type=makefile
+
+pre_build() {
+   GrepReplace -R "DEFINSUSR=.*bin"  "DEFINSUSR= root"  *
+   GrepReplace -R "DEFINSGRP=.*bin"  "DEFINSGPR= root"  *
+   GrepReplace -R "INSUSR_DEF=.*bin" "INSUSR_DEF= root" *
+   GrepReplace -R "INSGRP_DEF=.*bin" "INSGRP_DEF= root" *
+   
+   GrepReplace "INSDIR=.*etc/default" "$settings_target/default" cdrecord/Makefile.dfl
+   GrepReplace "INSDIR=.*etc/default" "$settings_target/default" rscsi/Makefile.dfl
+   
+   GrepReplace "/opt/schily" "$target" DEFAULTS/Defaults.linux
+
+   pushd RULES
+   for t in ppc64 sh4 s390x ; do
+	ln -s i586-linux-cc.rul ${t}-linux-cc.rul
+	ln -s i586-linux-gcc.rul ${t}-linux-gcc.rul
+   done
+   popd
+}
