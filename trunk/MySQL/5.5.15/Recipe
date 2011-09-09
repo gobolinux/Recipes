@@ -1,0 +1,38 @@
+# Recipe for version 5.5.15 by Zbigniew Baniewski <zb@ispid.com.pl>, on pi±, 9 wrz 2011, 16:35:24 CEST
+# Recipe (MakeRecipe) for MySQL by Maglan C. Diemer, maglan@univates.br, on Qui Dez 8 20:53:16 BRST 2005
+compile_version=1.10.0
+url="http://mysql.mirrors.ovh.net/ftp.mysql.com/Downloads/MySQL-5.5/mysql-5.5.15.tar.gz"
+file_size=23774015
+file_md5=306b5549c7bd72e8e705a890db0da82b
+recipe_type=cmake
+
+unmanaged_files=(
+   "$goboPrefix/Files/MySQL"
+)
+
+# embedded mysql library recquires -fPIC
+environment=(
+   CXXFLAGS="-fPIC $CXXFLAGS" 
+   CFLAGS="-fPIC -D_GNU_SOURCE $CFLAGS"
+)
+
+pre_install() {
+   mkdir -p "$goboPrefix/Files/MySQL"
+}
+
+pre_link() {
+   # task file
+   mkdir -p $target/Resources/Tasks
+   cp support-files/mysql.server $target/Resources/Tasks/MySQL
+   chmod +x $target/Resources/Tasks/MySQL
+    
+   # settings files
+   mkdir -p ${target}/Resources/Defaults/Settings/MySQL
+   cp support-files/my-*.cnf ${target}/Resources/Defaults/Settings/MySQL
+   ln -s my-medium.cnf ${target}/Resources/Defaults/Settings/MySQL/my.cnf
+
+   # libraries should be linked in lib as well as in lib/mysql
+   pushd "$target/lib"
+   ln -sf mysql/*.* .
+   popd
+}

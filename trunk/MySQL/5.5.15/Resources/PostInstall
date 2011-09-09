@@ -1,0 +1,4 @@
+#!/bin/sh
+
+echo "Installing prepared tables"
+$target/bin/mysql_install_db --user=mysql --datadir=${target}/Resources/Unmanaged/Files/MySQL
