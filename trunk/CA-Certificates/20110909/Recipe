@@ -1,0 +1,27 @@
+# Recipe for version 20110909 by Michael Homer <michael@gobolinux.org>, on Fri Sep 9 18:26:58 NZST 2011
+recipe_type=manifest
+compile_version=1.11.4
+# This is a copy of http://curl.haxx.se/ca/cacert.pem.bz2 made 2009-02-08,
+# because the original file may change and invalidate the checksums.
+url=http://mwh.geek.nz/files/gobo/cacert-20110909.pem.bz2
+file_size=126049
+file_md5=da03e48c643b329f6113b862ca2b3d8d
+dir=cacert
+uncompress=no
+
+pre_build() {
+   bunzip2 cacert-20110909.pem.bz2
+   echo -e "\n\n" >> cacert-20110909.pem
+   csplit --prefix=cert cacert-20110909.pem '%--BEGIN CERTIFICATE--%' '/--END CERTIFICATE--/'+3 '{*}'
+   for cert in cert*
+   do
+      mv $cert $cert.pem
+   done
+   c_rehash .
+}
+
+manifest=(
+   "*.pem:lib/ssl/certs/"
+   "cacert-20110909.pem:lib/ssl/certs/cacert.pem"
+   "*.0:lib/ssl/certs/"
+)
