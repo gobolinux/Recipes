@@ -1,7 +1,7 @@
 diff -X linux-3.0.4.orig/Documentation/dontdiff -Nurp linux-3.0.4.orig/fs/gobohide.c linux-3.0.4/fs/gobohide.c
 --- linux-3.0.4.orig/fs/gobohide.c	1969-12-31 21:00:00.000000000 -0300
 +++ linux-3.0.4/fs/gobohide.c	2011-09-05 09:05:18.000000000 -0300
-@@ -0,0 +1,520 @@
+@@ -0,0 +1,515 @@
 +/*
 + * Copyright (C) 2002-2011 GoboLinux.org
 + *
@@ -18,6 +18,10 @@ diff -X linux-3.0.4.orig/Documentation/dontdiff -Nurp linux-3.0.4.orig/fs/gobohi
 + * Original idea: Lucas C. Villa Real <lucasvr@gobolinux.org>
 + *
 + * Changes:
++ * 12-Sep-2011 - Lucas C. Villa Real
++ *               Take the superblock into account when comparing the dentries 
++ *               in order to allow mount points to be hidden.
++ *
 + * 03-Sep-2011 - Lucas C. Villa Real
 + *               Security updates. Thanks to Dan Rosenberg for his code review.
 + *
@@ -94,7 +98,7 @@ diff -X linux-3.0.4.orig/Documentation/dontdiff -Nurp linux-3.0.4.orig/fs/gobohi
 +static int gobohide_count_hidden(struct gobohide_user __user *uhide);
 +static int gobohide_get_hidden(int count, struct gobohide_user __user *uhide);
 +static struct hide *gobohide_get_unlocked(ino_t i_ino, const char *filename, 
-+	int namelen, struct dentry *dentry);
++	int namelen, struct dentry *parent);
 +
 +/** 
 + * gobohide_fs_ioctl - Handle fs-related ioctls 
@@ -313,10 +317,10 @@ diff -X linux-3.0.4.orig/Documentation/dontdiff -Nurp linux-3.0.4.orig/fs/gobohi
 +
 +	/* Get updated inode number */
 +	entry->i_ino = gobohide_translate_inode_nr(dentry->d_inode);
-+		
++
 +	write_lock_irqsave(&gobohide_inode_rwlock, flags);
 +	old = gobohide_get_unlocked(entry->i_ino, dentry->d_name.name, 
-+		dentry->d_name.len+1, dentry);
++		dentry->d_name.len+1, dentry->d_parent);
 +
 +	if (old) {
 +		gobohide_remove_unlocked(entry, 0);
@@ -382,7 +386,13 @@ diff -X linux-3.0.4.orig/Documentation/dontdiff -Nurp linux-3.0.4.orig/fs/gobohi
 +	write_lock_irqsave(&gobohide_inode_rwlock, flags);
 +	if (gobohide_inode_list_size) {
 +		list_for_each_entry_safe(entry, aux, &gobohide_inode_list, head) {
-+			if (entry->i_ino == ino) {
++			struct file *filp = entry->filp;
++			struct dentry *dentry = filp->f_path.dentry;
++			struct dentry *mp = filp->f_path.mnt->mnt_mountpoint;
++			ino_t mp_ino = mp->d_inode->i_ino;
++
++			if ((entry->i_ino == ino && path->dentry->d_sb == dentry->d_sb) || 
++				(mp_ino == ino && path->dentry->d_sb == mp->d_sb)) {
 +				gobohide_remove_unlocked(entry, 1);
 +				break;
 +			}
@@ -438,62 +448,47 @@ diff -X linux-3.0.4.orig/Documentation/dontdiff -Nurp linux-3.0.4.orig/fs/gobohi
 + *  is verified to exist in the "must hide" list through the comparison of the
 + *  inode number and the superblock.
 + *
-+ * @i_ino: inode being readdir'd
++ * @ino: inode being readdir'd
 + * @filename: inode's filename
 + * @namelen: inodes's filename length in bytes
-+ * @dentry: the root's dentry for the given inode.
++ * @parent: the parent dentry for the given inode.
 + *
 + * If the inode number is in the inode_list, returns a pointer to its entry
 + * in the inode_list or NULL if it isn't there. The returned entry must be
 + * released with gobohide_put().
 + */
-+struct hide *gobohide_get(ino_t i_ino, const char *filename, int namelen, 
-+	struct dentry *dentry)
++struct hide *gobohide_get(ino_t ino, const char *filename, int namelen, 
++	struct dentry *parent)
 +{
 +	unsigned long flags;
 +	struct hide *entry;
 +
 +	write_lock_irqsave(&gobohide_inode_rwlock, flags);
-+	entry = gobohide_get_unlocked(i_ino, filename, namelen, dentry);
++	entry = gobohide_get_unlocked(ino, filename, namelen, parent);
 +	write_unlock_irqrestore(&gobohide_inode_rwlock, flags );
 +
 +	return entry;
 +}
 +
-+static struct hide *gobohide_get_unlocked(ino_t i_ino, const char *filename, 
-+	int namelen, struct dentry *dentry)
++static struct hide *gobohide_get_unlocked(ino_t ino, const char *filename, 
++	int namelen, struct dentry *parent)
 +{
 +	struct hide *entry = NULL;
-+	struct dentry *hidden_dentry, *i_dentry;
 +
-+	if (! i_ino || ! gobohide_inode_list_size)
++	if (! ino || ! gobohide_inode_list_size)
 +		return NULL;
-+	
-+	list_for_each_entry(entry, &gobohide_inode_list, head) {
-+		hidden_dentry = entry->filp->f_dentry;
-+		if (entry->i_ino == i_ino && hidden_dentry->d_sb == dentry->d_sb) {
-+			if (hidden_dentry->d_name.len != namelen)
-+				break;
 +
-+			hidden_dentry = hidden_dentry->d_parent;
-+			i_dentry = dentry;
-+			while (hidden_dentry && i_dentry) {
-+				if (hidden_dentry->d_name.len != i_dentry->d_name.len)
-+					break;
-+				if (strncmp(hidden_dentry->d_name.name, i_dentry->d_name.name,
-+					i_dentry->d_name.len))
-+					break;
-+				if (hidden_dentry->d_parent == hidden_dentry || 
-+					i_dentry->d_parent == i_dentry)
-+					break;
-+				hidden_dentry = hidden_dentry->d_parent;
-+				i_dentry = i_dentry->d_parent;
-+			}	
-+			if (hidden_dentry == i_dentry) {
-+				/* Increment the reference count and return the object */
-+				entry->refcount++;
-+				return entry;
-+			}
++	list_for_each_entry(entry, &gobohide_inode_list, head) {
++		struct file *filp = entry->filp;
++		struct dentry *dentry = filp->f_path.dentry;
++		struct dentry *mp = filp->f_path.mnt->mnt_mountpoint;
++		ino_t mp_ino = mp->d_inode->i_ino;
++		
++		if ((entry->i_ino == ino && parent->d_sb == dentry->d_sb) || 
++			(mp_ino == ino && parent->d_sb == mp->d_sb)) {
++			/* Increment the reference count and return the object */
++			entry->refcount++;
++			return entry;
 +		}
 +	}
 +
@@ -831,7 +826,7 @@ diff  -up /dev/null linux-3.0.4/fs/gobohide.c
 +int  gobohide_fs_ioctl(struct inode *inode, unsigned long arg);
 +ino_t gobohide_translate_inode_nr(struct inode *inode);
 +struct hide *gobohide_get(ino_t i_ino, const char *filename, 
-+	int namelen, struct dentry *dentry);
++	int namelen, struct dentry *parent);
 +int  gobohide_put(struct hide *entry);
 +int  gobohide_remove(struct hide *hide);
 +
@@ -839,7 +834,7 @@ diff  -up /dev/null linux-3.0.4/fs/gobohide.c
 +
 +#define gobohide_fs_ioctl(inode, arg) 0
 +#define ino_t gobohide_translate_inode_nr(inode) 0
-+#define gobohide_get(i_ino, filename, namelen, dentry) NULL
++#define gobohide_get(i_ino, filename, namelen, parent) NULL
 +#define gobohide_put(entry) 0
 +#define gobohide_remove(hide) 0
 +
