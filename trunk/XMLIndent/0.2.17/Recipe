@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for XMLIndent by Lucas C. Villa Real, on Wed Sep 14 14:47:16 BRT 2011
+# Recipe for version 0.2.17 by Lucas C. Villa Real, on Wed Sep 14 14:47:16 BRT 2011
+compile_version=1.12.1
+url="$httpSourceforge/project/xmlindent/xmlindent/0.2.17/xmlindent-0.2.17.tar.gz"
+file_size=18333
+file_md5=c08be3867ee906ca69b949d55a4f3780
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
