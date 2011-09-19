@@ -1,0 +1,13 @@
+# Recipe for version 1.3.7 by Leandro Motta Barros <lmb@stackedboxes.org>, on Sun Sep 18 22:08:49 BRT 2011
+# Recipe (MakeRecipe) for IceWM by  Ozgur Ulukir, on Tue Dec 21 21:23:03 EET 2004
+compile_version=1.8.0
+url="$httpSourceforge/icewm/icewm-1.3.7.tar.gz"
+file_size=898197
+file_md5=224695231aedb2b91db3254a13e1c8dd
+recipe_type=configure
+
+configure_options=(
+   "--enable-gradients"
+   "--enable-corefonts"
+)
+
