@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for XF86-Input-Wacom by Leandro Motta Barros <lmb@stackedboxes.org>, on Sun Sep 18 12:46:25 BRT 2011
+# Recipe for version 0.11.1 by Leandro Motta Barros <lmb@stackedboxes.org>, on Sun Sep 18 12:46:25 BRT 2011
+compile_version=1.13.3
+url="$httpSourceforge/project/linuxwacom/xf86-input-wacom/xf86-input-wacom-0.11.1.tar.bz2"
+file_size=505180
+file_md5=0aec4a338cc583ed497b6af68d6d80ab
+recipe_type=configure
+
+make_variables=(
+   "sdkdir=$target/include/xorg"
+   "configdir=$target/share/X11/xorg.conf.d"
+)
