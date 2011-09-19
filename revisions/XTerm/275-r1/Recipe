@@ -1,0 +1,15 @@
+# Recipe for version 275 by Leandro Motta Barros <lmb@stackedboxes.org>, on Sun Sep 18 21:24:11 BRT 2011
+# Recipe (MakeRecipe) for XTerm by Hisham Muhammad, on Thu Feb 23 14:45:58 BRT 2006
+compile_version=1.9.0
+url="ftp://invisible-island.net/xterm/xterm-275.tgz"
+file_size=983775
+file_md5=bbbe6a4566c04656ec21863351570ac8
+recipe_type=configure
+configure_options=(
+   # otherwise uxterm is broken!
+   --enable-wide-chars
+
+   # paths for icons and app defaults
+   --with-icondir=$target/share/pixmaps
+   --with-app-defaults=$target/lib/X11/app-defaults
+)
