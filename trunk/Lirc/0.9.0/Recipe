@@ -1,0 +1,31 @@
+# Recipe for version 0.9.0 by Leandro Motta Barros <lmb@stackedboxes.org>, on Mon Sep 19 23:41:01 BRT 2011
+# Recipe (MakeRecipe) for Lirc by Fabio Mierlo, on Mon May 30 01:19:58 BRT 2005
+compile_version=1.8.0
+url="$httpSourceforge/lirc/lirc-0.9.0.tar.bz2"
+file_size=857286
+file_md5=b232aef26f23fe33ea8305d276637086
+recipe_type=configure
+
+configure_options=(
+   --with-devdir="${goboDevices}"
+   --with-kerneldir="${goboModules}/Current/build"
+   --with-moduledir="${goboModules}/$(readlink "${goboModules}/Current")/misc"
+   --with-transmitter
+   --with-x
+   --with-driver=serial
+   --with-major=61
+   --with-port=0x3f8
+   --with-irq=4
+)
+
+unmanaged_files=(
+   "${goboModules}/$(readlink "${goboModules}/Current")/misc/lirc_serial.ko"
+   "${goboModules}/$(readlink "${goboModules}/Current")/misc/lirc_dev.ko"
+   "${goboDevices}/lirc"
+   "${goboVariable}/run/lirc/lircm"
+   "${goboVariable}/run/lirc/lircd"
+)
+
+pre_link() {
+   mknod ${target}/Resources/Unmanaged${goboDevices}/lirc c 61 0
+}
