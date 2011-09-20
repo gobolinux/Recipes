@@ -1,0 +1,10 @@
+# Recipe for version 0.14 by Leandro Motta Barros <lmb@stackedboxes.org>, on Mon Sep 19 23:31:46 BRT 2011
+# Recipe (MakeRecipe) for LibDaemon by Jonas Karlsson <jonka750@student.liu.se>, on Tue Aug 21 12:11:35 CEST 2007
+compile_version=1.8.5
+url="http://0pointer.de/lennart/projects/libdaemon/libdaemon-0.14.tar.gz"
+file_size=340474
+file_md5=509dc27107c21bcd9fbf2f95f5669563
+recipe_type=configure
+configure_options=(
+   '--disable-lynx'
+)
