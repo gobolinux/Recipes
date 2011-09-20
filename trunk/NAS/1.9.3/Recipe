@@ -1,0 +1,31 @@
+# Recipe for version 1.9.3 by Leandro Motta Barros <lmb@stackedboxes.org>, on Mon Sep 19 17:53:41 BRT 2011
+# Recipe (MakeRecipe) for NAS by Jonas Karlsson <jonka750@student.liu.se>, on Sat Aug 30 07:37:24 GMT 2008
+compile_version=1.8.0
+url="$httpSourceforge/nas/nas-1.9.3.src.tar.gz"
+file_size=1485222
+file_md5=ecd01a3b4e17a9d464efa83a03618025
+dir='nas-1.9.3'
+recipe_type=xmkmf
+make_variables=(
+   INCROOT="${goboHeaders}"
+   ETCDIR="${settings_target}"
+   SHAREDIR="${target}/share"
+)
+build_variables=(
+   USRLIBDIR="${goboLibraries}"
+   SHLIBDIR="${goboLibraries}"
+   BINDIR="${goboExecutables}"
+   LIBDIR="${goboLibraries}/X11"
+   MANPATH="${goboManuals}"
+)
+install_variables=(
+   USRLIBDIR="${target}/lib"
+   SHLIBDIR="${target}/lib"
+   BINDIR="${target}/bin"
+   LIBDIR="${target}/lib/X11"
+   MANPATH="${target}/man"
+   INCDIR="${target}/include/audio"
+)
+
+build_target=World
+install_target="install install.man"
