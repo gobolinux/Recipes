@@ -1,0 +1,13 @@
+# Recipe for version 0.6.30 by Leandro Motta Barros <lmb@stackedboxes.org>, on Mon Sep 19 23:23:16 BRT 2011
+# Recipe (MakeRecipe) for Avahi by Giambattista Bloisi <giamby@infinito.it>, on Wed Dec 12 20:58:25 CET 2007
+compile_version=1.9.0
+url="http://avahi.org/download/avahi-0.6.30.tar.gz"
+file_size=1243534
+file_md5=e4db89a2a403ff4c47d66ac66fad1f43
+recipe_type=configure
+configure_options=(
+    --with-distro=none
+    --disable-qt3 
+    --disable-mono
+    --disable-python
+)
