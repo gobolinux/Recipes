@@ -1,0 +1,17 @@
+The version of Glibc which we ship in 014.01 doesn't export some symbols required by
+key.dns_resolver.c. A simple workaround is to link against the static version of
+the library it needs.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- keyutils-1.5.3/Makefile.orig	2011-09-21 13:56:03.000000000 -0300
++++ keyutils-1.5.3/Makefile	2011-09-21 13:58:17.000000000 -0300
+@@ -132,7 +132,7 @@ request-key: request-key.o -lkeyutils
+ 	$(CC) -L. $(CFLAGS) $(LDFLAGS) $(RPATH) -o $@ $< -lkeyutils
+ 
+ key.dns_resolver: key.dns_resolver.o -lkeyutils
+-	$(CC) -L. $(CFLAGS) $(LDFLAGS) $(RPATH) -o $@ $< -lkeyutils -lresolv
++	$(CC) -L. $(CFLAGS) $(LDFLAGS) $(RPATH) -o $@ $< -lkeyutils @%Compile_glibc_path%@/lib/libresolv.a
+ 
+ ###############################################################################
+ #
