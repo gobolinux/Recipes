@@ -1,0 +1,15 @@
+# Recipe for version 2.0.10 by Leandro Motta Barros <lmb@stackedboxes.org>, on Tue Sep 20 21:21:14 BRT 2011
+# Recipe for SDL_ttf 2.0.10 by Peter Eriksen <s02.0.10@student.dtu.dk>
+compile_version=1.8.0
+url="http://www.libsdl.org/projects/SDL_ttf/release/SDL_ttf-2.0.10.tar.gz"
+file_size=1326737
+file_md5=814e6e17e8879254208d23b3b7e0354b
+recipe_type=configure
+
+configure_options=(
+    --with-sdl-prefix=$sdl_path
+)
+
+#pre_build() {
+#    [ ! -f .bootstrapped ] && ./autogen.sh && touch .bootstrapped
+#}
