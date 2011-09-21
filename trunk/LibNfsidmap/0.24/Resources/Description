@@ -1,0 +1,20 @@
+[Name] LibNfsidmap
+[Summary] Library to help mapping id's, mainly for NFSv4.
+[Description] Library to help mapping id's, mainly for NFSv4.
+
+When NFSv4 is using AUTH_GSS (which currently only supports Kerberos v5), the
+NFSv4 server mapping functions MUST use secure communications.
+
+We provide several mapping functions, configured using /etc/idmapd.conf
+
+As of the 0.21 version of this library, mapping methods are separate
+dynamically-loaded libaries.  This allows the separation of any
+LDAP requirements from the main libnfsidmap library.  The main library
+now basically loads and calls the functions in the method-specific
+libaries.  The method libraries are expected to be named
+"libnfsidmap_<method>.so", for example, "libnfsidmap_nsswitch.so".
+
+Several methods may be specified in the /etc/idmapd.conf configuration
+file.  Each method is called until a mapping is found.
+[License] BSD
+[Homepage] http://www.citi.umich.edu/projects/nfsv4/linux/libnfsidmap/
