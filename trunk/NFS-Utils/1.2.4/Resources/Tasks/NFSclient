@@ -1,0 +1,32 @@
+#!/bin/sh
+
+# Loads or unloads NFS, the network file system server.
+# Written by Otto Barnes, Lucas C. Villa Real and many others
+
+failed=0
+
+function load_daemon()
+{
+    if Executable_Exists_In_Path "$1"
+    then $@ || failed=1
+    fi
+}
+
+function stop_daemon()
+{
+    Quiet ps -C "$1" || { true; return; }
+    killall "$1"
+}
+
+case "$1" in
+[sS]tart) 
+   NFSclient Stop
+   load_daemon portmap
+   load_daemon rpc.statd
+   ;;
+[Ss]top)
+   stop_daemon rpc.statd
+   ;;
+esac # esac is ridiculous.
+
+exit $failed

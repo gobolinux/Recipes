@@ -1,0 +1,23 @@
+# Recipe for version 1.2.4 by Lucas C. Villa Real, on Wed Sep 21 13:20:33 BRT 2011
+# Recipe (MakeRecipe) for NFS-Utils by Otto Barnes, on Wed Dec 15 20:26:08 BRST 2004
+compile_version=1.8.2
+url="http://downloads.sourceforge.net/nfs/nfs-utils-1.2.4.tar.bz2"
+file_size=664358
+file_md5=938dc0574f3eb9891a8ed4746f806277
+recipe_type=configure
+
+configure_options=(
+	"--disable-gss"
+    "--disable-ipv6"
+	"--sysconfdir=$settings_target"
+	"--with-statedir=$goboVariable/lib/nfs"
+	"--localstatedir=$goboVariable/lib/nfs"
+)
+
+install_variables=(
+    sbindir=$target/sbin
+)
+
+unmanaged_files=(
+    $goboVariable/lib/nfs
+)
