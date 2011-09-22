@@ -1,0 +1,13 @@
+# Recipe for version 2.35.92 by Leandro Motta Barros <lmb@stackedboxes.org>, on Wed Sep 21 23:25:17 BRT 2011
+# Recipe (MakeRecipe) for LibSoup by roko, <ro.ko@mcnon.com>, on Fri Nov 19 01:54:22 BRST 2004
+compile_version=1.8.0
+url="http://ftp.gnome.org/pub/GNOME/sources/libsoup/2.35/libsoup-2.35.92.tar.bz2"
+file_size=698391
+file_md5=d84d093c6fed8732be3cc0697bd98e64
+recipe_type=configure
+configure_options=(
+   --without-gnome
+)
+with_gnome=(
+   --with-gnome
+)
