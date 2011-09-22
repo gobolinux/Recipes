@@ -1,0 +1,11 @@
+# Recipe for version 3.1.92 by Leandro Motta Barros <lmb@stackedboxes.org>, on Wed Sep 21 22:10:56 BRT 2011
+# Recipe (MakeRecipe) for GConf by Jonas Karlsson <jonka750@student.liu.se>, on Tue Apr 5 23:42:34 CEST 2005
+compile_version=1.8.2
+url="ftp://ftp.gnome.org/pub/GNOME/sources/GConf/3.1/GConf-3.1.92.tar.bz2"
+file_size=1748032
+file_md5=dda3ec651e9af96fba202b00482f802a
+recipe_type=configure
+configure_options=(
+    --disable-gtk-doc
+    --disable-defaults-service
+)
