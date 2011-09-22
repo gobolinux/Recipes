@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for LibProxy by Leandro Motta Barros <lmb@stackedboxes.org>, on Wed Sep 21 22:28:36 BRT 2011
+# Recipe for version 0.4.7 by Leandro Motta Barros <lmb@stackedboxes.org>, on Wed Sep 21 22:28:36 BRT 2011
+compile_version=1.13.3
+url="http://libproxy.googlecode.com/files/libproxy-0.4.7.tar.gz"
+file_size=91092
+file_md5=509e03a488a61cd62bfbaf3ab6a2a7a5
+recipe_type=cmake
+
+# Not really sure if these are the correct paths. At worst, this shows which variables
+# must be set... whoever needs the Python or Perl bindings can start from here to fix
+# eventual problems.
+cmake_options=(
+   -DPYTHON_SITEPKG_DIR="$target/lib/python`python --version 2>&1 | awk {'print $2'} | cut -b1-3`/site-packages"
+   -DPX_PERL_ARCH="$target/lib/perl5/`echo $perl_path | sed 's,/\(.*\)/\(.*\)/\(.*\),\3,g'`/i686-linux"
+)
