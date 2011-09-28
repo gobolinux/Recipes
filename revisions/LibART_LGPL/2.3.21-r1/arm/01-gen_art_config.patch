@@ -1,0 +1,60 @@
+--- libart_lgpl-2.3.17/Makefile.in.orig	2006-05-16 21:38:31.000000000 -0300
++++ libart_lgpl-2.3.17/Makefile.in	2006-05-16 21:39:22.000000000 -0300
+@@ -96,7 +96,7 @@ STRIP = @STRIP@
+ VERSION = @VERSION@
+ ms_librarian = @ms_librarian@
+ 
+-noinst_PROGRAMS = testart testuta gen_art_config
++noinst_PROGRAMS = testart testuta
+ 
+ bin_SCRIPTS = \
+ 	libart2-config
+@@ -259,17 +259,11 @@ art_svp_vpath_stroke.lo art_svp_wind.lo 
+ art_uta_rect.lo art_uta_vpath.lo art_uta_svp.lo art_vpath.lo \
+ art_vpath_bpath.lo art_vpath_dash.lo art_vpath_svp.lo \
+ libart-features.lo
+-noinst_PROGRAMS =  testart$(EXEEXT) testuta$(EXEEXT) \
+-gen_art_config$(EXEEXT)
++noinst_PROGRAMS =  testart$(EXEEXT) testuta$(EXEEXT)
+ PROGRAMS =  $(noinst_PROGRAMS)
+ 
+ testart_OBJECTS =  testart.$(OBJEXT)
+ testuta_OBJECTS =  testuta.$(OBJEXT)
+-gen_art_config_SOURCES = gen_art_config.c
+-gen_art_config_OBJECTS =  gen_art_config.$(OBJEXT)
+-gen_art_config_LDADD = $(LDADD)
+-gen_art_config_DEPENDENCIES = 
+-gen_art_config_LDFLAGS = 
+ SCRIPTS =  $(bin_SCRIPTS)
+ 
+ CFLAGS = @CFLAGS@
+@@ -292,8 +286,8 @@ DISTFILES = $(DIST_COMMON) $(SOURCES) $(
+ 
+ TAR = gtar
+ GZIP_ENV = --best
+-SOURCES = $(libart_lgpl_2_la_SOURCES) $(testart_SOURCES) $(testuta_SOURCES) gen_art_config.c
+-OBJECTS = $(libart_lgpl_2_la_OBJECTS) $(testart_OBJECTS) $(testuta_OBJECTS) gen_art_config.$(OBJEXT)
++SOURCES = $(libart_lgpl_2_la_SOURCES) $(testart_SOURCES) $(testuta_SOURCES)
++OBJECTS = $(libart_lgpl_2_la_OBJECTS) $(testart_OBJECTS) $(testuta_OBJECTS)
+ 
+ all: all-redirect
+ .SUFFIXES:
+@@ -440,10 +434,6 @@ testuta$(EXEEXT): $(testuta_OBJECTS) $(t
+ 	@rm -f testuta$(EXEEXT)
+ 	$(LINK) $(testuta_LDFLAGS) $(testuta_OBJECTS) $(testuta_LDADD) $(LIBS)
+ 
+-gen_art_config$(EXEEXT): $(gen_art_config_OBJECTS) $(gen_art_config_DEPENDENCIES)
+-	@rm -f gen_art_config$(EXEEXT)
+-	$(LINK) $(gen_art_config_LDFLAGS) $(gen_art_config_OBJECTS) $(gen_art_config_LDADD) $(LIBS)
+-
+ install-binSCRIPTS: $(bin_SCRIPTS)
+ 	@$(NORMAL_INSTALL)
+ 	$(mkinstalldirs) $(DESTDIR)$(bindir)
+@@ -680,7 +670,6 @@ art_vpath_dash.lo art_vpath_dash.o : art
+ art_vpath_svp.lo art_vpath_svp.o : art_vpath_svp.c config.h \
+ 	art_vpath_svp.h art_svp.h art_rect.h art_point.h art_vpath.h \
+ 	art_pathcode.h art_misc.h art_config.h
+-gen_art_config.o: gen_art_config.c config.h
+ libart-features.lo libart-features.o : libart-features.c \
+ 	libart-features.h
+ testart.o: testart.c art_misc.h art_config.h art_vpath.h art_rect.h \
