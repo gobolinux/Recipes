@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Nut by Thomas Johannes <thomasundmarion@nexgo.de>, on Fr 30. Sep 15:28:21 CEST 2011
+# Recipe for version 17.0 by Thomas Johannes <thomasundmarion@nexgo.de>, on Fr 30. Sep 15:28:21 CEST 2011
+compile_version=1.13.3
+url="http://sourceforge.net/projects/nut/files/nut/17.0/nut-17.0.tar.gz"
+file_size=1316791
+file_md5=af274dc9b7da5713a49c9976e6750b3c
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+)
