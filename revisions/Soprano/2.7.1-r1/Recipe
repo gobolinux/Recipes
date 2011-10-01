@@ -1,0 +1,20 @@
+# Recipe for version 2.7.1 by Leandro Motta Barros <lmb@stackedboxes.org>, on Fri Sep 30 23:54:53 BRT 2011
+# Recipe (MakeRecipe) for Soprano by Giambattista Bloisi <giamby@infinito.it>, on Sat Jan 12 11:21:29 CET 2008
+compile_version=1.10.0
+url="http://downloads.sourceforge.net/soprano/soprano-2.7.1.tar.bz2"
+file_size=1950603
+file_md5=1e7839c9a9c6a380986eef304ebeee73
+file="soprano-2.7.1.tar.bz2"
+recipe_type=cmake
+environment=(
+   QMAKESPEC="linux-g++"
+   # This is necessary to build the Sesame2 backend, which is the only
+   # usably fast one. If sun_jdk_path is undefined, the empty variable
+   # will be fine. Augmenting environment in using_sun_jdk did not work.
+   JAVA_HOME=$sun_jdk_path
+)
+
+cmake_options=(
+   # The autodetected path of /usr/include causes compile errors
+   -DJAVA_INCLUDE_PATH=$sun_jdk_path/include
+)
