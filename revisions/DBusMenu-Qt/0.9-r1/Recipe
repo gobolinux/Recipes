@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for DBusMenu-Qt by Leandro Motta Barros <lmb@stackedboxes.org>, on Sat Oct 1 00:30:46 BRT 2011
+# Recipe for version 0.9 by Leandro Motta Barros <lmb@stackedboxes.org>, on Sat Oct 1 00:30:46 BRT 2011
+compile_version=1.13.3
+url="http://gitorious.org/dbusmenu/dbusmenu-qt/archive-tarball/0.9.0.kde"
+file="dbusmenu-dbusmenu-qt-0.9.0.kde.tar.gz"
+file_size=43867
+file_md5=e7225ad4c7b67db39ac34ae4ac44871e
+dir='dbusmenu-dbusmenu-qt'
+recipe_type=cmake
