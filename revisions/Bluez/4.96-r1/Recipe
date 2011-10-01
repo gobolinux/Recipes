@@ -1,0 +1,10 @@
+# Recipe for version 4.96 by Leandro Motta Barros <lmb@stackedboxes.org>, on Fri Sep 30 18:08:36 BRT 2011
+compile_version=1.13.2
+url="http://www.kernel.org/pub/linux/bluetooth/bluez-4.96.tar.bz2"
+mirror_url="ftp://linux-kernel.uio.no/pub/linux/bluetooth/bluez-4.96.tar.bz2"
+file_size=952234
+file_md5=255c3dda8b93210ab0dcf8d04ddaf69f
+recipe_type=configure
+make_variables=(
+   rulesdir="$target/lib/udev/rules.d"
+)
