@@ -1,0 +1,17 @@
+Fixes broken code.
+
+diff -aur
+virtuoso-opensource-6.1.3-vanilla/binsrc/samples/image_magick/im.c
+virtuoso-opensource-6.1.3/binsrc/samples/image_magick/im.c
+--- virtuoso-opensource-6.1.3-vanilla/binsrc/samples/image_magick/im.c 
+2010-10-18 10:01:28.000000000 -0200
++++ virtuoso-opensource-6.1.3/binsrc/samples/image_magick/im.c  2011-09-26
+15:49:21.000000000 -0300
+@@ -764,6 +764,7 @@
+   long f_size = n_args > 5 ? bif_long_arg (qst, args, 5, szMe) : 12;
+   char *text_color = n_args > 6 ? bif_string_arg (qst, args, 6, szMe) : "black" ;
+   dtp_t dtp = DV_TYPE_OF (blob);
++  im_env_t env;
+   im_init (&env, qst, args, "IM AnnotateImageBlob");
+   if (IS_STRING_DTP (dtp))
+     blob_size = box_length (blob) - 1;
