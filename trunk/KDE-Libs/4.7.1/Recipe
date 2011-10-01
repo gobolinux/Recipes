@@ -1,0 +1,13 @@
+# Recipe for version 4.7.1 by Leandro Motta Barros <lmb@stackedboxes.org>, on Sun Sep 25 21:31:05 BRT 2011
+# Recipe (MakeRecipe) for KDE-Libs by Giambattista Bloisi <giamby@infinito.it>, on Sat Jan 12 11:13:12 CET 2008
+compile_version=1.10.0
+url="http://download.kde.org/stable/4.7.1/src/kdelibs-4.7.1.tar.bz2"
+file_size=12074524
+file_md5=eaeacc3c94501f343eb7c4ef74c7475b
+file="kdelibs-4.7.1.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+-DKDE4_DBUS_INTERFACES_DIR="$goboShared/dbus-1/interfaces/"
+)
