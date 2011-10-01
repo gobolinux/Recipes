@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Hupnp by Leandro Motta Barros <lmb@stackedboxes.org>, on Sat Oct 1 00:16:00 BRT 2011
+# Recipe for version 1.0.0 by Leandro Motta Barros <lmb@stackedboxes.org>, on Sat Oct 1 00:16:00 BRT 2011
+compile_version=1.13.3
+url="http://sourceforge.net/projects/hupnp/files/hupnp/herqq-1.0.0.zip"
+file_size=1070813
+file_md5=45a0632f7c7b64bc0fdab852d36c1e61
+recipe_type=makefile
+
+pre_build() {
+   qmake -recursive "PREFIX = $target" 
+}
