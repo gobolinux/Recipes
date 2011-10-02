@@ -1,0 +1,10 @@
+# Recipe for version 0.12.15 by Leandro Motta Barros <lmb@stackedboxes.org>, on Sat Oct 1 22:40:07 BRT 2011
+
+compile_version=1.8.4
+url="http://downloads.pilot-link.org/pilot-link-0.12.5.tar.bz2"
+file_size=1578735
+file_md5=568c55bf504b044f6fbd50baa407c990
+recipe_type=configure
+install_variables=(
+   udevdir="${settings_target}/udev/rules.d"
+)
