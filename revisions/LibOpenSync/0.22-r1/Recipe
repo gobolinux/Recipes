@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for LibOpenSync by Leandro Motta Barros <lmb@stackedboxes.org>, on Sat Oct 1 22:45:12 BRT 2011
+# Recipe for version 0.22 by Leandro Motta Barros <lmb@stackedboxes.org>, on Sat Oct 1 22:45:12 BRT 2011
+compile_version=1.13.3
+url="http://www.opensync.org/download/releases/0.22/libopensync-0.22.tar.bz2"
+file_size=489978
+file_md5=f563ce2543312937a9afb4f8445ef932
+recipe_type=configure
+
+configure_options=(
+   # Configure was going nuts tying to find Python, and I was too bored to try to fix this
+   --disable-python
+)
