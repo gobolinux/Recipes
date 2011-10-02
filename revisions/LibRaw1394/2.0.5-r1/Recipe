@@ -1,0 +1,11 @@
+# Recipe for version 2.0.5 by Leandro Motta Barros <lmb@stackedboxes.org>, on Sun Oct 2 14:05:56 BRT 2011
+# Recipe (MakeRecipe) for LibRaw1394 by Maglan C. Diemer, maglan@univates.br, on Seg Ago 22 15:15:28 BRT 2005
+compile_version=1.8.0
+url="http://downloads.sourceforge.net/project/libraw1394/libraw1394/libraw1394-2.0.5.tar.gz"
+file_size=388774
+file_md5=1db64231c78540c32859b591cb8b40cf
+recipe_type=configure
+
+configure_options=(
+	--with-fw-dir=$goboModules/Current/source/include
+)
