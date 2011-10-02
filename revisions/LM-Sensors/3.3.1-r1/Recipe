@@ -1,0 +1,15 @@
+# Recipe for version 3.3.1 by Leandro Motta Barros <lmb@stackedboxes.org>, on Sun Oct 2 14:00:43 BRT 2011
+# Recipe (MakeRecipe) for LM-Sensors by Giambattista Bloisi <giamby@infinito.it>, on Sat Jan 12 21:57:56 CET 2008
+compile_version=1.10.0
+url="http://dl.lm-sensors.org/lm-sensors/releases/lm_sensors-3.3.1.tar.bz2"
+file_size=170156
+file_md5=8c0eebda8524fc87da1393b4564d279b
+mirror_url="ftp://ftp.netroedge.com/pub/lm-sensors/lm_sensors-3.3.1.tar.bz2"
+file="lm_sensors-3.3.1.tar.bz2"
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=(
+    "PREFIX=$target"
+    "ETCDIR=$settings_target"
+)
