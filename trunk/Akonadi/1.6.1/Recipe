@@ -1,0 +1,9 @@
+# Recipe for version 1.6.1 by Leandro Motta Barros <lmb@stackedboxes.org>, on Sat Oct 1 22:09:41 BRT 2011
+# Recipe (MakeRecipe) for Akonadi by Giambattista Bloisi <giamby@infinito.it>, on Sat Oct 25 22:20:43 CEST 2008
+compile_version=1.11.2
+url="ftp://ftp.kde.org/pub/kde/stable/akonadi/src/akonadi-1.6.1.tar.bz2"
+file_size=210896
+file_md5=8a78b2f9438ffc36d0f37d55839fb444
+recipe_type=cmake
+
+with_mysql=( "-DMYSQLD_EXECUTABLE=${mysql_path}/libexec/mysqld" )
