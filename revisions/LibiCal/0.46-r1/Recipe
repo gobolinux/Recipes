@@ -1,0 +1,8 @@
+# Recipe for version 0.46 by Leandro Motta Barros <lmb@stackedboxes.org>, on Sat Oct 1 21:47:20 BRT 2011
+# Recipe (MakeRecipe) for LibiCal by Jonas Karlsson <jonka750@student.liu.se>, on Fri Sep 5 23:49:20 CEST 2008
+compile_version=1.8.0
+url="${httpSourceforge}/freeassociation/libical-0.46.tar.gz"
+file_size=1102093
+file_md5=9c08f88945bfd5d0791d102e4aa4125c
+recipe_type=configure
+autogen_before_configure=yes 
