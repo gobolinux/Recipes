@@ -1,0 +1,27 @@
+This patch comes from http://www.linuxfromscratch.org/blfs/view/svn/multimedia/faac.html
+
+Submitted By: Guy Dalziel <gdalziel at linuxfromscratch dot org>
+Date: 2009-08-04
+Initial Package Version: 1.28
+Origin: Guy Dalziel
+Upstream Status: Not submitted.
+Description: Fixes a function conflict between FAAC and Glibc.
+
+diff -Naur faac-1.28-orig/common/mp4v2/mpeg4ip.h faac-1.28/common/mp4v2/mpeg4ip.h
+--- faac-1.28-orig/common/mp4v2/mpeg4ip.h	2009-01-26 22:42:35.000000000 +0000
++++ faac-1.28/common/mp4v2/mpeg4ip.h	2009-08-04 13:45:47.728062591 +0100
+@@ -120,14 +120,6 @@
+ #endif
+ #include <sys/param.h>
+ 
+-#ifdef __cplusplus
+-extern "C" {
+-#endif
+-char *strcasestr(const char *haystack, const char *needle);
+-#ifdef __cplusplus
+-}
+-#endif
+-
+ #define OPEN_RDWR O_RDWR
+ #define OPEN_CREAT O_CREAT 
+ #define OPEN_RDONLY O_RDONLY
