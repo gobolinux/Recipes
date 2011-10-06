@@ -1,0 +1,9 @@
+# Recipe for version 0.6.20 by Leandro Motta Barros <lmb@stackedboxes.org>, on Wed Oct 5 22:09:38 BRT 2011
+url=$httpSourceforge/libexif/libexif-0.6.20.tar.bz2
+file_size=1412921
+file_md5=19844ce6b5d075af16f0d45de1e8a6a3
+compile_version=1.8.0
+recipe_type=configure
+pre_build() {
+    GrepReplace 'SUBDIRS = m4m po libexif test doc binary' 'SUBDIRS = m4m po libexif test binary' Makefile.in
+}
