@@ -1,0 +1,10 @@
+# Recipe for version 1.6.0 by Leandro Motta Barros <lmb@stackedboxes.org>, on Fri Oct 7 18:45:43 BRT 2011
+# Recipe (MakeRecipe) for SoundTouch by Peter Eriksen <s022018@student.dtu.dk>, on Tue Nov 9 00:32:47 CET 2004
+compile_version=1.8.0
+url="http://www.surina.net/soundtouch/soundtouch-1.6.0.tar.gz"
+file_size=94852
+file_md5=aa1c63d4d67b033f044a6a48d2be5bdd
+dir=soundtouch
+recipe_type=configure
+autogen_before_configure=yes
+autogen=bootstrap
