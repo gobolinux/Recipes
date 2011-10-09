@@ -1,0 +1,5 @@
+[Name] Recoll
+[Summary] Desktop search tool
+[Description] Recoll is a desktop search tool that provides efficient full text search (from single-word to arbitrarily complex boolean searches) in a friendly GUI, with minimum technical sophistication and few mandatory external dependencies. Recoll was designed not to require a permanent daemon. It updates its index at designed intervals (for example through Cron tasks). Only if desired, the indexing task can run as a file-system monitoring daemon for real-time index updates.
+[License] GNU General Public License version 2
+[Homepage] http://www.recoll.org/
