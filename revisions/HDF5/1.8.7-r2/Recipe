@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for HDF5 by Leandro Motta Barros <lmb@stackedboxes.org>, on Sat Oct 8 00:14:04 BRT 2011
+# Recipe for version 1.8.7 by Leandro Motta Barros <lmb@stackedboxes.org>, on Sat Oct 8 00:14:04 BRT 2011
+compile_version=1.13.3
+url="http://www.hdfgroup.org/ftp/HDF5/current/src/hdf5-1.8.7.tar.bz2"
+file_size=5710170
+file_md5=8859e2abc5258596302c7618722a48ad
+recipe_type=configure
+
+configure_options=(
+	--enable-cxx
+	--enable-hl
+)
