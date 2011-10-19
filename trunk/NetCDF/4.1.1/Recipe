@@ -5,3 +5,9 @@ url="ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-4.1.1.tar.gz"
 file_size=11201096
 file_md5=79c5ff14c80d5e18dd8f1fceeae1c8e1
 recipe_type=configure
+
+configure_options=(
+	--enable-cxx-4
+	--enable-netcdf-4
+	--enable-shared
+)
