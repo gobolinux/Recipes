@@ -1,0 +1,16 @@
+Licence detection is broken, causing false incompatibility failure.
+
+This hardwires the Qt edition to "free", corresponding to the open-source
+edition we ship.
+--- PyQt-x11-gpl-4.5.1/configure.py.orig	2009-07-04 22:05:21.000000000 +1200
++++ PyQt-x11-gpl-4.5.1/configure.py	2009-07-04 22:06:12.000000000 +1200
+@@ -1798,6 +1798,9 @@
+         qt_edition = "Desktop Light"
+     else:
+         qt_edition = "Console"
++    # GoboLinux only allows Qt free - hard-wire the edition to that, as
++    # the above detection is broken in at least PyQt 4.5.1
++    qt_edition = "free"
+ 
+     if qt_shared:
+         if opts.staticplugins:

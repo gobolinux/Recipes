@@ -1,0 +1,15 @@
+# Recipe for version 4.8.6 by Michael Homer <michael@gobolinux.org>, on Sat Nov 12 10:07:51 NZDT 2011
+# on Sat Apr 16 12:56:40 CEST 2005
+
+compile_version=1.9.0
+url="http://www.riverbankcomputing.com/static/Downloads/PyQt4/PyQt-x11-gpl-4.8.6.tar.gz"
+file_size=9661693
+file_md5=9bfd7b08b8e438b83cc50d5c58191f97
+
+recipe_type=makefile
+pre_build() {
+    pythonversion=`python --version 2>&1 | awk {'print $2'} | cut -b1-3`
+    sitepackages="$target/lib/python${pythonversion}/site-packages"
+    echo yes | python configure.py -b $target/bin -v $target/Shared/sip -d $sitepackages -p $target/plugins 
+    chmod -R a+rw .
+}
