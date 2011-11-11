@@ -1,0 +1,14 @@
+# Recipe for version 4.13 by Michael Homer <michael@gobolinux.org>, on Sat Nov 12 10:12:48 NZDT 2011
+# on Sat Apr 16 13:31:22 CEST 2005
+
+compile_version=1.8.2
+url="http://www.riverbankcomputing.co.uk/static/Downloads/sip4/sip-4.13.tar.gz"
+file_size=714023
+file_md5=21b4e2cad56e4156df2220143264b8ff
+
+recipe_type=makefile
+pre_build() {
+   pythonversion=`python --version 2>&1 | awk {'print $2'} | cut -b1-3`
+   sitepackages="$target/lib/python${pythonversion}/site-packages"
+   python configure.py -b $target/bin -e $target/include -d $sitepackages -v $target/share/sip
+}
