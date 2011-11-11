@@ -1,0 +1,95 @@
+Patch taken from http://www.gnome.org/~chpe/patches/
+
+Index: TestGtkEmbed.cpp
+===================================================================
+RCS file: /cvsroot/mozilla/embedding/browser/gtk/tests/TestGtkEmbed.cpp,v
+retrieving revision 1.39
+diff -p -u -u -p -r1.39 browser/gtk/tests/TestGtkEmbed.cpp
+--- mozilla/embedding/browser/gtk/tests/TestGtkEmbed.cpp	24 Nov 2004 20:27:24 -0000	1.39
++++ mozilla/embedding/browser/gtk/tests/TestGtkEmbed.cpp	2 Dec 2005 14:13:40 -0000
+@@ -47,6 +47,13 @@
+ #include "nsIDOMUIEvent.h"
+ #include "prenv.h"
+ 
++#include "gtkmozembed_internal.h"
++#include "nsCOMPtr.h"
++#include "nsIWebBrowser.h"
++#include "nsIWebBrowserPrint.h"
++#include "nsIWebProgressListener.h"
++#include "nsIInterfaceRequestorUtils.h"
++
+ #ifdef NS_TRACE_MALLOC
+ #include "nsTraceMalloc.h"
+ #endif
+@@ -71,6 +78,7 @@ typedef struct _TestGtkBrowser {
+   GtkWidget  *progressBar;
+   GtkWidget  *statusAlign;
+   GtkWidget  *statusBar;
++  GtkWidget  *security_label;
+   const char *statusMessage;
+   int         loadPercent;
+   int         bytesLoaded;
+@@ -175,6 +183,7 @@ static gint dom_focus_in_cb      (GtkMoz
+ 				  TestGtkBrowser *browser);
+ static gint dom_focus_out_cb     (GtkMozEmbed *embed, nsIDOMUIEvent *event,
+ 				  TestGtkBrowser *browser);
++static void security_change_cb   (GtkMozEmbed*, gpointer, guint, TestGtkBrowser*);
+ 
+ // callbacks from the singleton object
+ static void new_window_orphan_cb (GtkMozEmbedSingle *embed,
+@@ -397,7 +406,11 @@ new_gtk_browser(guint32 chromeMask)
+   gtk_box_pack_start(GTK_BOX(browser->topLevelVBox), browser->progressAreaHBox,
+ 		     FALSE, // expand
+ 		     FALSE, // fill
+ 		     0);   // padding
++  // create security label
++  browser->security_label = gtk_label_new ("[---]");
++  gtk_box_pack_start (GTK_BOX (browser->progressAreaHBox), browser->security_label,
++		      FALSE, FALSE, 2);
+   // create our new progress bar
+   browser->progressBar = gtk_progress_bar_new();
+   // add it to the hbox
+@@ -532,7 +545,9 @@ new_gtk_browser(guint32 chromeMask)
+   // hookup to when the window is destroyed
+   gtk_signal_connect(GTK_OBJECT(browser->mozEmbed), "destroy",
+ 		     GTK_SIGNAL_FUNC(destroy_cb), browser);
+-  
++  gtk_signal_connect(GTK_OBJECT(browser->mozEmbed), "security-change",
++		     GTK_SIGNAL_FUNC(security_change_cb), browser);
++ 
+   // set the chrome type so it's stored in the object
+   gtk_moz_embed_set_chrome_mask(GTK_MOZ_EMBED(browser->mozEmbed),
+ 				actualChromeMask);
+@@ -1008,6 +1023,32 @@ gint dom_focus_out_cb     (GtkMozEmbed *
+   return NS_OK;
+ }
+ 
++void security_change_cb   (GtkMozEmbed *embed, gpointer request, guint state, TestGtkBrowser *browser)
++{
++	char *text = NULL;
++	switch (state) {
++		case nsIWebProgressListener::STATE_IS_INSECURE:
++			text = "[Insecure]";
++			break;
++		case nsIWebProgressListener::STATE_IS_BROKEN:
++			text = "[Broken!]";
++			break;
++		case nsIWebProgressListener::STATE_IS_SECURE|nsIWebProgressListener::STATE_SECURE_HIGH:
++			text = "[Secure:High]";
++			break;
++		case nsIWebProgressListener::STATE_IS_SECURE|nsIWebProgressListener::STATE_SECURE_MED:
++			text= "[Secure:Medium]";
++			break;
++		case nsIWebProgressListener::STATE_IS_SECURE|nsIWebProgressListener::STATE_SECURE_LOW:
++			text = "[Secure:Low]";
++			break;
++		default:
++			text = "[UNKNOWN]";
++			break;
++	}
++	gtk_label_set_text (GTK_LABEL (browser->security_label), text);
++}
++
+ void new_window_orphan_cb (GtkMozEmbedSingle *embed,
+ 			   GtkMozEmbed **retval, guint chromemask,
+ 			   gpointer data)
