@@ -1,0 +1,6 @@
+Glibc > 2.5 # "inline" behaviour changed with gcc 4.3 (http://gcc.gnu.org/gcc-4.3/porting_to.html) that needs glibc > 2.5
+GMP >= 4.2
+Linux >= 2.6.25 # ABI breakage with Linux < 2.6.25 (CVE-2008-1367)
+LibMPC >= 0.6 [libmpc]
+MPFR >= 2.3.2
+[gcj] # Enable java 
