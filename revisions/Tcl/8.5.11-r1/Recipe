@@ -1,0 +1,17 @@
+# Recipe for version 8.5.11 by Michael Homer <michael@gobolinux.org>, on Sat Nov 12 20:01:40 NZDT 2011
+compile_version=1.8.5
+url="$httpSourceforge/tcl/tcl8.5.11-src.tar.gz"
+file_size=4484001
+file_md5=b01a9691c83990b3db0ce62d1012ca67
+dir='tcl8.5.11/unix'
+recipe_type=configure
+install_target='install install-private-headers'
+
+configure_options=(
+   --with-encoding="iso8859-1"
+)
+
+pre_link(){
+   $sudo_exec ln -nfs ${target}/bin/tclsh8.5 ${target}/bin/tclsh
+   $sudo_exec ln -nfs ${goboLibraries}/tk8.5 ${target}/lib/tk8.5
+}
