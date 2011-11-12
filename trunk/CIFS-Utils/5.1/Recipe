@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for CIFS-Utils by Michael Homer <michael@gobolinux.org>, on Sat Nov 12 15:27:25 NZDT 2011
+# Recipe for version 5.1 by Michael Homer <michael@gobolinux.org>, on Sat Nov 12 15:27:25 NZDT 2011
+compile_version=1.13.3
+url="ftp://ftp.samba.org/pub/linux-cifs/cifs-utils/cifs-utils-5.1.tar.bz2"
+file_size=366162
+file_md5=b1b232adc042fd157d2f9848f4650fad
+recipe_type=configure
+make_variables=(
+   root_sbindir="$target/sbin"
+)
