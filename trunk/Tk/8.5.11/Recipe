@@ -1,0 +1,14 @@
+# Recipe for version 8.5.11 by Michael Homer <michael@gobolinux.org>, on Sat Nov 12 20:02:19 NZDT 2011
+compile_version=1.8.5
+url="$httpSourceforge/tcl/tk8.5.11-src.tar.gz"
+file_size=3809826
+file_md5=b61b72f0aad230091b100746f078b8f1
+dir='tk8.5.11/unix'
+recipe_type=configure
+configure_options=(
+   --with-tcl=$tcl_path/lib
+   --enable-xft
+)
+pre_link() {
+   $sudo_exec ln -nfs ${target}/bin/wish8.5 ${target}/bin/wish
+}
