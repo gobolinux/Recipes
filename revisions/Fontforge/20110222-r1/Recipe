@@ -1,0 +1,12 @@
+# Recipe for version 20110222 by Leandro Motta Barros <lmb@stackedboxes.org>, on Fri Nov 11 18:55:27 BRST 2011
+compile_version=1.8.0
+url="$httpSourceforge/fontforge/fontforge_full-20110222.tar.bz2"
+file_size=5126031
+file_md5=5be4dda345b5d73a27cc399df96e463a
+recipe_type=configure
+dir="fontforge-20110222"
+configure_options=(
+    --enable-type3
+    --with-freetype-bytecode  # Control whether we build with the bytecode interpreter
+    --enable-devicetables     # Control whether we build with support for device tables which allow fine control of kerning (etc.) at small point sizes
+)
