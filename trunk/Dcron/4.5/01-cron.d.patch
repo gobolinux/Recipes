@@ -1,0 +1,10 @@
+--- dcron-4.5/Makefile.orig	2011-11-12 22:17:13.582550134 +1300
++++ dcron-4.5/Makefile	2011-11-12 22:18:15.323362746 +1300
+@@ -67,7 +67,6 @@
+ 	$(INSTALL_PROGRAM) -m4750 -g $(CRONTAB_GROUP) crontab $(DESTDIR)$(BINDIR)/crontab
+ 	$(INSTALL_DATA) crontab.1 $(DESTDIR)$(MANDIR)/man1/crontab.1
+ 	$(INSTALL_DATA) crond.8 $(DESTDIR)$(MANDIR)/man8/crond.8
+-	$(INSTALL_DIR) $(DESTDIR)$(SCRONTABS)
+	$(INSTALL_DIR) $(DESTDIR)$(CRONTABS)
+	$(INSTALL_DIR) $(DESTDIR)$(CRONSTAMPS)
+ 
