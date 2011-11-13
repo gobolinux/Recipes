@@ -35,7 +35,7 @@ configure_options=(
    --with-os-vendor=GoboLinux
    --with-module-dir="${goboLibraries}/xorg/modules"
    --with-dri-driver-path="${goboLibraries}/xorg/modules/dri"
-   --with-fontdir="${goboShared}/fonts"
+   --with-fontrootdir="${goboShared}/fonts"
    --with-xkb-output="${goboVariable}/lib/xkb"
    --with-xkb-bin-directory="${goboExecutables}"
 )
