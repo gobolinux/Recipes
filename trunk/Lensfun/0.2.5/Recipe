@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for Lensfun by Leandro Motta Barros <lmb@stackedboxes.org>, on Tue Nov 15 14:21:41 BRST 2011
+# Recipe for version 0.2.5 by Leandro Motta Barros <lmb@stackedboxes.org>, on Tue Nov 15 14:21:41 BRST 2011
+compile_version=1.13.3
+url="http://download.berlios.de/lensfun/lensfun-0.2.5.tar.bz2"
+file_size=470733
+file_md5=a10438dffae68a5988fc54b0393a3755
+recipe_type=configure
+makefile=GNUmakefile
+build_target="all"
+configure_options=(
+   --prefix=$target
+   --datadir=$target/shared
+)
