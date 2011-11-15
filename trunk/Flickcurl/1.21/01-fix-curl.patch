@@ -1,0 +1,11 @@
+Fixes compilation with recent versions of Curl, whichno longer provide types.h.
+
+diff -aur flickcurl-1.21-vanilla/src/flickcurl_internal.h flickcurl-1.21-modified/src/flickcurl_internal.h
+--- flickcurl-1.21-vanilla/src/flickcurl_internal.h	2010-07-24 16:33:34.000000000 -0300
++++ flickcurl-1.21-modified/src/flickcurl_internal.h	2011-11-15 14:59:17.000000000 -0200
+@@ -24,5 +24,4 @@
+ #include <libxml/xpath.h>
+ 
+ #include <curl/curl.h>
+-#include <curl/types.h>
+ #include <curl/easy.h>
