@@ -18,12 +18,12 @@ do_build() {
 }
 
 do_install() {
-   ./bjam install
+   $sudo_exec ./bjam install
 
    # Manually install docs
-   mkdir -p $target/doc
-   cp -R doc/html $target/doc
+   $sudo_exec mkdir -p $target/doc
+   $sudo_exec cp -R doc/html $target/doc
 
    # Install bjam for use by e.g. BGL-Python
-   cp bjam $target/bin
+   $sudo_exec cp bjam $target/bin
 }
