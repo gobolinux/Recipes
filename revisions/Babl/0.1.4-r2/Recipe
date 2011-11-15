@@ -1,0 +1,11 @@
+# Recipe for version 0.1.4 by Hisham Muhammad <hisham@gobolinux.org>, on Tue Nov 8 21:38:55 BRST 2011
+# Recipe (MakeRecipe) for Babl by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jan. 2., péntek, 23.52.42 CET
+compile_version=1.11.4
+url="ftp://ftp.gtk.org/pub/babl/0.1/babl-0.1.4.tar.bz2"
+file_size=423645
+file_md5=1deaf8188b200b10d98a343a7e712b2b
+recipe_type=configure
+
+configure_options=(
+   --enable-introspection=no
+)
