@@ -1,0 +1,11 @@
+# Recipe for version 0.0.9 by Michael Homer <michael@gobolinux.org>, on Tue Nov 15 20:11:40 NZDT 2011
+# Recipe (MakeRecipe) for LibOpenRAW by Jonas Karlsson <jonka750@student.liu.se>, on Sun Jan 4 12:05:30 CET 2009
+compile_version=1.10.0
+url="http://libopenraw.freedesktop.org/download/libopenraw-0.0.9.tar.bz2"
+file_size=478687
+file_md5=3611d8aea870d25314665ef53093288e
+recipe_type=configure
+
+install_variables=(
+   GDK_PIXBUF_DIR="$target/lib/gdk-pixbuf-2.0/2.10.0/loaders"
+)
