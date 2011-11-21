@@ -1,0 +1,28 @@
+# Recipe for version 5.9 by Michael Homer <michael@gobolinux.org>, on Mon Nov 21 20:45:44 NZDT 2011
+compile_version=1.8.0
+url="$ftpGnu/ncurses/ncurses-5.9.tar.gz"
+file_size=2826473
+file_md5=8cb9c412e5f2d96bc6f459aa8c6282a1
+recipe_type=configure
+needs_safe_linking=yes
+configure_options=(
+   "--with-shared"
+   "--without-debug"
+   "--with-termlib"
+   "--with-gpm"
+   "--enable-rpath"
+   "--enable-termcap"
+   "--enable-symlinks"
+   "--enable-widec"
+   "--with-terminfo-dirs=$target/share/terminfo"
+   "--with-default-terminfo-dir=$target/share/terminfo"
+)
+install_target=install.libs
+pre_install() {
+   mkdir $target/share/ncursesw
+   echo "Hack created so that ncursesw gets a share symlink" > $target/share/ncursesw/README
+}
+post_install() {
+   chmod 755 $target/lib/*.5.9
+   chmod 644 $target/lib/libncurses++w.a
+}
