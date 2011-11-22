@@ -1,0 +1,11 @@
+compile_version=1.10.2
+url="ftp://ftp.remotesensing.org/pub/geotiff/libgeotiff/libgeotiff-1.4.0RC1.tar.gz"
+file_size=1434793
+file_md5=766691c3bdfbefbada11c675d188e1b1
+dir='libgeotiff-1.4.0'
+recipe_type=configure
+
+pre_link()
+{
+	cp -f -v geo_config.h $target/include
+}
