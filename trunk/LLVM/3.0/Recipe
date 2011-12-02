@@ -1,0 +1,21 @@
+# Recipe for version 3.0 by Michael Homer <michael@gobolinux.org>, on Sat Dec 3 09:36:21 NZDT 2011
+# Recipe (MakeRecipe) for LLVM by Michael Homer <michael@gobolinux.org>, on Thu Oct 21 21:00:58 NZDT 2010
+compile_version=1.13.0
+urls=(
+   "http://llvm.org/releases/3.0/llvm-3.0.tar.gz"
+   "http://llvm.org/releases/3.0/clang-3.0.tar.gz"
+)
+dir=llvm-3.0.src
+
+pre_build() {
+   mv ../clang-3.0.src tools/clang
+}
+recipe_type=configure
+file_sizes=(
+10350539
+7240578
+)
+file_md5s=(
+a8e5f5f1c1adebae7b4a654c376a6005
+43350706ae6cf05d0068885792ea0591
+)
