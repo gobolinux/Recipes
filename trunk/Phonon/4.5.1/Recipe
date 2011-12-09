@@ -1,0 +1,13 @@
+# Recipe for version 4.5.1 by Leandro Motta Barros <lmb@stackedboxes.org>, on Thu Dec 8 15:25:28 BRST 2011
+# Recipe (MakeRecipe) for Phonon by Paul Gideon Dann <pdgiddie+gobo@gmail.com>, on Fri Sep 19 13:16:45 BST 2008
+compile_version=1.11.2
+url="http://kde.mirrors.tds.net/pub/kde/stable/phonon/4.5.1/src/phonon-4.5.1.tar.xz"
+file_size=291088
+file_md5=3df071b7f9996afcd67b18958955ecdd
+recipe_type=cmake
+
+cmake_options=(
+   -DCMAKE_BUILD_TYPE=Release
+   -DQT_MKSPECS_DIR=$target/mkspecs
+   -DQT_PLUGINS_DIR=$target/plugins
+)
