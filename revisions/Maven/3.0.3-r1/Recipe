@@ -1,0 +1,22 @@
+# Recipe for version 3.0.3 by Lucas C. Villa Real, on Fri Dec 16 03:01:39 BRST 2011
+# Recipe (MakeRecipe) for Maven by Kevin Quick <quick@sparq.org>, on Mon Jul 12 11:30:24 MST 2010
+compile_version=1.13.0
+url="http://ftp.wayne.edu/apache//maven/source/apache-maven-3.0.3-src.zip"
+file_size=5327957
+file_md5=fa91e532655bbc0dad05a96398b2de7c
+dir='apache-maven-3.0.3'
+recipe_type=manifest
+pre_install() {
+  export M2_HOME=$target/apache-maven-3.0.3
+  export PATH=${M2_HOME}/bin:$PATH
+  ant
+}
+environment=(
+  M2_HOME=$target/apache-maven-3.0.3
+)
+manifest=(
+  "$target/apache-maven-3.0.3/bin/*:bin"
+  "$target/apache-maven-3.0.3/boot/*:boot"
+  "$target/apache-maven-3.0.3/lib/*:lib"
+  "$target/apache-maven-3.0.3/conf/*:$target_settings"
+)
