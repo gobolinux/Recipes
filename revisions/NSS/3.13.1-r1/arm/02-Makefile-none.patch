@@ -1,0 +1,9 @@
+--- nss-3.11.4/mozilla/Makefile.orig	2007-01-15 11:31:45.000000000 -0200
++++ nss-3.11.4/mozilla/Makefile	2007-01-15 11:32:04.000000000 -0200
+@@ -2,3 +2,6 @@ all:
+ 	make -C security/coreconf
+ 	make -C security/dbm
+ 	make -C security/nss
++
++none:
++	@echo "Skipping build process."
