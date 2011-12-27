@@ -1,0 +1,10 @@
+# Recipe for version 1.1.8 by Leandro Motta Barros <lmb@stackedboxes.org>, on Tue Dec 27 16:29:45 BRST 2011
+# Recipe (MakeRecipe) for LibBurn by Jonas Karlsson <jonka750@student.liu.se>, on Mon Mar 5 01:29:26 CET 2007
+compile_version=1.8.2
+url="http://files.libburnia-project.org/releases/libburn-1.1.8.tar.gz"
+file_size=854198
+file_md5=b91d2b8c65483efe447dbc3e3c9545d0
+recipe_type=configure
+configure_options=(
+    --disable-debug
+)
