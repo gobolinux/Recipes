@@ -1,0 +1,13 @@
+# Recipe for version 1.7.4 by Michael Homer <michael@gobolinux.org>, on Wed Jan 4 13:32:28 NZDT 2012
+# Recipe (MakeRecipe) for Git-Cola by Michael Homer <michael@gobolinux.org>, on Sat Nov 12 10:05:04 NZDT 2011
+compile_version=1.13.3
+url="http://github.com/git-cola/git-cola/tarball/v1.7.4"
+file_size=509951
+file_md5=2240891a0a51280d1ee6983a92a8e8b8
+file="git-cola-git-cola-v1.7.4-0-gdf33993.tar.gz"
+dir='git-cola-git-cola-6504ec2'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+)
