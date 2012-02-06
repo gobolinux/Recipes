@@ -1,0 +1,104 @@
+
+This patch converts unionfs fromv->i_nlink to set_nlink() usage,
+as required by vfs changes in 3.2 series kernels.
+
+Signed-off-by: Thomas Backlund <tmb@mageia.org>
+
+ fs/unionfs/inode.c  |   12 ++++++------
+ fs/unionfs/rename.c |    3 +--
+ fs/unionfs/subr.c   |    2 +-
+ fs/unionfs/unlink.c |    2 +-
+ 4 files changed, 9 insertions(+), 10 deletions(-)
+
+diff -urp linux-3.1/fs/unionfs.orig/inode.c linux-3.1/fs/unionfs/inode.c
+--- linux-3.1/fs/unionfs.orig/inode.c	2011-12-24 22:52:53.000000000 +0200
++++ linux-3.1/fs/unionfs/inode.c	2011-12-25 01:21:27.358071742 +0200
+@@ -142,7 +142,7 @@ static int unionfs_create(struct inode *
+ 			fsstack_copy_inode_size(dir,
+ 						lower_parent_dentry->d_inode);
+ 			/* update no. of links on parent directory */
+-			dir->i_nlink = unionfs_get_nlinks(dir);
++			set_nlink(dir, unionfs_get_nlinks(dir));
+ 		}
+ 	}
+ 
+@@ -253,7 +253,7 @@ static int unionfs_link(struct dentry *o
+ 		lower_dir_dentry = dget_parent(lower_new_dentry);
+ 		fsstack_copy_attr_times(dir, lower_dir_dentry->d_inode);
+ 		dput(lower_dir_dentry);
+-		dir->i_nlink = unionfs_get_nlinks(dir);
++		set_nlink(dir, unionfs_get_nlinks(dir));
+ 		err = 0;
+ 	}
+ 	if (err)
+@@ -328,7 +328,7 @@ check_link:
+ 	fsstack_copy_inode_size(dir, lower_new_dentry->d_parent->d_inode);
+ 
+ 	/* propagate number of hard-links */
+-	old_dentry->d_inode->i_nlink = unionfs_get_nlinks(old_dentry->d_inode);
++	set_nlink(old_dentry->d_inode, unionfs_get_nlinks(old_dentry->d_inode));
+ 	/* new dentry's ctime may have changed due to hard-link counts */
+ 	unionfs_copy_attr_times(new_dentry->d_inode);
+ 
+@@ -402,7 +402,7 @@ static int unionfs_symlink(struct inode
+ 			fsstack_copy_inode_size(dir,
+ 						lower_parent_dentry->d_inode);
+ 			/* update no. of links on parent directory */
+-			dir->i_nlink = unionfs_get_nlinks(dir);
++			set_nlink(dir, unionfs_get_nlinks(dir));
+ 		}
+ 	}
+ 
+@@ -514,7 +514,7 @@ static int unionfs_mkdir(struct inode *d
+ 						lower_parent_dentry->d_inode);
+ 
+ 			/* update number of links on parent directory */
+-			dir->i_nlink = unionfs_get_nlinks(dir);
++			set_nlink(dir, unionfs_get_nlinks(dir));
+ 		}
+ 
+ 		err = make_dir_opaque(dentry, dbstart(dentry));
+@@ -594,7 +594,7 @@ static int unionfs_mknod(struct inode *d
+ 			fsstack_copy_inode_size(dir,
+ 						lower_parent_dentry->d_inode);
+ 			/* update no. of links on parent directory */
+-			dir->i_nlink = unionfs_get_nlinks(dir);
++			set_nlink(dir, unionfs_get_nlinks(dir));
+ 		}
+ 	}
+ 
+diff -urp linux-3.1/fs/unionfs.orig/rename.c linux-3.1/fs/unionfs/rename.c
+--- linux-3.1/fs/unionfs.orig/rename.c	2011-12-24 22:52:53.000000000 +0200
++++ linux-3.1/fs/unionfs/rename.c	2011-12-25 01:23:23.890614537 +0200
+@@ -212,8 +212,7 @@ static int do_unionfs_rename(struct inod
+ 		fsstack_copy_attr_times(new_parent->d_inode,
+ 					unlink_dir_dentry->d_inode);
+ 		/* propagate number of hard-links */
+-		new_parent->d_inode->i_nlink =
+-			unionfs_get_nlinks(new_parent->d_inode);
++		set_nlink(new_parent->d_inode, unionfs_get_nlinks(new_parent->d_inode));
+ 
+ 		unlock_dir(unlink_dir_dentry);
+ 		if (!err) {
+diff -urp linux-3.1/fs/unionfs.orig/subr.c linux-3.1/fs/unionfs/subr.c
+--- linux-3.1/fs/unionfs.orig/subr.c	2011-12-24 22:52:53.000000000 +0200
++++ linux-3.1/fs/unionfs/subr.c	2011-12-25 01:11:58.115643669 +0200
+@@ -91,5 +91,5 @@ void unionfs_copy_attr_all(struct inode
+ 	 * Update the nlinks AFTER updating the above fields, because the
+ 	 * get_links callback may depend on them.
+ 	 */
+-	dest->i_nlink = unionfs_get_nlinks(dest);
++	set_nlink(dest, unionfs_get_nlinks(dest));
+ }
+diff -urp linux-3.1/fs/unionfs.orig/unlink.c linux-3.1/fs/unionfs/unlink.c
+--- linux-3.1/fs/unionfs.orig/unlink.c	2011-12-24 22:52:53.000000000 +0200
++++ linux-3.1/fs/unionfs/unlink.c	2011-12-25 01:22:19.319205490 +0200
+@@ -190,7 +190,7 @@ static int unionfs_rmdir_first(struct in
+ 
+ 	fsstack_copy_attr_times(dir, lower_dir_dentry->d_inode);
+ 	/* propagate number of hard-links */
+-	dentry->d_inode->i_nlink = unionfs_get_nlinks(dentry->d_inode);
++	set_nlink(dentry->d_inode, unionfs_get_nlinks(dentry->d_inode));
+ 
+ out:
+ 	if (lower_dir_dentry)
