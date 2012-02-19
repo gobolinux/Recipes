@@ -1,0 +1,10 @@
+# Recipe for version 1.4.6 by Andreas Köhler <andi5.py@gmx.net>, on So 19. Feb 15:03:50 CET 2012
+# Recipe (MakeRecipe) for APR by Kosh <kosh.linux at gmail.com>, on Tue Feb 28 22:02:35 BRT 2006
+compile_version=1.8.2
+url="http://archive.apache.org/dist/apr/apr-1.4.6.tar.bz2"
+file_size=785724
+file_md5=ffee70a111fd07372982b0550bbb14b7
+recipe_type=configure
+configure_options=(
+   --enable-layout=GoboLinux
+)
