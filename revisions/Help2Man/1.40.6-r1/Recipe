@@ -1,0 +1,10 @@
+# Recipe for version 1.40.6 by Andreas Köhler <andi5.py@gmx.net>, on So 19. Feb 17:59:38 CET 2012
+url="http://ftp.gnu.org/gnu/help2man/help2man-1.40.6.tar.gz"
+file_size=184304
+file_md5=f9ff9c6e65c74a0763596a7ca2b69aa7
+dir='help2man-1.40.6'
+compile_version=1.13.0
+recipe_type=configure
+make_variables=(
+   "LINGUAS="
+)
