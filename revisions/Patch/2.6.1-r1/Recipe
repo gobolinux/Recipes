@@ -1,0 +1,9 @@
+# Recipe for version 2.6.1.1 by Andreas Köhler <andi5.py@gmx.net>, on So 19. Feb 14:26:03 CET 2012
+url="http://ftp.gnu.org/gnu/patch/patch-2.6.1.tar.bz2"
+file_size=253719
+file_md5=0818d1763ae0c4281bcdc63cdac0b2c0
+compile_version=1.8.0
+recipe_type=configure
+pre_build() {
+   export CPPFLAGS="$CPPFLAGS -D_GNU_SOURCE"
+}
