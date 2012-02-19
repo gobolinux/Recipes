@@ -1,0 +1,31 @@
+This sets the GoboLinux defaults in the default configuration
+file.
+
+-- 
+Jonas Karlsson
+
+--- httpd-2.2.3/docs/conf/httpd.conf.in	2005-11-29 17:10:50.000000000 +0100
++++ httpd-2.2.3.new/docs/conf/httpd.conf.in	2006-11-09 17:34:22.000000000 +0100
+@@ -62,10 +62,10 @@
+ # It is usually good practice to create a dedicated user and group for
+ # running httpd, as with most system services.
+ #
+-User daemon
+-Group daemon
++User httpd
++Group httpd
+ 
+ </IfModule>
+ </IfModule>
+ 
+ # 'Main' server configuration
+@@ -364,6 +364,9 @@
+ # the server, or you may simply copy their contents here and change as 
+ # necessary.
+ 
++# Include configurations for modules
++Include @%Compile_goboSettings%@/httpd/conf/*
++
+ # Server-pool management (MPM specific)
+ #Include @rel_sysconfdir@/extra/httpd-mpm.conf
+ 
