@@ -1,0 +1,21 @@
+# Recipe for version 2.21.1 by Michael Homer <michael@gobolinux.org>, on Sat Aug 20 00:16:59 NZST 2011
+url=$ftpGnu/binutils/binutils-2.21.1.tar.bz2
+file_size=18890094
+file_md5=a22801a9cad45c85e9ff6afc10537d72
+compile_version=1.8.0
+needs_build_directory=yes
+needs_safe_linking=yes
+recipe_type=configure
+configure_options=(
+   "--enable-shared"
+)
+make_variables=(
+   "tooldir=$target"
+)
+install_variables=(
+   target_header_dir="${target}/include"
+)
+
+pre_install() {
+   cp ../include/libiberty.h $target/include
+}
