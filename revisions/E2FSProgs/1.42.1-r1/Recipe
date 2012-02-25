@@ -1,0 +1,13 @@
+# Recipe for version 1.42.1 by Andreas Köhler <andi5.py@gmx.net>, on Sa 25. Feb 15:30:34 CET 2012
+url=$httpSourceforge/e2fsprogs/e2fsprogs-1.42.1.tar.gz
+file_size=5724307
+file_md5=8ed1501ae6746e2e735bdd1407211dc9
+recipe_type=configure
+needs_safe_linking=yes
+compile_version=1.9.0
+configure_options=(
+   "--enable-elf-shlibs"
+   "--disable-libblkid"
+   "--disable-libuuid"
+)
+install_target="install install-libs"
