@@ -1,0 +1,13 @@
+# Recipe for version 4.8.1 by Andreas Köhler <andi5.py@gmx.net>, on So 19. Feb 18:15:51 CET 2012
+url="http://www.midnight-commander.org/downloads/mc-4.8.1.tar.xz"
+file_size=2057960
+file_md5=0c9632b799edfb8da4665fbf20546c21
+file=mc-4.8.1.tar.xz
+compile_version=1.10.2
+recipe_type=configure
+configure_options=(
+    --enable-extcharset
+    --enable-charset
+    --without-x
+    --with-search-engine=glib
+)
