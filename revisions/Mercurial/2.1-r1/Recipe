@@ -1,0 +1,12 @@
+# Recipe for version 2.1 by Michael Homer <michael@gobolinux.org>, on Sun Feb 26 14:33:45 NZDT 2012
+# Recipe for mercurial by Frederico Recsky frederico at gmail.com
+compile_version=1.13.0
+url="http://www.selenic.com/mercurial/release/mercurial-2.1.tar.gz"
+file_size=3308300
+file_md5=d2ca44f8d0129ab50639143af99d9363
+build_script="setup.py"
+recipe_type=python
+
+pre_link() {
+  install contrib/hgk $target/bin/
+}
