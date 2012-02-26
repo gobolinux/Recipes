@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for Extract-NSS-Root-Certs by Michael Homer <michael@gobolinux.org>, on Sun Feb 26 16:16:48 NZDT 2012
+# Recipe for version git by Michael Homer <michael@gobolinux.org>, on Sun Feb 26 16:16:48 NZDT 2012
+compile_version=1.13.3
+git="https://github.com/agl/extract-nss-root-certs.git"
+
+recipe_type=manifest
+manifest=(
+   8.out:bin/extract-nss-root-certs
+)
+do_build() {
+    go tool 8g convert_mozilla_certdata.go
+    go tool 8l convert_mozilla_certdata.8
+}
