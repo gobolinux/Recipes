@@ -1,0 +1,26 @@
+# Recipe (MakeRecipe) for Golang by Kevin Quick <quick@sparq.org>, on Fri Nov 20 22:41:55 MST 2009
+# Recipe for version hg by Kevin Quick <quick@sparq.org>, on Fri Nov 20 22:41:55 MST 2009
+compile_version=1.12.3
+hg="http://go.googlecode.com/hg/ -u weekly"
+recipe_type=manifest
+create_dirs_first=yes
+manifest=(
+	"pkg:lib/go/pkg"
+)
+environment=(
+	"GOARCH=386"
+	"GOOS=linux"
+	"GOBIN=$target/bin"
+	"GOROOT_FINAL=$target/lib/go"
+)
+sandbox_options=(
+    --no-sandbox
+)
+do_build()
+{
+    $sudo_exec chown -R "$(whoami)" "$target"
+    pushd src
+    bash ./all.bash
+    popd
+    $sudo_exec chown -R "$(SuperUserName)" "$target"
+}
