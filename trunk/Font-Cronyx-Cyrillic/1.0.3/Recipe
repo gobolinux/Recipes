@@ -9,3 +9,6 @@ part_of=Xorg-Font
 configure_options=(
    --with-fontrootdir="${target}/share/fonts"
 )
+install_variables=(
+   FCCACHE=true
+)
