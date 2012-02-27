@@ -1,0 +1,23 @@
+--- nspr-4.6.4/mozilla/nsprpub/configure.in.orig	2007-01-13 17:40:36.000000000 -0200
++++ nspr-4.6.4/mozilla/nsprpub/configure.in	2007-01-13 17:46:17.000000000 -0200
+@@ -2148,20 +2148,6 @@ dnl AC_CHECK_LIB(thread, main)
+ dnl AC_CHECK_LIB(vms_jackets, main)
+ 
+ 
+-dnl We don't want anything to link with libdl even if it's present on OS X, 
+-dnl since it's not used and not part of the default installation.
+-
+-case $target in
+-*-darwin*)
+-    ;;
+-*)
+-    AC_CHECK_LIB(dl, dlopen,
+-        AC_CHECK_HEADER(dlfcn.h,
+-            OS_LIBS="-ldl $OS_LIBS"))
+-    ;;
+-esac
+-
+-
+ dnl ========================================================
+ dnl Check for system header files.
+ dnl ========================================================
