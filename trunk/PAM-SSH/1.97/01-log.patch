@@ -1,0 +1,11 @@
+--- pam_ssh-1.97/Makefile.in2	2011-08-28 20:13:28.100061658 +1200
++++ pam_ssh-1.97/Makefile.in	2011-08-28 20:13:59.086728933 +1200
+@@ -181,7 +181,7 @@
+ pam_ssh_la_DEPENDENCIES = @LTLIBOBJS@
+ am_pam_ssh_la_OBJECTS = atomicio.lo authfd.lo authfile.lo bufaux.lo \
+ 	buffer.lo cipher.lo cipher-3des1.lo cipher-bf1.lo cipher-ctr.lo \
+-	key.lo log.lo pam_ssh.lo rijndael.lo xmalloc.lo
++	key.lo log.lo pam_ssh.lo rijndael.lo xmalloc.lo pam_ssh_log.lo
+ pam_ssh_la_OBJECTS = $(am_pam_ssh_la_OBJECTS)
+ 
+ DEFAULT_INCLUDES =  -I. -I$(srcdir) -I.
