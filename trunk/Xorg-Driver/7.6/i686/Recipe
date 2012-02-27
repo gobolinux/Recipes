@@ -19,7 +19,7 @@ include=(
 	xf86-video-cirrus--1.3.2
 	xf86-video-dummy--0.3.4
 	xf86-video-fbdev--0.4.2
-	xf86-video-geode--2.11.10
+	xf86-video-geode--2.11.13
 #	xf86-video-glide--1.0.3 # compilation error - need libglide (glide.h)
 	xf86-video-glint--1.2.5
 	xf86-video-i128--1.3.4
@@ -30,7 +30,7 @@ include=(
 	xf86-video-neomagic--1.2.5
 #	xf86-video-newport--0.2.3 # uses deprecated loader api, breaking Xorg -configure
 	xf86-video-nv--2.1.18 # use nouveau instead, nv is deprecated, but still functional
-	xf86-video-nouveau--0.0.16_pre20101130 # git snapshot since no release have been done yet, from gentoo mirrors
+	xf86-video-nouveau--0.0.16_pre20111109 # git snapshot since no release have been done yet, from gentoo mirrors
 	xf86-video-r128--6.8.1
 	xf86-video-rendition--4.2.4
 	xf86-video-s3--0.6.3
