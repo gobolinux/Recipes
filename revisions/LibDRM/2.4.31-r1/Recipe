@@ -1,0 +1,16 @@
+# Recipe for version 2.4.31 by Andreas Köhler <andi5.py@gmx.net>, on So 26. Feb 13:14:45 CET 2012
+# Recipe (MakeRecipe) for LibDRM by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jan 9 17:56:36 BRST 2.4.316
+compile_version=1.12.0
+url="http://dri.freedesktop.org/libdrm/libdrm-2.4.31.tar.bz2"
+file_size=475677
+file_md5=b8cf744ec113c6028fe0975b1133b649
+recipe_type=configure
+symlink_options=(--conflict=overwrite)
+configure_options=(
+   --enable-intel
+   --enable-nouveau-experimental-api
+   --enable-radeon-experimental-api
+)
+with_udev=(
+   --enable-udev
+)
