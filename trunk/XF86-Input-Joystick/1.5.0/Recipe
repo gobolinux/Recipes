@@ -6,3 +6,6 @@ file_size=283763
 file_md5=79b20f86d1b2e625ae65e35c3457027f
 recipe_type=configure
 part_of=Xorg-Driver
+configure_options=(
+   --with-sdkdir="$target/include/xorg"
+)
