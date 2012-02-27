@@ -1,0 +1,13 @@
+# Recipe for version 6.2 by Andreas Köhler <andi5.py@gmx.net>, on So 26. Feb 22:35:58 CET 2012
+# Recipe (MakeRecipe) for Readline by Peter Eriksen <s022018@student.dtu.dk>, on Thu Nov 4 19:52:54 CET 2004
+compile_version=1.13.2
+
+url="$ftpGnu/readline/readline-6.2.tar.gz"
+file_size=2277926
+file_md5=67948acb2ca081f23359d0256e9a271c
+
+recipe_type=configure
+
+build_variables=(
+   "SHLIB_LIBS=-lncurses"
+)
