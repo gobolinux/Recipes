@@ -1,0 +1,10 @@
+# Recipe for version 1.22 by Michael Homer <michael@gobolinux.org>, on Sat Aug 20 23:54:34 NZST 2011
+# by Maglan C. Diemer
+compile_version=1.8.2
+url="$ftpGnu/libidn/libidn-1.22.tar.gz"
+file_size=3356444
+file_md5=893a1df0cf3b28b72d248382eaeaca71
+recipe_type=configure
+configure_options=(
+   "--mandir=${target}/man"
+)
