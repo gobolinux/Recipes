@@ -1,0 +1,15 @@
+# Recipe for version 4.2 by Michael Homer <michael@gobolinux.org>, on Sat Aug 20 07:30:35 NZST 2011
+url="http://ftp.gnu.org/gnu/bash/bash-4.2.tar.gz"
+file_size=7009201
+file_md5=3fb927c7c33022f1c327f14a81c0d4b0
+
+recipe_type=configure
+compile_version=1.13.2
+
+configure_options=(
+    "--with-installed-readline"
+)
+
+pre_link() {
+    ln -s bash ${target}/bin/sh
+}
