@@ -1,0 +1,11 @@
+# Recipe for version 9.39 by Andreas Köhler <andi5.py@gmx.net>, on So 26. Feb 12:50:45 CET 2012
+# Recipe (MakeRecipe) for Hdparm by  Ozgur Ulukir, on Fri Dec 17 22:07:37 EET 2004
+compile_version=1.8.2
+url="$httpSourceforge/hdparm/hdparm-9.39.tar.gz"
+file_size=126989
+file_md5=2bc17b72403885d4faf959682944243b
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "DESTDIR=$target"
+)
