@@ -1,0 +1,22 @@
+# Recipe for version 3.7.10 by Andreas Köhler <andi5.py@gmx.net>, on So 19. Feb 15:31:11 CET 2012
+compile_version=1.9.0
+url="http://www.sqlite.org/sqlite-autoconf-3071000.tar.gz"
+file_size=1801640
+file_md5=9ed2ca93577b58cfa0d01f64b9312ab9
+recipe_type=configure
+
+environment=(
+    CFLAGS="-DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_SECURE_DELETE=1 -DSQLITE_ENABLE_UNLOCK_NOTIFY=1"
+    TCLLIBDIR="$target/lib/tcl8.5"
+)
+
+configure_options=(
+    --enable-dynamic-extensions
+    --disable-readline
+)
+
+with_readline="--enable-readline"
+
+pre_link() {
+    ln -s $target/bin/sqlite3 $target/bin/sqlite
+}
