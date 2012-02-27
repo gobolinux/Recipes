@@ -1,0 +1,23 @@
+# Recipe for version 2.2.6 by Andreas Köhler <andi5.py@gmx.net>, on So 26. Feb 13:01:32 CET 2012
+# Recipe (MakeRecipe) for Nano by Laurent Pelecq (laurent.pelecq at soleil.org), on dim mar 26 15:32:24 CEST 2006
+compile_version=1.8.2
+url="http://www.nano-editor.org/dist/v2.2/nano-2.2.6.tar.gz"
+file_size=1572388
+file_md5=03233ae480689a008eb98feb1b599807
+recipe_type=configure
+
+docs=(
+  "doc/nanorc.sample"
+)
+
+configure_options=(
+#  "--with-slang"
+   "--enable-color"
+   "--enable-multibuffer"
+   "--enable-nanorc"
+#   "--enable-utf8"
+)
+
+pre_link() {
+   cp "$target/doc/nano-2.2.6/nanorc.sample" "${target}/Resources/Defaults/Settings/nanorc"
+}
