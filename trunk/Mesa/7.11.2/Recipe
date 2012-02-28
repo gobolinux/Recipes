@@ -1,0 +1,36 @@
+# Recipe for version 7.11.2.2 by Andreas Köhler <andi5.py@gmx.net>, on So 26. Feb 13:09:36 CET 2012
+# Recipe (MakeRecipe) for Mesa by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Nov 23 03:32:41 BRST 2004
+compile_version=1.8.5
+urls=(
+   ftp://ftp.freedesktop.org/pub/mesa/7.11.2/MesaLib-7.11.2.tar.bz2
+   ftp://ftp.freedesktop.org/pub/mesa/7.11.2/MesaGLUT-7.11.2.tar.bz2
+)
+recipe_type=configure
+dir='Mesa-7.11.2'
+
+configure_options=(
+    --enable-xcb
+    --disable-ttm-api
+    --enable-glx-tls
+    --enable-driglx-direct
+    
+    --with-driver=dri
+    --with-dri-driverdir="${goboLibraries}/xorg/modules/dri"
+    --without-gallium-drivers
+)
+
+install_variables=(
+   DRI_DRIVER_INSTALL_DIR="${target}/lib/xorg/modules/dri"
+)
+
+symlink_options=(
+   --conflict=overwrite
+)
+file_sizes=(
+6257280
+201575
+)
+file_md5s=(
+0837c52698fe3252369c3fdb5195afcc
+35ca3a0b54cb6f9d2e0e4eae8f6bb95e
+)
