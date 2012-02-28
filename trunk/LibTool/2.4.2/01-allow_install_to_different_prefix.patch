@@ -1,0 +1,24 @@
+diff -Naur libtool-2.2.6-old/libltdl/config/ltmain.m4sh libtool-2.2.6/libltdl/config/ltmain.m4sh
+--- libtool-2.2.6-old/libltdl/config/ltmain.m4sh	2009-11-08 22:32:06.000000000 +0100
++++ libtool-2.2.6/libltdl/config/ltmain.m4sh	2009-11-08 22:32:13.000000000 +0100
+@@ -1577,7 +1577,7 @@
+ 	  # are installed into $libdir/../bin (currently, that works fine)
+ 	  # but it's something to keep an eye on.
+ 	  test "$inst_prefix_dir" = "$destdir" && \
+-	    func_fatal_error "error: cannot install \`$file' to a directory not ending in $libdir"
++	    func_error "error: cannot install \`$file' to a directory not ending in $libdir"
+ 
+ 	  if test -n "$inst_prefix_dir"; then
+ 	    # Stick the inst_prefix_dir data into the link command.
+diff -Naur libtool-2.2.6-old/libltdl/config/ltmain.sh libtool-2.2.6/libltdl/config/ltmain.sh
+--- libtool-2.2.6-old/libltdl/config/ltmain.sh	2009-11-08 22:32:06.000000000 +0100
++++ libtool-2.2.6/libltdl/config/ltmain.sh	2009-11-08 22:32:38.000000000 +0100
+@@ -2019,7 +2019,7 @@
+ 	  # are installed into $libdir/../bin (currently, that works fine)
+ 	  # but it's something to keep an eye on.
+ 	  test "$inst_prefix_dir" = "$destdir" && \
+-	    func_fatal_error "error: cannot install \`$file' to a directory not ending in $libdir"
++	    func_error "error: cannot install \`$file' to a directory not ending in $libdir"
+ 
+ 	  if test -n "$inst_prefix_dir"; then
+ 	    # Stick the inst_prefix_dir data into the link command.
