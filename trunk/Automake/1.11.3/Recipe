@@ -1,0 +1,12 @@
+# Recipe for version 1.11.3 by Andreas Köhler, on So 19. Feb 13:49:14 CET 2012
+url="$ftpGnu/automake/automake-1.11.3.tar.gz"
+file_size=1620860
+file_md5=93ecb319f0365cb801990b00f658d026
+compile_version=1.11.3
+recipe_type=configure
+pre_install() {
+   pushd "${target}/share"
+   ln -s automake-1.11 automake
+   ln -s aclocal-1.11 aclocal
+   popd
+}
