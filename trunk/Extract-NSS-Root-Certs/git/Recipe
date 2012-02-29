@@ -1,7 +1,10 @@
 # Recipe (MakeRecipe) for Extract-NSS-Root-Certs by Michael Homer <michael@gobolinux.org>, on Sun Feb 26 16:16:48 NZDT 2012
 # Recipe for version git by Michael Homer <michael@gobolinux.org>, on Sun Feb 26 16:16:48 NZDT 2012
 compile_version=1.13.3
-git="https://github.com/agl/extract-nss-root-certs.git"
+
+# https:// is not applicable if you want to install ca-certificates to
+# avoid certificate warnings when checking out extract-nss-root-certs
+git="git://github.com/agl/extract-nss-root-certs.git"
 
 recipe_type=manifest
 manifest=(
