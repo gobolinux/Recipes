@@ -6,6 +6,13 @@ file_size=183236
 file_md5=b304bbe8ab63373924a744eac9ebc652
 dir='cdparanoia-III-10.2'
 recipe_type=configure
+makefile=Makefile.gobo
+build_target=all
 pre_build(){
     autoreconf -ivf
+    # Wrapper Makefile to force single job as parallel builds break
+    cat << EOF > Makefile.gobo
+% :
+	\$(MAKE) -j1 \$@
+EOF
 }
