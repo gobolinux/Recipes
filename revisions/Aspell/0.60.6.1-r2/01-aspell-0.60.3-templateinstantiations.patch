@@ -1,0 +1,8 @@
+--- aspell-0.60.5-orig/common/string_map.cpp~	2004-07-15 12:58:58.000000000 +0200
++++ aspell-0.60.5/common/string_map.cpp	2005-07-19 14:31:42.000000000 +0200
+@@ -82,3 +82,5 @@
+   }
+ }
+ 
++template class acommon::HashTable<acommon::StringMap::Parms>;
++template class acommon::BlockSList<acommon::StringPair>;
