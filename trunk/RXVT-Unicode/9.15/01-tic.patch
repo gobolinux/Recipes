@@ -1,0 +1,17 @@
+Specify the TERMINFO, as it cannot be fed in from the enviroment array.
+
+ Makefile.in |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff -Nur rxvt-unicode-9.05-old/doc/Makefile.in rxvt-unicode-9.05/doc/Makefile.in
+--- rxvt-unicode-9.05-old/doc/Makefile.in	2008-02-22 16:33:20.000000000 +0100
++++ rxvt-unicode-9.05/doc/Makefile.in	2008-09-13 01:29:38.936749456 +0200
+@@ -98,7 +98,7 @@
+ 	$(INSTALL_DATA) rxvt.7.man  $(DESTDIR)$(man7dir)/$(RXVTNAME).$(man7ext)
+ @IF_PERL@	$(INSTALL) -d $(DESTDIR)$(man3dir)
+ @IF_PERL@	$(INSTALL_DATA) rxvtperl.3.man $(DESTDIR)$(man3dir)/$(RXVTNAME)perl.$(man3ext)
+-	@TIC@ $(srcdir)/etc/rxvt-unicode.terminfo
++	@TIC@ -o $(DESTDIR)$(prefix)/Shared/terminfo $(srcdir)/etc/rxvt-unicode.terminfo
+ 
+ distdepend: alldoc
+ 
