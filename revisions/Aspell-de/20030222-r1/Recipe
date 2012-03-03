@@ -1,0 +1,10 @@
+# Recipe for version 20030222 by Andreas Köhler <andi5.py@gmx.net>, on Sa 3. Mär 18:44:59 CET 2012
+url="$ftpGnu/aspell/dict/de/aspell6-de-20030222-1.tar.bz2"
+file_size=274407 
+file_md5=5950c5c8a36fc93d4d7616591bace6a6  
+compile_version=1.13.3
+recipe_type=configure
+install_variables=(
+   "dictdir=$target/lib/aspell"
+   "datadir=$target/lib/aspell"
+)
