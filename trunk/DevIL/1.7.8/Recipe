@@ -6,3 +6,6 @@ dir=devil-1.7.8
 file_size=2051993
 file_md5=7918f215524589435e5ec2e8736d5e1d
 recipe_type=configure
+environment=(
+   CFLAGS=-Dpng_set_gray_1_2_4_to_8=png_set_expand_gray_1_2_4_to_8
+)

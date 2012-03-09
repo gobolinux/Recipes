@@ -1,0 +1,21 @@
+LibPNG 1.2 is too old, so link against libpng instead
+
+Author: Michael Homer <michael@gobolinux.org>
+--- devil-1.7.8/m4/devil-definitions.m4.orig	2012-03-10 10:03:46.013973453 +1300
++++ devil-1.7.8/m4/devil-definitions.m4	2012-03-10 10:03:57.813974520 +1300
+@@ -244,12 +244,12 @@
+ 
+ AC_DEFUN([SETTLE_PNG],
+          [DEVIL_IL_LIB([png.h],
+-                       [png12]) 
+-          AS_IF([test "x$have_png12" = "xno"],
++                       [png]) 
++          AS_IF([test "x$have_png" = "xno"],
+                 [DEVIL_IL_LIB([png.h],
+                               [png]) 
+                  lib_test_result="$have_png"],
+-                [lib_test_result="$have_png12"]) 
++                [lib_test_result="$have_png"]) 
+           AS_IF([test "x$lib_test_result" = "xyes"],
+                 [MAYBE_OPTIONAL_DEPENDENCY([IL],
+                                            [libpng]) ]) ]) 
