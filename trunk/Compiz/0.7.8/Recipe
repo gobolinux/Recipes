@@ -1,0 +1,12 @@
+# Recipe for version 0.7.8 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Mar 13 19:24:55 NZDT 2012
+# on Mon Oct 5 19:07:38 CDT 2009
+# Recipe (MakeRecipe) for Compiz by Giambattista Bloisi <giamby@infinito.it>, on Sun Nov 4 20:52:47 CET 2007
+compile_version=1.9.0
+url="http://xorg.freedesktop.org/archive/individual/app/compiz-0.7.8.tar.gz"
+file_size=1463748
+file_md5=e99977d9170a7bd5d571004eed038428
+recipe_type=configure
+
+environment=(
+    KDE_WINDOW_DECORATOR_CFLAGS="-I$goboHeaders/dbus-1.0 -I$goboLibraries/dbus-1.0/include"
+)
