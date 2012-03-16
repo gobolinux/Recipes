@@ -1,0 +1,11 @@
+# Recipe for version 5.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Mar 13 19:05:51 NZDT 2012
+# Recipe (MakeRecipe) for FixesProto by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 20:14:10 BRT 2005
+compile_version=1.7.1
+url="http://xorg.freedesktop.org/archive/individual/proto/fixesproto-5.0.tar.bz2"
+file_size=100886
+file_md5=e7431ab84d37b2678af71e29355e101d
+part_of=Xorg-Proto
+recipe_type=configure
+configure_options=(
+	--without-fop
+)
