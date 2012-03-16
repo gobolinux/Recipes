@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for EFIBootMgr by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Mar 15 19:14:53 NZDT 2012
+# Recipe for version 0.5.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Mar 15 19:14:53 NZDT 2012
+compile_version=1.13.3
+url="http://linux.dell.com/efibootmgr/efibootmgr-0.5.4.tar.gz"
+file_size=59121
+file_md5=cfcf24752d6461b73f7ba964bbf73169
+recipe_type=makefile
+makefile='Makefile'
+
+install_variables=(
+	BINDIR=$target/bin
+)
