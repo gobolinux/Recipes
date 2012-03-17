@@ -1,0 +1,11 @@
+# Recipe for version 1.9.100 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Mar 14 18:49:32 NZDT 2012
+# Recipe (MakeRecipe) for XF86-Video-MGA by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jan 9 17:17:07 BRST 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/driver/xf86-video-mga-1.9.100.tar.bz2"
+file_size=369119
+file_md5=3e80cfb84b62866d2f94774ecbf3e46c
+recipe_type=configure
+part_of=Xorg-Driver
+configure_options=(
+    --enable-dri
+)
