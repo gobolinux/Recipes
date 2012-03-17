@@ -1,0 +1,12 @@
+# Recipe for version 2.5.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Mar 13 19:21:50 NZDT 2.5.12
+# Recipe (MakeRecipe) for XKeyboard-Config by Giambattista Bloisi <giamby@infinito.it>, on Mon Jun 2.5.14:53:57 CEST 2008
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/data/xkeyboard-config-2.5.1.tar.bz2"
+file_size=833871
+file_md5=29cbf3980bbe94c3ffc9c233ea638059
+recipe_type=configure
+part_of=Xorg-App
+
+configure_options=(
+    --with-xkb-rules-symlink=xorg
+)
