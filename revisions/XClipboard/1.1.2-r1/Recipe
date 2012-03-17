@@ -1,0 +1,11 @@
+# Recipe for version 1.1.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Mar 13 19:27:22 NZDT 2012
+# Recipe (MakeRecipe) for XClipboard by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 18:40:42 BRT 2005
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/app/xclipboard-1.1.2.tar.bz2"
+file_size=124971
+file_md5=f53f9276c0d009b539d7f64c6db9f0ff
+recipe_type=configure
+part_of=Xorg-App
+install_variables=(
+   appdefaultdir=${target}/Shared/X11/app-defaults
+)
