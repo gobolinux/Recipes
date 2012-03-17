@@ -1,0 +1,11 @@
+# Recipe for version 7.2.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Mar 13 19:05:13 NZDT 2012
+# Recipe (MakeRecipe) for XExtProto by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 20:15:32 BRT 2005
+compile_version=1.7.1
+url="http://xorg.freedesktop.org/archive/individual/proto/xextproto-7.2.0.tar.bz2"
+file_size=207724
+file_md5=220732210ceffb01bf1caf970e3b1bfb
+part_of=Xorg-Proto
+recipe_type=configure
+configure_options=(
+	--without-fop
+)
