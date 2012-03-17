@@ -1,8 +1,8 @@
-# Recipe for version 4.1.0 by Andre Detsch <detsch@gobolinux.org>, on Wed Jun 21 11:54:27 BRT 2006
+# Recipe for version 4.1.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Mar 13 19:59:01 NZDT 2012
 # Recipe (MakeRecipe) for XF86-Video-VGA by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 19:39:02 BRT 2005
 compile_version=1.11.0
-url="http://xorg.freedesktop.org/X11R7.1/src/driver/xf86-video-vga-X11R7.1-4.1.0.tar.bz2"
+url="http://xorg.freedesktop.org/archive/individual/driver/xf86-video-vga-4.1.0.tar.bz2"
+file_size=233642
+file_md5=b93e5fe9757db779a75cd3ce97b9613d
 recipe_type=configure
-file_size=233678
-file_md5=b08b488f1b98d9152f5416091bc85055
 part_of=Xorg-Driver
