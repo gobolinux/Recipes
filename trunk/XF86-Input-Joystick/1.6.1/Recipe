@@ -1,0 +1,11 @@
+# Recipe for version 1.6.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Mar 13 19:57:30 NZDT 2012
+# Recipe (MakeRecipe) for XF86-Input-Joystick by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jan 9 17:14:06 BRST 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/driver/xf86-input-joystick-1.6.1.tar.bz2"
+file_size=323230
+file_md5=01f416753016f01e328b1098157a5266
+recipe_type=configure
+part_of=Xorg-Driver
+configure_options=(
+   --with-sdkdir="$target/include/xorg"
+)
