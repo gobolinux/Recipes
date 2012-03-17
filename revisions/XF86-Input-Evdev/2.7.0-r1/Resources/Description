@@ -1,0 +1,5 @@
+[Name] XF86-Input-Evdev
+[Summary] Evdev is an input driver for the X11 X.Org Server, utilizing the generic input event layer of the Linux kernel.
+[License] LGPL
+[Description] Evdev is an input driver for the X11 X.Org Server, utilizing the generic input event layer of the Linux kernel. By extension, this name is sometimes applied to Linux's input layer itself. Evdev relies on kernel drivers to communicate with the hardware. It is an example of glue code, because its only job is to translate kernel input events into X events.
+[Homepage] http://www.x.org/
