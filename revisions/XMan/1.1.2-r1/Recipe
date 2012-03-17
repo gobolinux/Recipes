@@ -1,0 +1,12 @@
+# Recipe for version 1.1.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Mar 13 19:24:06 NZDT 2012
+# Recipe (MakeRecipe) for XMan by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 19:02:50 BRT 2005
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/app/xman-1.1.2.tar.bz2"
+file_size=168211
+file_md5=17d89b043083cba9e335379fc61981c0
+recipe_type=configure
+part_of=Xorg-App
+
+make_variables=(
+    "appdefaultdir=$target/Shared/X11/app-defaults"
+)
