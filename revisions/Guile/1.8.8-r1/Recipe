@@ -1,0 +1,11 @@
+# Recipe for version 1.8.8 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Mar 14 23:44:35 NZDT 2012
+# Recipe for Guile 1.8.8 by Peter Eriksen <s022018@student.dtu.dk>
+compile_version=1.8.2
+url="http://ftp.gnu.org/pub/gnu/guile/guile-1.8.8.tar.gz"
+file_size=3956654
+file_md5=18661a8fdfef13e2fcb7651720aa53f3
+recipe_type=configure
+
+configure_options=(
+	--disable-error-on-warning
+)
