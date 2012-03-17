@@ -1,0 +1,8 @@
+# Recipe for version 1.4.99.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Mar 13 19:17:32 NZDT 2012
+# Recipe (MakeRecipe) for LibX11 by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 19:42:45 BRT 2005
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/lib/libX11-1.4.99.1.tar.bz2"
+file_size=2344655
+file_md5=0e6e25d99cfb18c6631c6dc4ac411c69
+recipe_type=configure
+part_of=Xorg-Lib
