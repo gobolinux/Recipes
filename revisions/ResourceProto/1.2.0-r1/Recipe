@@ -1,0 +1,11 @@
+# Recipe for version 1.2.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Mar 13 19:05:29 NZDT 2012
+# Recipe (MakeRecipe) for ResourceProto by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 20:15:04 BRT 2005
+compile_version=1.7.1
+url="http://xorg.freedesktop.org/archive/individual/proto/resourceproto-1.2.0.tar.bz2"
+file_size=102992
+file_md5=cfdb57dae221b71b2703f8e2980eaaf4
+part_of=Xorg-Proto
+recipe_type=configure
+configure_options=(
+	--without-fop
+)
