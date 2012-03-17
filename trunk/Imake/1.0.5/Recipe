@@ -1,0 +1,10 @@
+# Recipe for version 1.0.5 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Mar 13 19:16:34 NZDT 2012
+# Recipe (MakeRecipe) for Imake-X11R7.1 by Fabio Mierlo, on Mon Sep 4 00:34:48 BRT 2006
+compile_version=1.8.0
+url="http://xorg.freedesktop.org/archive/individual/util/imake-1.0.5.tar.bz2"
+file_size=148503
+file_md5=797ec5dcad4df56eaafa0c701d6aa5ce
+recipe_type=configure
+configure_options=(
+   --with-config-dir=${goboLibraries}/X11/config
+)
