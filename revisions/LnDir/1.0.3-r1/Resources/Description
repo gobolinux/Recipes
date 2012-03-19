@@ -1,0 +1,5 @@
+[Name] LnDir
+[Summary] Create a shadow directory of symbolic links to another directory tree
+[Description] 'lndir' makes a shadow copy (todir) of a directory tree (fromdir). The shadow is populated with symbolic links pointing at the real files in the fromdir directory tree, not with real files. This is useful for maintaining source code for different machine architectures. You create a shadow directory containing links to the real source (usually mounted from a remote machine). You can build in the shadow tree, and the object files will be in the shadow directory, while the source files in the shadow directory are just symlinks to the real files. If you update the source, you need not propagate the change to the other architectures by hand, since all source in all shadow directories are symlinks to the real thing: just cd to the shadow directory and recompile.
+[License] MIT
+[Homepage] http://cgit.freedesktop.org/xorg/util/lndir
