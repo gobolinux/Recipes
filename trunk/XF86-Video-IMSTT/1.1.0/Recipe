@@ -1,8 +1,8 @@
-# Recipe for version 1.1.0 by Andre Detsch <detsch@gobolinux.org>, on Wed Jun 21 11:53:38 BRT 2006
+# Recipe for version 1.1.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Mar 13 20:00:21 NZDT 2012
 # Recipe (MakeRecipe) for XF86-Video-IMSTT by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jan 9 17:17:03 BRST 2006
 compile_version=1.11.0
-url="http://xorg.freedesktop.org/X11R7.1/src/driver/xf86-video-imstt-X11R7.1-1.1.0.tar.bz2"
+url="http://xorg.freedesktop.org/archive/individual/driver/xf86-video-imstt-1.1.0.tar.bz2"
+file_size=234492
+file_md5=94853ca217238ed1f568a10cbeebe057
 recipe_type=configure
-file_size=234463
-file_md5=4d76953e97ee760efb7627e7ac721dbf
 part_of=Xorg-Driver
