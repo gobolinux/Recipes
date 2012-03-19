@@ -1,8 +1,8 @@
-# Recipe for version 1.1.0 by Andre Detsch <detsch@gobolinux.org>, on Wed Jun 21 11:53:06 BRT 2006
+# Recipe for version 1.1.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Mar 13 20:02:45 NZDT 2012
 # Recipe (MakeRecipe) for XF86-Input-UR98 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jan 9 17:15:29 BRST 2006
 compile_version=1.11.0
-url="http://xorg.freedesktop.org/X11R7.1/src/driver/xf86-input-ur98-X11R7.1-1.1.0.tar.bz2"
+url="http://xorg.freedesktop.org/archive/individual/driver/xf86-input-ur98-1.1.0.tar.bz2"
+file_size=230138
+file_md5=3cf8928411458baaa9e726e51772c550
 recipe_type=configure
-file_size=230302
-file_md5=7e8288f4f75bcba1e3aaf6ef68664b38
 part_of=Xorg-Driver
