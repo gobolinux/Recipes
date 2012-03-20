@@ -1,8 +1,8 @@
-# Recipe for version 1.0.2 by Andre Detsch <detsch@gobolinux.org>, on Wed Jun 21 11:54:57 BRT 2006
+# Recipe for version 1.0.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Mar 13 19:26:29 NZDT 2012
 # Recipe (MakeRecipe) for XTrap by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 19:23:27 BRT 2005
 compile_version=1.11.0
-url="http://xorg.freedesktop.org/releases/X11R7.1/src/app/xtrap-X11R7.1-1.0.2.tar.bz2"
+url="http://xorg.freedesktop.org/archive/individual/app/xtrap-1.0.2.tar.bz2"
+file_size=95471
+file_md5=97a62a011a11f03b46d72851aa298fa8
 recipe_type=configure
-file_size=95477
-file_md5=435778018128f2b9402252c9022b44fa
 part_of=Xorg-App
