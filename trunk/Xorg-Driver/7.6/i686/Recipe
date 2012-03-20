@@ -55,6 +55,10 @@ include=(
 	xf86-video-vmware--12.0.1
 	xf86-video-voodoo--1.2.4
 	xf86-input-multitouch--git
+#	xf86-video-impact--0.2.0 # compilation error (missing xf86Resources.h)
+    xf86-video-modesetting--0.2.0
+    xf86-video-openchrome--0.2.905
+    xf86-video-qxl--0.0.16
 #	xf86-video-wsfb--0.3.0 # For *BSD
 #	xf86-video-xgi--1.6.0 # uses deprecated loader api, breaking Xorg -configure
 #	xf86-video-xgixp--1.8.0 # uses deprecated loader api, breaking Xorg -configure
