@@ -1,0 +1,20 @@
+environment=(
+	HOST_CC="$HOSTCC"
+	HOST_CXX="$HOSTCXX"
+	HOST_CFLAGS="$HOSTCFLAGS"
+	HOST_CXXFLAGS="$HOSTCFLAGS"
+	HOST_LDFLAGS="$HOSTLDFLAGS"
+)
+
+pre_build() {
+	if [ ! -f .bootstrapped ]
+	then echo "Running autoconf..." && autoconf && touch .bootstrapped
+	fi
+
+	Quiet pushd config
+	$HOST_CC -c now.c -DXP_UNIX
+	$HOST_CC -c nsinstall.c -DXP_UNIX
+	$HOST_CC now.o -o now
+	$HOST_CC nsinstall.o -o nsinstall
+	Quiet popd
+}
