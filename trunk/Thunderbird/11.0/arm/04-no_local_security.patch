@@ -1,0 +1,36 @@
+Patch taken from http://groups.google.com/group/mozilla.dev.embedding/browse_thread/thread/4d544f304b5ed7ae/608c2f1feea64759?lnk=gst&q=testgtkembed+&rnum=3#608c2f1feea64759
+
+--- mozilla/embedding/browser/webBrowser/nsWebBrowser.cpp.orig	2007-01-16 23:58:40.000000000 -0200
++++ mozilla/embedding/browser/webBrowser/nsWebBrowser.cpp	2007-01-16 23:59:47.000000000 -0200
+@@ -1201,10 +1201,10 @@ NS_IMETHODIMP nsWebBrowser::Create()
+    }
+    mDocShellAsItem->SetTreeOwner(mDocShellTreeOwner);
+    
++#ifdef USE_LOCAL_SECURITY
+    // If the webbrowser is a content docshell item then we won't hear any
+    // events from subframes. To solve that we install our own chrome event handler
+    // that always gets called (even for subframes) for any bubbling event.
+-
+    if(!mInitInfo->sessionHistory)
+       mInitInfo->sessionHistory = do_CreateInstance(NS_SHISTORY_CONTRACTID);
+    NS_ENSURE_TRUE(mInitInfo->sessionHistory, NS_ERROR_FAILURE);
+@@ -1213,9 +1213,11 @@ NS_IMETHODIMP nsWebBrowser::Create()
+    // Hook up global history. Do not fail if we can't - just assert.
+    nsresult rv = EnableGlobalHistory(PR_TRUE);
+    NS_ASSERTION(NS_SUCCEEDED(rv), "EnableGlobalHistory() failed");
++#endif
+ 
+    NS_ENSURE_SUCCESS(mDocShellAsWin->Create(), NS_ERROR_FAILURE);
+ 
++#ifdef USE_LOCAL_SECURITY
+    // Hook into the OnSecurirtyChange() notification for lock/unlock icon
+    // updates
+    nsCOMPtr<nsIDOMWindow> domWindow;
+@@ -1229,6 +1231,7 @@ NS_IMETHODIMP nsWebBrowser::Create()
+            do_CreateInstance(NS_SECURE_BROWSER_UI_CONTRACTID, &rv);
+        if (NS_SUCCEEDED(rv)) securityUI->Init(domWindow);
+    }
++#endif
+ 
+    mDocShellTreeOwner->AddToWatcher(); // evil twin of Remove in SetDocShell(0)
+    mDocShellTreeOwner->AddChromeListeners();
