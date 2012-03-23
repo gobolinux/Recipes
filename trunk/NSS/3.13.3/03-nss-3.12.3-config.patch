@@ -1,0 +1,30 @@
+--- nss/mozilla/security/nss/lib/softoken/config.mk.orig	2005-10-19 01:03:31.000000000 +0000
++++ nss/mozilla/security/nss/lib/softoken/config.mk	2006-01-15 05:07:15.000000000 +0000
+@@ -93,6 +93,12 @@
+ MKSHLIB += -R '$$ORIGIN'
+ endif
+ 
++ifeq ($(OS_TARGET),Linux)
++# The -R '$ORIGIN' linker option instructs this library to search for its
++# dependencies in the same directory where it resides.
++DSO_LDOPTS += -Wl,-R,'$$ORIGIN'
++endif
++
+ ifeq ($(OS_TARGET),WINCE)
+ DEFINES += -DDBM_USING_NSPR
+ endif
+--- nss/mozilla/security/nss/lib/ssl/config.mk.orig	2005-10-19 01:04:16.000000000 +0000
++++ nss/mozilla/security/nss/lib/ssl/config.mk	2006-01-15 05:10:38.000000000 +0000
+@@ -119,6 +119,12 @@
+ #EXTRA_SHARED_LIBS += -ldl -lrt -lc -z defs
+ endif
+ 
++ifeq ($(OS_TARGET),Linux)
++# The -R '$ORIGIN' linker option instructs this library to search for its
++# dependencies in the same directory where it resides.
++DSO_LDOPTS += -Wl,-R,'$$ORIGIN'
++endif
++
+ endif
+ 
+ # indicates dependency on freebl static lib
