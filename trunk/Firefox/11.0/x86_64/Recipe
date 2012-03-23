@@ -1,0 +1,7 @@
+configure_options=(
+    ${configure_options[@]}
+    --enable-system-cairo
+    --enable-canvas                # This option specifies to include support for the <canvas></canvas> tag.
+    --enable-svg                   # This option is used to enable support for rendering SVG files.
+    --enable-xinerama              # Uncomment this option if you desire support for dual-monitor display using the X-Window Xinerama libraries.
+)
