@@ -1,0 +1,16 @@
+# Recipe for version 1.0.25 by Zbigniew Baniewski <zb@ispid.com.pl>, on Fri Mar 23 02:41:04 CET 2012
+# Recipe (MakeRecipe) for ALSA-Lib by Peter Eriksen <s022018@student.dtu.dk>, on Sat Jan 15 15:28:29 CET 2005
+compile_version=1.9.0
+url="ftp://ftp.alsa-project.org/pub/lib/alsa-lib-1.0.25.tar.bz2"
+file_size=838403
+file_md5=06fe5819020c6684b991dcffc5471304
+recipe_type=configure
+configure_options=(
+    --enable-symbolic-functions
+)
+
+install_variables=(
+   alsaconfigdir="${target}/share/alsa"
+   alsaplugindir="${target}/lib/alsa-lib"
+   exec_prefix="${target}"
+)
