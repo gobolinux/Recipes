@@ -1,0 +1,11 @@
+# Recipe for version 11.1.102.63 by Leandro Motta Barros <lmb@stackedboxes.org>, on Thu Mar 22 10:23:43 BRT 2012
+compile_version=1.10.2
+url="http://fpdownload.macromedia.com/get/flashplayer/pdc/11.1.102.63/install_flash_player_11_linux.i386.tar.gz"
+file_size=6746733
+file_md5=edc3326dd25adee13a8109834d8c05ce
+unpack_files=files_in_root
+
+recipe_type=manifest
+manifest=(
+ 'libflashplayer.so:lib/browser-plugins/libflashplayer.so'
+)
