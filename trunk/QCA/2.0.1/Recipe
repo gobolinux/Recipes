@@ -5,3 +5,11 @@ file_size=1925152
 file_md5=a0a87d0b3210e23f8c1713562282b7d6
 file="qca-2.0.1.tar.bz2"
 recipe_type=configure
+
+install_variables=(
+    QMAKE=echo
+)
+
+pre_install() {
+    GrepReplace -B "$qt_path/mkspecs/features" "$target/mkspecs/features" $dir/Makefile
+}
