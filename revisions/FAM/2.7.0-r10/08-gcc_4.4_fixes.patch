@@ -1,0 +1,13 @@
+Fix invalid conversion from 'const char*' to 'char*' errors.
+
+--- fam-2.7.0/src/NFSFileSystem.c++.orig	2010-01-05 12:35:34.347555169 -0200
++++ fam-2.7.0/src/NFSFileSystem.c++	2010-01-05 12:37:00.884679127 -0200
+@@ -97,7 +97,7 @@ NFSFileSystem::NFSFileSystem(const mnten
+ 
+     attr_cache_timeout = ACREGMAX;
+ 
+-    char * p;
++    const char * p;
+         
+     if (strstr(opt, "noac")) {
+         f_noac = true;

@@ -1,0 +1,13 @@
+#!/bin/sh
+
+source ScriptFunctions
+
+case "$1" in
+	[sS]tart)
+        Quiet ps -C portmap || StartTask Portmap
+        famd 
+        ;;
+	[sS]top) 
+        Quiet killall -9 famd || true
+        ;;
+esac # yeah..

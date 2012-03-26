@@ -1,0 +1,12 @@
+# by Maglan C. Diemer
+
+compile_version=1.8.2
+url="ftp://oss.sgi.com/projects/fam/download/fam-2.7.0.tar.gz"
+mirror_url="ftp://oss.sgi.com/projects/fam/download/stable/fam-2.7.0.tar.gz"
+file_size=301974
+file_md5=1bf3ae6c0c58d3201afc97c6a4834e39
+recipe_type=configure
+
+pre_build() {
+    autoreconf -f -i
+}

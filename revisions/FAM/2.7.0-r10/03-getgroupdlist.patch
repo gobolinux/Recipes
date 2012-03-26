@@ -1,0 +1,43 @@
+Use getgrouplist(3) when fetching users groups.
+Patch from Debian
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+diff -r 08edf44d9f72 -r 4e12baece02e config.h.in
+--- a/config.h.in	Wed Apr 12 13:49:40 2006 -0700
++++ b/config.h.in	Wed Apr 12 13:49:51 2006 -0700
+@@ -183,3 +183,6 @@
+ 
+ /* Define to 1 if you have F_NOTIFY fcntl */
+ #undef USE_DNOTIFY
++
++/* Define to 1 if you have the `getgrouplist' function */
++#undef HAVE_GETGROUPLIST
+diff -r 08edf44d9f72 -r 4e12baece02e configure.ac
+--- a/configure.ac	Wed Apr 12 13:49:40 2006 -0700
++++ b/configure.ac	Wed Apr 12 13:49:51 2006 -0700
+@@ -77,7 +77,7 @@
+ # Checks for library functions.
+ AC_FUNC_ERROR_AT_LINE
+ AC_FUNC_SELECT_ARGTYPES
+-AC_CHECK_FUNCS([bindresvport _daemonize daemon getgrmember select])
++AC_CHECK_FUNCS([bindresvport _daemonize daemon getgrmember getgrouplist select])
+ 
+ AC_CONFIG_FILES([Makefile
+                  src/Makefile
+diff -r 08edf44d9f72 -r 4e12baece02e src/Cred.c++
+--- a/src/Cred.c++	Wed Apr 12 13:49:40 2006 -0700
++++ b/src/Cred.c++	Wed Apr 12 13:49:51 2006 -0700
+@@ -71,6 +71,13 @@
+ 			pwd->pw_name, strerror(errno));
+             nAddlGroups = 0;
+         }
++#elif defined(HAVE_GETGROUPLIST)
++	if (getgrouplist(pwd->pw_name, primary_group, addlGroups, (int *)&nAddlGroups) == -1)
++	{
++	    Log::info("getgrouplist(%s, ...) failed: %s",
++	              pwd->pw_name, strerror(errno));
++	    nAddlGroups = 0;
++	}
+ #else
+         group *gbp;
+         unsigned int ii = 0;
