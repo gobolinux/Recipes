@@ -11,7 +11,7 @@ private__copy_kernel_image() {
    # Copy and symlink bzImage and System.map
    dest=$target/Resources/Unmanaged/$goboBoot
    mkdir -p $dest
-   [ -e arch/x86_64/boot/bzImage ] && cp arch/x86_64/boot/bzImage $dest/kernel-$fullversion
+   [ -e arch/x86/boot/bzImage ] && cp arch/x86/boot/bzImage $dest/kernel-$fullversion
    [ -e arch/i386/boot/bzImage ] && cp arch/i386/boot/bzImage $dest/kernel-$fullversion
 
    cp System.map $dest/System.map-$fullversion

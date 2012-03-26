@@ -7,10 +7,6 @@ recipe_type=makefile
 build_target="all"
 install_target="modules_install"
 
-make_variables=(
-    ARCH=`grep flags /proc/cpuinfo | grep -q " lm " && echo x86_64 || echo i686`
-)
-
 install_variables=(
 #   INSTALL_MOD_PATH="$target/Resources/Unmanaged"
    MODLIB="${target}/Resources/Unmanaged/${goboModules}/${version}-Gobo"
@@ -25,7 +21,6 @@ unmanaged_files=(
 )
 
 do_configuration() {
-   ARCH_PARAM=`grep flags /proc/cpuinfo | grep -q " lm " && echo "ARCH=x86_64" || echo ""`
    if [ ! -f .config ]
    then
       if [ ! -f $goboStatus/config.gz ]
@@ -35,7 +30,7 @@ do_configuration() {
          if Ask "Do you want to use a configuration based on the one from the running kernel?"
          then
             zcat $goboStatus/config.gz > .config
-            yes "" | make oldconfig $ARCH_PARAM
+            yes "" | make oldconfig
          else
             Log_Normal "Using the kernel configuration shipped with the recipe"
             cp "$archsubdir"/dot-config .config
@@ -57,7 +52,7 @@ do_configuration() {
    then Die "Reported version ($reported) does not match version ($version). Please fix recipe."
    fi
 
-   make menuconfig $ARCH_PARAM || Die "'menuconfig' failed."
+   make menuconfig || Die "'menuconfig' failed."
    [ -z "${SUDO_USER}" ] || chown ${SUDO_USER} -R include/config .config
 }
 
@@ -150,8 +145,7 @@ private__copy_kernel_source() {
    Quiet popd
    
    Quiet pushd $dest
-   ARCH_PARAM=`grep flags /proc/cpuinfo | grep -q " lm " && echo "ARCH=x86_64" || echo ""`
-   make prepare $ARCH_PARAM
+   make prepare
    Quiet popd
 }
 
