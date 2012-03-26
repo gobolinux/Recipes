@@ -1,0 +1,11 @@
+--- libtirpc-0.2.2/doc/Makefile.am.orig	2012-03-26 19:23:10.598108718 +1300
++++ libtirpc-0.2.2/doc/Makefile.am	2012-03-26 19:23:34.606108279 +1300
+@@ -1,5 +1,5 @@
+ 
+ install: install-am
+-	$(mkinstalldirs) $(DESTDIR)/etc
+-	cp -p ./etc_netconfig $(DESTDIR)/etc/netconfig
+-	chmod 0644 $(DESTDIR)/etc/netconfig
++	$(mkinstalldirs) $(sysconfdir)
++	cp -p ./etc_netconfig $(sysconfdir)/netconfig
++	chmod 0644 $(sysconfdir)/netconfig

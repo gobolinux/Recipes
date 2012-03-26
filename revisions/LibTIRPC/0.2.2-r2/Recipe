@@ -1,0 +1,30 @@
+# Recipe (MakeRecipe) for LibTIRPC by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Mar 26 18:53:52 NZDT 2012
+# Recipe for version 0.2.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Mar 26 18:53:52 NZDT 2012
+compile_version=1.13.3
+urls=(
+    "$httpSourceforge/project/libtirpc/libtirpc/0.2.2/libtirpc-0.2.2.tar.bz2"
+    "ftp://anduin.linuxfromscratch.org/other/rpcnis-headers.tar.bz2"
+)
+file_sizes=(
+    464094
+    31332
+)
+file_md5s=(
+    74c41c15c2909f7d11d9c7bfa7db6273
+    635c7c9b6c962246a50a579ddbdbb95c
+)
+unpack_files=inside_first
+recipe_type=configure
+
+pre_build() {
+    mkdir include
+    mv rpc rpcsvc include
+    if [ ! -e .bootstrapped ]
+    then
+        automake && touch .bootstrapped
+    fi
+}
+
+pre_link() {
+    cp ./tirpc/netconfig.h $target/include
+}
