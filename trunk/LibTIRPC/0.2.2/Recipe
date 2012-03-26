@@ -24,3 +24,7 @@ pre_build() {
         automake && touch .bootstrapped
     fi
 }
+
+pre_link() {
+    cp ./tirpc/netconfig.h $target/include
+}
