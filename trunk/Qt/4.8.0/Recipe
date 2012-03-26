@@ -1,0 +1,34 @@
+# Recipe for version 4.8.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Mar 26 19:53:21 NZDT 2012
+# by Andre Detsch
+
+compile_version=1.9.0
+url="http://get.qt.nokia.com/qt/source/qt-everywhere-opensource-src-4.8.0.tar.gz"
+file_size=238580694
+file_md5=e8a5fdbeba2927c948d9f477a6abe904
+recipe_type=configure
+
+configure_options=(
+    -release
+    -prefix "$target"
+    -nomake "examples demos docs"
+    -dbus
+    -no-separate-debug-info
+    -sql-sqlite
+    -system-sqlite
+    -opensource
+    -confirm-license
+    -optimized-qmake
+    -no-phonon
+    -no-phonon-backend
+)
+
+with_mysql="-plugin-sql-mysql"
+with_sqlite=(-plugin-sql-sqlite -system-sqlite)
+with_odbc="-plugin-sql-odbc"
+with_nas="-system-nas-sound"
+with_webkit="-webkit"
+
+pre_link() {
+   # clean out debug files
+   find ${target} -name "*.debug" | xargs rm -f
+}
