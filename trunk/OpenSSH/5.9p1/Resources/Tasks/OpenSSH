@@ -5,16 +5,19 @@ function generate_sshd_keys() {
    mkdir -p ${goboPrograms}/OpenSSH/Settings/ssh
    if [ ! -f ${goboPrograms}/OpenSSH/Settings/ssh/ssh_host_key ]
    then
+      # Generate a RSA key for protocol version 1
       ${goboPrograms}/OpenSSH/Current/bin/ssh-keygen -t rsa1 -b 1024 -f ${goboPrograms}/OpenSSH/Settings/ssh/ssh_host_key -N ''
       chmod 600 ${goboPrograms}/OpenSSH/Settings/ssh/ssh_host_key
    fi
    if [ ! -f ${goboPrograms}/OpenSSH/Settings/ssh/ssh_host_dsa_key ]
    then
-      ${goboPrograms}/OpenSSH/Current/bin/ssh-keygen -d -f ${goboPrograms}/OpenSSH/Settings/ssh/ssh_host_dsa_key -N ''
+      # Generate a DSA key for protocol version 2
+      ${goboPrograms}/OpenSSH/Current/bin/ssh-keygen -t dsa -f ${goboPrograms}/OpenSSH/Settings/ssh/ssh_host_dsa_key -N ''
       chmod 600 ${goboPrograms}/OpenSSH/Settings/ssh/ssh_host_dsa_key
    fi
    if [ ! -f ${goboPrograms}/OpenSSH/Settings/ssh/ssh_host_rsa_key ]
    then
+      # Generate a RSA key for protocol version 2
       ${goboPrograms}/OpenSSH/Current/bin/ssh-keygen -t rsa -f ${goboPrograms}/OpenSSH/Settings/ssh/ssh_host_rsa_key -N ''
       chmod 600 ${goboPrograms}/OpenSSH/Settings/ssh/ssh_host_rsa_key
    fi
