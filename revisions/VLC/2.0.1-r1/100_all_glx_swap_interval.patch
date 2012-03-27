@@ -1,0 +1,34 @@
+commit 233f70b51cc63010b19b2a40b9839e8e610612c9
+Author: Rémi Denis-Courmont <remi@remlab.net>
+Date:   Sat Mar 17 11:28:44 2012 +0200
+
+    GLX: glXSwapIntervalEXT() returns void so ignore return value
+    
+    glXSwapIntervalEXT() does not return a value, contrary to the
+    SGI equivalent. In case of error, the X11 error handler is used.
+    
+    This patch fixes compilation with conforming headers. It should still
+    be compatible with buggy Mesa headers where 'int' is returned.
+    
+    For reference, see the specification here:
+    http://www.opengl.org/registry/specs/EXT/swap_control.txt
+    http://www.opengl.org/registry/api/glxext.h
+    (cherry picked from commit 9cf66c2856ab3a209fe15ec5662a8cd927ee20bc)
+
+Bug-Gentoo: https://bugs.gentoo.org/show_bug.cgi?id=407593
+Index: vlc-2.0.1/modules/video_output/xcb/glx.c
+===================================================================
+--- vlc-2.0.1.orig/modules/video_output/xcb/glx.c
++++ vlc-2.0.1/modules/video_output/xcb/glx.c
+@@ -381,7 +381,10 @@ static int Open (vlc_object_t *obj)
+     if (HasExtension (glx_extensions, "GLX_EXT_swap_control")) {
+         PFNGLXSWAPINTERVALEXTPROC SwapIntervalEXT = (PFNGLXSWAPINTERVALEXTPROC)GetProcAddress (NULL, "glXSwapIntervalEXT");
+         if (!is_swap_interval_set && SwapIntervalEXT)
+-            is_swap_interval_set = !SwapIntervalEXT (dpy, sys->glwin, 1);
++        {
++            SwapIntervalEXT (dpy, sys->glwin, 1);
++            is_swap_interval_set = true;
++        }
+     }
+ #endif
+ 
