@@ -1,0 +1,11 @@
+# Recipe for version 3.2.7 by Michael Homer <michael@gobolinux.org>, on Wed Mar 28 19:49:01 NZDT 2012
+compile_version=1.12.0
+url="http://www.kernel.org/pub/linux/kernel/v2.6/linux-3.2.7.tar.bz2"
+file_size=78125610
+file_md5=2fb9dfbf3bca415cce173d06c96afb46
+recipe_type=makefile
+do_build=no
+install_target="headers_install"
+install_variables=(
+    "INSTALL_HDR_PATH=$target"
+)
