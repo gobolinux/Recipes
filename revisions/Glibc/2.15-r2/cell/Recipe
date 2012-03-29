@@ -1,0 +1,12 @@
+configure_options=(
+    ${configure_options[@]}
+    "--with-cpu=cell"
+    "--enable-add-ons"
+    "--host=powerpc-unknown-linux-gnu"
+)
+
+pre_build() {
+    echo "CFLAGS += -O3 -pipe -mcpu=cell -maltivec -mabi=altivec -ftree-vectorize" > configparms
+	cp -r ${sourcedir}/sysdeps/powerpc/powerpc32/970 ${sourcedir}/sysdeps/powerpc/powerpc32/cell
+	cp -r ${sourcedir}/sysdeps/powerpc/powerpc64/970 ${sourcedir}/glibc-2.8/sysdeps/powerpc/powerpc64/cell
+}
