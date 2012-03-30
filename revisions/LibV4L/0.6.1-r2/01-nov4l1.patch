@@ -1,0 +1,22 @@
+Skip V4L1 compatibility layer
+
+V4L1 is so obsolete that the headers don't exist, so skip building the
+compatibility layer at all.
+
+Author: Michael Homer <michael@gobolinux.org>
+--- libv4l-0.6.1/Makefile.orig	2012-03-31 10:40:54.260030072 +1300
++++ libv4l-0.6.1/Makefile	2012-03-31 10:41:05.250030120 +1300
+@@ -4,13 +4,11 @@
+ all install:
+ 	$(MAKE) -C libv4lconvert V4L2_LIB_VERSION=$(V4L2_LIB_VERSION) $@
+ 	$(MAKE) -C libv4l2 V4L2_LIB_VERSION=$(V4L2_LIB_VERSION) $@
+-	$(MAKE) -C libv4l1 V4L2_LIB_VERSION=$(V4L2_LIB_VERSION) $@
+ 
+ clean:
+ 	rm -f *~ include/*~ DEADJOE include/DEADJOE
+ 	$(MAKE) -C libv4lconvert V4L2_LIB_VERSION=$(V4L2_LIB_VERSION) $@
+ 	$(MAKE) -C libv4l2 V4L2_LIB_VERSION=$(V4L2_LIB_VERSION) $@
+-	$(MAKE) -C libv4l1 V4L2_LIB_VERSION=$(V4L2_LIB_VERSION) $@
+ 
+ export: clean
+ 	tar --transform s/^\./libv4l-$(V4L2_LIB_VERSION)/g -zcvf \
