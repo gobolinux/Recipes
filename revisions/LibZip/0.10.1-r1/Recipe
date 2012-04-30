@@ -1,0 +1,13 @@
+# Recipe for version 0.10.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Apr 29 11:58:55 BRT 2012
+# Recipe (MakeRecipe) for LibZip by Giambattista Bloisi <giamby@infinito.it>, on Fri Nov 30 23:13:24 CET 2007
+compile_version=1.9.0
+url="http://www.nih.at/libzip/libzip-0.10.1.tar.gz"
+file_size=849678
+file_md5=dd817b1dd4d582bef6715586311a8c08
+recipe_type=configure
+
+pre_link() {
+    Quiet pushd lib
+    make install-libincludeHEADERS libincludedir=$target/include
+    Quiet popd
+}
