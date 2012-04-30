@@ -1,0 +1,23 @@
+# Recipe for version 3.5.25 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Apr 29 11:51:01 BRT 2012
+# Recipe (MakeRecipe) for DjVuLibre by Harald Klimach, on Mon Mar 6 13:19:29 CET 2006
+compile_version=1.8.0
+url="http://downloads.sourceforge.net/project/djvu/DjVuLibre/3.5.25/djvulibre-3.5.25.2.tar.gz"
+file_size=2533618
+file_md5=994e2ff1d4ae6a763764dfe20509826e
+dir='djvulibre-3.5.25'
+recipe_type=configure
+configure_options=(
+    "--enable-threads"
+)
+
+using_qt3_pre_build() {
+   sed -i "s@for ac_prog in moc.*@for ac_prog in moc-qt3@" configure
+   sed -i "s@for ac_prog in uic.*@for ac_prog in uic-qt3@" configure
+}
+
+pre_link() {
+   mkdir -p  "${target}/icons/hicolor/"{22x22,32x32,48x48}
+   ln -s "${target}/Shared/djvu/osi/desktop/hi22-djvu.png" "${target}/icons/hicolor/22x22"
+   ln -s "${target}/Shared/djvu/osi/desktop/hi32-djvu.png" "${target}/icons/hicolor/32x32"
+   ln -s "${target}/Shared/djvu/osi/desktop/hi48-djvu.png" "${target}/icons/hicolor/48x48"
+}
