@@ -1,0 +1,32 @@
+# Recipe for version 4.8.1 by Lucas C. Villa Real, on Mon Mar 26 00:12:43 BRT 2012
+# Recipe (MakeRecipe) for KDE-PIM-Runtime by Michael Homer <michael@gobolinux.org>, on Wed Feb 10 19:47:32 NZDT 2010
+compile_version=1.13.0
+url="ftp://ftp.kde.org/pub/kde/stable/4.8.1/src/kdepim-runtime-4.8.1.tar.xz"
+file_size=1115984
+file_md5=9c26ea08d3c937313e931070c902bfb6
+recipe_type=makefile
+
+install_variables=(
+    DESTDIR=$target
+    CMAKE_INSTALL_PREFIX=$target
+)
+
+pre_build() {
+    cmake -DCMAKE_VERBOSE_MAKEFILE=ON .
+}
+
+pre_link() {
+    Quiet pushd $target
+    mkdir -p include lib Shared
+    mv usr/local/include/* include
+    mv usr/local/lib/* lib
+    mv usr/local/share/* Shared
+    rmdir usr/local/*
+    rmdir usr/local
+    rmdir usr
+    Quiet popd
+}
+
+#cmake_options=(
+#-DCMAKE_BUILD_TYPE=Release
+#)
