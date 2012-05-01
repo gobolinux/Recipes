@@ -1,0 +1,11 @@
+[Name] Email
+[Summary] A command line email sending program
+[Description] Email sends email to remote SMTP servers via the command line, 
+which makes it useful in cron jobs. It will send to any RFC standard remote 
+ESMTP server, and will allow you to encrypt, sign, and design your message 
+on the fly. It has the capability to use signature files with dynamic options, 
+address book functionality, and users can also attach pictures, binary files, 
+documents, or whatever they want. It is completely compatible with GNUPG for 
+encryption and signing, and is easy to configure and use.
+[Homepage] http://email.cleancode.org/
+[License] GNU General Public License (GPL)
