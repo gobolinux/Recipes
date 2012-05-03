@@ -1,0 +1,8 @@
+# Recipe for version 2.0.16 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed May 2 23:31:57 BRT 2012
+# Recipe (MakeRecipe) for Eigen by Giambattista Bloisi <giamby@infinito.it>, on Fri Feb 22 09:39:08 CET 2008
+compile_version=1.10.2
+url="http://bitbucket.org/eigen/eigen/get/2.0.16.tar.bz2"
+file_size=367843
+file_md5=178c5b3252714cdadb0807eb8cf57e71
+dir='eigen-eigen-9ca09dbd70ce'
+recipe_type=cmake
