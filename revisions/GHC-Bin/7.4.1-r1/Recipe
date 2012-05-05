@@ -1,0 +1,17 @@
+# Recipe for version 7.4.1 by Michael Homer <michael@gobolinux.org>, on Sat May 5 21:46:23 NZST 2012
+# Recipe (MakeRecipe) for GHC by Isaac Dupree <id@isaac.cedarswampstudios.org>, on Sat Jun 23 12:18:16 BRT 2007
+compile_version=1.11.0
+recipe_type=configure
+do_build=no
+
+pre_link() {
+   mkdir -p $settings_target/ghc-7.4.1
+   if [ -e $settings_target/ghc-7.4.1/package.conf ]
+   then
+      rm -f $target/lib/ghc-7.4.1/package.conf
+   else
+      mv $target/lib/ghc-7.4.1/package.conf $settings_target/ghc-7.4.1
+   fi
+   ln -s ../../../Settings/ghc-7.4.1/package.conf $target/lib/ghc-7.4.1/package.conf
+   sed -i "s!PKGCONF=$target/lib!PKGCONF=$settings_target!" $target/bin/ghc-pkg
+}
