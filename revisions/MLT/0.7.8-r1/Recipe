@@ -1,0 +1,13 @@
+# Recipe for version 0.7.8 by Hisham Muhammad <hisham@gobolinux.org>, on Mon May 14 01:48:46 BRT 2012
+# Recipe (MakeRecipe) for MLT by Mark Kimsal <mark2@mt2009.com>, on Sat May 23 19:38:42 EDT 2009
+compile_version=1.12.2rc3
+
+url="$httpSourceforge/mlt/mlt-0.7.8.tar.gz"
+file_size=1106625
+file_md5=4bdce45d832e065ac4c8c8ca56765e1d
+recipe_type=configure
+
+# this recipe requires FFMpeg, but I don't know how to add it
+# this is needed for kdenlive to function
+# Use ffmpeg libswcale instead of img_convert
+configure_options=("--avformat-swscale" "--enable-gpl")
