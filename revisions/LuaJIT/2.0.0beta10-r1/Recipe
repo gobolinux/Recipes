@@ -1,0 +1,9 @@
+# Recipe for version 2.0.0-beta10 by Hisham Muhammad <hisham@gobolinux.org>, on Tue May 15 14:08:32 BRT 2012
+compile_version=1.8.2
+url="http://luajit.org/download/LuaJIT-2.0.0-beta10.tar.gz"
+file_size=890830
+file_md5=ed66689b96f7ad7bfeffe0b4ff2d63d4
+recipe_type=makefile
+make_variables=(
+  INSTALL_TOP=$target
+)
