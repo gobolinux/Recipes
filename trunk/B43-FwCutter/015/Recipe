@@ -1,0 +1,29 @@
+# Recipe for version 015 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun May 20 21:02:43 BRT 2012
+# Recipe (MakeRecipe) for B43-FwCutter by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Feb 2 00:00:31 PST 2008
+compile_version=1.10.1
+urls=(
+    "http://bues.ch/b43/fwcutter/b43-fwcutter-015.tar.bz2"
+    "http://www.lwfinger.com/b43-firmware/broadcom-wl-5.100.138.tar.bz2"
+)
+file_sizes=(
+    18210
+    13514651
+)
+file_md5s=(
+    628e030565222a107bc40300313cbe76
+    f4e357b09eaf5d8b1f1920cf3493a555
+)
+unpack_files="inside_first"
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
+
+pre_link() {
+    firmware=$(basename ${urls[1]})
+    dirname=$(echo $firmware | sed 's,.tar.bz2,,g')
+    cd $dirname/linux
+    mkdir -p $target/lib/firmware
+    $sudo_exec $target/bin/b43-fwcutter -w $target/lib/firmware wl_apsta.o
+}
