@@ -1,0 +1,20 @@
+# Recipe for version 1.4 by Michael Homer <michael@gobolinux.org>, on Thu May 24 17:06:11 NZST 2012
+# Recipe (NewVersion) for Wine by Pedro Flores <pdavidflores@gmail.com>, on Thu Nov 26 01:35:33 CET 2009
+# Recipe (MakeRecipe) for Wine by roko, <ro.ko@mcnon.com>, on Thu Jan 27 22:27:44 CET 2005
+compile_version=1.12.4
+url="http://downloads.sourceforge.net/project/wine/Source/wine-1.4.tar.bz2"
+file_size=20035856
+file_md5=6594ab86a4b1fb2c09dadfb4ea7fc4af
+recipe_type=configure
+configure_options=(
+   "--localstatedir=$goboVariable/wine"
+#"--without-curses"
+)
+
+unmanaged_files=(
+   "$goboVariable/wine/"
+)
+
+install_variables=(
+   "UPDATE_DESKTOP_DATABASE=''"
+)
