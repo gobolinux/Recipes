@@ -1,0 +1,14 @@
+# Recipe for version 2.0.8 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed May 9 20:11:05 BRT 2012
+# Recipe (MakeRecipe) for SAGA by Lucas C. Villa Real, on Thu Feb 17 11:47:17 BRST 2011
+compile_version=1.12.3
+url="$httpSourceforge/project/saga-gis/SAGA%20-%202.0/SAGA%202.0.8/saga_2.0.8.tar.gz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fsaga-gis%2Ffiles%2FSAGA%2520-%25202.0%2FSAGA%25202.0.8%2F&ts=1297950379&use_mirror=softlayer"
+file_size=3405112
+file_md5=22828b698ff6a64cdb6d6af762bb3764
+file="saga_2.0.8.tar.gz"
+dir='saga-2.0.8'
+recipe_type=configure
+
+configure_options=(
+    --enable-python
+    --enable-unicode
+)
