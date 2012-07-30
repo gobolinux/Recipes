@@ -1,0 +1,27 @@
+# Recipe for version 6.4.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Jul 10 14:56:36 BRT 2012
+# Recipe (MakeRecipe) for GRASS by Lucas C. Villa Real, on Thu Feb 3 23:25:50 BRST 2011
+compile_version=1.10.1
+url="http://grass.osgeo.org/grass64/source/grass-6.4.2.tar.gz"
+file_size=24097202
+file_md5=d3398d6b1e3a2ef19cfb6e39a5ae9919
+recipe_type=configure
+
+make_variables=(
+    MINGW=
+)
+
+configure_options=(
+	--with-geos
+	--with-lapack
+	--with-cairo
+	--with-motif
+	--with-freetype
+	--with-cxx
+	--with-python
+	--with-wxwidgets
+	--with-nls
+	--with-readline
+	--with-sqlite
+#	--with-ffmpeg
+	--enable-largefile
+)
