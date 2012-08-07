@@ -1,0 +1,11 @@
+# Recipe for version 0.98.3 by Zbigniew Baniewski <zb@ispid.com.pl>, on Tue Aug 7 15:03:33 CEST 2012
+# Recipe (MakeRecipe) for GTK-Gnutella V0.98.3 by Zbigniew Baniewski <zb@ispid.com.pl>, on Sat, 27 Mar 2010 15:43:32 +0100
+
+compile_version=1.13.2
+url="$httpSourceforge/gtk-gnutella/gtk-gnutella-0.98.3.tar.bz2"
+file_size=19375096
+file_md5=7f0b23f2cbc1f432bc5140da877b03fa
+recipe_type=makefile
+pre_build() {
+   ./build.sh --prefix=${target}
+}
