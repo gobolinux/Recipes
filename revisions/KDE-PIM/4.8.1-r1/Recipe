@@ -1,0 +1,24 @@
+# Recipe for version 4.8.1 by Lucas C. Villa Real, on Mon Mar 26 00:13:44 BRT 2012
+# by Maglan C. Diemer && Andre Detsch
+compile_version=1.10.0
+url="ftp://ftp.kde.org/pub/kde/stable/4.8.1/src/kdepim-4.8.1.tar.xz"
+file_size=13952564
+file_md5=b6437783b3d7aa06701a5c3280164a68
+recipe_type=cmake
+
+# Workaround to let cmake find the required cmake 'include' files
+cmake_options=(
+    -DCMAKE_INSTALL_PREFIX=/usr
+    -DKDE4WORKSPACE_SYSCONF_DIR=$settings_target
+    -DCMAKE_BUILD_TYPE=Release
+    #-DWITH_Opensync=OFF # disabled as it causes compile errors
+)
+
+pre_install() {
+    GrepReplace "CMAKE_INSTALL_PREFIX \"/usr\"" "CMAKE_INSTALL_PREFIX \"$target\"" $dir/_build/cmake_install.cmake 
+    GrepReplace "/usr/" "$target/" $dir/_build/install_manifest.txt
+    GrepReplace "$goboShared" "$target/Shared" $dir/_build/install_manifest.txt
+    GrepReplace "CMAKE_INSTALL_PREFIX:PATH=/usr" "CMAKE_INSTALL_PREFIX:PATH=$target" $dir/_build/CMakeCache.txt
+    GrepReplace "KDE4_AUTH_POLICY_FILES_INSTALL_DIR:STRING=$goboShared" "KDE4_AUTH_POLICY_FILES_INSTALL_DIR:STRING=$target/Shared" $dir/_build/CMakeCache.txt
+    GrepReplace "PYTHON_SITE_PACKAGES_INSTALL_DIR:PATH=/usr" "PYTHON_SITE_PACKAGES_INSTALL_DIR:PATH=$target" $dir/_build/CMakeCache.txt
+}
