@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Korundum by Lucas C. Villa Real, on Mon Mar 26 00:13:28 BRT 2012
+# Recipe for version 4.8.1 by Lucas C. Villa Real, on Mon Mar 26 00:13:28 BRT 2012
+compile_version=1.10.1
+url="ftp://ftp.kde.org/pub/kde/stable/4.8.1/src/korundum-4.8.1.tar.xz"
+file_size=160576
+file_md5=8cc3ba4d1a916b646529707cbe95c49c
+recipe_type=cmake
+
+cmake_options=(
+    -DCUSTOM_RUBY_SITE_ARCH_DIR=$target/lib/ruby/site_ruby/1.9.1/i686-linux
+    -DCUSTOM_RUBY_SITE_LIB_DIR=$target/lib/ruby/site_ruby/1.9.1
+)
