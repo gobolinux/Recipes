@@ -1,0 +1,12 @@
+# Recipe for version 2.19.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri May 25 23:17:13 BRT 2012
+# Recipe (MakeRecipe) for XF86-Video-Intel by K Lowe, on Fri Mar 13 20:17:26 GMT 2009
+compile_version=1.12.0
+url="http://xorg.freedesktop.org/archive/individual/driver/xf86-video-intel-2.19.0.tar.bz2"
+file_size=1463260
+file_md5=f397bddfc88d4c9b30b56526c1e02e8e
+recipe_type=configure
+part_of=Xorg-Driver
+configure_options=(
+    --enable-dri
+    --enable-xvmc
+)
