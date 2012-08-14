@@ -1,0 +1,12 @@
+# Recipe for version 4.8.1 by Lucas C. Villa Real, on Mon Mar 26 00:16:12 BRT 2012
+# Recipe (MakeRecipe) for KDE-Admin by Giambattista Bloisi <giamby@infinito.it>, on Mon Jan 14 21:59:29 CET 2008
+compile_version=1.10.0
+url="ftp://ftp.kde.org/pub/kde/stable/4.8.1/src/kdeadmin-4.8.1.tar.xz"
+file_size=743056
+file_md5=816e678301670c8e7fe859f99951c7d4
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
+
