@@ -1,0 +1,18 @@
+# Recipe for version 1.8.7 by Michael Homer <michael@gobolinux.org>, on Sun Jun 1 10:23:21 NZST 2008
+compile_version=1.8.2
+url="ftp://ftp.ruby-lang.org/pub/ruby/stable/ruby-1.8.7.tar.bz2"
+file_size=4100024
+file_md5=f17f14c8d55e731b3ce1bc35c42f0a6c
+recipe_type=configure
+
+configure_options=(
+ "--disable-frame-address"
+ "--enable-shared"
+ "--enable-pthread"
+ "--enable-install-doc"
+)
+
+pre_link() {
+    mkdir $target/include
+    cp rubysig.h env.h $target/include
+}

@@ -1,0 +1,24 @@
+When creating a new file, mkcallback.rb and mkcbtable.rb end up not writing out 
+the first line. This patch works around that issue by first creating an empty 
+file and then concatenating the output of the script to that file.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- ruby-1.8.7/ext/dl/depend.orig	2012-05-02 13:41:36.000000000 -0300
++++ ruby-1.8.7/ext/dl/depend	2012-05-02 13:42:11.000000000 -0300
+@@ -36,11 +36,13 @@ call.func: $(srcdir)/mkcall.rb ./dlconfi
+ 
+ callback.func: $(srcdir)/mkcallback.rb ./dlconfig.rb
+ 	@echo "Generating callback.func"
+-	@$(RUBY) $(srcdir)/mkcallback.rb > $@
++	@touch $@
++	@$(RUBY) $(srcdir)/mkcallback.rb >> $@
+ 
+ cbtable.func: $(srcdir)/mkcbtable.rb ./dlconfig.rb
+ 	@echo "Generating cbtable.func"
+-	@$(RUBY) $(srcdir)/mkcbtable.rb > $@
++	@touch $@
++	@$(RUBY) $(srcdir)/mkcbtable.rb >> $@
+ 
+ debug:
+ 	$(MAKE) CPPFLAGS="$(CPPFLAGS) -DDEBUG"
