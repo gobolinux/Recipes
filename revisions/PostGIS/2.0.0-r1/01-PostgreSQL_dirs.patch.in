@@ -1,0 +1,14 @@
+--- postgis-1.5.2/postgis/Makefile.pgxs.orig	2011-05-17 14:31:49.000000000 -0300
++++ postgis-1.5.2/postgis/Makefile.pgxs	2011-05-17 14:33:46.000000000 -0300
+@@ -12,6 +12,11 @@ datamoduledir = contrib
+ docmoduledir = contrib
+ endif
+ 
++datadir = @%Compile_target%@/Shared
++pkglibdir = @%Compile_target%@/lib
++docdir = @%Compile_target%@/doc
++bindir = @%Compile_target%@/bin
++
+ install: all installdirs
+ ifneq (,$(DATA)$(DATA_built))
+ 	@for file in $(addprefix $(srcdir)/, $(DATA)) $(DATA_built); do \
