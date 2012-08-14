@@ -1,0 +1,12 @@
+# Recipe for version 4.8.1 by Lucas C. Villa Real, on Mon Mar 26 00:15:35 BRT 2012
+# Recipe (MakeRecipe) for KDE-Multimedia by Giambattista Bloisi <giamby@infinito.it>, on Mon Jan 14 09:40:45 CET 2008
+compile_version=1.10.0
+url="ftp://ftp.kde.org/pub/kde/stable/4.8.1/src/kdemultimedia-4.8.1.tar.xz"
+file_size=1472892
+file_md5=5feaa2f12f46b60c9b23a1a7011cbdef
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
+
