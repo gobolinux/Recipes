@@ -1,0 +1,16 @@
+# Recipe for version 4.8.1 by Lucas C. Villa Real, on Mon Mar 26 00:13:30 BRT 2012
+# Recipe (MakeRecipe) for KDE-Artwork by Giambattista Bloisi <giamby@infinito.it>, on Mon Jan 14 08:47:29 CET 2008
+compile_version=1.10.0
+url="ftp://ftp.kde.org/pub/kde/stable/4.8.1/src/kdeartwork-4.8.1.tar.xz"
+file_size=139235632
+file_md5=be817818f3e1971a31a8606e49f522a1
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
+
+with_xscreensaver=(
+    "-DXSCREENSAVER_DIR=$xscreensaver_path"
+    "-DXSCREENSAVER_CONFIG_DIR=$xscreensaver_settings_path"
+)
