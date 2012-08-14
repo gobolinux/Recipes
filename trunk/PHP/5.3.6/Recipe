@@ -25,9 +25,49 @@ configure_options=(
    --with-openssl
 )
 
+with_httpd=--with-apxs2=$dir/apxs2.sh
+with_postgresql=--with-pgsql
 with_openldap=--with-ldap
 with_mysql=--with-mysql
 
 install_variables=(
    PHP_PEAR_SYSCONF_DIR="${settings_target}"
+   SYSCONF_DIR="${settings_target}/httpd"
+   LIBEXECDIR="${target}/lib/httpd/modules"
 )
+
+pre_build() {
+   cat << EOF > apxs2.sh
+#!/bin/sh
+if echo "\$@" | grep -q "\-q LIBEXECDIR"
+then echo "$target/lib/httpd/modules"
+elif echo "\$@" | grep -q "\-q SYSCONFDIR"
+then echo "$settings_target/httpd"
+else apxs \$@
+fi
+EOF
+   chmod +x apxs2.sh
+}
+
+pre_install() {
+   if [ ! -f ${settings_target}/php.ini-production ]
+   then 
+       cp php.ini-production ${settings_target}
+   fi
+   if [ ! -f ${settings_target}/php.ini-development ]
+   then 
+       cp php.ini-development ${settings_target}
+   fi
+   if [ -f $goboSettings/httpd/httpd.conf ]
+   then
+       mkdir -p $settings_target/httpd
+       cp $goboSettings/httpd/httpd.conf $settings_target/httpd
+   fi
+}
+
+pre_link() {
+   if [ -f $settings_target/httpd/httpd.conf ]
+   then
+       rm -f $settings_target/ttpd/httpd.conf
+   fi
+}
