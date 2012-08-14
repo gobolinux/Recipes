@@ -1,0 +1,12 @@
+# Recipe for version 3.12.6 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jul 5 15:26:41 BRT 2012
+# Recipe (MakeRecipe) for Hpijs by David Smith <dsmith@algonet.se>, on Wed Nov 3 20:28:27 CET 2004
+compile_version=1.8.0
+url="http://prdownloads.sourceforge.net/hplip/hplip-3.12.6.tar.gz"
+file_size=21227044
+file_md5=5303938e8630775ea6fb383af85775e5
+recipe_type=configure
+
+configure_options=(
+#  "--enable-hpijs-only-build"
+  "--disable-network-build"
+)
