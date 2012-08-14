@@ -1,0 +1,22 @@
+--- libplist-1.8/cython/CMakeLists.txt.orig	2012-08-05 00:08:37.000000000 -0300
++++ libplist-1.8/cython/CMakeLists.txt	2012-08-05 00:25:21.000000000 -0300
+@@ -16,7 +16,7 @@ ADD_CUSTOM_COMMAND(
+ 
+ 
+ EXEC_PROGRAM("${PYTHON_EXECUTABLE}"
+-    ARGS "-c 'try:\n import distutils.sysconfig; print distutils.sysconfig.get_python_lib(1,0,\"${CMAKE_INSTALL_PREFIX}\")\nexcept: pass\n'"
++    ARGS "-c 'try:\n import distutils.sysconfig; pythondir=distutils.sysconfig.get_python_lib(1,0,\"${CMAKE_INSTALL_PREFIX}\"); gobodir=\"@%Compile_target%@/\" + \"/\".join((pythondir.split(\"/\")[4:])); print gobodir; \nexcept: pass\n'"
+     OUTPUT_VARIABLE DISTUTILS_PYTHON_ILIBRARY_PATH
+     )
+ 
+--- libplist-1.8/swig/CMakeLists.txt.orig	2012-08-05 13:35:19.000000000 -0300
++++ libplist-1.8/swig/CMakeLists.txt	2012-08-05 13:36:41.000000000 -0300
+@@ -9,7 +9,7 @@ SWIG_ADD_MODULE( plist python plist.i )
+ SWIG_LINK_LIBRARIES( plist plist plist++ ${PYTHON_LIBRARIES} )
+ 
+ EXEC_PROGRAM("${PYTHON_EXECUTABLE}"
+-    ARGS "-c 'try:\n import distutils.sysconfig; print distutils.sysconfig.get_python_lib(plat_specific=1)\nexcept: pass\n'"
++    ARGS "-c 'try:\n import distutils.sysconfig; pythondir=distutils.sysconfig.get_python_lib(plat_specific=1); gobodir=\"@%Compile_target%@/\" + \"/\".join((pythondir.split(\"/\")[4:])); print gobodir; \nexcept: pass\n'"
+     OUTPUT_VARIABLE DISTUTILS_PYTHON_ILIBRARY_PATH
+     )
+ 
