@@ -1,0 +1,22 @@
+--- xscreensaver-5.04/hacks/glx/flurry.h.orig	2008-03-01 21:19:31.000000000 +0000
++++ xscreensaver-5.04/hacks/glx/flurry.h	2008-03-01 21:19:41.000000000 +0000
+@@ -42,6 +42,10 @@
+ #include <stdlib.h>
+ #include <math.h>
+ 
++#if __VEC__
++#include <altivec.h>
++#endif
++
+ #include "yarandom.h"
+ #include "rotator.h"
+ #include "gltrackball.h"
+@@ -180,7 +184,7 @@
+     y = vec_abs(y);
+     mn = vec_min(x,y);
+     temp = vec_add(x,y);
+-    temp = vec_madd(mn, (vector float)(-0.6875), temp);
++    temp = vec_madd(mn, ((vector float){-0.6875}), temp);
+     return temp;
+ }
+ 
