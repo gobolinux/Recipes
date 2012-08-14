@@ -1,0 +1,11 @@
+# Recipe for version 1.3.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jul 15 18:53:27 BRT 2012
+# Recipe (MakeRecipe) for LibMatroska by Jonas Karlsson <jonka750@student.liu.se>, on Tue Mar 21 00:05:50 CET 2006
+compile_version=1.8.0
+url="http://dl.matroska.org/downloads/libmatroska/libmatroska-1.3.0.tar.bz2"
+file_size=80542
+file_md5=f4a8c411f09d39c754eb726efd616043
+recipe_type=makefile
+dir=libmatroska-1.3.0/make/linux
+install_variables=(
+    prefix=${target}
+)
