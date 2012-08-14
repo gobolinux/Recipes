@@ -1,0 +1,22 @@
+# Recipe (MakeRecipe) for KDE-Workspace by Lucas C. Villa Real, on Mon Mar 26 00:16:28 BRT 2012
+# Recipe for version 4.8.1 by Lucas C. Villa Real, on Mon Mar 26 00:16:28 BRT 2012
+compile_version=1.10.1
+url="ftp://ftp.kde.org/pub/kde/stable/4.8.1/src/kde-workspace-4.8.1.tar.xz"
+file_size=33575180
+file_md5=e4549dab07507e602a868bededb740ec
+recipe_type=cmake
+
+# Workaround to let cmake find the required cmake 'include' files
+cmake_options=(
+    -DCMAKE_INSTALL_PREFIX=/usr
+    -DKDE4WORKSPACE_SYSCONF_DIR=$settings_target
+)
+
+pre_install() {
+    GrepReplace "CMAKE_INSTALL_PREFIX \"/usr\"" "CMAKE_INSTALL_PREFIX \"$target\"" $dir/_build/cmake_install.cmake 
+    GrepReplace "/usr/" "$target/" $dir/_build/install_manifest.txt
+    GrepReplace "$goboShared" "$target/Shared" $dir/_build/install_manifest.txt
+    GrepReplace "CMAKE_INSTALL_PREFIX:PATH=/usr" "CMAKE_INSTALL_PREFIX:PATH=$target" $dir/_build/CMakeCache.txt
+    GrepReplace "KDE4_AUTH_POLICY_FILES_INSTALL_DIR:STRING=$goboShared" "KDE4_AUTH_POLICY_FILES_INSTALL_DIR:STRING=$target/Shared" $dir/_build/CMakeCache.txt
+    GrepReplace "PYTHON_SITE_PACKAGES_INSTALL_DIR:PATH=/usr" "PYTHON_SITE_PACKAGES_INSTALL_DIR:PATH=$target" $dir/_build/CMakeCache.txt
+}
