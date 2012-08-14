@@ -1,0 +1,5 @@
+[Name] LibVNCServer
+[Summary] A library for easy implementation of a RDP/VNC server
+[Description] LibVNCServer is a library that makes it easy to make a VNC server. All you do is provide a frame buffer and some I/O functions, and call a function each time the frame buffer changes. It supports all encodings known, including tight, zlib, ZRLE, and cursor encodings. It also includes the HTTP server from Xvnc, so you can start a java viewer by surfing to http://my.vnc.server:5801 or similar. It includes a beta version of LibVNCClient, which makes it easy to make a VNC client. Also included is LinuxVNC, which is to the Linux console as WinVNC is to the Windows desktop. 
+[License] GNU General Public License (GPL)
+[Homepage] http://libvncserver.sourceforge.net
