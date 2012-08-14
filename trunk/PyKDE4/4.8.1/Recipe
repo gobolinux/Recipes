@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for PyKDE4 by Lucas C. Villa Real, on Mon Mar 26 00:15:16 BRT 2012
+# Recipe for version 4.8.1 by Lucas C. Villa Real, on Mon Mar 26 00:15:16 BRT 2012
+compile_version=1.10.1
+url="ftp://ftp.kde.org/pub/kde/stable/4.8.1/src/pykde4-4.8.1.tar.xz"
+file_size=1982592
+file_md5=ef9da17db70c6ce532dc59c56020c333
+recipe_type=cmake
+
+pre_install() {
+    GrepReplace "$sip_path" "$target" $dir/_build/cmake_install.cmake
+}
