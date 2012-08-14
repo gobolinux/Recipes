@@ -1,0 +1,32 @@
+Produce a shared library rather than an executable and introduce an
+install target.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- tinyxml/Makefile.orig	2012-04-29 21:53:22.000000000 +1200
++++ tinyxml/Makefile	2012-04-29 21:53:39.000000000 +1200
+@@ -81,10 +81,14 @@ CXXFLAGS := ${CXXFLAGS} ${DEFS}
+ # Targets of the build
+ #****************************************************************************
+ 
+-OUTPUT := xmltest
++OUTPUT := libtinyxml.so
+ 
+ all: ${OUTPUT}
+ 
++install:
++	install ${OUTPUT} ${DESTDIR}/lib
++	install *.h ${DESTDIR}/include
++
+ 
+ #****************************************************************************
+ # Source files
+@@ -102,7 +106,7 @@ OBJS := $(addsuffix .o,$(basename ${SRCS
+ #****************************************************************************
+ 
+ ${OUTPUT}: ${OBJS}
+-	${LD} -o $@ ${LDFLAGS} ${OBJS} ${LIBS} ${EXTRA_LIBS}
++	${LD} -shared -o $@ ${LDFLAGS} ${OBJS} ${LIBS} ${EXTRA_LIBS}
+ 
+ #****************************************************************************
+ # common rules
