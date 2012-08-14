@@ -1,0 +1,32 @@
+# Recipe for version svn by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Jul 4 19:33:26 BRT 2012
+# Recipe (MakeRecipe) for GDAL by Leandro Motta Barros <lmb@stackedboxes.org>, on Thu May 28 16:31:24 BRT 2009
+compile_version=1.0.1
+svn="https://svn.osgeo.org/gdal/trunk/gdal"
+recipe_type=configure
+makefile=GNUmakefile
+
+configure_options=(
+    --with-hdf4=no
+    --with-hdf5=no
+    --with-netcdf=${netcdf_path}
+    --with-curl
+    --with-geos=${geos_path}/bin/geos-config
+    --with-sqlite3
+    #--with-libtiff=${tiff_path}
+    --with-python
+    --with-png
+    --with-threads
+    --with-expat=${expat_path}
+    --with-xerces=/usr
+    --with-openjpeg=${openjpeg_path}
+)
+
+install_variables=(
+    PY_HAVE_SETUPTOOLS=n
+    PYTHONPATH=$target/lib/python2.6/site-packages
+)
+
+pre_install() {
+    mkdir -p $target/lib/python2.6/site-packages
+    echo $goboLibraries/python2.6/site-packages/osgeo > $target/lib/python2.6/site-packages/osgeo.pth
+}
