@@ -1,0 +1,11 @@
+# Recipe for version 4.8.1 by Lucas C. Villa Real, on Mon Mar 26 00:13:39 BRT 2012
+# Recipe (MakeRecipe) for KDE-Webdev by Giambattista Bloisi <giamby@infinito.it>, on Sun Feb 10 23:09:57 CET 2008
+compile_version=1.10.2
+url="ftp://ftp.kde.org/pub/kde/stable/4.8.1/src/kdewebdev-4.8.1.tar.xz"
+file_size=2571644
+file_md5=0a3a936f207d09af4ea986988d1fc122
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
