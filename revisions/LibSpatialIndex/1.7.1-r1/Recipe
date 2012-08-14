@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for LibSpatialIndex by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri May 11 15:23:41 BRT 2012
+# Recipe for version 1.7.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri May 11 15:23:41 BRT 2012
+compile_version=1.13.3
+url="http://download.osgeo.org/libspatialindex/spatialindex-src-1.7.1.tar.bz2"
+file_size=359629
+file_md5=15e5fcff393a56ab9aa7553e4a9cd64a
+recipe_type=cmake
+
+pre_link() {
+    ln -s libspatialindex $target/include/spatialindex
+}
