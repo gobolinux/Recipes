@@ -1,0 +1,12 @@
+# Recipe for version 1.7.2.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Aug 5 19:15:21 BRT 2012
+# Recipe (MakeRecipe) for TagLib by Leandro Motta Barros <lmb@stackedboxes.org>, on Wed Sep 21 23:20:55 BRT 2011
+compile_version=1.13.3
+url="http://developer.kde.org/~wheeler/files/src/taglib-1.7.2.tar.gz"
+file_size=535427
+file_md5=b0a9e797d3833fb933c7c3176de3d720
+recipe_type=cmake
+
+cmake_options=(
+    -DWITH_ASF=ON
+    -DWITH_MP4=ON
+)
