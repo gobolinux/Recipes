@@ -1,0 +1,18 @@
+# Recipe for version 1.2.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu May 3 17:56:16 BRT 2012
+# Recipe (MakeRecipe) for XineLib by Michael Farrell <michael@xinomorph.org>, on Sun Oct 24 19:29:17 CST 2004
+compile_version=1.9.0
+url="${httpSourceforge}/xine/xine-lib-1.2.1.tar.bz2"
+file_size=6197175
+file_md5=fdd1cf233bfd8b7fe65bf7ef9abfed34
+recipe_type=configure
+configure_options=(
+   "--with-xv-path=$goboLibraries"
+   "--with-xvmc-path=$goboLibraries"
+   "--enable-ipv6"
+   "--with-xcb"
+   "--with-external-ffmpeg"
+   "--with-external-libmad"
+   "--without-esound"
+   "--disable-musepack"
+)
+with_esound="--with-esound"
