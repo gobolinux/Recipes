@@ -1,0 +1,15 @@
+Fixes a typo which leads to a compilation error.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- ruby-1.8.7/math.c.orig	2012-05-02 13:38:10.000000000 -0300
++++ ruby-1.8.7/math.c	2012-05-02 13:38:20.000000000 -0300
+@@ -34,7 +34,7 @@ domain_check(x, msg)
+ 	if (isnan(x)) {
+ #if defined(EDOM)
+ 	    errno = EDOM;
+-#elif define(ERANGE)
++#elif defined(ERANGE)
+ 	    errno = ERANGE;
+ #endif
+ 	    continue;

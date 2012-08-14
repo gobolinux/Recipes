@@ -11,3 +11,8 @@ configure_options=(
  "--enable-pthread"
  "--enable-install-doc"
 )
+
+pre_link() {
+    mkdir $target/include
+    cp rubysig.h env.h $target/include
+}
