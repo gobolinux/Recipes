@@ -1,0 +1,12 @@
+# Recipe for version 4.8.1 by Lucas C. Villa Real, on Mon Mar 26 00:15:32 BRT 2012
+# Recipe (MakeRecipe) for KDE-Toys by Giambattista Bloisi <giamby@infinito.it>, on Thu Jan 17 08:59:50 CET 2008
+compile_version=1.10.0
+url="ftp://ftp.kde.org/pub/kde/stable/4.8.1/src/kdetoys-4.8.1.tar.xz"
+file_size=378080
+file_md5=21a3010705eb4506c3b072a14d62784d
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
+
