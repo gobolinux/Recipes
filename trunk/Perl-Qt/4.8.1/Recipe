@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Perl-Qt by Lucas C. Villa Real, on Mon Mar 26 00:14:09 BRT 2012
+# Recipe for version 4.8.1 by Lucas C. Villa Real, on Mon Mar 26 00:14:09 BRT 2012
+compile_version=1.10.1
+url="ftp://ftp.kde.org/pub/kde/stable/4.8.1/src/perlqt-4.8.1.tar.xz"
+file_size=1813524
+file_md5=a644f1ca39d9140f12069e7065fa4bd5
+recipe_type=cmake
+
+cmake_options=(
+    -DCMAKE_BUILD_TYPE=Release
+    -DCUSTOM_PERL_SITE_ARCH_DIR=$target/lib/perl5
+)
