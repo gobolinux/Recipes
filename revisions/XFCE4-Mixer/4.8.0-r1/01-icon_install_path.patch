@@ -1,0 +1,148 @@
+Icons can't be installed into a "xfce4-mixer" subdir in share - they
+must go into share/icons directly.
+Also icons installed into "status" directory isn't picked up, but if
+installed into "apps" they are. Make it so until default works (or
+forever)
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+
+diff -Naur xfce4-mixer-4.6.1/icons.old/16x16/Makefile.am xfce4-mixer-4.6.1/icons/16x16/Makefile.am
+--- xfce4-mixer-4.6.1/icons.old/16x16/Makefile.am	2009-04-21 21:19:19.000000000 +0200
++++ xfce4-mixer-4.6.1/icons/16x16/Makefile.am	2009-04-21 21:21:30.000000000 +0200
+@@ -1,6 +1,6 @@
+ # $Id$
+ 
+-iconsdir = $(pkgdatadir)/icons/hicolor/16x16/status
++iconsdir = $(pkgdatadir)/icons/hicolor/16x16/apps
+ icons_DATA =								\
+ 	xfce4-mixer-volume-muted.png					\
+ 	xfce4-mixer-volume-ultra-low.png				\
+diff -Naur xfce4-mixer-4.6.1/icons.old/16x16/Makefile.in xfce4-mixer-4.6.1/icons/16x16/Makefile.in
+--- xfce4-mixer-4.6.1/icons.old/16x16/Makefile.in	2009-04-21 21:19:19.000000000 +0200
++++ xfce4-mixer-4.6.1/icons/16x16/Makefile.in	2009-04-21 21:21:18.000000000 +0200
+@@ -17,7 +17,7 @@
+ # $Id$
+ 
+ VPATH = @srcdir@
+-pkgdatadir = $(datadir)/@PACKAGE@
++pkgdatadir = $(datadir)
+ pkglibdir = $(libdir)/@PACKAGE@
+ pkgincludedir = $(includedir)/@PACKAGE@
+ am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
+@@ -242,7 +242,7 @@
+ target_alias = @target_alias@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+-iconsdir = $(pkgdatadir)/icons/hicolor/16x16/status
++iconsdir = $(pkgdatadir)/icons/hicolor/16x16/apps
+ icons_DATA = \
+ 	xfce4-mixer-volume-muted.png					\
+ 	xfce4-mixer-volume-ultra-low.png				\
+diff -Naur xfce4-mixer-4.6.1/icons.old/24x24/Makefile.am xfce4-mixer-4.6.1/icons/24x24/Makefile.am
+--- xfce4-mixer-4.6.1/icons.old/24x24/Makefile.am	2009-04-21 21:19:19.000000000 +0200
++++ xfce4-mixer-4.6.1/icons/24x24/Makefile.am	2009-04-21 21:22:08.000000000 +0200
+@@ -1,6 +1,6 @@
+ # $Id$
+ 
+-iconsdir = $(pkgdatadir)/icons/hicolor/24x24/status
++iconsdir = $(pkgdatadir)/icons/hicolor/24x24/apps
+ icons_DATA =								\
+ 	xfce4-mixer-volume-muted.png					\
+ 	xfce4-mixer-volume-ultra-low.png				\
+diff -Naur xfce4-mixer-4.6.1/icons.old/24x24/Makefile.in xfce4-mixer-4.6.1/icons/24x24/Makefile.in
+--- xfce4-mixer-4.6.1/icons.old/24x24/Makefile.in	2009-04-21 21:19:19.000000000 +0200
++++ xfce4-mixer-4.6.1/icons/24x24/Makefile.in	2009-04-21 21:22:01.000000000 +0200
+@@ -17,7 +17,7 @@
+ # $Id$
+ 
+ VPATH = @srcdir@
+-pkgdatadir = $(datadir)/@PACKAGE@
++pkgdatadir = $(datadir)
+ pkglibdir = $(libdir)/@PACKAGE@
+ pkgincludedir = $(includedir)/@PACKAGE@
+ am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
+@@ -242,7 +242,7 @@
+ target_alias = @target_alias@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+-iconsdir = $(pkgdatadir)/icons/hicolor/24x24/status
++iconsdir = $(pkgdatadir)/icons/hicolor/24x24/apps
+ icons_DATA = \
+ 	xfce4-mixer-volume-muted.png					\
+ 	xfce4-mixer-volume-ultra-low.png				\
+diff -Naur xfce4-mixer-4.6.1/icons.old/48x48/Makefile.am xfce4-mixer-4.6.1/icons/48x48/Makefile.am
+--- xfce4-mixer-4.6.1/icons.old/48x48/Makefile.am	2009-04-21 21:19:19.000000000 +0200
++++ xfce4-mixer-4.6.1/icons/48x48/Makefile.am	2009-04-21 21:24:18.000000000 +0200
+@@ -1,6 +1,6 @@
+ # $Id$
+ 
+-iconsdir = $(pkgdatadir)/icons/hicolor/48x48/status
++iconsdir = $(pkgdatadir)/icons/hicolor/48x48/apps
+ icons_DATA =								\
+ 	xfce4-mixer-volume-muted.png					\
+ 	xfce4-mixer-volume-ultra-low.png				\
+diff -Naur xfce4-mixer-4.6.1/icons.old/48x48/Makefile.in xfce4-mixer-4.6.1/icons/48x48/Makefile.in
+--- xfce4-mixer-4.6.1/icons.old/48x48/Makefile.in	2009-04-21 21:19:19.000000000 +0200
++++ xfce4-mixer-4.6.1/icons/48x48/Makefile.in	2009-04-21 21:24:09.000000000 +0200
+@@ -17,7 +17,7 @@
+ # $Id$
+ 
+ VPATH = @srcdir@
+-pkgdatadir = $(datadir)/@PACKAGE@
++pkgdatadir = $(datadir)
+ pkglibdir = $(libdir)/@PACKAGE@
+ pkgincludedir = $(includedir)/@PACKAGE@
+ am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
+@@ -242,7 +242,7 @@
+ target_alias = @target_alias@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+-iconsdir = $(pkgdatadir)/icons/hicolor/48x48/status
++iconsdir = $(pkgdatadir)/icons/hicolor/48x48/apps
+ icons_DATA = \
+ 	xfce4-mixer-volume-muted.png					\
+ 	xfce4-mixer-volume-ultra-low.png				\
+diff -Naur xfce4-mixer-4.6.1/icons.old/Makefile.in xfce4-mixer-4.6.1/icons/Makefile.in
+--- xfce4-mixer-4.6.1/icons.old/Makefile.in	2009-04-21 21:19:19.000000000 +0200
++++ xfce4-mixer-4.6.1/icons/Makefile.in	2009-04-21 21:19:47.000000000 +0200
+@@ -16,7 +16,7 @@
+ 
+ # $Id: Makefile.am 20832 2006-04-09 17:40:51Z benny $
+ VPATH = @srcdir@
+-pkgdatadir = $(datadir)/@PACKAGE@
++pkgdatadir = $(datadir)
+ pkglibdir = $(libdir)/@PACKAGE@
+ pkgincludedir = $(includedir)/@PACKAGE@
+ am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
+diff -Naur xfce4-mixer-4.6.1/icons.old/scalable/Makefile.am xfce4-mixer-4.6.1/icons/scalable/Makefile.am
+--- xfce4-mixer-4.6.1/icons.old/scalable/Makefile.am	2009-04-21 21:19:19.000000000 +0200
++++ xfce4-mixer-4.6.1/icons/scalable/Makefile.am	2009-04-21 21:25:15.000000000 +0200
+@@ -1,6 +1,6 @@
+ # $Id$
+ 
+-iconsdir = $(pkgdatadir)/icons/hicolor/scalable/status
++iconsdir = $(pkgdatadir)/icons/hicolor/scalable/apps
+ icons_DATA =								\
+ 	xfce4-mixer-volume-muted.svg					\
+ 	xfce4-mixer-volume-ultra-low.svg				\
+diff -Naur xfce4-mixer-4.6.1/icons.old/scalable/Makefile.in xfce4-mixer-4.6.1/icons/scalable/Makefile.in
+--- xfce4-mixer-4.6.1/icons.old/scalable/Makefile.in	2009-04-21 21:19:19.000000000 +0200
++++ xfce4-mixer-4.6.1/icons/scalable/Makefile.in	2009-04-21 21:24:56.000000000 +0200
+@@ -17,7 +17,7 @@
+ # $Id$
+ 
+ VPATH = @srcdir@
+-pkgdatadir = $(datadir)/@PACKAGE@
++pkgdatadir = $(datadir)
+ pkglibdir = $(libdir)/@PACKAGE@
+ pkgincludedir = $(includedir)/@PACKAGE@
+ am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
+@@ -242,7 +242,7 @@
+ target_alias = @target_alias@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+-iconsdir = $(pkgdatadir)/icons/hicolor/scalable/status
++iconsdir = $(pkgdatadir)/icons/hicolor/scalable/apps
+ icons_DATA = \
+ 	xfce4-mixer-volume-muted.svg					\
+ 	xfce4-mixer-volume-ultra-low.svg				\
