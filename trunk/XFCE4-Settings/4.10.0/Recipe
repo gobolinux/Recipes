@@ -1,0 +1,12 @@
+# Recipe for version 4.10.0 by Hisham Muhammad <hisham@gobolinux.org>, on Tue Sep 4 00:01:46 BRT 2012
+# Recipe (MakeRecipe) for XFCE4-Settings by Giambattista Bloisi <giamby@infinito.it>, on Sat Mar 21 13:21:45 CET 2009
+compile_version=1.12.2
+url="http://archive.xfce.org/xfce/4.10/src/xfce4-settings-4.10.0.tar.bz2"
+file_size=782922
+file_md5=cc4dd9179ead9046c056431f01a12000
+recipe_type=configure
+configure_options=(
+   --enable-debug=no
+)
+
+with_libcanberra=(--enable-sound-settings)
