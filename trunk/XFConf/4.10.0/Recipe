@@ -1,0 +1,10 @@
+# Recipe for version 4.10.0 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Sep 3 23:36:33 BRT 2012
+# Recipe (MakeRecipe) for XFConf by Giambattista Bloisi <giamby@infinito.it>, on Sat Mar 21 13:13:39 CET 2009
+compile_version=1.12.2
+url="http://archive.xfce.org/xfce/4.10/src/xfconf-4.10.0.tar.bz2"
+file_size=517425
+file_md5=4ed48150a03fb5f42b455494307b7f28
+recipe_type=configure
+with_doc=(
+   --enable-gtk-doc
+)
