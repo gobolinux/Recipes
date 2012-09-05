@@ -1,0 +1,10 @@
+# Recipe for version 4.10.0 by Hisham Muhammad <hisham@gobolinux.org>, on Tue Sep 4 00:02:05 BRT 2012
+# Recipe (MakeRecipe) for XFdesktop by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:28:04 CEST 2006
+compile_version=1.8.2
+url="http://archive.xfce.org/xfce/4.10/src/xfdesktop-4.10.0.tar.bz2"
+file_size=1098862
+file_md5=d5f6fb9fdde3ddff5804b2a251892936
+recipe_type=configure
+with_doc=(
+   --enable-xsltproc
+)
