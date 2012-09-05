@@ -1,0 +1,10 @@
+# Recipe for version 4.10.0 by Hisham Muhammad <hisham@gobolinux.org>, on Tue Sep 4 00:38:26 BRT 2012
+# Recipe (MakeRecipe) for XFCE4-Appfinder by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:24:37 CEST 2006
+compile_version=1.8.2
+url="http://archive.xfce.org/xfce/4.10/src/xfce4-appfinder-4.10.0.tar.bz2"
+file_size=429196
+file_md5=799f70a9ad67b450da67810a5107e623
+recipe_type=configure
+configure_options=(
+   --enable-debug=no
+)
