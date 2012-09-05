@@ -1,0 +1,13 @@
+# Recipe for version 0.4.8 by Hisham Muhammad <hisham@gobolinux.org>, on Tue Sep 4 01:09:11 BRT 2012
+# Recipe (MakeRecipe) for Terminal by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:15:19 CEST 2006
+compile_version=1.8.2
+url="http://archive.xfce.org/src/apps/terminal/0.4/Terminal-0.4.8.tar.bz2"
+file_size=1585791
+file_md5=8dff62234da14e1a5e542fb56560ebe2
+recipe_type=configure
+configure_options=(
+   --enable-debug=no
+)
+with_doc=(
+   --enable-xsltproc
+)
