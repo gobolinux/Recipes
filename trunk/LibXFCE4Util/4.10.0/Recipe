@@ -1,0 +1,13 @@
+# Recipe for version 4.10.0 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Sep 3 23:33:43 BRT 2012
+# Recipe (MakeRecipe) for LibXFCE4Util by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:19:39 CEST 2006
+compile_version=1.9.0
+url="http://archive.xfce.org/xfce/4.10/src/libxfce4util-4.10.0.tar.bz2"
+file_size=430542
+file_md5=2e8defcd40cbf6afedde531b27314511
+recipe_type=configure
+configure_options=(
+   --enable-debug=no
+)
+with_doc=(
+   --enable-gtk-doc
+)
