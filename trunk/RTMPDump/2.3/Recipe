@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for RTMPDump by Hisham Muhammad <hisham@gobolinux.org>, on Wed Sep 5 22:07:08 BRT 2012
+# Recipe for version 2.3 by Hisham Muhammad <hisham@gobolinux.org>, on Wed Sep 5 22:07:08 BRT 2012
+compile_version=1.9.0
+url="http://rtmpdump.mplayerhq.hu/download/rtmpdump-2.3.tgz"
+file_size=125103
+file_md5=eb961f31cd55f0acf5aad1a7b900ef59
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+)
