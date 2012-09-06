@@ -1,0 +1,116 @@
+Recursive IMAP support.
+
+diff -ur isync-1.0.4.orig/src/drv_imap.c isync-1.0.4/src/drv_imap.c
+--- isync-1.0.4.orig/src/drv_imap.c     2007-09-22 10:44:12.000000000 +0200
++++ isync-1.0.4/src/drv_imap.c  2009-01-21 23:43:10.000000000 +0100
+@@ -1678,7 +1678,7 @@
+	int ret;
+ 
+	imap->boxes = 0;
+-	if ((ret = imap_exec_b( ctx, 0, "LIST \"\" \"%s%%\"", ctx->prefix )) != DRV_OK)
++	if ((ret = imap_exec_b( ctx, 0, "LIST \"\" \"%s*\"", ctx->prefix )) != DRV_OK)
+		return ret;
+	*retb = imap->boxes;
+	return DRV_OK;
+diff -ur isync-1.0.4.orig/src/drv_maildir.c isync-1.0.4/src/drv_maildir.c
+--- isync-1.0.4.orig/src/drv_maildir.c  2008-02-23 10:02:21.000000000 +0100
++++ isync-1.0.4/src/drv_maildir.c       2009-01-21 23:43:10.000000000 +0100
+@@ -24,6 +24,7 @@
+ 
+ #include "isync.h"
+ 
++#include <assert.h>
+ #include <limits.h>
+ #include <stdlib.h>
+ #include <string.h>
+@@ -46,6 +47,56 @@
+ #include <db.h>
+ #endif /* USE_DB */
+ 
++static void encode_maildir_box(const char* in, char* out, size_t size)
++{
++	const char* p;
++	char c;
++	size_t out_chars;
++
++	for (p = in, out_chars = 0; (c = *p); ++p, ++out, ++out_chars) {
++		assert(out_chars < size);
++		if (c == '/') {
++			assert(out_chars < size - 1);
++			*(out++) = '~';
++			*out = '-';
++			++out_chars;
++		}
++		else if (c == '~') {
++			assert(out_chars < size - 1);
++			*(out++) = '~';
++			*out = '~';
++			++out_chars;
++		}
++		else {
++			*out = c;
++		}
++	}
++	assert(out_chars < size);
++	*out = 0;
++}
++
++static void decode_maildir_box(const char* in, char* out, size_t size)
++{
++	const char* p;
++	char c;
++	size_t out_chars;
++
++	for (p = in, out_chars = 0; (c = *p); ++p, ++out, ++out_chars) {
++		assert(out_chars < size);
++		if (c == '~') {
++			assert(out_chars < size - 1);
++			c = *(++p);
++			*out = (c == '-' ? '/' : '~');
++			++out_chars;
++		}
++		else {
++			*out = c;
++		}
++	}
++	assert(out_chars < size);
++	*out = 0;
++}
++
+ typedef struct maildir_store_conf {
+	store_conf_t gen;
+	char *inbox;
+@@ -164,14 +215,16 @@
+		const char *inbox = ((maildir_store_conf_t *)gctx->conf)->inbox;
+		int bl;
+		struct stat st;
+-		char buf[PATH_MAX];
++		char buf[PATH_MAX], box[PATH_MAX];
+ 
+		if (*de->d_name == '.')
+			continue;
+		bl = nfsnprintf( buf, sizeof(buf), "%s%s/cur", gctx->conf->path, de->d_name );
+		if (stat( buf, &st ) || !S_ISDIR(st.st_mode))
+			continue;
+-		add_string_list( retb, !memcmp( buf, inbox, bl - 4 ) && !inbox[bl - 4] ? "INBOX" : de->d_name );
++
++		decode_maildir_box(de->d_name, box, PATH_MAX);
++		add_string_list( retb, !memcmp( buf, inbox, bl - 4 ) && !inbox[bl - 4] ? "INBOX" : box );
+	}
+	closedir (dir);
+ 
+@@ -717,8 +770,12 @@
+ #endif /* USE_DB */
+	if (!strcmp( gctx->name, "INBOX" ))
+		gctx->path = nfstrdup( ((maildir_store_conf_t *)gctx->conf)->inbox );
+-	else
+-		nfasprintf( &gctx->path, "%s%s", gctx->conf->path, gctx->name );
++  else {
++    char box[_POSIX_PATH_MAX];
++    encode_maildir_box(gctx->name, box, _POSIX_PATH_MAX);
++    nfasprintf( &gctx->path, "%s%s", gctx->conf->path, box );
++  }
++   
+	if (opts & OPEN_SETFLAGS)
+		opts |= OPEN_OLD;
+	if (opts & OPEN_EXPUNGE)
