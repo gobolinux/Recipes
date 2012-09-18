@@ -1,0 +1,11 @@
+# Recipe for version 6.18.01 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Sep 18 15:56:57 BRT 2012
+compile_version=1.8.0
+url="ftp://ftp.astron.com/pub/tcsh/tcsh-6.18.01.tar.gz"
+mirror_url="ftp://ftp.astron.com/pub/tcsh/old/tcsh-6.18.01.tar.gz"
+file_size=926872
+file_md5=6eed09dbd4223ab5b6955378450d228a
+recipe_type=configure
+
+pre_link() {
+   ln -s tcsh $target/bin/csh
+}
