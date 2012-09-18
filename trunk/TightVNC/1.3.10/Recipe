@@ -1,7 +1,7 @@
 # Recipe for version 1.3.10 by Rui Andrada <shingonoide@gmail.com>, on Tue May 19 10:06:14 BRT 2009
 # Recipe (MakeRecipe) for TightVNC by Michael Farrell <michael@xinomorph.org>, on Sat Oct 30 06:31:03 CST 2004
 compile_version=1.12.0
-url="http://kent.dl.sourceforge.net/sourceforge/vnc-tight/tightvnc-1.3.10_unixsrc.tar.bz2"
+url="${httpSourceforge}/vnc-tight/tightvnc-1.3.10_unixsrc.tar.bz2"
 file_size=1780510
 file_md5=397b35faad32d5246b6d44b142f8304f
 dir='vnc_unixsrc'
