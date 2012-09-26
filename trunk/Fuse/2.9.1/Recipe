@@ -1,0 +1,18 @@
+# Recipe for version 2.9.1 by Guilherme B. Bedin <gbedin@gobolinux.org>, on Tue Sep 25 10:15:57 BRT 2012
+# Recipe (MakeRecipe) for Fuse by roko, <ro.ko@mcnon.com>, on Wed Mar 23 22:07:09 CET 2005
+compile_version=1.8.2
+url="$httpSourceforge/fuse/fuse-2.9.1.tar.gz"
+file_size=559705
+file_md5=c646133c7bbf8ad9d2ced0888dc4a319
+recipe_type=configure
+
+install_variables=(
+    INIT_D_PATH="$settings_target/init.d"
+)
+
+configure_options=(
+    MOUNT_FUSE_PATH=${target}/sbin
+    UDEV_RULES_PATH=$settings_target/udev/rules.d
+    --enable-lib
+    --enable-util
+)
