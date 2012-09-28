@@ -1,0 +1,31 @@
+From 2aa67e35a99a2f81c11e0cc1006524fdefc58c06 Mon Sep 17 00:00:00 2001
+From: Julien Cristau <jcristau@debian.org>
+Date: Tue, 10 Feb 2009 19:39:35 +0000
+Subject: Typo fix: Sceen -> Screen
+
+Reported by Antonio D'souza <adsouza@vmware.com>
+---
+diff --git a/src/grandr.h b/src/grandr.h
+index c00fe1a..73487e7 100644
+--- a/src/grandr.h
++++ b/src/grandr.h
+@@ -28,7 +28,7 @@
+ 
+ #include "constant.h"
+ 
+-struct SceenInfo;
++struct ScreenInfo;
+ 
+ struct CrtcInfo {
+ 	RRCrtc id;
+@@ -42,7 +42,7 @@ struct CrtcInfo {
+ 	
+ 	int changed;
+ 	
+-	struct SceenInfo *screen_info;
++	struct ScreenInfo *screen_info;
+ };
+ 
+ struct OutputInfo {
+--
+cgit v0.8.3-6-g21f6

@@ -1,0 +1,50 @@
+From ee6a9cc51dd24595687df146cf8bd1bab4085f4d Mon Sep 17 00:00:00 2001
+From: Keith Packard <keithp@neko.keithp.com>
+Date: Thu, 21 Jun 2007 23:14:18 +0000
+Subject: License dialog was displaying GPL, not MIT license
+
+---
+diff --git a/src/callbacks.c b/src/callbacks.c
+index 788ca52..f5a4bd4 100644
+--- a/src/callbacks.c
++++ b/src/callbacks.c
+@@ -377,17 +377,26 @@ on_about_btn_clicked                   (GtkButton       *button,
+ {
+ 	gchar *authors[] = {"Ming Lin (ming.m.lin@intel.com)", NULL};
+ 	gchar *comments = "This GUI is for RandR 1.2 setting\nming.m.lin@intel.com";
+-	gchar *license = "RandR GUI is free software; you can redistribute it and/or modify\n \
+-it under the terms of the GNU General Public License as published by\n \
+-the Free Software Foundation; either version 2 of the License, or\n \
+-(at your option) any later version.\n\n\
+-RandR GUI is distributed in the hope that it will be useful,\n \
+-but WITHOUT ANY WARRANTY; without even the implied warranty of\n \
+-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n \
+-GNU General Public License for more details.\n\n\
+-You should have received a copy of the GNU General Public License \n\
+-along with RandR GUI; if not, write to the Free Software Foundation, Inc.,\n \
+-59 Temple Place, Suite 330, Boston, MA  02111-1307  USA";
++	gchar *license =
++"Copyright © 2007 Intel Corporation\n"
++"\n"
++"Permission is hereby granted, free of charge, to any person obtaining a copy\n"
++"of this software and associated documentation files (the “Software”), to deal\n"
++"in the Software without restriction, including without limitation the rights\n"
++"to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n"
++"copies of the Software, and to permit persons to whom the Software is\n"
++"furnished to do so, subject to the following conditions:\n"
++"\n"
++"The above copyright notice and this permission notice shall be included in\n"
++"all copies or substantial portions of the Software.\n"
++"\n"
++"THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n"
++"IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n"
++"FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE\n"
++"AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n"
++"LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n"
++"OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\n"
++"THE SOFTWARE.";
+ 	
+ 	gtk_show_about_dialog (root_window, 
+ 								"authors", authors, 
+--
+cgit v0.8.3-6-g21f6
