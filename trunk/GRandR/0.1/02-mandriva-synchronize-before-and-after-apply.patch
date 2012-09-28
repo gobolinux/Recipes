@@ -1,0 +1,82 @@
+Bug description:
+ - open grandr
+ - switch resolution to 800x600 (from 1024x768 in my test case)
+ - press "apply"
+ - things will work
+ - switch back to 1024x768
+ - press apply
+ - you'll see 2 black rectangles, one at the right side and one at the bottom
+   side of the window
+
+According to Gustavo Boiko, this happens because of problems in the
+timing/order the events are sent, so we need a few calls to XSync and
+X{G,Ung}rabServer.
+But we have 3+ open connections to the X server! That's a problem when we use
+XGrabServer. One is from gtk, one is from XOpenDisplay at grandr.c and the
+others are from XOpenDisplay at the screen_apply function (and these leak!).
+This patch makes everyone use the gdk display.
+
+diff -Nrup grandr-0.1/src/grandr.c patch-display/src/grandr.c
+--- grandr-0.1/src/grandr.c	2007-06-19 10:22:41.000000000 -0300
++++ patch-display/src/grandr.c	2010-01-26 11:51:00.943612132 -0200
+@@ -304,12 +304,10 @@ screen_apply (struct ScreenInfo *screen_
+ 	window = screen_info->window;
+ 	screen = DefaultScreen (dpy);
+ 	
+-	cur_dpy = XOpenDisplay (NULL);
+-
+-	if (width == DisplayWidth (cur_dpy, screen) &&
+-			height == DisplayHeight (cur_dpy, screen) &&
+-			mmWidth == DisplayWidthMM (cur_dpy, screen) &&
+-			mmHeight == DisplayHeightMM (cur_dpy, screen) ) {
++	if (width == DisplayWidth (dpy, screen) &&
++			height == DisplayHeight (dpy, screen) &&
++			mmWidth == DisplayWidthMM (dpy, screen) &&
++			mmHeight == DisplayHeightMM (dpy, screen) ) {
+ 		return;
+ 	} else {
+ 		XRRSetScreenSize (dpy, window, width, height, mmWidth, mmHeight);
+@@ -401,7 +399,8 @@ apply (struct ScreenInfo *screen_info)
+ 	struct CrtcInfo *crtc_info;
+ 	GtkWidget *dialog;
+ 
+-	//XGrabServer (screen_info->dpy);
++	XGrabServer (screen_info->dpy);
++	XSync(screen_info->dpy, False);
+ 	set_positions (screen_info);
+ 	
+ 	if (!set_screen_size (screen_info)) {
+@@ -453,9 +452,11 @@ apply (struct ScreenInfo *screen_info)
+ 		//}
+ 	}
+ 	
+-	return 1;
+ 	
+-	//XUngrabServer (screen_info->dpy);
++	XSync(screen_info->dpy, False);
++	XUngrabServer (screen_info->dpy);
++	
++	return 1;
+ }
+ 
+ struct ScreenInfo*
+diff -Nrup grandr-0.1/src/main.c patch-display/src/main.c
+--- grandr-0.1/src/main.c	2007-06-19 10:22:41.000000000 -0300
++++ patch-display/src/main.c	2010-01-26 11:50:33.745608836 -0200
+@@ -29,6 +29,7 @@
+ #endif
+ 
+ #include <gtk/gtk.h>
++#include <gdk/gdkx.h>
+ #include <stdlib.h>
+ 
+ #include "interface.h"
+@@ -86,7 +87,7 @@ main (int argc, char *argv[])
+   root_window = create_main_win ();
+   gtk_widget_show (root_window);
+ 	
+-	display = XOpenDisplay(NULL);
++	display = GDK_DISPLAY();
+ 	
+ 	check_server_randr_version (display);
+ 	

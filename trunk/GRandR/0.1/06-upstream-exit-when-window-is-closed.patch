@@ -1,0 +1,22 @@
+From 8973f12088c606fcdd2ea1f8a320da78c3866632 Mon Sep 17 00:00:00 2001
+From: Julien Cristau <jcristau@debian.org>
+Date: Sun, 14 Sep 2008 13:40:57 +0000
+Subject: Exit when the window is closed
+
+---
+diff --git a/src/interface.c b/src/interface.c
+index 6ef4ab0..ff0dba2 100644
+--- a/src/interface.c
++++ b/src/interface.c
+@@ -540,6 +540,9 @@ create_main_win (void)
+   g_signal_connect ((gpointer) apply_btn, "clicked",
+                     G_CALLBACK (on_apply_btn_clicked),
+                     NULL);
++  g_signal_connect ((gpointer) main_win, "destroy",
++                    G_CALLBACK (gtk_main_quit),
++                    NULL);
+ 
+   /* Store pointers to all widgets, for use by lookup_widget(). */
+   GLADE_HOOKUP_OBJECT_NO_REF (main_win, main_win, "main_win");
+--
+cgit v0.8.3-6-g21f6
