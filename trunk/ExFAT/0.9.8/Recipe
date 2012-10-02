@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for ExFAT by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Oct 2 13:35:43 BRT 2012
+# Recipe for version 0.9.8 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Oct 2 13:35:43 BRT 2012
+compile_version=1.0.1
+url="http://exfat.googlecode.com/files/fuse-exfat-0.9.8.tar.gz"
+file_size=38286
+file_md5=59ff35d4ec8e53a79359edc53a6ab534
+recipe_type=scons
+
+scons_variables=(
+    DESTDIR=$target/bin
+)
