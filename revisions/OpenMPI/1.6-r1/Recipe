@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for OpenMPI by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Aug 14 16:34:20 BRT 2012
+# Recipe for version 1.6 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Aug 14 16:34:20 BRT 2012
+compile_version=1.0-svn
+url="http://www.open-mpi.org/software/ompi/v1.6/downloads/openmpi-1.6.tar.bz2"
+file_size=10034857
+file_md5=dd6f5bd4b3cb14d93bbf530e50e46e60
+recipe_type=configure
+
+configure_options=(
+    --with-threads=posix
+    --without-memory-manager
+    --disable-mpi-f90
+)
