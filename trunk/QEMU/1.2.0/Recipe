@@ -1,0 +1,17 @@
+# Recipe for version 1.2.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Oct 21 21:17:39 BRST 2012
+# Recipe (MakeRecipe) for QEMU by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sun Oct 17 23:20:23 BRST 2004
+compile_version=1.8.2
+url="http://wiki.qemu.org/download/qemu-1.2.0.tar.bz2"
+file_size=9865186
+file_md5=78eb1e984f4532aa9f2bdd3c127b5b61
+recipe_type=configure
+
+environment=(
+    CFLAGS=
+    CXXFLAGS=
+)
+
+configure_options=(
+    --enable-system
+    --enable-linux-user
+)

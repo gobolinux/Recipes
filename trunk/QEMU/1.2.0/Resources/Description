@@ -1,0 +1,13 @@
+[Name] QEMU
+[Summary] A fast processor emulator.
+[License] GNU General Public License (GPL)
+[Description] QEMU is a fast processor emulator. Using dynamic
+translation it achieves a reasonable  speed while being
+easy to port to new host CPUs.  In its user mode
+emulation mode, it can  launch Linux processes
+compiled for one CPU on another CPU. Linux system
+calls are converted because of endianness and 32/64
+bit mismatches.  In its full system emulation mode, it
+emulates a full system, including a processor and 
+various peripherials.
+[Homepage] http://fabrice.bellard.free.fr/qemu/
