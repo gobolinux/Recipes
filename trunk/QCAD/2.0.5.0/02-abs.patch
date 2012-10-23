@@ -1,0 +1,21 @@
+--- qcad-2.0.5.0-1-community.src/qcadlib/src/information/rs_information.h.orig	2012-10-23 15:10:09.000000000 -0200
++++ qcad-2.0.5.0-1-community.src/qcadlib/src/information/rs_information.h	2012-10-23 15:10:27.000000000 -0200
+@@ -30,7 +30,7 @@
+ #include "rs_entitycontainer.h"
+ #include "rs_line.h"
+ #include "rs_arc.h"
+-
++#include <stdlib.h>
+ 
+ 
+ /**
+--- qcad-2.0.5.0-1-community.src/./qcadlib/include/rs_actioninterface.h.orig	2012-10-23 15:14:06.000000000 -0200
++++ qcad-2.0.5.0-1-community.src/./qcadlib/include/rs_actioninterface.h	2012-10-23 15:14:17.000000000 -0200
+@@ -30,6 +30,7 @@
+ 
+ #include <qobject.h>
+ #include <qaction.h>
++#include <stdlib.h>
+ 
+ #include "rs_entitycontainer.h"
+ #include "rs_commandevent.h"
