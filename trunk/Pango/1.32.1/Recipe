@@ -1,0 +1,12 @@
+# Recipe for version 1.32.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Oct 26 23:27:51 BRST 2012
+# Recipe for Pango by Guilherme B. Bedin
+compile_version=1.8.2
+url="http://ftp.acc.umu.se/pub/gnome/sources/pango/1.32/pango-1.32.1.tar.xz"
+file_size=1035924
+file_md5=73570ab28462fc43960a8d1ffdae43d0
+recipe_type=configure
+
+configure_options=(
+    --with-included-modules=yes
+    --with-dynamic-modules=yes
+)
