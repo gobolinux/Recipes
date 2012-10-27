@@ -1,0 +1,13 @@
+# Recipe for version 1.12.6 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Oct 26 23:33:37 BRST 2012
+# Recipe (MakeRecipe) for Cairo by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 10:58:19 BRT 2005
+compile_version=1.12.6
+url="http://www.cairographics.org/releases/cairo-1.12.6.tar.xz"
+file_size=42103264
+file_md5=645b7c1421ed52260d0853e3215c1d8f
+recipe_type=configure
+configure_options=(
+   --enable-xcb
+   --enable-ft
+   --enable-tee
+)
+with_glitz="--enable-glitz"
