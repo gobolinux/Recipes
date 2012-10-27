@@ -1,0 +1,15 @@
+# Recipe for version 2.73 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Oct 21 02:06:06 BRST 2012
+# Recipe (MakeRecipe) for Transmission by Nathan Middleton, on Mon Oct 8 22:07:45 CDT 2007
+compile_version=1.9.0
+url="http://download.transmissionbt.com/files/transmission-2.73.tar.xz"
+file_size=2933916
+file_md5=86479f9bb378b793ce7a8a71f5b15904
+recipe_type=configure
+dir="transmission-2.72"
+
+configure_options=(
+    --enable-cli
+    --with-gtk
+    --enable-daemon
+    --with-inotify
+)
