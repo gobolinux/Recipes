@@ -1,0 +1,19 @@
+# Recipe for version 6.8.0_4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Nov 2 15:32:10 BRST 2012
+# Recipe (MakeRecipe) for ImageMagick by Seb Haezebrouck, on Wed Mar 19 14:19:20 CET 2008
+compile_version=1.10.2
+url="ftp://mirror.aarnet.edu.au/pub/imagemagick/ImageMagick-6.8.0-4.tar.bz2"
+file_size=11016952
+file_md5=635a943f9e6e40c68bc8414754c6fcaf
+recipe_type=configure
+make_variables=(
+    INSTALLPRIVLIB=$target/lib/perl5/5.10.0
+    INSTALLSITELIB=$target/lib/perl5/site_perl/5.10.0
+    INSTALLARCHLIB=$target/lib/perl5/5.10.0/i686-linux-thread-multi
+    INSTALLSITEARCH=$target/lib/perl5/site_perl/5.10.0/i686-linux-thread-multi
+    INSTALLSITEBIN=$target/bin
+    INSTALLSCRIPT=$target/bin
+    INSTALLMAN1DIR=$target/man/man1
+    INSTALLSITEMAN1DIR=$target/man/man1
+    INSTALLMAN3DIR=$target/man/man3
+    INSTALLSITEMAN3DIR=$target/man/man3
+)
