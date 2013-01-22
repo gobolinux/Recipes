@@ -1,0 +1,40 @@
+# Recipe (MakeRecipe) for USB-ModeSwitch by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jan 21 18:44:59 BRST 2013
+# Recipe for version 1.2.5 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jan 21 18:44:59 BRST 2013
+compile_version=1.0.1
+urls=(
+    "http://www.draisberghof.de/usb_modeswitch/usb-modeswitch-1.2.5.tar.bz2"
+    "http://www.draisberghof.de/usb_modeswitch/usb-modeswitch-data-20121109.tar.bz2"
+)
+file_sizes=(
+    259200
+    21558
+)
+file_md5s=(
+    c393603908eceab95444c5bde790f6f0
+    a7d23a03157871013a0d708ab2b1b6df
+)
+unpack_files=inside_first
+recipe_type=makefile
+build_target="usb_modeswitch dispatcher-static"
+make_variables=(
+    PREFIX=$target
+    ETCDIR=$settings_target
+    UDEVDIR=$target/lib/udev
+    SBINDIR=$target/sbin
+    MANPATH=$target/man
+)
+
+pre_build() {
+    GrepReplace -B "/usr" "$target" make_static_dispatcher.sh
+}
+
+pre_install() {
+    Quiet pushd usb-modeswitch-data-20121109
+    make PREFIX=$target ETCDIR=$settings_target RULESDIR=$settings_target/udev/rules.d
+    make install PREFIX=$target ETCDIR=$settings_target RULESDIR=$settings_target/udev/rules.d
+    Quiet popd
+}
+
+unmanaged_files=(
+    $goboVariable/lib/usb_modeswitch
+)
