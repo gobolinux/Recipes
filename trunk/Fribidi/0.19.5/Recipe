@@ -1,0 +1,10 @@
+# Recipe for version 0.19.5 by Hugo Barrocas <hugobarrocas@iol.pt>, on Sáb Fev 9 20:56:08 WET 2013
+# Recipe (MakeRecipe) for Fribidi by Rafael Guterres Jeffman (rafasgj), on Thu Sep 8 10:06:14 BRT 2005
+compile_version=1.13.3
+url="http://fribidi.org/download/fribidi-0.19.5.tar.bz2"
+file_size=625034
+file_md5=925bafb97afee8a2fc2d0470c072a155
+recipe_type=configure
+configure_options=(
+    --enable-charsets
+)
