@@ -1,0 +1,7 @@
+url="http://seafile.googlecode.com/files/seafile-1.5.3.tar.gz"
+dir='seafile-1.5.3/ccnet'
+recipe_type=configure
+configure_options=(
+   "--disable-client"
+   "--enable-server"
+)
