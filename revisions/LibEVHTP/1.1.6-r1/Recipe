@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for LibEVHTP by Hisham Muhammad <hisham@gobolinux.org>, on Mon Mar 11 10:23:17 BRT 2013
+# Recipe for version 1.1.6 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Mar 11 10:23:17 BRT 2013
+compile_version=1.9.0
+url="https://github.com/ellzey/libevhtp/archive/1.1.6.zip"
+file="libevhtp-1.1.6.zip"
+file_size=445632
+file_md5=417ec55de9a91f6b04d13c130755742a
+dir='libevhtp-1.1.6'
+recipe_type=cmake
