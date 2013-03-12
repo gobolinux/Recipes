@@ -1,0 +1,10 @@
+# Recipe for version 2.8.10 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Mar 12 17:19:18 BRT 2013
+compile_version=1.7.1
+url="http://www.cmake.org/files/v2.8/cmake-2.8.10.tar.gz"
+file_size=5766728
+file_md5=d4aef1eab859df61d2664721a72732c0
+recipe_type=configure
+
+configure_options=(
+   --prefix=$target
+)
