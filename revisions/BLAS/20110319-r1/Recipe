@@ -1,0 +1,18 @@
+# Recipe (MakeRecipe) for BLAS by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Apr 10 16:02:36 BRT 2013
+# Recipe for version 20110319 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Apr 10 16:02:36 BRT 2013
+compile_version=1.0.1
+url="http://netlib.org/blas/blas.tgz"
+file_size=99927
+file_md5=5e99e975f7a1e3ea6abcad7c6e7e42e6
+dir='BLAS'
+recipe_type=makefile
+makefile='Makefile'
+do_install=no
+
+pre_install() {
+    gcc *.a -o libblas.so -shared
+    cp *.a *.so $target/lib
+    Quiet pushd $target/lib
+    ln -s blas_LINUX.a libblas.a
+    Quiet popd
+}
