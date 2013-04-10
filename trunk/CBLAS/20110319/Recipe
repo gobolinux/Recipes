@@ -11,9 +11,9 @@ build_target="alllib"
 do_install=no
 
 pre_install() {
-    gcc lib/*.a -o lib/libblas.so -shared
+    gcc lib/*.a -o lib/libcblas.so -shared
     cp lib/*.a lib/*.so $target/lib
     Quiet pushd $target/lib
-    ln -s cblas_LINUX.a libblas.a
+    ln -s cblas_LINUX.a libcblas.a
     Quiet popd
 }
