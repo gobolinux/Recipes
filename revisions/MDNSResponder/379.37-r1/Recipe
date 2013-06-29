@@ -1,0 +1,20 @@
+# Recipe for version 379.37 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jun 29 11:40:27 BRT 2013
+# Recipe (MakeRecipe) for MDNSResponder by Maglan C. Diemer, maglan@univates.br, on Seg Dez 5 13:33:29 BRST 2005
+compile_version=1.8.0
+url="http://www.opensource.apple.com/tarballs/mDNSResponder/mDNSResponder-379.37.tar.gz"
+file_size=2034975
+file_md5=dd557e1058b51ac2f29cd01d67be0145
+recipe_type=makefile
+dir='mDNSResponder-379.37/mDNSPosix'
+makefile='Makefile'
+make_variables=(
+    "os=linux"
+)
+
+symlink_options=(
+    --conflict overwrite
+)
+
+pre_build() {
+    make os=linux -i
+}
