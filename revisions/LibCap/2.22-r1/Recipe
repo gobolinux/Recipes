@@ -1,0 +1,12 @@
+# Recipe for version 2.22 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jun 29 12:43:32 BRT 2013
+# Recipe (MakeRecipe) for LibCap by Andy Feldman <nereusren@gmail.com>, on Sat Jan 17 21:39:49 CST 2009
+compile_version=1.11.3
+url="http://ftp.de.debian.org/debian/pool/main/libc/libcap2/libcap2_2.22.orig.tar.gz"
+file_size=67432
+file_md5=b4896816b626bea445f0b3849bdd4077
+recipe_type=makefile
+dir="libcap-2.22"
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+)
