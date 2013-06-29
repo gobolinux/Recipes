@@ -1,0 +1,27 @@
+Produce a shared library rather than an executable and introduce an
+install target.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+diff --git a/Makefile b/Makefile
+index b1a8ed7..e8ed746 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,4 +1,15 @@
+-all: xmltest
++TARGET = libtinyxml.so
++
++all: ${TARGET} xmltest
++
++install:
++	install ${TARGET} ${DESTDIR}/lib
++	install *.h ${DESTDIR}/include
++
+ xmltest: xmltest.cpp tinyxml2.cpp tinyxml2.h
++
++${TARGET}: tinyxml2.o
++	${CXX} -shared -o $@ $<
++
+ clean:
+-	rm -f *.o xmltest
++	rm -f *.o xmltest ${TARGET}
