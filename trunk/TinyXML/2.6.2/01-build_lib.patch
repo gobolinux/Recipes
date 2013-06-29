@@ -40,3 +40,14 @@ Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
  
  #****************************************************************************
  # common rules
+--- tinyxml/tinyxml.h.orig	2013-06-29 17:29:20.000000000 -0300
++++ tinyxml/tinyxml.h	2013-06-29 17:29:32.000000000 -0300
+@@ -43,6 +43,8 @@ distribution.
+ #define DEBUG
+ #endif
+ 
++#define TIXML_USE_STL
++
+ #ifdef TIXML_USE_STL
+ 	#include <string>
+  	#include <iostream>
