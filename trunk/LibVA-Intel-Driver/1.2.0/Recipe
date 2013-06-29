@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for LibVA-Intel-Driver by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jun 29 13:13:34 BRT 2013
+# Recipe for version 1.2.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jun 29 13:13:34 BRT 2013
+compile_version=1.0.1
+url="http://www.freedesktop.org/software/vaapi/releases/libva-intel-driver/libva-intel-driver-1.2.0.tar.bz2"
+file_size=857789
+file_md5=afdd4c91ac552a14b4d0ce93b75c88bb
+recipe_type=configure
+
+install_variables=(
+    LIBVA_DRIVERS_PATH=$target/lib/dri
+)
