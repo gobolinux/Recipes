@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for TinyXML by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Apr 29 20:55:09 NZST 2012
+# Recipe for version 2.6.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Apr 29 20:55:09 NZST 2012
+compile_version=1.13.3
+url="$httpSourceforge/project/tinyxml/tinyxml/2.6.2/tinyxml_2_6_2.zip"
+file_size=290881
+file_md5=2a0aaf609c9e670ec9748cd01ed52dae
+dir='tinyxml'
+recipe_type=makefile
+install_variables=( DESTDIR=$target )

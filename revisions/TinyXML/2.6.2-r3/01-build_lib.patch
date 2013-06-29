@@ -1,0 +1,53 @@
+Produce a shared library rather than an executable and introduce an
+install target. Also, enable the STL extensions so that the library
+can be used by apps such as XBMC.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- tinyxml/Makefile.orig	2013-06-29 17:21:10.000000000 -0300
++++ tinyxml/Makefile	2013-06-29 17:21:20.000000000 -0300
+@@ -15,7 +15,7 @@ PROFILE        := NO
+ 
+ # TINYXML_USE_STL can be used to turn on STL support. NO, then STL
+ # will not be used. YES will include the STL files.
+-TINYXML_USE_STL := NO
++TINYXML_USE_STL := YES
+ 
+ #****************************************************************************
+ 
+@@ -81,10 +81,14 @@ CXXFLAGS := ${CXXFLAGS} ${DEFS}
+ # Targets of the build
+ #****************************************************************************
+ 
+-OUTPUT := xmltest
++OUTPUT := libtinyxml.so
+ 
+ all: ${OUTPUT}
+ 
++install:
++	install ${OUTPUT} ${DESTDIR}/lib
++	install *.h ${DESTDIR}/include
++
+ 
+ #****************************************************************************
+ # Source files
+@@ -102,7 +106,7 @@ OBJS := $(addsuffix .o,$(basename ${SRCS
+ #****************************************************************************
+ 
+ ${OUTPUT}: ${OBJS}
+-	${LD} -o $@ ${LDFLAGS} ${OBJS} ${LIBS} ${EXTRA_LIBS}
++	${LD} -shared -o $@ ${LDFLAGS} ${OBJS} ${LIBS} ${EXTRA_LIBS}
+ 
+ #****************************************************************************
+ # common rules
+--- tinyxml/tinyxml.h.orig	2013-06-29 17:29:20.000000000 -0300
++++ tinyxml/tinyxml.h	2013-06-29 17:29:32.000000000 -0300
+@@ -43,6 +43,8 @@ distribution.
+ #define DEBUG
+ #endif
+ 
++#define TIXML_USE_STL
++
+ #ifdef TIXML_USE_STL
+ 	#include <string>
+  	#include <iostream>
