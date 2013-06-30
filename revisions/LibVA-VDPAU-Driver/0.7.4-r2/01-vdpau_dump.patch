@@ -1,0 +1,17 @@
+VAEncH264VUIBufferType and VAEncH264SEIBufferType are dropped from the API, so remove
+references to them (given that the driver does not use these symbols).
+
+Patch obtained from the following URL:
+http://www.mail-archive.com/libva@lists.freedesktop.org/msg01597.html
+
+--- libva-vdpau-driver-0.7.4/src/vdpau_dump.c.orig	2013-06-29 13:23:46.000000000 -0300
++++ libva-vdpau-driver-0.7.4/src/vdpau_dump.c	2013-06-29 13:24:03.000000000 -0300
+@@ -59,8 +59,6 @@ const char *string_of_VABufferType(VABuf
+         _(VAEncSequenceParameterBufferType);
+         _(VAEncPictureParameterBufferType);
+         _(VAEncSliceParameterBufferType);
+-        _(VAEncH264VUIBufferType);
+-        _(VAEncH264SEIBufferType);
+ #endif
+ #if VA_CHECK_VERSION(0,31,1)
+         _(VAQMatrixBufferType);
