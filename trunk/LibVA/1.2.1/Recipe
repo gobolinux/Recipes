@@ -6,3 +6,11 @@ file_size=915262
 file_md5=ca95b343050cf8feaf98dfe08ce0191b
 dir='libva-1.2.1'
 recipe_type=configure
+
+configure_options=(
+    --with-drivers-path=$goboLibraries/lib/dri
+)
+
+install_variables=(
+    LIBVA_DRIVERS_PATH=$target/lib/dri
+)
