@@ -8,7 +8,7 @@ dir='libva-1.2.1'
 recipe_type=configure
 
 configure_options=(
-    --with-drivers-path=$goboLibraries/lib/dri
+    --with-drivers-path=$goboLibraries/dri
 )
 
 install_variables=(
