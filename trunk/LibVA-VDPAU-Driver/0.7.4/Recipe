@@ -5,3 +5,11 @@ url="http://www.freedesktop.org/software/vaapi/releases/libva-vdpau-driver/libva
 file_size=316729
 file_md5=5ec6d452d2dd307434ea3d32da49c3e5
 recipe_type=configure
+
+pre_build() {
+    autoreconf
+}
+
+environment=(
+    LIBVA_DRIVERS_PATH=$target/lib/dri
+)
