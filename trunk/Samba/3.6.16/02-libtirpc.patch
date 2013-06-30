@@ -1,0 +1,15 @@
+Lets Samba link to the libtirpc library for RPC support.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- samba-3.6.16/source3/Makefile.in.orig	2013-06-30 00:19:06.359356972 -0300
++++ samba-3.6.16/source3/Makefile.in	2013-06-30 00:20:05.488354385 -0300
+@@ -1783,7 +1783,7 @@ bin/smbd@EXEEXT@: $(BINARY_PREREQS) $(SM
+ 		$(KRB5LIBS) $(DYNEXP) $(PRINT_LIBS) $(AUTH_LIBS) \
+ 		$(ACL_LIBS) $(PASSDB_LIBS) $(LIBS) $(DNSSD_LIBS) $(AVAHI_LIBS) \
+ 		$(POPT_LIBS) @SMBD_LIBS@ $(LIBTALLOC_LIBS) $(LIBTEVENT_LIBS) $(LIBTDB_LIBS) \
+-		$(LIBWBCLIENT_LIBS) $(ZLIB_LIBS)
++		$(LIBWBCLIENT_LIBS) $(ZLIB_LIBS) $(LIBTIRPC_LIBS)
+ 
+ bin/nmbd@EXEEXT@: $(BINARY_PREREQS) $(NMBD_OBJ) @BUILD_POPT@ $(LIBTALLOC) $(LIBTEVENT) $(LIBTDB) $(LIBWBCLIENT)
+ 	@echo Linking $@

@@ -1,0 +1,18 @@
+Fixes a build error due to a missing definition in the Glibc headers.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- samba-3.6.16/source3/lib/util.c.orig	2013-06-29 23:59:26.438408591 -0300
++++ samba-3.6.16/source3/lib/util.c	2013-06-30 00:01:25.626403377 -0300
+@@ -62,6 +62,11 @@ extern unsigned int global_clobber_regio
+ #endif /* WITH_NISPLUS_HOME */
+ #endif /* HAVE_NETGROUP && WITH_AUTOMOUNT */
+ 
++/* Glibc-2.14 no longer ships rpcsvc/ypclnt.h, which defines YPERR_KEY */
++#ifndef YPERR_KEY
++#define YPERR_KEY 5
++#endif
++
+ static enum protocol_types Protocol = PROTOCOL_COREPLUS;
+ 
+ enum protocol_types get_Protocol(void)
