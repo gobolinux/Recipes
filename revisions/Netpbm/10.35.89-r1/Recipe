@@ -1,0 +1,36 @@
+# Recipe for version 10.35.89 by Hisham Muhammad <hisham@gobolinux.org>, on Wed Jul 3 19:08:12 BRT 2013
+# By Leandro Motta Barros, 02005-07-02
+
+compile_version=1.8.0
+url="$httpSourceforge/netpbm/netpbm-10.35.89.tgz"
+file_size=2551127
+file_md5=ff609d95f43cc8bf6ea9c3667a15b610
+recipe_type=makefile
+makefile='GNUmakefile'
+
+
+# 'Netpbm' uses a quite nonstandard installer, so I install things to
+# $target/pkg using 'install package' and move the files to the proper
+# places using 'pre_link'.
+
+install_variables=(
+    "pkgdir=$target/pkg/"
+)
+
+install_target=package
+
+pre_link()
+{
+    cd "$target"
+    mv pkg/include/* include
+    mv pkg/bin/* bin
+    for i in 1 2 3 4 5 6 7 8 9; do
+        if [ -d pkg/man/man$i ] && [ -d man/man$i ]; then
+            mv pkg/man/man$i/* man/man$i
+        fi
+    done
+    mv pkg/lib/* lib
+    mv pkg/link/* lib
+    rm -rf pkg
+    cd -
+}
