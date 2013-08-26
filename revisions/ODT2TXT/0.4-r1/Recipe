@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for ODT2TXT by Hisham Muhammad <hisham@gobolinux.org>, on Tue Jun 4 15:03:54 BRT 2013
+# Recipe for version 0.4 by Hisham Muhammad <hisham@gobolinux.org>, on Tue Jun 4 15:03:54 BRT 2013
+compile_version=1.9.0
+url="http://stosberg.net/odt2txt/odt2txt-0.4.tar.gz"
+file_size=23997
+file_md5=6fe3bd261ce2dde2810244bbe969bbc5
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
