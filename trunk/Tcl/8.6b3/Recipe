@@ -1,0 +1,21 @@
+# Recipe for version 8.6b3 by Zbigniew Baniewski <Zbigniew.Baniewski@gmail.com>, on Mon, 24 Sep 2012 19:19:43 +0200
+compile_version=1.13.3
+url="$httpSourceforge/tcl/tcl8.6b3-src.tar.gz"
+file_size=8078739
+file_md5=f54b9613b6656fe30e2caa0bf2ffb426
+dir='tcl8.6b3/unix'
+recipe_type=configure
+install_target='install install-private-headers'
+
+configure_options=(
+  --with-encoding="iso8859-2"
+  --enable-shared
+  --enable-threads
+  --enable-man-symlinks
+  --enable-man-compression=gzip
+)
+
+pre_link(){
+   $sudo_exec ln -nfs ${target}/bin/tclsh8.6 ${target}/bin/tclsh
+   $sudo_exec ln -nfs ${goboLibraries}/tk8.6 ${target}/lib/tk8.6
+}
