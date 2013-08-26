@@ -1,0 +1,14 @@
+# Recipe for version 2.6.4 by Zbigniew Baniewski <Zbigniew.Baniewski@gmail.com>, on nie, 23 wrz 2012, 12:05:42 CEST
+# Recipe (MakeRecipe) for Lbreakout2 by Laurent Pelecq (laurent.pelecq at soleil.org), on lun mai 8 22:16:50 CEST 2006
+compile_version=1.13.3
+url="$httpSourceforge/lgames/lbreakout2-2.6.4.tar.gz"
+file_size=3470380
+file_md5=4849af72225a304267eb71a9c100cd48
+recipe_type=configure
+
+configure_options=(
+	--with-docdir=doc
+)
+unmanaged_files=(
+  $goboVariable/lbreakout2.hscr
+)
