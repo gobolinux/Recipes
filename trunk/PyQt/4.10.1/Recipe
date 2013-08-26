@@ -1,0 +1,15 @@
+# Recipe for version 4.10.1 by Leandro Motta Barros <lmb@stackedboxes.org>, on Tue Jun 4 15:26:18 BRT 2013
+# on Sat Apr 16 12:56:40 CEST 2005
+
+compile_version=1.9.0
+url="http://downloads.sourceforge.net/project/pyqt/PyQt4/PyQt-4.10.1/PyQt-x11-gpl-4.10.1.tar.gz"
+file_size=11279330
+file_md5=e5973c4ec0b0469f329bc00209d2ad9c
+
+recipe_type=makefile
+pre_build() {
+    pythonversion=`python --version 2>&1 | awk {'print $2'} | cut -b1-3`
+    sitepackages="$target/lib/python${pythonversion}/site-packages"
+    echo yes | python configure.py -b $target/bin -v $target/Shared/sip -d $sitepackages -p $target/plugins 
+    chmod -R a+rw .
+}
