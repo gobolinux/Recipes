@@ -1,0 +1,12 @@
+# Recipe for version 3.1.1 by Zbigniew Baniewski <Zbigniew.Baniewski@gmail.com>, on sob, 22 wrz 2012, 00:18:26 CEST
+# Recipe (MakeRecipe) for Audacious-Itself by Guilherme B. Bedin, on Wed Jan 24 13:54:19 BRST 2007
+compile_version=1.13.3
+url="http://distfiles.atheme.org/audacious-3.1.1.tar.gz"
+file_size=1059836
+file_md5=60e5452e8fdbe749529d8add07b0dbe8
+recipe_type=configure
+part_of=Audacious
+
+configure_options=(
+    --disable-rpath
+)
