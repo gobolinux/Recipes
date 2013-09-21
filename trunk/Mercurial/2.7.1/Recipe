@@ -1,0 +1,12 @@
+# Recipe for version 2.7.1 by Hisham Muhammad <hisham@gobolinux.org>, on Sat Sep 21 12:00:33 BRT 2.7.13
+# Recipe for mercurial by Frederico Recsky frederico at gmail.com
+compile_version=1.13.0
+url="http://www.selenic.com/mercurial/release/mercurial-2.7.1.tar.gz"
+file_size=3756146
+file_md5=3313de3667902ae4dc82f29f5280294d
+build_script="setup.py"
+recipe_type=python
+
+pre_link() {
+  install contrib/hgk $target/bin/
+}
