@@ -1,0 +1,12 @@
+# Recipe for version 2.0.0 by Hisham Muhammad <hisham@gobolinux.org>, on Thu Oct 24 18:51:48 BRST 2013
+# Recipe (MakeRecipe) for Fish by Isaac Dupree <id@isaac.cedarswampstudios.org>, on Sat Dec 29 19:26:50 EST 2007
+compile_version=1.9.0
+url="http://fishshell.com/files/2.0.0/fish-2.0.0.tar.gz"
+dir="fish"
+file_size=1540652
+file_md5=fe5907e6af61607d4128ce891a1f6501
+recipe_type=configure
+pre_build() {
+   autoheader
+   autoconf
+}
