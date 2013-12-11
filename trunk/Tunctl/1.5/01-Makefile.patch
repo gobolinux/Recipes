@@ -1,0 +1,24 @@
+--- tunctl-1.5/Makefile.orig	2013-12-11 11:43:46.000000000 -0200
++++ tunctl-1.5/Makefile	2013-12-11 11:43:55.000000000 -0200
+@@ -11,7 +11,7 @@ CFLAGS = -g -Wall
+ BIN_DIR ?= /usr/sbin
+ MAN_DIR ?= /usr/share/man/man$(MANS)
+ 
+-all : $(BIN) $(MAN)
++all : $(BIN)
+ 
+ $(BIN) : $(BIN).c
+ 	$(CC) $(CFLAGS) -o $(BIN) $(BIN).c
+@@ -22,11 +22,9 @@ $(MAN) : $(PACKAGE).sgml
+ clean : 
+ 	rm -f $(BIN) $(OBJS) $(MAN) *~ manpage.*
+ 
+-install : $(BIN) $(MAN)
++install : $(BIN)
+ 	install -d $(DESTDIR)$(BIN_DIR)
+ 	install $(BIN) $(DESTDIR)$(BIN_DIR)
+-	install -d $(DESTDIR)$(MAN_DIR)
+-	install $(MAN) $(DESTDIR)$(MAN_DIR)
+ 
+ .PHONY: dist
+ dist: distcheck
