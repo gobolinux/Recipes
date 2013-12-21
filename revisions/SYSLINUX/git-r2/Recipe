@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for SYSLINUX by Lucas C. Villa Real, on Sun Jan 6 01:47:18 PST 2008
+# Recipe for version git by Lucas C. Villa Real, on Sun Jan 6 01:47:18 PST 2008
+compile_version=1.10.1
+git="http://www.kernel.org/pub/scm/boot/syslinux/syslinux.git"
+recipe_type=makefile
+
+make_variables=(
+    BINDIR=$target/bin
+    SBINDIR=$target/sbin
+    AUXDIR=$target/lib/syslinux
+    DIAGDIR=$target/lib/syslinux
+    DATADIR=$target/share
+    LIBDIR=$target/lib
+    MANDIR=$target/man
+    INCDIR=$target/include
+)
