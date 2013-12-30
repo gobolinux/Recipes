@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for MiniUPnPC by Hisham Muhammad <hisham@gobolinux.org>, on Mon Dec 30 11:59:11 BRST 2013
+# Recipe for version 1.8.20131209 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Dec 30 11:59:11 BRST 2013
+compile_version=1.9.0
+url="http://miniupnp.tuxfamily.org/files/download.php?file=miniupnpc-1.8.20131209.tar.gz"
+file_size=73900
+file_md5=e288531632d5a0e9d261bd375e47fee4
+dir='miniupnpc-1.8.20131209'
+recipe_type=cmake
