@@ -6,3 +6,8 @@ file_size=73900
 file_md5=e288531632d5a0e9d261bd375e47fee4
 dir='miniupnpc-1.8.20131209'
 recipe_type=cmake
+pre_install() {
+   mkdir -pv $target/include/miniupnpc
+   # This uses .. because cmake creates a _build directory
+   cp -v ../*.h $target/include/miniupnpc
+}
