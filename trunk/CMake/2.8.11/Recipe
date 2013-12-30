@@ -8,3 +8,10 @@ recipe_type=configure
 configure_options=(
    --prefix=$target
 )
+
+pre_install() {
+    if [ -d "/System/Index" ]
+    then
+        GrepReplace "$goboIndex" "$target" cmake_install.cmake
+    fi
+}
