@@ -1,0 +1,17 @@
+# Recipe for version 2.8.11 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Jul 10 15:12:34 BRT 2013
+compile_version=1.7.1
+url="http://www.cmake.org/files/v2.8/cmake-2.8.11.tar.gz"
+file_size=5883643
+file_md5=be6008f2299613d23fe82ab53ef7472e
+recipe_type=configure
+
+configure_options=(
+   --prefix=$target
+)
+
+pre_install() {
+    if [ -d "/System/Index" ]
+    then
+        GrepReplace "$goboIndex" "$target" cmake_install.cmake
+    fi
+}
