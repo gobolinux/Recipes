@@ -1,0 +1,16 @@
+--- net-tools-1.60/lib/fddi.c.orig	2007-02-25 13:26:12.000000000 -0300
++++ net-tools-1.60/lib/fddi.c	2007-02-25 13:27:11.000000000 -0300
+@@ -17,11 +17,11 @@
+ #include "config.h"
+ 
+ #include <features.h>
+-
+-#if HAVE_HWFDDI
+ #include <sys/types.h>
+ #include <sys/socket.h>
+ #include <net/if_arp.h>
++#include <linux/netdevice.h>
++#if HAVE_HWFDDI
+ #ifndef ARPHRD_FDDI
+ #error "No FDDI Support in your current Kernelsource Tree."
+ #error "Disable HW Type FDDI"
