@@ -19,4 +19,8 @@ pre_build() {
    GrepReplace "HAVE_AFDECnet=1" "HAVE_AFDECnet=0" config.make
    GrepReplace "HAVE_IP_TOOLS 1" "HAVE_IP_TOOLS 0" config.h
    GrepReplace "HAVE_IP_TOOLS=1" "HAVE_IP_TOOLS=0" config.make
+   GrepReplace "HAVE_HWSTRIP 1" "HAVE_HWSTRIP 0" config.h
+   GrepReplace "HAVE_HWSTRIP=1" "HAVE_HWSTRIP=0" config.make
+   GrepReplace "HAVE_HWTR 1" "HAVE_HWTR 0" config.h
+   GrepReplace "HAVE_HWTR=1" "HAVE_HWTR=0" config.make
 }
