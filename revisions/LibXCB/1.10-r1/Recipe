@@ -1,0 +1,13 @@
+# Recipe for version 1.10 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 2 14:42:14 GMT 2014
+# Recipe (MakeRecipe) for LibXCB by Lucas C. Villa Real, on Mon Mar 5 16:06:23 BRT 2007
+compile_version=1.8.2
+url="http://xorg.freedesktop.org/archive/individual/xcb/libxcb-1.10.tar.bz2"
+file_size=475211
+file_md5=074c335cc4453467eeb234e3dadda700
+recipe_type=configure
+part_of=Xorg-Lib
+
+# Stop xcb_xlib assertions.
+build_variables=(
+ "CPPFLAGS=-DNDEBUG"
+)
