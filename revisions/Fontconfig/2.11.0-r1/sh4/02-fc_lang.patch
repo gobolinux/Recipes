@@ -1,0 +1,15 @@
+--- /dev/null	2006-05-14 17:33:35.000000000 -0300
++++ fontconfig-2.3.95/fc-lang/Makefile-hostcc	2006-05-15 21:44:58.000000000 -0300
+@@ -0,0 +1,12 @@
++# This file overwrites original Makefile for cross-compiling fontconfig
++# Taken from http://mail.gnome.org/archives/gtk-list/2005-February/msg00065.html
++
++all:
++	gcc   -I.. -I../src fc-lang.c -o fc-lang
++	./fc-lang *.orth < fclang.tmpl.h > fclang.h || exit 0
++
++clean:
++	rm -f fc-lang fclang.h
++
++install:
++
