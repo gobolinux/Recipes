@@ -1,0 +1,14 @@
+diff -urp xf86-video-i740-1.3.4.orig/src/i740_driver.c xf86-video-i740-1.3.4/src/i740_driver.c
+--- xf86-video-i740-1.3.4.orig/src/i740_driver.c	2014-01-05 17:21:33.000000000 -0200
++++ xf86-video-i740-1.3.4/src/i740_driver.c	2014-01-05 17:21:55.000000000 -0200
+@@ -63,10 +63,6 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ 
+ #include "compiler.h"
+ 
+-/* Drivers using the mi implementation of backing store need: */
+-
+-#include "mibstore.h"
+-
+ /* All drivers using the vgahw module need this */
+ /* This driver needs to be modified to not use vgaHW for multihead operation */
+ #include "vgaHW.h"
