@@ -1,0 +1,7 @@
+[Name] Constype
+[Summary] Constype prints on the standard output the Sun code for the type of display that the specified device is.
+[Description] Constype prints on the standard output the Sun code for the type of display that the specified device is.
+It was originally written for SunOS, but has been ported to other SPARC OS'es and to Solaris on both SPARC & x86.
+It has lived for years in the xc/programs/Xserver/hw/sun directory of the X Window System, and is now split out by itself as part of the X.Org Modularization Project for X11R7.0.
+[License] MIT
+[Homepage] http://cgit.freedesktop.org/xorg/app/constype/
