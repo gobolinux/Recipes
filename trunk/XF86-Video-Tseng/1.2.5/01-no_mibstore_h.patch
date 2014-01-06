@@ -1,0 +1,12 @@
+--- xf86-video-tseng-1.2.5/src/tseng_driver.c.orig	2014-01-05 17:50:57.000000000 -0200
++++ xf86-video-tseng-1.2.5/src/tseng_driver.c	2014-01-05 17:51:03.000000000 -0200
+@@ -39,9 +39,6 @@
+ /* All drivers initialising the SW cursor need this */
+ #include "mipointer.h"
+ 
+-/* All drivers implementing backing store need this */
+-#include "mibstore.h"
+-
+ #include "fb.h"
+ 
+ #if GET_ABI_MAJOR(ABI_VIDEODRV_VERSION) < 6
