@@ -1,0 +1,37 @@
+Submitted By:            Armin K. <krejzi at email dot com>
+Date:                    2013-03-01
+Initial Package Version: 0.2.2
+Upstream Status:         Not submitted
+Origin:                  Upstream and LFS
+Description:             This patch contains removes nis references that
+                         have been removed from glibc.
+
+--- a/src/Makefile.am	2013-02-13 16:13:59.000000000 +0100
++++ b/src/Makefile.am	2013-03-01 13:56:39.911072502 +0100
+@@ -51,7 +51,7 @@
+         rpc_callmsg.c rpc_generic.c rpc_soc.c rpcb_clnt.c rpcb_prot.c \
+         rpcb_st_xdr.c svc.c svc_auth.c svc_dg.c svc_auth_unix.c svc_auth_none.c \
+         svc_generic.c svc_raw.c svc_run.c svc_simple.c svc_vc.c getpeereid.c \
+-        auth_time.c auth_des.c authdes_prot.c
++        auth_time.c
+ 
+ ## XDR
+ libtirpc_la_SOURCES += xdr.c xdr_rec.c xdr_array.c xdr_float.c xdr_mem.c xdr_reference.c xdr_stdio.c
+--- a/src/rpc_soc.c	2013-02-13 16:13:59.000000000 +0100
++++ b/src/rpc_soc.c	2013-03-01 13:56:11.700582054 +0100
+@@ -524,6 +524,7 @@
+  * Create the client des authentication object. Obsoleted by
+  * authdes_seccreate().
+  */
++#ifdef NEVER
+ AUTH *
+ authdes_create(servername, window, syncaddr, ckey)
+ 	char *servername;		/* network name of server */
+@@ -551,6 +552,7 @@
+ 	dummy = authdes_seccreate(servername, window, NULL, ckey);
+ 	return (dummy);
+ }
++#endif
+ 
+ /*
+  * Create a client handle for a unix connection. Obsoleted by clnt_vc_create()
