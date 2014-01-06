@@ -1,0 +1,20 @@
+diff -Nur xorg-cf-files-X11R7.1-1.0.2/host.def xorg-cf-files-X11R7.1-1.0.2-fabio.m/host.def
+--- xorg-cf-files-X11R7.1-1.0.2/host.def	1969-12-31 21:00:00.000000000 -0300
++++ xorg-cf-files-X11R7.1-1.0.2-fabio.m/host.def	2006-09-04 04:30:08.000000000 -0300
+@@ -0,0 +1,16 @@
++#define EtcX11Directory @%Compile_goboSettings%@/X11
++#define FontconfigFontsConfDir @%Compile_goboSettings%@/fonts
++#define Build75DpiFonts 		NO
++#define Build100DpiFonts 		NO
++#define BuildSpeedoFonts 		NO
++#define BuildType1Fonts 		NO
++#define BuildCIDFonts 			NO
++#define BuildTrueTypeFonts 		NO
++#define BuildCyrillicFonts 		NO
++#define HasFontconfig			YES
++#define HasFreetype2			YES
++#define HasExpat			YES
++#define HasLibpng			YES
++#define HasZlib				YES
++#define NothingOutsideProjectRoot	YES
++#define InstallXserverSetUID	YES
