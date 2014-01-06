@@ -1,0 +1,8 @@
+#!/bin/sh
+
+source ScriptFunctions
+
+case "$1" in
+	[sS]tart) portmap ;;
+	[sS]top)  Quiet killall -9 portmap || true ;;
+esac # come on..
