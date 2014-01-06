@@ -1,0 +1,21 @@
+# Recipe for version 2.5.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 2 15:28:58 GMT 2014
+# by Giusepe Casagrande, Jeremy Vernon
+url="http://downloads.sourceforge.net/project/freetype/freetype2/2.5.2/freetype-2.5.2.tar.bz2"
+file_size=1676373
+file_md5=10e8f4d6a019b124088d18bc26123a25
+compile_version=1.8.5
+recipe_type=configure
+
+# XFree86 also has a FreeType; We want this one to be the dominant FreeType
+symlink_options=(
+   "--conflict=overwrite"
+)
+
+make_variables=(
+	C_INCLUDE_PATH=
+)
+
+pre_link() {
+	cd $target/include
+	ln -s freetype2 freetype
+}
