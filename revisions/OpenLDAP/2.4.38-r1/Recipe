@@ -1,0 +1,26 @@
+# Recipe for version 2.4.38 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jan 4 15:22:38 GMT 2014
+# Recipe for OpenLdap by Maglan C. Diemer, maglan@univates.br
+compile_version=1.8.4
+url="ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/openldap-2.4.38.tgz"
+file_size=5506085
+file_md5=39831848c731bcaef235a04e0d14412f
+recipe_type=configure
+configure_options=(
+   --localstatedir="${goboVariable}/lib/openldap"
+   --with-cyrus-sasl=no
+   --with-tls=no
+)
+with_cyrus_sasl="--with-cyrus-sasl=yes"
+with_openssl="--with-tls=openssl"
+
+make_variables=(
+   LIBTOOL="${goboExecutables}/libtool --tag=CC"
+)
+
+pre_install() {
+   mkdir -p "${goboVariable}/lib/openldap"
+}
+
+unmanaged_files=(
+    "${goboVariable}/lib/openldap"
+)
