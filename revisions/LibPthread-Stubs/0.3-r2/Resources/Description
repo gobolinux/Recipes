@@ -1,0 +1,5 @@
+[Name] LibPthread-Stubs
+[Summary] Pthread functions stubs for platforms missing them
+[Description] libpthread-stubs provides stub functions for pthreads as weak aliases for platforms on which libc does not provide these stubs. Linking to both libc and libpthread-stubs will always provide a full set of pthread stubs, allowing programs and libraries to portably use pthreads when linked to pthreads and improve single-threaded performance when not linked to pthreads.
+[License] MIT
+[Homepage] http://xorg.freedesktop.org
