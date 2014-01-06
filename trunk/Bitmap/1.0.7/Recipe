@@ -1,0 +1,11 @@
+# Recipe for version 1.0.7 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 2 14:53:29 GMT 2014
+# Recipe (MakeRecipe) for Bitmap by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Wed Jan 11 12:05:58 BRST 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/app/bitmap-1.0.7.tar.bz2"
+file_size=169437
+file_md5=9c18cc1048146e29d68bfa9d0348b11d
+recipe_type=configure
+part_of=Xorg-App
+install_variables=(
+   appdefaultdir=${target}/Shared/X11/app-defaults
+)
