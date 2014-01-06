@@ -1,0 +1,14 @@
+# Recipe for version 9 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 2 17:15:42 GMT 2014
+# by Carlo Calica
+# 2004.01.06 16:54
+
+url="http://www.ijg.org/files/jpegsrc.v9.tar.gz"
+file_size=987900
+file_md5=b397211ddfd506b92cd5e02a22ac924d
+dir=jpeg-9
+compile_version=1.8.0
+recipe_type=configure
+
+configure_options=(
+   "--enable-shared"
+)
