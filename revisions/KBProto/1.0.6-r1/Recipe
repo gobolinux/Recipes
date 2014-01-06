@@ -1,0 +1,11 @@
+# Recipe for version 1.0.6 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 2 14:51:51 GMT 2014
+# Recipe (MakeRecipe) for KBProto by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 20:14:33 BRT 2005
+compile_version=1.8.2
+url="http://xorg.freedesktop.org/archive/individual/proto/kbproto-1.0.6.tar.bz2"
+file_size=256988
+file_md5=677ea8523eec6caca86121ad2dca0b71
+part_of=Xorg-Proto
+recipe_type=configure
+configure_options=(
+	--without-fop
+)
