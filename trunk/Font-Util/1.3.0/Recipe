@@ -11,3 +11,7 @@ configure_options=(
     --with-mapdir="$target/share/fonts/util"
     --with-fontrootdir="$target/share/fonts"
 )
+
+install_variables=(
+    mapfilesdir=$target/share/fonts/util
+)
