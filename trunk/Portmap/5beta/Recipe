@@ -7,3 +7,7 @@ file_md5=781e16ed4487c4caa082c6fef09ead4f
 recipe_type=makefile
 makefile='Makefile'
 make_variables=( PREFIX=$target )
+
+pre_install() {
+    mkdir -p $target/man/man8
+}
