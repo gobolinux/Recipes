@@ -1,0 +1,70 @@
+Section "ServerLayout"
+	Identifier     "Xorg Configured"
+	Screen         0 "Screen0"  0 0
+	InputDevice    "Mouse0" "CorePointer"
+	InputDevice    "Keyboard0" "CoreKeyboard"
+EndSection
+
+Section "Files"
+	RgbPath      "/System/Links/Shared/X11/rgb"
+	ModulePath   "/System/Links/Libraries/xorg/modules"
+	FontPath     "/Files/Fonts/TrueType"
+	FontPath     "/Files/Fonts/100dpi"
+	FontPath     "/Files/Fonts/75dpi"
+	FontPath     "/Files/Fonts/Ghostscript"
+	FontPath     "/Files/Fonts/Misc"
+EndSection
+
+Section "Module"
+	Load  "record"
+	Load  "extmod"
+	Load  "dbe"
+EndSection
+
+Section "Extensions"
+    Option "Composite" "Enable"
+    Option "RENDER"    "Enable"
+EndSection
+
+Section "InputDevice"
+	Identifier  "Keyboard0"
+	Driver      "kbd"
+EndSection
+
+Section "InputDevice"
+	Identifier  "Mouse0"
+	Driver      "mouse"
+	Option      "ZAxisMapping" "4 5"
+	Option      "Protocol" "PS/2"
+	Option      "Device" "/dev/psaux"
+EndSection
+
+Section "Monitor"
+	Identifier   "Monitor0"
+	VendorName   "Monitor Vendor"
+	ModelName    "Monitor Model"
+    HorizSync    30-50
+    VertRefresh  60
+EndSection
+
+Section "Device"
+	Identifier  "Card0"
+	Driver      "fbdev"
+EndSection
+
+Section "Screen"
+	Identifier "Screen0"
+	Device     "Card0"
+	Monitor    "Monitor0"
+	DefaultDepth 16
+	
+	SubSection "Display"
+		Depth     16
+		Modes     "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth     24
+		Modes     "800x600" "640x480"
+	EndSubSection
+EndSection
+
