@@ -1,0 +1,12 @@
+--- xf86-video-apm-1.2.5/src/apm.h.orig	2014-01-05 17:29:39.000000000 -0200
++++ xf86-video-apm-1.2.5/src/apm.h	2014-01-05 17:29:45.000000000 -0200
+@@ -33,9 +33,6 @@
+ /* All drivers initialising the SW cursor need this */
+ #include "mipointer.h"
+ 
+-/* All drivers implementing backing store need this */
+-#include "mibstore.h"
+-
+ /* I2C support */
+ #include "xf86i2c.h"
+ 
