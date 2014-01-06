@@ -1,0 +1,44 @@
+# Recipe for version 4.1.5.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jan 6 01:56:30 GMT 2014
+compile_version=1.8.2
+needs_safe_linking=yes
+url="http://cdn.debian.net/debian/pool/main/s/shadow/shadow_4.1.5.1.orig.tar.gz"
+file_size=3508077
+file_md5=ae66de9953f840fb3a97f6148bc39a30
+recipe_type=configure
+dir='shadow-4.1.5.1'
+configure_options=(
+   "--enable-shared"
+   "--without-selinux"
+)
+
+install_variables=(
+   bindir=$target/bin
+   sbindir=$target/sbin
+)
+
+pre_patch(){
+   sed -i -e 's@^HOME=.*$@HOME=/Users@' \
+          -e 's@^SHELL=.*$@SHELL=/bin/zsh@' \
+	  -e 's@yes@no@' etc/useradd
+}
+
+using_cracklib_pre_link(){
+   sed -i 's@DICTPATH.*@DICTPATH\t${goboLibraries}/cracklib/pw_dict@' \
+      ${target}/Resources/Defaults/Settings/login.defs
+}
+
+using_pam_pre_link() {
+   for FUNCTION in LASTLOG_ENAB MAIL_CHECK_ENAB \
+                   PORTTIME_CHECKS_ENAB CONSOLE \
+                   MOTD_FILE NOLOGINS_FILE PASS_MIN_LEN \
+                   SU_WHEEL_ONLY MD5_CRYPT_ENAB \
+                   CONSOLE_GROUPS ENVIRON_FILE \
+                   ULIMIT ENV_TZ ENV_HZ ENV_SUPATH \
+                   ENV_PATH QMAIL_DIR MAIL_DIR MAIL_FILE \
+                   CHFN_AUTH FAILLOG_ENAB QUOTAS_ENAB FTMP_FILE \
+                   OBSCURE_CHECKS_ENAB CRACKLIB_DICTPATH \
+                   PASS_CHANGE_TRIES PASS_ALWAYS_WARN ISSUE_FILE
+   do
+      sed -i "s/^$FUNCTION/# &/" ${target}/Resources/Defaults/Settings/login.defs
+   done
+}
