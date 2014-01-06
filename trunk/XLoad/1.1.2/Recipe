@@ -1,0 +1,12 @@
+# Recipe for version 1.1.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 2 14:56:33 GMT 2014
+# Recipe (MakeRecipe) for XLoad by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 18:58:34 BRT 2005
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/app/xload-1.1.2.tar.bz2"
+file_size=136745
+file_md5=b9e9808db18acecf4cdec134d86b157c
+recipe_type=configure
+part_of=Xorg-App
+
+make_variables=(
+    "appdefaultdir=$target/Shared/X11/app-defaults"
+)
