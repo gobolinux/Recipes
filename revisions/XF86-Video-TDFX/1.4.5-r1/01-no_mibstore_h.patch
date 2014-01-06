@@ -1,0 +1,13 @@
+--- xf86-video-tdfx-1.4.5/src/tdfx_driver.c.orig	2014-01-05 17:47:40.000000000 -0200
++++ xf86-video-tdfx-1.4.5/src/tdfx_driver.c	2014-01-05 17:47:47.000000000 -0200
+@@ -62,10 +62,6 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ 
+ #include "compiler.h"
+ 
+-/* Drivers using the mi implementation of backing store need: */
+-
+-#include "mibstore.h"
+-
+ /* All drivers using the vgahw module need this */
+ /* This driver needs to be modified to not use vgaHW for multihead operation */
+ #include "vgaHW.h"
