@@ -1,0 +1,64 @@
+# $Id: MyConfig.pm,v 1.5 2005/02/05 19:08:13 jmates Exp $
+#
+# Sample MyConfig.pm configuration to install CPAN modules to a custom
+# location, such as under a home directory.
+#
+# 1. Change all occurences of HOMEDIRFIX to your home directory,
+#    e.g. /home/user
+#
+# 2. Review 'makepl_arg' below. For more information on the arguments,
+#    read the following documentation using the perldoc(1) command:
+#
+#    perldoc ExtUtils::MakeMaker
+#
+# 3. Check the paths to various commands (e.g. wget), proxy settings for
+#    your environment, the urllist, and the shell.
+#
+# 4. Run 'perl -c MyConfig.pm' to ensure the formatting of this file is
+#    correct following the edits.
+
+$CPAN::Config = {
+  'build_cache' => q[5],
+  'build_dir' => q[HOMEDIRFIX/.cpan/build],
+  'cache_metadata' => q[1],
+  'cpan_home' => q[HOMEDIRFIX/.cpan],
+  'dontload_hash' => {  },
+  'ftp' => q[/usr/bin/ftp],
+  'ftp_proxy' => q[],
+  'getcwd' => q[cwd],
+  'gzip' => q[/usr/bin/gzip],
+  'histfile' => q[HOMEDIRFIX/.cpan/histfile],
+  'histsize' => q[100],
+  'http_proxy' => q[],
+  'inactivity_timeout' => q[0],
+  'index_expire' => q[1],
+  'inhibit_startup_message' => q[0],
+  'keep_source_where' => q[HOMEDIRFIX/.cpan/sources],
+  'lynx' => q[ ],
+  'make' => q[/usr/bin/make],
+  'make_arg' => q[],
+  'makepl_arg' => q[PREFIX=~/ SITELIBEXP=~/lib/perl5 LIB=~/lib/perl5 INSTALLMAN1DIR=~/share/man/man1 INSTALLMAN3DIR=~/share/man/man3 INSTALLSITEMAN1DIR=~/share/man/man1 INSTALLSITEMAN3DIR=~/share/man/man3],
+  'ncftp' => q[ ],
+  'ncftpget' => q[ ],
+  'no_proxy' => q[],
+  'pager' => q[less],
+  'prerequisites_policy' => q[ask],
+  'proxy_user' => q[],
+  'scan_cache' => q[atstart],
+  'shell' => q[/bin/sh],
+  'tar' => q[/usr/bin/tar],
+  'term_is_latin' => q[0],
+  'unzip' => q[/usr/bin/unzip],
+  'urllist' => [q[http://cpan.llarian.net/], q[ftp://cpan.nas.nasa.gov/pub/perl/CPAN/], q[ftp://cpan.pair.com/pub/CPAN/], q[ftp://ftp.duke.edu/pub/perl/], q[ftp://ftp.cs.colorado.edu/pub/perl/CPAN/], q[ftp://ftp.sunsite.utk.edu/pub/CPAN/], q[http://www.perl.com/CPAN/]],
+  'wait_list' => [q[wait://ls6.informatik.uni-dortmund.de:1404]],
+  'wget' => q[/usr/bin/wget],
+  # Added because CPAN in Perl 5.10.0 complains otherwise:
+  'auto_commit' => q[yes],
+  'mbuildpl_arg' => q[--install-base HOMEDIRFIX],
+  'mbuild_arg' => q[],
+  'mbuild_install_build_command' => q[./Build],
+  'mbuild_install_arg' => q[--uninst 1],
+  'make_install_arg' => q[UNINST=1],
+};
+1;
+__END__
