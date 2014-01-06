@@ -1,0 +1,8 @@
+# Recipe for version 2.3.3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 2 15:02:41 GMT 2014
+# Recipe (MakeRecipe) for XF86-Video-Vesa by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 19:38:58 BRT 2005
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/driver/xf86-video-vesa-2.3.3.tar.bz2"
+file_size=300571
+file_md5=3690a5356ed121b1a7dfb59a6dcf4bf9
+recipe_type=configure
+part_of=Xorg-Driver
