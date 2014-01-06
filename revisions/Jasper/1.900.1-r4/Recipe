@@ -1,0 +1,10 @@
+# Recipe for version 1.900.1 by Michael Homer, on Mon Oct 15 13:21:19 NZDT 2007
+compile_version=1.9.0
+url="http://www.ece.uvic.ca/~mdadams/jasper/software/jasper-1.900.1.zip"
+file_size=1415752
+file_md5=a342b2b4495b3e1394e161eb5d85d754
+dir='jasper-1.900.1'
+recipe_type=configure
+configure_options=(
+ '--enable-shared'
+)
