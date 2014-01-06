@@ -1,0 +1,10 @@
+# Recipe for version 1.28 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jan 4 15:21:20 GMT 2014
+# by Maglan C. Diemer
+compile_version=1.8.2
+url="$ftpGnu/libidn/libidn-1.28.tar.gz"
+file_size=3476317
+file_md5=43a6f14b16559e10a492acc65c4b0acc
+recipe_type=configure
+configure_options=(
+   "--mandir=${target}/man"
+)
