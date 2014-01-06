@@ -1,0 +1,36 @@
+# Recipe for version 7.34.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jan 4 15:20:23 GMT 2014
+compile_version=1.11.3
+url="http://curl.haxx.se/download/curl-7.34.0.tar.bz2"
+file_size=2770438
+file_md5=88491df2bb32e9146e776ae6ac2f8327
+recipe_type=configure
+
+configure_options=(
+   --disable-debug
+   --disable-verbose
+   --enable-http
+   --enable-ftp
+   --enable-file
+   --enable-proxy
+   --enable-dict
+   --enable-telnet
+   --enable-tftp
+   --enable-manual
+   --enable-ipv6
+   --enable-thread
+   --enable-crypto-auth
+   --enable-cookies
+   --without-gnutls
+   --without-ssl
+   --without-nss
+   --enable-nonblocking
+   --enable-largefile
+   --without-krb4
+)
+
+with_gnutls="--with-gnutls"
+with_openssl="--with-ssl"
+with_nss="--with-nss"
+with_kerberos="--with-gssapi"
+with_libssh2="--with-libssh2"
+with_openldap=(--enable-ldap --enable-ldaps)
