@@ -1,0 +1,26 @@
+# Recipe for version 2.36.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 2 16:50:05 GMT 2014
+# Recipe (MakeRecipe) for GLib by  Ozgur Ulukir, on Mon Dec 20 01:48:37 EET 2004
+compile_version=1.8.2
+url="http://ftp.gnome.org/pub/gnome/sources/glib/2.36/glib-2.36.4.tar.xz"
+file_size=6570720
+file_md5=2f4b15f7ef43d8702d067ab987bf7aba
+recipe_type=configure
+configure_options=(
+   "--with-gio-module-dir=${goboLibraries}/gio/modules"
+   "--disable-fam"
+)
+with_fam="--enable-fam"
+
+install_variables=(
+   GIO_MODULE_DIR="${target}/lib/gio/modules"
+)
+
+using_fam_pre_install() {
+   [ -e gio/fam/libgiofam.la ] && sed -i "s,libdir='${goboLibraries},libdir='${target}/lib," gio/fam/libgiofam.la
+}
+
+pre_link() {
+    Quiet pushd $target/lib/pkgconfig
+    for i in *; do ln -s $i `echo $i | sed 's/-2.0//g'`; done
+    Quiet popd
+}

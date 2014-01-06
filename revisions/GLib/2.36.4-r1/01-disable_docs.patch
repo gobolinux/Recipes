@@ -1,0 +1,11 @@
+--- glib-2.36.4/Makefile.in.orig	2014-01-04 02:34:30.000000000 -0200
++++ glib-2.36.4/Makefile.in	2014-01-04 02:34:47.000000000 -0200
+@@ -686,7 +686,7 @@ EXTRA_DIST = ChangeLog.pre-2-20 ChangeLo
+ 	gio-unix-2.0.pc.in gio-windows-2.0.pc.in check-abis.sh
+ TEST_PROGS = 
+ ACLOCAL_AMFLAGS = -I m4macros ${ACLOCAL_FLAGS}
+-SUBDIRS = . m4macros glib gmodule gthread gobject gio po docs \
++SUBDIRS = . m4macros glib gmodule gthread gobject gio po \
+ 	$(am__append_1)
+ DIST_SUBDIRS = $(SUBDIRS) build $(am__append_2)
+ bin_SCRIPTS = glib-gettextize
