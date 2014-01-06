@@ -1,0 +1,11 @@
+# Recipe for version 1.14.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 2 14:52:24 GMT 2014
+# Recipe (MakeRecipe) for RecordProto by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 20:14:54 BRT 2005
+compile_version=1.7.1
+url="http://xorg.freedesktop.org/archive/individual/proto/recordproto-1.14.2.tar.bz2"
+file_size=123033
+file_md5=1b4e5dede5ea51906f1530ca1e21d216
+part_of=Xorg-Proto
+recipe_type=configure
+configure_options=(
+	--without-fop
+)
