@@ -1,0 +1,55 @@
+#!/bin/bash
+
+source GoboPath
+
+cmd="$1"
+[ "$cmd" ] || cmd=Start
+
+case "$cmd" in
+
+[Ss]tart)
+
+   mountpoint -q "$goboStatus" || mount -t proc none "$goboStatus"
+   mountpoint -q "$goboDevices" || mount -t devtmpfs none "$goboDevices"
+   mkdir -p "$goboDevices/pts"
+   mountpoint -q "$goboDevices/pts" || mount -t devpts devpts "$goboDevices/pts"
+
+   # Udev handles uevents itself, so we don't need to have
+   # the kernel call out to any binary in response to them
+   echo "" > "$goboStatus/sys/kernel/hotplug"
+      
+   # Start the udev daemon to continually watch for, and act on,
+   # uevents
+   /lib/udev/udevd --daemon
+      
+   # Now traverse /sys in order to "coldplug" devices that have
+   # already been discovered
+   /sbin/udevadm trigger --action=add    --type=subsystems
+   /sbin/udevadm trigger --action=add    --type=devices
+   /sbin/udevadm trigger --action=change --type=devices
+
+   # Wait for events to finish
+   udevadm settle --timeout=10
+      
+   # If any LVM based partitions are on the system, ensure they
+   # are activated so they can be used.
+   [ -x /sbin/vgchange ] && /sbin/vgchange -a y >/dev/null
+
+   echo "UDEV task: finished."
+   ;;
+   
+[Ss]top)
+
+   killall udevd
+
+   ;;
+   
+[Rr]estart)
+
+   $0 stop
+   sleep 1
+   $0 start
+
+   ;;
+
+esac
