@@ -6,6 +6,6 @@ file_md5=51ce71a1642cdde1f4485a7ff82193c0
 recipe_type=configure
 
 pre_link() {
-    ln -sf libpng12 $target/include/libpng
+    ln -sf libpng16 $target/include/libpng
     ln -sf libpng.so $target/lib/libpng.so.0
 }
