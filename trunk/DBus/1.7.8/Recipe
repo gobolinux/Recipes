@@ -16,8 +16,12 @@ configure_options=(
 )
 
 install_variables=(
-    DESTDIR=$target
+    DBUS_DAEMONDIR=$target/bin
 )
+
+pre_link() {
+    mkdir -p $settings_target/dbus-1/system.d
+}
 
 unmanaged_files=(
     $goboVariable/run/console/
