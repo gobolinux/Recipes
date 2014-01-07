@@ -16,13 +16,6 @@ case "$cmd" in
 
    # Udev handles uevents itself, so we don't need to have
    # the kernel call out to any binary in response to them
-   echo "UDEV task: /dev"
-   ls /dev/
-   echo "UDEV task: /dev/pts"
-   ls /dev/pts
-   echo "UDEV task: /proc/mounts"
-   cat /proc/mounts
-
    echo "" > "$goboStatus/sys/kernel/hotplug"
       
    # Start the udev daemon to continually watch for, and act on,
