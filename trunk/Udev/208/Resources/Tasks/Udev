@@ -11,7 +11,7 @@ case "$cmd" in
 
    mountpoint -q "$goboStatus" || mount -t proc none "$goboStatus"
    mountpoint -q "$goboDevices" || mount -t devtmpfs none "$goboDevices"
-   mkdir -p "$goboDevices/pts"
+   mkdir -p "$goboDevices/pts" "$goboDevices/shm"
    mountpoint -q "$goboDevices/pts" || mount -t devpts devpts "$goboDevices/pts"
 
    # Udev handles uevents itself, so we don't need to have
@@ -35,7 +35,6 @@ case "$cmd" in
    # are activated so they can be used.
    [ -x /sbin/vgchange ] && /sbin/vgchange -a y >/dev/null
 
-   echo "UDEV task: finished."
    ;;
    
 [Ss]top)
