@@ -1,0 +1,7 @@
+#!/bin/sh
+
+echo sh /lib/udev/init-net-rules.sh
+#sh /lib/udev/init-net-rules.sh
+echo udevadm hwdb --update
+#udevadm hwdb --update
+echo done
