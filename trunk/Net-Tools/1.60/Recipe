@@ -6,9 +6,10 @@ file_md5=888774accab40217dde927e21979c165
 recipe_type=makefile
 
 make_variables=(
-   "BASEDIR=$target"
+   BASEDIR="$target"
    # mandir defaults to /usr/share/man which makes SymlinkProgram miss the manpages
-   "mandir=/man" 
+   mandir="/share/man"
+   INSTALLNLSDIR="$target/share/locale"
 )
 
 install_target=update
