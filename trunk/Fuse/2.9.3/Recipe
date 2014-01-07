@@ -8,6 +8,7 @@ recipe_type=configure
 
 install_variables=(
     INIT_D_PATH="$settings_target/init.d"
+    MOUNT_FUSE_PATH="${target}/sbin"
 )
 
 configure_options=(
