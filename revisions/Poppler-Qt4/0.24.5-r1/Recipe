@@ -1,0 +1,18 @@
+# Recipe (MakeRecipe) for Poppler-Qt4 by Hisham Muhammad <hisham@gobolinux.org>, on Wed Jan 8 19:45:45 BRST 2014
+# Recipe for version 0.24.5 by Hisham Muhammad <hisham@gobolinux.org>, on Wed Jan 8 19:45:45 BRST 2014
+compile_version=1.9.0
+url="http://poppler.freedesktop.org/poppler-0.24.5.tar.xz"
+file_size=1512476
+file_md5=334f2ac95cc8039f2a57fe63e4a81c69
+dir='poppler-0.24.5'
+recipe_type=configure
+configure_options=(
+  "--disable-splash-output"
+  "--disable-cairo-output"
+  "--disable-poppler-glib"
+  "--enable-poppler-qt4"
+  "--disable-poppler-qt5"
+  "--disable-poppler-cpp"
+  "--disable-gtk-test"
+  "--disable-utils"
+)
