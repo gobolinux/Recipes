@@ -1,0 +1,12 @@
+[Name] Ghostscript
+[Summary] An interpreter for the PostScript language and for PDF.
+[License] GNU General Public License (GPL)
+[Description] An interpreter for the PostScript language and PDF, \
+that can convert PS and PDF files to raster formats, display them and \
+print them on printers without PostScript support. \
+Ghostscript can also convert PS to PDF (with some limitations) and PDF \
+to PS. It also provides a library with PS and PDF functions for \
+inclusion in other applications.
+This package is originally Artofcode-Ghostscript with the addition of
+functions from ESP-Ghostscript and therefor obsoletes those packages.
+[Homepage] http://www.ghostscript.com/awki
