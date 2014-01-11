@@ -1,0 +1,14 @@
+# Recipe for version 4.15.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jan 11 09:05:55 GMT 2014
+# on Sat Apr 16 13:31:22 CEST 2005
+
+compile_version=1.8.2
+url="http://downloads.sourceforge.net/project/pyqt/sip/sip-4.15.4/sip-4.15.4.tar.gz"
+file_size=776179
+file_md5=1d5c9e92bc7fca5ac11e088a4cf6c83d
+
+recipe_type=makefile
+pre_build() {
+   pythonversion=`python --version 2>&1 | awk {'print $2'} | cut -b1-3`
+   sitepackages="$target/lib/python${pythonversion}/site-packages"
+   python configure.py -b $target/bin -e $target/include -d $sitepackages -v $target/share/sip
+}
