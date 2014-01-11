@@ -6,3 +6,6 @@ file_size=1434496
 file_md5=9eeabf1ad65b7f41533854a59f7a716d
 recipe_type=configure
 
+configure_options=(
+    --disable-examples
+)
