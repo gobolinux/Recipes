@@ -1,0 +1,35 @@
+# Recipe for version 9.10 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 9 15:51:43 GMT 2014
+# Recipe (MakeRecipe) for GhostScript by Jonas Karlsson <jonka750@student.liu.se>, on Tue Jan 24 11:36:14 CET 2006
+compile_version=1.8.5
+url="http://downloads.ghostscript.com/public/ghostscript-9.10.tar.bz2"
+file_size=30983380
+file_md5=7179bb1ed4f6f453147e6f7e1f210ce8
+recipe_type=configure
+build_target="all so"
+install_target="install soinstall"
+
+configure_options=(
+   --enable-cups
+   --with-drivers=ALL
+   --with-fontpath="${target}/share/fonts/Ghostscript"
+   --with-system-libtiff
+   --disable-compile-inits
+   --enable-dynamic
+)
+
+make_variables=(
+   CUPSLIBDIRS="$target/lib"
+   CUPSSERVERBIN="$target/lib/cups"
+   CUPSSERVERROOT="$settings_target/cups"
+   CUPSDATA="$target/share/cups"
+)
+
+pre_link() {
+   # Linking fonts dir so ghostscript can find it.
+   ln -sf ${goboPrefix}/Files/Fonts/Ghostscript ${target}/share/ghostscript/fonts
+   
+   # Making headers dir and copying headers
+   install -v -d -m755 ${target}/include/ps
+   install -v -m644 src/*.h ${target}/include/ps
+   ln -s ${target}/include/ps ${target}/include/ghostscript
+}
