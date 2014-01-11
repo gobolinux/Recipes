@@ -1,0 +1,11 @@
+# Recipe for version 2.0.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 9 01:52:54 GMT 2014
+# by Jeremy Vernon
+url="$httpSourceforge/libmng/libmng-2.0.2.tar.gz"
+file_size=1559967
+file_md5=1ffefaed4aac98475ee6267422cbca55
+compile_version=1.8.5
+recipe_type=configure
+
+pre_build() {
+    sed -i "s:#include <jpeg:#include <stdio.h>\n&:" libmng_types.h
+}
