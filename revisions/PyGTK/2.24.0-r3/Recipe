@@ -1,0 +1,21 @@
+# Recipe for version 2.24.0 by Leandro Motta Barros <lmb@stackedboxes.org>, on Sat Oct 8 23:29:46 BRT 2011
+url="http://ftp.gnome.org/pub/GNOME/sources/pygtk/2.24/pygtk-2.24.0.tar.bz2"
+file_size=2361097
+file_md5=a1051d5794fd7696d3c1af6422d17a49
+compile_version=1.8.5
+recipe_type=configure
+configure_options=(
+   "--enable-numpy"
+)
+
+install_variables=(
+   pyexecdir="$target/lib/python$(python --version 2>&1 | awk {'print $2'} | cut -b1-3)/site-packages"
+   pythondir="$target/lib/python$(python --version 2>&1 | awk {'print $2'} | cut -b1-3)/site-packages"
+)
+
+pre_link() {
+   pythonversion=$(python --version 2>&1 | awk {'print $2'} | cut -b1-3)
+   echo "$goboLibraries/python2.5/site-packages/gtk-2.0" > $target/lib/python${pythonversion}/site-packages/pygtk.pth
+   echo "$goboLibraries/python2.4/site-packages/gtk-2.0" >> $target/lib/python${pythonversion}/site-packages/pygtk.pth
+   echo "$goboLibraries/python2.3/site-packages/gtk-2.0" >> $target/lib/python${pythonversion}/site-packages/pygtk.pth
+}
