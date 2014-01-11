@@ -1,0 +1,17 @@
+# Recipe for version 5.2.9 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 9 16:43:40 GMT 2014
+# Recipe (MakeRecipe) for Gutenprint by Lucas C. Villa Real, on Fri Feb 23 17:17:16 GMT 2007
+compile_version=1.8.2
+url="$httpSourceforge/gimp-print/gutenprint-5.2.9.tar.bz2"
+file_size=5720450
+file_md5=aefbec27b96dd404d9ac9811e17d58ce
+recipe_type=configure
+
+install_variables=(
+    bindir="$target/bin"
+    sbindir="$target/sbin"
+    cups_conf_datadir="$target/share/cups"
+    cups_conf_serverbin="$target/share/cups"
+    cups_conf_serverroot="$settings_target"
+    gimp_plug_indir="$target/lib/gimp/1.2/plug-ins"
+    gimp2_plug_indir="$target/lib/gimp/2.0/plug-ins"
+)
