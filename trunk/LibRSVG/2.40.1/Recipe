@@ -1,0 +1,17 @@
+# Recipe for version 2.40.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 9 17:11:06 GMT 2014
+# Recipe (MakeRecipe) for LibRSVG by roko, <ro.ko@mcnon.com>, on Sat Jan 1 10:29:51 BRST 2005
+compile_version=1.8.0
+url="http://ftp.gnome.org/pub/gnome/sources/librsvg/2.40/librsvg-2.40.1.tar.xz"
+file_size=505664
+file_md5=a31eb5d66c3fe94d888a6b17a287ea42
+recipe_type=configure
+configure_options=(
+    --disable-mozilla-plugin
+    --disable-introspection
+)
+with_libcroco="--with-croco"
+
+install_variables=(
+    gdk_pixbuf_moduledir=$(pkg-config gdk-pixbuf-2.0 --variable=gdk_pixbuf_binarydir | sed "s,/usr/,$target/,g")/loaders
+    gdk_pixbuf_cache_file=$(pkg-config gdk-pixbuf-2.0 --variable=gdk_pixbuf_binarydir | sed "s,/usr/,$target/,g")/loaders.cache
+)
