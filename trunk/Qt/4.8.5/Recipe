@@ -1,0 +1,56 @@
+# Recipe for version 4.8.5 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Jan 10 18:10:14 GMT 2014
+# by Andre Detsch
+
+compile_version=1.9.0
+url="http://download.qt-project.org/official_releases/qt/4.8/4.8.5/qt-everywhere-opensource-src-4.8.5.tar.gz"
+file_size=241491467
+file_md5=1864987bdbb2f58f8ae8b350dfdbe133
+recipe_type=configure
+dir='qt-everywhere-opensource-src-4.8.5'
+
+configure_options=(
+    -release
+    -prefix "$target"
+    -nomake "examples demos docs"
+    -dbus
+    -no-separate-debug-info
+    -sql-sqlite
+    -system-sqlite
+    -opensource
+    -confirm-license
+    -optimized-qmake
+    -no-phonon
+    -no-phonon-backend
+    -no-nas-sound
+)
+
+with_mysql="-plugin-sql-mysql"
+with_sqlite=(-plugin-sql-sqlite -system-sqlite)
+with_odbc="-plugin-sql-odbc"
+#with_nas="-system-nas-sound"
+with_webkit="-webkit"
+
+environment=(
+   # Workaround to fix build error due to missing libQtCLucene.so
+   LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$dir/lib"
+)
+
+install_variables=(
+   INSTALL_ROOT=$target
+)
+
+pre_install() {
+   if [ -d "$target/usr" ]
+   then
+      Quiet pushd "$target"
+      find . -type d -empty | grep -v "./Resources\|./usr" | xargs rmdir -p >& /dev/null
+      mv usr/* .
+      rmdir usr
+      Quiet popd
+   fi
+}
+
+pre_link() {
+   # clean out debug files
+   find ${target} -name "*.debug" | xargs rm -f
+}
