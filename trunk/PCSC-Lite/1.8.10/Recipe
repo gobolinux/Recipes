@@ -1,0 +1,11 @@
+# Recipe for version 1.8.10 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jan 11 17:54:51 GMT 2014
+# Recipe (MakeRecipe) for PCSC-Lite by Kosh <kosh.linux at gmail.com>, on Fri Nov 4 14:14:11 BRST 2005
+compile_version=1.8.0
+url="https://alioth.debian.org/frs/download.php/file/3963/pcsc-lite-1.8.10.tar.bz2"
+file_size=561707
+file_md5=7268cc5ef8fc01b785c7cea87adb1ade
+recipe_type=configure
+
+install_variables=(
+	confdir=$settings_target
+)
