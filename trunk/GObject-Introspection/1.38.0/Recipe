@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for GObject-Introspection by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Jan 10 14:58:44 GMT 2014
+# Recipe for version 1.38.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Jan 10 14:58:44 GMT 2014
+compile_version=1.13.0
+url="http://ftp.gnome.org/pub/gnome/sources/gobject-introspection/1.38/gobject-introspection-1.38.0.tar.xz"
+file_size=1226324
+file_md5=4851028e950ec0f809e26676b22aba97
+recipe_type=configure
+
+install_variables=(
+    GIR_DIR=$target/share/gir-1.0
+)
