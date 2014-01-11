@@ -1,0 +1,3 @@
+#!/bin/bash
+
+which gtk-update-icon-cache && gtk-update-icon-cache || true
