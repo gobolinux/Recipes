@@ -1,0 +1,16 @@
+This patch directs the Foomatic_kitload (part of Gutenprint) to install in the Gutenprint folder.
+--
+Hugo Barrocas
+
+--- gutenprint-5.0.0/src/foomatic/Makefile.in.orig	2007-02-28 11:04:10.000000000 +0000
++++ gutenprint-5.0.0/src/foomatic/Makefile.in	2007-02-28 11:08:53.000000000 +0000
+@@ -654,7 +654,8 @@ install-kit:
+ 	  $(mkdir_p) $(DESTDIR)`$(FOOMATIC_KITLOAD) -l` ; \
+ 	  $(FOOMATIC_KITLOAD) -f -d $(DESTDIR) -k $(FOOMATIC_DB) ; \
+ 	else \
+-	  $(FOOMATIC_KITLOAD) -f -k $(FOOMATIC_DB) ; \
++	  mkdir -p $(datadir)/foomatic ; \
++	  ( cd $(FOOMATIC_DB) ; tar cf - --exclude CVS . ) | tar xvCf $(datadir)/foomatic/db/source - 2> $(datadir)/foomatic/kitload2.log | tee $(datadir)/foomatic/kitload.log ; \
+ 	fi
+ 
+ clean-local:
