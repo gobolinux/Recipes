@@ -10,4 +10,6 @@ configure_options=(
     # Required by inkscape
     --enable-xpdf-headers
     --disable-poppler-qt4
+    --enable-zlib
+    --enable-libcurl
 )
