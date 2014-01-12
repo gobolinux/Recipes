@@ -1,0 +1,24 @@
+# Recipe for version 300 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jan 12 03:05:14 GMT 2014
+# Recipe (MakeRecipe) for XTerm by Hisham Muhammad, on Thu Feb 23 14:45:58 BRT 2006
+compile_version=1.9.0
+url="ftp://invisible-island.net/xterm/xterm-300.tgz"
+file_size=1123519
+file_md5=6adc7c7f39ab2a71fd83747049d60358
+recipe_type=configure
+configure_options=(
+   # otherwise uxterm is broken!
+   --enable-wide-chars
+
+   # paths for icons and app defaults
+   --with-icondir=$target/share/pixmaps
+   --with-app-defaults=$target/lib/X11/app-defaults
+)
+
+install_variables=(
+   bindir=$target/bin
+   libdir=$target/lib
+   mandir=$target/share/man/man1
+   appsdir=$target/lib/X11/app-defaults
+   icondir=$target/share/pixmaps
+   pixmapdir=$target/share/pixmaps
+)
