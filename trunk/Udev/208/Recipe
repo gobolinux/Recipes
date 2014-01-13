@@ -16,6 +16,15 @@ unpack_files=inside_first
 recipe_type=makefile
 makefile="udev-lfs-208-1/Makefile.lfs"
 
+pre_link() {
+    make -f $makefile gudev
+    make -f $makefile install-gudev DESTDIR=$target
+    make -f $makefile gir-data
+    make -f $makefile install-gir-data DESTDIR=$target
+    cp -r $target/usr/* $target
+    rm -rf -- $target/usr
+}
+
 install_variables=(
     DESTDIR=$target
     SYSCONFDIR=$settings_target
