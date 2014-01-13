@@ -1,0 +1,5 @@
+#
+# Modify "-march" to fit your architecture
+#
+export CFLAGS="-O2 -march=i686 -fomit-frame-pointer -pipe"
+export CXXFLAGS="-O2 -march=i686 -fomit-frame-pointer -pipe"
