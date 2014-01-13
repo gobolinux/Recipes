@@ -23,6 +23,8 @@ pre_link() {
     make -f $makefile install-gir-data DESTDIR=$target
     cp -r $target/usr/* $target
     rm -rf -- $target/usr
+    rm -f $target/lib/libudev.so
+    cp -a $target/lib/libudev.so.1 $target/lib/libudev.so
 }
 
 install_variables=(
