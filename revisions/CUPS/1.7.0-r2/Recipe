@@ -1,0 +1,72 @@
+# Recipe for version 1.7.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Jan 8 14:28:29 GMT 2014
+compile_version=1.12.4
+url="http://www.cups.org/software/1.7.0/cups-1.7.0-source.tar.bz2"
+file_size=8421353
+file_md5=5ab496a2ce27017fcdb3d7ec4818a75a
+dir='cups-1.7.0'
+recipe_type=configure
+
+configure_options=(
+   --with-libdir="$target/lib"
+   --with-rcdir="$target/cupsinit"
+   --with-docdir="$target/doc"
+   --with-fontpath="${goboShared}/Fonts/Ghostscript"
+   --with-cups-user=lp
+   --with-cups-group=lp
+   --with-system-groups=lpadmin
+   --with-icondir="$target/share/icons"
+   --with-menudir="$target/share/applications"
+   --with-dbusdir="$settings_target/dbus-1"
+   --with-python
+   --enable-threads
+   --enable-libpaper
+)
+
+environment=(
+   LIBTOOL=
+)
+
+make_variables=(
+   LIBTOOL=
+)
+
+# TODO: the following array has been tested with $goboIndex only.
+install_variables=(
+    BUILDROOT="$target"
+    MENUDIR="/share/applications"
+    DBUSDIR="/../Settings/dbus"
+    PAMDIR="/../Settings/pam.d"
+    INITDIR="/../Settings/cupsinit"
+    ICONDIR="/share/icons"
+    includedir="/include"
+    libdir="/lib"
+)
+
+unmanaged_files=(
+   ${goboVariable}/log/cups
+   ${goboVariable}/run/cups/certs
+   ${goboVariable}/cache/cups
+   ${goboVariable}/spool/cups/tmp
+)
+
+pre_link() {
+   rm -rf -- $target/cupsinit
+   rm -rf -- $target/share/cups/banners         # This is now part of the CUPS Filters package
+   rm -rf -- $target/share/cups/data/testprint  # Ditto.
+   Quiet pushd $target/lib
+   ln -s ../share/cups .
+   Quiet popd
+   if [ ! -e "$settings_target/cups/client.conf" ]
+   then
+      mkdir -p "$settings_target/cups"
+      echo "ServerName $goboVariable/run/cups/cups.sock" > $settings_target/cups/client.conf
+   fi
+}
+
+pre_install() {
+    GrepReplace "(BUILDROOT)$goboSettings" "(BUILDROOT)/../Settings" Makedefs 
+    GrepReplace "(BUILDROOT)/usr" "(BUILDROOT)" Makedefs 
+    GrepReplace "(BUILDROOT)/Data" "/Data" Makedefs 
+}
+
+post_install_message="=========================================\n\nNote: when upgrading from CUPS 1.1.20 you may need\n      to recreate your printers because of changes\n      in the ppd uri format for usb printers.\n\n=================================================="
