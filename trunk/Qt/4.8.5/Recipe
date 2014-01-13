@@ -53,4 +53,6 @@ pre_install() {
 pre_link() {
    # clean out debug files
    find ${target} -name "*.debug" | xargs rm -f
+   # create a config file to prevent hardcoded paths from being used
+   echo -e "[Paths]\nPrefix = $target" > $target/bin/qt.conf
 }
