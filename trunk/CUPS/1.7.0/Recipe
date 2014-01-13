@@ -30,9 +30,14 @@ make_variables=(
    LIBTOOL=
 )
 
+# TODO: the following array has been tested with $goboIndex only.
 install_variables=(
     BUILDROOT="$target"
+    MENUDIR="/share/applications"
     DBUSDIR="/../Settings/dbus"
+    PAMDIR="/../Settings/pam.d"
+    INITDIR="/../Settings/cupsinit"
+    ICONDIR="/share/icons"
     includedir="/include"
     libdir="/lib"
 )
