@@ -1,0 +1,31 @@
+# Recipe for version 208 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 7 14:48:10 BRST 2014
+compile_version=1.9.0
+urls=(
+    "http://www.freedesktop.org/software/systemd/systemd-208.tar.xz"
+    "http://anduin.linuxfromscratch.org/sources/other/udev-lfs-208-1.tar.bz2"
+)
+file_sizes=(
+    2382904
+    29411
+)
+file_md5s=(
+    df64550d92afbffb4f67a434193ee165
+    67a5339e7ef1fa08f5db8315a5ea69e7
+)
+unpack_files=inside_first
+recipe_type=makefile
+makefile="udev-lfs-208-1/Makefile.lfs"
+
+pre_link() {
+    make -f $makefile gudev
+    make -f $makefile install-gudev DESTDIR=$target
+    make -f $makefile gir-data
+    make -f $makefile install-gir-data DESTDIR=$target
+    cp -r $target/usr/* $target
+    rm -rf -- $target/usr
+}
+
+install_variables=(
+    DESTDIR=$target
+    SYSCONFDIR=$settings_target
+)
