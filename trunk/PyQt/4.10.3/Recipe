@@ -11,6 +11,6 @@ pre_build() {
     pythonversion=`python --version 2>&1 | awk {'print $2'} | cut -b1-3`
     sitepackages="$target/lib/python${pythonversion}/site-packages"
     [ -z "$QMAKESPEC" ] && export QMAKESPEC="$qt_path/mkspecs/linux-g++"
-    echo yes | python configure.py -b $target/bin -v $target/Shared/sip -d $sitepackages -p $target/plugins 
+    echo yes | python configure.py -b $target/bin -v $target/$(basename $goboShared)/sip -d $sitepackages -p $target/plugins 
     chmod -R a+rw .
 }
