@@ -1,0 +1,9 @@
+# Recipe for version 1.4.17 by Hisham Muhammad <hisham@gobolinux.org>, on Thu Jan 16 18:56:15 BRST 2014
+compile_version=1.10.2
+url="$ftpGnu/m4/m4-1.4.17.tar.bz2"
+file_size=1438525
+file_md5=8a1787edcba75ae5cd1dc40d7d8ed03a
+recipe_type=configure
+configure_options=(
+   "--enable-changeword"
+)
