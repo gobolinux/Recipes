@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for CDRKit by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jan 20 15:39:27 BRST 2014
+# Recipe for version 1.1.11 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jan 20 15:39:27 BRST 2014
+compile_version=1.0.0
+url="$httpSourceforge/project/wodim/cdrkit/cdrkit_1.1.11.orig.tar.gz"
+file_size=1445133
+file_md5=efe08e2f3ca478486037b053acd512e9
+dir='cdrkit-1.1.11'
+recipe_type=cmake
