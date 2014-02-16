@@ -34,7 +34,7 @@ make_variables=(
 install_variables=(
     BUILDROOT="$target"
     MENUDIR="/share/applications"
-    DBUSDIR="/../Settings/dbus"
+    DBUSDIR="/../Settings/dbus-1"
     PAMDIR="/../Settings/pam.d"
     INITDIR="/../Settings/cupsinit"
     ICONDIR="/share/icons"
@@ -48,6 +48,12 @@ unmanaged_files=(
    ${goboVariable}/cache/cups
    ${goboVariable}/spool/cups/tmp
 )
+
+pre_install() {
+    GrepReplace "(BUILDROOT)$goboSettings" "(BUILDROOT)/../Settings" Makedefs 
+    GrepReplace "(BUILDROOT)/usr" "(BUILDROOT)" Makedefs 
+    GrepReplace "(BUILDROOT)/Data" "/Data" Makedefs 
+}
 
 pre_link() {
    rm -rf -- $target/cupsinit
@@ -63,10 +69,9 @@ pre_link() {
    fi
 }
 
-pre_install() {
-    GrepReplace "(BUILDROOT)$goboSettings" "(BUILDROOT)/../Settings" Makedefs 
-    GrepReplace "(BUILDROOT)/usr" "(BUILDROOT)" Makedefs 
-    GrepReplace "(BUILDROOT)/Data" "/Data" Makedefs 
+post_install() {
+   GrepReplace -B 'user="root"' 'user="0"' "$settings_target/dbus-1/system.d/cups.conf"
+   GrepReplace -B 'user="root"' 'user="0"' "$target/Resources/Defaults/Settings/dbus-1/system.d/cups.conf"
 }
 
 post_install_message="=========================================\n\nNote: when upgrading from CUPS 1.1.20 you may need\n      to recreate your printers because of changes\n      in the ppd uri format for usb printers.\n\n=================================================="
