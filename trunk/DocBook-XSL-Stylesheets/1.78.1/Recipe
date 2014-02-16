@@ -5,22 +5,21 @@ url="$httpSourceforge/docbook/docbook-xsl-1.78.1.tar.bz2"
 file_size=5003045
 file_md5=6dd0f89131cc35bf4f2ed105a1c17771
 recipe_type=manifest
-dir=docbook-xsl-1.78.1
 manifest=(
-   "$dir/fo:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/fo"
-   "$dir/lib:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/lib"
-   "$dir/VERSION:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/VERSION.xsl"
-   "$dir/html:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/html"
-   "$dir/xhtml:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/xhtml"
-   "$dir/xhtml-1_1:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/xhtml-1_1"
-   "$dir/epub:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/epub"
-   "$dir/htmlhelp:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/htmlhelp"
-   "$dir/javahelp:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/javahelp"
-   "$dir/eclipse:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/eclipse"
-   "$dir/manpages:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/manpages"
-   "$dir/common:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/common"
-   "$dir/highlighting:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/highlighting"
-   "$dir/catalog.xml:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/catalog.xml"
+   "fo:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/fo"
+   "lib:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/lib"
+   "VERSION:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/VERSION"
+   "html:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/html"
+   "xhtml:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/xhtml"
+   "xhtml-1_1:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/xhtml-1_1"
+   "epub:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/epub"
+   "htmlhelp:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/htmlhelp"
+   "javahelp:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/javahelp"
+   "eclipse:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/eclipse"
+   "manpages:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/manpages"
+   "common:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/common"
+   "highlighting:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/highlighting"
+   "catalog.xml:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/catalog.xml"
 )
 unmanaged_files=(
    "$goboVariable/lib/xml"
