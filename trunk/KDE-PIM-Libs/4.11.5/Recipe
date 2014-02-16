@@ -1,0 +1,32 @@
+# Recipe for version 4.11.5 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jan 11 22:48:11 GMT 2014
+# Recipe (MakeRecipe) for KDE-PIM-Libs by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Apr 7 01:40:08 BRT 2008
+compile_version=1.10.0
+url="ftp://ftp.kde.org/pub/kde/stable/4.11.5/src/kdepimlibs-4.11.5.tar.xz"
+file_size=2936404
+file_md5=55740ea0b5a0fd009e778cdc62ff6a13
+recipe_type=makefile
+
+install_variables=(
+    DESTDIR=$target
+    CMAKE_INSTALL_PREFIX=$target
+)
+
+pre_build() {
+    cmake -DCMAKE_VERBOSE_MAKEFILE=ON .
+}
+
+pre_link() {
+    Quiet pushd $target
+    mkdir -p include lib Shared
+    mv usr/local/include/* include
+    mv usr/local/lib/* lib
+    mv usr/local/share/* Shared
+    rmdir usr/local/*
+    rmdir usr/local
+    rmdir usr
+    Quiet popd
+}
+
+#cmake_options=(
+#-DCMAKE_BUILD_TYPE=Release
+#)
