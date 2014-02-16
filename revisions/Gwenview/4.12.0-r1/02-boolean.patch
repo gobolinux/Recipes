@@ -1,0 +1,91 @@
+--- gwenview-4.12.0/lib/cms/cmsprofile.cpp.orig	2014-01-14 14:11:57.000000000 +0000
++++ gwenview-4.12.0/lib/cms/cmsprofile.cpp	2014-01-14 14:13:47.000000000 +0000
+@@ -82,7 +82,7 @@ static cmsHPROFILE loadFromJpegData(cons
+     IODeviceJpegSourceManager::setup(&srcinfo, &buffer);
+ 
+     setup_read_icc_profile(&srcinfo);
+-    jpeg_read_header(&srcinfo, true);
++    jpeg_read_header(&srcinfo, (boolean) true);
+     jpeg_start_decompress(&srcinfo);
+ 
+     uchar* profile_data;
+--- gwenview-4.12.0/lib/imageformats/jpeghandler.cpp.orig	2014-01-14 14:15:00.000000000 +0000
++++ gwenview-4.12.0/lib/imageformats/jpeghandler.cpp	2014-01-14 14:19:13.000000000 +0000
+@@ -111,7 +111,7 @@ static QSize getJpegSize(QIODevice* ioDe
+     // Init decompression
+     jpeg_create_decompress(&cinfo);
+     Gwenview::IODeviceJpegSourceManager::setup(&cinfo, ioDevice);
+-    jpeg_read_header(&cinfo, true);
++    jpeg_read_header(&cinfo, (boolean) true);
+ 
+     size = QSize(cinfo.image_width, cinfo.image_height);
+     jpeg_destroy_decompress(&cinfo);
+@@ -134,7 +134,7 @@ static bool loadJpeg(QImage* image, QIOD
+     // Init decompression
+     jpeg_create_decompress(&cinfo);
+     Gwenview::IODeviceJpegSourceManager::setup(&cinfo, ioDevice);
+-    jpeg_read_header(&cinfo, true);
++    jpeg_read_header(&cinfo, (boolean) true);
+ 
+     // Compute scale value
+     cinfo.scale_num = 1;
+@@ -270,7 +270,7 @@ extern "C" {
+ #if defined(Q_OS_UNIXWARE)
+         return B_TRUE;
+ #else
+-        return true;
++        return (boolean) true;
+ #endif
+     }
+ 
+@@ -364,8 +364,8 @@ static bool write_jpeg_image(const QImag
+         jpeg_set_quality(&cinfo, quality, B_TRUE /* limit to baseline-JPEG values */);
+         jpeg_start_compress(&cinfo, B_TRUE);
+ #else
+-        jpeg_set_quality(&cinfo, quality, true /* limit to baseline-JPEG values */);
+-        jpeg_start_compress(&cinfo, true);
++        jpeg_set_quality(&cinfo, quality, (boolean) true/* limit to baseline-JPEG values */);
++        jpeg_start_compress(&cinfo, (boolean) true);
+ #endif
+ 
+         row_pointer[0] = new uchar[cinfo.image_width * cinfo.input_components];
+--- gwenview-4.12.0/lib/iodevicejpegsourcemanager.cpp.orig	2014-01-14 14:19:53.000000000 +0000
++++ gwenview-4.12.0/lib/iodevicejpegsourcemanager.cpp	2014-01-14 14:20:09.000000000 +0000
+@@ -66,7 +66,7 @@ static boolean fill_input_buffer(j_decom
+         cinfo->src->next_input_byte = fakeEOI;
+         cinfo->src->bytes_in_buffer = 2;
+     }
+-    return true;
++    return (boolean) true;
+ }
+ 
+ static void init_source(j_decompress_ptr cinfo)
+--- gwenview-4.12.0/lib/jpegcontent.cpp.orig	2014-01-14 14:24:07.000000000 +0000
++++ gwenview-4.12.0/lib/jpegcontent.cpp	2014-01-14 14:24:40.000000000 +0000
+@@ -91,7 +91,7 @@ boolean inmem_empty_output_buffer(j_comp
+     dest->next_output_byte = (JOCTET*)(dest->mOutput->data() + dest->mOutput->size() - INMEM_DST_DELTA);
+     dest->free_in_buffer = INMEM_DST_DELTA;
+ 
+-    return (boolean) true;
++    return true;
+ }
+ 
+ void inmem_term_destination(j_compress_ptr cinfo)
+@@ -163,7 +163,7 @@ struct JpegContent::Private
+ 
+         // Read the header
+         jcopy_markers_setup(&srcinfo, JCOPYOPT_ALL);
+-        int result = jpeg_read_header(&srcinfo, (boolean) true);
++        int result = jpeg_read_header(&srcinfo, true);
+         if (result != JPEG_HEADER_OK) {
+             kError() << "Could not read jpeg header\n";
+             jpeg_destroy_decompress(&srcinfo);
+@@ -489,7 +489,7 @@ void JpegContent::applyPendingTransforma
+     // Enable saving of extra markers that we want to copy
+     jcopy_markers_setup(&srcinfo, JCOPYOPT_ALL);
+ 
+-    (void) jpeg_read_header(&srcinfo, (boolean)true);
++    (void) jpeg_read_header(&srcinfo, true);
+ 
+     // Init transformation
+     jpeg_transform_info transformoption;
