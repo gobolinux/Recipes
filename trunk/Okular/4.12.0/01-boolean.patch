@@ -1,0 +1,16 @@
+--- okular-4.12.0/generators/plucker/unpluck/image.cpp.orig	2014-01-14 14:02:56.000000000 +0000
++++ okular-4.12.0/generators/plucker/unpluck/image.cpp	2014-01-14 14:03:43.000000000 +0000
+@@ -271,11 +271,11 @@ bool TranscribePalmImageToJPEG
+ 
+     jpeg_set_defaults (&cinfo);
+     jpeg_set_quality (&cinfo, 100,
+-                      true /* limit to baseline-JPEG values */ );
++                      TRUE /* limit to baseline-JPEG values */ );
+ 
+     row_pointer[0] = &jpeg_row[0];
+ 
+-    jpeg_start_compress (&cinfo, true);
++    jpeg_start_compress (&cinfo, TRUE);
+ 
+     /* row by row, uncompress the Palm image and copy it to the JPEG buffer */
+     rowbuf = (unsigned char *) malloc (bytes_per_row * width);
