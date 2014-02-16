@@ -1,0 +1,14 @@
+# Recipe for version 4.12.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Jan 14 02:22:38 GMT 2014
+# Recipe (MakeRecipe) for Nepomuk-Widgets by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jan 11 20:35:08 GMT 2014
+compile_version=1.13.320140106-SVN
+url="ftp://ftp.kde.org/pub/kde/stable/4.12.0/src/nepomuk-widgets-4.12.0.tar.xz"
+file_size=48700
+file_md5=ba1076f5db4c8f76a24a09c9ce551f8c
+recipe_type=cmake
+
+pre_install() {
+	for i in $(find $dir/_build -name cmake_install.cmake)
+	do
+		GrepReplace "$kde_libs_path" "$target" "$i"
+	done
+}
