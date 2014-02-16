@@ -1,0 +1,44 @@
+# Recipe for version 4.12.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jan 13 16:08:56 GMT 2014
+# Recipe (MakeRecipe) for KDE-Libs by Giambattista Bloisi <giamby@infinito.it>, on Sat Jan 12 11:13:12 CET 2008
+compile_version=1.10.0
+url="ftp://ftp.kde.org/pub/kde/stable/4.12.0/src/kdelibs-4.12.0.tar.xz"
+file_size=11552932
+file_md5=1faff09ea887fea6caa15e36b219c558
+recipe_type=cmake
+
+pre_build() {
+    if [ ! -e "$dir/kded/.patched" ]
+    then
+       sed -i "s@{SYSCONF_INSTALL_DIR}/xdg/menus@& RENAME kde-applications.menu@" $dir/kded/CMakeLists.txt
+       sed -i "s@applications.menu@kde-&@" $dir/kded/kbuildsycoca.cpp
+       touch "$dir/kded/.patched"
+    fi
+}
+
+cmake_options=(
+-DDOCBOOKXML_CURRENTDTD_VERSION="$(ls $goboShared/xml/docbook | grep xml-dtd | sort -n | tail -1 | sed 's,xml-dtd-,,g')"
+-DOCBOOKXML_CURRENTDTD_DIR="$goboShared/xml/docbook/$(ls $goboShared/xml/docbook | grep xml-dtd | sort -n | tail -1)"
+-DCMAKE_BUILD_TYPE=Release
+-DKDE4_DBUS_INTERFACES_DIR="$goboShared/dbus-1/interfaces/"
+-DSYSCONF_INSTALL_DIR="$settings_target"
+-DLIB_INSTALL_DIR="$goboLibraries"
+-DLIBEXEC_INSTALL_DIR="$goboLibraries/kde4/libexec"
+-DPLUGIN_INSTALL_DIR="$goboLibraries/lib/kde4"
+-DKDE4_LIB_DIR="$goboLibraries"
+)
+
+pre_install() {
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+-DKDE4_DBUS_INTERFACES_DIR="$goboShared/dbus-1/interfaces/"
+-DSYSCONF_INSTALL_DIR="$settings_target"
+-DLIB_INSTALL_DIR="$target/lib"
+-DLIBEXEC_INSTALL_DIR="$target/lib/kde4/libexec"
+-DPLUGIN_INSTALL_DIR="$target/lib/kde4"
+-DKDE4_LIB_DIR="$target/lib"
+)
+for i in $(find $dir/_build -name cmake_install.cmake)
+do
+    GrepReplace "/usr/" "$target/" "$i"
+done
+}
