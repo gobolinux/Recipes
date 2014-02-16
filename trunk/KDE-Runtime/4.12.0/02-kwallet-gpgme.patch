@@ -1,0 +1,82 @@
+diff --git kwalletd/backend/kwalletbackend.cc kwalletd/backend/kwalletbackend.cc
+index b41bddb..804902f 100644
+--- a/kwalletd/backend/kwalletbackend.cc
++++ a/kwalletd/backend/kwalletbackend.cc
+@@ -28,7 +28,9 @@
+ #include <kcodecs.h>
+ #include <ksavefile.h>
+ #include <kstandarddirs.h>
++#ifdef HAVE_QGPGME
+ #include <gpgme++/key.h>
++#endif
+ #include <knotification.h>
+ 
+ #include <QtCore/QFile>
+diff --git kwalletd/kwalletd.cpp kwalletd/kwalletd.cpp
+index b522156..20bc8c0 100644
+--- a/kwalletd/kwalletd.cpp
++++ a/kwalletd/kwalletd.cpp
+@@ -49,7 +49,9 @@
+ #include <kpluginfactory.h>
+ #include <kpluginloader.h>
+ #include <KNotification>
++#ifdef HAVE_QGPGME
+ #include <gpgme++/key.h>
++#endif
+ 
+ #include <QtCore/QDir>
+ #include <QTextDocument> // Qt::escape
+@@ -833,11 +835,13 @@ void KWalletD::doTransactionChangePassword(const QString& appid, const QString&
+ 
+ 	assert(w);
+ 
++#ifdef HAVE_QGPGME
+     if (w->cipherType() == KWallet::BACKEND_CIPHER_GPG) {
+         QString keyID = w->gpgKey().shortKeyID();
+         assert(!keyID.isNull());
+         KMessageBox::errorWId((WId)wId, i18n("<qt>The <b>%1</b> wallet is encrypted using GPG key <b>%2</b>. Please use <b>GPG</b> tools (such as <b>kleopatra</b>) to change the passphrase associated to that key.</qt>", Qt::escape(wallet), keyID));
+     } else {
++#endif
+         QPointer<KNewPasswordDialog> kpd = new KNewPasswordDialog();
+         kpd->setPrompt(i18n("<qt>Please choose a new password for the wallet '<b>%1</b>'.</qt>", Qt::escape(wallet)));
+         kpd->setCaption(i18n("KDE Wallet Service"));
+@@ -862,7 +866,9 @@ void KWalletD::doTransactionChangePassword(const QString& appid, const QString&
+         }
+ 
+         delete kpd;
++#ifdef HAVE_QGPGME
+     }
++#endif
+ 
+ 	if (reclose) {
+ 		internalClose(w, handle, true);
+diff --git kwalletd/kwalletwizard.h kwalletd/kwalletwizard.h
+index b29bddc..95b422b 100644
+--- a/kwalletd/kwalletwizard.h
++++ a/kwalletd/kwalletwizard.h
+@@ -20,7 +20,9 @@
+ #define KWALLETWIZARD_H
+ 
+ #include <QWizard>
++#ifdef HAVE_QGPGME
+ #include <gpgme++/key.h>
++#endif
+ 
+ class PageGpgKey;
+ class PagePassword;
+diff --git kwalletd/kwalletwizard.cpp kwalletd/kwalletwizard.cpp
+index e97057c..49ffed1 100644
+--- a/kwalletd/kwalletwizard.cpp
++++ a/kwalletd/kwalletwizard.cpp
+@@ -120,7 +120,11 @@ public:
+     }
+ 
+ private:
++#ifdef HAVE_QGPGME
+     Ui::KWalletWizardPagePasswordGpg ui;
++#else
++    Ui::KWalletWizardPagePassword ui;
++#endif
+ };
+ 
+ #ifdef HAVE_QGPGME
