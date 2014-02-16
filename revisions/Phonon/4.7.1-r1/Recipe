@@ -1,0 +1,16 @@
+# Recipe for version 4.7.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jan 13 03:36:08 GMT 2014
+# Recipe (MakeRecipe) for Phonon by Paul Gideon Dann <pdgiddie+gobo@gmail.com>, on Fri Sep 19 13:16:45 BST 2008
+compile_version=1.11.2
+url="http://download.kde.org/stable/phonon/4.7.1/phonon-4.7.1.tar.xz"
+file_size=329900
+file_md5=0935e1c00440a03e3032860030398665
+recipe_type=cmake
+
+cmake_options=(
+   -DCMAKE_BUILD_TYPE=Release
+   -DCMAKE_INSTALL_LIBDIR=lib
+   -DQT_MKSPECS_DIR=$target/mkspecs
+   -DQT_PLUGINS_DIR=$target/plugins
+   -DPHONON_INSTALL_QT_EXTENSIONS_INTO_SYSTEM_QT=TRUE
+   -DDBUS_INTERFACES_INSTALL_DIR=$target/share/dbus-1/interfaces
+)
