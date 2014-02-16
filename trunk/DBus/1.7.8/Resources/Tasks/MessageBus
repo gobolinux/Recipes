@@ -30,7 +30,6 @@ case "$op" in
    # so we can rearrange this easily
    RETVAL=0
    
-   /bin/dbus-uuidgen --ensure
    /bin/dbus-daemon --system
    RETVAL=$?
    #sleep 2

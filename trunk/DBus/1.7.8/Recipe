@@ -15,14 +15,6 @@ configure_options=(
     "--disable-systemd"
 )
 
-install_variables=(
-    DBUS_DAEMONDIR=$target/bin
-)
-
-pre_link() {
-    mkdir -p $settings_target/dbus-1/system.d
-}
-
 unmanaged_files=(
     $goboVariable/run/console/
     $goboVariable/run/dbus/
