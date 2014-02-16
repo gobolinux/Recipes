@@ -4,9 +4,9 @@ compile_version=1.13.3
 git="git://git.kernel.org/pub/scm/linux/kernel/git/dwmw2/linux-firmware.git"
 recipe_type=manifest
 manifest=(
-    *:Resources/Unmanaged/lib/firmware/
+    *:Resources/Unmanaged/System/Links/Libraries/firmware/
 )
 
 unmanaged_files=(
-    /lib/firmware
+    /System/Links/Libraries/firmware
 )
