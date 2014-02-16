@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Linux-Firmware by Michael Homer <michael@gobolinux.org>, on Fri Aug 26 06:50:34 NZST 2011
+# Recipe for version git by Michael Homer <michael@gobolinux.org>, on Fri Aug 26 06:50:34 NZST 2011
+compile_version=1.13.3
+git="git://git.kernel.org/pub/scm/linux/kernel/git/dwmw2/linux-firmware.git"
+recipe_type=manifest
+manifest=(
+    *:Resources/Unmanaged/System/Links/Libraries/firmware/
+)
+
+unmanaged_files=(
+    /System/Links/Libraries/firmware
+)
