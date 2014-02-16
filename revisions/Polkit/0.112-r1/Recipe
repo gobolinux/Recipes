@@ -1,0 +1,21 @@
+# Recipe for version 0.112 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jan 13 12:14:51 GMT 2014
+# Recipe (MakeRecipe) for Polkit by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Mar 27 02:13:46 NZDT 2012
+compile_version=1.13.3
+url="http://www.freedesktop.org/software/polkit/releases/polkit-0.112.tar.gz"
+file_size=1429240
+file_md5=b0f2fa00a55f47c6a5d88e9b73f80127
+recipe_type=configure
+
+install_variables=(
+    INTROSPECTION_GIRDIR=$target/share/gir-1.0
+    INTROSPECTION_TYPELIBDIR=$target/lib/girepository-1.0
+)
+
+pre_link() {
+    mkdir -p $target/share/polkit-1/rules.d
+    mkdir -p $goboVariable/ConsoleKit
+}
+
+unmanaged_files=(
+    $goboVariable/ConsoleKit
+)
