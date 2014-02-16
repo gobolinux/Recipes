@@ -1,0 +1,11 @@
+# Recipe for version 0.9.2.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jan 13 12:42:21 GMT 2014
+# Recipe (MakeRecipe) for DBusMenu-Qt by Leandro Motta Barros <lmb@stackedboxes.org>, on Sat Oct 1 00:30:46 BRT 2011
+compile_version=1.13.3
+url="http://launchpad.net/libdbusmenu-qt/trunk/0.9.2/+download/libdbusmenu-qt-0.9.2.tar.bz2"
+file_size=37882
+file_md5=9a49484927669cd2ec91b3bf9ba8b79e
+recipe_type=cmake
+
+cmake_options=(
+   -DWITH_DOC=OFF
+)
