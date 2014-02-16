@@ -1,0 +1,19 @@
+# Recipe (MakeRecipe) for MozJS by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jan 13 12:16:04 GMT 2014
+# Recipe for version 17.0.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jan 13 12:16:04 GMT 2014
+compile_version=1.13.320140106-SVN
+url="http://ftp.mozilla.org/pub/mozilla.org/js/mozjs17.0.0.tar.gz"
+file_size=6778934
+file_md5=20b6f8f1140ef6e47daa3b16965c9202
+dir='mozjs17.0.0/js/src'
+recipe_type=configure
+
+configure_options=(
+	--enable-threadsafe
+	--enable-readline
+	--with-system-ffi
+	--with-system-nspr
+)
+
+pre_link() {
+    find $target/include $target/lib/*.a $target/lib/pkgconfig/*.pc -type f -exec chmod -v 644 {} \;
+}
