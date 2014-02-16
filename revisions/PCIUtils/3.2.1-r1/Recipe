@@ -1,0 +1,15 @@
+# Recipe for version 3.2.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Jan 14 04:31:49 GMT 2014
+# Recipe (MakeRecipe) for PCIUtils by Carlo J. Calica <ccalica@gmail.com>, on Tue Oct 11 20:14:02 PDT 2005
+compile_version=1.8.4
+url="http://kernel.org/pub/software/utils/pciutils/pciutils-3.2.1.tar.bz2"
+file_size=336930
+file_md5=425b1acad6854cc2bbb06ac8e48e76fc
+
+recipe_type=makefile
+
+make_variables=(
+   "PREFIX=$target"
+   "SHARED=yes"
+)
+
+install_target="install install-lib"
