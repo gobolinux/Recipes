@@ -1,0 +1,14 @@
+# Recipe for version 4.12.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Jan 14 13:41:09 GMT 2014
+# Recipe (MakeRecipe) for KDE-Plasma-Addons by Giambattista Bloisi <giamby@infinito.it>, on Sat Nov 1 17:09:32 CET 2008
+compile_version=1.11.3
+url="ftp://ftp.kde.org/pub/kde/stable/4.12.0/src/kdeplasma-addons-4.12.0.tar.xz"
+file_size=1757972
+file_md5=6ae4f17a6d8dd183f9602740473d6b1f
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+# Contrary to how it sounds, this is a search path, not a target
+-DDBUS_INTERFACES_INSTALL_DIR="$goboShared/dbus-1/interfaces/"
+-DPLASMACLOCK_INCLUDE_DIR="$goboHeaders/plasmaclock"
+)
