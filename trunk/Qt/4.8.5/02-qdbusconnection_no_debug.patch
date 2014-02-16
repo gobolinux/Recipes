@@ -1,0 +1,13 @@
+--- qt-everywhere-opensource-src-4.8.5/src/dbus/qdbusconnection.cpp.orig	2014-01-20 03:28:34.000000000 +0000
++++ qt-everywhere-opensource-src-4.8.5/src/dbus/qdbusconnection.cpp	2014-01-20 03:29:50.000000000 +0000
+@@ -1109,8 +1109,10 @@ public:
+         // make sure this connection is running on the main thread
+         QCoreApplication *instance = QCoreApplication::instance();
+         if (!instance) {
++#ifndef QT_NO_DEBUG
+             qWarning("QDBusConnection: %s D-Bus connection created before QCoreApplication. Application may misbehave.",
+                      type == SessionBus ? "session" : type == SystemBus ? "system" : "generic");
++#endif
+         } else if (QDBusConnectionPrivate::d(*this)) {
+             QDBusConnectionPrivate::d(*this)->moveToThread(instance->thread());
+         }
