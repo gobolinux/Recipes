@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for Polkit-KDE-Agent by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Jan 14 02:06:43 GMT 2014
+# Recipe for version 0.99.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Jan 14 02:06:43 GMT 2014
+compile_version=1.13.320140106-SVN
+url="http://download.kde.org/stable/apps/KDE4.x/admin/polkit-kde-agent-1-0.99.0.tar.bz2"
+file_size=34433
+file_md5=a02d3fddc6270a88bceaf3ba604c92f8
+recipe_type=cmake
+
+pre_install() {
+	for i in $(find $dir/_build -name cmake_install.cmake)
+	do
+		GrepReplace "$kde_libs_path" "$target" "$i"
+	done
+}
