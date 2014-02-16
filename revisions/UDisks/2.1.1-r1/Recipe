@@ -1,0 +1,13 @@
+# Recipe for version 2.1.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jan 13 12:51:43 GMT 2014
+# Recipe (MakeRecipe) for UDisks by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon May 21 16:58:41 BRT 2012
+compile_version=1.0.0
+url="http://udisks.freedesktop.org/releases/udisks-2.1.1.tar.bz2"
+file_size=837872
+file_md5=80e03f312542b800cf3162254b202725
+recipe_type=configure
+
+install_variables=(
+    INTROSPECTION_TYPELIBDIR=$target/lib/girepository-1.0
+    INTROSPECTION_GIRDIR=$target/$(basename $goboShared)/gir-1.0
+    udevdir=$target/lib/udev
+)
