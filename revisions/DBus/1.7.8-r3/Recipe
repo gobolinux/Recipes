@@ -1,0 +1,22 @@
+# Recipe for version 1.7.8 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 2 12:24:52 BRST 2014
+# Recipe (MakeRecipe) for recipe-store by Carlo J. Calica <ccalica@gmail.com>, on Sat Oct 1 17:29:57 PDT 2005
+compile_version=1.10.2
+url="http://dbus.freedesktop.org/releases/dbus/dbus-1.7.8.tar.gz"
+file_size=1839231
+file_md5=ca49eca5719f16a58b2399617ecd1ff6
+recipe_type=configure
+configure_options=(
+    "--with-x"
+    "--with-xml"
+    "--localstatedir=$variable_target"
+    "--libexecdir=$target/lib"
+    "--with-console-auth-dir=$goboVariable/run/console"
+    "--without-systemdsystemunitdir"
+    "--disable-systemd"
+)
+
+unmanaged_files=(
+    $goboVariable/run/console/
+    $goboVariable/run/dbus/
+    $goboVariable/lib/dbus/
+)
