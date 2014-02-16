@@ -1,0 +1,20 @@
+# Recipe (MakeRecipe) for UPower by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jan 13 12:50:43 GMT 2014
+# Recipe for version 0.9.23 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jan 13 12:50:43 GMT 2014
+compile_version=1.13.320140106-SVN
+url="http://upower.freedesktop.org/releases/upower-0.9.23.tar.xz"
+file_size=425804
+file_md5=39cfd97bfaf7d30908f20cf937a57634
+recipe_type=configure
+
+install_variables=(
+    udevrulesdir=$target/lib/udev/rules.d
+)
+
+post_install() {
+    GrepReplace "\"root\"" "\"0\"" "$settings_target/dbus-1/system.d/org.freedesktop.UPower.conf"
+    GrepReplace "\"root\"" "\"0\"" "$target/Resources/Defaults/Settings/dbus-1/system.d/org.freedesktop.UPower.conf"
+}
+
+unmanaged_files=(
+    $goboVariable/lib/upower
+)
