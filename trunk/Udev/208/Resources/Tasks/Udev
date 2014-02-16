@@ -11,11 +11,18 @@ case "$cmd" in
 
    mountpoint -q "$goboStatus" || mount -t proc none "$goboStatus"
    mountpoint -q "$goboDevices" || mount -t devtmpfs none "$goboDevices"
-   mkdir -p "$goboDevices/pts" "$goboDevices/shm"
+   mkdir -p "$goboDevices/pts"
    mountpoint -q "$goboDevices/pts" || mount -t devpts devpts "$goboDevices/pts"
 
    # Udev handles uevents itself, so we don't need to have
    # the kernel call out to any binary in response to them
+   echo "UDEV task: /dev"
+   ls /dev/
+   echo "UDEV task: /dev/pts"
+   ls /dev/pts
+   echo "UDEV task: /proc/mounts"
+   cat /proc/mounts
+
    echo "" > "$goboStatus/sys/kernel/hotplug"
       
    # Start the udev daemon to continually watch for, and act on,
@@ -35,6 +42,7 @@ case "$cmd" in
    # are activated so they can be used.
    [ -x /sbin/vgchange ] && /sbin/vgchange -a y >/dev/null
 
+   echo "UDEV task: finished."
    ;;
    
 [Ss]top)
