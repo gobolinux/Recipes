@@ -8,15 +8,18 @@ unpack_files=files_in_root
 recipe_type=manifest
 dir=docbook-xml-4.5
 manifest=(
-    $dir/docbook.cat:share/xml/docbook/xml-dtd-4.5/.
-    $dir/calstblx.dtd:share/xml/docbook/xml-dtd-4.5/.
-    $dir/docbookx.dtd:share/xml/docbook/xml-dtd-4.5/.
-    $dir/soextblx.dtd:share/xml/docbook/xml-dtd-4.5/.
-    $dir/dbcentx.mod:share/xml/docbook/xml-dtd-4.5/.
-    $dir/dbgenent.mod:share/xml/docbook/xml-dtd-4.5/.
-    $dir/dbhierx.mod:share/xml/docbook/xml-dtd-4.5/.
-    $dir/dbnotnx.mod:share/xml/docbook/xml-dtd-4.5/.
-    $dir/dbpoolx.mod:share/xml/docbook/xml-dtd-4.5/.
-    $dir/htmltblx.mod:share/xml/docbook/xml-dtd-4.5/.
-    $dir/ent:share/xml/docbook/xml-dtd-4.5/ent
+    docbook.cat:share/xml/docbook/xml-dtd-4.5/.
+    calstblx.dtd:share/xml/docbook/xml-dtd-4.5/.
+    docbookx.dtd:share/xml/docbook/xml-dtd-4.5/.
+    soextblx.dtd:share/xml/docbook/xml-dtd-4.5/.
+    dbcentx.mod:share/xml/docbook/xml-dtd-4.5/.
+    dbgenent.mod:share/xml/docbook/xml-dtd-4.5/.
+    dbhierx.mod:share/xml/docbook/xml-dtd-4.5/.
+    dbnotnx.mod:share/xml/docbook/xml-dtd-4.5/.
+    dbpoolx.mod:share/xml/docbook/xml-dtd-4.5/.
+    htmltblx.mod:share/xml/docbook/xml-dtd-4.5/.
+    ent:share/xml/docbook/xml-dtd-4.5/ent
 )
+pre_link() {
+    cp -v -af *.dtd ent/ *.mod $target/share/xml/docbook/xml-dtd-4.5/
+}
