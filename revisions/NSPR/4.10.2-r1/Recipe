@@ -1,0 +1,31 @@
+# Recipe for version 4.10.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jan 13 12:18:25 GMT 2014
+# Recipe (MakeRecipe) for NSPR by Jonas Karlsson <jonka750@student.liu.se>, on Sun Sep 24 11:30:09 CEST 2006
+compile_version=1.8.2
+url="http://ftp.mozilla.org/pub/mozilla.org/nspr/releases/v4.10.2/src/nspr-4.10.2.tar.gz"
+file_size=1103130
+file_md5=f0d254da0b2b870d9a5fa094e879d4b8
+recipe_type=configure
+dir="nspr-4.10.2/nspr"
+
+configure_options=(
+   --enable-optimize
+   --disable-debug
+   --with-mozilla
+   --with-pthreads
+   $([ $(uname -m) = x86_64 ] && echo --enable-64bit)
+)
+
+pre_build() {
+   sed -ri 's#^(RELEASE_BINS =).*#\1#' pr/src/misc/Makefile.in
+   sed -i 's#$(LIBRARY) ##' config/rules.mk
+}
+
+pre_link() {
+   pushd ${target}/lib &&
+   for lib in *.so
+   do
+      mv ${lib} ${lib}.7
+      ln -s ${lib}.7 ${lib}
+   done &&
+   popd
+}
