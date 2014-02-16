@@ -1,0 +1,14 @@
+# Recipe for version 4.12.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Jan 14 02:11:44 GMT 2014
+# Recipe (MakeRecipe) for Nepomuk-Core by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jan 11 20:40:28 GMT 2014
+compile_version=1.13.320140106-SVN
+url="ftp://ftp.kde.org/pub/kde/stable/4.12.0/src/nepomuk-core-4.12.0.tar.xz"
+file_size=380312
+file_md5=c1e4c92642622bd61dc8e170bd63015b
+recipe_type=cmake
+
+pre_install() {
+	for i in $(find $dir/_build -name cmake_install.cmake)
+	do
+		GrepReplace "$kde_libs_path" "$target" "$i"
+	done
+}
