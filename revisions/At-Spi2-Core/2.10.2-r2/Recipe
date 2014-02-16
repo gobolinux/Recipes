@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for At-Spi2-Core by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 9 13:48:46 GMT 2014
+# Recipe for version 2.10.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 9 13:48:46 GMT 2014
+compile_version=1.13.3
+url="http://ftp.gnome.org/pub/gnome/sources/at-spi2-core/2.10/at-spi2-core-2.10.2.tar.xz"
+file_size=446272
+file_md5=d4a198201f6189fb248f3edd19efe39c
+recipe_type=configure
+
+pre_link() {
+	GrepReplace -B "root" "$(SuperUserName)" "$settings_target/at-spi2/accessibility.conf"
+	GrepReplace -B "root" "$(SuperUserName)" "$target/Resources/Defaults/Settings/at-spi2/accessibility.conf"
+}
