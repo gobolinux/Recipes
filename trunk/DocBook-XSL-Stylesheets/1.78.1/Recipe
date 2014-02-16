@@ -5,10 +5,11 @@ url="$httpSourceforge/docbook/docbook-xsl-1.78.1.tar.bz2"
 file_size=5003045
 file_md5=6dd0f89131cc35bf4f2ed105a1c17771
 recipe_type=manifest
+dir=docbook-xsl-1.78.1
 manifest=(
    "fo:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/fo"
    "lib:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/lib"
-   "VERSION:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/VERSION"
+   "VERSION:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/VERSION.xsl"
    "html:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/html"
    "xhtml:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/xhtml"
    "xhtml-1_1:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/xhtml-1_1"
