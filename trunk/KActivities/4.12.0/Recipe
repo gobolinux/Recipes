@@ -1,0 +1,18 @@
+# Recipe for version 4.12.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Jan 14 03:31:09 GMT 2014
+# Recipe (MakeRecipe) for KActivities by Lucas C. Villa Real, on Mon Mar 26 00:16:01 BRT 2012
+compile_version=1.10.1
+url="ftp://ftp.kde.org/pub/kde/stable/4.12.0/src/kactivities-4.12.0.tar.xz"
+file_size=86916
+file_md5=c09a7173efb90ab78a70a1653f738852
+recipe_type=cmake
+
+# Workaround to let cmake find the required cmake 'include' files
+cmake_options=(
+    -DCMAKE_INSTALL_PREFIX=/usr
+)
+
+pre_install() {
+    GrepReplace "CMAKE_INSTALL_PREFIX \"/usr\"" "CMAKE_INSTALL_PREFIX \"$target\"" $dir/_build/cmake_install.cmake 
+    GrepReplace "/usr/" "$target/" $dir/_build/install_manifest.txt
+    GrepReplace "CMAKE_INSTALL_PREFIX:PATH=/usr" "CMAKE_INSTALL_PREFIX:PATH=$target" $dir/_build/CMakeCache.txt
+}
