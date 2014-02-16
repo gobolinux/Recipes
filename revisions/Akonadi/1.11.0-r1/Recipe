@@ -1,0 +1,17 @@
+# Recipe for version 1.11.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jan 13 10:17:22 GMT 2014
+# Recipe (MakeRecipe) for Akonadi by Giambattista Bloisi <giamby@infinito.it>, on Sat Oct 25 22:20:43 CEST 2008
+compile_version=1.11.2
+url="ftp://ftp.kde.org/pub/kde/stable/akonadi/src/akonadi-1.11.0.tar.bz2"
+file_size=235101
+file_md5=580361613d04b260f807b2a4df099eca
+recipe_type=cmake
+
+with_mysql=( "-DMYSQLD_EXECUTABLE=${mysql_path}/libexec/mysqld" )
+
+environment=(
+   QMAKESPEC="${qt_path}/mkspecs/linux-g++"
+)
+
+pre_link() {
+   GrepReplace "\${PACKAGE_PREFIX_DIR}" "$target" $target/lib/cmake/Akonadi/AkonadiConfig.cmake
+}
