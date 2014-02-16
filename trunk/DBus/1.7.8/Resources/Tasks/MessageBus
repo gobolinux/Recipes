@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # messagebus:   The D-BUS systemwide message bus
 #
@@ -10,8 +10,18 @@
 # pidfile: /Programs/DBus/Variable/run/dbus/pid
 #
 
+source GoboPath
+
 op="$1"
 [ "$op" ] || op="start"
+
+function SuperUserWorkaround() {
+   if [ "$(SuperUserName)" != "root" ]
+   then
+      GrepReplace -B "\"root\"" "\"$(SuperUserName)\"" "$goboSettings/dbus-1/system.d"/*.conf
+      GrepReplace -B "User=root" "User=$(SuperUserName)" "$goboShared/dbus-1/system-services"/*.service
+   fi
+}
 
 case "$op" in
 [Ss]tart)
@@ -30,6 +40,8 @@ case "$op" in
    # so we can rearrange this easily
    RETVAL=0
    
+   SuperUserWorkaround
+   /bin/dbus-uuidgen --ensure
    /bin/dbus-daemon --system
    RETVAL=$?
    #sleep 2
