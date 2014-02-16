@@ -1,0 +1,13 @@
+--- gwenview-4.12.0/lib/CMakeLists.txt.orig	2014-01-14 14:09:32.000000000 +0000
++++ gwenview-4.12.0/lib/CMakeLists.txt	2014-01-14 14:10:38.000000000 +0000
+@@ -26,9 +26,7 @@ endif()
+ 
+ if ("${jpeglib_version}" LESS 80)
+     set(GV_JPEG_DIR libjpeg-62)
+-endif()
+-
+-if ("${jpeglib_version}" EQUAL 80)
++else ("${jpeglib_version}" LESS 80)
+     set(GV_JPEG_DIR libjpeg-80)
+ endif()
+ 
