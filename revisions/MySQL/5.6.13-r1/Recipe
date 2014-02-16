@@ -1,0 +1,43 @@
+# Recipe for version 5.6.13 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Sep 2 00:33:11 BRT 2013
+# Recipe (MakeRecipe) for MySQL by Maglan C. Diemer, maglan@univates.br, on Qui Dez 8 20:53:16 BRST 2005
+compile_version=1.10.0
+url="http://dev.mysql.com/get/Downloads/MySQL-5.6/mysql-5.6.13.tar.gz/from/http://cdn.mysql.com"
+dir=mysql-5.6.13
+file_size=35951160
+file_md5=4bfeb22f2f876825db70d9820d164343
+recipe_type=cmake
+
+cmake_options=(
+    -DWITH_EMBEDDED_SERVER=TRUE
+)
+
+unmanaged_files=(
+   "$goboPrefix/Files/MySQL"
+)
+
+# embedded mysql library recquires -fPIC
+environment=(
+   CXXFLAGS="-fPIC $CXXFLAGS" 
+   CFLAGS="-fPIC -D_GNU_SOURCE $CFLAGS"
+)
+
+pre_install() {
+   mkdir -p "$goboPrefix/Files/MySQL"
+}
+
+pre_link() {
+   # task file
+   mkdir -p $target/Resources/Tasks
+   cp support-files/mysql.server $target/Resources/Tasks/MySQL
+   chmod +x $target/Resources/Tasks/MySQL
+    
+   # settings files
+   mkdir -p ${target}/Resources/Defaults/Settings/MySQL
+   cp support-files/my-*.cnf ${target}/Resources/Defaults/Settings/MySQL
+   ln -s my-medium.cnf ${target}/Resources/Defaults/Settings/MySQL/my.cnf
+
+   # libraries should be linked in lib as well as in lib/mysql
+   pushd "$target/lib"
+   ln -sf mysql/*.* .
+   popd
+}
