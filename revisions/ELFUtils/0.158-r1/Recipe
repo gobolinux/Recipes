@@ -1,0 +1,13 @@
+# Recipe for version 0.158 by Hisham Muhammad <hisham@gobolinux.org>, on Thu Feb 27 15:24:09 BRT 2014
+# Recipe for ELFUtils 0.158 by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.8.0
+url="https://fedorahosted.org/releases/e/l/elfutils/0.158/elfutils-0.158.tar.bz2"
+file_size=4931570
+file_md5=050a4909e452d01ab4747fd69d4036e0
+recipe_type=configure
+
+pre_build() {
+	for i in `find . -name Makefile`; do 
+		sed 's/-Werror//g' $i > $i.tmp && mv $i.tmp $i; 
+	done
+}
