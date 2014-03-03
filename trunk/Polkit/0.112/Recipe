@@ -13,9 +13,4 @@ install_variables=(
 
 pre_link() {
     mkdir -p $target/share/polkit-1/rules.d
-    mkdir -p $goboVariable/ConsoleKit
 }
-
-unmanaged_files=(
-    $goboVariable/ConsoleKit
-)

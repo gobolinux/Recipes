@@ -37,5 +37,3 @@ then
    chown polkitd $target/share/polkit-1/rules.d
    chmod 700 $target/share/polkit-1/rules.d
 fi
-
-mkdir -p $goboVariable/run/ConsoleKit
