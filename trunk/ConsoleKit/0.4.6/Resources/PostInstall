@@ -1,0 +1,20 @@
+#!/bin/bash
+
+source GoboPath
+
+sessionFile="$goboSettings/pam.d/system-session"
+if ! grep -q "ConsoleKit" "$sessionFile" 2> /dev/null
+then
+	cat >> "$sessionFile" << "EOF"
+# Begin ConsoleKit addition
+
+session   optional    pam_loginuid.so
+session   optional    pam_ck_connector.so nox11
+
+# End ConsoleKit addition
+EOF
+fi
+
+superuser=`cat $goboSettings/passwd | grep ':x:0:0:' | cut -d: -f1`
+consolekitConf="$goboSettings/dbus-1/system.d/ConsoleKit.conf"
+GrepReplace -B "policy user=\"[a-zA-Z_][a-zA-Z_0-9]*\"" "policy user=\"$superuser\"" "$consolekitConf"
