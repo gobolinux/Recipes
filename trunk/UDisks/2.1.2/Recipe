@@ -11,3 +11,11 @@ install_variables=(
     INTROSPECTION_GIRDIR=$target/$(basename $goboShared)/gir-1.0
     udevdir=$target/lib/udev
 )
+
+post_install() {
+	mkdir -p $goboVariable/lib/udisks2
+}
+
+unmanaged_files=(
+	$goboVariable/lib/udisks2
+)
