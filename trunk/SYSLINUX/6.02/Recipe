@@ -1,0 +1,28 @@
+# Recipe (MakeRecipe) for SYSLINUX by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Feb 17 02:54:55 GMT 2014
+# Recipe for version 6.02 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Feb 17 02:54:55 GMT 2014
+compile_version=1.13.3
+url="https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.02.tar.xz"
+file_size=6471080
+file_md5=6f275813a1b08cf852e55c0a3f8fbc78
+recipe_type=makefile
+makefile='Makefile'
+build_target="bios installer"
+install_target="bios installer install"
+
+install_variables=( INSTALLROOT=$target )
+
+pre_link() {
+	if [ -d "$target/usr" ]
+	then
+		Quiet pushd $target/usr
+		for i in *
+		do 
+			if [ ! -d ../$i ]
+			then mv $i ..
+			else cp -r $i ..; rm -rf $i
+			fi
+		done
+		Quiet popd
+		rmdir $target/usr
+	fi
+}
