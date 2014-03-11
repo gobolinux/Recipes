@@ -1,0 +1,30 @@
+From: http://cblfs.cross-lfs.org/index.php/TeTeX
+Submitted By: Michael (rabenkind at selfservix dot org)
+Date: 2009-09-01
+Initial Package Version: 3.0
+Origin: Myself
+Upstream Status: Unknown
+Description: Fix compilation with gcc-4.4.1
+
+--- tetex-src-3.0/texk/web2c/cpascal.h.orig	2009-09-01 18:04:18.000000000 +0200
++++ tetex-src-3.0/texk/web2c/cpascal.h	2009-09-01 17:54:12.000000000 +0200
+@@ -15,6 +15,8 @@
+ /* We must include this first, to resolve many C issues.  */
+ #include "config.h"
+ 
++#define getline pascal_getline
++
+ /* We only use getopt in the applications, not in web2c itself.  */
+ #include <kpathsea/getopt.h>
+ 
+--- tetex-src-3.0/texk/dvipsk/afm2tfm.c.orig	2009-09-01 18:07:35.000000000 +0200
++++ tetex-src-3.0/texk/dvipsk/afm2tfm.c	2009-09-01 18:00:33.000000000 +0200
+@@ -40,6 +40,8 @@
+ #endif
+ #endif /* KPATHSEA */
+ 
++#define getline pascal_getline
++
+ /* JLH: added these to make the code easier to read and remove some
+    ascii<->ebcdic dependencies */
+ #define ASCII_A 65
