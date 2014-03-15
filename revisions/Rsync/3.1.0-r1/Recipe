@@ -1,0 +1,12 @@
+# Recipe for version 3.1.0 by Hisham Muhammad <hisham@gobolinux.org>, on Tue Mar 11 17:41:32 UTC 2014
+# by Andre Detsch
+# 2004.01.06 16:59
+compile_version=1.8.0
+url='http://rsync.samba.org/ftp/rsync/src/rsync-3.1.0.tar.gz'
+file_size=883901
+file_md5=3be148772a33224771a8d4d2a028b132
+recipe_type=configure
+
+configure_options=(
+  "--prefix=${target}"
+)
