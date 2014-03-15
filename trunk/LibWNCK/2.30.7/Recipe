@@ -5,3 +5,7 @@ url="http://napoleon.acc.umu.se/pub/GNOME/sources/libwnck/2.30/libwnck-2.30.7.ta
 file_size=726965
 file_md5=9bef4b8560acca78cd6f08a95039af9c
 recipe_type=configure
+make_variables=(
+   INTROSPECTION_GIRDIR="$target/share/gir-1.0"
+   INTROSPECTION_TYPELIBDIR="$target/lib/girepository-1.0"
+)
