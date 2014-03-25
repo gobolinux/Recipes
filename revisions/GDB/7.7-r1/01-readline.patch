@@ -1,0 +1,40 @@
+Fixes build errors. Patch taken from the community.
+Reference: http://lists.opensuse.org/opensuse-commit/2009-03/msg00362.html
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- gdb-7.0.1/gdb/tui/tui-io.c.orig	2010-02-02 13:09:23.000000000 -0200
++++ gdb-7.0.1/gdb/tui/tui-io.c	2010-02-02 13:10:38.000000000 -0200
+@@ -514,7 +514,7 @@ tui_rl_display_match_list (char **matche
+ void
+ tui_setup_io (int mode)
+ {
+-  extern int readline_echoing_p;
++  extern int _rl_echoing_p;
+  
+   if (mode)
+     {
+@@ -524,12 +524,12 @@ tui_setup_io (int mode)
+       tui_old_rl_prep_terminal = rl_prep_term_function;
+       tui_old_rl_getc_function = rl_getc_function;
+       tui_old_rl_outstream = rl_outstream;
+-      tui_old_readline_echoing_p = readline_echoing_p;
++      tui_old_readline_echoing_p = _rl_echoing_p;
+       rl_redisplay_function = tui_redisplay_readline;
+       rl_deprep_term_function = tui_deprep_terminal;
+       rl_prep_term_function = tui_prep_terminal;
+       rl_getc_function = tui_getc;
+-      readline_echoing_p = 0;
++      _rl_echoing_p = 0;
+       rl_outstream = tui_rl_outstream;
+       rl_prompt = 0;
+       rl_completion_display_matches_hook = tui_rl_display_match_list;
+@@ -566,7 +566,7 @@ tui_setup_io (int mode)
+       rl_getc_function = tui_old_rl_getc_function;
+       rl_outstream = tui_old_rl_outstream;
+       rl_completion_display_matches_hook = 0;
+-      readline_echoing_p = tui_old_readline_echoing_p;
++      _rl_echoing_p = tui_old_readline_echoing_p;
+       rl_already_prompted = 0;
+ 
+       /* Save tty for SIGCONT.  */
