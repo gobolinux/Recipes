@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for Meanwhile by Jonas Karlsson <jonka750@student.liu.se>, on Tue Jun 24 13:11:25 CEST 2008
+# Recipe for version 1.0.2 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Jun 24 13:11:25 CEST 2008
+compile_version=1.8.2
+url="$httpSourceforge/meanwhile/meanwhile-1.0.2.tar.gz"
+file_size=479325
+file_md5=bf4ced109a367b4c5d71fe63c043270e
+recipe_type=configure
+configure_options=(
+   "--disable-debug"
+   "--disable-doxygen"
+)
+with_doxygen="--enable-doxygen"
+with_doc="--enable-doxygen"
