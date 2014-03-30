@@ -1,0 +1,13 @@
+compile_version=1.9.0
+url="http://sourceforge.net/projects/dejavu/files/dejavu/2.34/dejavu-fonts-ttf-2.34.tar.bz2"
+file_size=4706932
+file_md5=161462de16e2ca79873bc2b0d2e6c74c
+recipe_type=makefile
+do_build=no
+do_install=no
+pre_link() {
+   mkdir -p $target/Resources/Defaults/Settings/fonts/conf.d
+   cp -av fontconfig/* $target/Resources/Defaults/Settings/fonts/conf.d
+   mkdir -p $target/share/fonts/TTF
+   cp -av ttf/* $target/share/fonts/TTF
+}
