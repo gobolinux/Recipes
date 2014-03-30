@@ -26,6 +26,8 @@ function SuperUserWorkaround() {
 
 case "$op" in
 [Ss]tart)
+   # DBus expects run/console to exist.
+   mkdir -p /Data/Variable/run/console/
    # Sanity checks.
    mkdir -p /Data/Variable/run/dbus/
    if [ -e /Data/Variable/run/dbus/pid ]
