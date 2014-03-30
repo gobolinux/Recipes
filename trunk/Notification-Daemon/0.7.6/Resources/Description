@@ -1,0 +1,11 @@
+[Name] Notification-Daemon
+[Summary] Desktop Notification Framework notification daemon.
+[Description] Notification-Daemon is a daemon which manages drawing \
+notifications using theme engines on the desktop. These notifications \
+are designed to notify the user of something without interrupting \
+their work with a dialog box that they must close. Passive popups can \
+automatically disappear after a short period of time. \
+Notification-Daemon is spawned through a DBUS API and can use DBus to \
+create notifications.
+[License] GNU General Public License v2
+[Homepage] http://www.galago-project.org/news/index.php
