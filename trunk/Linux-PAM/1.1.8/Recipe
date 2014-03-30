@@ -33,7 +33,13 @@ unmanaged_files=(
 pre_link(){                                            
    # Make unix_chkpwd setuid so that non-root        
    # processes can read shadow file.             
-   chmod u+s "${target}/sbin/unix_chkpwd"       
+   chmod u+s "${target}/sbin/unix_chkpwd"
+
+   Quiet pushd "$settings_target/pam.d"
+   ln -fs system-auth system-session
+   ln -fs system-auth system-account
+   ln -fs system-auth system-password
+   Quiet popd
 }
 
 post_install_message="You must recompile Shadow to enable PAM support for it."
