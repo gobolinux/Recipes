@@ -1,0 +1,15 @@
+# Recipe for version 3.12.0 by Hisham Muhammad <hisham@gobolinux.org>, on Tue Mar 25 18:59:02 BRT 2014
+# Recipe (MakeRecipe) for Gnome-Keyring by roko, <ro.ko@mcnon.com>, on Sat Jan 1 01:19:40 BRST 2005
+compile_version=1.8.4
+url="http://ftp.gnome.org/pub/gnome/sources/gnome-keyring/3.12/gnome-keyring-3.12.0.tar.xz"
+file_size=1162892
+file_md5=b0e2041c31c68b92f324d1ec7fa9d289
+recipe_type=configure
+configure_options=(
+   --with-pkcs11-modules="$target/share/p11-kit/modules"
+   --with-pkcs11-config="$settings_target/pkcs11"
+)
+
+install_variables=(
+   P11_MODULE_PATH=$target/share/p11-kit/modules
+)
