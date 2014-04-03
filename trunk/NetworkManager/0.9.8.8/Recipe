@@ -10,6 +10,12 @@ configure_options=(
    --with-udev-dir=$target/lib/udev
 )
 
+install_variables=(
+   DBUS_SYS_DIR=$settings_target/dbus-1/system.d
+   UDEV_BASE_DIR=$target/lib/udev
+)
+
 unmanaged_files=(
-    $variable_target/run/NetworkManager
+   $goboVariable/run/NetworkManager
+   $goboVariable/lib/NetworkManager
 )
