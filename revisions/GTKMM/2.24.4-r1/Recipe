@@ -1,0 +1,12 @@
+# Recipe for version 2.24.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Apr 3 15:29:16 GMT 2014
+# Recipe (MakeRecipe) for GTKMM by Rafael Guterres Jeffman (rafasgj), on Thu Nov 10 15:40:47 BRST 2005
+compile_version=1.9.0
+url="http://ftp.gnome.org/pub/GNOME/sources/gtkmm/2.24/gtkmm-2.24.4.tar.xz"
+file_size=10262212
+file_md5=b9ac60c90959a71095f07f84dd39961d
+recipe_type=configure
+
+configure_options=(
+    --disable-docs
+)
+with_docs="--enable-docs"
