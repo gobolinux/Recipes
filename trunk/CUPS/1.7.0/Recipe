@@ -60,6 +60,7 @@ pre_link() {
    rm -rf -- $target/share/cups/banners         # This is now part of the CUPS Filters package
    rm -rf -- $target/share/cups/data/testprint  # Ditto.
    Quiet pushd $target/lib
+   mkdir -p cups/driver
    ln -s ../share/cups .
    Quiet popd
    if [ ! -e "$settings_target/cups/client.conf" ]
