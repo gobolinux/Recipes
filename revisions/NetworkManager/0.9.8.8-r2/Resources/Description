@@ -1,0 +1,12 @@
+[Name] NetworkManager 
+[Summary] A network manager powered by DBus and HAL 
+[Description] NetworkManager attempts to keep an active network connection available at all
+times.  The point of NetworkManager is to make networking configuration and
+setup as painless and automatic as possible.  If using DHCP, NetworkManager is
+_intended_ to replace default routes, obtain IP addresses from a DHCP server,
+and change nameservers whenever it sees fit.  In effect, the goal of
+NetworkManager is to make networking Just Work.  If you have special needs,
+we'd like to hear about them, but understand that NetworkManager is not
+intended to serve the needs of all users.
+[License] GNU General Public License Version 2
+[Homepage] http://www.gnome.org/projects/NetworkManager/
