@@ -1,0 +1,12 @@
+# Recipe for version 0.18.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Apr 3 14:54:41 GMT 2014
+# Recipe (MakeRecipe) for GParted by Andre Detsch <detsch@gobolinux.org>, on Mon Nov 20 21:56:41 BRST 2006
+compile_version=1.8.2
+url="$httpSourceforge/gparted/gparted-0.18.0.tar.bz2"
+file_size=2070650
+file_md5=c4c928de08519c923abaa5a099881241
+recipe_type=configure
+configure_options=(
+    --disable-doc
+    --disable-scrollkeeper
+)
+with_doc=( --enable-doc )
