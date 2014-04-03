@@ -9,3 +9,7 @@ configure_options=(
    --with-pkcs11-modules="$target/share/p11-kit/modules"
    --with-pkcs11-config="$settings_target/pkcs11"
 )
+
+install_variables=(
+   P11_MODULE_PATH=$target/share/p11-kit/modules
+)
