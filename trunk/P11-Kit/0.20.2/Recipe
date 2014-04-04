@@ -8,3 +8,9 @@ recipe_type=configure
 configure_options=(
    --without-trust-paths
 )
+
+install_variables=(
+	p11_system_config=$settings_target/pkcs11
+	p11_system_config_file=$settings_target/pkcs11/pkcs11.conf
+	p11_system_config_modules=$settings_target/pkcs11/modules
+)
