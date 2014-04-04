@@ -1,0 +1,12 @@
+# Recipe for version 2.34.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Apr 3 15:35:44 GMT 2014
+# Recipe (MakeRecipe) for PangoMM by Giambattista Bloisi <giamby@infinito.it>, on Fri Oct 17 20:38:37 CEST 2008
+compile_version=1.11.2
+url="http://ftp.gnome.org/pub/gnome/sources/pangomm/2.34/pangomm-2.34.0.tar.xz"
+file_size=516028
+file_md5=2c702caede167323c9ed9eed2b933098
+recipe_type=configure
+
+configure_options=(
+    --disable-documentation
+)
+with_docs="--enable-documentation"
