@@ -1,0 +1,10 @@
+# Recipe for version 0.19.6 by Hisham Muhammad <hisham@gobolinux.org>, on Tue Apr 1 16:55:53 BRT 2014
+# Recipe (MakeRecipe) for Fribidi by Rafael Guterres Jeffman (rafasgj), on Thu Sep 8 10:06:14 BRT 2005
+compile_version=1.13.3
+url="http://fribidi.org/download/fribidi-0.19.6.tar.bz2"
+file_size=639022
+file_md5=ce93d862344991173dabb609bf93ca1d
+recipe_type=configure
+configure_options=(
+    --enable-charsets
+)
