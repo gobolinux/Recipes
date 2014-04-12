@@ -16,28 +16,31 @@ op="$1"
 [ "$op" ] || op="start"
 
 function SuperUserWorkaround() {
-   if [ "$(SuperUserName)" != "root" ]
-   then
-      GrepReplace -B "user=\"root\"" "user=\"$(SuperUserName)\"" "$goboSettings/dbus-1/system.d"/*.conf
-      GrepReplace -B "user=\"0\"" "user=\"$(SuperUserName)\"" "$goboSettings/dbus-1/system.d"/*.conf
-      GrepReplace -B "User=root" "User=$(SuperUserName)" "$goboShared/dbus-1/system-services"/*.service
-   fi
+   local superuser="$(SuperUserName)"
+   for entry in "root" "gobo" "0"
+   do
+      if [ "$superuser" != "$entry" ]
+      then
+         GrepReplace -B "user=\"$entry\"" "user=\"$superuser\"" "$goboSettings/dbus-1/system.d"/*.conf
+         GrepReplace -B "User=$entry" "User=$superuser" "$goboShared/dbus-1/system-services"/*.service
+      fi
+   done
 }
 
 case "$op" in
 [Ss]tart)
    # DBus expects run/console to exist.
-   mkdir -p /Data/Variable/run/console/
+   mkdir -p $goboVariable/run/console/
    # Sanity checks.
-   mkdir -p /Data/Variable/run/dbus/
-   if [ -e /Data/Variable/run/dbus/pid ]
+   mkdir -p $goboVariable/run/dbus/
+   if [ -e $goboVariable/run/dbus/pid ]
    then
-      if ps `cat /Data/Variable/run/dbus/pid` &> /dev/null
+      if ps `cat $goboVariable/run/dbus/pid` &> /dev/null
       then
          echo "Already running."
          exit 1
       else
-         rm -f /Data/Variable/run/dbus/pid
+         rm -f $goboVariable/run/dbus/pid
       fi
    fi   
    # so we can rearrange this easily
@@ -52,6 +55,6 @@ case "$op" in
    ;;
 [Ss]top)
    killall dbus-daemon
-   rm -f /Data/Variable/run/dbus/pid > /dev/null
+   rm -f $goboVariable/run/dbus/pid > /dev/null
    ;;
 esac
