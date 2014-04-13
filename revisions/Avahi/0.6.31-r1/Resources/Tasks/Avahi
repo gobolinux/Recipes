@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# Task to start/stop Avahi by Andrew Stormont <andyjstormont@googlemail.com>
+
+AVAHI_RUNNING=0
+
+if [ ! -z `pgrep avahi-daemon` ]; then
+    # avahi in process list
+    AVAHI_RUNNING=1;
+fi;
+
+case "$1" in 
+    [sS]tart)
+        if [ $AVAHI_RUNNING == 1 ]; then
+            echo "Avahi is already running.";
+            exit 1;
+        else
+            avahi-daemon -D
+        fi;
+    ;;
+    [sS]top) 
+        if [ $AVAHI_RUNNING == 0 ]; then
+            echo "Avahi is not running";
+            exit 1;
+        else
+            killall avahi-daemon
+        fi;
+    ;;
+esac
