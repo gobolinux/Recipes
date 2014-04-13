@@ -1,0 +1,37 @@
+# Recipe for version 5.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Apr 12 22:28:08 GMT 2014
+# Recipe (MakeRecipe) for PulseAudio by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Mar 2 16:47:14 PST 2008
+compile_version=1.13.1
+url="http://freedesktop.org/software/pulseaudio/releases/pulseaudio-5.0.tar.xz"
+file_size=1455428
+file_md5=c43749838612f4860465e83ed62ca38e
+recipe_type=configure
+
+configure_options=(
+  --disable-ltdl-install
+  --without-caps
+  --disable-samplerate    #Disable optional libsamplerate support
+  --disable-oss           #Disable optional OSS support
+  --disable-alsa          #Disable optional ALSA support
+  --disable-solaris       #Disable optional Solaris audio support
+  --disable-glib2         #Disable optional GLib 2 support
+  --disable-gconf         #Disable optional GConf support
+  --disable-avahi         #Disable optional Avahi support
+  --disable-jack          #Disable optional JACK support
+  --disable-asyncns       #Disable optional Async DNS support
+  --disable-tcpwrap       #Disable optional TCP wrappers support
+  --disable-lirc          #Disable optional LIRC support
+  --disable-hal           #Disable optional HAL support
+  --disable-bluez         #Disable optional BlueZ support
+  --disable-dbus          #Disable optional D-Bus support
+  --disable-polkit        #Disable optional PolicyKit support
+)
+with_alsa="--enable-alsa"
+with_avahi="--enable-avahi"
+with_bluez="--enable-bluez"
+with_dbus="--enable-dbus"
+with_gconf="--enable-gconf"
+with_glib2="--enable-glib2"
+with_lirc="--enable-lirc"
+with_jack="--enable-jack"
+with_samplerate="--enable-samplerate"
+with_tcpwrap="--enable-tcpwrap"
