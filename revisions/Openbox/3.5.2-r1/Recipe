@@ -1,0 +1,11 @@
+# Recipe for version 3.5.2 by Hisham Muhammad <hisham@gobolinux.org>, on Tue Apr 8 21:23:34 BRT 2014
+compile_version=1.8.0
+url="http://icculus.org/openbox/releases/openbox-3.5.2.tar.gz"
+file_size=972751
+file_md5=93df606606053b7e8578a5c116afb8ec
+recipe_type=configure
+
+configure_options=(
+   --with-x
+   --enable-startup-notification
+)
