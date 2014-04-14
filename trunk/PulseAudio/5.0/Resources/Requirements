@@ -1,2 +1,2 @@
-required_users=("pulse")
 required_groups=( "pulse-rt" "pulse-access" )
+required_users=("pulse groups=pulse-rt,pulse-access")
