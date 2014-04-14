@@ -1,0 +1,12 @@
+# Recipe for version 1.9.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Apr 14 20:52:32 UTC 2014
+# Recipe (MakeRecipe) for TagLib by Leandro Motta Barros <lmb@stackedboxes.org>, on Wed Sep 21 23:20:55 BRT 2011
+compile_version=1.13.3
+url="http://taglib.github.io/releases/taglib-1.9.1.tar.gz"
+file_size=654074
+file_md5=0d35df96822bbd564c5504cb3c2e4d86
+recipe_type=cmake
+
+cmake_options=(
+    -DWITH_ASF=ON
+    -DWITH_MP4=ON
+)
