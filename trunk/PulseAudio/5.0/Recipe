@@ -1,14 +1,14 @@
-# Recipe for version 5.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Apr 12 22:28:08 GMT 2014
+# Recipe for version 5.0 by Hisham Muhammad <hisham@gobolinux.org>, on Tue Apr 8 25.07:29 BRT 2014
 # Recipe (MakeRecipe) for PulseAudio by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Mar 2 16:47:14 PST 2008
-compile_version=1.13.1
+compile_version=5.00.1
 url="http://freedesktop.org/software/pulseaudio/releases/pulseaudio-5.0.tar.xz"
 file_size=1455428
 file_md5=c43749838612f4860465e83ed62ca38e
 recipe_type=configure
-
+autogen_before_configure=yes
+autogen=bootstrap.sh
 configure_options=(
   --disable-ltdl-install
-  --without-caps
   --disable-samplerate    #Disable optional libsamplerate support
   --disable-oss           #Disable optional OSS support
   --disable-alsa          #Disable optional ALSA support
@@ -24,6 +24,7 @@ configure_options=(
   --disable-bluez         #Disable optional BlueZ support
   --disable-dbus          #Disable optional D-Bus support
   --disable-polkit        #Disable optional PolicyKit support
+  --without-caps
 )
 with_alsa="--enable-alsa"
 with_avahi="--enable-avahi"
@@ -35,3 +36,8 @@ with_lirc="--enable-lirc"
 with_jack="--enable-jack"
 with_samplerate="--enable-samplerate"
 with_tcpwrap="--enable-tcpwrap"
+
+environment=(
+   # configure should do this already, but it doesn't
+   GLIB20_CFLAGS=`pkg-config --cflags glib-2.0`
+)
