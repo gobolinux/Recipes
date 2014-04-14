@@ -1,0 +1,263 @@
+			     BASH PATCH REPORT
+			     =================
+
+Bash-Release: 4.0
+Patch-ID: bash40-007
+
+Bug-Reported-by:	AnMaster <anmaster@tele2.se>
+Bug-Reference-ID:	<49A41C18.80807@tele2.se>
+Bug-Reference-URL:	http://lists.gnu.org/archive/html/bug-bash/2009-02/msg00188.html
+
+Bug-Description:
+
+Bash had a number of problems parsing associative array subscripts containing
+special characters.  The subscripts are supposed to be read as if they are
+enclosed between double quotes.
+
+Patch:
+
+*** ../bash-4.0/parse.y	2009-01-08 08:29:12.000000000 -0500
+--- bash/parse.y	2009-02-25 17:25:56.000000000 -0500
+***************
+*** 2919,2922 ****
+--- 2919,2923 ----
+  #define P_COMMAND	0x08	/* parsing a command, so look for comments */
+  #define P_BACKQUOTE	0x10	/* parsing a backquoted command substitution */
++ #define P_ARRAYSUB	0x20	/* parsing a [...] array subscript for assignment */
+  
+  /* Lexical state while parsing a grouping construct or $(...). */
+***************
+*** 3134,3137 ****
+--- 3134,3139 ----
+  	      FREE (nestret);
+  	    }
++ 	  else if ((flags & P_ARRAYSUB) && (tflags & LEX_WASDOL) && (ch == '(' || ch == '{' || ch == '['))	/* ) } ] */
++ 	    goto parse_dollar_word;
+  	}
+        /* Parse an old-style command substitution within double quotes as a
+***************
+*** 3150,3153 ****
+--- 3150,3154 ----
+  	/* check for $(), $[], or ${} inside quoted string. */
+  	{
++ parse_dollar_word:
+  	  if (open == ch)	/* undo previous increment */
+  	    count--;
+***************
+*** 4277,4281 ****
+  		      (token_index == 0 && (parser_state&PST_COMPASSIGN))))
+          {
+! 	  ttok = parse_matched_pair (cd, '[', ']', &ttoklen, 0);
+  	  if (ttok == &matched_pair_error)
+  	    return -1;		/* Bail immediately. */
+--- 4277,4281 ----
+  		      (token_index == 0 && (parser_state&PST_COMPASSIGN))))
+          {
+! 	  ttok = parse_matched_pair (cd, '[', ']', &ttoklen, P_ARRAYSUB);
+  	  if (ttok == &matched_pair_error)
+  	    return -1;		/* Bail immediately. */
+*** ../bash-4.0/arrayfunc.c	2009-01-04 14:32:21.000000000 -0500
+--- bash/arrayfunc.c	2009-02-25 07:58:54.000000000 -0500
+***************
+*** 605,666 ****
+  }
+  
+! /* This function assumes s[i] == '['; returns with s[ret] == ']' if
+!    an array subscript is correctly parsed. */
+! int
+! skipsubscript (s, i)
+!      const char *s;
+!      int i;
+! {
+!   int count, c;
+! #if defined (HANDLE_MULTIBYTE)
+!   mbstate_t state, state_bak;
+!   size_t slength, mblength;
+! #endif
+! 
+! #if defined (HANDLE_MULTIBYTE)
+!   memset (&state, '\0', sizeof (mbstate_t));
+!   slength = strlen (s + i);
+! #endif
+!   
+!   count = 1;
+!   while (count)
+!     {
+!       /* Advance one (possibly multibyte) character in S starting at I. */
+! #if defined (HANDLE_MULTIBYTE)
+!       if (MB_CUR_MAX > 1)
+! 	{
+! 	  state_bak = state;
+! 	  mblength = mbrlen (s + i, slength, &state);
+! 
+! 	  if (MB_INVALIDCH (mblength))
+! 	    {
+! 	      state = state_bak;
+! 	      i++;
+! 	      slength--;
+! 	    }
+! 	  else if (MB_NULLWCH (mblength))
+! 	    return i;
+! 	  else
+! 	    {
+! 	      i += mblength;
+! 	      slength -= mblength;
+! 	    }
+! 	}
+!       else
+! #endif
+!       ++i;
+! 
+!       c = s[i];
+! 
+!       if (c == 0)
+! 	break;
+!       else if (c == '[')
+! 	count++;
+!       else if (c == ']')
+! 	count--;
+!     }
+! 
+!   return i;
+! }
+  
+  /* This function is called with SUB pointing to just after the beginning
+--- 605,609 ----
+  }
+  
+! /* skipsubscript moved to subst.c to use private functions. 2009/02/24. */
+  
+  /* This function is called with SUB pointing to just after the beginning
+*** ../bash-4.0/subst.c	2009-01-28 14:34:12.000000000 -0500
+--- bash/subst.c	2009-02-25 09:18:33.000000000 -0500
+***************
+*** 223,226 ****
+--- 223,227 ----
+  static char *extract_delimited_string __P((char *, int *, char *, char *, char *, int));
+  static char *extract_dollar_brace_string __P((char *, int *, int, int));
++ static int skip_matched_pair __P((const char *, int, int, int, int));
+  
+  static char *pos_params __P((char *, int, int, int));
+***************
+*** 1375,1378 ****
+--- 1376,1480 ----
+  #define CQ_RETURN(x) do { no_longjmp_on_fatal_error = 0; return (x); } while (0)
+  
++ /* This function assumes s[i] == open; returns with s[ret] == close; used to
++    parse array subscripts.  FLAGS currently unused. */
++ static int
++ skip_matched_pair (string, start, open, close, flags)
++      const char *string;
++      int start, open, close, flags;
++ {
++   int i, pass_next, backq, si, c, count;
++   size_t slen;
++   char *temp, *ss;
++   DECLARE_MBSTATE;
++ 
++   slen = strlen (string + start) + start;
++   no_longjmp_on_fatal_error = 1;
++ 
++   i = start + 1;		/* skip over leading bracket */
++   count = 1;
++   pass_next = backq = 0;
++   ss = (char *)string;
++   while (c = string[i])
++     {
++       if (pass_next)
++ 	{
++ 	  pass_next = 0;
++ 	  if (c == 0)
++ 	    CQ_RETURN(i);
++ 	  ADVANCE_CHAR (string, slen, i);
++ 	  continue;
++ 	}
++       else if (c == '\\')
++ 	{
++ 	  pass_next = 1;
++ 	  i++;
++ 	  continue;
++ 	}
++       else if (backq)
++ 	{
++ 	  if (c == '`')
++ 	    backq = 0;
++ 	  ADVANCE_CHAR (string, slen, i);
++ 	  continue;
++ 	}
++       else if (c == '`')
++ 	{
++ 	  backq = 1;
++ 	  i++;
++ 	  continue;
++ 	}
++       else if (c == open)
++ 	{
++ 	  count++;
++ 	  i++;
++ 	  continue;
++ 	}
++       else if (c == close)
++ 	{
++ 	  count--;
++ 	  if (count == 0)
++ 	    break;
++ 	  i++;
++ 	  continue;
++ 	}
++       else if (c == '\'' || c == '"')
++ 	{
++ 	  i = (c == '\'') ? skip_single_quoted (ss, slen, ++i)
++ 			  : skip_double_quoted (ss, slen, ++i);
++ 	  /* no increment, the skip functions increment past the closing quote. */
++ 	}
++       else if (c == '$' && (string[i+1] == LPAREN || string[i+1] == LBRACE))
++ 	{
++ 	  si = i + 2;
++ 	  if (string[si] == '\0')
++ 	    CQ_RETURN(si);
++ 
++ 	  if (string[i+1] == LPAREN)
++ 	    temp = extract_delimited_string (ss, &si, "$(", "(", ")", SX_NOALLOC|SX_COMMAND); /* ) */
++ 	  else
++ 	    temp = extract_dollar_brace_string (ss, &si, 0, SX_NOALLOC);
++ 	  i = si;
++ 	  if (string[i] == '\0')	/* don't increment i past EOS in loop */
++ 	    break;
++ 	  i++;
++ 	  continue;
++ 	}
++       else
++ 	ADVANCE_CHAR (string, slen, i);
++     }
++ 
++   CQ_RETURN(i);
++ }
++ 
++ #if defined (ARRAY_VARS)
++ int
++ skipsubscript (string, start)
++      const char *string;
++      int start;
++ {
++   return (skip_matched_pair (string, start, '[', ']', 0));
++ }
++ #endif
++ 
+  /* Skip characters in STRING until we find a character in DELIMS, and return
+     the index of that character.  START is the index into string at which we
+*** ../bash-4.0/patchlevel.h	2009-01-04 14:32:40.000000000 -0500
+--- bash/patchlevel.h	2009-02-22 16:11:31.000000000 -0500
+***************
+*** 26,30 ****
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 6
+  
+  #endif /* _PATCHLEVEL_H_ */
+--- 26,30 ----
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 7
+  
+  #endif /* _PATCHLEVEL_H_ */

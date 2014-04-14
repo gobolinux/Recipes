@@ -1,0 +1,15 @@
+# Recipe for version 4.1.002 by Baffo32 <baffo32@gmail.com>, on Wed Mar 3 23:09:11 EST 2010
+url=$ftpGnu/bash/bash-4.1.tar.gz
+file_size=6598300
+file_md5=9800d8724815fd84994d9be65ab5e7b8
+
+recipe_type=configure
+compile_version=1.13.2
+
+configure_options=(
+    "--with-installed-readline"
+)
+
+pre_link() {
+    ln -s bash ${target}/bin/sh
+}

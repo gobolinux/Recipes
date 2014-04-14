@@ -1,0 +1,15 @@
+# Recipe for version 4.3 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Apr 14 17:53:47 BRT 2014
+url="http://ftp.gnu.org/gnu/bash/bash-4.3.tar.gz"
+file_size=7955839
+file_md5=81348932d5da294953e15d4814c74dd1
+
+recipe_type=configure
+compile_version=1.13.2
+
+configure_options=(
+    "--with-installed-readline"
+)
+
+pre_link() {
+    ln -s bash ${target}/bin/sh
+}

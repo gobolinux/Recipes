@@ -1,0 +1,64 @@
+			     BASH PATCH REPORT
+			     =================
+
+Bash-Release: 4.0
+Patch-ID: bash40-030
+
+Bug-Reported-by:	Henning Bekel <h.bekel@googlemail.com>
+Bug-Reference-ID:	<7c6eacF262ctuU1@mid.individual.net>
+Bug-Reference-URL:	http://lists.gnu.org/archive/html/bug-bash/2009-07/msg00054.html
+
+Bug-Description:
+
+A shell function invoked with `bind -x' is supposed to be able to move the
+cursor by setting READLINE_POINT.  The effects of this assignment were
+sometimes ignored.
+
+Patch:
+
+*** ../bash-4.0-patched/bashline.c	2009-01-08 09:29:24.000000000 -0500
+--- bash/bashline.c	2009-07-16 14:13:41.000000000 -0400
+***************
+*** 3389,3393 ****
+    register int i;
+    intmax_t mi;
+-   int save_point;
+    sh_parser_state_t ps;
+    char *cmd, *value, *l;
+--- bash/3389,3392 ----
+***************
+*** 3433,3437 ****
+      VSETATTR (v, att_exported);
+    l = value_cell (v);
+-   save_point = rl_point;
+    value = inttostr (rl_point, ibuf, sizeof (ibuf));
+    v = bind_int_variable ("READLINE_POINT", value);
+--- bash/3432,3435 ----
+***************
+*** 3451,3455 ****
+      {
+        i = mi;
+!       if (i != save_point)
+  	{
+  	  rl_point = i;
+--- bash/3449,3453 ----
+      {
+        i = mi;
+!       if (i != rl_point)
+  	{
+  	  rl_point = i;
+*** ../bash-4.0/patchlevel.h	2009-01-04 14:32:40.000000000 -0500
+--- bash/patchlevel.h	2009-02-22 16:11:31.000000000 -0500
+***************
+*** 26,30 ****
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 29
+  
+  #endif /* _PATCHLEVEL_H_ */
+--- bash/26,30 ----
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 30
+  
+  #endif /* _PATCHLEVEL_H_ */

@@ -1,0 +1,56 @@
+			     BASH PATCH REPORT
+			     =================
+
+Bash-Release:	4.0
+Patch-ID:	bash40-026
+
+Bug-Reported-by:	Sergei Steshenko <sergstesh@yahoo.com>
+Bug-Reference-ID:	<670181.38883.qm@web35204.mail.mud.yahoo.com>
+Bug-Reference-URL:	http://lists.gnu.org/archive/html/bug-bash/2009-05/msg00059.html
+
+Bug-Description:
+
+A forgotten line in externs.h caused compilation errors to occur on some
+systems (e.g., Cygwin).
+
+Patch:
+
+*** ../bash-4.0-patched/externs.h	2009-01-18 18:29:29.000000000 -0500
+--- bash/externs.h	2009-06-02 09:05:40.000000000 -0400
+***************
+*** 193,196 ****
+--- bash/193,198 ----
+  
+  /* Declarations for functions defined in lib/sh/fpurge.c */
++ 
++ #if defined NEED_FPURGE_DECL
+  #if !HAVE_DECL_FPURGE
+  
+***************
+*** 201,205 ****
+  
+  #endif /* HAVE_DECL_FPURGE */
+! 
+  
+  /* Declarations for functions defined in lib/sh/getcwd.c */
+--- bash/203,207 ----
+  
+  #endif /* HAVE_DECL_FPURGE */
+! #endif /* NEED_FPURGE_DECL */
+  
+  /* Declarations for functions defined in lib/sh/getcwd.c */
+*** ../bash-4.0/patchlevel.h	2009-01-04 14:32:40.000000000 -0500
+--- bash/patchlevel.h	2009-02-22 16:11:31.000000000 -0500
+***************
+*** 26,30 ****
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 25
+  
+  #endif /* _PATCHLEVEL_H_ */
+--- bash/26,30 ----
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 26
+  
+  #endif /* _PATCHLEVEL_H_ */

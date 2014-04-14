@@ -1,0 +1,62 @@
+			     BASH PATCH REPORT
+			     =================
+
+Bash-Release: 4.0
+Patch-ID: bash40-031
+
+Bug-Reported-by:	Roman Rakus <rrakus@redhat.com>
+Bug-Reference-ID:	<4A93F6E9.4050401@redhat.com>
+Bug-Reference-URL:	
+
+Bug-Description:
+
+An implicit assignment to index "0" of an existing array variable caused
+the shell to crash when the variable was unset.
+
+Patch:
+
+*** ../bash-4.0-patched/arrayfunc.c	2009-03-08 21:24:39.000000000 -0400
+--- bash/arrayfunc.c	2009-08-24 09:29:43.000000000 -0400
+***************
+*** 99,103 ****
+    hash = assoc_create (0);
+    if (oldval)
+!     assoc_insert (hash, "0", oldval);
+  
+    FREE (value_cell (var));
+--- bash/99,103 ----
+    hash = assoc_create (0);
+    if (oldval)
+!     assoc_insert (hash, savestring ("0"), oldval);
+  
+    FREE (value_cell (var));
+*** ../bash-4.0-patched/variables.c	2009-01-04 14:32:46.000000000 -0500
+--- bash/variables.c	2009-08-24 09:29:58.000000000 -0400
+***************
+*** 2218,2222 ****
+        else if (assoc_p (entry))
+  	{
+! 	  assoc_insert (assoc_cell (entry), "0", newval);
+  	  free (newval);
+  	}
+--- bash/2218,2222 ----
+        else if (assoc_p (entry))
+  	{
+! 	  assoc_insert (assoc_cell (entry), savestring ("0"), newval);
+  	  free (newval);
+  	}
+*** ../bash-4.0/patchlevel.h	2009-01-04 14:32:40.000000000 -0500
+--- bash/patchlevel.h	2009-02-22 16:11:31.000000000 -0500
+***************
+*** 26,30 ****
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 30
+  
+  #endif /* _PATCHLEVEL_H_ */
+--- bash/26,30 ----
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 31
+  
+  #endif /* _PATCHLEVEL_H_ */

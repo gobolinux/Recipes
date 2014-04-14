@@ -1,0 +1,50 @@
+			     BASH PATCH REPORT
+			     =================
+
+Bash-Release: 4.0
+Patch-ID: bash40-033
+
+Bug-Reported-by:	Dr. Werner Fink <werner@suse.de>
+Bug-Reference-ID:	<200907010951.n619p76I013912@boole.suse.de>
+Bug-Reference-URL:	http://lists.gnu.org/archive/html/bug-bash/2009-07/msg00000.html
+
+Bug-Description:
+
+Bash-4.0 has a memory leak in the `read' builtin when the number of fields
+read is not the same as the number of variables passed as arguments.
+
+Patch:
+
+*** ../bash-4.0-patched/builtins/read.def	2009-03-08 21:24:45.000000000 -0400
+--- bash/builtins/read.def	2009-07-01 15:32:42.000000000 -0400
+***************
+*** 764,768 ****
+  	tofree = input_string = t;
+        else
+! 	input_string = strip_trailing_ifs_whitespace (t1, ifs_chars, saw_escape);
+      }
+  #endif
+--- bash/764,771 ----
+  	tofree = input_string = t;
+        else
+! 	{
+! 	  input_string = strip_trailing_ifs_whitespace (t1, ifs_chars, saw_escape);
+! 	  tofree = t;
+! 	}
+      }
+  #endif
+*** ../bash-4.0/patchlevel.h	2009-01-04 14:32:40.000000000 -0500
+--- bash/patchlevel.h	2009-02-22 16:11:31.000000000 -0500
+***************
+*** 26,30 ****
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 32
+  
+  #endif /* _PATCHLEVEL_H_ */
+--- bash/26,30 ----
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 33
+  
+  #endif /* _PATCHLEVEL_H_ */
