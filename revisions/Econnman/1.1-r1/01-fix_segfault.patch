@@ -1,0 +1,28 @@
+Fixes a segfault when the default flag is set to True.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+diff -urp econnman-1.1.orig/econnman-bin econnman-1.1/econnman-bin
+--- econnman-1.1.orig/econnman-bin	2013-12-10 09:26:47.000000000 +0000
++++ econnman-1.1/econnman-bin	2014-04-13 21:00:59.000000000 +0000
+@@ -1491,7 +1491,7 @@ if __name__ == "__main__":
+ 
+     for td in ("./data/theme/default.edj", "/usr/share/econnman/theme/default.edj"):
+         if os.path.exists(td):
+-            Theme(default=True).extension_add(td)
++            Theme(default=False).extension_add(td)
+ 
+     win = Window("econnman", ELM_WIN_BASIC)
+     win.title = "EConnMan"
+diff -urp econnman-1.1.orig/econnman-bin.in econnman-1.1/econnman-bin.in
+--- econnman-1.1.orig/econnman-bin.in	2013-11-11 06:15:16.000000000 +0000
++++ econnman-1.1/econnman-bin.in	2014-04-13 21:00:42.000000000 +0000
+@@ -1491,7 +1491,7 @@ if __name__ == "__main__":
+ 
+     for td in ("./data/theme/default.edj", "@PKGDATADIR@/theme/default.edj"):
+         if os.path.exists(td):
+-            Theme(default=True).extension_add(td)
++            Theme(default=False).extension_add(td)
+ 
+     win = Window("econnman", ELM_WIN_BASIC)
+     win.title = "EConnMan"
