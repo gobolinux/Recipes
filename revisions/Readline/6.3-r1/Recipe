@@ -1,0 +1,13 @@
+# Recipe for version 6.3 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Apr 14 17:56.31 BRT 2014
+# Recipe (MakeRecipe) for Readline by Peter Eriksen <s022018@student.dtu.dk>, on Thu Nov 4 19:52:54 CET 2004
+compile_version=1.13.2
+
+url="$ftpGnu/readline/readline-6.3.tar.gz"
+file_size=2468560
+file_md5=33c8fb279e981274f485fd91da77e94a
+
+recipe_type=configure
+
+build_variables=(
+   "SHLIB_LIBS=-lncurses"
+)
