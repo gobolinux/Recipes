@@ -1,0 +1,11 @@
+# Recipe for version 2014.2.15 by Hisham Muhammad <hisham@gobolinux.org>, on Fri Apr 11 13:38:11 BRT 2014
+# Recipe (MakeRecipe) for NTFS-3G by Lucas C. Villa Real, on Thu Feb 22 02:10:40 BRT 2007
+compile_version=1.8.2
+url="http://tuxera.com/opensource/ntfs-3g_ntfsprogs-2014.2.15.tgz"
+file_size=1143575
+file_md5=f11d563816249d730a00498983485f3a
+recipe_type=configure
+
+configure_options=(
+    "--disable-ldconfig"
+)
