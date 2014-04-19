@@ -5,19 +5,20 @@ function Has_Substring() {
    [[ "$alt" != "$1" ]]
 }
 
-powertop --auto-tune &> /dev/null
-
-for device in /sys/bus/usb/devices/*
-do
-   if [[ -e $device/product ]]
-   then
-      product=$(<$device/product)
-      
-      # Do not auto-suspend keyboards and mice
-      if Has_Substring "$product" "Keyboard" || Has_Substring "$product" "Mouse" 
+(
+   powertop --auto-tune &> /dev/null
+   
+   for device in /sys/bus/usb/devices/*
+   do
+      if [[ -e $device/product ]]
       then
-         echo 'on' > $device/power/control
+         product=$(<$device/product)
+         
+         # Do not auto-suspend keyboards and mice
+         if Has_Substring "$product" "Keyboard" || Has_Substring "$product" "Mouse" 
+         then
+            echo 'on' > $device/power/control
+         fi
       fi
-   fi
-done
-
+   done
+) &
