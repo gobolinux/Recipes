@@ -1,0 +1,11 @@
+# Recipe for version 4.6.5 by Hisham Muhammad <hisham@gobolinux.org>, on Thu Apr 17 17:59:32 BRT 2014
+# Recipe for Gnuplot 4.6.5 by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.8.0
+url="$httpSourceforge/gnuplot/gnuplot-4.6.5.tar.gz"
+file_size=5035657
+file_md5=9a476b21f74bd99c876f1509d731a0f9
+recipe_type=configure
+
+configure_options=(
+    "--enable-history-file"
+)
