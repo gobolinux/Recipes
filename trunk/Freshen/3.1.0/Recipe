@@ -9,3 +9,9 @@ manifest=(
 "bin:bin"
 "lib:lib"
 )
+
+pre_link() {
+   python_release=$(basename $python_path)
+   python_version=${python_release%.*}
+   mv $target/lib/python2.5 $target/lib/python$python_version
+}
