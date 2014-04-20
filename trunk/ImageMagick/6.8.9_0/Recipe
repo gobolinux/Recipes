@@ -1,0 +1,19 @@
+# Recipe for version 6.8.9_0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Apr 17 14:28:28 GMT 2014
+# Recipe (MakeRecipe) for ImageMagick by Seb Haezebrouck, on Wed Mar 19 14:19:20 CET 2008
+compile_version=1.10.2
+url="http://www.imagemagick.org/download/ImageMagick-6.8.9-0.tar.xz"
+file_size=7545228
+file_md5=d89b4b5db15cf8fb1486cec1067244ae
+recipe_type=configure
+make_variables=(
+    INSTALLPRIVLIB=$target/lib/perl5/5.10.0
+    INSTALLSITELIB=$target/lib/perl5/site_perl/5.10.0
+    INSTALLARCHLIB=$target/lib/perl5/5.10.0/i686-linux-thread-multi
+    INSTALLSITEARCH=$target/lib/perl5/site_perl/5.10.0/i686-linux-thread-multi
+    INSTALLSITEBIN=$target/bin
+    INSTALLSCRIPT=$target/bin
+    INSTALLMAN1DIR=$target/man/man1
+    INSTALLSITEMAN1DIR=$target/man/man1
+    INSTALLMAN3DIR=$target/man/man3
+    INSTALLSITEMAN3DIR=$target/man/man3
+)
