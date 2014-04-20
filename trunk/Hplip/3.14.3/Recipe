@@ -21,11 +21,10 @@ install_variables=(
     mimedir=$target/share/cups/mime
     icondir=$target/share/applications
     systraydir=$settings_target/xdg/autostart
-    halpredir=$targe/share/hal/fdi/preprobe/10osvendor
+    halpredir=$target/share/hal/fdi/preprobe/10osvendor
     rulesdir=$settings_target/udev/rules.d
     hplip_confdir=$settings_target/hp
     hplip_statedir=$goboVariable/lib/hp
-
 )
 
 unmanaged_files=(
