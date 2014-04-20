@@ -1,0 +1,10 @@
+# Recipe for version 0.95.2 by Leandro Motta Barros <lmb@stackedboxes.org>, on Sun Oct 2 02:52:31 BRT 2011
+compile_version=1.8.2
+url="$httpSourceforge/lesstif/lesstif-0.95.2.tar.bz2"
+file_size=2481073
+file_md5=754187dbac09fcf5d18296437e72a32f
+recipe_type=configure
+
+install_variables=(
+	docdir=$target/doc/LessTif
+)
