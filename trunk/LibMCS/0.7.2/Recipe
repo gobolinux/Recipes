@@ -1,0 +1,13 @@
+# Recipe for version 0.7.2 by Hisham Muhammad <hisham@gobolinux.org>, on Sat Apr 19 16:59:25 BRT 2014
+# Recipe (MakeRecipe) for LibMCS by Lucas C. Villa Real, on Thu Mar 8 19:16:48 BRT 2007
+compile_version=1.9.0
+url="http://distfiles.atheme.org/libmcs-0.7.2.tgz"
+file_size=112987
+file_md5=c47fc81f3efacaa0a5a0b8fd14f9d48e
+recipe_type=configure
+
+configure_options=(
+
+	"--disable-kconfig"
+
+)
