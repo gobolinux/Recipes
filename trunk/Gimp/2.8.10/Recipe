@@ -9,22 +9,12 @@ configure_options=(
     --disable-mp 
     --enable-gimp-remote 
     --without-poppler
-    --disable-python
 )  
 with_poppler="--with-poppler"
 with_python="--with-python"
 with_pygtk="--with-python"
 
-build_variables=(
-   gimpplugindir="${goboLibraries}/gimp/2.0"
-)
-
-install_variables=(
-   gimpsysconfdir="${settings_target}/gimp/2.0"
-)
-
 pre_install() {
    # Sigh, libtool again...
    find -name "*.la" | xargs sed -i "s,^libdir='${goboLibraries},libdir='${target}/lib,"
 }
-
