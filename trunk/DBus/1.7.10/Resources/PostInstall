@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source GoboPath
+
 dbus-uuidgen --ensure
 
 chmod 4750 $target/lib/dbus/dbus-daemon-launch-helper
@@ -11,3 +13,5 @@ then
     echo "This is critical for the correct execution of the desktop environment. Please check."
     echo
 fi
+
+GrepReplace -B "/System/Links/Shared" "$goboShared" $target/Resources/Defaults/Settings/dbus-1/system-local.conf
