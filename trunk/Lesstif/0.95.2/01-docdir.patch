@@ -1,0 +1,26 @@
+--- lesstif-0.95.2/Makefile.in.orig	2014-04-17 17:56:08.000000000 +0000
++++ lesstif-0.95.2/Makefile.in	2014-04-17 17:57:11.000000000 +0000
+@@ -291,6 +291,7 @@ DIST_SUBDIRS = scripts include lib clien
+ # polluting /usr/local for default installs.
+ #
+ rootdir = $(prefix)/LessTif
++docdir = $(prefix)/doc/LessTif
+ dist_root_DATA = AUTHORS  BUG-REPORTING  COPYING  COPYING.LIB  CREDITS \
+                 FAQ  INSTALL.txt  README  ReleaseNotes.html ReleaseNotes.txt
+ 
+@@ -354,12 +355,12 @@ distclean-libtool:
+ uninstall-info-am:
+ install-dist_rootDATA: $(dist_root_DATA)
+ 	@$(NORMAL_INSTALL)
+-	test -z "$(rootdir)" || $(mkdir_p) "$(DESTDIR)$(rootdir)"
++	test -z "$(docdir)" || $(mkdir_p) "$(DESTDIR)$(docdir)"
+ 	@list='$(dist_root_DATA)'; for p in $$list; do \
+ 	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+ 	  f=$(am__strip_dir) \
+-	  echo " $(dist_rootDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(rootdir)/$$f'"; \
+-	  $(dist_rootDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(rootdir)/$$f"; \
++	  echo " $(dist_rootDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(docdir)/$$f'"; \
++	  $(dist_rootDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(docdir)/$$f"; \
+ 	done
+ 
+ uninstall-dist_rootDATA:
