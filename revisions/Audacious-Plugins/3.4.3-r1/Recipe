@@ -1,0 +1,15 @@
+# Recipe for version 3.4.3 by Hisham Muhammad <hisham@gobolinux.org>, on Sat Apr 19 17:02:26 BRT 2014
+# Recipe (MakeRecipe) for Audacious-Plugins by Guilherme B. Bedin, on Wed Jan 24 13:55:32 BRST 2007
+compile_version=1.13.3
+url="http://distfiles.audacious-media-player.org/audacious-plugins-3.4.3.tar.bz2"
+file_size=1812774
+file_md5=a52e1ec2f37e9269e26ee67b41153d73
+recipe_type=configure
+part_of=Audacious
+
+make_variables=(
+    "pluginlibdir=$target/lib/audacious"
+)
+unmanaged_files=(
+  $goboLibraries/audacious
+)
