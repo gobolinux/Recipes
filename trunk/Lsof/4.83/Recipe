@@ -15,7 +15,8 @@ pre_build() {
         chmod -R a+w lsof_4.83_src
     fi
 	cd lsof_4.83_src
-	[ -f Makefile ] || Configure -n linux
+	[ -f Makefile ] || ./Configure -n linux
+	grep -q ltirpc Makefile || GrepReplace -B '${CC} -o $@ ${OBJ} ${CFGL}' '${CC} -o $@ ${OBJ} ${CFGL} -ltirpc' Makefile
 }
 
 # lsof does not implement an install target aside from
