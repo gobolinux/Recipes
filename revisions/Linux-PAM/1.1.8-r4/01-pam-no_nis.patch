@@ -1,0 +1,36 @@
+--- ./modules/pam_unix/pam_unix_passwd.c.orig	2006-06-27 08:38:14.000000000 +0000
++++ ./modules/pam_unix/pam_unix_passwd.c	2006-11-15 13:57:41.000000000 +0000
+@@ -187,6 +185,9 @@
+ 
+ static char *getNISserver(pam_handle_t *pamh)
+ {
++#if defined(__UCLIBC__)
++	return NULL;
++#else
+ 	char *master;
+ 	char *domainname;
+ 	int port, err;
+@@ -213,6 +214,7 @@
+ 		return NULL;
+ 	}
+ 	return master;
++#endif
+ }
+ 
+ #ifdef WITH_SELINUX
+@@ -757,6 +759,7 @@
+ 		goto done;
+ 	}
+ 
++#if !defined(__UCLIBC__)
+ 	if (on(UNIX_NIS, ctrl) && _unix_comesfromsource(pamh, forwho, 0, 1)) {
+ 	    if ((master=getNISserver(pamh)) != NULL) {
+ 		struct timeval timeout;
+@@ -826,6 +829,7 @@
+ 		    retval = PAM_TRY_AGAIN;
+ 	    }
+ 	}
++#endif
+ 
+ 	if (_unix_comesfromsource(pamh, forwho, 1, 0)) {
+ #ifdef USE_LCKPWDF
