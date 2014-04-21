@@ -1,0 +1,5 @@
+#!/bin/bash
+
+source GoboPath
+
+GrepReplace -B "/System/Links/Shared" "$goboShared" $target/Resources/Defaults/Settings/security/pam_env.conf
