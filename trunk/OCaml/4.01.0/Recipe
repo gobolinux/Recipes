@@ -1,0 +1,31 @@
+# Recipe for version 4.01.0 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Apr 21 16:33:25 BRT 2014
+# Recipe (MakeRecipe) for OCaml by  Ozgur Ulukir, on Mon Dec 20 17:41:24 EET 2004
+
+url="http://caml.inria.fr/pub/distrib/ocaml-4.01/ocaml-4.01.0.tar.xz"
+file_size=2981020
+file_md5=32015b473de16ca19b82c728358eaa78
+compile_version=1.8.2
+recipe_type=configure
+build_target=world.opt
+
+# configure accepts 'prefix' but does not like the '=' delimiter used by PrepareProgram
+override_default_options=yes
+configure_options=(
+   --prefix "$target"
+)
+
+# Wrapper Makefile to force single job
+makefile=Makefile.build
+pre_build() {
+   cat << EOF > Makefile.build
+% :
+	\$(MAKE) -j1 \$@
+EOF
+}
+
+# If Emacs is present install the Emacs mode.
+using_emacs_pre_link() {
+   cd emacs
+   make install
+}
+
