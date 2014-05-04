@@ -1,0 +1,23 @@
+# Recipe for version 4.2.1 by Hisham Muhammad <hisham@gobolinux.org>, on Fri May 2 14:36:44 BRT 2014
+# Recipe (MakeRecipe) for BeeCrypt by Lucas C. Villa Real, on Mon Feb 26 01:25:37 BRT 2007
+compile_version=1.8.2
+url="$httpSourceforge/beecrypt/beecrypt-4.2.1.tar.gz"
+file_size=882758
+file_md5=8441c014170823f2dff97e33df55af1e
+recipe_type=configure
+
+environment=(
+   CXXFLAGS="-fpermissive"
+)
+
+configure_options=(
+    --without-python
+    --without-java
+    --enable-debug    # needed to disable broken optimizations
+)
+
+pre_link() {
+    Quiet pushd $target/include
+    ln -s beecrypt/* .
+    Quiet popd
+}
