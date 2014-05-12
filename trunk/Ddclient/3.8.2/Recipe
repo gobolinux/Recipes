@@ -1,0 +1,11 @@
+# Recipe for version 3.8.2 by Hisham Muhammad <hisham@gobolinux.org>, on Tue May 6 07:31:27 BRT 2014
+# Recipe (MakeRecipe) for Ddclient by Aitor Pérez Iturri, on lun dic 4 10:06:56 CET 2006
+compile_version=1.8.2
+url="http://downloads.sourceforge.net/project/ddclient/ddclient/ddclient-3.8.2/ddclient-3.8.2.tar.bz2"
+file_size=41996
+file_md5=62cd5fe93ced2c794d5f441f9d908841
+dir='ddclient-3.8.2'
+recipe_type=manifest
+manifest=(
+	"ddclient:bin"
+)
