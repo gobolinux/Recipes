@@ -1,0 +1,21 @@
+#!/bin/sh
+PID_FILE="/System/Variable/run/ddclient.pid"
+
+PID=`cat ${PID_FILE} 2>/dev/null`
+case "$1" in
+	[sS]tart)
+		if [ -n "${PID}" -a `pidof ddclient` = ${PID} ]
+		then
+			echo "ddclient is already running"
+			exit
+		else
+			rm -f -- ${PID_FILE}
+		fi
+		[ ${DDCLIENT_DELAY} ] || DDCLIENT_DELAY=300
+		ddclient -daemon ${DDCLIENT_DELAY}
+		;;
+	[sS]top)
+		kill -9 ${PID}
+		rm -f -- ${PID_FILE}
+		;;
+esac
