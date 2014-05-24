@@ -1,0 +1,24 @@
+--- pinfo-0.6.9/src/manual.c	2006-03-16 11:14:30.000000000 -0300
++++ pinfo-0.6.9-hack/src/manual.c	2006-10-13 16:32:48.000000000 -0200
+@@ -1646,6 +1646,8 @@
+ 		memcpy(strippedline, str, len + 1);
+ 		strip_manual(strippedline);
+ 	}
++	strip_manual(str);
++	len = strlen(str);
+ 	move(y, x);
+ 	for (i = 0; i < len; i++)
+ 	{
+@@ -1860,6 +1862,12 @@
+ 			buf[tmpcnt++] = buf[i];
+ 			i += 2;
+ 		}
++		/* and 0x1B -- italic marks */
++		else if (buf[i] == 27)
++		{
++			while (buf[i] && buf[i] != 'm')
++				i++;
++		}
+ 		else /* else we don't do anything */
+ 			buf[tmpcnt++] = buf[i];
+ 	}
