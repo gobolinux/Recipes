@@ -1,0 +1,26 @@
+Fix build error where gcc complains that --export-dynamic is an unrecognized option.
+
+diff -ur zziplib-0.13.58.old/configure zziplib-0.13.58/configure
+--- zziplib-0.13.58.old/configure	2009-08-23 08:38:19.000000000 -0300
++++ zziplib-0.13.58/configure	2014-06-09 16:14:54.000000000 -0300
+@@ -16179,7 +16179,7 @@
+ 
+     if test ".$can_build_shared" = .no
+     then ZZIPLIB_LDFLAGS=""
+-    else ZZIPLIB_LDFLAGS="--export-dynamic"
++    else ZZIPLIB_LDFLAGS="${wl}--export-dynamic"
+     fi
+     RESOLVES=' # '
+   ;;
+diff -ur zziplib-0.13.58.old/configure.ac zziplib-0.13.58/configure.ac
+--- zziplib-0.13.58.old/configure.ac	2009-08-23 08:38:24.000000000 -0300
++++ zziplib-0.13.58/configure.ac	2014-06-09 16:15:04.000000000 -0300
+@@ -288,7 +288,7 @@
+ 
+     if test ".$can_build_shared" = .no
+     then ZZIPLIB_LDFLAGS=""
+-    else ZZIPLIB_LDFLAGS="--export-dynamic"
++    else ZZIPLIB_LDFLAGS="${wl}--export-dynamic"
+     fi
+     RESOLVES=' # '
+   ;;
