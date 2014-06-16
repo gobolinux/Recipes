@@ -1,0 +1,6 @@
+# Recipe (MakeRecipe) for GitDB by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jun 2 11:21:08 BRT 2014
+# Recipe for version git by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jun 2 11:21:08 BRT 2014
+compile_version=2.0
+git="git://github.com/gitpython-developers/gitdb.git"
+recipe_type=makefile
+makefile='Makefile'
