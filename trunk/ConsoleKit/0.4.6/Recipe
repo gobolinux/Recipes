@@ -9,7 +9,6 @@ recipe_type=configure
 configure_options=(
 	--enable-udev-acl
 	--enable-pam-module
-	--libexecdir=$target/lib/ConsoleKit
 )
 
 install_variables=(
@@ -18,10 +17,6 @@ install_variables=(
 	dbusconfdir=$settings_target/dbus-1/system.d
 	pamlibdir=$target/lib/security
 )
-
-#unmanaged_files=(
-#	$goboVariable/run/ConsoleKit
-#)
 
 pre_link() {
 	mkdir -p $target/lib/ConsoleKit/run-session.d
