@@ -1,0 +1,43 @@
+# Recipe (MakeRecipe) for ConsoleKit by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Feb 23 16:11:54 GMT 2014
+# Recipe for version 0.4.6 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Feb 23 16:11:54 GMT 2014
+compile_version=1.13.1
+url="http://anduin.linuxfromscratch.org/sources/BLFS/svn/c/ConsoleKit-0.4.6.tar.xz"
+file_size=363712
+file_md5=6aaadf5627d2f7587aa116727e2fc1da
+recipe_type=configure
+
+configure_options=(
+	--enable-udev-acl
+	--enable-pam-module
+)
+
+install_variables=(
+	udevdir=$target/lib/udev
+	udevrulesdir=$target/lib/udev/rules.d
+	dbusconfdir=$settings_target/dbus-1/system.d
+	pamlibdir=$target/lib/security
+)
+
+pre_link() {
+	mkdir -p $target/lib/ConsoleKit/run-session.d
+	cat > $target/lib/ConsoleKit/run-session.d/pam-foreground-compat.ck << "EOF"
+#!/bin/sh
+TAGDIR=/var/run/console
+
+[ -n "$CK_SESSION_USER_UID" ] || exit 1
+[ "$CK_SESSION_IS_LOCAL" = "true" ] || exit 0
+
+TAGFILE="$TAGDIR/`getent passwd $CK_SESSION_USER_UID | cut -f 1 -d:`"
+
+if [ "$1" = "session_added" ]; then
+    mkdir -p "$TAGDIR"
+    echo "$CK_SESSION_ID" >> "$TAGFILE"
+fi
+
+if [ "$1" = "session_removed" ] && [ -e "$TAGFILE" ]; then
+    sed -i "\%^$CK_SESSION_ID\$%d" "$TAGFILE"
+    [ -s "$TAGFILE" ] || rm -f "$TAGFILE"
+fi
+EOF
+chmod -v 755 $target/lib/ConsoleKit/run-session.d/pam-foreground-compat.ck
+}
