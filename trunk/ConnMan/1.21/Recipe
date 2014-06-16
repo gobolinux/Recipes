@@ -5,6 +5,10 @@ url="http://www.kernel.org/pub/linux/network/connman/connman-1.21.tar.gz"
 file_size=903256
 file_md5=41bc0067e609faefc52750d20869113d
 recipe_type=configure
+
 configure_options=(
-    "--with-dbusconf=$settings_target/dbus-1/system.d/"
+    --enable-test
+    --enable-nmcompat
+    --disable-polkit
+    --with-dbusconfdir="$settings_target/dbus-1/system.d/"
 )
