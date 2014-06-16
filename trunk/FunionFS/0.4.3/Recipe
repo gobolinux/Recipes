@@ -8,3 +8,7 @@ recipe_type=configure
 configure_options=(
     --mandir=$target/man
 )
+
+unmanaged_files=(
+    $goboVariable/run/mount
+)
