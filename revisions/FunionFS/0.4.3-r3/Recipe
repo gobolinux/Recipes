@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for FunionFS by Lucas C. Villa Real, on Thu Feb 8 00:54:50 BRST 2007
+compile_version=1.8.2
+url="http://funionfs.apiou.org/file/funionfs-0.4.3.tar.gz"
+file_size=693349
+file_md5=0cc320624b335a68847c447c9625410b
+recipe_type=configure
+
+configure_options=(
+    --mandir=$target/man
+)
+
+unmanaged_files=(
+    $goboVariable/run/mount
+)
