@@ -1,0 +1,13 @@
+# Recipe for version 0.12.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Jan 22 01:07:25 BRST 2014
+# Recipe (MakeRecipe) for SPICE by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Mar 20 14:34:32 NZDT 2012
+compile_version=1.13.3
+url="http://spice-space.org/download/releases/spice-0.12.4.tar.bz2"
+file_size=1718655
+file_md5=325b1c42ce24e75de45a75876b73a8bd
+recipe_type=configure
+
+configure_options=(
+#    --enable-gui
+    --enable-client
+    --disable-smartcard
+)
