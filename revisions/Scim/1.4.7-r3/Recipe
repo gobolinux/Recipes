@@ -1,0 +1,24 @@
+# Recipe (MakeRecipe) for Scim by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jan 26 00:35:35 PST 2008
+# Recipe for version 1.4.7 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jan 26 00:35:35 PST 2008
+compile_version=1.10.0
+url="$httpSourceforge/scim/scim-1.4.7.tar.gz"
+file_size=3075769
+file_md5=840dcfd4264a1443478c188ff747984e
+recipe_type=configure
+
+configure_options=(
+    --with-gtk-im-module-dir=$target/lib/gtk-2.0/immodules
+	--prefix=/usr
+)
+
+install_variables=(
+    prefix=$target
+)
+
+pre_install() {
+    for i in `find $dir -name "*.la"`
+    do
+        GrepReplace "libdir='/usr/lib\(/\|\)\(.*\)'" "libdir='$target/lib\1\2'" $i
+        GrepReplace "libdir=/usr/lib\(/\|\)\(.*\)"   "libdir=$target/lib\1\2"   $i
+    done
+}

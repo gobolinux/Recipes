@@ -1,0 +1,35 @@
+This patch is necessary to fix a buffer overflow that happens when a malformed
+libtool .la file is read (with unbalanced "'" quotes).
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- scim-1.4.7/src/ltdl.cpp.orig	2008-01-26 01:32:27.000000000 -0800
++++ scim-1.4.7/src/ltdl.cpp	2008-01-26 03:15:22.000000000 -0800
+@@ -2907,19 +2907,24 @@ trim (
+ {
+   /* remove the leading and trailing "'" from str
+      and store the result in dest */
++  const char *start = strchr (str, '\'');
+   const char *end   = strrchr (str, '\'');
+   size_t len	    = LT_STRLEN (str);
+   char *tmp;
+ 
+   LT_DLFREE (*dest);
++  
++  if (start == end)
++  	end = &str[len-1];
+ 
+-  if (len > 3 && str[0] == '\'')
++  if (len > 3 && start[0] == '\'')
+     {
+-      tmp = LT_EMALLOC (char, end - str);
++      tmp = LT_EMALLOC (char, len);
+       if (!tmp)
+ 	return 1;
+ 
+-      strncpy(tmp, &str[1], (end - str) - 1);
++	  memset(tmp, 0, len);
++      strncpy(tmp, &start[1], (end - str) - 1);
+       tmp[len-3] = LT_EOS_CHAR;
+       *dest = tmp;
+     }
