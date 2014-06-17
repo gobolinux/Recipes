@@ -1,0 +1,5 @@
+[Name] LibGSSGlue
+[Summary] Exports a gssapi interface which calls other random gssapi libraries
+[Description] This library exports a gssapi interface, but doesn't implement any gssapi mechanisms itself; instead it calls gssapi routines in other libraries, depending on the mechanism.
+[License] 3-clause BSD
+[Homepage] http://www.citi.umich.edu/projects/nfsv4/linux/libgssglue/
