@@ -1,0 +1,42 @@
+# Recipe for version 0.9.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Oct 21 23:50:45 BRST 2013
+# Recipe (MakeRecipe) for MLT by Mark Kimsal <mark2@mt2009.com>, on Sat May 23 19:38:42 EDT 2009
+compile_version=1.12.2rc3
+
+url="$httpSourceforge/mlt/mlt-0.9.0.tar.gz"
+file_size=1167943
+file_md5=1cd2d73f3ffe77a43980e99aaa4ea06c
+recipe_type=configure
+
+# this recipe requires FFMpeg, but I don't know how to add it
+# this is needed for kdenlive to function
+# Use ffmpeg libswcale instead of img_convert
+configure_options=(
+    "--avformat-swscale" 
+    "--enable-gpl" 
+    "--avformat-vdpau"
+    "--swig-languages=perl python"
+    #"--swig-languages=lua perl python"
+)
+
+pre_link() {
+    Quiet pushd "$dir/src/swig/lua"
+    install -D -m 0755 mlt.so $(pkg-config --variable INSTALL_CMOD lua)/mlt.so
+    Quiet popd
+    
+    Quiet pushd "$dir/src/swig/perl"
+    mkdir -p ${target}/Shared/perl5
+    install -D -m 0644 mlt.pm ${target}/Shared/perl5/mlt.pm
+    install -D -m 0755 play.pl ${target}/Shared/perl5/play.pl
+    install -D -m 0755 blib/arch/auto/mlt/mlt.so \
+      ${target}/lib/perl5/auto/mlt/mlt.so
+    install -D -m 0644 blib/arch/auto/mlt/mlt.bs \
+      ${target}/lib/perl5/auto/mlt/mlt.bs
+    Quiet popd
+    
+    Quiet pushd "$dir/src/swig/python"
+    PYTHONSITEPKG=$(python -c "import sys, os; print os.path.join('python%s' % sys.version[:3], 'site-packages')")
+    mkdir -p ${target}/lib/$PYTHONSITEPKG
+    install -D -m 0755 _mlt.so ${target}/lib/$PYTHONSITEPKG/_mlt.so
+    install -D -m 0755 mlt.py ${target}/lib/$PYTHONSITEPKG/mlt.py
+    Quiet popd
+}
