@@ -1,9 +1,12 @@
 #!/bin/sh
 
-which gtk-query-immodules-2.0 2> /dev/null || exit 0
-
-# Warning: we're going to touch GTK's gtk.immodules file. What's the
-# best way to proceed?
-
 source GoboPath
-gtk-query-immodules-2.0 | sudo tee $goboSettings/gtk-2.0/gtk.immodules
+
+if which gtk-query-immodules-2.0 2> /dev/null
+then
+   gtk-query-immodules-2.0 --update-cache
+fi
+if which gtk-query-immodules-3.0 2> /dev/null
+then
+   gtk-query-immodules-3.0 --update-cache
+fi
