@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for GLU by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri May 23 01:00:22 UTC 2014
+# Recipe for version 9.0.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri May 23 01:00:22 UTC 2014
+compile_version=2.0
+url="http://cgit.freedesktop.org/mesa/glu/snapshot/glu-9.0.0.tar.gz"
+file_size=303961
+file_md5=c97863d7cda5442352bd92b1942299e2
+recipe_type=configure
+autogen_before_configure=yes
