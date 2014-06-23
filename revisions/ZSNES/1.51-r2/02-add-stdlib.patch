@@ -1,0 +1,14 @@
+Stdlib for system()
+
+diff -ur zsnes_1_51/src.old/tools/depbuild.cpp zsnes_1_51/src/tools/depbuild.cpp
+--- zsnes_1_51/src.old/tools/depbuild.cpp	2006-12-27 09:04:05.000000000 -0200
++++ zsnes_1_51/src/tools/depbuild.cpp	2014-06-22 22:56:38.000000000 -0300
+@@ -24,6 +24,8 @@
+ #include <iostream>
+ #include <string>
+ #include <cstdio>
++#include <stdlib.h>
++#include <unistd.h>
+ using namespace std;
+ 
+ #include "fileutil.h"
