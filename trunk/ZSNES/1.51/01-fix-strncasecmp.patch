@@ -1,0 +1,82 @@
+Add .h for the lack of stnrcasecmp
+
+diff -ur zsnes_1_51/src.old/gui/guifuncs.c zsnes_1_51/src/gui/guifuncs.c
+--- zsnes_1_51/src.old/gui/guifuncs.c	2007-01-24 16:40:51.000000000 -0200
++++ zsnes_1_51/src/gui/guifuncs.c	2014-06-22 22:44:02.000000000 -0300
+@@ -39,6 +39,7 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
++#include <strings.h>
+ #include <zlib.h>
+ #define fnamencmp strncasecmp
+ #define fnamecmp strcasecmp
+diff -ur zsnes_1_51/src.old/initc.c zsnes_1_51/src/initc.c
+--- zsnes_1_51/src.old/initc.c	2007-10-31 01:17:29.000000000 -0200
++++ zsnes_1_51/src/initc.c	2014-06-22 22:44:12.000000000 -0300
+@@ -30,6 +30,7 @@
+ #include <stdlib.h>
+ #include <ctype.h>
+ #include <string.h>
++#include <strings.h>
+ #include <sys/stat.h>
+ #define DIR_SLASH "\\"
+ #endif
+diff -ur zsnes_1_51/src.old/parsegen.cpp zsnes_1_51/src/parsegen.cpp
+--- zsnes_1_51/src.old/parsegen.cpp	2007-10-31 02:30:26.000000000 -0200
++++ zsnes_1_51/src/parsegen.cpp	2014-06-22 22:43:52.000000000 -0300
+@@ -31,6 +31,8 @@
+ #include <sstream>
+ #include <set>
+ #include <stack>
++#include <strings.h>
++#include <string.h>
+ using namespace std;
+ 
+ #include <errno.h>
+diff -ur zsnes_1_51/src.old/patch.c zsnes_1_51/src/patch.c
+--- zsnes_1_51/src.old/patch.c	2006-12-27 08:47:05.000000000 -0200
++++ zsnes_1_51/src/patch.c	2014-06-22 22:43:40.000000000 -0300
+@@ -27,6 +27,7 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
++#include <strings.h>
+ #include <sys/stat.h>
+ #endif
+ #include "zpath.h"
+diff -ur zsnes_1_51/src.old/tools/macroll.cpp zsnes_1_51/src/tools/macroll.cpp
+--- zsnes_1_51/src.old/tools/macroll.cpp	2006-12-27 09:04:05.000000000 -0200
++++ zsnes_1_51/src/tools/macroll.cpp	2014-06-22 22:43:18.000000000 -0300
+@@ -28,6 +28,7 @@
+ using namespace std;
+ 
+ #include <unistd.h>
++#include <strings.h>
+ 
+ #include "fileutil.h"
+ 
+diff -ur zsnes_1_51/src.old/tools/strutil.h zsnes_1_51/src/tools/strutil.h
+--- zsnes_1_51/src.old/tools/strutil.h	2006-12-27 09:04:05.000000000 -0200
++++ zsnes_1_51/src/tools/strutil.h	2014-06-22 22:43:10.000000000 -0300
+@@ -25,6 +25,7 @@
+ #include <string>
+ #include <vector>
+ #include <cctype>
++#include <strings.h>
+ 
+ struct ci_char_traits : public std::char_traits<char>
+ {
+diff -ur zsnes_1_51/src.old/ui.c zsnes_1_51/src/ui.c
+--- zsnes_1_51/src.old/ui.c	2007-01-21 03:00:54.000000000 -0200
++++ zsnes_1_51/src/ui.c	2014-06-22 22:43:31.000000000 -0300
+@@ -26,7 +26,8 @@
+ #else
+ #include <stdio.h>
+ #include <stdlib.h>
+-#include <string.h>
++#include <unistd.h>
++#include <strings.h>
+ #include <time.h>
+ #endif
+ 
