@@ -1,0 +1,10 @@
+# Recipe for version 1.10.8 by Hisham Muhammad <hisham@gobolinux.org>, on Thu Jun 26 19:08:53 BRT 2014
+# Recipe (MakeRecipe) for Wireshark by demian <demianflorentin_æt_gmail.com>, on mar sep 4 15:16:18 PYT 2007
+compile_version=1.8.5
+url="http://media-2.cacetech.com/wireshark/src/wireshark-1.10.8.tar.bz2"
+file_size=26715025
+file_md5=510dc3b063785549b41ebc748ac21055
+recipe_type=configure
+configure_options=(
+   "--enable-threads"
+)
