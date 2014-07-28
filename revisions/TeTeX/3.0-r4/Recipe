@@ -1,0 +1,26 @@
+compile_version=1.8.0
+
+urls=(
+   "http://www.las.ic.unicamp.br/pub/ctan/obsolete/systems/unix/teTeX/3.0/distrib/tetex-src-3.0.tar.gz"
+   "http://www.las.ic.unicamp.br/pub/ctan/obsolete/systems/unix/teTeX/3.0/distrib/tetex-texmf-3.0.tar.gz"
+)
+
+dirs=(
+   "tetex-src-3.0"
+   "tetex-texmf-3.0"
+)
+
+unpack_files=dirs
+recipe_type=configure
+create_dirs_first=yes
+
+pre_build() {
+    mkdir -p $target/share/texmf/
+    cp -a ../tetex-texmf-3.0/* $target/share/texmf/
+}
+
+pre_link() {
+    cd $target/bin
+    ln -sfn i686-pc-linux-gnu/* .
+    rm -f {info,makeinfo,install-info,texi2dvi,texi2pdf,texindex,infokey} # Conflicts. Using binaries from Texinfo 
+}
