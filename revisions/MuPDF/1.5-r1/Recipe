@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for MuPDF by Hisham Muhammad <hisham@gobolinux.org>, on Sun Jul 20 17:16:03 BRT 2014
+# Recipe for version 1.5 by Hisham Muhammad <hisham@gobolinux.org>, on Sun Jul 20 17:16:03 BRT 2014
+compile_version=2.0
+url="http://mupdf.com/downloads/mupdf-1.5-source.tar.gz"
+file_size=13269193
+file_md5=89bd4ddc74c266062ebf2702741bb173
+recipe_type=makefile
+make_variables=(
+   prefix=$target
+)
+
