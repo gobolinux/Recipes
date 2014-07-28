@@ -15,8 +15,8 @@ recipe_type=configure
 create_dirs_first=yes
 
 pre_build() {
-    mkdir $target/Shared/texmf/
-    cp -a ../tetex-texmf-3.0/* $target/Shared/texmf/
+    mkdir -p $target/share/texmf/
+    cp -a ../tetex-texmf-3.0/* $target/share/texmf/
 }
 
 pre_link() {
