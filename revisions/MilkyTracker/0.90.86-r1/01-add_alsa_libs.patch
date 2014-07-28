@@ -1,0 +1,14 @@
+Explicitly add -lasound to milkytracker compilation. I think it assumes it comes from SDL_LIBS in other distros.
+
+diff -ur milkytracker-0.90.86.old/src/tracker/Makefile.am milkytracker-0.90.86/src/tracker/Makefile.am
+--- milkytracker-0.90.86.old/src/tracker/Makefile.am	2013-11-09 08:57:21.000000000 -0200
++++ milkytracker-0.90.86/src/tracker/Makefile.am	2014-07-15 20:01:23.866836089 -0300
+@@ -76,7 +76,7 @@
+ $(top_builddir)/src/ppui/osinterface/libosinterface.a \
+ $(top_builddir)/src/fx/libfx.a $(compressionLib) $(RTMIDI) $(SDL_LIBS) \
+ $(top_builddir)/src/compression/zziplib/generic/libzzip.a \
+-$(Z_LIBS)
++$(Z_LIBS) $(ALSA_LIBS)
+ #$(ZZIP_LIBS) read below
+ 
+ # NOTE: The MilkyTracker source contains a MODIFIED version of the zzip
