@@ -1,0 +1,12 @@
+# Recipe for version 0.30.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Jun 17 21:45:27 BRT 2014
+# Recipe (MakeRecipe) for Neon by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Wed Jul 13 08:44:23 BRT 2005
+compile_version=1.9.0
+url="http://www.webdav.org/neon/neon-0.30.0.tar.gz"
+file_size=909989
+file_md5=fb60b3a124eeec441937a812c456fd94
+recipe_type=configure
+
+configure_options=(
+    "--enable-shared"
+    "--with-ssl"
+)
