@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Python-DateUtil by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Aug 18 19:05:21 BRT 2014
+# Recipe for version 1.5 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Aug 18 19:05:21 BRT 2014
+compile_version=2.0
+url="https://labix.org/download/python-dateutil/python-dateutil-1.5.tar.gz"
+file_size=232384
+file_md5=35f3732db3f2cc4afdc68a8533b60a52
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "DESTDIR=$target"
+   "prefix=$target"
+)
