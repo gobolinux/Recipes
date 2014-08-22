@@ -1,0 +1,35 @@
+# Recipe for version 1.11.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Jul 8 10:18:55 BRT 2014
+# Recipe (MakeRecipe) for GDAL by Leandro Motta Barros <lmb@stackedboxes.org>, on Thu May 28 16:31:24 BRT 2009
+compile_version=1.12.3
+url="ftp://ftp.remotesensing.org/gdal/1.11.0/gdal-1.11.0.tar.xz"
+file_size=6456168
+file_md5=31f2c4a7230b40e5fdc3cf12a100f96b
+recipe_type=configure
+makefile=GNUmakefile
+
+configure_options=(
+    --with-hdf4=no
+    --with-hdf5=no
+    --with-netcdf=${netcdf_path}
+    --with-curl
+    --with-geos=${geos_path}/bin/geos-config
+    --with-sqlite3
+    #--with-libtiff=${tiff_path}
+    --with-python
+    --with-png
+    --with-threads
+    --with-expat=${expat_path}
+    --with-xerces=/usr
+#    --with-openjpeg=${openjpeg_path}
+)
+
+install_variables=(
+    PY_HAVE_SETUPTOOLS=n
+    PYTHONPATH=$goboLibraries/python$(python --version 2>&1 | awk {'print $2'} | cut -d. -f1-2)/site-packages
+)
+
+pre_install() {
+    local pythondir=python$(python --version 2>&1 | awk {'print $2'} | cut -d. -f1-2)/site-packages
+    mkdir -p $target/lib/$pythondir
+    echo $goboLibraries/$pythondir/osgeo > $target/lib/$pythondir/osgeo.pth
+}
