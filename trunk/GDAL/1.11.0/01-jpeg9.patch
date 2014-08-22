@@ -1,0 +1,11 @@
+--- gdal-1.11.0/frmts/jpeg/jpgdataset.cpp.orig	2014-07-08 23:35:41.000000000 -0300
++++ gdal-1.11.0/frmts/jpeg/jpgdataset.cpp	2014-07-08 23:35:59.000000000 -0300
+@@ -2733,7 +2733,7 @@ JPGDataset::CreateCopy( const char * psz
+ 
+     pszVal = CSLFetchNameValue(papszOptions, "ARITHMETIC");
+     if( pszVal )
+-        sCInfo.arith_code = CSLTestBoolean(pszVal);
++        sCInfo.arith_code = (boolean) CSLTestBoolean(pszVal);
+ 
+ #if JPEG_LIB_VERSION_MAJOR >= 8 && \
+       (JPEG_LIB_VERSION_MAJOR > 8 || JPEG_LIB_VERSION_MINOR >= 3)
