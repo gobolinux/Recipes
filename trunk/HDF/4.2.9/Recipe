@@ -5,3 +5,7 @@ url="http://www.hdfgroup.org/ftp/HDF/releases/HDF4.2.9/src/hdf-4.2.9.tar.bz2"
 file_size=3126686
 file_md5=c268a703f334ee4987fa710a0de9b9fc
 recipe_type=cmake
+
+cmake_options=(
+    -DHDF4_BUILD_FORTRAN=OFF
+)
