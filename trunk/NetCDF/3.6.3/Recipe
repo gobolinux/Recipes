@@ -9,3 +9,7 @@ recipe_type=configure
 configure_options=(
 	--enable-shared
 )
+
+make_variables=(
+    LIBTOOL=$dir/libtool
+)
