@@ -9,4 +9,9 @@ recipe_type=configure
 configure_options=(
 	--enable-netcdf-4
 	--enable-shared
+	--with-pic
+)
+
+make_variables=(
+	LIBTOOL=$dir/libtool
 )
