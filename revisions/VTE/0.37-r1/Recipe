@@ -1,0 +1,12 @@
+# Recipe for version 0.37 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Aug 25 15:33:46 BRT 2014
+compile_version=1.8.2
+url="http://ftp.gnome.org/pub/GNOME/sources/vte/0.37/vte-0.37.1.tar.xz"
+file_size=998380
+file_md5=00e98cbf99d0565e32b5e193da9ec749
+recipe_type=configure
+
+pre_link() {
+    Quiet pushd $target/lib/pkgconfig
+    ln -sf vte-*.pc vte.pc
+    Quiet popd
+}
