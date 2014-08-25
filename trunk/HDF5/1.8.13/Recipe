@@ -11,3 +11,7 @@ configure_options=(
 	--enable-shared
 	--disable-mpi-size
 )
+
+make_variables=(
+	LIBTOOL=$dir/libtool
+)
