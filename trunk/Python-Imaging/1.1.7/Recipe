@@ -11,4 +11,10 @@ pre_install(){
     # At least Sketch needs these header, not included in the standard installation.
     mkdir -p $target/include
     cp "${sourcedir}/libImaging/"{Imaging.h,ImPlatform.h} $target/include
+
+    if [ -d $target/lib64 ]
+    then
+       cp -r $target/lib64/* $target/lib/
+       rm -rf $target/lib64
+    fi
 }
