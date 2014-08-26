@@ -32,4 +32,9 @@ pre_install() {
     local pythondir=python$(python --version 2>&1 | awk {'print $2'} | cut -d. -f1-2)/site-packages
     mkdir -p $target/lib/$pythondir
     echo $goboLibraries/$pythondir/osgeo > $target/lib/$pythondir/osgeo.pth
+    if [ -d $target/lib64 ]
+    then
+       cp -r $target/lib64/* $target/lib/
+       rm -rf $target/lib64
+    fi
 }
