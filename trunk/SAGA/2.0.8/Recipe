@@ -12,3 +12,7 @@ configure_options=(
     --enable-python
     --enable-unicode
 )
+
+environment=(
+    LIBTOOL=$compileSourcesDir/$dir/libtool
+)
