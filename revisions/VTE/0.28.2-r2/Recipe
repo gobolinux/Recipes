@@ -1,0 +1,22 @@
+# Recipe for version 0.29 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Aug 25 17:32:45 BRT 2014
+compile_version=1.8.2
+url="http://ftp.gnome.org/pub/GNOME/sources/vte/0.28/vte-0.28.2.tar.xz"
+file_size=962340
+file_md5=497f26e457308649e6ece32b3bb142ff
+recipe_type=configure
+
+configure_options=(
+    --with-gtk=2.0
+)
+
+pre_link() {
+    Quiet pushd $target/include
+    mv vte-0.0/vte .
+    rmdir vte-0.0
+    Quiet popd
+    
+    Quiet pushd $target/lib/pkgconfig
+    ln -sf pyvte.pc vte.pc
+    grep -q "Libs:" vte.pc || echo "Libs: -lvte" >> vte.pc
+    Quiet popd
+}
