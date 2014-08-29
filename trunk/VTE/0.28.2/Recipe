@@ -5,8 +5,18 @@ file_size=962340
 file_md5=497f26e457308649e6ece32b3bb142ff
 recipe_type=configure
 
+configure_options=(
+    --with-gtk=2.0
+)
+
 pre_link() {
+    Quiet pushd $target/include
+    mv vte-0.0/vte .
+    rmdir vte-0.0
+    Quiet popd
+    
     Quiet pushd $target/lib/pkgconfig
-    ln -sf vte-*.pc vte.pc
+    ln -sf pyvte.pc vte.pc
+    grep -q "Libs:" vte.pc || echo "Libs: -lvte" >> vte.pc
     Quiet popd
 }
