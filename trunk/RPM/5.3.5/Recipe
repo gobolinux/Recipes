@@ -1,0 +1,18 @@
+# Recipe for version 5.3.5 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Jun 17 23:06:57 BRT 2014
+# Recipe (MakeRecipe) for RPM by Lucas C. Villa Real, on Mon Feb 26 01:11:39 BRT 2007
+compile_version=1.9.0
+url="http://rpm5.org/files/rpm/rpm-5.3/rpm-5.3.5.tar.gz"
+file_size=9526224
+file_md5=7a5112fd208bfda7a1cab20b9ce17a02
+recipe_type=configure
+
+configure_options=(
+    --without-apidocs
+    --without-selinux
+    --without-python
+    --without-perl
+    --without-lua
+    --without-syck
+    --without-dmalloc
+    --without-efence
+)
