@@ -1,0 +1,9 @@
+# Recipe for version 2.4.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Jul 8 13:16:41 BRT 2014
+# Recipe (MakeRecipe) for QGIS by Lucas C. Villa Real, on Wed Feb 2 15:04:12 BRST 2011
+compile_version=1.10.1
+url="http://qgis.org/downloads/qgis-2.4.0.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+    -DPYTHON_LIBRARY="$goboLibraries/libpython$(python --version 2>&1 | awk {'print $2'} | cut -d. -f1-2).so"
+)
