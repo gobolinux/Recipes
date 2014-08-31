@@ -1,0 +1,12 @@
+# Recipe for version 1.5.3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Jul 16 19:59:56 BRT 2014
+# Recipe (MakeRecipe) for LibPcap by Evandro Clivatti Dall'Agnol, on Wed Sep 1 19:51:16 BRT 2004
+compile_version=1.8.0
+# configure_options changed to compile tcpdump 3.8.3 (by roko)
+url="http://www.tcpdump.org/release/libpcap-1.5.3.tar.gz"
+file_size=642352
+file_md5=7e7321fb3aff2f2bb05c8229f3795d4a
+recipe_type=configure
+configure_options=(
+   "--enable-yydebug"
+)
+install_target="install install-shared"
