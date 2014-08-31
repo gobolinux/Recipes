@@ -1,0 +1,11 @@
+[Name] libpcap
+[Summary] A system-independent interface for user-level packet capture.
+[License] BSD License (original)
+[Description] This is a handy little library which provides a
+packet filtering mechanism based on the BSD packet
+filter (BPF). Most notably, tcpdump needs this to
+work, and there is also a perl module (still in
+beta) which can use this as well. In plain
+english, if you want to write your own network
+traffic analyzer, this is the place to start.
+[Homepage] http://www.tcpdump.org/
