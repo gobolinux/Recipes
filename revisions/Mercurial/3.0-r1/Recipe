@@ -1,0 +1,12 @@
+# Recipe for version 3.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Jun 25 12:37:38 BRT 2014
+# Recipe for mercurial by Frederico Recsky frederico at gmail.com
+compile_version=1.13.0
+url="http://www.selenic.com/mercurial/release/mercurial-3.0.tar.gz"
+file_size=3903047
+file_md5=133ff0a31047d2c0b4640943a58535a7
+build_script="setup.py"
+recipe_type=python
+
+pre_link() {
+  install contrib/hgk $target/bin/
+}
