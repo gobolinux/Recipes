@@ -1,0 +1,4 @@
+#!/bin/sh
+
+GTK_BINARY_VERSION=$(ls $target/lib/gtk-2.0/2*)
+gtk-query-immodules-2.0 > $target/lib/gtk-2.0/$(GTK_BINARY_VERSION)/immodules.cache
