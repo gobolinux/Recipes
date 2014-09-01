@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for NXComp by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jul 3 14:53:15 BRT 2014
+# Recipe for version 3.5.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jul 3 14:53:15 BRT 2014
+compile_version=2.0
+url="http://pkgs.fedoraproject.org/repo/pkgs/nx/nxcomp-3.5.0-2.tar.gz/ad8c0f133122c6d07732ca69c8759410/nxcomp-3.5.0-2.tar.gz"
+file_size=532999
+file_md5=ad8c0f133122c6d07732ca69c8759410
+dir='nxcomp'
+recipe_type=configure
+
+pre_install() {
+    cp -a libXcomp.* $target/lib
+    cp NX.h $target/include
+}
