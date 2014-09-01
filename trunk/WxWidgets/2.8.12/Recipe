@@ -6,4 +6,6 @@ file_size=18924737
 file_md5=2fa39da14bc06ea86fe902579fedc5b1
 recipe_type=configure
 
-configure_options=("--disable-unicode") 
+configure_options=(
+    --enable-unicode
+)
