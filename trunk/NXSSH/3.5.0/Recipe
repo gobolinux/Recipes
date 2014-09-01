@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for NXSSH by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jul 3 14:43:59 BRT 2014
+# Recipe for version 3.5.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jul 3 14:43:59 BRT 2014
+compile_version=2.0
+url="http://pkgs.fedoraproject.org/repo/pkgs/nx/nxssh-3.5.0-2.tar.gz/f52fcdb38e09f8dcfb9ff0344dfbbbd6/nxssh-3.5.0-2.tar.gz"
+file_size=1430751
+file_md5=f52fcdb38e09f8dcfb9ff0344dfbbbd6
+dir='nxssh'
+recipe_type=configure
+do_install=no
+
+pre_install() {
+    cp nxssh nxsshd nxssh-keygen $target/bin
+}
