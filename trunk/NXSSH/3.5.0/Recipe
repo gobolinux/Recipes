@@ -9,5 +9,5 @@ recipe_type=configure
 do_install=no
 
 pre_install() {
-    cp nxssh nxsshd nxssh-keygen $target/bin
+    cp -v nxssh nxsshd nxssh-keygen $target/bin
 }
