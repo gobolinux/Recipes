@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for XBMC by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jun 29 14:04:17 BRT 2013
+# Recipe for version 12.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jun 29 14:04:17 BRT 2013
+compile_version=1.0.1
+url="http://mirrors.xbmc.org/releases/source/xbmc-12.2.tar.gz"
+file_size=67663000
+file_md5=489f3877decae4e265ece54f9eaef0ba
+recipe_type=configure
+create_dirs_first=yes
+
+configure_options=(
+    --enable-rtmp
+)
