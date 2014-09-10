@@ -1,0 +1,20 @@
+# Recipe for version 3.5.1 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Sep 8 13:45:24 BRT 2014
+# Recipe (MakeRecipe) for Audacious-Plugins by Guilherme B. Bedin, on Wed Jan 24 13:55:32 BRST 2007
+compile_version=1.13.3
+url="http://distfiles.audacious-media-player.org/audacious-plugins-3.5.1.tar.bz2"
+file_size=1714137
+file_md5=0eeb7f8f0183f4189ff1b564e9719cf8
+recipe_type=configure
+part_of=Audacious
+
+make_variables=(
+    "pluginlibdir=$target/lib/audacious"
+)
+unmanaged_files=(
+  $goboLibraries/audacious
+)
+pre_build() {
+   # Remove existing symlink so that it doesn't install
+   # plugins over previous version.
+   rm -f /usr/lib/audacious && true
+}
