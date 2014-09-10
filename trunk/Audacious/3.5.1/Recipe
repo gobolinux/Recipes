@@ -1,0 +1,9 @@
+# Recipe for version 3.5.1 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Sep 8 13:44:05 BRT 2014
+# Recipe (MakeRecipe) for Audacious by Dominique Juergensen <brokolie@vollbio.de>, on Qua Jul 19 22:57:23 CEST 2009
+compile_version=1.12.3
+recipe_type=meta
+
+include=(
+   "Audacious-Itself--3.5.1"
+   "Audacious-Plugins--3.5.1"
+)
