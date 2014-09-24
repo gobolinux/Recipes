@@ -1,0 +1,11 @@
+# Recipe for version 3.14.0 by Hisham Muhammad <hisham@gobolinux.org>, on Wed Sep 24 10:27:08 BRT 2014
+# Recipe (MakeRecipe) for GTK+ by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 11:55:54 BRT 2005
+compile_version=1.9.0
+url="http://ftp.acc.umu.se/pub/GNOME/sources/gtk+/3.14/gtk+-3.14.0.tar.xz"
+file_size=15571976
+file_md5=2e4e64a29e0373f36fbc98e1531da2db
+recipe_type=configure
+
+configure_options=(
+    --disable-gtk-doc-html
+)
