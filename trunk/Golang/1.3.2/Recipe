@@ -1,0 +1,32 @@
+# Recipe (MakeRecipe) for Golang by Hisham Muhammad <hisham@gobolinux.org>, on Mon Sep 29 15:22:47 BRT 2014
+# Recipe for version 1.3.2 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Sep 29 15:22:47 BRT 2014
+compile_version=2.0
+url="https://storage.googleapis.com/golang/go1.3.2.src.tar.gz"
+file_size=10049331
+file_md5=72982ca92b8fbb74ad9b5a056bca9cbf
+dir='go'
+recipe_type=manifest
+create_dirs_first=yes
+manifest=(
+)
+environment=(
+	"GOARCH=386"
+	"GOOS=linux"
+	"GOBIN=$target/bin"
+	"GOROOT_FINAL=$target/lib/go"
+)
+sandbox_options=(
+    --no-sandbox
+)
+do_build()
+{
+    $sudo_exec chown -R "$(whoami)" "$target"
+    pushd src
+    bash ./all.bash
+    popd
+    $sudo_exec chown -R "$(SuperUserName)" "$target"
+}
+do_install() {
+   mkdir -p "$target/lib/go"
+   cp -a pkg "$target/lib/go"
+}
