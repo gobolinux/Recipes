@@ -1,0 +1,21 @@
+# Recipe for version 7.8.3 by Hisham Muhammad <hisham@gobolinux.org>, on Wed Feb 26 13:42:25 BRT 2014
+# Recipe (MakeRecipe) for GHC by Isaac Dupree <id@isaac.cedarswampstudios.org>, on Sat Jun 23 12:18:16 BRT 2007
+
+# $url is in the arch subdirectory of this recipe!
+
+compile_version=1.11.0
+recipe_type=configure
+do_build=no
+dir='ghc-7.8.3'
+
+pre_link() {
+   mkdir -p $settings_target/ghc-7.8.3
+   if [ -e $settings_target/ghc-7.8.3/package.conf ]
+   then
+      rm -f $target/lib/ghc-7.8.3/package.conf
+   else
+      mv $target/lib/ghc-7.8.3/package.conf $settings_target/ghc-7.8.3
+   fi
+   ln -s ../../../Settings/ghc-7.8.3/package.conf $target/lib/ghc-7.8.3/package.conf
+   sed -i "s!PKGCONF=$target/lib!PKGCONF=$settings_target!" $target/bin/ghc-pkg
+}
