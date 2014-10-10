@@ -1,0 +1,23 @@
+# Recipe for version 5.9 by Andreas Köhler <andi5.py@gmx.net>, on So 19. Feb 14:03:56 CET 2012
+compile_version=1.12.0
+url="$ftpGnu/ncurses/ncurses-5.9.tar.gz"
+file_size=2826473
+file_md5=8cb9c412e5f2d96bc6f459aa8c6282a1
+
+recipe_type=configure
+
+configure_options=(
+#   --enable-widec
+   --with-shared
+   --without-debug
+#   --with-termlib
+)
+
+install_variables=(
+   ticdir="${target}/share/terminfo"
+)
+
+pre_link() {
+   chmod 755 $target/lib/*.5.9
+   chmod 644 $target/lib/libncurses++.a
+}
