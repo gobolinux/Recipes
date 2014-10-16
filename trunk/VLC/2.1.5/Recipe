@@ -1,0 +1,16 @@
+# Recipe for version 2.1.5 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Oct 13 23:07:39 BRT 2014
+# Recipe (MakeRecipe) for VLC by keisangi, on Sun Feb 17 01:23:41 JST 2008
+compile_version=1.10.2
+url="http://download.videolan.org/pub/videolan/vlc/2.1.5/vlc-2.1.5.tar.xz"
+file_size=19574208
+file_md5=3941b561f590cc95ca5e795213cba2f2
+recipe_type=configure
+configure_options=(
+   "--with-kde-solid=$target/share/apps/solid/actions"
+   --disable-lua
+   --disable-a52
+)
+
+install_variables=(
+   soliddatadir=$target/share/apps/solid/actions
+)
