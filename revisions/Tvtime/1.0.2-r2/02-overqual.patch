@@ -1,0 +1,59 @@
+See https://sourceforge.net/tracker/?func=detail&atid=506987&aid=1619454&group_id=64301
+
+diff -x config.log -x config.status -ru tmp/tvtime-1.0.1/plugins/greedyh.asm work/tvtime-1.0.1/plugins/greedyh.asm
+--- tvtime-1.0.1/plugins/greedyh.asm	2005-08-14 17:16:43.000000000 +0100
++++ tvtime-1.0.1-new/plugins/greedyh.asm	2007-01-20 12:58:10.000000000 +0000
+@@ -18,7 +18,7 @@
+ 
+ #include "x86-64_macros.inc"
+ 
+-void DScalerFilterGreedyH::FUNCT_NAME(TDeinterlaceInfo* pInfo)
++void FUNCT_NAME(TDeinterlaceInfo* pInfo)
+ {
+     int64_t i;
+     bool InfoIsOdd = (pInfo->PictureHistory[0]->Flags & PICTURE_INTERLACED_ODD) ? 1 : 0;
+diff -x config.log -x config.status -ru tmp/tvtime-1.0.1/plugins/tomsmocomp/TomsMoCompAll2.inc work/tvtime-1.0.1/plugins/tomsmocomp/TomsMoCompAll2.inc
+--- tvtime-1.0.1/plugins/tomsmocomp/TomsMoCompAll2.inc	2004-10-20 16:31:05.000000000 +0100
++++ tvtime-1.0.1-new/plugins/tomsmocomp/TomsMoCompAll2.inc	2007-01-20 12:58:43.000000000 +0000
+@@ -5,9 +5,9 @@
+ #endif
+ 
+ #ifdef USE_STRANGE_BOB
+-#define SEARCH_EFFORT_FUNC(n) DScalerFilterTomsMoComp::SEFUNC(n##_SB)
++#define SEARCH_EFFORT_FUNC(n) SEFUNC(n##_SB)
+ #else
+-#define SEARCH_EFFORT_FUNC(n) DScalerFilterTomsMoComp::SEFUNC(n)
++#define SEARCH_EFFORT_FUNC(n) SEFUNC(n)
+ #endif
+ 
+ int SEARCH_EFFORT_FUNC(0)		// we don't try at all ;-)
+diff -x config.log -x config.status -ru tmp/tvtime-1.0.1/plugins/tomsmocomp.cpp work/tvtime-1.0.1/plugins/tomsmocomp.cpp
+--- tvtime-1.0.1/plugins/tomsmocomp.cpp	2004-10-20 18:38:04.000000000 +0100
++++ tvtime-1.0.1-new/plugins/tomsmocomp.cpp	2007-01-20 12:59:58.000000000 +0000
+@@ -31,7 +31,7 @@
+ 
+ #define IS_MMX
+ #define SSE_TYPE MMX
+-#define FUNCT_NAME DScalerFilterTomsMoComp::filterDScaler_MMX
++#define FUNCT_NAME filterDScaler_MMX
+ #include "tomsmocomp/TomsMoCompAll.inc"
+ #undef  IS_MMX
+ #undef  SSE_TYPE
+@@ -39,7 +39,7 @@
+ 
+ #define IS_3DNOW
+ #define SSE_TYPE 3DNOW
+-#define FUNCT_NAME DScalerFilterTomsMoComp::filterDScaler_3DNOW
++#define FUNCT_NAME filterDScaler_3DNOW
+ #include "tomsmocomp/TomsMoCompAll.inc"
+ #undef  IS_3DNOW
+ #undef  SSE_TYPE
+@@ -47,7 +47,7 @@
+ 
+ #define IS_SSE
+ #define SSE_TYPE SSE
+-#define FUNCT_NAME DScalerFilterTomsMoComp::filterDScaler_SSE
++#define FUNCT_NAME filterDScaler_SSE
+ #include "tomsmocomp/TomsMoCompAll.inc"
+ #undef  IS_SSE
+ #undef  SSE_TYPE

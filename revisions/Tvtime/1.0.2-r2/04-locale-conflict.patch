@@ -1,0 +1,26 @@
+See http://sourceforge.net/p/tvtime/bugs/732/
+
+diff -Naur tvtime-1.0.2/src/xmltv.c tvtime-1.0.2.fix/src/xmltv.c
+--- tvtime-1.0.2/src/xmltv.c	2004-09-26 16:40:01.000000000 +0000
++++ tvtime-1.0.2.fix/src/xmltv.c	2014-09-06 06:37:49.531195435 +0000
+@@ -118,9 +118,9 @@
+ typedef struct {
+     const char *code;
+     const char *name;
+-} locale_t;
++} locale_entry_t;
+ 
+-static locale_t locale_table[] = {
++static locale_entry_t locale_table[] = {
+     {"AA", "Afar"},           {"AB", "Abkhazian"},      {"AF", "Afrikaans"},
+     {"AM", "Amharic"},        {"AR", "Arabic"},         {"AS", "Assamese"},
+     {"AY", "Aymara"},         {"AZ", "Azerbaijani"},    {"BA", "Bashkir"},
+@@ -168,7 +168,7 @@
+     {"XH", "Xhosa"},          {"YO", "Yoruba"},         {"ZH", "Chinese"},
+     {"ZU", "Zulu"} };
+ 
+-const int num_locales = sizeof( locale_table ) / sizeof( locale_t );
++const int num_locales = sizeof( locale_table ) / sizeof( locale_entry_t );
+ 
+ /**
+  * Timezone parsing code based loosely on the algorithm in
