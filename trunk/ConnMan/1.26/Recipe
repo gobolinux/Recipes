@@ -1,0 +1,14 @@
+# Recipe for version 1.26 by Hugo Barrocas <barrocas75@gmail.com>, on Sáb Nov 22 11:30:22 UTC 2014
+# Recipe (MakeRecipe) for ConnMan by Dominique Juergensen <brokolie@vollbio.de>, on Tue Nov 24 11:01:13 CET 2009
+compile_version=1.12.4
+url="https://www.kernel.org/pub/linux/network/connman/connman-1.26.tar.xz"
+file_size=645540
+file_md5=ba05b110b7c81e5fa14e8b402ef37a9e
+recipe_type=configure
+
+configure_options=(
+    --enable-test
+    --enable-nmcompat
+    --enable-polkit
+    --with-dbusconfdir="$settings_target/dbus-1/system.d/"
+)
