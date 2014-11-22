@@ -1,0 +1,14 @@
+# Recipe for version 5.2.2 by Hugo Barrocas <barrocas75@gmail.com>, on Sáb Nov 15 17:04:18 UTC 2014
+compile_version=1.8.2
+url="http://www.rarlab.com/rar/unrarsrc-5.2.2.tar.gz"
+file_size=217481
+file_md5=69ef5af8442cbb7dfdebe298bfb9c61a
+dir='unrar'
+
+recipe_type=makefile
+makefile=makefile
+do_install=no
+
+pre_link() {
+	cp unrar $target/bin/
+}
