@@ -1,0 +1,10 @@
+# Recipe for version 2.0.3 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Feb 16 01:16:50 BRST 2015
+# Recipe (MakeRecipe) for SDL2 by Hisham Muhammad <hisham@gobolinux.org>, on Sat Mar 1 14:24:56 BRT 2014
+compile_version=1.9.0
+url="http://libsdl.org/release/SDL2-2.0.3.tar.gz"
+file_size=3871267
+file_md5=fe6c61d2e9df9ef570e7e80c6e822537
+recipe_type=cmake
+cmake_options=(
+   "-DHAVE_LIBUDEV_H=0"
+)
