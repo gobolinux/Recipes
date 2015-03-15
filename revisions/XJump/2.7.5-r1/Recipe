@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for XJump by Hisham Muhammad <hisham@gobolinux.org>, on Fri Feb 13 17:42:24 BRST 2015
+# Recipe for version xjump_2.7.5.orig by Hisham Muhammad <hisham@gobolinux.org>, on Fri Feb 13 17:42:24 BRST 2015
+compile_version=2.0
+url="http://ftp.de.debian.org/debian/pool/main/x/xjump/xjump_2.7.5.orig.tar.gz"
+file_size=15940
+file_md5=3e8d09c6b8162b7e4380f8a77eb595dc
+dir='xjump-2.7.5.orig'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+        TARGET="$target/bin"
+)
+pre_install() {
+        groupadd -f games
+}
