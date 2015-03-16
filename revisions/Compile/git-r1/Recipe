@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for Compile by Hisham Muhammad
+# Based on recipe for version 1.11.3 by Jonas Karlsson <jonas(at)gobolinux.org>
+compile_version=3.0
+git="https://github.com/gobolinux/Compile"
+recipe_type=makefile
+make_variables=(
+   VERSION=$version
+   DESTDIR=$target
+)
