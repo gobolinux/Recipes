@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for OpenH264 by Hisham Muhammad <hisham@gobolinux.org>, on Sat Mar 21 23:29:59 BRT 2015
+# Recipe for version 1.4.0 by Hisham Muhammad <hisham@gobolinux.org>, on Sat Mar 21 23:29:59 BRT 2015
+compile_version=git
+url="https://github.com/cisco/openh264/archive/v1.4.0.tar.gz"
+file="openh264-1.4.0.tar.gz"
+file_size=37679656
+file_md5=06d92ee5bd231814394b7e29f0545e57
+dir='openh264-1.4.0'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
