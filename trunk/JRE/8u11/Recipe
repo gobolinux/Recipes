@@ -1,0 +1,34 @@
+# Recipe for version 8u11 by Hugo Barrocas <barrocas75@gmail.com>, on Qua Abr 15 12:33:14 UTC 2015
+# Recipe (MakeRecipe) for JRE by Hugo Barrocas <barrocas75@gmail.com>, on Qui Jul 31 01:39:30 UTC 2014
+
+compile_version=2.0
+recipe_type=manifest
+url="http://ftp.osuosl.org/pub/funtoo/distfiles/oracle-java/jre-8u11-linux-i586.tar.gz"
+file_size=58188271
+file_md5=329c93351f0fcbc832fdf76a406dfbc3
+dir='jre1.8.0_11'
+unpack_files=files_in_root
+
+pre_link() {
+ # Remove previous plugin link (if exists).
+      rm $firefox_path/firefox/browser/plugins/libjavaplugin_oji.so
+      rm $firefox_path/firefox/browser/plugins/libnpjp2.so
+ # Create the plugin directory if it does not exist.
+     mkdir -p $firefox_path/firefox/browser/plugins
+ # Create a link to the java plugin in the Firefox plugin directory.
+     ln -s $target/lib/i386/libnpjp2.so $firefox_path/firefox/browser/plugins
+}
+
+manifest=(
+    'bin:bin'
+    'lib:lib'
+    'man:man'
+    'plugin:plugin'
+    'COPYRIGHT:doc/COPYRIGHT'
+    'LICENSE:doc/LICENSE'
+    'README:doc/README'
+    'release:doc/release'
+    'THIRDPARTYLICENSEREADME-JAVAFX.txt:doc/THIRDPARTYLICENSEREADME-JAVAFX.txt'
+    'THIRDPARTYLICENSEREADME.txt:doc/THIRDPARTYLICENSEREADME.txt'
+    'Welcome.html:doc/Welcome.html'
+)
