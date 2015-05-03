@@ -1,0 +1,18 @@
+Python searches each element of PREFIXES + 'lib/pythonx.y/site-packages'
+for modules, and also for .pth files. This patch ensures that the
+/S/L/L tree is included in that, allowing other packages to provide
+their own .pth files when necessary. It relies on the legacy tree in
+order to keep the patch simple - the 'lib/pythonx.y/site-packages'
+suffix is hard-coded later on.
+diff -urNa Python-3.0.1.orig/Lib/site.py Python-3.0.1/Lib/site.py
+--- Python-3.0.1.orig/Lib/site.py	2008-05-16 10:51:26.000000000 +1200
++++ Python-3.0.1/Lib/site.py	2009-02-14 15:40:54.000000000 +1300
+@@ -57,7 +57,7 @@
+ import builtins
+ 
+ # Prefixes for site-packages; add additional prefixes like /usr/local here
+-PREFIXES = [sys.prefix, sys.exec_prefix]
++PREFIXES = [sys.prefix, sys.exec_prefix, '@%Compile_goboPrefix%@/']
+ # Enable per user site-packages directory
+ # set it to False to disable the feature or True to force the feature
+ ENABLE_USER_SITE = None
