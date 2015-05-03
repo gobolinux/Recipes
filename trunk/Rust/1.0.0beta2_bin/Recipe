@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Rust by Hisham Muhammad <hisham@gobolinux.org>, on Mon Apr 20 20:38:12 BRT 2015
+# Recipe for version 1.0.0beta2_bin by Hisham Muhammad <hisham@gobolinux.org>, on Mon Apr 20 20:38:12 BRT 2015
+compile_version=git
+url="https://static.rust-lang.org/dist/rust-1.0.0-beta.2-i686-unknown-linux-gnu.tar.gz"
+file_size=155548443
+file_md5=47f4de3cf0cc7e5d2ad8cd0698eab80b
+recipe_type=manifest
+pre_link() {
+   ./install.sh --prefix=$target
+}
+
