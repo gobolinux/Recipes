@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for KSH by Hisham Muhammad <hisham@gobolinux.org>, on Mon May 11 15:28:59 BRT 2015
+# Recipe for version 93u_20120801 by Hisham Muhammad <hisham@gobolinux.org>, on Mon May 11 15:28:59 BRT 2015
+compile_version=git
+url="http://http.debian.net/debian/pool/main/k/ksh/ksh_93u+20120801.orig.tar.gz"
+file_size=2432910
+file_md5=106231c8a47830903eaddd887af506dd
+dir='ksh-93u+20120801'
+recipe_type=manifest
+manifest=()
+pre_build() {
+   bin/package make ksh
+}
+pre_install() {
+   my_arch=`bin/package`
+   mv arch/$my_arch/* "$target"
+}
