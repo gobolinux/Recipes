@@ -1,0 +1,23 @@
+# Recipe for version 2.4.1 by Hisham Muhammad <hisham@gobolinux.org>, on Thu May 21 14:17:36 BRT 2015
+# Recipe (MakeRecipe) for Git by Jonas Karlsson <jonka750@student.liu.se>, on Sat Apr 15 18:45:06 CEST 2006
+compile_version=1.9.0
+url="https://www.kernel.org/pub/software/scm/git/git-2.4.1.tar.gz"
+file_size=5339514
+file_md5=c72b2dcff11ebd25cb4fa488d6279717
+recipe_type=makefile
+makefile='Makefile'
+build_target="all"
+install_target="install"
+
+environment=(
+   XML_CATALOG_FILES="$docbook_xsl_stylesheets_path/Shared/xml/docbook/stylesheet/catalog.xml $goboVariable/lib/xml/catalog $goboVariable/lib/xml/docbook"
+)
+make_variables=(
+   prefix="$target"
+   PREFIX="$target"
+   ASCIIDOC8="YesPlease"
+)
+
+pre_link() {
+   cp -a Documentation/* $target/doc
+}
