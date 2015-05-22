@@ -1,0 +1,22 @@
+configure_options=(
+   -de
+   -Dcc=gcc
+   -Dusethreads
+   -Duselargefiles
+   -Uusesfio
+   -Dprefix=$target
+   -Dman1dir=$target/share/man/man1
+   -Dman3dir=$target/share/man/man3
+   -Duseshrplib
+   -Dlibperl='libperl.so.5.10'
+   -Dotherlibdirs=$goboSystem/Aliens/CPAN/.cpan:$goboSystem/Aliens/CPAN/lib/perl5:$goboLibraries/perl5:$goboLibraries/perl5/site_perl
+   -Dlocincpth="$goboHeaders"
+   -Dloclibpth="$goboLibraries"
+   -Dlibpth="$goboLibraries /usr/lib"
+   cf_by='GoboLinux'
+   -Dpager="${goboExecutables}/less -isR"
+   # Configure options to consider:
+   # -Duseshrplib useful for embeding perl (ie mod_perl)
+   # a DBM would be useful (dbm_opem() for binding hashes to files) would add a dependency
+   # -Dlibspath
+)
