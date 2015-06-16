@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for Apache-Maven by Hisham Muhammad <hisham@gobolinux.org>, on Mon Jun 15 18:00:23 BRT 2015
+# Recipe for version 3.3.3 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Jun 15 18:00:23 BRT 2015
+compile_version=git
+url="http://ftp.unicamp.br/pub/apache/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz"
+file_size=8042383
+file_md5=794b3b7961200c542a7292682d21ba36
+dir="apache-maven-3.3.3"
+recipe_type=manifest
+manifest=(
+   bin:bin
+   lib:lib
+   conf:conf
+   boot:boot
+)
