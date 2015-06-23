@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for VKeybd by Hisham Muhammad <hisham@gobolinux.org>, on Mon Jun 22 21:42:26 BRT 2015
+# Recipe for version 0.1.18d by Hisham Muhammad <hisham@gobolinux.org>, on Mon Jun 22 21:42:26 BRT 2015
+compile_version=git
+url="ftp://ftp.suse.com/pub/people/tiwai/vkeybd/vkeybd-0.1.18d.tar.bz2"
+file_size=38918
+file_md5=5c7bd16e2903866f949879b885953a2b
+dir='vkeybd'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+   "TCL_VERSION=$(basename "${tcl_path}" | sed 's,\([^.]*\.[^.]*\)\..*,\1,')"
+)
