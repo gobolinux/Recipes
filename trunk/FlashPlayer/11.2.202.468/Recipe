@@ -1,0 +1,20 @@
+# Recipe for version 11.2.202.468 by Hugo Barrocas <barrocas75@gmail.com>, on Qui Jul 2 22:56:07 UTC 2015
+compile_version=2.0
+url="http://fpdownload.macromedia.com/get/flashplayer/pdc/11.2.202.468/install_flash_player_11_linux.i386.tar.gz"
+file_size=6935039
+file_md5=fd90ed0ebfdbb827cf4aa54f0e584538
+unpack_files=files_in_root
+
+recipe_type=manifest
+
+pre_link() {
+  # Remove previous plugin link, avoids errors on updating
+  rm $firefox_path/firefox/browser/plugins/libflashplayer.so
+  # Create a link to the Flash plugin in the Firefox plugin directory (and the plugin directory itself if it does not exist).
+  mkdir -p $firefox_path/firefox/browser/plugins
+  ln -s $target/lib/libflashplayer.so  $firefox_path/firefox/browser/plugins
+}
+
+manifest=(
+ 'libflashplayer.so:lib/libflashplayer.so'
+)
