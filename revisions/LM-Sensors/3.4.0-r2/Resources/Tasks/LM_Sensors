@@ -1,0 +1,10 @@
+#!/bin/sh
+
+case "$1" in
+    [Ss]tart)
+	        # put actions suggested by sensors-detect here
+	        ;;
+    [Ss]top)
+	        # no stop action necessary
+	        ;;
+esac
