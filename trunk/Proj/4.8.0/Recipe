@@ -5,3 +5,7 @@ url="http://download.osgeo.org/proj/proj-4.8.0.tar.gz"
 file_size=785279
 file_md5=d815838c92a29179298c126effbb1537
 recipe_type=configure
+
+pre_link() {
+  cp src/projects.h $target/include
+}
