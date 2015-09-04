@@ -6,3 +6,10 @@ file_size=22675106
 file_md5=98cf8fe74e512e1061caf1ee0c2043a8
 file="R-2.14.0.tar.gz"
 recipe_type=configure
+configure_options=( --with-readline=no --with-x=no )
+
+pre_link() {
+  Quiet pushd $target/lib
+  ln -sf . R
+  Quiet popd
+}
