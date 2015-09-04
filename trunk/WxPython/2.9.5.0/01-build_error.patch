@@ -1,0 +1,42 @@
+--- wxPython-src-2.9.5.0/wxPython/src/gtk/html2_wrap.cpp        2013-05-18 12:47:49.000000000 -0600
++++ wxPython-src-2.9.5.0-patch/wxPython/src/gtk/html2_wrap.cpp  2013-09-11 11:13:06.179333082 -0600
+@@ -2683,7 +2683,7 @@
+ #include <wx/sharedptr.h>
+ #include <wx/vector.h>
+
+-
++class wxWebView;
+
+ enum wxWebViewZoom
+ {
+@@ -2784,12 +2784,12 @@
+ class wxWebView : public wxControl
+ {
+ public:
+-    virtual bool Create(wxWindow*, wxWindowID, const wxString&, const wxPoint&,
+-                        const wxSize&, long style, const wxString&) { _RaiseError(); return false; }
+-    static wxWebView* New(wxWebViewBackend) { _RaiseError(); return NULL; }
+-    static wxWebView* New(wxWindow*, wxWindowID, const wxString&, const wxPoint& ,
+-                          const wxSize& , const wxString&, long style,
+-                          const wxString&) { _RaiseError(); return NULL; }
++    virtual bool Create(wxWindow* parent, wxWindowID id, const wxString& url, const wxPoint& pos,
++                        const wxSize& size, long style, const wxString& name) { _RaiseError(); return false; }
++    static wxWebView* New(const wxString& backend) { _RaiseError(); return NULL; }
++    static wxWebView* New(wxWindow* parent, wxWindowID id, const wxString& url, const wxPoint& pos,
++                          const wxSize&  size, const wxString& backend, long style,
++                          const wxString& name) { _RaiseError(); return NULL; }
+
+     virtual wxString GetCurrentTitle() const { return wxEmptyString; }
+     virtual wxString GetCurrentURL() const { return wxEmptyString; }
+
+
+--- wxPython-src-2.9.5.0/wxPython/setup.py      2013-02-27 13:14:01.000000000 -0700
++++ wxPython-src-2.9.5.0-patch/wxPython/setup.py        2013-09-11 09:54:08.882270829 -0600
+@@ -946,6 +946,7 @@
+ DATA_FILES += find_data_files('wx/tools/Editra/tests/syntax', '*')
+ DATA_FILES += find_data_files('wx/tools/Editra', '[A-Z]*', recursive=False)
+
++DATA_FILES += ["src/wx.pth"]
+
+ ## import pprint
+ ## pprint.pprint(DATA_FILES)
