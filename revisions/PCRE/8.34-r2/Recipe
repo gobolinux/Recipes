@@ -1,0 +1,12 @@
+# Recipe for version 8.34 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 9 14:04:56 GMT 2014
+# by Jeremy Vernon
+compile_version=1.12.0
+url="http://sourceforge.net/projects/pcre/files/pcre/8.34/pcre-8.34.tar.bz2"
+file_size=1468794
+file_md5=5439e321351bddd5533551bbce128d07
+recipe_type=configure
+
+configure_options=(
+   "--enable-utf8"
+   #utf-8 support here needed for at least Goffice 0.5.2
+)
