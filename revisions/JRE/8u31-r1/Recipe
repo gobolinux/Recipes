@@ -1,0 +1,47 @@
+# Recipe for version 8u31 by Hugo Barrocas <barrocas75@gmail.com>, on Seg Out 5 21:41:38 UTC 2015
+# Recipe (MakeRecipe) for JRE by Hugo Barrocas <barrocas75@gmail.com>, on Qui Jul 31 01:39:30 UTC 2014
+
+compile_version=2.0
+recipe_type=manifest
+url="http://ftp.osuosl.org/pub/funtoo/distfiles/oracle-java/jre-8u31-linux-i586.tar.gz"
+file_size=64564510
+file_md5=6cb48241523ad39862c05d8cf791ce92
+
+# url="http://javadl.sun.com/webapps/download/AutoDL?BundleId=109698"
+# url="http://download.oracle.com/otn-pub/java/jdk/8u60-b27/jre-8u60-linux-i586.tar.gz"
+
+# uncompress=no
+dir='jre1.8.0_31'
+unpack_files=files_in_root
+
+# pre_patch() {
+# 	mv AutoDL?BundleId=109698 jre-8u60-linux-i586.tar.gz
+# }
+
+# pre_patch() {
+# 	tar zxvf jre-8u60-linux-i586.tar.gz
+# }
+
+pre_link() {
+	# Remove previous plugin link (if exists).
+		rm $firefox_path/firefox/browser/plugins/libjavaplugin_oji.so
+		rm $firefox_path/firefox/browser/plugins/libnpjp2.so
+	# Create the Firefox plugin directory if it does not exist.
+		mkdir -p $firefox_path/firefox/browser/plugins
+	# Create a link to the java plugin in the Firefox plugin directory.
+		ln -s $target/lib/i386/libnpjp2.so $firefox_path/firefox/browser/plugins
+}
+
+manifest=(
+	'bin:bin'
+	'lib:lib'
+	'man:man'
+	'plugin:plugin'
+	'COPYRIGHT:doc/COPYRIGHT'
+	'LICENSE:doc/LICENSE'
+	'README:doc/README'
+	'release:doc/release'
+	'THIRDPARTYLICENSEREADME-JAVAFX.txt:doc/THIRDPARTYLICENSEREADME-JAVAFX.txt'
+	'THIRDPARTYLICENSEREADME.txt:doc/THIRDPARTYLICENSEREADME.txt'
+	'Welcome.html:doc/Welcome.html'
+)
