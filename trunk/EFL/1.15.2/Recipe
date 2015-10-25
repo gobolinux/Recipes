@@ -1,0 +1,21 @@
+# Recipe for version 1.15.2 by Hugo Barrocas <barrocas75@gmail.com>, on Sex Out 23 15:45:09 UTC 2015
+# Recipe (MakeRecipe) for EFL by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Apr 12 15:50:52 GMT 2014
+compile_version=2.0
+url="http://download.enlightenment.org/rel/libs/efl/efl-1.15.2.tar.gz"
+file_size=52944411
+file_md5=c3a67f27f1a9d4992a95dd651dc0063c
+recipe_type=configure
+
+environment=(
+	CFLAGS="-I$goboHeaders/luajit-2.0"
+	CXXFLAGS="-I$goboHeaders/luajit-2.0"
+)
+
+configure_options=(
+	#--enable-drm
+	--disable-drm
+	--enable-v4l2
+	--enable-image-loader-webp
+	--with-id="GoboLinux"
+	--with-profile="release"
+)
