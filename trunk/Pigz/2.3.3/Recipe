@@ -1,0 +1,16 @@
+# Recipe for version 2.3.3 by Hisham Muhammad <hisham@gobolinux.org>, on Thu Nov 5 10:38:03 EST 2.35
+# Recipe (MakeRecipe) for Pigz by Guilherme B. Bedin <gbedin@gobolinux.org>, on Sat Nov 12.37:16:04 BRST 2.31
+compile_version=1.13.3
+url="http://zlib.net/pigz/pigz-2.3.3.tar.gz"
+file_size=92787
+file_md5=01d7a16cce77929cc1a78aa1bdfb68cb
+recipe_type=makefile
+makefile='Makefile'
+
+do_install=no
+
+pre_link() {
+   cp pigz unpigz ${target}/bin
+   mkdir -p ${target}/man/man1
+   cp pigz.1 ${target}/man/man1
+}
