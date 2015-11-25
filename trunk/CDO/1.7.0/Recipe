@@ -5,3 +5,7 @@ url="https://code.zmaw.de/attachments/download/11392/cdo-1.7.0.tar.gz"
 file_size=6852143
 file_md5=cca30c3c79335ad734e1838806f7bfc2
 recipe_type=configure
+
+configure_options=(
+    --with-netcdf
+)
