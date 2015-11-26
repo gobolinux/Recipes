@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for IW by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Nov 25 20:39:41 BRST 2015
+# Recipe for version 4.3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Nov 25 20:39:41 BRST 2015
+compile_version=2.0
+url="https://www.kernel.org/pub/software/network/iw/iw-4.3.tar.xz"
+file_size=98400
+file_md5=7adec72e91ebdd9c55429fa34a23a6f5
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
