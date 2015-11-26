@@ -1,0 +1,11 @@
+# Recipe for version 2.22 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Nov 25 21:44:34 BRST 2015
+# Recipe (MakeRecipe) for Grep by Andre Detsch, on Wed Mar 9 17:46:19 BRT 2005
+compile_version=1.9.0
+url="http://ftp.gnu.org/gnu/grep/grep-2.22.tar.xz"
+file_size=1297864
+file_md5=e1015e951a49a82b02e38891026ef5df
+recipe_type=configure
+needs_safe_linking=yes
+configure_options=(
+    "--without-included-regex"
+)
