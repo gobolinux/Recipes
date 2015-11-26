@@ -1,0 +1,5 @@
+[Name] Parallel-NetCDF
+[Summary] A Parallel I/O Library for NetCDF File Access
+[Description] PnetCDF is a library providing high-performance I/O while still maintaining file-format compatibility with  Unidata's NetCDF. NetCDF gives scientific programmers a self-describing and portable means for storing data. However, prior to version 4, netCDF does so in a serial manner. By making some small changes to the netCDF APIs, PnetCDF can use MPI-IO to achieve high-performance parallel I/O.
+[License] Custom (similar to BSD and MIT.)
+[Homepage] http://trac.mcs.anl.gov/projects/parallel-netcdf

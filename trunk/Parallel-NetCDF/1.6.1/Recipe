@@ -1,0 +1,9 @@
+# Recipe for version 1.6.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Oct 19 18:39:58 BRST 2015
+# Recipe (MakeRecipe) for Parallel-NetCDF by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Jan 29 14:26:47 CST 2014
+compile_version=1.0.1
+url="http://cucis.ece.northwestern.edu/projects/PnetCDF/Release/parallel-netcdf-1.6.1.tar.bz2"
+recipe_type=configure
+
+configure_options=(
+    --disable-fortran
+)
