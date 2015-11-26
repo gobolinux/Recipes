@@ -1,0 +1,6 @@
+# Recipe for version git by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Nov 25 21:07:45 BRST 2015
+# Recipe (MakeRecipe) for Ethtool by Jonas Karlsson <jonka750@student.liu.se>, on Mon Apr 14 22:2git:01 GMT 2008
+compile_version=1.8.0
+git="git://git.kernel.org/pub/scm/network/ethtool/ethtool.git"
+recipe_type=configure
+autogen_before_configure=yes
