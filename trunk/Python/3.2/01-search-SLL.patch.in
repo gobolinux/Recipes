@@ -12,7 +12,7 @@ diff -urNa Python-3.0.1.orig/Lib/site.py Python-3.0.1/Lib/site.py
  
  # Prefixes for site-packages; add additional prefixes like /usr/local here
 -PREFIXES = [sys.prefix, sys.exec_prefix]
-+PREFIXES = [sys.prefix, sys.exec_prefix, '@%Compile_goboPrefix%@/']
++PREFIXES = [sys.prefix, sys.exec_prefix, '@%Compile_goboPrefix%@/', '@%Compile_goboData%@/Aliens/PIP']
  # Enable per user site-packages directory
  # set it to False to disable the feature or True to force the feature
  ENABLE_USER_SITE = None
