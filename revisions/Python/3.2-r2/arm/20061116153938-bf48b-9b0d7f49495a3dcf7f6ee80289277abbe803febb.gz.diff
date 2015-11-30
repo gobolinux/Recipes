@@ -1,0 +1,25 @@
+Thu Nov 16 16:39:38 CET 2006  hanwen@lilypond.org
+  * cache printf %z test result
+diff -rN -u old-Python-2.5.cross/configure.in new-Python-2.5.cross/configure.in
+--- old-Python-2.5.cross/configure.in	2006-11-16 17:47:47.000000000 +0100
++++ new-Python-2.5.cross/configure.in	2006-11-16 17:47:47.000000000 +0100
+@@ -3373,7 +3373,8 @@
+ AC_CHECK_FILE(/dev/ptc, AC_DEFINE(HAVE_DEV_PTC, 1, [Define if we have /dev/ptc.]))
+ 
+ AC_MSG_CHECKING(for %zd printf() format support)
+-AC_TRY_RUN([#include <stdio.h>
++AC_CACHE_VAL(ac_cv_printf_zd_format,
++		    AC_TRY_RUN([#include <stdio.h>
+ #include <stddef.h>
+ #include <string.h>
+ 
+@@ -3391,7 +3392,7 @@
+ }],
+ [AC_MSG_RESULT(yes)
+  AC_DEFINE(PY_FORMAT_SIZE_T, "z", [Define to printf format modifier for Py_ssize_t])],
+- AC_MSG_RESULT(no))
++ AC_MSG_RESULT(no)))
+ 
+ AC_CHECK_TYPE(socklen_t,,
+   AC_DEFINE(socklen_t,int,
+

@@ -1,0 +1,49 @@
+Thu Nov 16 17:02:47 CET 2006  hanwen@lilypond.org
+  * Add mingw  to pyport.h (largely similar to cygwin)
+diff -rN -u old-Python-2.5.cross/Include/pyport.h new-Python-2.5.cross/Include/pyport.h
+--- old-Python-2.5.cross/Include/pyport.h	2006-11-16 17:47:44.000000000 +0100
++++ new-Python-2.5.cross/Include/pyport.h	2006-11-16 17:47:44.000000000 +0100
+@@ -593,34 +593,34 @@
+ /*
+   All windows ports, except cygwin, are handled in PC/pyconfig.h.
+ 
+-  BeOS and cygwin are the only other autoconf platform requiring special
++  Mingw, BeOS and cygwin are the only other autoconf platform requiring special
+   linkage handling and both of these use __declspec().
+ */
+-#if defined(__CYGWIN__) || defined(__BEOS__)
++#if defined(__CYGWIN__) || defined(__MINGW32__) || defined(__BEOS__)
+ #	define HAVE_DECLSPEC_DLL
+ #endif
+ 
+ /* only get special linkage if built as shared or platform is Cygwin */
+-#if defined(Py_ENABLE_SHARED) || defined(__CYGWIN__)
++#if defined(Py_ENABLE_SHARED) || defined(__CYGWIN__) || defined(__MINGW32__)
+ #	if defined(HAVE_DECLSPEC_DLL)
+ #		ifdef Py_BUILD_CORE
+ #			define PyAPI_FUNC(RTYPE) __declspec(dllexport) RTYPE
+ #			define PyAPI_DATA(RTYPE) extern __declspec(dllexport) RTYPE
+ 			/* module init functions inside the core need no external linkage */
+ 			/* except for Cygwin to handle embedding (FIXME: BeOS too?) */
+-#			if defined(__CYGWIN__)
++#			if defined(__CYGWIN__) || defined(__MINGW32__)
+ #				define PyMODINIT_FUNC __declspec(dllexport) void
+-#			else /* __CYGWIN__ */
++#			else /* __CYGWIN__ || __MINGW32__ */
+ #				define PyMODINIT_FUNC void
+-#			endif /* __CYGWIN__ */
++#			endif /* __CYGWIN__ || __MINGW32__ */
+ #		else /* Py_BUILD_CORE */
+ 			/* Building an extension module, or an embedded situation */
+ 			/* public Python functions and data are imported */
+ 			/* Under Cygwin, auto-import functions to prevent compilation */
+ 			/* failures similar to http://python.org/doc/FAQ.html#3.24 */
+-#			if !defined(__CYGWIN__)
++#			if !defined(__CYGWIN__) && !defined(__MINGW32__)
+ #				define PyAPI_FUNC(RTYPE) __declspec(dllimport) RTYPE
+-#			endif /* !__CYGWIN__ */
++#			endif /* !__CYGWIN__ && ! __MINGW32__ */
+ #			define PyAPI_DATA(RTYPE) extern __declspec(dllimport) RTYPE
+ 			/* module init functions outside the core must be exported */
+ #			if defined(__cplusplus)
+

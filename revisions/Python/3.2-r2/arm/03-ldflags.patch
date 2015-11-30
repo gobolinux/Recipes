@@ -1,0 +1,11 @@
+--- Python-2.5/Lib/distutils/unixccompiler.py.orig	2007-06-20 09:01:35.000000000 -0300
++++ Python-2.5/Lib/distutils/unixccompiler.py	2007-06-20 09:01:40.000000000 -0300
+@@ -270,7 +270,7 @@ class UnixCCompiler(CCompiler):
+         elif compiler[:3] == "gcc" or compiler[:3] == "g++":
+             return "-Wl,-R" + dir
+         else:
+-            return "-R" + dir
++            return "-Wl,-R" + dir
+ 
+     def library_option(self, lib):
+         return "-l" + lib

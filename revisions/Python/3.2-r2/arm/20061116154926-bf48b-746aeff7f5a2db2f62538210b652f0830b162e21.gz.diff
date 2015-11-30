@@ -1,0 +1,66 @@
+Thu Nov 16 16:49:26 CET 2006  hanwen@lilypond.org
+  * use PYTHON_FOR_BUILD iso. BUILDPYTHON
+diff -rN -u old-Python-2.5.cross/Makefile.pre.in new-Python-2.5.cross/Makefile.pre.in
+--- old-Python-2.5.cross/Makefile.pre.in	2006-11-16 17:47:45.000000000 +0100
++++ new-Python-2.5.cross/Makefile.pre.in	2006-11-16 17:47:45.000000000 +0100
+@@ -18,6 +18,8 @@
+ #
+ # See also the section "Build instructions" in the README file.
+ 
++DELIM=@DELIM@
++
+ # === Variables set by makesetup ===
+ 
+ MODOBJS=        _MODOBJS_
+@@ -169,7 +171,8 @@
+ UNICODE_OBJS=   @UNICODE_OBJS@
+ 
+ PYTHON=		python$(EXE)
+-BUILDPYTHON=	python$(BUILDEXE)
++BUILDPYTHON=	python$(EXE)
++PYTHON_FOR_BUILD=	@PYTHON_FOR_BUILD@
+ 
+ # === Definitions added by makesetup ===
+ 
+@@ -338,8 +341,8 @@
+ 			Modules/python.o \
+ 			$(BLDLIBRARY) $(LIBS) $(MODLIBS) $(SYSLIBS) $(LDLAST)
+ 
+-platform: $(BUILDPYTHON)
+-	$(RUNSHARED) ./$(BUILDPYTHON) -E -c 'import sys ; from distutils.util import get_platform ; print get_platform()+"-"+sys.version[0:3]' >platform
++platform: @CROSS_COMMENT@ $(BUILDPYTHON)
++	$(RUNSHARED) $(PYTHON_FOR_BUILD) -E -c 'import sys ; from distutils.util import get_platform ; print get_platform()+"-"+sys.version[0:3]' >platform
+ 
+ 
+ # Build the shared modules
+@@ -572,7 +575,7 @@
+ 
+ TESTOPTS=	-l $(EXTRATESTOPTS)
+ TESTPROG=	$(srcdir)/Lib/test/regrtest.py
+-TESTPYTHON=	$(RUNSHARED) ./$(BUILDPYTHON) -E -tt
++TESTPYTHON=	$(RUNSHARED) $(PYTHON_FOR_BUILD) -E -tt
+ test:		all platform
+ 		-find $(srcdir)/Lib -name '*.py[co]' -print | xargs rm -f
+ 		-$(TESTPYTHON) $(TESTPROG) $(TESTOPTS)
+@@ -885,8 +888,9 @@
+ # Install the dynamically loadable modules
+ # This goes into $(exec_prefix)
+ sharedinstall:
+-	$(RUNSHARED) ./$(BUILDPYTHON) -E $(srcdir)/setup.py install \
+-	   	--prefix=$(prefix) \
++	CC='$(CC)' LDSHARED='$(BLDSHARED)' OPT='$(OPT)' CROSS_COMPILING='$(CROSS_COMPILING)' \
++		$(RUNSHARED) $(PYTHON_FOR_BUILD) -E $(srcdir)/setup.py install \
++		--prefix=$(prefix) \
+ 		--install-scripts=$(BINDIR) \
+ 		--install-platlib=$(DESTSHARED) \
+ 		--root=/$(DESTDIR)
+@@ -959,7 +963,7 @@
+ # This installs a few of the useful scripts in Tools/scripts
+ scriptsinstall:
+ 	SRCDIR=$(srcdir) $(RUNSHARED) \
+-	./$(BUILDPYTHON) $(srcdir)/Tools/scripts/setup.py install \
++	$(PYTHON_FOR_BUILD) $(srcdir)/Tools/scripts/setup.py install \
+ 	--prefix=$(prefix) \
+ 	--install-scripts=$(BINDIR) \
+ 	--root=/$(DESTDIR)
+
