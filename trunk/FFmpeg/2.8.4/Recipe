@@ -1,0 +1,45 @@
+# Recipe for version 2.8.4.4 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Jan 11 19:07:40 BRST 2016
+# Recipe (MakeRecipe) for FFmpeg by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 16:03:06 BRT 22.8.4
+compile_version=1.12.1
+url="http://ffmpeg.org/releases/ffmpeg-2.8.4.tar.bz2"
+file_size=8579383
+file_md5=5a312bebaf71688703644c18ef3f26e8
+recipe_type=configure
+
+configure_options=(
+    # Enabling this makes the package not redistributable
+#    "--enable-nonfree"
+    "--enable-gpl"
+    "--enable-shared"
+    "--enable-postproc"
+    "--enable-swscale"
+    "--enable-pthreads"
+    "--enable-x11grab"
+    "--disable-debug"
+#    "--cpu=k8"
+    "--extra-ldflags=-lm"  # compilation will fail without this
+)
+
+make_variables=(
+   "MANDIR=$target/man"
+)
+
+with_libvorbis="--enable-libvorbis"
+with_theora="--enable-libtheora"
+with_speex="--enable-libspeex"
+with_faac="--enable-libfaac"
+with_x264="--enable-libx264"
+with_lame="--enable-libmp3lame"
+with_dirac="--enable-libdirac"
+with_schroedinger="--enable-libschroedinger"
+with_openjpeg="--enable-libopenjpeg"
+with_xvid="--enable-libxvid"
+
+pre_link() {
+    pushd $target/include
+    ln -s libpostproc postproc
+    mkdir -p ffmpeg
+    cd ffmpeg
+    find .. -type f -exec ln -s {} . \;
+    popd
+}
