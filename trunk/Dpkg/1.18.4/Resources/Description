@@ -1,0 +1,5 @@
+[Name] dpkg
+[Summary] Debian's package maintenance system.
+[License] GNU General Public License 2
+[Description] dpkg is the software at the base of the Debian package management system. dpkg is used to install, remove, and provide information about .deb packages. dpkg itself is a low level tool; higher level tools, such as [APT], are used to fetch packages from remote locations or deal with complex package relations. End users are encouraged to use tools like aptitude or synaptic, having a more sophisticated way of dealing with package relationships and a friendlier interface. The Debian package dpkg provides the dpkg program, as well as several others necessary for run-time functioning of the packaging system, including dpkg-statoverride, dpkg-divert and update-alternatives. You will encounter this tool on Debian and Ubuntu.
+[Homepage] http://ftp.wa.au.debian.org/debian/pool/main/d/dpkg/
