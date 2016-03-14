@@ -1,0 +1,166 @@
+diff -ur alsa-utils-1.1.0/alsamixer/mainloop.c alsa-utils-1.1.0-mouse/alsamixer/mainloop.c
+--- alsa-utils-1.1.0/alsamixer/mainloop.c	2015-10-27 14:34:26.000000000 -0200
++++ alsa-utils-1.1.0-mouse/alsamixer/mainloop.c	2016-03-11 16:16:44.142755306 -0300
+@@ -48,6 +48,10 @@
+ #ifdef HAVE_CURSES_ESCDELAY
+ 	set_escdelay(100);
+ #endif
++#ifdef KEY_MOUSE
++	mouseinterval(0);
++	mousemask(BUTTON1_RELEASED, NULL);
++#endif
+ 	window_size_changed(); /* update screen_lines/cols */
+ 	init_colors(use_color);
+ 	snd_lib_error_set_handler(black_hole_error_handler);
+@@ -121,6 +125,11 @@
+ 				window_size_changed();
+ 			else
+ #endif
++#ifdef KEY_MOUSE
++			if (key == KEY_MOUSE)
++				window_handle_mouse();
++			else
++#endif
+ 				active_widget->handle_key(key);
+ 			active_widget = get_active_widget();
+ 			if (!active_widget)
+Only in alsa-utils-1.1.0-mouse/alsamixer: Makefile
+diff -ur alsa-utils-1.1.0/alsamixer/mixer_display.c alsa-utils-1.1.0-mouse/alsamixer/mixer_display.c
+--- alsa-utils-1.1.0/alsamixer/mixer_display.c	2015-10-27 14:34:26.000000000 -0200
++++ alsa-utils-1.1.0-mouse/alsamixer/mixer_display.c	2016-03-11 16:30:18.110732158 -0300
+@@ -393,6 +393,38 @@
+ 	display_string_in_field(y, x, s, width, ALIGN_CENTER);
+ }
+ 
++int control_from_position(int y, int x, int *ry, int *rx, int *h)
++{
++	struct control *control;
++	int col;
++	int i, c;
++	if (x < first_control_x)
++		return -1;
++
++	if (y < base_y - volume_height)
++		return -1;
++
++	if (y > channel_name_y)
++		return -1;
++	
++	c = first_visible_control_index;
++	for (i = first_control_x;
++	     c < first_visible_control_index + visible_controls;
++	     i += (control_width + 1)) {
++		control = &controls[c];
++		if (control->flags & (TYPE_PVOLUME | TYPE_CVOLUME)) {
++			if (x > i && x < i + control_width) {
++				*rx = x - i;
++				*ry = y - (base_y - volume_height);
++				*h = volume_height + 5;
++				return c;
++			}
++		}
++		c++;
++	}
++	return -1;
++}
++
+ static void display_control(unsigned int control_index)
+ {
+ 	struct control *control;
+diff -ur alsa-utils-1.1.0/alsamixer/mixer_display.h alsa-utils-1.1.0-mouse/alsamixer/mixer_display.h
+--- alsa-utils-1.1.0/alsamixer/mixer_display.h	2015-10-27 14:34:26.000000000 -0200
++++ alsa-utils-1.1.0-mouse/alsamixer/mixer_display.h	2016-03-11 16:14:54.190758433 -0300
+@@ -6,5 +6,6 @@
+ void display_view_mode(void);
+ void display_controls(void);
+ void compute_controls_layout(void);
++int control_from_position(int y, int x, int *ry, int *rx, int *h);
+ 
+ #endif
+Only in alsa-utils-1.1.0-mouse/alsamixer: mixer_display.h.gch
+diff -ur alsa-utils-1.1.0/alsamixer/mixer_widget.c alsa-utils-1.1.0-mouse/alsamixer/mixer_widget.c
+--- alsa-utils-1.1.0/alsamixer/mixer_widget.c	2015-10-27 14:34:26.000000000 -0200
++++ alsa-utils-1.1.0-mouse/alsamixer/mixer_widget.c	2016-03-11 16:41:31.622713004 -0300
+@@ -611,6 +611,28 @@
+ 	}
+ }
+ 
++#ifdef KEY_MOUSE
++static void on_handle_mouse(MEVENT* mevent)
++{
++	int control_index, ry, rx, h;
++	int slider_height;
++	
++	control_index = control_from_position(mevent->y, mevent->x, &ry, &rx, &h);
++	if (control_index == -1) {
++		return;
++	}
++	focus_control_index = control_index;
++	refocus_control();
++	slider_height = h - 6;
++	if (ry < slider_height) {
++		change_control_to_percent(((slider_height - ry) / (double)slider_height) * 100, LEFT | RIGHT);
++	}
++	if (ry == h - 4) {
++		toggle_mute(LEFT | RIGHT);
++	}
++}
++#endif
++
+ static void create(void)
+ {
+ 	static const char title[] = " AlsaMixer v" SND_UTIL_VERSION_STR " ";
+@@ -647,6 +669,9 @@
+ 
+ struct widget mixer_widget = {
+ 	.handle_key = on_handle_key,
++#ifdef KEY_MOUSE
++	.handle_mouse = on_handle_mouse,
++#endif
+ 	.window_size_changed = on_window_size_changed,
+ 	.close = on_close,
+ };
+diff -ur alsa-utils-1.1.0/alsamixer/widget.c alsa-utils-1.1.0-mouse/alsamixer/widget.c
+--- alsa-utils-1.1.0/alsamixer/widget.c	2015-10-27 14:34:26.000000000 -0200
++++ alsa-utils-1.1.0-mouse/alsamixer/widget.c	2016-03-11 16:36:29.758721589 -0300
+@@ -138,3 +138,27 @@
+ 		widget->window_size_changed();
+ 	}
+ }
++
++#ifdef KEY_MOUSE
++void window_handle_mouse(void)
++{
++	PANEL *panel, *below;
++	struct widget *widget;
++	MEVENT mevent;
++	int ok, begy, begx, maxy, maxx;
++	
++	ok = getmouse(&mevent);
++	if (ok != OK)
++		return;
++	
++	panel = panel_below(NULL);
++	widget = panel_userptr(panel);
++	getbegyx(widget->window, begy, begx);
++	getmaxyx(widget->window, maxy, maxx);
++	if (mevent.y >= begy && mevent.y <= (begy + maxy) &&
++	    mevent.x >= begx && mevent.x <= (begx + maxx) &&
++	    widget->handle_mouse) {
++		widget->handle_mouse(&mevent);
++	}
++}
++#endif
+diff -ur alsa-utils-1.1.0/alsamixer/widget.h alsa-utils-1.1.0-mouse/alsamixer/widget.h
+--- alsa-utils-1.1.0/alsamixer/widget.h	2015-10-27 14:34:26.000000000 -0200
++++ alsa-utils-1.1.0-mouse/alsamixer/widget.h	2016-03-11 15:49:43.150801406 -0300
+@@ -16,6 +16,9 @@
+ 	int cursor_visibility;
+ 
+ 	void (*handle_key)(int key);
++#ifdef KEY_MOUSE
++	void (*handle_mouse)(MEVENT* mevent);
++#endif
+ 	void (*window_size_changed)(void);
+ 	void (*close)(void);
+ };
