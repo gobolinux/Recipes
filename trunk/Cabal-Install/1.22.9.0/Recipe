@@ -1,0 +1,18 @@
+# Recipe for version 1.22.9.0 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Mar 28 18:29:46 BRT 2016
+# Recipe (MakeRecipe) for Cabal-Install by Frank Wilson <frank@thefixedpoint.me.uk>, on Wed Jan 14 19:22:50 GMT 2009
+compile_version=1.12.0
+url="http://haskell.org/cabal/release/cabal-install-1.22.9.0/cabal-install-1.22.9.0.tar.gz"
+file_size=302660
+file_md5=460995d67a9dc65f04bd2a68eaccf6a5
+recipe_type=manifest
+
+do_build() {
+    export PREFIX="$goboSystem/Aliens/Cabal/ghc-$(ghc --numeric-version)"
+    echo Prefix = $PREFIX
+    echo Target = $target
+    $sudo_exec sh ./bootstrap.sh --global  # need sudo because this installs to Aliens/Cabal
+}
+
+manifest=(
+    "$goboSystem/Aliens/Cabal/ghc-$(ghc --numeric-version)/bin/cabal:bin"
+)
