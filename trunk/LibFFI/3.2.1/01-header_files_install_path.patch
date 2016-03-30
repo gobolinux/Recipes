@@ -1,0 +1,20 @@
+--- libffi-3.0.3/include/Makefile.in.old	2008-11-14 09:58:38.000000000 +0100
++++ libffi-3.0.3/include/Makefile.in	2008-11-14 09:58:28.000000000 +0100
+@@ -203,7 +203,7 @@
+ AUTOMAKE_OPTIONS = foreign
+ DISTCLEANFILES = ffitarget.h
+ EXTRA_DIST = ffi.h.in ffi_common.h
+-includesdir = $(libdir)/@PACKAGE_NAME@-@PACKAGE_VERSION@/include
++includesdir = @includedir@
+ nodist_includes_HEADERS = ffi.h ffitarget.h
+ all: all-am
+ 
+--- libffi-3.0.3/include/Makefile.am.old	2008-11-14 09:59:04.000000000 +0100
++++ libffi-3.0.3/include/Makefile.am	2008-11-14 09:58:56.000000000 +0100
+@@ -5,5 +5,5 @@
+ DISTCLEANFILES=ffitarget.h
+ EXTRA_DIST=ffi.h.in ffi_common.h
+ 
+-includesdir = $(libdir)/@PACKAGE_NAME@-@PACKAGE_VERSION@/include
++includesdir = @includedir@
+ nodist_includes_HEADERS = ffi.h ffitarget.h
