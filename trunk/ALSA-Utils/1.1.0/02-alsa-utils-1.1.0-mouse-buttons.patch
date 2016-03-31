@@ -1,0 +1,208 @@
+diff -ur alsa-utils-1.1.0/alsamixer/mixer_display.c alsa-utils-1.1.0-mouse/alsamixer/mixer_display.c
+--- alsa-utils-1.1.0/alsamixer/mixer_display.c	2016-03-11 17:00:31.104680598 -0300
++++ alsa-utils-1.1.0-mouse/alsamixer/mixer_display.c	2016-03-11 20:59:50.776272224 -0300
+@@ -60,6 +60,20 @@
+ static int name_y;
+ static int channel_name_y;
+ 
++enum button_types {
++	PLAYBACK_BUTTON,
++	CAPTURE_BUTTON,
++	ALL_BUTTON,
++	HELP_BUTTON,
++	SYSTEM_INFORMATION_BUTTON,
++	SELECT_SOUND_CARD_BUTTON,
++	EXIT_BUTTON,
++	CARD_BUTTON,
++	BUTTON_COUNT
++};
++
++static struct button buttons[BUTTON_COUNT];
++
+ static void display_string_in_field(int y, int x, const char *s, int width, enum align align)
+ {
+ 	int string_width;
+@@ -106,6 +120,12 @@
+ 		_("F6:  Select sound card"),
+ 		_("Esc: Exit"),
+ 	};
++	const int keys_right[4] = {
++		KEY_F(1),
++		KEY_F(2),
++		KEY_F(6),
++		KEY_CANCEL
++	};
+ 	unsigned int label_width_left, label_width_right;
+ 	unsigned int right_x, i;
+ 
+@@ -130,14 +150,24 @@
+ 	}
+ 
+ 	wattrset(mixer_widget.window, attr_mixer_text);
+-	if (label_width_left)
++	if (label_width_left) {
+ 		for (i = 0; i < 4; ++i)
+ 			display_string_in_field(1 + i, 2, labels_left[i],
+ 						label_width_left, ALIGN_RIGHT);
++		buttons[CARD_BUTTON].x = label_width_left;
++		buttons[CARD_BUTTON].y = 1;
++		buttons[CARD_BUTTON].w = 28;
++		buttons[CARD_BUTTON].key = KEY_F(6);
++	}
+ 	if (label_width_right)
+-		for (i = 0; i < 4; ++i)
++		for (i = 0; i < 4; ++i) {
+ 			display_string_in_field(1 + i, right_x, labels_right[i],
+ 						label_width_right, ALIGN_LEFT);
++			buttons[HELP_BUTTON + i].x = right_x;
++			buttons[HELP_BUTTON + i].y = 1 + i;
++			buttons[HELP_BUTTON + i].w = label_width_right;
++			buttons[HELP_BUTTON + i].key = keys_right[i];
++		}
+ }
+ 
+ void display_card_info(void)
+@@ -204,6 +234,19 @@
+ 	for (i = 0; i < 3; ++i)
+ 		widths[i] = get_mbs_width(modes[i]);
+ 	if (4 + widths[0] + 6 + widths[1] + 6 + widths[2] + 1 <= info_items_width) {
++		buttons[PLAYBACK_BUTTON].x = info_items_left;
++		buttons[PLAYBACK_BUTTON].y = 3;
++		buttons[PLAYBACK_BUTTON].w = 4 + widths[0];
++		buttons[PLAYBACK_BUTTON].key = KEY_F(3);
++		buttons[CAPTURE_BUTTON].x = info_items_left + 6 + widths[0];
++		buttons[CAPTURE_BUTTON].y = 3;
++		buttons[CAPTURE_BUTTON].w = 4 + widths[1];
++		buttons[CAPTURE_BUTTON].key = KEY_F(4);
++		buttons[ALL_BUTTON].x = info_items_left + 6 + widths[0] + 6 + widths[1];
++		buttons[ALL_BUTTON].y = 3;
++		buttons[ALL_BUTTON].w = 4 + widths[2];
++		buttons[ALL_BUTTON].key = KEY_F(5);
++		
+ 		wmove(mixer_widget.window, 3, info_items_left);
+ 		wattrset(mixer_widget.window, attr_mixer_text);
+ 		for (i = 0; i < 3; ++i) {
+@@ -219,6 +262,14 @@
+ 				waddch(mixer_widget.window, ' ');
+ 		}
+ 	} else {
++		buttons[PLAYBACK_BUTTON].w = 0;
++		buttons[CAPTURE_BUTTON].w = 0;
++		buttons[ALL_BUTTON].w = 0;
++		buttons[PLAYBACK_BUTTON + view_mode].x = info_items_left;
++		buttons[PLAYBACK_BUTTON + view_mode].y = 3;
++		buttons[PLAYBACK_BUTTON + view_mode].w = widths[view_mode];
++		buttons[PLAYBACK_BUTTON + view_mode].key = KEY_F(3 + view_mode);
++
+ 		wattrset(mixer_widget.window, attr_mixer_active);
+ 		display_string_in_field(3, info_items_left,
+ 					has_view_mode ? modes[view_mode] : "",
+@@ -393,6 +444,21 @@
+ 	display_string_in_field(y, x, s, width, ALIGN_CENTER);
+ }
+ 
++int key_from_position(int y, int x)
++{
++	int i;
++	
++	for (i = 0; i < BUTTON_COUNT; i++) {
++		if (buttons[i].w > 0 &&
++		    y == buttons[i].y &&
++		    x >= buttons[i].x &&
++		    x <= buttons[i].x + buttons[i].w) {
++			return buttons[i].key;
++		}
++	}
++	return -1;
++}
++
+ int control_from_position(int y, int x, int *ry, int *rx, int *h)
+ {
+ 	struct control *control;
+diff -ur alsa-utils-1.1.0/alsamixer/mixer_display.h alsa-utils-1.1.0-mouse/alsamixer/mixer_display.h
+--- alsa-utils-1.1.0/alsamixer/mixer_display.h	2016-03-11 17:00:31.104680598 -0300
++++ alsa-utils-1.1.0-mouse/alsamixer/mixer_display.h	2016-03-11 20:43:13.840300576 -0300
+@@ -1,6 +1,13 @@
+ #ifndef MIXER_DISPLAY_H_INCLUDED
+ #define MIXER_DISPLAY_H_INCLUDED
+ 
++struct button {
++	int x;
++	int y;
++	int w;
++	int key;
++};
++
+ void init_mixer_layout(void);
+ void display_card_info(void);
+ void display_view_mode(void);
+diff -ur alsa-utils-1.1.0/alsamixer/mixer_widget.c alsa-utils-1.1.0-mouse/alsamixer/mixer_widget.c
+--- alsa-utils-1.1.0/alsamixer/mixer_widget.c	2016-03-11 17:00:31.104680598 -0300
++++ alsa-utils-1.1.0-mouse/alsamixer/mixer_widget.c	2016-03-11 20:55:14.473280082 -0300
+@@ -614,8 +614,14 @@
+ #ifdef KEY_MOUSE
+ static void on_handle_mouse(MEVENT* mevent)
+ {
+-	int control_index, ry, rx, h;
++	int control_index, ry, rx, h, key;
+ 	int slider_height;
++
++	key = key_from_position(mevent->y, mevent->x);
++	if (key != -1) {
++		on_handle_key(key);
++		return;
++	}
+ 	
+ 	control_index = control_from_position(mevent->y, mevent->x, &ry, &rx, &h);
+ 	if (control_index == -1) {
+@@ -624,7 +630,7 @@
+ 	focus_control_index = control_index;
+ 	refocus_control();
+ 	slider_height = h - 6;
+-	if (ry < slider_height) {
++	if (ry <= slider_height) {
+ 		change_control_to_percent(((slider_height - ry) / (double)slider_height) * 100, LEFT | RIGHT);
+ 	}
+ 	if (ry == h - 4) {
+diff -ur alsa-utils-1.1.0/alsamixer/textbox.c alsa-utils-1.1.0-mouse/alsamixer/textbox.c
+--- alsa-utils-1.1.0/alsamixer/textbox.c	2015-10-27 14:34:26.000000000 -0200
++++ alsa-utils-1.1.0-mouse/alsamixer/textbox.c	2016-03-11 21:08:54.616256758 -0300
+@@ -344,6 +344,7 @@
+ 
+ 	widget_init(&text_widget, text_box_y + 2, text_box_x + 2,
+ 		    SCREEN_CENTER, SCREEN_CENTER, widget_attrs, WIDGET_BORDER);
++	mvwprintw(text_widget.window, 0, text_box_x - 3, "[x]");
+ 	mvwprintw(text_widget.window, 0, (text_box_x + 2 - get_mbs_width(title) - 2) / 2, " %s ", title);
+ 
+ 	if (current_top > max_scroll_y)
+@@ -361,6 +362,20 @@
+ 	create();
+ }
+ 
++#ifdef KEY_MOUSE
++static void on_handle_mouse(MEVENT* mevent)
++{
++	int begx, begy;
++	
++	getbegyx(text_widget.window, begy, begx);
++	if (mevent->y == begy &&
++	    mevent->x >= begx + text_box_x - 3 &&
++	    mevent->x <= begx + text_box_x) {
++		text_widget.close();
++	}
++}
++#endif
++
+ static void on_close(void)
+ {
+ 	unsigned int i;
+@@ -373,6 +388,9 @@
+ 
+ static struct widget text_widget = {
+ 	.handle_key = on_handle_key,
++#ifdef KEY_MOUSE
++	.handle_mouse = on_handle_mouse,
++#endif
+ 	.window_size_changed = on_window_size_changed,
+ 	.close = on_close,
+ };
