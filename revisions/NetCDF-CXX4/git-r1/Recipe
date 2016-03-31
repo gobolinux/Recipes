@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for NetCDF-CXX4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Mar 30 21:07:18 BRT 2016
+# Recipe for version git by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Mar 30 21:07:18 BRT 2016
+compile_version=1.12.3
+git="https://github.com/Unidata/netcdf-cxx4.git"
+recipe_type=configure
+
+pre_build() {
+  autoreconf -if
+}
