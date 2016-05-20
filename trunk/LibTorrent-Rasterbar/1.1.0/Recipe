@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for LibTorrent-Rasterbar by Paul Dufresne <dufresnep@gmail.com>, on Fri May 20 02:22:12 UTC 2016
+# Recipe for version 1.1.0 by Paul Dufresne <dufresnep@gmail.com>, on Fri May 20 02:22:12 UTC 2016
+compile_version=2.0
+url="https://github.com/arvidn/libtorrent/archive/libtorrent-1_1.tar.gz"
+file="libtorrent-libtorrent-1_1.tar.gz"
+file_size=2616752
+file_md5=759d2aed9dcfbac4a3bb4e21c43143d9
+dir='libtorrent-libtorrent-1_1'
+recipe_type=cmake
