@@ -1,0 +1,23 @@
+# Recipe for version 2.5.3 by Paul Dufresne <dufresnep@gmail.com>, on Tue May 17 23:45:51 UTC 2016
+# Recipe (MakeRecipe) for Nano by Laurent Pelecq (laurent.pelecq at soleil.org), on dim mar 26 15:32:24 CEST 2006
+compile_version=1.8.2
+url="http://www.nano-editor.org/dist/v2.5/nano-2.5.3.tar.gz"
+file_size=1967760
+file_md5=a04d77611422ab4b6a7b489650c7a793
+recipe_type=configure
+
+docs=(
+  "doc/nanorc.sample"
+)
+
+configure_options=(
+#  "--with-slang"
+   "--enable-color"
+   "--enable-multibuffer"
+   "--enable-nanorc"
+#   "--enable-utf8"
+)
+
+pre_link() {
+   cp "$target/doc/nano-2.5.3/nanorc.sample" "${target}/Resources/Defaults/Settings/nanorc"
+}
