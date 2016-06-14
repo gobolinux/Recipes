@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Cronos by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Jun 14 15:20:09 BRT 2016
+# Recipe for version 1.41 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Jun 14 15:20:09 BRT 2016
+compile_version=1.12.3
+url="http://www.stat.cmu.edu/~abrock/oldcronos/cronos-1.41.tar.gz"
+file_size=735618
+file_md5=f6a4b3e9dce5d466615efb8f91739856
+
+# The author has likely forgotten to rename the directory name when creating release 1.41
+dir='cronos-1.40'
+recipe_type=configure
