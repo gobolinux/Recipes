@@ -25,8 +25,11 @@ make_variables=(
 
 pre_link() {
    # Linking fonts dir so ghostscript can find it.
-   ln -sf ${goboPrefix}/Files/Fonts/Ghostscript ${target}/share/ghostscript/fonts
-   
+   if [ -d /Files/Fonts ]
+   then
+      ln -sf ${goboPrefix}/Files/Fonts/Ghostscript ${target}/share/ghostscript/fonts
+   fi
+
    # Making headers dir and copying headers
    install -v -d -m755 ${target}/include/ps
    install -v -m644 src/*.h ${target}/include/ps
