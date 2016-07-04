@@ -1,0 +1,111 @@
+Add -p flag to avoid 'File already exists' errors.
+
+diff -Nur zenity-3.20.0.old/aclocal.m4 zenity-3.20.0/aclocal.m4
+--- zenity-3.20.0.old/aclocal.m4	2016-03-23 14:59:45.000000000 -0300
++++ zenity-3.20.0/aclocal.m4	2016-06-29 17:11:14.670902926 -0300
+@@ -659,7 +659,7 @@
+ 	done
+ 
+ $(_HELP_POFILES):
+-	$(AM_V_at)if ! test -d "$(dir [$]@)"; then mkdir "$(dir [$]@)"; fi
++	$(AM_V_at)if ! test -d "$(dir [$]@)"; then $(MKDIR_P) "$(dir [$]@)"; fi
+ 	$(AM_V_at)if test ! -f "[$]@" -a -f "$(srcdir)/[$]@"; then cp "$(srcdir)/[$]@" "[$]@"; fi
+ 	$(AM_V_GEN)if ! test -f "[$]@"; then \
+ 	  (cd "$(dir [$]@)" && \
+@@ -673,14 +673,14 @@
+ 	fi
+ 
+ $(_HELP_MOFILES): %.mo: %.po
+-	$(AM_V_at)if ! test -d "$(dir [$]@)"; then mkdir "$(dir [$]@)"; fi
++	$(AM_V_at)if ! test -d "$(dir [$]@)"; then $(MKDIR_P) "$(dir [$]@)"; fi
+ 	$(AM_V_GEN)msgfmt -o "[$]@" "$<"
+ 
+ $(_HELP_LC_FILES): $(_HELP_LINGUAS)
+ $(_HELP_LINGUAS): $(_HELP_LC_STAMPS)
+ $(_HELP_LC_STAMPS): %.stamp: %.mo
+ $(_HELP_LC_STAMPS): $(_HELP_C_FILES) $(_HELP_C_EXTRA)
+-	$(AM_V_at)if ! test -d "$(dir [$]@)"; then mkdir "$(dir [$]@)"; fi
++	$(AM_V_at)if ! test -d "$(dir [$]@)"; then $(MKDIR_P) "$(dir [$]@)"; fi
+ 	$(_HELP_LC_VERBOSE)if test -d "C"; then d="../"; else d="$(abs_srcdir)/"; fi; \
+ 	mo="$(dir [$]@)$(patsubst %/$(notdir [$]@),%,[$]@).mo"; \
+ 	if test -f "$${mo}"; then mo="../$${mo}"; else mo="$(abs_srcdir)/$${mo}"; fi; \
+diff -Nur zenity-3.20.0.old/configure zenity-3.20.0/configure
+--- zenity-3.20.0.old/configure	2016-03-23 14:59:46.000000000 -0300
++++ zenity-3.20.0/configure	2016-06-29 17:11:59.593902121 -0300
+@@ -7223,7 +7223,7 @@
+ 	done
+ 
+ $(_HELP_POFILES):
+-	$(AM_V_at)if ! test -d "$(dir $@)"; then mkdir "$(dir $@)"; fi
++	$(AM_V_at)if ! test -d "$(dir $@)"; then $(MKDIR_P) "$(dir $@)"; fi
+ 	$(AM_V_at)if test ! -f "$@" -a -f "$(srcdir)/$@"; then cp "$(srcdir)/$@" "$@"; fi
+ 	$(AM_V_GEN)if ! test -f "$@"; then \
+ 	  (cd "$(dir $@)" && \
+@@ -7237,14 +7237,14 @@
+ 	fi
+ 
+ $(_HELP_MOFILES): %.mo: %.po
+-	$(AM_V_at)if ! test -d "$(dir $@)"; then mkdir "$(dir $@)"; fi
++	$(AM_V_at)if ! test -d "$(dir $@)"; then $(MKDIR_P) "$(dir $@)"; fi
+ 	$(AM_V_GEN)msgfmt -o "$@" "$<"
+ 
+ $(_HELP_LC_FILES): $(_HELP_LINGUAS)
+ $(_HELP_LINGUAS): $(_HELP_LC_STAMPS)
+ $(_HELP_LC_STAMPS): %.stamp: %.mo
+ $(_HELP_LC_STAMPS): $(_HELP_C_FILES) $(_HELP_C_EXTRA)
+-	$(AM_V_at)if ! test -d "$(dir $@)"; then mkdir "$(dir $@)"; fi
++	$(AM_V_at)if ! test -d "$(dir $@)"; then $(MKDIR_P) "$(dir $@)"; fi
+ 	$(_HELP_LC_VERBOSE)if test -d "C"; then d="../"; else d="$(abs_srcdir)/"; fi; \
+ 	mo="$(dir $@)$(patsubst %/$(notdir $@),%,$@).mo"; \
+ 	if test -f "$${mo}"; then mo="../$${mo}"; else mo="$(abs_srcdir)/$${mo}"; fi; \
+diff -Nur zenity-3.20.0.old/Makefile.in zenity-3.20.0/Makefile.in
+--- zenity-3.20.0.old/Makefile.in	2016-03-23 14:59:46.000000000 -0300
++++ zenity-3.20.0/Makefile.in	2016-06-29 17:13:43.278900264 -0300
+@@ -670,7 +670,7 @@
+ 	        distuninstallcheck \
+ 	  && chmod -R a-w "$$dc_install_base" \
+ 	  && ({ \
+-	       (cd ../.. && umask 077 && mkdir "$$dc_destdir") \
++	       (cd ../.. && umask 077 && mkdir -p "$$dc_destdir") \
+ 	       && $(MAKE) $(AM_MAKEFLAGS) DESTDIR="$$dc_destdir" install \
+ 	       && $(MAKE) $(AM_MAKEFLAGS) DESTDIR="$$dc_destdir" uninstall \
+ 	       && $(MAKE) $(AM_MAKEFLAGS) DESTDIR="$$dc_destdir" \
+diff -Nur zenity-3.20.0.old/po/Makefile.in.in zenity-3.20.0/po/Makefile.in.in
+--- zenity-3.20.0.old/po/Makefile.in.in	2015-10-02 08:42:34.000000000 -0300
++++ zenity-3.20.0/po/Makefile.in.in	2016-06-29 17:13:16.462900745 -0300
+@@ -269,7 +269,7 @@
+ 	      if (cd $(DESTDIR)$(localedir)/$$lang && LC_ALL=C ls -l -d $$lc 2>/dev/null) | grep ' -> ' >/dev/null; then \
+ 	        link=`cd $(DESTDIR)$(localedir)/$$lang && LC_ALL=C ls -l -d $$lc | sed -e 's/^.* -> //'`; \
+ 	        mv $(DESTDIR)$(localedir)/$$lang/$$lc $(DESTDIR)$(localedir)/$$lang/$$lc.old; \
+-	        mkdir $(DESTDIR)$(localedir)/$$lang/$$lc; \
++	        $(mkdir_p) $(DESTDIR)$(localedir)/$$lang/$$lc; \
+ 	        (cd $(DESTDIR)$(localedir)/$$lang/$$lc.old && \
+ 	         for file in *; do \
+ 	           if test -f $$file; then \
+@@ -282,7 +282,7 @@
+ 	          :; \
+ 	        else \
+ 	          rm -f $(DESTDIR)$(localedir)/$$lang/$$lc; \
+-	          mkdir $(DESTDIR)$(localedir)/$$lang/$$lc; \
++	          $(mkdir_p) $(DESTDIR)$(localedir)/$$lang/$$lc; \
+ 	        fi; \
+ 	      fi; \
+ 	      rm -f $(DESTDIR)$(localedir)/$$lang/$$lc/$(DOMAIN).mo; \
+@@ -317,7 +317,7 @@
+ 	      if (cd $(DESTDIR)$(localedir)/$$lang && LC_ALL=C ls -l -d $$lc 2>/dev/null) | grep ' -> ' >/dev/null; then \
+ 	        link=`cd $(DESTDIR)$(localedir)/$$lang && LC_ALL=C ls -l -d $$lc | sed -e 's/^.* -> //'`; \
+ 	        mv $(DESTDIR)$(localedir)/$$lang/$$lc $(DESTDIR)$(localedir)/$$lang/$$lc.old; \
+-	        mkdir $(DESTDIR)$(localedir)/$$lang/$$lc; \
++	        $(mkdir_p) $(DESTDIR)$(localedir)/$$lang/$$lc; \
+ 	        (cd $(DESTDIR)$(localedir)/$$lang/$$lc.old && \
+ 	         for file in *; do \
+ 	           if test -f $$file; then \
+@@ -330,7 +330,7 @@
+ 	          :; \
+ 	        else \
+ 	          rm -f $(DESTDIR)$(localedir)/$$lang/$$lc; \
+-	          mkdir $(DESTDIR)$(localedir)/$$lang/$$lc; \
++	          $(mkdir_p) $(DESTDIR)$(localedir)/$$lang/$$lc; \
+ 	        fi; \
+ 	      fi; \
+ 	    fi; \

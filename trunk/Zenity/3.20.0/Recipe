@@ -1,0 +1,11 @@
+# Recipe for version 3.20.0 by Hisham Muhammad <hisham@gobolinux.org>, on Wed Jun 29 16:20:50 BRT 2016
+# Recipe (MakeRecipe) for Zenity by Nathan Middleton, on Thu Oct 25 04:26:14 CDT 2007
+compile_version=1.9.0
+url="http://ftp.gnome.org/pub/gnome/sources/zenity/3.20/zenity-3.20.0.tar.xz"
+file_size=3882968
+file_md5=23f84cd3807da36455525357385f7586
+recipe_type=configure
+configure_options=(
+   --disable-scrollkeeper
+   --disable-docs
+)
