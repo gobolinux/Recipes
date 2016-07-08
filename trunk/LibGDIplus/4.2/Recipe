@@ -1,0 +1,16 @@
+# Recipe for version 4.2 by Aitor P. Iturri, on Thu Jun 30 14:48:25 UTC 2016
+# Recipe (MakeRecipe) for LibGDIplus by Mike Hughes, in Aug 2007
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; version 2 of the License.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+compile_version=1.8.5
+url="http://download.mono-project.com/sources/libgdiplus/libgdiplus-4.2.tar.gz"
+file_size=687398
+file_md5=3e68075aa0911d5ebc2b3739e85af0ea
+recipe_type=configure
