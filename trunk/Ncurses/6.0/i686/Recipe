@@ -1,0 +1,12 @@
+configure_options=(
+   "--with-shared"
+   "--with-termlib"
+   "--with-gpm"
+   "--without-debug"
+   "--without-ada"
+   "--enable-rpath"
+   "--enable-termcap"
+   "--enable-symlinks"
+   "--enable-overwrite"
+#   "--enable-widec"
+)
