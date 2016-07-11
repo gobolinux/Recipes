@@ -1,0 +1,14 @@
+# Recipe for version 2.28 by AitorATuin, on Sun Jul 10 12:30:44 CEST 2016
+# Recipe (MakeRecipe) for Util-Linux-NG by Giambattista Bloisi <giamby@infinito.it>, on Thu Jan 17 09:41:27 CET 2008
+compile_version=1.12.0
+url="https://www.kernel.org/pub/linux/utils/util-linux/v2.28/util-linux-2.28.tar.xz"
+file_size=4119560
+file_md5=e534e6ccc49107e5d31c329af798ef7d
+recipe_type=configure
+
+configure_options=(
+   --enable-arch
+   --enable-partx
+   --enable-write
+   --disable-makeinstall-chown
+)
