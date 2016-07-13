@@ -1,0 +1,11 @@
+# Recipe for version 4.6 by AitorATuin, on Tue Dec 22 20:50:37 UTC 2015
+# Recipe (MakeRecipe) for DMenu by Aitor Perez Iturri, on mar sep 11 01:37:37 CEST 2007
+compile_version=1.9.0
+url="http://dl.suckless.org/tools/dmenu-4.6.tar.gz"
+file_size=15057
+file_md5=6fedf081133bc0725cb040b3b8ac3fac
+recipe_type=makefile
+makefile='Makefile'
+install_variables=(
+	"PREFIX=$target"
+)
