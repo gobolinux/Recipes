@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Scripts by AitorATuin
+# Based on recipe for version svn by Hisham Muhammad
+compile_version=2.0
+git=https://github.com/gobolinux/Scripts.git
+recipe_type=makefile
+needs_safe_linking=yes
+make_variables=(
+   VERSION=$version
+   DESTDIR=$target
+)
