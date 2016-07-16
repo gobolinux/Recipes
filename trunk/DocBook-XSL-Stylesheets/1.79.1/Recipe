@@ -5,7 +5,7 @@ url="https://downloads.sourceforge.net/docbook/docbook-xsl-1.79.1.tar.bz2"
 file_size=21967928
 file_md5=b48cbf929a2ad85e6672f710777ca7bc
 recipe_type=manifest
-dir=docbook-xsl-1.79.1
+#dir=docbook-xsl-1.79.1
 manifest=(
    "fo:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/fo"
    "lib:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/lib"
