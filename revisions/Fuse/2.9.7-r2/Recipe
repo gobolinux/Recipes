@@ -1,0 +1,23 @@
+# Recipe (MakeRecipe) for Fuse by roko, <ro.ko@mcnon.com>, on Wed Mar 23 22:07:09 CET 2005
+compile_version=1.8.2
+url="https://github.com/libfuse/libfuse/releases/download/fuse-2.9.7/fuse-2.9.7.tar.gz"
+file_size=661138
+file_md5=9bd4ce8184745fd3d000ca2692adacdb
+recipe_type=configure
+
+# Please do not remove the prefix and mandir overrides
+# below, as they are needed to bootstrap the distro with
+# GoboALFS (lucasvr)
+install_variables=(
+    prefix="${goboPrograms}/Fuse/2.9.7"
+    mandir="${goboPrograms}/Fuse/2.9.7/share/man"
+    INIT_D_PATH="$settings_target/init.d"
+    MOUNT_FUSE_PATH="${target}/sbin"
+)
+
+configure_options=(
+    MOUNT_FUSE_PATH=${target}/sbin
+    UDEV_RULES_PATH=$settings_target/udev/rules.d
+    --enable-lib
+    --enable-util
+)
