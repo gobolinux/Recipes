@@ -1,0 +1,36 @@
+# Recipe for version 1.79.1 by Aitor P. Iturri, on Thu Jun 30 21:00:43 CEST 2016
+# Recipe (MakeRecipe) for DocBook-XSL-Stylesheets by Michael Homer <michael@gobolinux.org>, on Tue Nov 25 19:46:40 NZDT 2008
+compile_version=1.11.4
+url="https://downloads.sourceforge.net/docbook/docbook-xsl-1.79.1.tar.bz2"
+file_size=21967928
+file_md5=b48cbf929a2ad85e6672f710777ca7bc
+recipe_type=manifest
+#dir=docbook-xsl-1.79.1
+manifest=(
+   "fo:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/fo"
+   "lib:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/lib"
+   "VERSION:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/VERSION.xsl"
+   "html:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/html"
+   "xhtml:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/xhtml"
+   "xhtml-1_1:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/xhtml-1_1"
+   "epub:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/epub"
+   "htmlhelp:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/htmlhelp"
+   "javahelp:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/javahelp"
+   "eclipse:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/eclipse"
+   "manpages:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/manpages"
+   "common:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/common"
+   "highlighting:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/highlighting"
+   "catalog.xml:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/catalog.xml"
+)
+unmanaged_files=(
+   "$goboVariable/lib/xml"
+)
+
+pre_install() {
+   cat <<EOF > "$target/Resources/XmlCatalogData"
+rewriteSystem;http://docbook.sourceforge.net/release/xsl/current/;file://\${target}/$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/;\${goboVariable}/lib/xml/catalog
+rewriteURI;http://docbook.sourceforge.net/release/xsl/current/;file://\${target}/$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/;\${goboVariable}/lib/xml/catalog
+rewriteSystem;http://docbook.sourceforge.net/release/xsl/1.79.1/;file://\${target}/Current/$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/;\${goboVariable}/lib/xml/catalog
+rewriteURI;http://docbook.sourceforge.net/release/xsl/1.79.1/;file://\${target}/$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/;\${goboVariable}/lib/xml/catalog
+EOF
+}
