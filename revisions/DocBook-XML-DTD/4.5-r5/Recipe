@@ -1,0 +1,25 @@
+# Recipe (MakeRecipe) for DocBook-XML-DTD by Andreas Köhler <andi5.py@gmx.net>, on Fri Aug 15 07:54:42 CEST 2008
+# Recipe for version 4.5 by Andreas Köhler <andi5.py@gmx.net>, on Fri Aug 15 07:54:42 CEST 2008
+compile_version=1.11.2
+url="http://www.docbook.org/xml/4.5/docbook-xml-4.5.zip"
+file_size=98497
+file_md5=03083e288e87a7e829e437358da7ef9e
+unpack_files=files_in_root
+recipe_type=manifest
+#dir=docbook-xml-4.5
+manifest=(
+    docbook.cat:share/xml/docbook/xml-dtd-4.5/.
+    calstblx.dtd:share/xml/docbook/xml-dtd-4.5/.
+    docbookx.dtd:share/xml/docbook/xml-dtd-4.5/.
+    soextblx.dtd:share/xml/docbook/xml-dtd-4.5/.
+    dbcentx.mod:share/xml/docbook/xml-dtd-4.5/.
+    dbgenent.mod:share/xml/docbook/xml-dtd-4.5/.
+    dbhierx.mod:share/xml/docbook/xml-dtd-4.5/.
+    dbnotnx.mod:share/xml/docbook/xml-dtd-4.5/.
+    dbpoolx.mod:share/xml/docbook/xml-dtd-4.5/.
+    htmltblx.mod:share/xml/docbook/xml-dtd-4.5/.
+    ent:share/xml/docbook/xml-dtd-4.5/ent
+)
+pre_link() {
+    cp -v -af *.dtd ent/ *.mod $target/share/xml/docbook/xml-dtd-4.5/
+}
