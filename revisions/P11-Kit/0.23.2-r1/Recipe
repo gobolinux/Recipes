@@ -1,0 +1,16 @@
+# Recipe for version 0.23.2 by AitorATuin, on Fri Jul 15 22:37:06 CEST 2016
+# Recipe (MakeRecipe) for P11-Kit by Leandro Motta Barros <lmb@stackedboxes.org>, on Wed Sep 21 23:43:38 BRT 2011
+compile_version=1.13.3
+url="https://p11-glue.freedesktop.org/releases/p11-kit-0.23.2.tar.gz"
+file_size=1022733
+file_md5=738af2442331fc22f440df9bee9b062a
+recipe_type=configure
+configure_options=(
+   --without-trust-paths
+)
+
+install_variables=(
+	p11_system_config=$settings_target/pkcs11
+	p11_system_config_file=$settings_target/pkcs11/pkcs11.conf
+	p11_system_config_modules=$settings_target/pkcs11/modules
+)
