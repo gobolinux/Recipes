@@ -1,0 +1,43 @@
+compile_version=1.8.2
+needs_safe_linking=yes
+url="http://pkg-shadow.alioth.debian.org/releases/shadow-4.2.1.tar.xz"
+file_size=1594536
+file_md5=2bfafe7d4962682d31b5eba65dba4fc8
+recipe_type=configure
+dir='shadow-4.2.1'
+configure_options=(
+   "--enable-shared"
+   "--without-selinux"
+)
+
+install_variables=(
+   bindir=$target/bin
+   sbindir=$target/sbin
+)
+
+pre_patch(){
+   sed -i -e 's@^HOME=.*$@HOME=/Users@' \
+          -e 's@^SHELL=.*$@SHELL=/bin/zsh@' \
+	  -e 's@yes@no@' etc/useradd
+}
+
+using_cracklib_pre_link(){
+   sed -i 's@DICTPATH.*@DICTPATH\t${goboLibraries}/cracklib/pw_dict@' \
+      ${target}/Resources/Defaults/Settings/login.defs
+}
+
+using_pam_pre_link() {
+   for FUNCTION in LASTLOG_ENAB MAIL_CHECK_ENAB \
+                   PORTTIME_CHECKS_ENAB CONSOLE \
+                   MOTD_FILE NOLOGINS_FILE PASS_MIN_LEN \
+                   SU_WHEEL_ONLY MD5_CRYPT_ENAB \
+                   CONSOLE_GROUPS ENVIRON_FILE \
+                   ULIMIT ENV_TZ ENV_HZ ENV_SUPATH \
+                   ENV_PATH QMAIL_DIR MAIL_DIR MAIL_FILE \
+                   CHFN_AUTH FAILLOG_ENAB QUOTAS_ENAB FTMP_FILE \
+                   OBSCURE_CHECKS_ENAB CRACKLIB_DICTPATH \
+                   PASS_CHANGE_TRIES PASS_ALWAYS_WARN ISSUE_FILE
+   do
+      sed -i "s/^$FUNCTION/# &/" ${target}/Resources/Defaults/Settings/login.defs
+   done
+}
