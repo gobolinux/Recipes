@@ -5,9 +5,6 @@ file_size=661138
 file_md5=9bd4ce8184745fd3d000ca2692adacdb
 recipe_type=configure
 
-# Please do not remove the prefix and mandir overrides
-# below, as they are needed to bootstrap the distro with
-# GoboALFS (lucasvr)
 install_variables=(
     prefix="${goboPrograms}/Fuse/2.9.7"
     mandir="${goboPrograms}/Fuse/2.9.7/share/man"
