@@ -115,8 +115,10 @@ private__copy_kernel_source() {
 
    Log_Normal "Creating a working copy of the kernel sources tree..."
    Quiet pushd $dir
-   mkdir -p $dest/arch/x86
+   mkdir -p $dest/arch/x86/boot
    cp -r arch/x86/tools/ $dest/arch/x86/
+   cp -r arch/x86/purgatory/ $dest/arch/x86/
+   cp arch/x86/boot/string.c $dest/arch/x86/boot/
    cp .version .config System.map Module.symvers Makefile Kbuild Kconfig $dest/
    ls | while read i
    do
@@ -138,7 +140,7 @@ private__copy_kernel_source() {
             -name "asm-offsets.c" -or \
             -name "asm-offsets_32.c" -or \
             -name "asm-offsets_64.c" -or \
-			-name "bounds.c" \
+            -name "bounds.c" \
          \)`
          for dir in $dirlist
          do mkdir -p "$dest/$dir"
