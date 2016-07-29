@@ -1,0 +1,5 @@
+[Name] Acpid
+[Summary] Advanced Configuration and Power Interface event daemon
+[Description] The acpid (Advanced Configuration and Power Interface event daemon) is a completely flexible, totally extensible daemon for delivering ACPI events. It listens on netlink interface and when an event occurs, executes programs to handle the event. The programs it executes are configured through a set of configuration files, which can be dropped into place by packages or by the user.
+[License] GNU General Public License version 2
+[Homepage] http://acpid2.sourceforge.net
