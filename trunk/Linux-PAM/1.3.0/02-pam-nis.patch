@@ -1,0 +1,11 @@
+--- Linux-PAM-1.1.4/modules/pam_unix/support.c.old	2011-08-21 01:43:49.000000000 +1200
++++ Linux-PAM-1.1.4/modules/pam_unix/support.c	2011-08-21 01:48:04.000000000 +1200
+@@ -298,7 +298,7 @@
+ 		}
+ 	}
+ 
+-#if defined(HAVE_YP_GET_DEFAULT_DOMAIN) && defined (HAVE_YP_BIND) && defined (HAVE_YP_MATCH) && defined (HAVE_YP_UNBIND)
++#if defined(HAVE_YP_GET_DEFAULT_DOMAIN) && defined (HAVE_YP_BIND) && defined (HAVE_YP_MATCH) && defined (HAVE_YP_UNBIND) && defined (HAVE_RPCSVC_YPCLNT_H)
+ 	if (!matched && nis) {
+ 		char *userinfo = NULL, *domain = NULL;
+ 		int len = 0, i;
