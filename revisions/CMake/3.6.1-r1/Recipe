@@ -1,0 +1,17 @@
+# Recipe for version 3.6.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Jul 29 20:18:00 GMT 2016
+compile_version=2.0
+url="https://cmake.org/files/v3.6/cmake-3.6.1.tar.gz"
+file_size=6895262
+file_md5=d6dd661380adacdb12f41b926ec99545
+recipe_type=configure
+
+configure_options=(
+   --prefix=$target
+)
+
+pre_install() {
+    if [ ! -z "$goboIndex" -a -d "$goboIndex" ]
+    then
+        GrepReplace "$goboIndex" "$target" cmake_install.cmake
+    fi
+}
