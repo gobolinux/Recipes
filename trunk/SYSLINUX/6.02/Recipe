@@ -9,7 +9,7 @@ makefile='Makefile'
 build_target="bios installer"
 install_target="bios installer install"
 
-install_variables=( INSTALLROOT=$target )
+install_variables=( INSTALLROOT=$target MANDIR=/share/man )
 
 pre_link() {
 	if [ -d "$target/usr" ]
