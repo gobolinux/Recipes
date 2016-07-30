@@ -1,0 +1,10 @@
+[Name] Intel-GPU-Tools
+[Summary] Variety of small tools for testing intel graphics.
+[Description] This is a collection of tools for development and testing of the Intel DRM
+driver. There are many macro-level test suites that get used against our
+driver, including xtest, rendercheck, piglit, and oglconform, but failures
+from those can be difficult to track down to kernel changes, and many require
+complicated build procedures or specific testing environments to get useful
+results.
+[License] MIT
+[Homepage] http://cgit.freedesktop.org/xorg/app/intel-gpu-tools/
