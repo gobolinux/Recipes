@@ -1,0 +1,17 @@
+# Recipe for version 1.3.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jul 30 14:42:15 BRT 2016
+# Recipe (MakeRecipe) for Font-Util by Jonas Karlsson <jonka750@student.liu.se>, on Sun Jun 1 18:19:42 GMT 2008
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/font/font-util-1.3.1.tar.bz2"
+file_size=153289
+file_md5=23756dab809f9ec5011bb27fb2c3c7d6
+recipe_type=configure
+part_of=Xorg-Font
+
+configure_options=(
+    --with-mapdir="$target/share/fonts/util"
+    --with-fontrootdir="$target/share/fonts"
+)
+
+install_variables=(
+    mapfilesdir=$target/share/fonts/util
+)
