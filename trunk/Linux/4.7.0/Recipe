@@ -53,7 +53,7 @@ do_configuration() {
    fi
 
    make menuconfig || Die "'menuconfig' failed."
-   [ -z "${SUDO_USER}" ] || chown ${SUDO_USER} -R include/config .config
+   [ -z "${SUDO_USER}" ] || chown ${SUDO_USER} .config
 }
 
 do_install() {
