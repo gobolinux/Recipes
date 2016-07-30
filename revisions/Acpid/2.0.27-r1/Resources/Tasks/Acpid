@@ -1,0 +1,13 @@
+#!/bin/sh
+
+op="$1"
+[ "$op" ] || op="start"
+
+case "$op" in
+[Ss]tart)
+   /Programs/Acpid/Current/sbin/acpid
+   ;;
+[Ss]top)
+   killall -9 acpid >& /dev/null
+   ;;
+esac
