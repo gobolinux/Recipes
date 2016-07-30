@@ -1,0 +1,9 @@
+# Recipe for version 2.5.4 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Wed Oct 18 10:31:46 BRST 2006
+# Recipe (MakeRecipe) for Mdadm by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Jun 21 16:34:18 BRT 2005
+compile_version=1.8.0
+url="http://www.cse.unsw.edu.au/~neilb/source/mdadm/mdadm-2.5.4.tgz"
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "DESTDIR=$target"
+)
