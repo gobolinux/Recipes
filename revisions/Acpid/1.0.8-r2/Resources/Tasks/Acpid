@@ -1,0 +1,13 @@
+#!/bin/sh
+
+op="$1"
+[ "$op" ] || op="start"
+
+case "$op" in
+[Ss]tart)
+   /Programs/Acpid/Current/sbin/acpid -c /System/Settings/acpi/events -s /System/Variable/run/acpid.socket
+   ;;
+[Ss]top)
+   killall acpid
+   ;;
+esac
