@@ -13,6 +13,10 @@ configure_options=(
 with_cyrus_sasl="--with-cyrus-sasl=yes"
 with_openssl="--with-tls=openssl"
 
+environment=(
+   CPP="cpp -P" # GCC 5.x fix
+)
+
 make_variables=(
    LIBTOOL="${goboExecutables}/libtool --tag=CC"
 )
