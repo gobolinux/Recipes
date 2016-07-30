@@ -69,11 +69,12 @@ do_install() {
    echo "BEGIN"
 
    # Restore Config_heavy.pl
-   eval $(LD_LIBRARY_PATH="${sourcedir}" "${target}/bin/"perl -V:installarchlib)
-   installarchlib="$(echo $installarchlib | sed "s,/usr,$target,")"
-   $sudo_exec cp -fv "${sourcedir}/lib/Config_heavy.pl.bak" "${installarchlib}/Config_heavy.pl" || Die "Failed restoring Config_heavy.pl"
+   bakfile=$(find "${target}" -name "Config_heavy.pl.bak")
+   archfile=$(find "${target}" -name "Config_heavy.pl")
+   $sudo_exec cp -fv "${bakfile}" "${archfile}" || Die "Failed restoring Config_heavy.pl"
    
    # These symlinks are required for 'ld' to find '-lperl'
+   installarchlib=$(dirname "${archfile}")
    $sudo_exec ln -sfv libperl.so.5.10 "${installarchlib}/CORE/libperl.so.5"
    $sudo_exec ln -sfv libperl.so.5.10 "${installarchlib}/CORE/libperl.so"
    
