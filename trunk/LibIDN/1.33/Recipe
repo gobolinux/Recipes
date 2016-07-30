@@ -1,0 +1,10 @@
+# Recipe for version 1.33 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jul 30 07:13:51 BRT 2016
+# by Maglan C. Diemer
+compile_version=1.8.2
+url="$ftpGnu/libidn/libidn-1.33.tar.gz"
+file_size=3501056
+file_md5=a9aa7e003665de9c82bd3f9fc6ccf308
+recipe_type=configure
+configure_options=(
+   "--mandir=${target}/man"
+)
