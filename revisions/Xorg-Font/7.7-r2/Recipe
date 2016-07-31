@@ -1,0 +1,4 @@
+# Recipe for version 7.7 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 2 15:07:01 GMT 2014
+recipe_type=meta
+compile_version=1.8.5
+symlink_options=(--conflict=overwrite)
