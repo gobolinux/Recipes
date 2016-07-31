@@ -1,0 +1,54 @@
+# Recipe for version 2.10.3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jul 30 14:40:39 BRT 2016
+# Recipe (MakeRecipe) for XF86-Input-Evdev by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jan 9 17:13:31 BRST 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/driver/xf86-input-evdev-2.10.3.tar.bz2"
+file_size=404476
+file_md5=aa3363ce5061d0c4d1e7f7019b99716d
+recipe_type=configure
+part_of=Xorg-Driver
+configure_options=(
+   --with-sdkdir="$target/include/xorg"
+)
+install_variables=(
+   sdkdir="${target}/include/xorg"
+)
+
+# Install evdev.conf udev rule
+pre_link() {
+   mkdir -p ${target}/Shared/X11/xorg.conf.d
+   cat > ${target}/Shared/X11/xorg.conf.d/10-evdev.conf << EOF
+Section "InputClass"
+	Identifier "evdev pointer catchall"
+	MatchIsPointer "on"
+	MatchDevicePath "/dev/input/event*"
+	Driver "evdev"
+EndSection
+
+Section "InputClass"
+	Identifier "evdev keyboard catchall"
+	MatchIsKeyboard "on"
+	MatchDevicePath "/dev/input/event*"
+	Driver "evdev"
+EndSection
+
+Section "InputClass"
+	Identifier "evdev tablet catchall"
+	MatchIsTablet "on"
+	MatchDevicePath "/dev/input/event*"
+	Driver "evdev"
+EndSection
+
+Section "InputClass"
+	Identifier "evdev touchscreen catchall"
+	MatchIsTouchscreen "on"
+	MatchDevicePath "/dev/input/event*"
+	Driver "evdev"
+EndSection
+
+Section "InputClass"
+	Identifier "ThinkPad HDAPS accelerometer blacklist"
+	MatchProduct "ThinkPad HDAPS Accelerometer data"
+	Option "Ignore" "on"
+EndSection
+EOF
+}
