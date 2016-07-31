@@ -1,0 +1,17 @@
+# Recipe for version 1.3.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jul 30 14:37:18 BRT 2016
+# Recipe (MakeRecipe) for XInit by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 18:54:37 BRT 2005
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/app/xinit-1.3.4.tar.bz2"
+file_size=165881
+file_md5=4e928452dfaf73851413a2d8b8c76388
+recipe_type=configure
+part_of=Xorg-App
+
+configure_options=(
+    --with-xserver=$goboExecutables/X
+    --with-xterm=$goboExecutables/xterm
+)
+
+install_variables=(
+    xinitrcdir=$settings_target/X11/xinit
+)
