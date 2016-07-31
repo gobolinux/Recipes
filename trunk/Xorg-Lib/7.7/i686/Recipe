@@ -1,38 +1,38 @@
 include=(
-	xtrans--1.3.2
-	libFS--1.0.5
-	libICE--1.0.8
+	xtrans--1.3.5
+	libFS--1.0.7
+	libICE--1.0.9
 	libSM--1.2.2
 	libXau--1.0.8
-	libxcb--1.10
-	libXdmcp--1.1.1
-	libX11--1.6.2
-	libXext--1.3.2
+	libxcb--1.12
+	libXdmcp--1.1.2
+	libX11--1.6.3
+	libXext--1.3.3
 	libXScrnSaver--1.2.2
-	libXt--1.1.4
+	libXt--1.1.5
 	libXmu--1.1.2
 	libXpm--3.5.11
-	libXaw--1.0.12
-	libXfixes--5.0.1
+	libXaw--1.0.13
+	libXfixes--5.0.2
 	libXcomposite--0.4.4
-	libXrender--0.9.8
+	libXrender--0.9.9
 	libXcursor--1.1.14
 	libXdamage--1.1.4
-	libfontenc--1.1.2
-	libXfont--1.4.6
-	libXft--2.3.1
-	libXi--1.7.2
+	libfontenc--1.1.3
+	libXfont--1.5.1
+	libXft--2.3.2
+	libXi--1.7.6
 	libXinerama--1.1.3
-	libXrandr--1.4.2
+	libXrandr--1.5.0
 	libXres--1.0.7
 	libXtst--1.2.2
 	libXv--1.0.10
-	libXvMC--1.0.8
+	libXvMC--1.0.9
 	libXxf86dga--1.1.4
-	libXxf86vm--1.1.3
+	libXxf86vm--1.1.4
 	libdmx--1.1.3
-	libxkbfile--1.0.8
-	libpciaccess--0.13.2
+	libxkbfile--1.0.9
+	libpciaccess--0.13.4
 #	libAppleWM--1.4.0 # Not Necessary
 #	libWindowsWM--1.0.1 # Not Necessary
 )
