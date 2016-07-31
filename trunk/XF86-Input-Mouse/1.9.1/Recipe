@@ -1,0 +1,11 @@
+# Recipe for version 1.9.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jul 30 14:40:52 BRT 2016
+# Recipe (MakeRecipe) for XF86-Input-Mouse by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jan 9 17:14:40 BRST 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/driver/xf86-input-mouse-1.9.1.tar.bz2"
+file_size=348244
+file_md5=77085b649c5c0b333565ba562f573951
+recipe_type=configure
+part_of=Xorg-Driver
+install_variables=(
+   sdkdir="${target}/include/xorg"
+)
