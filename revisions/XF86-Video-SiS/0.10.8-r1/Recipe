@@ -1,0 +1,11 @@
+# Recipe for version 0.10.8 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jul 30 14:40:44 BRT 2016
+# Recipe (MakeRecipe) for XF86-Video-SiS by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jan 9 17:18:08 BRST 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/driver/xf86-video-sis-0.10.8.tar.bz2"
+file_size=734785
+file_md5=c173c4ce572eb19db5dfdc8a858c6c67
+recipe_type=configure
+part_of=Xorg-Driver
+configure_options=(
+    --enable-dri
+)
