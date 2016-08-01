@@ -1,0 +1,12 @@
+# Recipe for version 3.5.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jul 31 16:35:36 BRT 2016
+compile_version=1.8.5
+url="https://www.python.org/ftp/python/3.5.2/Python-3.5.2.tar.xz"
+file_size=15222676
+file_md5=8906efbacfcdc7c3c9198aeefafd159e
+recipe_type=configure
+needs_safe_linking=yes
+
+configure_options=(
+  "--enable-shared"
+#  "--with-cxx=no"
+)
