@@ -1,0 +1,13 @@
+# Recipe for version 2.0.11 by AitorATuin, on Sat Jul 16 09:29:07 CEST 2016
+# Recipe for Guile 2.0.11 by Peter Eriksen <s022018@student.dtu.dk>
+compile_version=1.8.2
+url="$ftpGnu/guile/guile-2.0.11.tar.gz"
+file_size=7516053
+file_md5=e532c68c6f17822561e3001136635ddd
+recipe_type=configure
+
+pre_link() {
+    # We don't want to have gdb files under lib
+    mkdir -p ${target}/share/gdb/guile
+    mv ${target}/lib/*.scm ${target}/share/gdb/guile
+}
