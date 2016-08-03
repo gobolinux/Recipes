@@ -1,0 +1,10 @@
+# Recipe for version 3.5.9 by Hisham Muhammad <hisham@gobolinux.org>, on Tue Aug 2 19:44:25 BRT 2016
+# Recipe (MakeRecipe) for Awesome by Viola Zoli; Hungary, violazoli@gmail.com, on 2008. márc. 24., hétfõ, 12.53.5.90 CET
+compile_version=1.10.2
+url="http://awesome.naquadah.org/download/awesome-3.5.9.tar.bz2"
+file_size=757631
+file_md5=3e3268231fbd131fa9d5c27615b1efea
+recipe_type=cmake
+cmake_options=(
+   -DSYSCONFDIR="$settings_target"
+)
