@@ -1,0 +1,8 @@
+# Recipe for version 1.7.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Mar 20 14:23:08 NZDT 2012
+# Recipe (MakeRecipe) for XF86-Video-i810 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jan 9 17:16:56 BRST 2006
+compile_version=1.8.2
+url="ftp://ftp.freedesktop.org/pub/individual/driver/xf86-video-i810-1.7.4.tar.bz2"
+file_size=461513
+file_md5=744a6ee1ebfe1c74e3b170b8d7ef8395
+recipe_type=configure
+part_of=Xorg-Driver
