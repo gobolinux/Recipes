@@ -25,6 +25,9 @@ pre_install() {
    mkdir -p "${goboVariable}/lib/openldap"
 }
 
+sandbox_options=(
+    "--allow-leftovers"
+)
 unmanaged_files=(
     "${goboVariable}/lib/openldap"
 )
