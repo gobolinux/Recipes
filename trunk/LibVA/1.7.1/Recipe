@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for LibVA by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Apr 30 17:24:56 BRT 2010
+compile_version=2.0
+url="https://www.freedesktop.org/software/vaapi/releases/libva/libva-1.7.1.tar.bz2"
+file_size=801086
+file_md5=79f98dd94daa78a026ded79fbcc137c5
+dir='libva-1.7.1'
+recipe_type=configure
+
+configure_options=(
+    --with-drivers-path=$goboLibraries/dri
+)
+
+install_variables=(
+    LIBVA_DRIVERS_PATH=$target/lib/dri
+)
