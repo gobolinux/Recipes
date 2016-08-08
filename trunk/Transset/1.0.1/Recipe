@@ -4,12 +4,5 @@ compile_version=1.8.0
 url="http://xorg.freedesktop.org/archive/individual/app/transset-1.0.1.tar.bz2"
 file_size=121199
 file_md5=4afa9e30637171ae9e557a986e423720
-dir='transset'
-recipe_type=makefile
+recipe_type=configure
 part_of=Xorg-App
-makefile='Makefile'
-do_install=no
-pre_install() {
-   cp transset $target/bin
-   cp transset $target/doc
-}
