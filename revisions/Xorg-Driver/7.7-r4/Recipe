@@ -1,0 +1,13 @@
+# Recipe for version 7.7 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 2 15:06:58 GMT 2014
+recipe_type=meta                                     
+compile_version=1.8.5 
+symlink_options=(--conflict=overwrite)
+
+pre_link() {
+   # Xorg has a feature in which it's able to automatically add devices as they're reported by
+   # Udev or by (the now deprecated) HAL.
+   # Xorg will attempt to compare the strings returned by these software  with the ones in Xorg
+   # config files, so they must agree on the prefix used to represent device files.
+   GrepReplace -B "/dev" "$goboDevices" $target/Shared/X11/xorg.conf.d/*
+}
+
