@@ -1,0 +1,18 @@
+# Recipe for version 0.95 by Kosh <kosh.linux at gmail.com, on Thu Nov 23 19:57:56 BRST 2006
+# Recipe (MakeRecipe) for recipe-store by Carlo J. Calica <ccalica@gmail.com>, on Sat Oct 1 17:29:57 PDT 2005
+compile_version=1.8.2
+url="http://dbus.freedesktop.org/releases/dbus/dbus-0.95.tar.gz"
+recipe_type=configure
+configure_options=(
+    "--with-x"
+    "--with-xml"
+#    "--enable-xml-docs"
+)
+
+post_install() {
+    dbus-uuidgen --ensure
+}
+
+unmanaged_files=(
+    $goboVariable/run/dbus
+)
