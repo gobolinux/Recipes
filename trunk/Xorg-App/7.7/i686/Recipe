@@ -1,23 +1,18 @@
-include=(
-#################################################
-# Xorg-Data 
-# This is included in Xorg-App, since 2/3 modules have deps here
+_include=(
+#####################################################################################
+# Packages that happen to be part of Xorg-Data are included below due to module
+# dependencies.
 # Please note that UpdateXorgRecipe will NOT automatically bump the version of these.
-#################################################
-    xbitmaps--1.1.0
-##    xcursor-themes--1.0.3 # moved to app due to dependencies
+#####################################################################################
+#   xcursor-themes--1.0.4 # moved to app due to dependencies
+    xbitmaps--1.1.1
 #################################################
 # Xorg-App
 #################################################
     bdftopcf--1.0.5
-#    fonttosfnt--1.0.4
     iceauth--1.0.7
-#    lbxproxy--1.0.3
-#    luit--1.1.1
     mkfontdir--1.0.7
     mkfontscale--1.1.2
-#    proxymngr--1.0.4
-#    scripts-xorg--1.0.1 # Deprecated app, not maintained anymore since 2006
     sessreg--1.1.0
     setxkbmap--1.3.1
     smproxy--1.0.6
@@ -40,21 +35,14 @@ include=(
     xkeyboard-config--2.1
     xkill--1.0.4
     xlsatoms--1.1.2
-#    xlsclients--1.1.3
     xmodmap--1.0.9
-#    xphelloworld--1.0.1
-#    xplsprinters--1.0.1
     xpr--1.0.4
-#    xprehashprinterlist--1.0.1
     xprop--1.2.2
     xrandr--1.5.0
     xrdb--1.1.0
     xrefresh--1.0.5
     xset--1.2.3
-#    xsetmode--1.0.0
-#    xsetpointer--1.0.1
     xsetroot--1.1.1
-#    xtrap--1.0.2
     xvinfo--1.1.3
     xwd--1.0.6
     xwininfo--1.1.3
@@ -97,7 +85,6 @@ include=(
     xfontsel--1.0.5
     xfs--1.1.4
     xfsinfo--1.0.5
-#    xfwp--1.0.3
     xgc--1.0.5
     xkbprint--1.0.4
     xload--1.1.2
@@ -111,14 +98,32 @@ include=(
     xsm--1.0.3
     xstdcmap--1.0.3
     xvidtune--1.0.3
-    # --- New packages added by UpdateXorgRecipe ---
-    compiz--0.7.8
-    constype--1.0.4
-    grandr--0.1
-    intel-gpu-tools--1.15
-    mkcfm--1.0.1
-    scripts--1.0.1
     transset--1.0.1
-    xrx--1.0.4
     xscope--1.4.1
+################################################
+#  Other optional packages
+################################################
+#    compiz--0.7.8
+#    constype--1.0.4
+#    grandr--0.1
+#    intel-gpu-tools--1.15
+#    mkcfm--1.0.1
+#    scripts--1.0.1
+#    xrx--1.0.4
+################################################
+# Old or deprecated apps
+################################################
+#    fonttosfnt--1.0.4
+#    lbxproxy--1.0.3
+#    luit--1.1.1
+#    proxymngr--1.0.4
+#    scripts-xorg--1.0.1 # Deprecated app, not maintained anymore since 2006
+#    xlsclients--1.1.3
+#    xphelloworld--1.0.1
+#    xplsprinters--1.0.1
+#    xprehashprinterlist--1.0.1
+#    xsetmode--1.0.0
+#    xsetpointer--1.0.1
+#    xtrap--1.0.2
+#    xfwp--1.0.3
 )
