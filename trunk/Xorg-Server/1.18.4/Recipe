@@ -46,6 +46,10 @@ install_variables=(
    miscconfigdir="${target}/lib/xorg"
 )
 
+sandbox_options=(
+    --allow-leftovers
+)
+
 unmanaged_files=(
    "$goboVariable/lib/xkb"
 )
