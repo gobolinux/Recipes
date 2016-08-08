@@ -4,6 +4,7 @@ compile_version=1.13.3
 git="http://bitmath.org/git/multitouch.git"
 recipe_type=makefile
 makefile='Makefile'
+part_of=Xorg-Driver
 
 install_variables=(
     DESTDIR=$target
