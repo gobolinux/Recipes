@@ -1,0 +1,19 @@
+# Recipe for version 1.4.1 by Diogo Lima <diogo.urb@gmail.com>, on Fri Jan 28 13:16:14 BRST 2011
+# Recipe (MakeRecipe) for recipe-store by Carlo J. Calica <ccalica@gmail.com>, on Sat Oct 1 17:29:57 PDT 2005
+compile_version=1.10.2
+url="http://dbus.freedesktop.org/releases/dbus/dbus-1.4.1.tar.gz"
+file_size=1850139
+file_md5=99cb057700c0455fb68f8d57902f77ac
+recipe_type=configure
+configure_options=(
+    "--with-x"
+    "--with-xml"
+    "--localstatedir=$variable_target"
+    "--libexecdir=$target/lib"
+#    "--enable-xml-docs"
+)
+
+unmanaged_files=(
+    $goboVariable/run/dbus/
+    $goboVariable/lib/dbus/
+)
