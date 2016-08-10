@@ -1,0 +1,18 @@
+# Recipe for version 2.13 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Aug 9 02:38:30 GMT 2016
+# Recipe (MakeRecipe) for Links by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Nov 23 18:09:18 BRST 2004
+compile_version=1.8.0
+url="http://links.twibright.com/download/links-2.13.tar.bz2"
+file_size=6516087
+file_md5=af418c83909ee73c09b95470bda6e377
+recipe_type=configure
+
+#pre_build() {
+#    the shipped configure doesn't recognize parameters such as CC
+#    echo "Running autoconf..." && autoconf
+#}
+
+pre_link(){
+	# Copy the icon to the correct directory
+	mkdir -p ${target}/share/icons/links
+	cp graphics/links.xpm ${target}/share/icons/links
+}
