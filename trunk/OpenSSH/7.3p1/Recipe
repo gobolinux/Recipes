@@ -1,0 +1,25 @@
+# Recipe for version 7.3p1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Aug 9 02:00:46 GMT 2016
+# Recipe for OpenSSH by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.10.2
+url="http://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-7.3p1.tar.gz"
+file_size=1522617
+file_md5=dfadd9f035d38ce5d58a3bf130b86d08
+recipe_type=configure
+install_target=install-nokeys
+configure_options=(
+   "--sysconfdir=$settings_target/ssh"
+)
+install_variables=(
+   sysconfdir="${settings_target}/ssh"
+)
+unmanaged_files=(
+   "${goboVariable}/empty"
+)
+
+with_pam="--with-pam"
+
+pre_link() {
+   mkdir -p "${target}/Resources/Unmanaged/${goboVariable}/empty"
+   chmod 755 "${target}/Resources/Unmanaged/${goboVariable}/empty"
+   chown 0:sys "${target}/Resources/Unmanaged/${goboVariable}/empty"
+}
