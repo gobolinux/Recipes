@@ -1,0 +1,4 @@
+wpaConfig="${goboSettings}/wpa_supplicant.conf"
+wpaControlPath="${goboVariable}/run/wpa_supplicant"
+wpaGlobalControl="${wpaControlPath}-global"
+wpaActionHandler="${goboPrograms}/WPA_Supplicant/Current/Resources/Utils/ActionHandler"

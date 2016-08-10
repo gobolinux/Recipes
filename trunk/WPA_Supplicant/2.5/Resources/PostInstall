@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# This package installs desktop files into the /usr/share/applications hierarchy and 
+# system performance and memory usage can be improved by updating /usr/share/applications/mimeinfo.cache. 
+
+which update-desktop-database >& /dev/null && update-desktop-database

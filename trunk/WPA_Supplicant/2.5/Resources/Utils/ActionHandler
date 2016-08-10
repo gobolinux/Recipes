@@ -1,0 +1,80 @@
+#!/bin/bash
+
+# This script is called by wpa_cli when connection state changes.
+# Code from BootScripts/Tasks/Network is duplicated to manage the access point as if it were a hardware interface
+
+interface="$1"
+network="$WPA_ID_STR"
+
+source GoboPath
+source "${goboSettings}/WPATasks"
+if [ -r "${goboSettings}/NetworkOptions" ]; then
+   source "${goboSettings}/NetworkOptions" 2> /dev/null
+fi
+
+#
+# Brings a statically assigned interface up or down
+#
+function StaticNetworkInterface() {
+   unset broadcastcmd
+   interface="$2"
+   case "$1" in
+      [Ss]tart)
+         [ -z "$networkNetmask" ]   && networkNetmask=255.255.255.0
+         [ -n "$networkBroadcast" ] && broadcastcmd="broadcast $networkBroadcast"
+         ifconfig $interface $networkIP netmask $networkNetmask $broadcastcmd
+         if [ -n "$Gateway" -a "$GatewayInterface" = "$interface" ]
+         then route add default gateway $Gateway metric 1 dev $GatewayInterface
+         fi
+         ;;
+      [Ss]top)
+         # Here just the route is removed, because the wlan interface is still in use
+         if [ -n "$Gateway" -a "$GatewayInterface" = "$interface" ]
+         then route del default gateway $Gateway metric 1 dev $GatewayInterface
+         fi
+         ;;
+   esac
+}
+
+function RunHook() {
+   case "$2" in
+      [Ss]tart)
+         hookfunc="$3_${1}Up"
+         [ "`type -t $hookfunc`" = "function" ] && $hookfunc
+         ;;
+      [Ss]top)
+         hookfunc="$3_${1}Down"
+         [ "`type -t $hookfunc`" = "function" ] && $hookfunc
+         ;;
+   esac
+}
+
+function NetworkInterface() {
+   eval 'export networkBootProto=$'$2'_BootProto'
+   eval 'export networkIP=$'$2'_IP'
+   eval 'export networkNetmask=$'$2'_Netmask'
+   eval 'export networkBroadcast=$'$2'_Broadcast'
+   RunHook Pre "$@"
+   # $2 in Network becomes $3 here, to differentiate between networks and interfaces
+   if [ -z "$networkBootProto" -o "$networkBootProto" = "Static" ]
+   then StaticNetworkInterface "$1" "$3"
+   else source ${networkBootProto}NetworkInterface "$1" "$3"
+   fi
+   rtn=$?
+   RunHook Post "$@"
+   return $rtn
+}
+
+# If a network has no provided identity, default to DHCP by default
+if [ -z "$_BootProto" ]; then export _BootProto=DHCP; fi;
+
+case "$2" in
+   CONNECTED)
+      NetworkInterface Start "$network" "$interface" ||
+         wpa_cli -p "$wpaControlPath" -i "$interface" reassociate
+      ;;
+   DISCONNECTED)
+      NetworkInterface Stop "$network" "$interface"
+      ;;
+esac
+
