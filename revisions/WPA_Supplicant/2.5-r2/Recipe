@@ -1,0 +1,44 @@
+# Recipe for version 2.5 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Aug 9 02:06:02 GMT 2016
+# Recipe (MakeRecipe) for WPA_Supplicant by Jonas Karlsson <jonka750@student.liu.se>, on Sun Jul 24 09:52:31 CEST 2.55
+compile_version=1.9.0
+url="http://hostap.epitest.fi/releases/wpa_supplicant-2.5.tar.gz"
+file_size=2607336
+file_md5=96ff75c3a514f1f324560a2376f13110
+recipe_type=makefile
+dir=wpa_supplicant-2.5/wpa_supplicant
+
+build_target="all"
+using_qt4() {
+   build_target="${build_target} wpa_gui-qt4"
+}
+
+environment=(
+   QMAKESPEC="$qt_path/mkspecs/linux-g++"
+)
+
+make_variables=(
+   "DESTDIR=$target"
+   # if these are not set, files are installed in /usr/local/... which SymlinkProgram misses
+   "BINDIR=/sbin"
+   "LIBDIR=/lib"
+)
+
+pre_build() {
+   if [ ! -e .config ]; then
+      cp defconfig .config
+      for opt in DEBUG_FILE EAP_SIM EAP_AKA EAP_PSK EAP_PAX EAP_AKA_PRIME WPS PCSC IPV6 LIBNL32 READLINE \
+                 CTRL_IFACE_DBUS CTRL_IFACE_DBUS_NEW CTRL_IFACE_DBUS_INTRO
+      do
+          if grep -q "^#CONFIG_${opt}=y" .config
+          then GrepReplace -B "^#CONFIG_${opt}=y" "CONFIG_${opt}=y" .config
+          else echo "CONFIG_${opt}=y" >> .config
+          fi
+      done
+      echo "CFLAGS += -I$goboHeaders/libnl3" >> .config
+      Log_Error You may alter wpa_supplicant build time configuration by modifying $(pwd)/.config
+   fi
+}
+
+using_qt4_pre_link() {
+   cp wpa_gui-qt4/wpa_gui $target/sbin
+}
