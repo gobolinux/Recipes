@@ -1,0 +1,10 @@
+--- xf86-video-sis-0.10.7/src/sis_driver.c.orig	2014-01-05 17:44:13.000000000 -0200
++++ xf86-video-sis-0.10.7/src/sis_driver.c	2014-01-05 17:44:22.000000000 -0200
+@@ -57,7 +57,6 @@
+ #include "fb.h"
+ #include "micmap.h"
+ #include "mipointer.h"
+-#include "mibstore.h"
+ #include "edid.h"
+ 
+ #define SIS_NEED_inSISREG
