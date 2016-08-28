@@ -1,0 +1,29 @@
+# Recipe for version 1.61.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Aug 22 01:25:13 GMT 2016
+compile_version=1.8.2
+url="https://sourceforge.net/projects/boost/files/boost/1.61.0/boost_1_61_0.tar.bz2"
+file_size=85202254
+file_md5=6095876341956f65f9d35939ccea1a9f
+recipe_type=makefile
+
+# Sadly, Boost 1.45 no longer provides a configure script, so we need to
+# resort to a very procedural recipe using Boost's completely nonstandard
+# build system.
+
+do_configuration() {
+   ./bootstrap.sh --prefix=$target
+}
+
+do_build() {
+   ./bjam variant=release threading=multi stage
+}
+
+do_install() {
+   $sudo_exec ./bjam install
+
+   # Manually install docs
+   $sudo_exec mkdir -p $target/doc
+   $sudo_exec cp -R doc/html $target/doc
+
+   # Install bjam for use by e.g. BGL-Python
+   $sudo_exec cp bjam $target/bin
+}
