@@ -23,3 +23,9 @@ manifest=(
 pre_link() {
     cp -v -af *.dtd ent/ *.mod $target/share/xml/docbook/xml-dtd-4.5/
 }
+sandbox_options=(
+    --allow-leftovers
+)
+unmanaged_files=(
+    $goboVariable/lib/xml
+)
