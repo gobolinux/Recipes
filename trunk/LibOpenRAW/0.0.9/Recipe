@@ -7,5 +7,6 @@ file_md5=3611d8aea870d25314665ef53093288e
 recipe_type=configure
 
 install_variables=(
+   LIBTOOL="$goboExecutables/libtool"
    GDK_PIXBUF_DIR="$target/lib/gdk-pixbuf-2.0/2.10.0/loaders"
 )
