@@ -25,12 +25,3 @@ manifest=(
 unmanaged_files=(
    "$goboVariable/lib/xml"
 )
-
-pre_install() {
-   cat <<EOF > "$target/Resources/XmlCatalogData"
-rewriteSystem;http://docbook.sourceforge.net/release/xsl/current/;file://\${target}/$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/;\${goboVariable}/lib/xml/catalog
-rewriteURI;http://docbook.sourceforge.net/release/xsl/current/;file://\${target}/$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/;\${goboVariable}/lib/xml/catalog
-rewriteSystem;http://docbook.sourceforge.net/release/xsl/1.79.1/;file://\${target}/Current/$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/;\${goboVariable}/lib/xml/catalog
-rewriteURI;http://docbook.sourceforge.net/release/xsl/1.79.1/;file://\${target}/$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/;\${goboVariable}/lib/xml/catalog
-EOF
-}
