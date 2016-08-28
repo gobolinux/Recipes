@@ -1,10 +1,12 @@
 Fontconfig 2.3.95
 FreeType >= 2.1.9
+GLib 2.49.5
 Glibc 2.4
 Glitz >= 0.5.1 [glitz]
 LibPNG >= 1.2
 LibXML2
+#LibRSVG # will bring GTK+
 Pixman >= 0.16.0
-XCB-Util
+#XCB-Util # Part of Xorg-Lib
 Xorg-Lib >= 7.5
 ZLib 1.2.0
