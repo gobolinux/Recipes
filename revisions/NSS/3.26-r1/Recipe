@@ -1,0 +1,30 @@
+# Recipe for version 3.26 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Aug 27 03:20:02 GMT 2016
+# Recipe (MakeRecipe) for NSS by Jonas Karlsson <jonka750@student.liu.se>, on Wed May 31 09:34:32 CEST 2006
+compile_version=1.8.0
+url="https://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/NSS_3_26_RTM/src/nss-3.26.tar.gz"
+file_size=7386943
+file_md5=b71ab412cf07af436726679b204b0777
+recipe_type=makefile
+do_install=no
+dir=nss-3.26/nss
+
+build_variables=(
+   BUILD_OPT=1
+   USE_SYSTEM_ZLIB=1
+   NSS_USE_SYSTEM_SQLITE=1
+   NSPR_INCLUDE_DIR="${goboHeaders}/nspr"
+   $([ $(uname -m) = x86_64 ] && echo USE_64=1)
+)
+
+pre_link() {
+   Quiet pushd ../dist &&
+   install -v -m755 Linux*/lib/*.so              ${target}/lib              &&
+   install -v -m644 Linux*/lib/{*.chk,libcrmf.a} ${target}/lib              &&
+   install -v -m755 -d                           ${target}/include/nss      &&
+   cp -v -RL {public,private}/nss/*              ${target}/include/nss      &&
+   chmod -v 644                                  ${target}/include/nss/*    &&
+   install -v -m755 Linux*/bin/{certutil,nss-config,pk12util} ${target}/bin &&
+   install -v -m755 -d                           ${target}/lib/pkgconfig    &&
+   install -v -m644 Linux*/lib/pkgconfig/nss.pc  ${target}/lib/pkgconfig
+   Quiet popd
+}
