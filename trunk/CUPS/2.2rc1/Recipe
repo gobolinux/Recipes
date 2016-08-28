@@ -49,6 +49,12 @@ unmanaged_files=(
    ${goboVariable}/spool/cups/tmp
 )
 
+pre_build() {
+   # If xdg-utils is not installed, then we set Firefox as the default browser to access
+   # the Cups web interface
+   Quiet which xdg-open || sed -i 's#@CUPS_HTMLVIEW@#firefox#' desktop/cups.desktop.in
+}
+
 pre_install() {
     GrepReplace "(BUILDROOT)$goboSettings" "(BUILDROOT)/../Settings" Makedefs 
     GrepReplace "(BUILDROOT)/usr" "(BUILDROOT)" Makedefs 
