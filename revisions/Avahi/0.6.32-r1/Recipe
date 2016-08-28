@@ -1,0 +1,15 @@
+# Recipe for version 0.6.32 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Aug 22 16:27:55 GMT 2016
+# Recipe (MakeRecipe) for Avahi by Giambattista Bloisi <giamby@infinito.it>, on Wed Dec 12 20:58:25 CET 2007
+compile_version=1.9.0
+url="https://github.com/lathiat/avahi/releases/download/v0.6.32/avahi-0.6.32.tar.gz"
+file_size=1297169
+file_md5=22b5e705d3eabb31d26f2e1e7b074013
+recipe_type=configure
+configure_options=(
+    --with-distro=none
+    #--disable-gtk3
+    --disable-gtk
+    --disable-qt3 
+    --disable-mono
+    --disable-python
+)
