@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for NCSA-Mosaic by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Aug 28 01:02:16 BRT 2016
+# Recipe for version git by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Aug 28 01:02:16 BRT 2016
+compile_version=2.0
+git="https://github.com/alandipert/ncsa-mosaic.git"
+recipe_type=makefile
+makefile='Makefile'
+build_target=linux
+do_install=no
+
+pre_install() {
+   cp -v ./src/Mosaic $target/bin
+   mkdir -p $target/share/icons/Mosaic
+   mkdir -p $target/share/applications
+   cp -v $recipedir/mosaic64.png $target/share/icons/Mosaic
+   cp -v $recipedir/mosaic.desktop $target/share/applications
+}
