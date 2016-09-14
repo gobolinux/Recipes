@@ -7,7 +7,7 @@ op="$1"
 
 case "$op" in
 [Ss]tart)
-   ${goboExecutbles}/acpid
+   ${goboExecutables}/acpid
    ;;
 [Ss]top)
    killall -9 acpid >& /dev/null
