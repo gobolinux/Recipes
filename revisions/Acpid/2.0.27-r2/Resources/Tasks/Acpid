@@ -1,0 +1,15 @@
+#!/bin/sh
+
+source GoboPath
+
+op="$1"
+[ "$op" ] || op="start"
+
+case "$op" in
+[Ss]tart)
+   ${goboExecutbles}/acpid
+   ;;
+[Ss]top)
+   killall -9 acpid >& /dev/null
+   ;;
+esac
