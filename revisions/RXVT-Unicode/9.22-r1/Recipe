@@ -1,0 +1,12 @@
+# Recipe for version 9.22 by Hisham Muhammad <hisham@gobolinux.org>, on Thu Aug 25 20:46:46 BRT 2016
+# Recipe (MakeRecipe) for RXVT-Unicode by Isaac Dupree <id@isaac.cedarswampstudios.org>, on Sun Jul 22 19.22:17 BRT 2007
+compile_version=1.9.0
+url="http://dist.schmorp.de/rxvt-unicode/rxvt-unicode-9.22.tar.bz2"
+file_size=931198
+file_md5=93782dec27494eb079467dacf6e48185
+mirror_url="http://dist.schmorp.de/rxvt-unicode/Attic/rxvt-unicode-9.22.tar.bz2"
+recipe_type=configure
+configure_options=(
+   --enable-256-color
+   --with-terminfo="$target/Shared/terminfo"
+)
