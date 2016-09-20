@@ -1,0 +1,17 @@
+#!/bin/bash
+
+source GoboPath
+
+dbus-uuidgen --ensure
+
+chmod 4750 $target/lib/dbus-daemon-launch-helper
+FILEMODE=$(stat -c '%a' $target/lib/dbus-daemon-launch-helper)
+if [ "$FILEMODE" != "4750" ]
+then
+    echo
+    echo "Error: could not set permissions of $target/lib/dbus-daemon-launch-helper to 4750."
+    echo "This is critical for the correct execution of the desktop environment. Please check."
+    echo
+fi
+
+GrepReplace -B "/System/Links/Shared" "$goboShared" $target/Resources/Defaults/Settings/dbus-1/system-local.conf

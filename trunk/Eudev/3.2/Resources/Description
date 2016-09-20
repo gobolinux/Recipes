@@ -1,0 +1,5 @@
+[Name] Eudev
+[Summary] eudev is a fork of udev, with the goal of isolation from the init system.
+[Description] eudev is a fork of systemd's udev with the goal of obtaining better compatibility with existing software such as OpenRC, Upstart, older kernels, various toolchains, and anything else required by (but not well supported by) udev.
+[License] GNU General Public License version 2
+[Homepage] https://wiki.gentoo.org/wiki/Project:Eudev

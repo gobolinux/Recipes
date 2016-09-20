@@ -1,0 +1,15 @@
+# Recipe for version 1.6.3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jul 30 14:28:34 BRT 2016
+# Recipe (MakeRecipe) for LibX11 by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 19:42:45 BRT 2005
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/lib/libX11-1.6.3.tar.bz2"
+file_size=2363858
+file_md5=2e36b73f8a42143142dda8129f02e4e0
+recipe_type=configure
+part_of=Xorg-Lib
+
+make_variables=(
+    libintldir=lib
+    X11dir=lib/X11
+    x11datadir=share/X11
+    x11localedir=share/X11/locale
+)

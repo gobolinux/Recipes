@@ -1,0 +1,32 @@
+--- avahi-0.6.22/avahi-daemon/avahi-dbus.conf.in.orig	2008-03-13 10:09:41.000000000 -0700
++++ avahi-0.6.22/avahi-daemon/avahi-dbus.conf.in	2008-03-13 10:09:33.000000000 -0700
+@@ -3,11 +3,11 @@
+  "http://www.freedesktop.org/standards/dbus/1.0/busconfig.dtd">
+ <busconfig>
+ 
+-  <!-- Only root or user @AVAHI_USER@ can own the Avahi service -->
++  <!-- Only the superuser or user @AVAHI_USER@ can own the Avahi service -->
+   <policy user="@AVAHI_USER@">
+     <allow own="org.freedesktop.Avahi"/>
+   </policy>
+-  <policy user="root">
++  <policy user="0">
+     <allow own="org.freedesktop.Avahi"/>
+   </policy>
+ 
+--- avahi-0.6.22/avahi-daemon/avahi-dbus.conf.orig	2008-03-13 10:09:03.000000000 -0700
++++ avahi-0.6.22/avahi-daemon/avahi-dbus.conf	2008-03-13 10:09:16.000000000 -0700
+@@ -3,11 +3,11 @@
+  "http://www.freedesktop.org/standards/dbus/1.0/busconfig.dtd">
+ <busconfig>
+ 
+-  <!-- Only root or user avahi can own the Avahi service -->
++  <!-- Only the superuser or user avahi can own the Avahi service -->
+   <policy user="avahi">
+     <allow own="org.freedesktop.Avahi"/>
+   </policy>
+-  <policy user="root">
++  <policy user="0">
+     <allow own="org.freedesktop.Avahi"/>
+   </policy>
+ 

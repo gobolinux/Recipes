@@ -1,0 +1,12 @@
+# Recipe for version 1.0.3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jul 30 14:33:00 BRT 2016
+# Recipe (MakeRecipe) for XMH by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 19:02:01 BRT 2005
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/app/xmh-1.0.3.tar.bz2"
+file_size=212109
+file_md5=342484425ae92cee33dfb8791b1cc2bf
+recipe_type=configure
+part_of=Xorg-App
+
+make_variables=(
+    "appdefaultdir=$target/Shared/X11/app-defaults"
+)

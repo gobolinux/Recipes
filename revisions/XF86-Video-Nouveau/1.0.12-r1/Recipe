@@ -1,0 +1,14 @@
+# Recipe for version 1.0.12 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jul 30 14:38:01 BRT 2016
+# Recipe (MakeRecipe) for XF86-Video-Nouveau by Diogo Lima <diogo.urb@gmail.com>, on Mon Jan 31 14:02:48 BRST 2011
+compile_version=1.13.3
+url="http://xorg.freedesktop.org/archive/individual/driver/xf86-video-nouveau-1.0.12.tar.bz2"
+file_size=599816
+file_md5=dc79910c7b9e32321cefc7af250c7765
+#git="git://anongit.freedesktop.org/nouveau/xf86-video-nouveau"
+recipe_type=configure
+autogen_before_configure=yes
+part_of=Xorg-Driver
+
+pre_build() {
+    autoreconf -i
+}

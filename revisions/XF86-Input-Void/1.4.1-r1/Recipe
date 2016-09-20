@@ -1,0 +1,11 @@
+# Recipe for version 1.4.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jul 30 14:41:34 BRT 2016
+# Recipe (MakeRecipe) for XF86-Input-Void by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jan 9 17:15:33 BRST 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/driver/xf86-input-void-1.4.1.tar.bz2"
+file_size=271597
+file_md5=5227013b52b3ca85d6b7ec8adea988d4
+recipe_type=configure
+part_of=Xorg-Driver
+install_variables=(
+   sdkdir="${target}/include/xorg"
+)

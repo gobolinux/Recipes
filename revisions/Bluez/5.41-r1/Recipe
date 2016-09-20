@@ -1,0 +1,15 @@
+# Recipe for version 5.41 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Aug 27 16:17:08 GMT 2016
+compile_version=1.13.2
+url="http://www.kernel.org/pub/linux/bluetooth/bluez-5.41.tar.xz"
+file_size=1665948
+file_md5=318341b2188698130adb73236ee69244
+mirror_url="ftp://linux-kernel.uio.no/pub/linux/bluetooth/bluez-5.41.tar.bz2"
+recipe_type=configure
+
+configure_options=(
+   --disable-systemd
+   --enable-threads
+)
+make_variables=(
+   rulesdir="$target/lib/udev/rules.d"
+)

@@ -1,0 +1,11 @@
+# Recipe for version 1.8.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jul 30 14:38:08 BRT 2016
+# Recipe (MakeRecipe) for XF86-Input-Keyboard by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jan 9 17:14:13 BRST 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/driver/xf86-input-keyboard-1.8.1.tar.bz2"
+file_size=319232
+file_md5=96ccc43d389b970afbd3893875dfd678
+recipe_type=configure
+part_of=Xorg-Driver
+install_variables=(
+   sdkdir="${target}/include/xorg"
+)

@@ -1,0 +1,13 @@
+recipe_type=makefile
+
+make_variables=(
+   "OPENSSLDIR=$target"
+   "INSTALLTOP=$target"
+   "CC=$CC"
+)
+
+pre_build() {
+    unset C_INCLUDE_PATH CXX_INCLUDE_PATH
+    ./Configure shared --prefix=$target --openssldir=$target linux-generic32
+}
+

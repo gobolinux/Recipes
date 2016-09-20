@@ -1,0 +1,14 @@
+Adds $goboHeaders to the include dir
+
+diff -ru orig/SDL-1.2.11/sdl-config.in SDL-1.2.11/sdl-config.in
+--- orig/SDL-1.2.11/sdl-config.in	2006-06-20 05:33:59.000000000 +0200
++++ SDL-1.2.11/sdl-config.in	2006-07-14 00:16:58.000000000 +0200
+@@ -41,7 +41,7 @@
+       echo @SDL_VERSION@
+       ;;
+     --cflags)
+-      echo -I@includedir@/SDL @SDL_CFLAGS@
++      echo -I@includedir@/SDL -I@%Compile_goboHeaders%@/SDL @SDL_CFLAGS@
+       ;;
+ @ENABLE_SHARED_TRUE@    --libs)
+ @ENABLE_SHARED_TRUE@      echo -L@libdir@ @SDL_RLD_FLAGS@ @SDL_LIBS@

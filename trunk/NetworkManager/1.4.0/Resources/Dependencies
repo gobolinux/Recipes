@@ -1,0 +1,26 @@
+###############################################
+# Required dependencies, per Linux From Scratch
+###############################################
+DBus-GLib 0.106
+LibGUdev 230
+Libndp 1.6
+LibNL 3.2.28
+NSS 3.26
+##########################
+# Recommended dependencies
+##########################
+# ConsoleKit2 1.0.2
+# Polkit 0.113
+# UPower 0.99.4
+# Vala 0.32.1
+DHCPCD >= 6.0.0
+GObject-Introspection >= 1.48.0
+Iptables >= 1.4.21
+Newt >= 0.52.0
+WPA_Supplicant 2.5
+#######################
+# Optional dependencies
+#######################
+# ModemManager 1.6.0
+BlueZ 5.41
+PPP 2.4.7

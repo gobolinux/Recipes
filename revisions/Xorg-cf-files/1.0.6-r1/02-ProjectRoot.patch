@@ -1,0 +1,11 @@
+--- xorg-cf-files-X11R7.1-1.0.2/site.def.in	2006-04-15 15:55:25.000000000 +0000
++++ xorg-cf-files-X11R7.1-1.0.2/site.def.in.new	2008-03-10 21:31:10.000000000 +0000
+@@ -72,7 +72,7 @@
+ #ifdef AfterVendorCF
+ 
+ #ifndef ProjectRoot
+-#define ProjectRoot @prefix@
++#define ProjectRoot /usr
+ #endif
+ 
+ /*

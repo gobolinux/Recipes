@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if [ -e "$goboSettings/BootScripts/BootUp" ]
+then
+   grep -q "Acpid Start" ${goboSettings}/BootScripts/BootUp || \
+      echo "Exec \"Starting ACPI daemon...\"                Acpid Start" >> ${goboSettings}/BootScripts/BootUp
+fi
+
+$target/Resources/Tasks/Acpid Stop
+$target/Resources/Tasks/Acpid Start

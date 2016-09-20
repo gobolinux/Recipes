@@ -1,0 +1,8 @@
+# Recipe for version 2.0 by Jonas Karlsson <jonas@gobolinux.org>, on Tue Jan 5 15:24:12 CET 2010
+# Recipe (MakeRecipe) for InputProto by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 20:14:28 BRT 2005
+compile_version=1.8.5
+url="http://xorg.freedesktop.org/releases/individual/proto/inputproto-2.0.tar.bz2"
+file_size=140071
+file_md5=0f7acbc14a082f9ae03744396527d23d
+recipe_type=configure
+part_of=Xorg-Proto

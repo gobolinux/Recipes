@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for Eudev by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Sep 14 10:46:04 BRT 2016
+# Recipe for version 3.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Sep 14 10:46:04 BRT 2016
+compile_version=2.0
+url="http://dev.gentoo.org/~blueness/eudev/eudev-3.2.tar.gz"
+file_size=1360397
+file_md5=9eb477cc8718db272b5d24dff1126b04
+dir='eudev-3.2'
+recipe_type=configure
+autogen_before_configure=yes
