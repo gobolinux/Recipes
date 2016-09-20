@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for Bicon by Hisham Muhammad <hisham@gobolinux.org>, on Fri Sep 16 17:49:54 BRT 2016
+# Recipe for version 0.5 by Hisham Muhammad <hisham@gobolinux.org>, on Fri Sep 16 17:49:54 BRT 2016
+compile_version=git
+url="https://github.com/behdad/bicon/releases/download/0.5/bicon-0.5.tar.gz"
+file_size=468225
+file_md5=862972ed260f9e74277b8eeb7c81e126
+dir='bicon-0.5'
+recipe_type=configure
