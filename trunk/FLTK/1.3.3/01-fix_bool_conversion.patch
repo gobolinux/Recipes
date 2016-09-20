@@ -1,0 +1,23 @@
+Fix boolean conversion which fails in more recent GCC releases.
+
+diff -Nur fltk-1.3.3.old/src/Fl_JPEG_Image.cxx fltk-1.3.3/src/Fl_JPEG_Image.cxx
+--- fltk-1.3.3.old/src/Fl_JPEG_Image.cxx	2013-09-21 13:41:23.000000000 -0300
++++ fltk-1.3.3/src/Fl_JPEG_Image.cxx	2016-09-16 15:09:37.777781328 -0300
+@@ -155,7 +155,7 @@
+   
+   jpeg_create_decompress(&dinfo);
+   jpeg_stdio_src(&dinfo, fp);
+-  jpeg_read_header(&dinfo, 1);
++  jpeg_read_header(&dinfo, TRUE);
+   
+   dinfo.quantize_colors      = (boolean)FALSE;
+   dinfo.out_color_space      = JCS_RGB;
+@@ -337,7 +337,7 @@
+   
+   jpeg_create_decompress(&dinfo);
+   jpeg_mem_src(&dinfo, data);
+-  jpeg_read_header(&dinfo, 1);
++  jpeg_read_header(&dinfo, TRUE);
+   
+   dinfo.quantize_colors      = (boolean)FALSE;
+   dinfo.out_color_space      = JCS_RGB;
