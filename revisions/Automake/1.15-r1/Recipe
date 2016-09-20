@@ -1,0 +1,12 @@
+# Recipe for version 1.15 by James D Berridge, on Sun Jun 7 15:37:02 UTC 2015
+url="https://ftp.gnu.org/gnu/automake/automake-1.15.tar.gz"
+file_size=2244206
+file_md5=716946a105ca228ab545fc37a70df3a3
+compile_version=1.15
+recipe_type=configure
+pre_install() {
+   pushd "${target}/share"
+   ln -s automake-1.11 automake
+   ln -s aclocal-1.11 aclocal
+   popd
+}

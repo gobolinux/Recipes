@@ -1,0 +1,7 @@
+# Recipe for version svn by Hisham Muhammad <hisham@gobolinux.org>, on Mon May 18 19:47:06 BRT 2015
+# Recipe (MakeRecipe) for Code::Blocks by Jonas Karlsson <jonka750@student.liu.se>, on Thu Sep 25 18:01:11 CEST 2008
+compile_version=1.11.0
+svn="http://svn.code.sf.net/p/codeblocks/code/trunk"
+autogen_before_configure=yes
+autogen=bootstrap
+recipe_type=configure

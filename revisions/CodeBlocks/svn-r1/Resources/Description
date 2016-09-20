@@ -1,0 +1,21 @@
+[Name] Code::Blocks
+[Summary] A cross-platform C++ IDE
+[Description] Codeblocks is a cross-platform C++ IDE built around
+wxWidgets, designed to be extensible and configurable. Most of its
+functionality is already provided by plugins. Plugins included in the
+base package are:
+
+   * Compiler frontend to many free compilers
+   * Debugger frontend for GDB (and CDB for windows platforms)
+   * Source formatter (based on AStyle)
+   * Wizard to create new C++ classes
+   * Code-completion / symbols-browser (work in progress)
+   * Default MIME handler
+   * Wizard to create new Code::Blocks plugins
+   * To-do list
+   * Extensible wizard based on scripts (for creating new
+     projects/targets/etc) 
+   * Autosave (saves your work in the unfortunate case of a crash)
+
+[License] GNU General Public License version 3.0
+[Homepage] http://www.codeblocks.org/

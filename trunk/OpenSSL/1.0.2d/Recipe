@@ -1,0 +1,25 @@
+# Recipe for version 1.0.2d by Hugo Barrocas <barrocas75@gmail.com>, on Sáb Out 3 18:29:03 UTC 2015
+compile_version=1.8.2
+url=http://www.openssl.org/source/openssl-1.0.2d.tar.gz
+file_size=5295447
+file_md5=38dd619b2e77cbac69b99f52a053d25a
+recipe_type=configure
+configure=Configure
+makefile=Makefile.gobo
+build_target="all"
+configure_options=(
+   --openssldir="/usr/lib/ssl"
+   zlib-dynamic
+)
+
+install_variables=(
+   INSTALLTOP="${target}"
+   MANDIR="${target}/share/man"
+)
+pre_build() {
+   # Wrapper Makefile to force single job as parallel builds break
+   cat << EOF > Makefile.gobo
+% :
+	\$(MAKE) -j1 \$@
+EOF
+}
