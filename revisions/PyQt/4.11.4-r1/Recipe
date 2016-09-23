@@ -1,0 +1,16 @@
+# Recipe for version 4.11.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Sep 14 23:53:40 GMT 2016
+# on Sat Apr 16 12:56:40 CEST 2005
+
+compile_version=1.9.0
+url="http://sourceforge.net/projects/pyqt/files/PyQt4/PyQt-4.11.4/PyQt-x11-gpl-4.11.4.tar.gz"
+file_size=11317088
+file_md5=2fe8265b2ae2fc593241c2c84d09d481
+
+recipe_type=makefile
+pre_build() {
+    pythonversion=`python --version 2>&1 | awk {'print $2'} | cut -b1-3`
+    sitepackages="$target/lib/python${pythonversion}/site-packages"
+    [ -z "$QMAKESPEC" ] && export QMAKESPEC="$qt_path/mkspecs/linux-g++"
+    echo yes | python configure.py -b $target/bin -v $target/$(basename $goboShared)/sip -d $sitepackages -p $target/plugins 
+    chmod -R a+rw .
+}
