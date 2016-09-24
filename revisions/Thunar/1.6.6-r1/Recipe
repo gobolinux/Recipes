@@ -1,0 +1,13 @@
+# Recipe for version 1.6.6 by Xavier Rohan <rohanone@riseup.net>, on Sat Sep 24 05:21:06 UTC 2016
+# Recipe (MakeRecipe) for Thunar by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:15:56 CEST 2006
+compile_version=1.9.0
+url="http://archive.xfce.org/xfce/4.12/src/Thunar-1.6.6.tar.bz2"
+file_size=2160158
+file_md5=27a5343174593dd0067906c922e6af96
+recipe_type=configure
+configure_options=(
+   --enable-debug
+)
+with_doc=(
+   --enable-gtk-doc
+)
