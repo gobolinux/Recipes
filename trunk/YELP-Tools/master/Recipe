@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for YELP-Tools by Xavier Rohan <rohanone@riseup.net>, on Wed Sep 28 04:34:28 UTC 2016
+# Recipe for version master by Xavier Rohan <rohanone@riseup.net>, on Wed Sep 28 04:34:28 UTC 2016
+compile_version=2.0
+url="https://github.com/GNOME/yelp-tools/archive/master.zip"
+file="yelp-tools-master.zip"
+file_size=53195
+file_md5=f1104f0f2ea1160c584ac3162eb96124
+dir='yelp-tools-master'
+recipe_type=configure
+autogen_before_configure=yes
