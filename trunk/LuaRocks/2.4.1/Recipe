@@ -1,0 +1,18 @@
+# Recipe for version 2.4.1 by Hisham Muhammad <hisham@gobolinux.org>, on Wed Oct 19 16:28:58 EDT 2016
+# Recipe (MakeRecipe) for Luarocks by Hisham Muhammad, on Thu Apr 24 17:43:49 BRT 2008
+compile_version=2.0
+url="http://www.luarocks.org/releases/luarocks-2.4.1.tar.gz"
+file_size=135200
+file_md5=39ae81028259164e0a1aec5577fab065
+recipe_type=configure
+configure_options=(
+   "--prefix=$target"
+   "--sysconfdir=$settings_target/luarocks"
+   "--rocks-tree=$goboSystem/Aliens/LuaRocks"
+   "--versioned-rocks-dir" 
+   "--with-lua=$lua_path"
+)
+build_target="build"
+unmanaged_files=(
+   "$goboSystem/Aliens/LuaRocks"
+)
