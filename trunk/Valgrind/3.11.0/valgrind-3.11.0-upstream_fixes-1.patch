@@ -1,0 +1,124 @@
+Submitted By:           Douglas R. Reno <renodr at linuxfromscratch dot org>
+Date:                   2016-07-20
+Inital Package Version: 3.11.0
+Origin:                 Self
+Upstream Status:        Unknown
+Description:            This patch contains several fixes to the test suite as well as a fix that forces valgrind to close files that it opens.
+
+diff -Naur valgrind-3.11.0.orig/configure valgrind-3.11.0/configure
+--- valgrind-3.11.0.orig/configure	2015-09-22 15:30:47.000000000 -0500
++++ valgrind-3.11.0/configure	2016-07-20 19:22:52.726877937 -0500
+@@ -5453,7 +5453,7 @@
+ 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: ok (ICC version ${gcc_version})" >&5
+ $as_echo "ok (ICC version ${gcc_version})" >&6; }
+ 	;;
+-     notclang-[3-9].*|notclang-[1-9][0-9]*)
++     notclang-[3-9]|notclang-[3-9].*|notclang-[1-9][0-9]*)
+ 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: ok (${gcc_version})" >&5
+ $as_echo "ok (${gcc_version})" >&6; }
+ 	;;
+diff -Naur valgrind-3.11.0.orig/configure.ac valgrind-3.11.0/configure.ac
+--- valgrind-3.11.0.orig/configure.ac	2015-09-22 15:26:31.000000000 -0500
++++ valgrind-3.11.0/configure.ac	2016-07-20 19:23:20.350894953 -0500
+@@ -160,7 +160,7 @@
+      icc-1[[3-9]].*)
+ 	AC_MSG_RESULT([ok (ICC version ${gcc_version})])
+ 	;;
+-     notclang-[[3-9]].*|notclang-[[1-9][0-9]]*)
++     notclang-[[3-9]]|notclang-[[3-9]].*|notclang-[[1-9][0-9]]*)
+ 	AC_MSG_RESULT([ok (${gcc_version})])
+ 	;;
+      clang-2.9|clang-[[3-9]].*|clang-[[1-9][0-9]]*)
+diff -Naur valgrind-3.11.0.orig/coregrind/m_libcprint.c valgrind-3.11.0/coregrind/m_libcprint.c
+--- valgrind-3.11.0.orig/coregrind/m_libcprint.c	2015-09-08 08:23:27.000000000 -0500
++++ valgrind-3.11.0/coregrind/m_libcprint.c	2016-07-20 19:25:29.322036158 -0500
+@@ -359,6 +359,7 @@
+    if (fp->num_chars)
+       VG_(write)(fp->fd, fp->buf, fp->num_chars);
+ 
++   VG_(close)(fp->fd);
+    VG_(free)(fp);
+ }
+ 
+diff -Naur valgrind-3.11.0.orig/drd/tests/std_thread2.cpp valgrind-3.11.0/drd/tests/std_thread2.cpp
+--- valgrind-3.11.0.orig/drd/tests/std_thread2.cpp	2015-09-08 08:23:31.000000000 -0500
++++ valgrind-3.11.0/drd/tests/std_thread2.cpp	2016-07-20 19:22:17.003132179 -0500
+@@ -26,6 +26,7 @@
+   return 0;
+ }
+ 
++#if defined(__GNUC__) && __GNUC__ -0 < 6
+ //
+ // From libstdc++-v3/src/c++11/thread.cc
+ //
+@@ -70,3 +71,4 @@
+     }
+   }
+ }
++#endif
+diff -Naur valgrind-3.11.0.orig/drd/tests/std_thread.cpp valgrind-3.11.0/drd/tests/std_thread.cpp
+--- valgrind-3.11.0.orig/drd/tests/std_thread.cpp	2015-09-08 08:23:31.000000000 -0500
++++ valgrind-3.11.0/drd/tests/std_thread.cpp	2016-07-20 19:21:07.708929606 -0500
+@@ -21,6 +21,7 @@
+   return 0;
+ }
+ 
++#if defined(__GNUC__) && __GNUC__ -0 < 6
+ //
+ // From libstdc++-v3/src/c++11/thread.cc
+ //
+@@ -65,3 +66,4 @@
+     }
+   }
+ }
++#endif
+diff -Naur valgrind-3.11.0.orig/gdbserver_tests/filter_gdb valgrind-3.11.0/gdbserver_tests/filter_gdb
+--- valgrind-3.11.0.orig/gdbserver_tests/filter_gdb	2015-09-08 08:23:25.000000000 -0500
++++ valgrind-3.11.0/gdbserver_tests/filter_gdb	2016-07-20 19:30:11.367788943 -0500
+@@ -59,9 +59,13 @@
+ #       'exited with code' and 'exited normally' are printed slightly
+ #       differently between gdb versions, normalize to "Program exited...".
+ #       for hgtls the breakpoint p=... address might show var location.
+-#	gdb might also try to show the "entry value" p=p@entry=0x...
+-#	Some gdb versions don't show the source line:number after switching
+-#		threads in #0  0x........ in do_burn ().
++#	     gdb might also try to show the "entry value" p=p@entry=0x...
++#	     Some gdb versions don't show the source line:number after switching
++#		  threads in #0  0x........ in do_burn ().
++#       Newer gdb say Thread .... hit Breakpoint, we expect just Breakpoint.
++#       We expect "Program recieved" instead of "Thread .... received"
++#       Ordering of ' Thread .... (tid .' might differ between gdb version,
++#       so remove all such lines except the "current" one (starts with '*').
+ sed -e '/Remote debugging using/,/vgdb launched process attached/d'                                   \
+     -e '/filter_gdb BEGIN drop/,/filter_gdb END drop/d'                                               \
+     -e 's/^\[?1034hReading symbols/Reading symbols/'                                                \
+@@ -74,6 +78,8 @@
+     -e '/\[Switching to Thread ....\]/d'                                                              \
+     -e 's/\(\[Switching to thread [1234] (Thread ....)\]\)#0/\1\n#0/'                                 \
+     -e 's/^\([ \* ] [0-9] Thread .... (tid [0-9] VgTs_WaitSys)  0x........ in\).*$/\1 syscall .../'   \
++    -e 's/^Thread .... hit Breakpoint /Breakpoint /'                                                  \
++    -e 's/^Thread .... received /Program received /'                                                  \
+     -e 's/#[0-9]\(  0x........ in sleeper_or_burner\)/#.\1/'                                          \
+     -e 's/\(#0  0x........ in do_burn ()\) at sleepers.c:41/\1/'                                      \
+     -e '/^Reading symbols from .*\.\.\.done\./d'                                                      \
+@@ -115,6 +121,7 @@
+     -e 's/\(^Breakpoint 1, tls_ptr (p=0x........\) <tests[0-9+]*>\() at tls.c:55\)/\1\2/'         \
+     -e '/Id   Target Id         Frame/d'                                                              \
+     -e 's/^\([ \*] [1234] \) *Thread /\1Thread /'                                                     \
++    -e 's/^  [0-9] Thread .... (tid [0-9] .*$//'                                                      \
+     -e 's/VgTs_WaitSys) 0x/VgTs_WaitSys)  0x/'                                                        \
+     -e '/Cannot access memory at address 0x......../d'                                                \
+     -e '/\[New Thread/d'                                                                              \
+diff -Naur valgrind-3.11.0.orig/gdbserver_tests/nlcontrolc.stdoutB.exp valgrind-3.11.0/gdbserver_tests/nlcontrolc.stdoutB.exp
+--- valgrind-3.11.0.orig/gdbserver_tests/nlcontrolc.stdoutB.exp	2015-09-08 08:23:25.000000000 -0500
++++ valgrind-3.11.0/gdbserver_tests/nlcontrolc.stdoutB.exp	2016-07-20 19:30:37.587556449 -0500
+@@ -1,9 +1,6 @@
+ Continuing.
+ Program received signal SIGTRAP, Trace/breakpoint trap.
+ 0x........ in syscall ...
+-  4 Thread .... (tid 4 VgTs_WaitSys)  0x........ in syscall ...
+-  3 Thread .... (tid 3 VgTs_WaitSys)  0x........ in syscall ...
+-  2 Thread .... (tid 2 VgTs_WaitSys)  0x........ in syscall ...
+ * 1 Thread .... (tid 1 VgTs_WaitSys)  0x........ in syscall ...
+ $1 = 0
+ $2 = 0
