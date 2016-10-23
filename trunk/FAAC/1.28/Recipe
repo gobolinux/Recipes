@@ -5,9 +5,15 @@ url="$httpSourceforge/faac/faac-1.28.tar.bz2"
 file_size=531256
 file_md5=c5dde68840cefe46532089c9392d1df0
 recipe_type=configure
+
+environment=(
+   CXXFLAGS="-std=c++98"
+)
+
 pre_build () {
-    sh bootstrap
+   sh bootstrap
 }
+
 configure_options=(
- --with-mp4v2    
+   --with-mp4v2
 )
