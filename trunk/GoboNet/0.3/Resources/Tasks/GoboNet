@@ -1,0 +1,10 @@
+#!/bin/bash
+
+case "$1" in
+  [sS]tart)
+    gobonet autoconnect
+    ;;
+  [sS]top)
+    gobonet disconnect
+    ;;
+esac
