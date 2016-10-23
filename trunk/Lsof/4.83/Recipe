@@ -8,15 +8,15 @@ mirror_url="http://ftp.cerias.purdue.edu/pub/tools/unix/sysutils/lsof/OLD/lsof_4
 recipe_type=makefile
 
 pre_build() {
-	# Extract sub-package and create makefile
-	if [ ! -d lsof_4.83_src ]
+    # Extract sub-package and create makefile
+    if [ ! -d lsof_4.83_src ]
     then
         tar --no-same-owner -xf lsof_4.83_src.tar
         chmod -R a+w lsof_4.83_src
     fi
-	cd lsof_4.83_src
-	[ -f Makefile ] || ./Configure -n linux
-	grep -q ltirpc Makefile || GrepReplace -B '${CC} -o $@ ${OBJ} ${CFGL}' '${CC} -o $@ ${OBJ} ${CFGL} -ltirpc' Makefile
+    cd lsof_4.83_src
+    [ -f Makefile ] || ./Configure -n linux
+    grep -q ltirpc Makefile || GrepReplace -B '${CC} -o $@ ${OBJ} ${CFGL}' '${CC} -o $@ ${OBJ} ${CFGL} -ltirpc -lkrb5' Makefile
 }
 
 # lsof does not implement an install target aside from
