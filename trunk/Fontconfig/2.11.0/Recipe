@@ -18,6 +18,11 @@ install_variables=(
    RUN_FC_CACHE_TEST=false
 )
 
+pre_link() {
+   mkdir -p "$settings_target/fonts"
+   cp fonts.conf "$settings_target/fonts/"
+}
+
 unmanaged_files=(
    "$goboVariable/cache/fontconfig"
 )
