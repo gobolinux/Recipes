@@ -10,6 +10,7 @@ configure_options=(
     #--disable-gtk3
     --disable-gtk
     --disable-qt3 
+    --disable-qt4 
     --disable-mono
     --disable-python
 )
