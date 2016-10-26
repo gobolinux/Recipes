@@ -42,7 +42,7 @@ using_opengl() {
    -dlopen-opengl)
 }
 
-using_mysql() {
+_using_mysql() {
    configure_options=("${configure_options[@]}"
    -plugin-sql-mysql
    -I"${goboHeaders}/mysql"
@@ -58,9 +58,9 @@ docs=(
 )
 
 environment=(
-   QTDIR="$goboPrefix/Files/Compile/Sources/qt-x11-free-3.3.8b"
-   PATH="$goboPrefix/Files/Compile/Sources/qt-x11-free-3.3.8b/bin:$PATH"
-   LD_LIBRARY_PATH="$goboPrefix/Files/Compile/Sources/qt-x11-free-3.3.8b/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
+   QTDIR="$goboData/Compile/Sources/qt-x11-free-3.3.8b"
+   PATH="$goboData/Compile/Sources/qt-x11-free-3.3.8b/bin:$PATH"
+   LD_LIBRARY_PATH="$goboData/Compile/Sources/qt-x11-free-3.3.8b/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
 )
 
 pre_build() {
@@ -98,7 +98,7 @@ pre_link() {
    cd xdg
    for f in $(find . -type f)
    do
-      install -o 0 -g 0 -m644 -D $f ${target}/Shared/$f
+      install -o 0 -g 0 -m644 -D $f ${target}/share/$f
    done
    popd &>/dev/null
    
@@ -106,12 +106,14 @@ pre_link() {
    cd doc
    for m in $(find man -type f)
    do
-      install -o 0 -g 0 -m644 -D $f ${target}/Shared/$f
+      install -o 0 -g 0 -m644 -D $f ${target}/share/$f
    done
    popd &>/dev/null
    
    # Fix references to source dir in .prl files
    sed -i -e "/^QMAKE_PRL_BUILD_DIR/d" \
-   -e "s,${goboPrefix}/Files/Compile/Sources/qt-x11-free-3.3.8b/lib,${goboLibraries},g"\
+   -e "s,${goboData}/Compile/Sources/qt-x11-free-3.3.8b/lib,${goboLibraries},g"\
    "${target}/lib/"*.prl
+
+   ln -sf $target/mkspecs $target/share/qt3/mkspecs
 }
