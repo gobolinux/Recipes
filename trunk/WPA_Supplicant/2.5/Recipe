@@ -8,9 +8,9 @@ recipe_type=makefile
 dir=wpa_supplicant-2.5/wpa_supplicant
 
 build_target="all"
-using_qt4() {
-   build_target="${build_target} wpa_gui-qt4"
-}
+#using_qt4() {
+#   build_target="${build_target} wpa_gui-qt4"
+#}
 
 environment=(
    QMAKESPEC="$qt_path/mkspecs/linux-g++"
@@ -39,6 +39,6 @@ pre_build() {
    fi
 }
 
-using_qt4_pre_link() {
-   cp wpa_gui-qt4/wpa_gui $target/sbin
-}
+#using_qt4_pre_link() {
+#   cp wpa_gui-qt4/wpa_gui $target/sbin
+#}
