@@ -2,11 +2,12 @@
 # on Sat Apr 16 12:56:40 CEST 2005
 
 compile_version=1.8.0
-url="http://www.riverbankcomputing.co.uk/static/Downloads/PyQt3/PyQt-x11-gpl-3.18.1.tar.gz"
+url="https://sourceforge.net/projects/pyqt/files/PyQt3/PyQt-x11-gpl-3.18.1.tar.gz"
 file_size=819441
 file_md5=f1d120495d1aaf393819e988c0a7bb7e
 environment=(
-   "QTDIR=$qt_path"
+   QTDIR="$qt_path"
+   EXTRA_CXXFLAGS="-DANY=void -std=c++98"
 )
 
 recipe_type=makefile
@@ -16,8 +17,8 @@ pre_build() {
    pythonsubdir=python`python -V 2>&1 | cut -d' ' -f2 | cut -d'.' -f1-2`
    mkdir -p $target/include/${pythonsubdir}
    mkdir -p $target/lib/${pythonsubdir}/site-packages/
-   mkdir -p $target/Shared/sip
+   mkdir -p $target/share/sip
 #   mkdir -p $target/QScintilla/lib
 #   mkdir -p $target/QScintilla/include
-   echo yes | python configure.py -b $target/bin -v $target/Shared/sip -d $target/lib/${pythonsubdir}/site-packages/ -n ${goboPrograms}/QScintilla/Current/include -o ${goboPrograms}/QScintilla/Current/lib
+   echo yes | python configure.py -b $target/bin -v $target/share/sip -d $target/lib/${pythonsubdir}/site-packages
 }
