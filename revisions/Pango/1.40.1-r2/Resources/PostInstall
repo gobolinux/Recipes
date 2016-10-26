@@ -1,0 +1,4 @@
+#!/bin/bash
+
+mkdir -p "${settings_target}/pango"
+${target}/bin/pango-querymodules > "${settings_target}/pango/pango.modules"
