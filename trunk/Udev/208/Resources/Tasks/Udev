@@ -20,8 +20,12 @@ case "$cmd" in
       
    # Start the udev daemon to continually watch for, and act on,
    # uevents
-   /lib/udev/udevd --daemon
-      
+   if [ -e /lib/udev/udevd ]
+   then /lib/udev/udevd --daemon
+   elif [ -e /sbin/udevd ]
+   then /sbin/udevd --daemon
+   fi
+
    # Now traverse /sys in order to "coldplug" devices that have
    # already been discovered
    /sbin/udevadm trigger --action=add    --type=subsystems
@@ -30,11 +34,11 @@ case "$cmd" in
    /sbin/udevadm trigger
 
    # Wait for events to finish
-   udevadm settle --timeout=10
+   /sbin/udevadm settle --timeout=10
       
    # If any LVM based partitions are on the system, ensure they
    # are activated so they can be used.
-   [ -x /sbin/vgchange ] && /sbin/vgchange -a y >/dev/null
+   [ -x /sbin/vgchange ] && /sbin/vgchange -a y >& /dev/null
 
    ;;
    
