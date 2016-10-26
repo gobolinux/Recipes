@@ -8,4 +8,5 @@ recipe_type=makefile
 makefile='Makefile'
 make_variables=(
    "PREFIX=$target"
+   "INSTALL_MAN=$target/share/man"
 )
