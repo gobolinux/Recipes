@@ -13,6 +13,7 @@ case "$cmd" in
    mountpoint -q "$goboDevices" || mount -t devtmpfs none "$goboDevices"
    mkdir -p "$goboDevices/pts" "$goboDevices/shm"
    mountpoint -q "$goboDevices/pts" || mount -t devpts devpts "$goboDevices/pts"
+   mountpoint -q "$goboVariable/run/udev" || mount -t tmpfs none "$goboVariable/run/udev"
 
    # Udev handles uevents itself, so we don't need to have
    # the kernel call out to any binary in response to them
