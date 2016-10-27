@@ -42,7 +42,7 @@ using_opengl() {
    -dlopen-opengl)
 }
 
-_using_mysql() {
+using_mysql() {
    configure_options=("${configure_options[@]}"
    -plugin-sql-mysql
    -I"${goboHeaders}/mysql"
