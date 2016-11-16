@@ -9,7 +9,7 @@ install_variables=(
     out=$target
 )
 
-post_install() {
+pre_link() {
     mkdir -p $target/share/os-prober
     cp -v $target/lib/common.sh $target/share/os-prober/
 }
