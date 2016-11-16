@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for RFKill by Hisham Muhammad <hisham@gobolinux.org>, on Wed Nov 16 16:32:34 BRST 2016
+# Recipe for version 0.5 by Hisham Muhammad <hisham@gobolinux.org>, on Wed Nov 16 16:32:34 BRST 2016
+compile_version=git
+url="https://www.kernel.org/pub/software/network/rfkill/rfkill-0.5.tar.xz"
+file_size=7776
+file_md5=ce834c00c049cd86a04ab115c92ef548
+dir='rfkill-0.5'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
