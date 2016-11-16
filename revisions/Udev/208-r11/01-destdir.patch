@@ -1,0 +1,64 @@
+--- systemd-208/udev-lfs-208-1/Makefile.lfs.orig	2014-01-07 17:32:29.000000000 +0000
++++ systemd-208/udev-lfs-208-1/Makefile.lfs	2014-01-07 17:33:42.000000000 +0000
+@@ -284,11 +284,11 @@ build/%pc: %pc.in common
+ 
+ install: udev
+ 	@mkdir -pv $(DESTDIR)/lib/udev/devices/pts   $(DESTDIR)/lib/udev/rules.d \
+-              $(DESTDIR){,/usr}/lib/firmware    $(DESTDIR)/sbin             \
+-              $(DESTDIR)/usr/lib/pkgconfig      $(DESTDIR)/etc/udev/rules.d \
+-              $(DESTDIR)/usr/share/man/man{7,8} $(DESTDIR)/usr/include      \
+-              $(DESTDIR)/usr/share/doc/udev-$(SYSTEMD_VERSION)/lfs          \
+-              $(DESTDIR)/usr/share/gtk-doc/html/libudev
++              $(DESTDIR)/lib/firmware    $(DESTDIR)/sbin             \
++              $(DESTDIR)/lib/pkgconfig      $(SYSCONFDIR)/udev/rules.d \
++              $(DESTDIR)/share/man/man{7,8} $(DESTDIR)/include      \
++              $(DESTDIR)/share/doc/udev-$(SYSTEMD_VERSION)/lfs          \
++              $(DESTDIR)/share/gtk-doc/html/libudev
+ 
+    # Copy executables
+ 	@cp -v build/udevadm                  $(DESTDIR)/sbin
+@@ -298,19 +298,19 @@ install: udev
+ 	@cp -v udev-lfs-$(VERSION)/*functions $(DESTDIR)/lib/udev
+ 
+    # Copy and set up library and associated files
+-	@cp -v build/{lib,}udev.pc            $(DESTDIR)/usr/lib/pkgconfig
++	@cp -v build/{lib,}udev.pc            $(DESTDIR)/lib/pkgconfig
+ 	@cp -v build/$(LIBUDEV_REAL_NAME)     $(DESTDIR)/lib
+ 
+-	ln -svfn ../../lib/$(LIBUDEV_REAL_NAME) $(DESTDIR)/usr/lib/$(LIBUDEV_SONAME)
++	ln -svfn ../../lib/$(LIBUDEV_REAL_NAME) $(DESTDIR)/lib/$(LIBUDEV_SONAME)
+ 	ln -svfn $(LIBUDEV_REAL_NAME)           $(DESTDIR)/lib/$(LIBUDEV_LINK_NAME)
+ 
+    # Copy the libudev header
+-	@cp -v src/libudev/libudev.h          $(DESTDIR)/usr/include
++	@cp -v src/libudev/libudev.h          $(DESTDIR)/include
+ 
+    # Create null device and copy rules
+ 	@cp -v rules/*                        $(DESTDIR)/lib/udev/rules.d
+ 	@rm -v                                $(DESTDIR)/lib/udev/rules.d/99*
+-	@cp -v udev-lfs-$(VERSION)/*.rules    $(DESTDIR)/etc/udev/rules.d
++	@cp -v udev-lfs-$(VERSION)/*.rules    $(SYSCONFDIR)/udev/rules.d
+ 
+    # Set up hardware DB
+ 	@mkdir -pv $(DESTDIR)/lib/udev/hwdb.d
+@@ -318,13 +318,13 @@ install: udev
+    #	@build/udevadm hwdb --update
+ 
+    # Copy documentation
+-	@cp -v udev-lfs-$(VERSION)/udev.7     $(DESTDIR)/usr/share/man/man7
+-	@cp -v udev-lfs-$(VERSION)/udevadm.8  $(DESTDIR)/usr/share/man/man8
+-	@cp -v udev-lfs-$(VERSION)/udevd.8    $(DESTDIR)/usr/share/man/man8
+-	@cp -v udev-lfs-$(VERSION)/README     $(DESTDIR)/usr/share/doc/udev-$(SYSTEMD_VERSION)/lfs
+-	@cp -v udev-lfs-$(VERSION)/*.txt      $(DESTDIR)/usr/share/doc/udev-$(SYSTEMD_VERSION)/lfs
+-	@cp -v docs/libudev/*.{txt,types}     $(DESTDIR)/usr/share/doc/udev-$(SYSTEMD_VERSION)
+-	@cp -v docs/libudev/html/*            $(DESTDIR)/usr/share/gtk-doc/html/libudev
++	@cp -v udev-lfs-$(VERSION)/udev.7     $(DESTDIR)/share/man/man7
++	@cp -v udev-lfs-$(VERSION)/udevadm.8  $(DESTDIR)/share/man/man8
++	@cp -v udev-lfs-$(VERSION)/udevd.8    $(DESTDIR)/share/man/man8
++	@cp -v udev-lfs-$(VERSION)/README     $(DESTDIR)/share/doc/udev-$(SYSTEMD_VERSION)/lfs
++	@cp -v udev-lfs-$(VERSION)/*.txt      $(DESTDIR)/share/doc/udev-$(SYSTEMD_VERSION)/lfs
++	@cp -v docs/libudev/*.{txt,types}     $(DESTDIR)/share/doc/udev-$(SYSTEMD_VERSION)
++	@cp -v docs/libudev/html/*            $(DESTDIR)/share/gtk-doc/html/libudev
+ 
+    # Copy misc
+ 	@cp -v udev-lfs-$(VERSION)/init-net-rules.sh  $(DESTDIR)/lib/udev
