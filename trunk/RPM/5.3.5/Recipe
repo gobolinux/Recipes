@@ -15,4 +15,13 @@ configure_options=(
     --without-syck
     --without-dmalloc
     --without-efence
+    --with-db
+)
+
+pre_build() {
+    autoreconf -i
+}
+
+unmanaged_files=(
+    $goboVariable/lib/rpm
 )
