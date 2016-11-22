@@ -18,6 +18,8 @@ configure_options=(
 
 pre_link() {
     Quiet pushd $target/include
-    ln -s beecrypt/* .
+    mv beecrypt/* .
+    rmdir beecrypt
+    ln -s . beecrypt
     Quiet popd
 }
