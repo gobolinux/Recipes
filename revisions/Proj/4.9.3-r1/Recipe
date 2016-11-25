@@ -1,0 +1,11 @@
+# Recipe for version 4.9.3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Nov 25 11:53:03 BRST 2016
+# Recipe (MakeRecipe) for Proj by roko, <ro.ko@mcnon.com> , on Sat Oct 9 19:19:37 BRT 2004
+compile_version=1.8.0
+url="http://download.osgeo.org/proj/proj-4.9.3.tar.gz"
+file_size=921448
+file_md5=d598336ca834742735137c5674b214a1
+recipe_type=configure
+
+pre_link() {
+  cp src/projects.h $target/include
+}
