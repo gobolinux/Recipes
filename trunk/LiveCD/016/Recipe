@@ -11,5 +11,5 @@ do_install=no
 
 pre_link() {
     cp -r * $target
-    rm -f $target/pre_link.sh
+    rm -f $target/pre_link.sh $target/Makefile
 }
