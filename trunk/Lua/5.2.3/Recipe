@@ -10,4 +10,5 @@ docs=(
 )
 make_variables=(
   INSTALL_TOP=$target
+  MYCFLAGS="-fPIC"
 )
