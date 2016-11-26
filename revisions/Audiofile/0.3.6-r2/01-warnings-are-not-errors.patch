@@ -1,0 +1,47 @@
+Don't treat warnings as errors. (Compilation with newest versions of GCC produces
+warnings.)
+
+diff -Naur audiofile-0.3.1-vanilla/libaudiofile/Makefile.am audiofile-0.3.1-fixed/libaudiofile/Makefile.am
+--- audiofile-0.3.1-vanilla/libaudiofile/Makefile.am	2011-09-15 21:44:13.000000000 -0300
++++ audiofile-0.3.1-fixed/libaudiofile/Makefile.am	2011-09-21 21:42:58.000000000 -0300
+@@ -48,5 +48,5 @@
+ # SGI MIPSpro cc
+ # AM_CFLAGS = -fullwarn -g
+ # No debugging.
+-AM_CFLAGS = -DNDEBUG -Wall -Werror $(COVERAGE_CFLAGS)
++AM_CFLAGS = -DNDEBUG -Wall $(COVERAGE_CFLAGS)
+ AM_CXXFLAGS = $(AM_CFLAGS) -fno-rtti -fno-exceptions
+diff -Naur audiofile-0.3.1-vanilla/libaudiofile/Makefile.in audiofile-0.3.1-fixed/libaudiofile/Makefile.in
+--- audiofile-0.3.1-vanilla/libaudiofile/Makefile.in	2011-09-18 14:59:15.000000000 -0300
++++ audiofile-0.3.1-fixed/libaudiofile/Makefile.in	2011-09-21 21:43:23.000000000 -0300
+@@ -319,7 +319,7 @@
+ # SGI MIPSpro cc
+ # AM_CFLAGS = -fullwarn -g
+ # No debugging.
+-AM_CFLAGS = -DNDEBUG -Wall -Werror $(COVERAGE_CFLAGS)
++AM_CFLAGS = -DNDEBUG -Wall $(COVERAGE_CFLAGS)
+ AM_CXXFLAGS = $(AM_CFLAGS) -fno-rtti -fno-exceptions
+ all: all-recursive
+ 
+diff -Naur audiofile-0.3.1-vanilla/libaudiofile/modules/Makefile.am audiofile-0.3.1-fixed/libaudiofile/modules/Makefile.am
+--- audiofile-0.3.1-vanilla/libaudiofile/modules/Makefile.am	2011-08-21 22:02:47.000000000 -0300
++++ audiofile-0.3.1-fixed/libaudiofile/modules/Makefile.am	2011-09-21 21:42:20.000000000 -0300
+@@ -18,5 +18,5 @@
+ # SGI MIPSpro cc
+ # AM_CFLAGS = -fullwarn -g
+ # No debugging.
+-AM_CFLAGS = -DNDEBUG -Wall -Werror $(COVERAGE_CFLAGS)
++AM_CFLAGS = -DNDEBUG -Wall $(COVERAGE_CFLAGS)
+ AM_CXXFLAGS = $(AM_CFLAGS) -fno-rtti -fno-exceptions
+diff -Naur audiofile-0.3.1-vanilla/libaudiofile/modules/Makefile.in audiofile-0.3.1-fixed/libaudiofile/modules/Makefile.in
+--- audiofile-0.3.1-vanilla/libaudiofile/modules/Makefile.in	2011-09-18 14:59:15.000000000 -0300
++++ audiofile-0.3.1-fixed/libaudiofile/modules/Makefile.in	2011-09-21 21:42:42.000000000 -0300
+@@ -222,7 +222,7 @@
+ # SGI MIPSpro cc
+ # AM_CFLAGS = -fullwarn -g
+ # No debugging.
+-AM_CFLAGS = -DNDEBUG -Wall -Werror $(COVERAGE_CFLAGS)
++AM_CFLAGS = -DNDEBUG -Wall $(COVERAGE_CFLAGS)
+ AM_CXXFLAGS = $(AM_CFLAGS) -fno-rtti -fno-exceptions
+ all: all-am
+ 
