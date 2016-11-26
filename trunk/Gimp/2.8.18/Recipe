@@ -17,8 +17,6 @@ with_pygtk="--with-python"
 pre_install() {
    # Sigh, libtool again...
    find -name "*.la" | xargs sed -i "s,^libdir='${goboLibraries},libdir='${target}/lib,"
-}
 
-install_variables=(
-   LIBTOOL="$goboExecutables/libtool"
-)
+   GrepReplace -B 'func_fatal_error "error: cannot install' 'echo "error: cannot install' libtool
+}
