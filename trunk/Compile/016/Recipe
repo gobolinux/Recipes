@@ -1,0 +1,12 @@
+# Recipe for version 016 by Lucas C. Villa Real <lucasvr@gobolinux.org> on Sat Nov 26 23:25:46 BRST 2016
+# Recipe (MakeRecipe) for Compile by Hisham Muhammad
+compile_version=1.8.2
+url="https://github.com/gobolinux/Compile/releases/download/016/Compile-016.tar.gz"
+file_size=89291
+file_md5=a1b29fe1b302bea814f1887fe1fdb1ad
+recipe_type=makefile
+
+make_variables=(
+   VERSION=$version
+   DESTDIR=$target
+)
