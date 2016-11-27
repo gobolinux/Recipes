@@ -9,5 +9,5 @@ recipe_type=makefile
 do_install=no
 
 pre_link() {
-    cp -r bin share src $target
+    cp -r bin lib share src $target
 }
