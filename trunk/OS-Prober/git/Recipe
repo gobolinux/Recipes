@@ -1,7 +1,7 @@
 # Recipe (MakeRecipe) for OS-Prober by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Nov 10 16:37:22 BRST 2016
 # Recipe for version git by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Nov 10 16:37:22 BRST 2016
 compile_version=2.0
-git="https://github.com/campadrenalin/os-prober.git"
+git="https://github.com/lucasvr/os-prober.git"
 recipe_type=makefile
 makefile='Makefile'
 
@@ -10,6 +10,11 @@ install_variables=(
 )
 
 pre_link() {
+    mkdir -p $goboVariable/lib/os-prober
     mkdir -p $target/share/os-prober
     cp -v $target/lib/common.sh $target/share/os-prober/
 }
+
+unmanaged_files=(
+    $goboVariable/lib/os-prober
+)
