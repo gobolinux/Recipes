@@ -39,10 +39,6 @@ do_configuration() {
       fi
    fi
 
-   #GrepReplace "\$(INSTALL_MOD_PATH)/lib/modules/\$(KERNELRELEASE)" \
-   #            "$target/Resources/Unmanaged/$goboModules/\$(KERNELRELEASE)" \
-   #            Makefile >& /dev/null
-   
    # Sanity check to make sure patches are not trying to mess with the version id.
    local v=`grep "^VERSION =" Makefile | awk '{print $3}'`
    local p=`grep "^PATCHLEVEL" Makefile | awk '{print $3}'`
@@ -55,6 +51,9 @@ do_configuration() {
 
    make menuconfig || Die "'menuconfig' failed."
    [ -z "${SUDO_USER}" ] || chown ${SUDO_USER} .config
+
+   # Build tools/objtool. Third-party modules may rely on it.
+   make -C tools/objtool
 }
 
 do_install() {
@@ -118,6 +117,8 @@ private__copy_kernel_source() {
 
    Log_Normal "Creating a working copy of the kernel sources tree..."
    Quiet pushd $dir
+   mkdir -p $dest/tools/objtool
+   cp -r tools/objtool/objtool $dest/tools/objtool/
    mkdir -p $dest/arch/x86/boot
    cp -r arch/x86/tools/ $dest/arch/x86/
    cp -r arch/x86/purgatory/ $dest/arch/x86/
