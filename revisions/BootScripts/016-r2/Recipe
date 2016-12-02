@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for BootScripts by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Nov 26 23:48:43 BRST 2016
+# Recipe for version 016 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Nov 26 23:48:43 BRST 2016
+compile_version=016
+url="https://github.com/gobolinux/BootScripts/releases/download/016/BootScripts-016.tar.gz"
+file_size=23214
+file_md5=b724876577aaa4c6b842cd0356330962
+dir='BootScripts-016'
+recipe_type=makefile
+
+install_variables=(
+   "DESTDIR=$target"
+)
+
+pre_link() {
+    rm -f $target/Makefile
+}
