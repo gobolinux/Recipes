@@ -11,12 +11,13 @@ configure_options=(
     --enable-gimp-console
 )  
 with_poppler="--with-poppler"
-with_python="--with-python"
-with_pygtk="--with-python"
 
 pre_install() {
    # Sigh, libtool again...
    find -name "*.la" | xargs sed -i "s,^libdir='${goboLibraries},libdir='${target}/lib,"
 
+   # Gimp ships with a libtool file that cannot be simply overriden by /bin/libtool.
+   # Thus, we tweak our local copy so that it doesn't fail when copying files to a
+   # destination other than /usr/lib
    GrepReplace -B 'func_fatal_error "error: cannot install' 'echo "error: cannot install' libtool
 }
