@@ -1,0 +1,25 @@
+# Recipe for version 1.0.1m by Hisham Muhammad <hisham@gobolinux.org>, on Sun Apr 19 23:33:36 BRT 2015
+compile_version=1.8.2
+url=http://www.openssl.org/source/openssl-1.0.1m.tar.gz
+file_size=4533406
+file_md5=d143d1555d842a069cb7cc34ba745a06
+recipe_type=configure
+configure=Configure
+makefile=Makefile.gobo
+build_target="all"
+configure_options=(
+   --openssldir="/usr/lib/ssl"
+   zlib-dynamic
+)
+
+install_variables=(
+   INSTALLTOP="${target}"
+   MANDIR="${target}/share/man"
+)
+pre_build() {
+   # Wrapper Makefile to force single job as parallel builds break
+   cat << EOF > Makefile.gobo
+% :
+	\$(MAKE) -j1 \$@
+EOF
+}

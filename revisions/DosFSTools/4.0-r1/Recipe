@@ -1,0 +1,12 @@
+# Recipe for version 4.0 by Aitor P. Iturri, on Sat Jun 25 19:01:09 UTC 2016
+url="https://github.com/dosfstools/dosfstools/releases/download/v4.0/dosfstools-4.0.tar.gz"
+file_size=209587
+file_md5=d96f46cbc5b84ad4c9766b4fbf6c8e09
+dir=dosfstools-4.0
+compile_version=1.8.0
+recipe_type=configure
+make_variables=(
+   "PREFIX=$target"
+   "DOCDIR=$target/doc"
+   "MANDIR=$target/man"
+)

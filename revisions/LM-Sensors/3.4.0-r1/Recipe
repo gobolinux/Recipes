@@ -1,0 +1,15 @@
+# Recipe for version 3.4.0 by Hisham Muhammad <hisham@gobolinux.org>, on Wed Aug 12 18:23:17 BRT 2015
+# Recipe (MakeRecipe) for LM-Sensors by Giambattista Bloisi <giamby@infinito.it>, on Sat Jan 12 21:57:56 CET 2008
+compile_version=1.10.0
+url="http://dl.lm-sensors.org/lm-sensors/releases/lm_sensors-3.4.0.tar.bz2"
+file_size=175802
+file_md5=c03675ae9d43d60322110c679416901a
+mirror_url="ftp://ftp.netroedge.com/pub/lm-sensors/lm_sensors-3.4.0.tar.bz2"
+file="lm_sensors-3.4.0.tar.bz2"
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=(
+    "PREFIX=$target"
+    "ETCDIR=$settings_target"
+)

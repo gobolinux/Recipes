@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for WLD by Xavier Rohan <rohanone@riseup.net>, on Tue Dec 6 17:24:56 UTC 2016
+# Recipe for version 1.0 by Xavier Rohan <rohanone@riseup.net>, on Tue Dec 6 17:24:56 UTC 2016
+compile_version=2.0
+url="https://github.com/michaelforney/wld/archive/master.zip"
+file="wld-master.zip"
+file_size=88098
+file_md5=d291ca130e759955918fcb7bf3169ded
+dir='wld-master'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)

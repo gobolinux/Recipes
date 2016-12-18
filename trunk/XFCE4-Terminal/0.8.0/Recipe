@@ -1,0 +1,11 @@
+# Recipe for version 0.8.0 by Hugo Barrocas <barrocas75@gmail.com>, on Qui Out 20 16:20:06 UTC 2016
+# Recipe (MakeRecipe) for XFCE4-Terminal by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Aug 25 15:40:22 BRT 2014
+compile_version=2.0
+url="http://archive.xfce.org/src/apps/xfce4-terminal/0.8/xfce4-terminal-0.8.0.tar.bz2"
+file_size=868612
+file_md5=8b6be02150d79a234581daa49d2e9266
+recipe_type=configure
+
+make_variables=(
+    CFLAGS="-U VTE_SEAL_ENABLE"
+)

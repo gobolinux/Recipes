@@ -1,0 +1,12 @@
+diff --git a/lib/wibox/drawable.lua b/lib/wibox/drawable.lua
+index 0212efa..8f10adc 100644
+--- a/lib/wibox/drawable.lua
++++ b/lib/wibox/drawable.lua
+@@ -390,6 +390,7 @@ function drawable.new(d, widget_context_skeleton, drawable_name)
+ 
+     -- Set up our callbacks for repaints
+     ret._redraw_callback = function(hierar, arg)
++        if type(ret.drawable) ~= "drawable" then return end --FIXME See #1070
+         if ret._widget_hierarchy_callback_arg ~= arg then
+             return
+         end

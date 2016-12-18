@@ -1,0 +1,9 @@
+# Recipe for version 0.39.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Jul 29 20:43:40 GMT 2016
+compile_version=1.9.0
+url="http://savannah.nongnu.org/download/atool/atool-0.39.0.tar.gz"
+file_size=119307
+file_md5=e0aa006decbc6484b9dba2879f1bb9f0
+recipe_type=configure
+pre_install() {
+   GrepReplace ".*$goboExecutables/perl -w" "#! /usr/bin/env perl" atool
+}

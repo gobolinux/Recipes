@@ -1,0 +1,13 @@
+# Recipe for version 5.3.3 by Hisham Muhammad <hisham@gobolinux.org>, on Wed Jun 22 17:06:28 BRT 2016
+compile_version=1.10.2
+url=http://www.lua.org/ftp/lua-5.3.3.tar.gz
+file_size=294290
+file_md5=703f75caa4fdf4a911c1a72e67a27498
+recipe_type=makefile
+build_target=linux
+docs=(
+  "doc/*.html"
+)
+make_variables=(
+  INSTALL_TOP=$target
+)

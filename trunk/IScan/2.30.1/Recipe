@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for IScan by Hisham Muhammad <hisham@gobolinux.org>, on Tue Aug 4 09:55:31 BRT 2015
+# Recipe for version 2.30.1 by Hisham Muhammad <hisham@gobolinux.org>, on Tue Aug 4 09:55:31 BRT 2015
+compile_version=git
+url="http://dev.gentoo.org/~idella4/tarballs/iscan_2.30.1-1.tar.gz"
+file_size=1217985
+file_md5=2ba2043973f149d5a2d0468bf76d0030
+dir='iscan-2.30.1'
+recipe_type=configure
+autogen_before_configure=yes
+autogen=bootstrap

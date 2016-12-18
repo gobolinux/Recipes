@@ -1,0 +1,11 @@
+# Recipe for version 2.0.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Aug 27 16:31:39 GMT 2016
+# Recipe (MakeRecipe) for LibiCal by Jonas Karlsson <jonka750@student.liu.se>, on Fri Sep 5 23:49:20 CEST 2008
+compile_version=1.8.0
+url="https://github.com/libical/libical/releases/download/v2.0.0/libical-2.0.0.tar.gz"
+file_size=699099
+file_md5=6bf8e5f5a3ba88baf390d0134e05d76e
+recipe_type=cmake
+
+cmake_options=(
+    -DCMAKE_INSTALL_LIBDIR=lib
+)

@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for CxxTest by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jun 2 16:21:35 BRT 2016
+# Recipe for version 4.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jun 2 16:21:35 BRT 2016
+compile_version=1.12.3
+url="https://github.com/CxxTest/cxxtest/releases/download/4.4/cxxtest-4.4.tar.gz"
+file_size=330076
+file_md5=c3cc3355e2ac64e34c215f28e44cfcec
+dir=cxxtest-4.4/python
+recipe_type=python
+
+pre_install() {
+    mkdir -p "$target"/{bin,include,lib,share/cxxtest}
+    cp -v  ../bin/cxxtestgen "$target/bin/"
+    cp -vR ../cxxtest "$target/include/"
+    cp -v ../build_tools/cmake/* "$target/share/cxxtest/"
+}

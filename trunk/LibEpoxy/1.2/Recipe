@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for LibEpoxy by Hisham Muhammad <hisham@gobolinux.org>, on Sun Apr 5 23:43:45 BRT 2015
+# Recipe for version 1.2 by Hisham Muhammad <hisham@gobolinux.org>, on Sun Apr 5 23:43:45 BRT 2015
+compile_version=git
+url="https://github.com/anholt/libepoxy/archive/v1.2.tar.gz"
+file="libepoxy-1.2.tar.gz"
+file_size=267110
+file_md5=12d6b7621f086c0c928887c27d90bc30
+dir='libepoxy-1.2'
+recipe_type=configure
+autogen_before_configure=yes

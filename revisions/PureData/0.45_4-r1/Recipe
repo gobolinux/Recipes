@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for PureData by Hisham Muhammad <hisham@gobolinux.org>, on Mon Jun 22 20:58:07 BRT 2015
+# Recipe for version 0.45_4 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Jun 22 20:58:07 BRT 2015
+compile_version=git
+url="$httpSourceforge/project/pure-data/pure-data/0.45.4/pd-0.45-4.src.tar.gz"
+file_size=2252744
+file_md5=d480a68b0ae03b0a55d55fd750da9c5a
+dir='pd-0.45-4'
+recipe_type=configure
+autogen_before_configure=yes

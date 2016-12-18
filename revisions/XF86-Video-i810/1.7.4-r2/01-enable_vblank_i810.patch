@@ -1,0 +1,28 @@
+From: Alan Hourihane <alanh@fairlite.demon.co.uk>
+Date: Mon, 28 Aug 2006 10:55:38 +0000 (+0100)
+Subject: Fix SetVBlank to operate all the time
+X-Git-Tag: xf86-video-i810-1.7.0 / xf86-video-intel-1.7.0
+X-Git-Url: http://gitweb.freedesktop.org/?p=xorg/driver/xf86-video-intel.git;a=commitdiff;h=26e6c074c17b2d4e9b9f165468ad45a3b0ecc0ef
+
+Fix SetVBlank to operate all the time
+---
+
+--- a/src/i830_driver.c
++++ b/src/i830_driver.c
+@@ -8079,13 +8079,15 @@ I830BIOSEnterVT(int scrnIndex, int flags
+ 
+ #ifdef XF86DRI
+    if (pI830->directRenderingEnabled) {
++
++      I830DRISetVBlankInterrupt (pScrn, TRUE);
++
+       if (!pI830->starting) {
+          ScreenPtr pScreen = pScrn->pScreen;
+          drmI830Sarea *sarea = (drmI830Sarea *) DRIGetSAREAPrivate(pScreen);
+          int i;
+ 
+ 	 I830DRIResume(screenInfo.screens[scrnIndex]);
+-         I830DRISetVBlankInterrupt (pScrn, TRUE);
+       
+ 	 I830RefreshRing(pScrn);
+ 	 I830Sync(pScrn);

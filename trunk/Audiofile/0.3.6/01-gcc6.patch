@@ -1,0 +1,14 @@
+From https://github.com/mpruett/audiofile/pull/28/commits/28cfdbbcb96a69087c3d21faf69b5eae7bcf6d69?diff=split:
+GCC-6 now treats the left bitwise-shift of a negative integer as nonconformant so explicitly cast to an unsigned int while bit-shifting.
+
+--- audiofile-audiofile-0.3.6/libaudiofile/modules/SimpleModule.h.orig	2016-11-21 15:34:50.330151685 -0200
++++ audiofile-audiofile-0.3.6/libaudiofile/modules/SimpleModule.h	2016-11-21 15:35:13.399152118 -0200
+@@ -123,7 +123,7 @@ struct signConverter
+ 	typedef typename IntTypes<Format>::UnsignedType UnsignedType;
+ 
+ 	static const int kScaleBits = (Format + 1) * CHAR_BIT - 1;
+-	static const int kMinSignedValue = -1 << kScaleBits;
++	static const int kMinSignedValue = static_cast<signed>(static_cast<unsigned>(-1) << kScaleBits);
+ 
+ 	struct signedToUnsigned : public std::unary_function<SignedType, UnsignedType>
+ 	{

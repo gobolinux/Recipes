@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for DevelScripts by Hisham Muhammad
+# Recipe for version git by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Sep 2 14:48:25 GMT 2016
+compile_version=1.12.3
+git="https://github.com/gobolinux/DevelScripts.git"
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   VERSION="$version"
+   PREFIX="$target"
+)

@@ -1,0 +1,27 @@
+# Recipe (MakeRecipe) for KeePass2-Bin by Aitor P. Iturri, on Sat Jul 2 14:06:15 CEST 2016
+# Recipe for version 2.34 by Aitor P. Iturri, on Sat Jul 2 14:06:15 CEST 2016
+compile_version=2.0
+url="https://downloads.sourceforge.net/keepass/KeePass-2.34.zip"
+file_size=2923638
+file_md5=c6ee6dd8c8fb4e6db466a2da76bd3929
+recipe_type=manifest
+manifest=(
+  "KeePass.exe*:libexec/KeePass2/"
+  "ShInstUtil.exe:libexec/KeePass2/"
+  "*.dll:libexec/KeePass2/"
+  "XSL:libexec/KeePass2/XSL/"
+  "KeePass.chm:doc/"
+  "License.txt:doc/"
+)
+unpack_files=files_in_root
+dir='KeePass2-Bin'
+
+pre_link() {
+  mkdir -p $target/libexec/KeePass2/Plugins
+  cat << EOF > $target/bin/KeePass2
+#!/bin/sh
+${goboExecutables}/mono --config ${goboSettings}/mono/config ${target}/libexec/KeePass2/KeePass.exe
+EOF
+  chmod +x $target/bin/KeePass2
+}
+

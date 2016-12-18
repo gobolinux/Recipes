@@ -1,0 +1,42 @@
+# Recipe for version 6.0 by Hisham Muhammad <hisham@gobolinux.org>, on Wed Aug 19 18:27:36 BRT 2015
+compile_version=1.12.0
+url="$ftpGnu/ncurses/ncurses-6.0.tar.gz"
+file_size=3131891
+file_md5=ee13d052e1ead260d7c28071f46eefb1
+
+recipe_type=configure
+
+configure_options=(
+   "--with-shared"
+#   "--with-termlib"
+   "--with-gpm"
+   "--without-debug"
+   "--without-ada"
+   "--enable-rpath"
+   "--enable-termcap"
+   "--enable-symlinks"
+   "--enable-overwrite"
+   "--enable-widec"
+   
+   "--enable-ext-colors"
+   "--enable-ext-mouse"
+   "--with-extra-suffix"
+   "--with-abi-version=6"
+)
+
+# configure_options is in platform subdirectories
+
+make_variables=(
+   TEST_LIBS="-lutil -ldl"
+)
+
+install_variables=(
+   ticdir="${target}/share/terminfo"
+)
+
+pre_link() {
+   chmod 755 $target/lib/*.6.0
+   chmod 644 $target/lib/libncurses++.a
+   mkdir $target/include/ncursesw
+   mv $target/include/*.* $target/include/ncursesw
+}

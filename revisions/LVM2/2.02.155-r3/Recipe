@@ -1,0 +1,10 @@
+# Recipe for version 2.02.155 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jul 30 13:24:50 BRT 2016
+# Recipe (MakeRecipe) for LVM2 by Aitor Pérez Iturri, on dom mar 4 14:05:20 CET 2007
+compile_version=1.8.5
+url="ftp://sources.redhat.com/pub/lvm2/releases/LVM2.2.02.155.tgz"
+file_size=2021197
+file_md5=8e8025f2d82861c7285e2a36c58d279c
+recipe_type=configure
+configure_options=(
+	"--disable-realtime"
+)

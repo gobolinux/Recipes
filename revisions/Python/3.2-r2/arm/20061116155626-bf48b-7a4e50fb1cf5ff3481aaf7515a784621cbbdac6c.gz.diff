@@ -1,0 +1,15 @@
+Thu Nov 16 16:56:26 CET 2006  hanwen@lilypond.org
+  * also set template for mingw
+diff -rN -u old-Python-2.5.cross/Lib/distutils/command/build_ext.py new-Python-2.5.cross/Lib/distutils/command/build_ext.py
+--- old-Python-2.5.cross/Lib/distutils/command/build_ext.py	2006-11-16 17:47:45.000000000 +0100
++++ new-Python-2.5.cross/Lib/distutils/command/build_ext.py	2006-11-16 17:47:45.000000000 +0100
+@@ -668,7 +668,7 @@
+             # don't extend ext.libraries, it may be shared with other
+             # extensions, it is a reference to the original list
+             return ext.libraries + [pythonlib]
+-        elif sys.platform[:6] == "cygwin":
++        elif sys.platform[:6] == "cygwin" or sys.platform[:5] == "mingw":
+             template = "python%d.%d"
+             pythonlib = (template %
+                    (sys.hexversion >> 24, (sys.hexversion >> 16) & 0xff))
+

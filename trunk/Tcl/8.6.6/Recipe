@@ -1,0 +1,30 @@
+# Recipe for version 8.6.6 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jul 30 07:13:10 BRT 2016
+compile_version=1.13.3
+url="$httpSourceforge/tcl/tcl8.6.6-src.tar.gz"
+file_size=9553805
+file_md5=5193aea8107839a79df8ac709552ecb7
+dir='tcl8.6.6/unix'
+recipe_type=configure
+install_target='install install-private-headers'
+
+configure_options=(
+  --with-encoding="iso8859-2"
+  --enable-shared
+  --enable-threads
+  --enable-man-symlinks
+  --enable-man-compression=gzip
+)
+
+install_variables=(
+   prefix=$target
+   bindir=$target/bin
+   includedir=$target/include
+   exec_prefix=$target
+   libdir=$target/lib
+   mandir=$target/share/man
+)
+
+pre_link(){
+   $sudo_exec ln -nfs ${target}/bin/tclsh8.6 ${target}/bin/tclsh
+   $sudo_exec ln -nfs ${goboLibraries}/tk8.6 ${target}/lib/tk8.6
+}

@@ -1,0 +1,14 @@
+Fix the installation path
+
+diff -Nur p7zip_9.20.1.old/install.sh p7zip_9.20.1/install.sh
+--- p7zip_9.20.1.old/install.sh	2011-03-16 16:32:56.000000000 -0300
++++ p7zip_9.20.1/install.sh	2015-11-24 21:38:39.176935409 -0200
+@@ -17,7 +17,7 @@
+ }
+ 
+ # global install
+-DEST_HOME=/usr/local
++DEST_HOME=%@Compile_prefix@%
+ # for testing 
+ # DEST_HOME=${HOME}/INSTALL/usr/local
+ DEST_BIN=${DEST_HOME}/bin

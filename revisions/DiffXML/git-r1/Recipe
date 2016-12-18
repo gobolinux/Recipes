@@ -1,0 +1,27 @@
+# Recipe (MakeRecipe) for DiffXML by Hisham Muhammad <hisham@gobolinux.org>, on Wed Oct 14 11:26:09 BRT 2015
+# Recipe for version git by Hisham Muhammad <hisham@gobolinux.org>, on Wed Oct 14 11:26:09 BRT 2015
+compile_version=git
+git="git://github.com/amouat/diffxml"
+recipe_type=manifest
+pre_link() {
+   ant jarDiffXML
+
+   mkdir -p "$target/lib/java"
+   cp build/*.jar "$target/lib/java"
+   cp lib/*.jar "$target/lib/java"
+
+   mkdir -p "$target/bin"
+cat <<EOF > "$target/bin/diffxml"
+#!/bin/sh
+export CLASSPATH=$target/lib/java:$target/lib/java/diffxml.jar
+java org.diffxml.diffxml.DiffXML "\$@"
+EOF
+cat <<EOF > "$target/bin/patchxml"
+#!/bin/sh
+export CLASSPATH=$target/lib/java:$target/lib/java/diffxml.jar
+java org.diffxml.diffxml.PatchXML "\$@"
+EOF
+   chmod +x "$target/bin/diffxml"
+   chmod +x "$target/bin/patchxml"
+   
+}

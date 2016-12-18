@@ -1,0 +1,78 @@
+# Recipe for version 2.2rc1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Aug 9 02:17:10 GMT 2016
+compile_version=1.12.4
+url="https://github.com/apple/cups/releases/download/v2.2rc1/cups-2.2rc1-source.tar.gz"
+file_size=9476368
+file_md5=7918e68de41e2013cb580bae9004c410
+dir='cups-2.2rc1'
+recipe_type=configure
+
+configure_options=(
+   --with-libdir="$target/lib"
+   --with-rcdir="$target/cupsinit"
+   --with-docdir="$target/doc"
+   --with-fontpath="${goboShared}/Fonts/Ghostscript"
+   --with-cups-user=lp
+   --with-cups-group=lp
+   --with-system-groups=lpadmin
+   --with-icondir="$target/share/icons"
+   --with-menudir="$target/share/applications"
+   --with-dbusdir="$settings_target/dbus-1"
+   --with-python
+   --enable-threads
+   --enable-libpaper
+)
+
+environment=(
+   LIBTOOL=
+)
+
+make_variables=(
+   LIBTOOL=
+)
+
+# TODO: the following array has been tested with $goboIndex only.
+install_variables=(
+    BUILDROOT="$target"
+    MENUDIR="/share/applications"
+    DBUSDIR="/../Settings/dbus-1"
+    PAMDIR="/../Settings/pam.d"
+    INITDIR="/../Settings/cupsinit"
+    ICONDIR="/share/icons"
+    includedir="/include"
+    libdir="/lib"
+)
+
+unmanaged_files=(
+   ${goboVariable}/log/cups
+   ${goboVariable}/run/cups/certs
+   ${goboVariable}/cache/cups
+   ${goboVariable}/spool/cups/tmp
+)
+
+pre_install() {
+    GrepReplace "(BUILDROOT)$goboSettings" "(BUILDROOT)/../Settings" Makedefs 
+    GrepReplace "(BUILDROOT)/usr" "(BUILDROOT)" Makedefs 
+    GrepReplace "(BUILDROOT)/Data" "/Data" Makedefs 
+}
+
+pre_link() {
+   rm -rf -- $target/cupsinit
+   rm -rf -- $target/share/cups/banners         # This is now part of the CUPS Filters package
+   rm -rf -- $target/share/cups/data/testprint  # Ditto.
+   Quiet pushd $target/lib
+   mkdir -p cups/driver
+   ln -s ../share/cups .
+   Quiet popd
+   if [ ! -e "$settings_target/cups/client.conf" ]
+   then
+      mkdir -p "$settings_target/cups"
+      echo "ServerName $goboVariable/run/cups/cups.sock" > $settings_target/cups/client.conf
+   fi
+}
+
+post_install() {
+   GrepReplace -B 'user="root"' 'user="0"' "$settings_target/dbus-1/system.d/cups.conf"
+   GrepReplace -B 'user="root"' 'user="0"' "$target/Resources/Defaults/Settings/dbus-1/system.d/cups.conf"
+}
+
+post_install_message="=========================================\n\nNote: when upgrading from CUPS 1.1.20 you may need\n      to recreate your printers because of changes\n      in the ppd uri format for usb printers.\n\n=================================================="

@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for Lcov by Hisham Muhammad <hisham@gobolinux.org>, on Wed Mar 25 14:05:02 BRT 2015
+# Recipe for version 1.11 by Hisham Muhammad <hisham@gobolinux.org>, on Wed Mar 25 14:05:02 BRT 2015
+compile_version=git
+url="$httpSourceforge/project/ltp/Coverage%20Analysis/LCOV-1.11/lcov-1.11.tar.gz"
+file_size=155906
+file_md5=e79b799ae3ce149aa924c7520e993024
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   CFG_DIR="$settings_target"
+   BIN_DIR="$target/bin"
+   MAN_DIR="$target/share/man"
+)

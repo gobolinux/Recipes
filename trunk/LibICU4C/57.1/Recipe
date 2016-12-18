@@ -1,0 +1,8 @@
+# Recipe for version 57.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Aug 22 11:49:48 GMT 2016
+# Recipe (MakeRecipe) for LibICU by Daniele Maccari <daniele.maccari@gmail.com>, on Wed Feb 13 11:50:18 CET 2008
+compile_version=1.10.1
+url="http://download.icu-project.org/files/icu4c/57.1/icu4c-57_1-src.tgz"
+file_size=22360664
+file_md5=976734806026a4ef8bdd17937c8898b9
+dir='icu/source'
+recipe_type=configure

@@ -1,0 +1,37 @@
+--- PyQt-x11-gpl-3.18.1/configure.py.orig	2016-09-27 13:29:13.842382814 +0000
++++ PyQt-x11-gpl-3.18.1/configure.py	2016-09-27 13:28:18.842383892 +0000
+@@ -258,27 +258,27 @@ class ConfigurePyQt3(ConfigureBase):
+         }
+ 
+     def code(self, extra_include_dirs, extra_lib_dir, extra_libs):
+-        generate_code("qt", extra_include_dirs=extra_include_dirs, extra_lib_dir=extra_lib_dir, extra_libs=extra_libs)
++        generate_code("qt", extra_include_dirs=extra_include_dirs, extra_lib_dir=extra_lib_dir, extra_libs=extra_libs, extra_cxxflags=os.environ["EXTRA_CXXFLAGS"])
+ 
+         if "qtext" in pyqt_modules:
+-            generate_code("qtext", extra_define=qsci_define, extra_include_dirs=[opt_qsciincdir], extra_lib_dir=opt_qscilibdir, extra_libs=["qscintilla"], sip_flags=qtext_sip_flags)
++            generate_code("qtext", extra_define=qsci_define, extra_include_dirs=[opt_qsciincdir], extra_lib_dir=opt_qscilibdir, extra_libs=["qscintilla"], sip_flags=qtext_sip_flags, extra_cxxflags=os.environ["EXTRA_CXXFLAGS"])
+ 
+         if "qtgl" in pyqt_modules:
+-            generate_code("qtgl", opengl=1)
++            generate_code("qtgl", opengl=1, extra_cxxflags=os.environ["EXTRA_CXXFLAGS"])
+ 
+         if "qtpe" in pyqt_modules:
+-            generate_code("qtpe", extra_libs=["qpe"], sip_flags=qtpe_sip_flags)
++            generate_code("qtpe", extra_libs=["qpe"], sip_flags=qtpe_sip_flags, extra_cxxflags=os.environ["EXTRA_CXXFLAGS"])
+ 
+         if "qtui" in pyqt_modules:
+-            generate_code("qtui", extra_libs=["qui"])
++            generate_code("qtui", extra_libs=["qui"], extra_cxxflags=os.environ["EXTRA_CXXFLAGS"])
+ 
+         if "qtaxcontainer" in pyqt_modules:
+-            generate_code("qtaxcontainer", extra_libs=["qaxcontainer"])
++            generate_code("qtaxcontainer", extra_libs=["qaxcontainer"], extra_cxxflags=os.environ["EXTRA_CXXFLAGS"])
+ 
+         # The rest don't need special handling.
+         for m in ("qtcanvas", "qtnetwork", "qtsql", "qttable", "qtxml"):
+             if m in pyqt_modules:
+-                generate_code(m)
++                generate_code(m, extra_cxxflags=os.environ["EXTRA_CXXFLAGS"])
+ 
+     def tools(self):
+         tool_dirs = []

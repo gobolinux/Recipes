@@ -1,0 +1,13 @@
+# Recipe for version 1.16.3 by Hugo Barrocas <barrocas75@gmail.com>, on Sáb Out 3 18:14:18 UTC 2015
+# by Jeremy Vernon
+# 2004.01.06 16:54
+
+compile_version=2.0
+recipe_type=configure
+url="http://ftp.gnu.org/gnu/wget/wget-1.16.3.tar.xz"
+file_size=1794148
+file_md5=d2e4455781a70140ae83b54ca594ce21
+
+configure_options=(
+   "--with-ssl=openssl"
+)

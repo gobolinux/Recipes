@@ -1,0 +1,5 @@
+[Name] LibEvent
+[Summary] Library to execute a callback function after timeout or when activity on file descriptors occurs
+[License] 3-clause BSD license
+[Description] The libevent API provides a mechanism to execute a callback function when a specific event occurs on a file descriptor or after a timeout has been reached. It is meant to replace the asynchronous event loop found in event-driven network servers.
+[Homepage] http://www.monkey.org/~provos/libevent/

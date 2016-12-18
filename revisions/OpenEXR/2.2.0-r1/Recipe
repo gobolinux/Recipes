@@ -1,0 +1,12 @@
+# Recipe for version 2.2.0 by Hugo Barrocas <barrocas75@gmail.com>, on Dom Mar 13 18:20:15 UTC 2016
+# Recipe (MakeRecipe) for OpenEXR by roko, <ro.ko@mcnon.com>, on Sun Dec 5 22:40:14 BRST 2004
+compile_version=1.9.0
+url="http://download.savannah.nongnu.org/releases/openexr/openexr-2.2.0.tar.gz"
+file_size=14489661
+file_md5=b64e931c82aa3790329c21418373db4e
+recipe_type=configure
+dir='openexr-2.2.0'
+
+configure_options=(
+    --with-ilmbase-prefix=$ilmbase_path
+)

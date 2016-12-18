@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for JQ by Hisham Muhammad <hisham@gobolinux.org>, on Wed Jul 27 21:27:07 BRT 2016
+# Recipe for version 1.5 by Hisham Muhammad <hisham@gobolinux.org>, on Wed Jul 27 21:27:07 BRT 2016
+compile_version=git
+url="https://github.com/stedolan/jq/releases/download/jq-1.5/jq-1.5.tar.gz"
+file_size=739309
+file_md5=0933532b086bd8b6a41c1b162b1731f9
+dir='jq-1.5'
+recipe_type=configure

@@ -1,0 +1,8 @@
+# Recipe for version 1.18.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Feb 24 22:11:01 BRT 2016
+# Recipe (MakeRecipe) for DPKG_1.18.4 by Zbigniew Baniewski <zb@ispid.com.pl>, on Sun Nov 16 16:14:01 BRST 2008
+compile_version=1.11.3
+url="http://mirrors.kernel.org/debian/pool/main/d/dpkg/dpkg_1.18.4.tar.xz"
+file_size=4377024
+file_md5=e95b513c89693f6ec3ab53b6b1c3defd
+dir='dpkg-1.18.4'
+recipe_type=configure

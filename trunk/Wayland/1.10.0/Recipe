@@ -1,0 +1,9 @@
+compile_version=2.0
+url="http://wayland.freedesktop.org/releases/wayland-1.10.0.tar.xz"
+file_size=368976
+file_md5=e7751c38807c231afaba9d6b68f2a2b7
+recipe_type=configure
+
+configure_options=(
+    --disable-documentation
+)

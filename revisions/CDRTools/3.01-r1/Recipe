@@ -1,0 +1,19 @@
+# Recipe for version 3.01
+url="http://downloads.sourceforge.net/project/cdrtools/cdrtools-3.01.tar.bz2"
+file_size=2087416
+file_md5=7d45c5b7e1f78d85d1583b361aee6e8b
+dir='cdrtools-3.01'
+compile_version=1.9.0
+recipe_type=makefile
+
+pre_build() {
+   GrepReplace -R "DEFINSUSR=.*bin"  "DEFINSUSR= root"  *
+   GrepReplace -R "DEFINSGRP=.*bin"  "DEFINSGPR= root"  *
+   GrepReplace -R "INSUSR_DEF=.*bin" "INSUSR_DEF= root" *
+   GrepReplace -R "INSGRP_DEF=.*bin" "INSGRP_DEF= root" *
+   
+   GrepReplace "INSDIR=.*etc/default" "$settings_target/default" cdrecord/Makefile.dfl
+   GrepReplace "INSDIR=.*etc/default" "$settings_target/default" rscsi/Makefile.dfl
+   
+   GrepReplace "/opt/schily" "$target" DEFAULTS/Defaults.linux
+}

@@ -1,0 +1,16 @@
+# Recipe for version 1.5.24 by Muhammad Najib Bin Ibrahim <mnajib@gmail.com>, on Fri Oct 16 16:55:44 UTC 2015
+# Recipe (MakeRecipe) for Mutt by Felix Breuer, on Sun Sep 5 16:25:02 BRT 2004
+compile_version=1.8.2
+url="https://bitbucket.org/mutt/mutt/downloads/mutt-1.5.24.tar.gz"
+file_size=3897115
+file_md5=7f25d27f3c7c82285ac07aac35f5f0f2
+dir='mutt-1.5.24'
+recipe_type=configure
+configure_options=(
+   --enable-imap
+   --enable-pop
+   --enable-smtp
+   --enable-gpgme
+   --enable-pgp
+   --with-ssl
+)

@@ -1,0 +1,11 @@
+--- net-tools-1.60/lib/inet_sr.c.orig	2006-06-19 11:45:51.000000000 -0300
++++ net-tools-1.60/lib/inet_sr.c	2006-06-19 11:46:18.000000000 -0300
+@@ -104,7 +104,7 @@ static int INET_setroute(int action, int
+        isnet = 1; break;
+     case 2:
+        isnet = 0; break;
+-    default:
++    default: break;
+     }
+ 
+     /* Fill in the other fields. */

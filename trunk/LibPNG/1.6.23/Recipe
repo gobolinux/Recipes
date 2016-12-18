@@ -1,0 +1,10 @@
+compile_version=1.8.5
+url="http://downloads.sourceforge.net/project/libpng/libpng16/1.6.23/libpng-1.6.23.tar.xz"
+file_size=961520
+file_md5=9b320a05ed4db1f3f0865c8a951fd9aa
+recipe_type=configure
+
+pre_link() {
+    ln -sf libpng16 $target/include/libpng
+    ln -sf libpng.so $target/lib/libpng.so.0
+}

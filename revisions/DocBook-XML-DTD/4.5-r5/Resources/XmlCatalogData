@@ -1,0 +1,35 @@
+public;-//OASIS//DTD DocBook XML V4.5//EN;http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd;${goboVariable}/lib/xml/docbook
+public;-//OASIS//DTD DocBook XML CALS Table Model V4.5//EN;file://${target}/share/xml/docbook/xml-dtd-4.5/calstblx.dtd;${goboVariable}/lib/xml/docbook
+public;-//OASIS//DTD DocBook XML Exchange Table Model 19990315//EN;file://${target}/share/xml/docbook/xml-dtd-4.5/soextblx.dtd;${goboVariable}/lib/xml/docbook
+public;-//OASIS//ELEMENTS DocBook XML Information Pool V4.5//EN;file://${target}/share/xml/docbook/xml-dtd-4.5/dbpoolx.mod;${goboVariable}/lib/xml/docbook
+public;-//OASIS//ELEMENTS DocBook XML Document Hierarchy V4.5//EN;file://${target}/share/xml/docbook/xml-dtd-4.5/dbhierx.mod;${goboVariable}/lib/xml/docbook
+public;-//OASIS//ELEMENTS DocBook XML HTML Tables V4.5//EN;file://${target}/share/xml/docbook/xml-dtd-4.5/htmltblx.mod;${goboVariable}/lib/xml/docbook
+public;-//OASIS//ENTITIES DocBook XML Notations V4.5//EN;file://${target}/share/xml/docbook/xml-dtd-4.5/dbnotnx.mod;${goboVariable}/lib/xml/docbook
+public;-//OASIS//ENTITIES DocBook XML Character Entities V4.5//EN;file://${target}/share/xml/docbook/xml-dtd-4.5/dbcentx.mod;${goboVariable}/lib/xml/docbook
+public;-//OASIS//ENTITIES DocBook XML Additional General Entities V4.5//EN;file://${target}/share/xml/docbook/xml-dtd-4.5/dbgenent.mod;${goboVariable}/lib/xml/docbook
+rewriteSystem;http://www.oasis-open.org/docbook/xml/4.5;file://${target}/share/xml/docbook/xml-dtd-4.5;${goboVariable}/lib/xml/docbook
+rewriteURI;http://www.oasis-open.org/docbook/xml/4.5;file://${target}/share/xml/docbook/xml-dtd-4.5;${goboVariable}/lib/xml/docbook
+delegatePublic;-//OASIS//ENTITIES DocBook XML;file://${goboVariable}/lib/xml/docbook;${goboVariable}/lib/xml/catalog
+delegatePublic;-//OASIS//DTD DocBook XML;file://${goboVariable}/lib/xml/docbook;${goboVariable}/lib/xml/catalog
+delegateSystem;http://www.oasis-open.org/docbook/;file://${goboVariable}/lib/xml/docbook;${goboVariable}/lib/xml/catalog
+delegateURI;http://www.oasis-open.org/docbook/;file://${goboVariable}/lib/xml/docbook;${goboVariable}/lib/xml/catalog
+public;-//OASIS//DTD DocBook XML V4.1.2//EN;http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd;${goboVariable}/lib/xml/docbook
+public;-//OASIS//DTD DocBook XML V4.2//EN;http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd;${goboVariable}/lib/xml/docbook
+public;-//OASIS//DTD DocBook XML V4.3//EN;http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd;${goboVariable}/lib/xml/docbook
+public;-//OASIS//DTD DocBook XML V4.4//EN;http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd;${goboVariable}/lib/xml/docbook
+rewriteSystem;http://www.oasis-open.org/docbook/xml/4.1.2;file://${target}/share/xml/docbook/xml-dtd-4.5;${goboVariable}/lib/xml/docbook
+rewriteSystem;http://www.oasis-open.org/docbook/xml/4.2;file://${target}/share/xml/docbook/xml-dtd-4.5;${goboVariable}/lib/xml/docbook
+rewriteSystem;http://www.oasis-open.org/docbook/xml/4.3;file://${target}/share/xml/docbook/xml-dtd-4.5;${goboVariable}/lib/xml/docbook
+rewriteSystem;http://www.oasis-open.org/docbook/xml/4.4;file://${target}/share/xml/docbook/xml-dtd-4.5;${goboVariable}/lib/xml/docbook
+rewriteURI;http://www.oasis-open.org/docbook/xml/4.1.2;file://${target}/share/xml/docbook/xml-dtd-4.5;${goboVariable}/lib/xml/docbook
+rewriteURI;http://www.oasis-open.org/docbook/xml/4.2;file://${target}/share/xml/docbook/xml-dtd-4.5;${goboVariable}/lib/xml/docbook
+rewriteURI;http://www.oasis-open.org/docbook/xml/4.3;file://${target}/share/xml/docbook/xml-dtd-4.5;${goboVariable}/lib/xml/docbook
+rewriteURI;http://www.oasis-open.org/docbook/xml/4.4;file://${target}/share/xml/docbook/xml-dtd-4.5;${goboVariable}/lib/xml/docbook
+delegateSystem;http://www.oasis-open.org/docbook/xml/4.1.2;file://${goboVariable}/lib/xml/docbook;${goboVariable}/lib/xml/catalog
+delegateSystem;http://www.oasis-open.org/docbook/xml/4.2;file://${goboVariable}/lib/xml/docbook;${goboVariable}/lib/xml/catalog
+delegateSystem;http://www.oasis-open.org/docbook/xml/4.3;file://${goboVariable}/lib/xml/docbook;${goboVariable}/lib/xml/catalog
+delegateSystem;http://www.oasis-open.org/docbook/xml/4.4;file://${goboVariable}/lib/xml/docbook;${goboVariable}/lib/xml/catalog
+delegateURI;http://www.oasis-open.org/docbook/xml/4.1.2;file://${goboVariable}/lib/xml/docbook;${goboVariable}/lib/xml/catalog
+delegateURI;http://www.oasis-open.org/docbook/xml/4.2;file://${goboVariable}/lib/xml/docbook;${goboVariable}/lib/xml/catalog
+delegateURI;http://www.oasis-open.org/docbook/xml/4.3;file://${goboVariable}/lib/xml/docbook;${goboVariable}/lib/xml/catalog
+delegateURI;http://www.oasis-open.org/docbook/xml/4.4;file://${goboVariable}/lib/xml/docbook;${goboVariable}/lib/xml/catalog

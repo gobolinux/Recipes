@@ -1,0 +1,36 @@
+# Recipe for version 7.42.1 by Hisham Muhammad <hisham@gobolinux.org>, on Thu May 21 14:22:42 BRT 2015
+compile_version=1.11.3
+url="http://curl.haxx.se/download/curl-7.42.1.tar.bz2"
+file_size=3327304
+file_md5=296945012ce647b94083ed427c1877a8
+recipe_type=configure
+
+configure_options=(
+   --disable-debug
+   --disable-verbose
+   --enable-http
+   --enable-ftp
+   --enable-file
+   --enable-proxy
+   --enable-dict
+   --enable-telnet
+   --enable-tftp
+   --enable-manual
+   --enable-ipv6
+   --enable-thread
+   --enable-crypto-auth
+   --enable-cookies
+   --without-gnutls
+   --without-ssl
+   --without-nss
+   --enable-nonblocking
+   --enable-largefile
+   --without-krb4
+)
+
+with_gnutls="--with-gnutls"
+with_openssl=("--with-ssl" "--with-ca-path=/usr/lib/ssl/certs")
+with_nss="--with-nss"
+with_kerberos="--with-gssapi"
+with_libssh2="--with-libssh2"
+with_openldap=(--enable-ldap --enable-ldaps)

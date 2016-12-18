@@ -1,0 +1,11 @@
+environment=(
+	AR="${cross_compiler}ar"
+	NM="${cross_compiler}nm"
+)
+make_variables=(
+	AR="${cross_compiler}ar"
+	NM="${cross_compiler}nm"
+)
+pre_build() {
+	echo "Running autoconf..." && autoconf
+}

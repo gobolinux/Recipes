@@ -1,0 +1,17 @@
+# Recipe for version 3.5.1 by Hugo Barrocas <barrocas75@gmail.com>, on Ter Mar 29 22:10:07 UTC 2016
+compile_version=2.0
+url="https://cmake.org/files/v3.5/cmake-3.5.1.tar.gz"
+file_size=6863121
+file_md5=ca051f4a66375c89d1a524e726da0296
+recipe_type=configure
+
+configure_options=(
+   --prefix=$target
+)
+
+pre_install() {
+    if [ ! -z "$goboIndex" -a -d "$goboIndex" ]
+    then
+        GrepReplace "$goboIndex" "$target" cmake_install.cmake
+    fi
+}

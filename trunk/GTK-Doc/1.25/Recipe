@@ -1,0 +1,10 @@
+# Recipe for version 1.25 by AitorATuin, on Tue Jul 19 16:56:12 CEST 2016
+# Recipe (MakeRecipe) for GTK-Doc by Andreas Köhler <andi5.py@gmx.net>, on Sun Oct 26 15:46:55 CET 2008
+compile_version=1.11.3rc1
+url="https://download.gnome.org/sources/gtk-doc/1.25/gtk-doc-1.25.tar.xz"
+file_size=673184
+file_md5=0dc6570953112a464a409fb99258ccbc
+recipe_type=configure
+configure_options=(
+   "--with-xml-catalog=$goboVariable/lib/xml/catalog"
+)

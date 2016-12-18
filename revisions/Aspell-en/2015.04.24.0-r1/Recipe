@@ -1,0 +1,11 @@
+# Recipe for version 2015.04.24.0 by Hisham Muhammad <hisham@gobolinux.org>, on Thu Aug 6 16:52:48 BRT 2015
+url="$ftpGnu/aspell/dict/en/aspell6-en-2015.04.24-0.tar.bz2"
+file_size=177131
+file_md5=52aba8cc2b754eb6cd2d40968edd604e
+compile_version=1.8.2
+recipe_type=configure
+install_variables=(
+   "dictdir=$target/lib/aspell"
+   "datadir=$target/lib/aspell"
+)
+

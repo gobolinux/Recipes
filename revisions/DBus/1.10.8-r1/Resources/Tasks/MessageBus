@@ -1,0 +1,60 @@
+#!/bin/bash
+#
+# messagebus:   The D-BUS systemwide message bus
+#
+# chkconfig: 345 97 03
+# description:  This is a daemon which broadcasts notifications of system events \
+#               and other messages. See http://www.freedesktop.org/software/dbus/
+#
+# processname: dbus-daemon
+# pidfile: /Programs/DBus/Variable/run/dbus/pid
+#
+
+source GoboPath
+
+op="$1"
+[ "$op" ] || op="start"
+
+function SuperUserWorkaround() {
+   local superuser="$(SuperUserName)"
+   for entry in "root" "gobo" "0"
+   do
+      if [ "$superuser" != "$entry" ]
+      then
+         GrepReplace -B "user=\"$entry\"" "user=\"$superuser\"" "$goboSettings/dbus-1/system.d"/*.conf
+         GrepReplace -B "User=$entry" "User=$superuser" "$goboShared/dbus-1/system-services"/*.service
+      fi
+   done
+}
+
+case "$op" in
+[Ss]tart)
+   # DBus expects run/console to exist.
+   mkdir -p $goboVariable/run/console/
+   # Sanity checks.
+   mkdir -p $goboVariable/run/dbus/
+   if [ -e $goboVariable/run/dbus/pid ]
+   then
+      if ps `cat $goboVariable/run/dbus/pid` &> /dev/null
+      then
+         echo "Already running."
+         exit 1
+      else
+         rm -f $goboVariable/run/dbus/pid
+      fi
+   fi   
+   # so we can rearrange this easily
+   RETVAL=0
+   
+   SuperUserWorkaround
+   /bin/dbus-uuidgen --ensure
+   /bin/dbus-daemon --system
+   RETVAL=$?
+   #sleep 2
+   exit $RETVAL
+   ;;
+[Ss]top)
+   killall dbus-daemon
+   rm -f $goboVariable/run/dbus/pid > /dev/null
+   ;;
+esac

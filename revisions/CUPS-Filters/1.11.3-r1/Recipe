@@ -1,0 +1,17 @@
+# Recipe for version 1.13.3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Sep 24 20:18:11 BRT 2016
+# Recipe (MakeRecipe) for CUPS-Filters by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 9 02:04:33 GMT 2014
+compile_version=1.12.3
+url="http://www.openprinting.org/download/cups-filters/cups-filters-1.11.3.tar.xz"
+file_size=1408372
+file_md5=3e7ec44dc9b977f1beb64df49041004f
+recipe_type=configure
+
+configure_options=(
+    --without-rcdir
+)
+
+install_variables=(
+    CUPS_SERVERROOT=$settings_target
+    CUPS_SERVERBIN=$target/lib/cups
+    CUPS_DATADIR=$target/share/cups
+)

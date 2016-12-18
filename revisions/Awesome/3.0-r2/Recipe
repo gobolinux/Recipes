@@ -1,0 +1,11 @@
+# Recipe for version 3.0 by Moritz Wilhelmy <the.wulf.gang@googlemail.com>, on Sa 20. Sep 14:56:55 CEST 2008
+# Recipe (MakeRecipe) for Awesome by Viola Zoli; Hungary, violazoli@gmail.com, on 2008. márc. 24., hétfõ, 12.53.00 CET
+compile_version=1.10.2
+url="http://awesome.naquadah.org/download/awesome-3.0.tar.bz2"
+file_size=142225
+file_md5=32bb9e94a63f421a7a8500f1041b6add
+recipe_type=configure
+configure_options=(
+--with-x
+--with-gtk
+)

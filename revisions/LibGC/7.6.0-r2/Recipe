@@ -1,0 +1,10 @@
+# Recipe for version 7.6.0 by Hugo Barrocas <barrocas75@gmail.com>, on qui nov 24 02:24:37 UTC 2016
+# Recipe (MakeRecipe) for LibGC by Felix Breuer, on Sun Sep 5 17.6.01:57 BRT 2004
+compile_version=2.0
+url="http://www.hboehm.info/gc/gc_source/gc-7.6.0.tar.gz"
+file_size=1111751
+file_md5=bf46ccbdaccfa3186c2ab87191c8855a
+recipe_type=configure
+configure_options=(
+	"--enable-cplusplus"
+)

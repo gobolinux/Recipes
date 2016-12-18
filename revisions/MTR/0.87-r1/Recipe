@@ -1,0 +1,10 @@
+# Recipe for version 0.87 by Clement (TRONIQ89) <troniq89@openmailbox.org>, on Wed Oct 19 09:06:00 UTC 2016
+# Recipe (MakeRecipe) for MTR by Lucas C. Villa Real, on Mon Jun 1 22:26:27 BRT 2009
+compile_version=1.10.1
+url="ftp://ftp.bitwizard.nl/mtr/mtr-0.87.tar.gz"
+file_size=184645
+file_md5=fbc82d6784c4292ff79651e21ecd649f
+recipe_type=configure
+configure_options=(
+"--without-gtk"
+)

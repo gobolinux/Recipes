@@ -1,0 +1,20 @@
+--- ppp-2.4.4/pppd/plugins/rp-pppoe/plugin.c.orig	2006-08-17 14:54:57.000000000 -0300
++++ ppp-2.4.4/pppd/plugins/rp-pppoe/plugin.c	2006-08-17 14:54:59.000000000 -0300
+@@ -24,7 +24,6 @@
+ static char const RCSID[] =
+ "$Id: plugin.c,v 1.15 2006/05/29 23:29:16 paulus Exp $";
+ 
+-#define _GNU_SOURCE 1
+ #include "pppoe.h"
+ 
+ #include "pppd/pppd.h"
+--- ppp-2.4.4/pppd/plugins/rp-pppoe/pppoe.h.orig	2006-08-17 14:54:29.000000000 -0300
++++ ppp-2.4.4/pppd/plugins/rp-pppoe/pppoe.h	2006-08-17 14:54:31.000000000 -0300
+@@ -17,6 +17,7 @@
+ #define __EXTENSIONS__
+ #endif
+ 
++#define _GNU_SOURCE
+ #include "config.h"
+ 
+ #if defined(HAVE_NETPACKET_PACKET_H) || defined(HAVE_LINUX_IF_PACKET_H)

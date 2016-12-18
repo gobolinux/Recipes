@@ -1,0 +1,55 @@
+Thu Nov 16 17:20:55 CET 2006  hanwen@lilypond.org
+  * mingw fixes for Modules
+diff -rN -u old-Python-2.5.cross/Modules/timemodule.c new-Python-2.5.cross/Modules/timemodule.c
+--- old-Python-2.5.cross/Modules/timemodule.c	2006-11-16 17:47:44.000000000 +0100
++++ new-Python-2.5.cross/Modules/timemodule.c	2006-11-16 17:47:44.000000000 +0100
+@@ -42,6 +42,10 @@
+ #include <windows.h>
+ #include "pythread.h"
+ 
++#ifdef MS_WINDOWS
++#include <winsock2.h>
++#endif
++
+ /* helper to allow us to interrupt sleep() on Windows*/
+ static HANDLE hInterruptEvent = NULL;
+ static BOOL WINAPI PyCtrlHandler(DWORD dwCtrlType)
+@@ -836,7 +840,9 @@
+ 	   If Ctrl+C event delivered while not sleeping
+ 	   it will be ignored.
+ 	*/
++#ifdef WITH_THREAD
+ 	main_thread = PyThread_get_thread_ident();
++#endif
+ 	hInterruptEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
+ 	SetConsoleCtrlHandler( PyCtrlHandler, TRUE);
+ #endif /* MS_WINDOWS */
+@@ -938,8 +944,11 @@
+ 		 * by Guido, only the main thread can be interrupted.
+ 		 */
+ 		ul_millis = (unsigned long)millisecs;
+-		if (ul_millis == 0 ||
+-		    main_thread != PyThread_get_thread_ident())
++		if (ul_millis == 0
++#ifdef WITH_THREAD
++		    || main_thread != PyThread_get_thread_ident()
++#endif
++		    )
+ 			Sleep(ul_millis);
+ 		else {
+ 			DWORD rc;
+diff -rN -u old-Python-2.5.cross/Modules/xxsubtype.c new-Python-2.5.cross/Modules/xxsubtype.c
+--- old-Python-2.5.cross/Modules/xxsubtype.c	2006-11-16 17:47:44.000000000 +0100
++++ new-Python-2.5.cross/Modules/xxsubtype.c	2006-11-16 17:47:44.000000000 +0100
+@@ -1,6 +1,10 @@
+ #include "Python.h"
+ #include "structmember.h"
+ 
++#ifndef CLOCKS_PER_SEC
++#include <bits/time.h>
++#endif
++
+ PyDoc_STRVAR(xxsubtype__doc__,
+ "xxsubtype is an example module showing how to subtype builtin types from C.\n"
+ "test_descr.py in the standard test suite requires it in order to complete.\n"
+

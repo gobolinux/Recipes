@@ -1,0 +1,14 @@
+# Recipe for version 2.54.1 by Hisham Muhammad <hisham@gobolinux.org>, on Thu Jun 16 16:41:09 BRT 2016
+# Recipe (MakeRecipe) for LibSoup by roko, <ro.ko@mcnon.com>, on Fri Nov 19 01:54:22 BRST 2004
+compile_version=1.8.0
+url="http://ftp.gnome.org/pub/GNOME/sources/libsoup/2.54/libsoup-2.54.1.tar.xz"
+file_size=1793108
+file_md5=73b1fb774de16c29b380f87016f9f9dd
+recipe_type=configure
+configure_options=(
+   --without-gnome
+   --disable-tls-check
+)
+with_gnome=(
+   --with-gnome
+)

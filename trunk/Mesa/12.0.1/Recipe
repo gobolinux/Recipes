@@ -1,0 +1,48 @@
+# Recipe (MakeRecipe) for Mesa by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Nov 23 03:32:41 BRST 2004
+compile_version=2.0
+url="ftp://ftp.freedesktop.org/pub/mesa/12.0.1/mesa-12.0.1.tar.xz"
+file_size=8571144
+file_md5=972fd5ad5a63aeabf173fb9adefc6522
+recipe_type=configure
+
+configure_options=(
+    --enable-sysfs
+#    --enable-xcb
+    --enable-dri
+    --enable-glx
+#    --enable-xorg
+    --enable-xa
+    --enable-xvmc
+    --enable-vdpau
+    --enable-va
+    --enable-dri3
+#    --disable-ttm-api
+    --enable-gbm
+    --enable-glx-tls
+    --enable-gles1
+    --enable-gles2
+    --enable-osmesa
+    --enable-texture-float
+    --enable-driglx-direct
+    
+    --with-egl-platforms="drm,x11"
+    --with-dri-driverdir="${goboLibraries}/xorg/modules/dri"
+    --without-gallium-drivers
+)
+
+install_variables=(
+   DRI_DRIVER_INSTALL_DIR="${target}/lib/xorg/modules/dri"
+)
+
+symlink_options=(
+   --conflict=overwrite
+)
+
+pre_build() {
+    if [ -d Mesa-7.9.2 ]
+    then
+        mv Mesa-7.9.2/src/glut src/
+        mv Mesa-7.9.2/include/GL/* include/GL/
+        rm -rf -- Mesa-7.9.2
+    fi
+}

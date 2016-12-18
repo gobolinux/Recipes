@@ -1,0 +1,22 @@
+# Recipe for version 6.11.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Jul 29 20:32:34 GMT 2016
+compile_version=2.0
+url="http://roy.marples.name/downloads/dhcpcd/dhcpcd-6.11.1.tar.xz"
+file_size=190956
+file_md5=8acf2c0295f0c132a1e9f8060665b53d
+recipe_type=configure
+configure_options=(
+   --dbdir="${goboVariable}/lib/dhcpcd"
+   --rundir="${goboVariable}/run"
+   --mandir="${target}/Shared/man"
+)
+install_variables=(
+   SYSCONFDIR="${settings_target}"
+   SBINDIR="${target}/sbin"
+   LIBDIR="${target}/lib"
+   MANDIR="${target}/share/man"
+   LIBEXECDIR="${target}/lib/dhcpcd"
+)
+unmanaged_files=(
+   "${goboVariable}/lib/dhcpcd"
+   "${goboVariable}/run"
+)

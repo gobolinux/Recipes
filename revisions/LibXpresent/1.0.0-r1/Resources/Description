@@ -1,0 +1,7 @@
+[Name] LibXpresent
+[Summary] libXpresent provides an X Window System client interface to the Present extension to the X protocol.
+[Description] The Present extension provides a way for applications to update their window contents from a pixmap in a well defined fashion, synchronizing with the display refresh and potentially using a more efficient mechanism than copying the contents of the source pixmap.
+
+This package contains the development headers for the library found in libxpresent1. Non-developers likely have little use for this package.
+[License] MIT
+[Homepage] http://x.org

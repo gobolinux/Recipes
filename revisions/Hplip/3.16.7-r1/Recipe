@@ -1,0 +1,33 @@
+# Recipe for version 3.16.7 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Aug 26 16:09:02 GMT 2016
+# Recipe (MakeRecipe) for Hplip by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Wed Apr 26 15:08:17 BRT 2006
+compile_version=1.8.2
+url="$httpSourceforge/hplip/hplip-3.16.7.tar.gz"
+file_size=22872438
+file_md5=d4982fd71549f45856b5ad76e1ae8809
+recipe_type=configure
+
+configure_options=(
+    --enable-hpijs-install
+    --disable-network-build
+    --disable-scan-build
+)
+
+install_variables=(
+    LIBTOOL=$goboExecutables/libtool
+    prefix=$target
+    exec_prefix=$target
+    cupsfilterdir=$target/lib/cups/filter
+    cupsbackenddir=$target/lib/cups/backend
+    rulessystemdir=$target/lib/systemd/system
+    mimedir=$target/share/cups/mime
+    icondir=$target/share/applications
+    systraydir=$settings_target/xdg/autostart
+    halpredir=$target/share/hal/fdi/preprobe/10osvendor
+    rulesdir=$settings_target/udev/rules.d
+    hplip_confdir=$settings_target/hp
+    hplip_statedir=$goboVariable/lib/hp
+)
+
+unmanaged_files=(
+    $goboVariable/lib/hp
+)

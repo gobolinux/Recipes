@@ -1,0 +1,13 @@
+Description: Pulls in stdlib.h for NULL definition
+
+diff -Naur net-tools-1.60/lib/ec_hw.c net-tools-1.60-b2/lib/ec_hw.c
+--- net-tools-1.60/lib/ec_hw.c	1999-11-20 22:02:53.000000000 +0100
++++ net-tools-1.60-b2/lib/ec_hw.c	2008-06-22 20:54:56.000000000 +0200
+@@ -16,6 +16,7 @@
+ 
+ #if HAVE_HWEC
+ 
++#include <stdlib.h>
+ #include <net/if_arp.h>
+ #include "net-support.h"
+ 

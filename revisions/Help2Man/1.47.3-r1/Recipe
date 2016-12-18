@@ -1,0 +1,10 @@
+# Recipe for version 1.47.3 by AitorATuin, on Thu Jul 7 12:35:49 CEST 2016
+url="https://ftp.gnu.org/gnu/help2man/help2man-1.47.3.tar.xz"
+file_size=184832
+file_md5=d1d44a7a7b2bd61755a2045d96ecaea0
+dir='help2man-1.47.3'
+compile_version=1.13.0
+recipe_type=configure
+make_variables=(
+   "LINGUAS="
+)

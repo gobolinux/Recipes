@@ -1,0 +1,15 @@
+# Recipe for version 2.92 by Hugo Barrocas <barrocas75@gmail.com, on qui nov 10 23:22:31 UTC 2016
+# Recipe (MakeRecipe) for Transmission by Nathan Middleton, on Mon Oct 8 22:07:45 CDT 2007
+compile_version=1.9.0
+url="https://github.com/transmission/transmission-releases/raw/master/transmission-2.92.tar.xz"
+file_size=3378116
+file_md5=3fce404a436e3cd7fde80fb6ed61c264
+recipe_type=configure
+dir="transmission-2.92"
+
+configure_options=(
+    --enable-cli
+    --with-gtk
+    --enable-daemon
+    --with-inotify
+)

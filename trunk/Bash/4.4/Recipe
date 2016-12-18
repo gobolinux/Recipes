@@ -1,0 +1,15 @@
+# Recipe for version 4.4 by Clement (TRONIQ89) <troniq89@openmailbox.org>, on Tue Oct 18 13:02:37 UTC 2016
+url="http://ftp.gnu.org/gnu/bash/bash-4.4.tar.gz"
+file_size=9377313
+file_md5=148888a7c95ac23705559b6f477dfe25
+
+recipe_type=configure
+compile_version=1.13.2
+
+configure_options=(
+    "--with-installed-readline"
+)
+
+pre_link() {
+    ln -s bash ${target}/bin/sh
+}

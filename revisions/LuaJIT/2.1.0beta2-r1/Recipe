@@ -1,0 +1,10 @@
+# Recipe for version 2.1.0beta2 by Hisham Muhammad <hisham@gobolinux.org>, on Wed Apr 13 16:19:48 BRT 2016
+compile_version=1.8.2
+url="http://luajit.org/download/LuaJIT-2.1.0-beta2.tar.gz"
+file_size=942597
+file_md5=fa14598d0d775a7ffefb138a606e0d7b
+recipe_type=makefile
+make_variables=(
+  INSTALL_TOP=$target
+  XCFLAGS="-DLUAJIT_ENABLE_LUA52COMPAT"
+)

@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for Nestopia by Hisham Muhammad <hisham@gobolinux.org>, on Thu Aug 4 00:14:10 BRT 2016
+# Recipe for version 1.47 by Hisham Muhammad <hisham@gobolinux.org>, on Thu Aug 4 00:14:10 BRT 2016
+compile_version=git
+url="https://github.com/rdanbrook/nestopia/archive/1.47.tar.gz"
+file="nestopia-1.47.tar.gz"
+file_size=1271675
+file_md5=af4f36d83b581ce5e3cf1112ee9bccdf
+dir='nestopia-1.47'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)

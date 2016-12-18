@@ -1,0 +1,25 @@
+--- Python-2.5/setup.py.orig	2007-06-23 17:32:46.000000000 -0300
++++ Python-2.5/setup.py	2007-06-23 17:33:44.000000000 -0300
+@@ -297,11 +297,17 @@
+                     for directory in options.dirs:
+                         add_dir_to_list(dir_list, directory)
+ 
+-        if os.path.normpath(sys.prefix) != '/usr':
+-            add_dir_to_list(self.compiler.library_dirs,
+-                            sysconfig.get_config_var("LIBDIR"))
+-            add_dir_to_list(self.compiler.include_dirs,
+-                            sysconfig.get_config_var("INCLUDEDIR"))
++        if os.environ.get('CROSS_COMPILING') == 'yes':
++            add_dir_to_list(self.compiler.library_dirs, ".")
++            add_dir_to_list(self.compiler.library_dirs, "GOBOLINUX_LIB_DIR")
++            add_dir_to_list(self.compiler.include_dirs, ".")
++            add_dir_to_list(self.compiler.include_dirs, "GOBOLINUX_INCLUDE_DIR")
++        else:
++            if os.path.normpath(sys.prefix) != '/usr':
++                add_dir_to_list(self.compiler.library_dirs,
++                                sysconfig.get_config_var("LIBDIR"))
++                add_dir_to_list(self.compiler.include_dirs,
++                                sysconfig.get_config_var("INCLUDEDIR"))
+ 
+         try:
+             have_unicode = unicode

@@ -1,0 +1,21 @@
+http://bugs.mysql.com/bug.php?id=70047
+--- mysql-5.6.13/storage/innobase/row/row0log.cc	2016-04-10 18:15:59.112412719 -0300
++++ mysql-5.6.13/storage/innobase/row/row0log.cc	2016-04-10 18:17:05.580259177 -0300
+@@ -2364,7 +2364,7 @@
+ 		and be ignored when the operation is unsupported. */
+ 		fallocate(index->online_log->fd,
+ 			  FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE,
+-			  ofs, srv_buf_size);
++			  ofs, srv_sort_buf_size);
+ #endif /* FALLOC_FL_PUNCH_HOLE */
+ 
+ 		next_mrec = index->online_log->head.block;
+@@ -3153,7 +3153,7 @@
+ 		and be ignored when the operation is unsupported. */
+ 		fallocate(index->online_log->fd,
+ 			  FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE,
+-			  ofs, srv_buf_size);
++			  ofs, srv_sort_buf_size);
+ #endif /* FALLOC_FL_PUNCH_HOLE */
+ 
+ 		next_mrec = index->online_log->head.block;

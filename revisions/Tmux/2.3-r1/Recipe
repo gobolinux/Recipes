@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for Tmux by Jonas Karlsson <jonas@gobolinux.org>, on Sun May 10 22:15:01 CEST 2009
+compile_version=1.12.3
+url="https://github.com/tmux/tmux/releases/download/2.3/tmux-2.3.tar.gz"
+file_size=473944
+file_md5=fcfd1611d705d8b31df3c26ebc93bd3e
+recipe_type=makefile
+#makefile='GNUmakefile'
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
+pre_build(){
+    configure
+}

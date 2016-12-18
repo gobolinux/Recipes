@@ -1,0 +1,11 @@
+# Recipe for version 3.3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Mar 28 14:05:51 GMT 2014
+# Recipe (MakeRecipe) for Mdadm by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Jun 21 16:34:18 BRT 2005
+compile_version=1.8.2
+url="https://www.kernel.org/pub/linux/utils/raid/mdadm/mdadm-3.3.tar.xz"
+file_size=399152
+file_md5=abb19b309281b93cf79d29fb2dfb2e85
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "DESTDIR=$target"
+)

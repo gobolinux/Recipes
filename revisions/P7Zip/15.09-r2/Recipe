@@ -1,0 +1,13 @@
+# Recipe for version 15.09 by Hugo Barrocas <barrocas75@gmail.com>, on Dom Mar 13 17:44:49 UTC 2016
+# Recipe (MakeRecipe) for P7Zip by Hisham Muhammad, on Sat Jan 15 19:12:47 BRST 2005
+compile_version=1.11.0
+url="http://downloads.sf.net/p7zip/p7zip_15.09_src_all.tar.bz2"
+file_size=4048481
+file_md5=ab69f4f13ba0ec57eca2cf4c9edd9678
+dir='p7zip_15.09'
+recipe_type=makefile
+makefile='makefile'
+# make='make all3'
+install_variables=(
+ "DEST_HOME=$target"
+)

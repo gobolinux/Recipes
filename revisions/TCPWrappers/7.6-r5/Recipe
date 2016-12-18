@@ -1,0 +1,40 @@
+# Recipe (MakeRecipe) for TCPWrappers by Michael Farrell <michael@xinomorph.org>, on Mon Nov 8 18:08:30 CST 2004
+# Recipe for version 7.6 by Michael Farrell <michael@xinomorph.org>, on Mon Nov 8 18:08:30 CST 2004
+compile_version=1.8.0
+url="ftp://ftp.porcupine.org/pub/security/tcp_wrappers_7.6.tar.gz"
+file_size=99438
+file_md5=e6fa25f71226d090f34de3f6b122fb5a
+dir='tcp_wrappers_7.6'
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=(
+	"REAL_DAEMON_DIR=$target"
+)
+
+build_target=linux
+
+do_install() {
+	# Because make install is all broken, we'll do it manually.
+	mkdir -p $target/share/man/{man3,man5,man8}
+	install -o 0 -g 0 -m 0644 shared/libwrap.so.0.7.6 $target/lib/
+	ln -s libwrap.so.0.7.6 $target/lib/libwrap.so.0
+	install -o 0 -g 0 -m 0755 tcpd $target/bin/
+	install -o 0 -g 0 -m 0755 tcpdchk $target/bin/
+	install -o 0 -g 0 -m 0755 tcpdmatch $target/bin/
+	install -o 0 -g 0 -m 0755 try-from $target/bin/
+	install -o 0 -g 0 -m 0755 safe_finger $target/bin/
+	install -o 0 -g 0 -m 0644 tcpd.8 $target/share/man/man8/
+	install -o 0 -g 0 -m 0644 tcpdchk.8 $target/share/man/man8/
+	install -o 0 -g 0 -m 0644 tcpdmatch.8 $target/share/man/man8/
+	install -o 0 -g 0 -m 0644 hosts_access.5 $target/share/man/man5/
+	install -o 0 -g 0 -m 0644 hosts_options.5 $target/share/man/man5/
+	ln -s $target/lib/libwrap.so.0 $target/lib/libwrap.so
+	install -o 0 -g 0 -m 0644 hosts_access.3 $target/share/man/man3/
+	install -o 0 -g 0 -m 0644 tcpd.h $target/include/
+	install -o 0 -g 0 -m 0644 libwrap.a $target/lib/
+	ln -s $target/share/man/man3/hosts_access.3 $target/share/man/man3/hosts_ctl.3
+	ln -s $target/share/man/man3/hosts_access.3 $target/share/man/man3/request_init.3
+	ln -s $target/share/man/man3/hosts_access.3 $target/share/man/man3/request_set.3
+}	
+

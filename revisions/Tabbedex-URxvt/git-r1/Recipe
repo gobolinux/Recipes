@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for Tabbedex-URxvt by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Nov 24 15:20:03 BRST 2016
+# Recipe for version git by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Nov 24 15:20:03 BRST 2016
+compile_version=2.0
+git="https://github.com/shaggytwodope/tabbedex-urxvt.git"
+recipe_type=manifest
+
+manifest=(
+    tabbedex:lib/urxvt/perl/
+)

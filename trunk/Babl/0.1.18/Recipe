@@ -1,0 +1,11 @@
+# Recipe for version 0.1.18 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Aug 25 19:28:26 GMT 2016
+# Recipe (MakeRecipe) for Babl by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jan. 2., péntek, 23.52.42 CET
+compile_version=1.11.4
+url="https://download.gimp.org/pub/babl/0.1/babl-0.1.18.tar.bz2"
+file_size=734225
+file_md5=400d430e9c39b8795a65eb8a65fbe0af
+recipe_type=configure
+
+configure_options=(
+   --enable-introspection=no
+)

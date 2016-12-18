@@ -1,0 +1,10 @@
+# Recipe for version 1.2_rc3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Nov 25 20:27:15 BRST 2015
+# Recipe (MakeRecipe) for Aircrack-ng by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Mar 14 23:55:34 PDT 2008
+compile_version=1.10.1
+url="http://download.aircrack-ng.org/aircrack-ng-1.2-rc3.tar.gz"
+file_size=4303552
+file_md5=3f4096808c916baa8872a5ad138a9c35
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=( prefix=$target )

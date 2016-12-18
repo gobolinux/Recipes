@@ -1,0 +1,11 @@
+# Recipe for version 2.24.29 by Ivan Florentin <ivanflorentin@gmail.com>, on Sat Dec 17 03:16:57 PYST 2016
+# Recipe (MakeRecipe) for GTK+ by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 11:55:54 BRT 2005
+compile_version=1.9.0
+url="http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.24/gtk+-2.24.29.tar.xz"
+file_size=13143648
+file_md5=1b7a3689f65617387b5b54520f4439e8
+recipe_type=configure
+
+configure_options=(
+    --disable-gtk-doc-html
+)

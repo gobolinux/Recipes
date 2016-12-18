@@ -1,0 +1,45 @@
+# Recipe (MakeRecipe) for HFSProgs by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jun 26 18:21:30 BRT 2016
+# Recipe for version 332.25 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jun 26 18:21:30 BRT 2016
+compile_version=1.12.3
+urls=(
+  "https://opensource.apple.com/tarballs/diskdev_cmds/diskdev_cmds-332.25.tar.gz"
+  "http://ftp.de.debian.org/debian/pool/main/h/hfsprogs/hfsprogs_332.25-11.debian.tar.gz"
+)
+file_sizes=(
+  736496
+  55509
+)
+file_md5s=(
+  261c3de5ec0dcf5244e3f60d79c1d6f1
+  ce42d7b88de9c41c6192ff3c450a6bd1
+)
+unpack_files='inside_first'
+dir='diskdev_cmds-332.25'
+recipe_type=makefile
+makefile='Makefile.lnx'
+do_install=no
+
+pre_build() {
+  for patch in debian/patches/*.patch
+  do
+    patch -i ${patch} -p1
+  done
+}
+
+pre_install() {
+  # Borrowed from ArchLinux
+
+  # Create required package directories
+  install -m 755 -d "$target/bin"
+  install -m 755 -d "$target/share/licenses/hfsprogs"
+  install -m 755 -d "$target/share/hfsprogs"
+  install -m 755 -d "$target/share/man/man8/"
+  # Copy executable files
+  install -m 755 "newfs_hfs.tproj/newfs_hfs" "$target/bin/mkfs.hfsplus"
+  install -m 755 "fsck_hfs.tproj/fsck_hfs" "$target/bin/fsck.hfsplus"
+  # Copy shared data
+  install -m 644 "newfs_hfs.tproj/hfsbootdata.img" "$target/share/hfsprogs/hfsbootdata"
+  # Copy man pages
+  install -m 644 "newfs_hfs.tproj/newfs_hfs.8" "$target/share/man/man8/mkfs.hfsplus.8"
+  install -m 644 "fsck_hfs.tproj/fsck_hfs.8" "$target/share/man/man8/fsck.hfsplus.8"
+}

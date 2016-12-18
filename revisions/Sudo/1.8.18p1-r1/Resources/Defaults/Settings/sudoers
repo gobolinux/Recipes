@@ -1,0 +1,41 @@
+# sudoers file.
+#
+# This file MUST be edited with the 'visudo' command as root.
+#
+# See the sudoers man page for the details on how to write a sudoers file.
+#
+
+# Host alias specification
+
+# User alias specification
+
+# Cmnd alias specification
+
+# Defaults specification
+
+#If you want to have sudo send mail to someone in the cases that sudo
+#would like to send mail (see the mail_* options - defaults are normal),
+#uncomment this line and fill in an appropriate address for mailto:
+#Default mailto="", mailerpath=/bin/sendmail
+
+Defaults !env_reset, setenv
+
+# User privilege specification
+
+# user #0 is normally in group sys, allowed later anyway.
+# (user id's can't syntactically be allowed to
+#  do things, in this file -- this was here:
+#  gobo	ALL=(ALL) ALL
+# )
+
+# Uncomment to allow people in group wheel to run all commands
+# %wheel	ALL=(ALL)	ALL
+
+# Same thing without a password
+# %wheel	ALL=(ALL)	NOPASSWD: ALL
+%sys           ALL=(ALL)       ALL
+
+# Samples
+#%users  ALL=/sbin/mount /cdrom,/sbin/umount /cdrom
+# %users  localhost=/sbin/shutdown -h now
+

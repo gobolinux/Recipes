@@ -1,0 +1,73 @@
+# Recipe for version 5.6.20 by Renato Maia <maia.renato@gmail.com>, on Sun Apr 10 20:28:05 BRT 2016
+### PHP 5.6.20
+# GoboLinux Recipe created by Taeber Rapczak <taeber@rapczak.com>
+# June 14, 2004
+
+### Compile Version
+compile_version=1.8.0
+
+### Download Section
+url="http://museum.php.net/php5/php-5.6.20.tar.bz2"
+file_size=14162188
+file_md5=e6422449bb0342f074eb649a9adf586b
+mirror_urls=(
+	"http://www.php.net/get/php-5.6.20.tar.bz2/from/us2.php.net/mirror"
+	"http://www.php.net/get/php-5.6.20.tar.bz2/from/us4.php.net/mirror"
+)
+
+### File Information
+file="php-5.6.20.tar.bz2"
+
+### Compilation Variables
+recipe_type=configure
+
+configure_options=(
+   --with-openssl
+)
+
+with_httpd=--with-apxs2=$dir/apxs2.sh
+with_postgresql=--with-pgsql
+with_openldap=--with-ldap
+with_mysql=--with-mysql
+
+install_variables=(
+   PHP_PEAR_SYSCONF_DIR="${settings_target}"
+   SYSCONF_DIR="${settings_target}/httpd"
+   LIBEXECDIR="${target}/lib/httpd/modules"
+)
+
+pre_build() {
+   cat << EOF > apxs2.sh
+#!/bin/sh
+if echo "\$@" | grep -q "\-q LIBEXECDIR"
+then echo "$target/lib/httpd/modules"
+elif echo "\$@" | grep -q "\-q SYSCONFDIR"
+then echo "$settings_target/httpd"
+else apxs \$@
+fi
+EOF
+   chmod +x apxs2.sh
+}
+
+pre_install() {
+   if [ ! -f ${settings_target}/php.ini-production ]
+   then 
+       cp php.ini-production ${settings_target}
+   fi
+   if [ ! -f ${settings_target}/php.ini-development ]
+   then 
+       cp php.ini-development ${settings_target}
+   fi
+   if [ -f $goboSettings/httpd/httpd.conf ]
+   then
+       mkdir -p $settings_target/httpd
+       cp $goboSettings/httpd/httpd.conf $settings_target/httpd
+   fi
+}
+
+pre_link() {
+   if [ -f $settings_target/httpd/httpd.conf ]
+   then
+       rm -f $settings_target/httpd/httpd.conf
+   fi
+}

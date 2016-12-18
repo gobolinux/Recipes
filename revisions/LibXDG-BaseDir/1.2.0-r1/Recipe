@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for LibXDG-BaseDir by Hisham Muhammad <hisham@gobolinux.org>, on Tue Aug 2 19:54:04 BRT 2016
+# Recipe for version 1.2.0 by Hisham Muhammad <hisham@gobolinux.org>, on Tue Aug 2 19:54:04 BRT 2016
+compile_version=git
+url="https://github.com/devnev/libxdg-basedir/archive/libxdg-basedir-1.2.0.tar.gz"
+file="libxdg-basedir-libxdg-basedir-1.2.0.tar.gz"
+file_size=30159
+file_md5=bd3bb815c9e27fda9c721b9c0b29ddda
+dir='libxdg-basedir-libxdg-basedir-1.2.0'
+recipe_type=configure
+autogen_before_configure=yes

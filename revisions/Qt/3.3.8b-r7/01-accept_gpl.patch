@@ -1,0 +1,16 @@
+Accept GNU GPL 2/3 automatically
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+
+--- qt-x11-free-3.3.8b/configure	2008-08-29 15:15:22.000000000 +0000
++++ qt-x11-free-3.3.8b/configure.new	2008-08-29 15:19:17.000000000 +0000
+@@ -2398,7 +2398,8 @@
+ 	else
+ 	    echo "Do you accept the terms of $affix license? \c"
+ 	fi
+-	read acceptance
++#	read acceptance
++	acceptance=yes
+ 	echo
+ 	if [ "$acceptance" = "yes" ]; then
+ 	    break

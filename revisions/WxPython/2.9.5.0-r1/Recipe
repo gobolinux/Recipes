@@ -1,0 +1,36 @@
+# Recipe (MakeRecipe) for WxPython by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Aug 9 11:10:29 BRT 2005
+compile_version=1.8.0
+url="http://downloads.sourceforge.net/wxpython/wxPython-src-2.9.5.0.tar.bz2"
+file_size=57952918
+file_md5=a2a28fe8223391c93bf8788316767c9e
+recipe_type=configure
+
+configure_options=(
+        "--with-gtk"
+        "--enable-display"
+        "--enable-geometry"
+        "--enable-graphics_ctx"
+        "--enable-intl"
+        "--enable-sound"
+        "--enable-unicode"
+        "--enable-optimize"
+        "--disable-monolithic"
+)
+
+post_install() {
+    Quiet pushd wxPython
+    python_opts="WXPORT=gtk2 UNICODE=1 EP_ADD_OPTS=1 NO_SCRIPTS=1 BUILD_GL_CANVAS=0 build_ext"
+    python setup.py $python_opts build
+    python setup.py $python_opts install --prefix=$target
+    for s in scripts/*
+    do
+      [ -x "$s" ] && cp -v "$s" $target/bin
+    done
+    Quiet popd
+
+    Quiet pushd $target/include
+    ln -fs wx-2.9/wx .
+    Quiet popd
+
+    SymlinkProgram WxPython
+}

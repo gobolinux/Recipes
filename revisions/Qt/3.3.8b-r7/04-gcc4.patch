@@ -1,0 +1,11 @@
+--- qt-x11-free-3.3.8b/src/tools/qglobal.h.orig	2016-09-27 02:41:55.419144372 +0000
++++ qt-x11-free-3.3.8b/src/tools/qglobal.h	2016-09-27 02:42:10.603144074 +0000
+@@ -41,6 +41,8 @@
+ #ifndef QGLOBAL_H
+ #define QGLOBAL_H
+ 
++#include <stddef.h>
++
+ #define QT_VERSION_STR   "3.3.8b"
+ /*
+    QT_VERSION is (major << 16) + (minor << 8) + patch.

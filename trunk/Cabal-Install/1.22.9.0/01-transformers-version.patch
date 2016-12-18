@@ -1,0 +1,14 @@
+Lower the version of transformers to avoid a dependency error in mtl 2.2.1
+
+diff -Nur cabal-install-1.22.9.0.old/bootstrap.sh cabal-install-1.22.9.0/bootstrap.sh
+--- cabal-install-1.22.9.0.old/bootstrap.sh	2016-03-02 17:10:11.000000000 -0300
++++ cabal-install-1.22.9.0/bootstrap.sh	2016-03-28 19:03:27.342546786 -0300
+@@ -192,7 +192,7 @@
+                        # >= 2.6 && < 2.7
+ CABAL_VER="1.22.8.0";  CABAL_VER_REGEXP="1\.22"
+                        # >= 1.22 && < 1.23
+-TRANS_VER="0.5.1.0";   TRANS_VER_REGEXP="0\.[45]\."
++TRANS_VER="0.4.3.0";   TRANS_VER_REGEXP="0\.4\."
+                        # >= 0.2.* && < 0.6
+ MTL_VER="2.2.1";       MTL_VER_REGEXP="[2]\."
+                        #  >= 2.0 && < 3

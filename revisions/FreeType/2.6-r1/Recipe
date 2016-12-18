@@ -1,0 +1,21 @@
+# Recipe for version 2.6 by Aitor Iturri, on Mon Jul 4 15:02:14 CEST 2016
+# by Giusepe Casagrande, Jeremy Vernon
+url="http://download.savannah.gnu.org/releases/freetype/freetype-2.6.tar.bz2"
+file_size=1726219
+file_md5=5682890cb0267f6671dd3de6eabd3e69
+compile_version=1.8.5
+recipe_type=configure
+
+# XFree86 also has a FreeType; We want this one to be the dominant FreeType
+symlink_options=(
+   "--conflict=overwrite"
+)
+
+make_variables=(
+	C_INCLUDE_PATH=
+)
+
+pre_link() {
+	cd $target/include
+	ln -s freetype2 freetype
+}

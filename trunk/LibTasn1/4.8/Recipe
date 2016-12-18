@@ -1,0 +1,13 @@
+# Recipe for version 4.8 by AitorATuin, on Thu Jul 14 01:17:17 CEST 2016
+# Recipe (MakeRecipe) for LibTasn1 by Giovani Facchini, on Qui Abr 14 17:14:26 BRT 2005
+compile_version=1.8.0
+url="https://ftp.gnu.org/gnu/libtasn1/libtasn1-4.8.tar.gz"
+file_size=1859924
+file_md5=9a6767705725544f2b86670dcfb34107
+recipe_type=configure
+#pre_build(){
+#   libtoolize --force
+#   aclocal
+#   autoconf
+#   automake --add-missing
+#}

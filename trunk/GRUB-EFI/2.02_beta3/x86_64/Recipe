@@ -1,0 +1,7 @@
+# arch=x86_64
+
+configure_options=(
+    ${configure_options[@]}
+    --disable-efiemu
+    --target="x86_64"
+)

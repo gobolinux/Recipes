@@ -1,0 +1,12 @@
+# Recipe for version 2.9.1 by Joel Roth <joelz@pobox.com>, on Wed Nov 12 04:53:06 UTC 2014
+# Recipe (MakeRecipe) for Ecasound by roko, <ro.ko@mcnon.com>, on Fri Oct 29 23:05:38 BRST 2004
+compile_version=1.8.0
+url="http://ecasound.seul.org/download/ecasound-2.9.1.tar.gz"
+file_size=1057333
+file_md5=13c7be1e4eddc0bbf3792dc17777e465
+recipe_type=configure
+configure_options=(
+--enable-shared
+--disable-rubyecasound 
+--with-python-modules=$target/lib/python2.3/site-packages
+)

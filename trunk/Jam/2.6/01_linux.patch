@@ -1,0 +1,16 @@
+diff -Naur jam-2.5/Jambase jam-2.5-patched/Jambase
+--- jam-2.5/Jambase	2003-04-23 01:45:49.000000000 -0300
++++ jam-2.5-patched/Jambase	2004-06-20 11:33:26.000000000 -0300
+@@ -449,6 +449,12 @@
+     case IRIX :
+ 	RANLIB		?= "" ;
+ 
++    case LINUX :
++	YACC		?= bison -y ;
++	YACCGEN		?= .c ;
++	YACCFILES	?= y.tab ;
++	YACCFLAGS	?= -d ;
++
+     case MPEIX :
+ 	CC		?= gcc ;
+ 	C++		?= gcc ;

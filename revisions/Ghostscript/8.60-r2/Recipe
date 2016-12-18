@@ -1,0 +1,19 @@
+# Recipe for version 8.60 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Aug 17 15:46:45 CEST 2007
+# Recipe (MakeRecipe) for GhostScript by Jonas Karlsson <jonka750@student.liu.se>, on Tue Jan 24 11:36:14 CET 2006
+compile_version=1.8.5
+url="$httpSourceforge/ghostscript/ghostscript-8.60.tar.bz2"
+file_size=12942029
+file_md5=89fc0a90e67caf151a9d6855200c68ca
+recipe_type=configure
+build_target="std so"
+install_target="install soinstall"
+
+pre_link() {
+   # Linking fonts dir so ghostscript can find it.
+   ln -sf /Files/Fonts/Ghostscript ${target}/share/ghostscript/fonts
+   
+   # Making headers dir and copying headers
+   install -v -d -m755 ${target}/include/ps
+   install -v -m644 src/*.h ${target}/include/ps
+   ln -s ${target}/include/ps ${target}/include/ghostscript
+}

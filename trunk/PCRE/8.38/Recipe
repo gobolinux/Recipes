@@ -1,0 +1,13 @@
+# Recipe for version 8.38 by Hugo Barrocas <barrocas75@gmail.com>, on Qua Mar 30 02:25:23 UTC 2016
+# by Jeremy Vernon
+compile_version=1.12.0
+url="http://www.paldo.org/paldo/sources/pcre/pcre-8.38.tar.bz2"
+file_size=1562265
+file_md5=00aabbfe56d5a48b270f999b508c5ad2
+recipe_type=configure
+
+configure_options=(
+   --enable-unicode-properties
+   --enable-utf8
+   #unicode and utf-8 support are needed here for at least Goffice 0.5.2 and Glib 2.48.0
+)

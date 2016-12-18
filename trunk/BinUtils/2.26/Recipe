@@ -1,0 +1,23 @@
+# Recipe for version 2.26 by Hisham Muhammad <hisham@gobolinux.org>, on Wed Apr 13 18:15:07 BRT 2016
+url=$ftpGnu/binutils/binutils-2.26.tar.bz2
+file_size=25543552
+file_md5=64146a0faa3b411ba774f47d41de239f
+compile_version=1.8.0
+needs_build_directory=yes
+needs_safe_linking=yes
+recipe_type=configure
+configure_options=(
+   "--enable-shared"
+   "--enable-gold=default"
+   "--enable-plugins"
+)
+make_variables=(
+   "tooldir=$target"
+)
+install_variables=(
+   target_header_dir="${target}/include"
+)
+
+pre_install() {
+   cp ../include/libiberty.h $target/include
+}

@@ -1,0 +1,19 @@
+# Recipe for version 1.9.6 by Hisham Muhammad <hisham@gobolinux.org>, on Wed Oct 14 11:29:33 BRT 2015
+# Recipe (MakeRecipe) for Apache-Ant by Hisham Muhammad, on Mon Aug 30 15:40:45 BRT 2004
+compile_version=1.9.0
+url="http://ftp.unicamp.br/pub/apache//ant/binaries/apache-ant-1.9.6-bin.tar.bz2"
+file_size=4385004
+file_md5=9a966bfde100aa696f8a32cba03bce21
+dir='apache-ant-1.9.6'
+recipe_type=manifest
+
+environment=(
+  JAVA_HOME=$(dirname $(dirname $(which java)))
+  CLASSPATH=${CLASSPATH:+${CLASSPATH}:}${junit_path}/lib/junit.jar
+)
+
+manifest=(
+  "bin/*:bin"
+  "lib/*:lib"
+  "manual:doc"
+)

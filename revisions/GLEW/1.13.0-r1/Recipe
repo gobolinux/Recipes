@@ -1,0 +1,11 @@
+# Recipe for version 1.13.0 by Hugo Barrocas <barrocas75@gmail.com>, on Qua Mar 30 14:12:01 UTC 2016
+# Recipe (MakeRecipe) for GLEW by Leandro Motta Barros <lmb@stackedboxes.org>, on Tue Jan 19 14:31:23 BRST 2010
+compile_version=1.12.3
+url="$httpSourceforge/glew/glew/1.13.0/glew-1.13.0.tgz"
+file_size=616070
+file_md5=7cbada3166d2aadfc4169c4283701066
+recipe_type=makefile
+makefile='Makefile'
+install_variables=(
+   GLEW_DEST=$target
+)

@@ -1,0 +1,16 @@
+# Recipe for version 5.0.10 by Hisham Muhammad <hisham@gobolinux.org>, on Sat Nov 28 20:23:28 BRST 2015
+# Recipe (MakeRecipe) for Whois by Hisham Muhammad, on Wed Sep 1 19:10:16 BRT 2004
+compile_version=1.9.0
+url="http://ftp.debian.org/debian/pool/main/w/whois/whois_5.0.10.tar.gz"
+file_size=81226
+file_md5=d7626a3f789da85e70e4b931b6b34a26
+dir='whois-5.0.10'
+recipe_type=makefile
+makefile='Makefile'
+install_variables=(
+   "BASEDIR=$target"
+   "prefix="
+)
+pre_install() {
+   mkdir -p "$target/share/man/man1"
+}
