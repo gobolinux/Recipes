@@ -18,3 +18,14 @@
 -includesdir = $(libdir)/@PACKAGE_NAME@-@PACKAGE_VERSION@/include
 +includesdir = @includedir@
  nodist_includes_HEADERS = ffi.h ffitarget.h
+--- libffi-3.2.1/libffi.pc.in.orig	2016-12-19 11:06:05.000000000 -0200
++++ libffi-3.2.1/libffi.pc.in	2016-12-19 11:07:00.000000000 -0200
+@@ -2,7 +2,7 @@ prefix=@prefix@
+ exec_prefix=@exec_prefix@
+ libdir=@libdir@
+ toolexeclibdir=@toolexeclibdir@
+-includedir=${libdir}/@PACKAGE_NAME@-@PACKAGE_VERSION@/include
++includedir=${prefix}/include
+ 
+ Name: @PACKAGE_NAME@
+ Description: Library supporting Foreign Function Interfaces
