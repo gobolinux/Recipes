@@ -1,0 +1,13 @@
+# Recipe for version 4.8.188 by Hugo Barrocas <barrocas75@gmail.com>, on qui dez 22 14:40:53 UTC 2016
+url="http://www.midnight-commander.org/downloads/mc-4.8.18.tar.xz"
+file_size=2462080
+file_md5=85ff9279f912c5482fe9f110f8892c96
+file=mc-4.8.18.tar.xz
+compile_version=1.10.2
+recipe_type=configure
+configure_options=(
+    --enable-extcharset
+    --enable-charset
+    --without-x
+    --with-search-engine=glib
+)
