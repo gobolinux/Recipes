@@ -1,0 +1,11 @@
+# Recipe for version 3.01b by Hugo Barrocas <barrocas75@gmail.com>, on qui dez 22 12:20:13 UTC 2016
+# Recipe (MakeRecipe) for FDclone by JPaul Hatungimana <jhatungimana@netscape.net>, on Sat Aug 21 12:32:10 CEST 2010
+compile_version=1.13.3
+url="http://hp.vector.co.jp/authors/VA012337/soft/fd/FD-3.01b.tar.gz"
+file_size=953287
+file_md5=3c3668bef7924e689943a2cca5ff414d
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
