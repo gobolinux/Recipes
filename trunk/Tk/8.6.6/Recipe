@@ -1,0 +1,17 @@
+# Recipe for version 8.6.6 by Hugo Barrocas <barrocas75@gmail.com>, on qui dez 22 17:06:00 UTC 2016
+compile_version=1.13.3
+url="$httpSourceforge/tcl/tk8.6.6-src.tar.gz"
+file_size=4273737
+file_md5=dd7dbb3a6523c42d05f6ab6e86096e99
+dir='tk8.6.6/unix'
+recipe_type=configure
+configure_options=(
+  --with-tcl=$tcl_path/lib
+  --enable-xft
+  --enable-shared
+  --enable-threads
+  --enable-man-symlinks
+)
+pre_link() {
+   $sudo_exec ln -nfs ${target}/bin/wish8.6 ${target}/bin/wish
+}
