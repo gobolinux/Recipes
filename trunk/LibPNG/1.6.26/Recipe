@@ -1,0 +1,11 @@
+# Recipe for version 1.6.26 by Wilson Moura <wilsonmourati@gmail.com>, on sex dez 23 16:43:29 BRT 2016
+compile_version=1.8.5
+url="ftp://ftp.simplesystems.org/pub/libpng/png/src/libpng16/libpng-1.6.26.tar.gz"
+file_size=1482778
+file_md5=236cd975520fc1f34cc0b8f0e615f7a0
+recipe_type=configure
+
+pre_link() {
+    ln -sf libpng16 $target/include/libpng
+    ln -sf libpng.so $target/lib/libpng.so.0
+}
