@@ -5,3 +5,7 @@ url="$ftpGnu/libtool/libtool-2.4.6.tar.xz"
 file_size=973080
 file_md5=1bfb9b923f2c1339b4d2ce1807064aa5
 recipe_type=configure
+
+make_variables=(
+    LIBTOOL=$dir/libtool
+)
