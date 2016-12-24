@@ -1,0 +1,12 @@
+# Recipe for version 2.2.6 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. dec. 22., kedd, 05.52.32 CET
+# Recipe (MakeRecipe) for SDL_perl by David Smith <dsmith@algonet.se>, on fre apr 8 22:12:06 CEST 2005
+compile_version=1.8.0
+url="http://search.cpan.org/CPAN/authors/id/K/KT/KTHAKORE/SDL_Perl-v2.2.6.tar.gz"
+file_size=913498
+file_md5=445950ca7b9991f34ec792bbac8386b6
+recipe_type=perl
+dir="SDL_Perl-v2.2.6"
+pre_build(){
+    perl Build.PL
+    Build
+}
