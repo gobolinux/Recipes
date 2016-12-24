@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for GCstar by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. febr. 1., vasárnap, 01.51.46 CET
+# Recipe for version 1.4.3 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. febr. 1., vasárnap, 01.51.46 CET
+compile_version=1.11.4
+url="http://download.gna.org/gcstar/gcstar-1.4.3.tar.gz"
+file_size=2505623
+file_md5=a4182efaf0f81fba39d1ab8b9b582417
+dir='gcstar'
+recipe_type=manifest
+manifest=(
+    templates:share/gcstar/templates
+)
+pre_link() {
+    $compileSourcesDir/gcstar/install --prefix=$target --text
+}

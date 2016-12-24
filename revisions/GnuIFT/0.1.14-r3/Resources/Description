@@ -1,0 +1,19 @@
+[Name] GnuIFT
+[Summary] GNU Image Finding Tool - index and search images by content
+[Description] The GIFT (the GNU Image-Finding Tool) is a Content Based
+Image Retrieval System (CBIRS). It enables you to do Query By Example
+on images, giving you the opportunity to improve query results by
+relevance feedback. For processing your queries the program relies
+entirely on the content of the images, freeing you from the need to
+annotate all images before querying the collection. 
+The GIFT comes with a tool which lets you index whole directory trees
+containing images in one go. You then can use the GIFT server and its
+client, to browse your own image collections. 
+The GIFT is an open framework. The developers explicitly have taken
+into account the possibility of adding new ways of querying to the
+framework. The communication protocol for client-server communication,
+MRML, is XML based and fully documented (http://www.mrml.net). This
+aims at promoting code reuse among researchers and application
+developers.
+[License] GNU General Public License version 2
+[Homepage] http://www.gnu.org/software/gift/

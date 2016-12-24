@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for CheckGmail by Hisham Muhammad, on Tue Oct 24 13:22:04 BRST 2006
+# Recipe for version 1.10 by Hisham Muhammad, on Tue Oct 24 13:22:04 BRST 2006
+compile_version=1.8.0
+url="$httpSourceforge/checkgmail/checkgmail-1.10.tar.bz2"
+file_size=44998
+file_md5=62d2358e44a833bf5908a20a42ffa8ca
+recipe_type=manifest
+manifest=(
+   checkgmail:bin
+   man/checkgmail.1.gz:man/man1
+)
