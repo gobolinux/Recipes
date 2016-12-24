@@ -1,0 +1,22 @@
+--- beryl-core-0.2.1/src/Makefile.in.old	2007-03-28 23:43:51.000000000 +0200
++++ beryl-core-0.2.1/src/Makefile.in	2007-03-28 23:43:32.000000000 +0200
+@@ -283,7 +283,7 @@
+ 	main.c	   \
+ 	$(berylsource)
+ 
+-beryl_xgl_LDFLAGS = -export-dynamic
++beryl_xgl_LDFLAGS = -export-dynamic -pthread
+ beryl_xgl_SOURCES = \
+ 	main.c	   \
+ 	$(berylsource)
+--- beryl-core-0.2.1/src/Makefile.am.old	2007-03-28 23:44:25.000000000 +0200
++++ beryl-core-0.2.1/src/Makefile.am	2007-03-28 23:44:08.000000000 +0200
+@@ -44,7 +44,7 @@
+ 	main.c	   \
+ 	$(berylsource)
+ 
+-beryl_xgl_LDFLAGS = -export-dynamic
++beryl_xgl_LDFLAGS = -export-dynamic -pthread
+ beryl_xgl_SOURCES =   \
+ 	main.c	   \
+ 	$(berylsource)

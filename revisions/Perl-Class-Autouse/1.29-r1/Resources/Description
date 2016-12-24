@@ -1,9 +1,0 @@
-[Name] Perl-Class-Autouse
-[Summary] Run-time load a class the first time you call a method in it.
-[Description] Class::Autouse allows you to specify a class the will
-only load when a method of the class is called. For large classes that
-might not be used during the running of a program, such as
-Date::Manip, this can save you large amounts of memory, and decrease
-the script load time.
-[License] GNU General Public License/Perl Artistic License
-[Homepage] http://search.cpan.org/~adamk/Class-Autouse/

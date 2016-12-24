@@ -1,8 +1,0 @@
-[Name] Perl-File-Temp
-[Summary] Return name and handle of a temporary file safely
-[Description] This module can be used to generate temporary files
-(providing a filename and filehandle) or directories. Possible race
-conditions are avoided and some security checks are performed (eg
-making sure the sticky bit is set on world writeable temp directories).
-[License] GNU General Public License/Perl Artistic License
-[Homepage] http://search.cpan.org/~tjenness/File-Temp/

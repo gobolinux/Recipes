@@ -1,7 +1,0 @@
-[Name] Perl-Text-Template
-[Summary] Expand template text with embedded Perl
-[Description] This is a library for generating form letters, building HTML pages, or filling in templates generally. A `template' is a piece of text that has little Perl programs embedded in it here and there. When you `fill in' a template, you evaluate the little programs and replace them with their values.
-
-You can store a template in a file outside your program. People can modify the template without modifying the program. You can separate the formatting details from the main code, and put the formatting parts of the program into the template. That prevents code bloat and encourages functional separation.
-[License] GNU GPL version 2 or later
-[Homepage] http://search.cpan.org/dist/Text-Template/

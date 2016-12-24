@@ -1,8 +1,0 @@
-[Name] Perl-File-Chdir
-[Summary] A more sensible way to change directories
-[Description] Perl's chdir() has the unfortunate problem of being
-very, very, very global. If any part of your program calls chdir() or
-if any library you use calls chdir(), it changes the current working
-directory for the whole program.
-[License] GNU General Public License/Perl Artistic License
-[Homepage] http://search.cpan.org/~dagolden/File-chdir/

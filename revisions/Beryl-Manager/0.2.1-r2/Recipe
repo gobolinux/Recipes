@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Beryl-Manager by Jonas Karlsson <jonka750@student.liu.se>, on Sat Mar 24 01:17:58 CET 2007
+# Recipe for version 0.2.1 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Mar 24 01:17:58 CET 2007
+compile_version=1.8.2
+url="http://releases.beryl-project.org/0.2.1/beryl-manager-0.2.1.tar.bz2"
+file_size=177433
+file_md5=cd2b81f5af7a6438d495334d797eb088
+recipe_type=configure
+
+configure_options=(
+   --mandir=${target}/man
+)

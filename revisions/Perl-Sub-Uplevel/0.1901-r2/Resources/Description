@@ -1,9 +1,0 @@
-[Name] Perl-Sub-Uplevel
-[Summary] Safe call stack spoofing for perl
-[Description] Sub::Uplevel from CPAN provides a safe implementation
-similar to Tcl's uplevel() function. It allows you to safely fool the
-caller() into thinking it's in a different part of the stack, without
-knowing that it is being wrapped.
-[License] GNU General Public License version 1 (or later)/Perl
-Artistic License
-[Homepage] http://search.cpan.org/~dagolden/Sub-Uplevel/
