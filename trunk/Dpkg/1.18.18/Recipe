@@ -6,3 +6,10 @@ file_size=4501988
 file_md5=f68cee943aa275a326c0d7e263ee4242
 dir='dpkg-1.18.18'
 recipe_type=configure
+
+configure_options=(
+    --disable-static
+    --disable-dselect
+    --disable-start-stop-daemon
+    --disable-update-alternatives
+)
