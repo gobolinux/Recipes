@@ -5,3 +5,7 @@ url="https://github.com/libevent/libevent/releases/download/release-2.0.22-stabl
 file_size=854987
 file_md5=c4c56f986aa985677ca1db89630a2e11
 recipe_type=configure
+
+pre_link() {
+    cp -r include/event2 $target/include
+}
