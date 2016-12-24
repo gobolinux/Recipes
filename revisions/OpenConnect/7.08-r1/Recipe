@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for OpenConnect by Lucas C. Villa Real, on Fri Dec 23 11:40:07 BRST 2016
+# Recipe for version 7.08 by Lucas C. Villa Real, on Fri Dec 23 11:40:07 BRST 2016
+compile_version=2.0
+url="ftp://ftp.infradead.org/pub/openconnect/openconnect-7.08.tar.gz"
+file_size=1686133
+file_md5=ca2ca1f61b8515879b481dcf6ed4366b
+dir='openconnect-7.08'
+recipe_type=configure
+
+configure_options=(
+    --with-vpnc-script=$goboSettings/vpnc/vpnc-script
+)
