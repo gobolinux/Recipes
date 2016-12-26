@@ -1,0 +1,16 @@
+# Recipe for version 1.1.0c by Aitor ATuin <atuin@tuta.io>, on Sat Dec 24 15:52:40 UTC 2016
+# Recipe for version 1.0.2e by Aitor ATuin, <atuin@tuta.io>, on Wed Dec 23 17:38:40 UTC 2015
+compile_version=016
+url="https://www.openssl.org/source/openssl-1.1.0c.tar.gz"
+file_size=5179668
+file_md5="601e8191f72b18192a937ecf1a800f3f"
+recipe_type=configure
+configure=Configure
+build_target="all"
+
+# Use /etc/ssl to search for certs
+configure_options=(
+   --openssldir=/etc/ssl
+   --libdir=lib
+   zlib-dynamic
+)
