@@ -1,0 +1,15 @@
+# Recipe for version 1.0.2j by Aitor ATuin <atuin@tuta.io>, on Mon Dec 26 18:34:28 CET 2016
+compile_version=016
+url="https://www.openssl.org/source/openssl-1.0.2j.tar.gz"
+file_size=5307912
+file_md5=96322138f0b69e61b7212bc53d5e912b
+recipe_type=configure
+configure=Configure
+build_target="all"
+
+# Use /etc/ssl to search for certs
+configure_options=(
+   --openssldir=/etc/ssl
+   --libdir=lib
+   zlib-dynamic
+)
