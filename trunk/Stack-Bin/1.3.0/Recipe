@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Stack-Bin by Aitor ATuin <atuin@tuta.io>, on Mon Dec 26 21:14:01 CET 2016
+# Recipe for version 1.3.0 by Aitor ATuin <atuin@tuta.io>, on Mon Dec 26 21:14:01 CET 2016
+compile_version=016
+url="https://github.com/commercialhaskell/stack/releases/download/v1.3.0/stack-1.3.0-linux-x86_64.tar.gz"
+file_size=11260020
+file_md5=f99b271884cc26eee9d2da1b708ceaf4
+dir='stack-1.3.0-linux-x86_64'
+recipe_type=manifest
+manifest=(
+   "stack:bin"
+)
