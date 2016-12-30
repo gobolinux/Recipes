@@ -1,0 +1,15 @@
+# Recipe for version 1.7.3 by Aitor ATuin <atuin@tuta.io>, on Fri Dec 30 19:20:08 CET 2016
+# Recipe (MakeRecipe) for CryptSetup by Isaac Dupree <id@isaac.cedarswampstudios.org>, on Sun Jul 1 17:35:24 BRT 2007
+compile_version=1.8.5
+url="https://www.kernel.org/pub/linux/utils/cryptsetup/v1.7/cryptsetup-1.7.3.tar.xz"
+file_size=1228432
+file_md5=7e3fdb1a1cd055cb9c5f847b15230d81
+recipe_type=configure
+
+with_openssl=(
+  --with-crypto_backend=openssl
+)
+
+with_passwdqc=(
+  --enable-passwdqc
+)
