@@ -1,0 +1,10 @@
+# Recipe for version 0.12 by AitorATuin <atuin@tuta.io>, on Thu Sep 8 21:45:32 CEST 2016
+# Recipe (MakeRecipe) for XClip by Jonas Karlsson <jonka750@student.liu.se>, on Fri Apr 6 21:38:03 CEST 2007
+compile_version=1.9.0
+url="https://github.com/astrand/xclip/archive/0.12.tar.gz"
+file_size=27177
+dir=xclip-0.12
+file_md5=5d001eec349fc8299400abea4f2cbb89
+recipe_type=configure
+autogen_before_configure=yes
+autogen=autoconf
