@@ -1,0 +1,13 @@
+# Recipe for version 0.7 by Pedro Flores <pdavidflores@gmail.com>, on Mon Jan 2 13:24:13 PYST 2017
+# Recipe (MakeRecipe) for Speech-Dispatcher by Raphael J. Schmid <raphael.schmid@gmail.com>, on Tue Dec 16 20:27:41 CET 2008
+compile_version=1.11.4
+url="http://www.freebsoft.org/pub/projects/speechd/speech-dispatcher-0.7.tar.gz"
+file_size=1115738
+file_md5=8e0d833c680c8217cc40d88c68c5265f
+recipe_type=configure
+environment=(
+   CFLAGS="-lpthread"
+)
+#configure_options=(
+#   --without-flite
+#)
