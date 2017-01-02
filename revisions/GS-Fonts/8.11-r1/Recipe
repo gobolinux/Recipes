@@ -1,0 +1,20 @@
+# Recipe (MakeRecipe) for GS-Fonts by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jan 2 15:34:50 BRST 2017
+# Recipe for version 8.11 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jan 2 15:34:50 BRST 2017
+compile_version=016
+url="$httpSourceforge/project/gs-fonts/gs-fonts/8.11%20%28base%2035%2C%20GPL%29/ghostscript-fonts-std-8.11.tar.gz"
+file_size=3752871
+file_md5=6865682b095f8c4500c54b285ff05ef6
+recipe_type=manifest
+dir='fonts'
+
+pre_install() {
+    mkdir -p $target/share/ghostscript/fonts
+}
+
+manifest=(
+    *.afm:share/ghostscript/fonts
+    *.pfb:share/ghostscript/fonts
+    *.pfm:share/ghostscript/fonts
+    fonts.dir:share/ghostscript/fonts
+    fonts.scale:share/ghostscript/fonts
+)
