@@ -10,3 +10,7 @@ configure_options=(
     --enable-float-approx 
     --enable-assertions
 )
+
+pre_link() {
+    cp -v libcelt/celt.h $target/include/celt*/
+}
