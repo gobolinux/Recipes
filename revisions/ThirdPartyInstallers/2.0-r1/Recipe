@@ -1,0 +1,12 @@
+# Recipe for version 2.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Jan 3 13:54:14 BRST 2017
+# Recipe (MakeRecipe) for ThirdPartyInstallers by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jan 2 01:23:19 BRST 2017
+compile_version=016
+url="https://github.com/gobolinux/ThirdPartyInstallers/releases/download/v2.0/ThirdPartyInstallers-2.0.tar.gz"
+file_size=10265
+file_md5=80a26da6a463b4465f3fa03e1764bf9e
+dir='ThirdPartyInstallers-2.0'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
