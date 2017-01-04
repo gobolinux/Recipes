@@ -1,0 +1,11 @@
+# Recipe for version 1.7.0 by Aitor ATuin <atuin@tuta.io>, on mar ene 3 19:31:56 CET 2017
+# Recipe (MakeRecipe) for Tree by Rafael Guterres Jeffman, on Wed May 3 15:29:48 BRT 2006
+compile_version=1.8.0
+url="http://mama.indstate.edu/users/ice/tree/src/tree-1.7.0.tgz"
+file_size=47082
+file_md5=abe3e03e469c542d8e157cdd93f4d8a6
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+)
