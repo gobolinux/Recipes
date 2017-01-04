@@ -1,0 +1,16 @@
+# Recipe for version 4.5 by Pedro Flores <pdavidflores@gmail.com>, on Tue Jan 3 11:49:58 PYST 2017
+# Recipe (MakeRecipe) for BRLTTY by Pedro Flores <pdavidflores@gmail.com>, on Sat Dec 31 18:30:01 PYST 2016
+compile_version=016
+url="https://github.com/brltty/brltty/archive/BRLTTY-4.5.tar.gz"
+file_size=2547777
+file_md5=c21cfd64fd84b21739383e63e1ec81b3
+dir='brltty-BRLTTY-4.5'
+autogen_before_configure=yes
+autogen=autogen
+create_dirs_first=yes
+recipe_type=configure
+configure_options=(
+    "--with-screen-driver=lx"
+    "--enable-gpm"
+    "--disable-java-bindings"
+)
