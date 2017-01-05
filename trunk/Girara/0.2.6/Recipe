@@ -1,0 +1,11 @@
+# Recipe for version 0.2.6 by Zoltan A. Kocsis <djfishlips@gmail.com>, on Thu Jan 5 15:39:42 CET 2017
+# Recipe (MakeRecipe) for Girara by Hisham Muhammad <hisham@gobolinux.org>, on Wed Sep 24 10:13:27 BRT 2014
+compile_version=016
+url="https://pwmt.org/projects/girara/download/girara-0.2.6.tar.gz"
+file_size=75841
+file_md5=99900fc6bfb769a2cc76c234000a64d7
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   PREFIX="$target"
+)
