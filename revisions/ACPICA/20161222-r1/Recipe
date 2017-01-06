@@ -1,0 +1,9 @@
+# Recipe for version 20161222 by Aitor ATuin <atuin@tuta.io>, on jue ene 5 18:02:31 CET 2017
+# Recipe (MakeRecipe) for ACPICA by AitorATuin, on Mon Oct 10 22:31:30 CEST 2016
+compile_version=git-20160828
+url="https://acpica.org/sites/acpica/files/acpica-unix-20161222.tar.gz"
+file_size=1580428
+file_md5=03f9a7aa1599a7103a4d234fa573f132
+dir='acpica-unix-20161222'
+recipe_type=makefile
+makefile='Makefile'
