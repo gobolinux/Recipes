@@ -1,0 +1,42 @@
+# Recipe for version 3.2.2 by Demian Florentin <demianflorentin@gmail.com>, on Sat Jan 7 18:46:20 PYST 2017
+# Recipe (MakeRecipe) for FFmpeg by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 16:03:06 BRT 23.2.3
+compile_version=1.12.1
+url="http://ffmpeg.org/releases/ffmpeg-3.2.2.tar.bz2"
+file_size=9611373
+file_md5=82cf25d36df70ee995bbdb3efc079934
+recipe_type=configure
+
+configure_options=(
+    # Enabling this makes the package not redistributable
+    "--enable-gpl"
+    "--enable-shared"
+    "--enable-postproc"
+    "--enable-swscale"
+    "--enable-pthreads"
+    "--enable-x11grab"
+    "--disable-debug"
+    "--enable-sdl"
+    "--extra-ldflags=-lm"  # compilation will fail without this
+)
+
+make_variables=(
+   "MANDIR=$target/man"
+)
+
+with_libvorbis="--enable-libvorbis"
+with_theora="--enable-libtheora"
+with_x264="--enable-libx264"
+with_lame="--enable-libmp3lame"
+with_dirac="--enable-libdirac"
+with_schroedinger="--enable-libschroedinger"
+with_openjpeg="--enable-libopenjpeg"
+with_xvid="--enable-libxvid"
+
+pre_link() {
+    pushd $target/include
+    ln -s libpostproc postproc
+    mkdir -p ffmpeg
+    cd ffmpeg
+    find .. -type f -exec ln -s {} . \;
+    popd
+}
