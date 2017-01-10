@@ -1,0 +1,18 @@
+Fixes ambiguous definition of abs():
+
+./src/stc/scintilla/src/Editor.cxx: In function ‘bool Close(Point, Point)’:
+./src/stc/scintilla/src/Editor.cxx:5844:23: error: call of overloaded ‘abs(XYPOSITION)’ is ambiguous
+  if (abs(pt1.x - pt2.x) > 3)
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- wxPython-src-3.0.2.0/src/stc/scintilla/src/Editor.cxx.orig	2017-01-10 10:37:21.463095406 -0200
++++ wxPython-src-3.0.2.0/src/stc/scintilla/src/Editor.cxx	2017-01-10 10:37:34.743095655 -0200
+@@ -10,6 +10,7 @@
+ #include <stdio.h>
+ #include <ctype.h>
+ #include <assert.h>
++#include <math.h>
+ 
+ #include <string>
+ #include <vector>
