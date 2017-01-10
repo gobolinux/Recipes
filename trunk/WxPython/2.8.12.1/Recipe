@@ -21,6 +21,20 @@ configure_options=(
 )
 
 pre_link() {
+    # Fixes a broken link wx-config -> /usr/lib/wx/config/gtk2-unicode-release-2.8
+    if [ -h $target/bin/wx-config ]
+    then
+        rm -f $target/bin/wx-config
+        cp wx-config $target/bin/wx-config
+    fi
+
+    # Force copy of all headers
+    mkdir -p $target/include/wx-2.8/wx
+    cp -a include/wx/* $target/include/wx-2.8/wx
+
+    # Put wx-config on the PATH
+    export PATH=$PATH:$target/bin
+
     make -C contrib/src/gizmos
     make -C contrib/src/gizmos install
     make -C contrib/src/stc
