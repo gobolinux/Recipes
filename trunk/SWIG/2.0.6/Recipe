@@ -7,3 +7,8 @@ file_md5=86bc02218774ca75bdf7766db74a62c6
 file=SWIG-2.0.6.0.tar.gz
 recipe_type=configure
 dir=swig-2.0.6
+
+pre_link() {
+    mkdir -p $target/share/swig/2.0.6
+    cp -r Lib/* $target/share/swig/2.0.6
+}
