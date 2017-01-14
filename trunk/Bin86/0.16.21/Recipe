@@ -1,0 +1,12 @@
+# Recipe for version 0.16.21 by Aitor P. Iturri <atuin@tuta.io>, on jue ene 12 23:12:10 CET 2017
+# Recipe (MakeRecipe) for Bin86 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jun 19 03:09:44 BRT 2006
+compile_version=1.8.0
+url="http://v3.sk/~lkundrak/dev86/bin86-0.16.21.tar.gz"
+file_size=154283
+file_md5=a94f57453500700cebfea86d7d217481
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+   "MANDIR=$target/share/man/man1"
+)

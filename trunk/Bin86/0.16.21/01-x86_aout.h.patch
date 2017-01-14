@@ -1,0 +1,22 @@
+Let bin86 to be compiled in x86_64 systems
+--- bin86-0.16.21-orig/ld/x86_aout.h	2013-10-29 16:44:51.000000000 +0100
++++ bin86-0.16.21/ld/x86_aout.h	2017-01-14 10:21:25.432119620 +0100
+@@ -12,15 +12,13 @@
+ #if defined(i386) || defined(__BCC__) || defined(MSDOS)
+ typedef long Long;
+ #define __OUT_OK 1
+-#else
++#elif defined(__x86_64__)
+ /* Beware: this will probably allow some BE hosts to generate broken files. */
+-#ifdef INT32_MAX
+ #include <stdint.h>
+-typedef int32_t Long;
++typedef int Long;
+ #define __OUT_OK 1
+ #else
+-typedef char Long[4];
+-#endif
++#define char Long[4];
+ #endif
+ 
+ struct	exec {			/* a.out header */
