@@ -1,0 +1,13 @@
+# Recipe for version 0.16.21 by Aitor P. Iturri <atuin@tuta.io>, on sáb ene 14 19:46:27 CET 2017
+# Recipe (MakeRecipe) for Dev86 by Lucas C. Villa Real, on Sat Jan 5 03:50:00 PST 2008
+compile_version=1.8.0
+url="https://github.com/lkundrak/dev86/archive/v0.16.21.tar.gz"
+file_size=711473
+file_md5=f4ea78fba18cef96f1e8d5f542585699
+dir="dev86-0.16.21"
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=(
+   "PREFIX=$target"
+)
