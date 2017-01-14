@@ -1,0 +1,23 @@
+# Recipe for version 1.8.1 by Aitor P. Iturri <atuin@tuta.io>, on jue ene 12 22:53:04 CET 2017
+# Recipe (MakeRecipe) for Ranger by Aitor P Iturri <atuin@tuta.io>, on Sat Sep 10 21:13:15 CEST 2016
+compile_version=016
+url="http://ranger.nongnu.org/ranger-1.8.1.tar.gz"
+file_size=227415
+file_md5=4c10f47379b021dff061785bf342d0af
+dir='ranger-1.8.1'
+recipe_type=makefile
+makefile='Makefile'
+install_variables=(
+   "PYTHON=./python"
+   "DESTDIR=$target"
+)
+pre_install() {
+    cp $(which python) python 
+}
+pre_link() {
+    mv ${target}/usr/share/man/* ${target}/share/man
+    mv ${target}/usr/share/doc ${target}/share
+    mv ${target}/usr/lib/* ${target}/lib
+    mv ${target}/usr/bin/* ${target}/bin
+    rm -rf ${target}/usr
+}
