@@ -1,0 +1,17 @@
+# Recipe (MakeRecipe) for Mupen64Plus by Hisham Muhammad <hisham@gobolinux.org>, on Mon Jan 16 03:26:19 BRST 2017
+# Recipe for version 2.5 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Jan 16 03:26:19 BRST 2017
+compile_version=git
+url="https://github.com/mupen64plus/mupen64plus-core/releases/download/2.5/mupen64plus-bundle-src-2.5.tar.gz"
+file_size=2178979
+file_md5=e329654f869ced5eaf82a8c2337b28d7
+dir='mupen64plus-bundle-src-2.5'
+recipe_type=manifest
+pre_build() {
+   ./m64p_build.sh
+}
+pre_install() {
+   local program=Mupen64Plus
+   local version=2.5
+   echo SandboxInstall -c ./m64p_install.sh "$program" "$version" -- PREFIX="$target"
+   SandboxInstall -c ./m64p_install.sh "$program" "$version" -- PREFIX="$target"
+}
