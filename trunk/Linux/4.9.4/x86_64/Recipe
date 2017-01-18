@@ -2,7 +2,6 @@
 
 post_install() {
    private__check_firmware
-   private__gen_uefi_app
 }
 
 private__copy_kernel_image() {
@@ -43,24 +42,4 @@ private__check_firmware_version () {
          Ask "You need to install firmware for the ${driver} driver to work. Do you want to install it?" && InstallPackage ${driver}-Firmware
       fi
    fi
-}
-
-private__gen_uefi_app () {
-   local grub_cfg="grub-uefi.cfg.new"
-   Quiet pushd "$goboBoot"
-
-   Log_Normal "Generating an updated UEFI application"
-   grub-mkconfig -o $grub_cfg
-   grub-mkstandalone-efi \
-       -d /Programs/GRUB-EFI/Current/lib/grub/x86_64-efi \
-       -O x86_64-efi \
-       --modules="part_gpt part_msdos iso9660 all_video efi_gop efi_uga video_bochs video_cirrus gfxterm gettext font" \
-       --fonts="unicode" \
-       --themes="" \
-       -o BOOTX64.EFI \
-       --compress=gz \
-       "boot/grub/grub.cfg=$grub_cfg"
-
-   Quiet popd
-   Log_Normal "Now, please mount your EFI System Partition and move $goboBoot/BOOTX64.EFI into its /EFI/BOOT directory."
 }
