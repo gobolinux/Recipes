@@ -1,0 +1,11 @@
+# Recipe for AlsaEqual by Hisham Muhammad <hisham@gobolinux.org>
+compile_version=016
+url=https://launchpad.net/ubuntu/+archive/primary/+files/alsaequal_0.6.orig.tar.bz2
+file_size=23562
+file_md5=d2edc7710c72cbf3ab297c414e35ebda
+
+recipe_type=makefile
+dir=alsaequal
+make_variables=(
+   PREFIX="$target"
+)
