@@ -1,0 +1,8 @@
+# Recipe for version 0.8 by Hisham Muhammad <hisham@gobolinux.org>, on Thu Jan 19 08:34:26 BRST 2017
+# Recipe (MakeRecipe) for GoboNet by Hisham Muhammad <hisham@gobolinux.org>, on Sun Sep 18 19:55:55 BRT 2016
+compile_version=git
+url="https://github.com/gobolinux/GoboNet/releases/download/0.8/gobonet-0.8.tar.gz"
+file_size=103541
+file_md5=ced2bc5a5ed4812ed2ae1c4433e06567
+dir='gobonet-0.8'
+recipe_type=configure
