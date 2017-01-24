@@ -1,0 +1,12 @@
+compile_version=016
+url="$httpSourceforge/pcmanfm/libfm-1.2.5.tar.xz"
+file_size=912740
+file_md5=a1ba9ae5e920f38b647dd511edd6c807
+dir='libfm-1.2.5'
+recipe_type=configure
+
+configure_options=(
+        --with-extra-only \
+        --with-gtk=no     \
+        --disable-static  
+)
