@@ -1,0 +1,10 @@
+# Recipe for version 4.0 by Hisham Muhammad <hisham@gobolinux.org>, on Sat Jan 28 01:19:09 BRST 2017
+# Recipe (MakeRecipe) for Awesome by Viola Zoli; Hungary, violazoli@gmail.com, on 2008. márc. 24., hétfõ, 12.54.00 CET
+compile_version=1.10.2
+url="https://github.com/awesomeWM/awesome-releases/raw/master/awesome-4.0.tar.xz"
+file_size=930664
+file_md5=3dc903f7d5980fc15e7c6e6620040792
+recipe_type=cmake
+cmake_options=(
+   -DSYSCONFDIR="$settings_target"
+)
