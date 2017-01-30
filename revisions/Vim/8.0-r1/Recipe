@@ -1,0 +1,31 @@
+# Recipe for version 8.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jan 30 13:07:31 BRST 2017
+# Recipe (MakeRecipe) for Vim by Matthias Wolf, on Tue Sep 21 12:10:37 CEST 2004
+compile_version=1.8.2
+url="ftp://ftp.vim.org/pub/vim/unix/vim-8.0.tar.bz2"
+file_size=10637407
+file_md5=457543a7754b0d3c1c0aa4d4c3bb4070
+dir='vim80/src'
+recipe_type=configure
+
+configure_options=(
+   --prefix="$target"
+   --exec-prefix="$target"
+   --enable-gui=no
+   --enable-multibyte
+   --disable-selinux
+   --datadir="$target/share"
+   --mandir="$target/share/man"
+)
+with_perl=(
+   --enable-perlinterp
+)
+with_python=(
+   --enable-pythoninterp
+)
+
+with_gtk2="--enable-gui=gtk2"
+with_gtk3="--enable-gui=gtk3"
+
+pre_link() {
+	ln -s vim $target/bin/vi
+}
