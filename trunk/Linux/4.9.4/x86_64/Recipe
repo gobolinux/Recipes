@@ -2,6 +2,12 @@
 
 post_install() {
    private__check_firmware
+   mkdir -p $target/bin
+   cp "$archsubdir"/WriteBoot64 $target/bin
+   if Ask "Do you want to regenerate your UEFI boot application?"
+   then $target/bin/WriteBoot64
+   else Log_Nornal "You may regenerate it later on by running $target/bin/WriteBoot64"
+   fi
 }
 
 private__copy_kernel_image() {

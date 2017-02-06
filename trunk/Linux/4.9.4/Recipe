@@ -105,8 +105,8 @@ private__copy_kernel_source() {
 
    Log_Normal "Creating a working copy of the kernel sources tree..."
    Quiet pushd $dir
-   mkdir -p $dest/tools/objtool
-   cp -r tools/objtool/objtool $dest/tools/objtool/
+   mkdir -p $dest/tools
+   cp -r tools/objtool/ $dest/tools/
    mkdir -p $dest/arch/x86/boot
    cp -r arch/x86/tools/ $dest/arch/x86/
    cp -r arch/x86/purgatory/ $dest/arch/x86/
