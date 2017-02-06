@@ -1,0 +1,65 @@
+#!/bin/bash
+
+# Abort on errors
+set -e
+
+source GoboPath
+source ScriptFunctions
+Import Log
+
+mount_esp_partition() {
+   local esp=$(fdisk -l -t gpt | grep "EFI System" | awk {'print $1'})
+   if [ ! -d $goboBoot/efi ]
+   then mkdir -p $goboBoot/efi
+   fi
+   mountpoint -q $goboBoot/efi && return 0
+   mount "$esp" $goboBoot/efi && return 1
+   return 2
+}
+
+umount_esp_partition() {
+   umount $goboBoot/efi
+}
+
+gen_uefi_app() {
+   local grub_cfg="grub-uefi.cfg.new"
+   Quiet pushd "$goboBoot"
+
+   Log_Normal "Generating an updated UEFI application"
+   grub-mkconfig -o $grub_cfg
+   grub-mkstandalone-efi \
+       -d /Programs/GRUB-EFI/Current/lib/grub/x86_64-efi \
+       -O x86_64-efi \
+       --modules="part_gpt part_msdos iso9660 all_video efi_gop efi_uga video_bochs video_cirrus gfxterm gettext font" \
+       --fonts="unicode" \
+       --themes="" \
+       -o BOOTX64.EFI \
+       --compress=gz \
+       "boot/grub/grub.cfg=$grub_cfg"
+
+   Quiet popd
+
+   if [ -e "$goboBoot/efi/EFI/BOOT/BOOTX64.EFI" ]
+   then
+       Log_Normal "Updating UEFI application"
+       mv -v "$goboBoot/efi/EFI/BOOT/BOOTX64.EFI" "$goboBoot/efi/EFI/BOOT/BOOTX64.OLD"
+       mv -v "$goboBoot/BOOTX64.EFI" "$goboBoot/efi/EFI/BOOT"
+   else
+       Log_Normal "A new UEFI application has been created. You can now activate your kernel by mounting your"
+       Log_Normal "EFI System Partition and moving $goboBoot/BOOTX64.EFI into your ESP's /EFI/BOOT directory."
+   fi
+}
+    
+export LC_ALL=en_US
+
+if [ "$(uname -m)" = "x86_64" ]
+then
+    mount_esp_partition
+    mounted_esp=$?
+
+    gen_uefi_app
+
+    if [ $mounted_esp = 1 ]
+    then umount_esp_partition
+    fi
+fi
