@@ -9,7 +9,6 @@ install_target="modules_install"
 
 install_variables=(
    INSTALL_FW_PATH="$target/lib/firmware"
-#   DEPMOD="true"
 )
 
 unmanaged_files=(
@@ -91,25 +90,24 @@ private__calculate_full_version() {
 }
 
 private__copy_kernel_source() {
-   simpleversion="$1"
-   dest="${target}/lib/modules/${simpleversion}"
-   rm -f "${dest}/build"
-   rm -f "${dest}/source"
+   local simpleversion="$1"
+   local moddir="${target}/lib/modules/${simpleversion}"
+   mkdir -p "$moddir"
+   rm -f "${moddir}/build"
+   rm -f "${moddir}/source"
    # Copy modules.order and modules.builtin
-   mkdir -p $dest
-   cp $dir/modules.order $dir/modules.builtin $dest/
+   cp $dir/modules.order $dir/modules.builtin $moddir/
    # Copy sanitized sources to Resources/Unmanaged/Files/Compile/Sources/linux-<version>
-   dest="${target}/lib/modules/${simpleversion}/build"
+   local dest="${target}/lib/modules/${simpleversion}/build"
    mkdir -p $dest
    ln -fs build "${target}/lib/modules/${simpleversion}/source"
 
    Log_Normal "Creating a working copy of the kernel sources tree..."
    Quiet pushd $dir
    mkdir -p $dest/tools
-   cp -r tools/objtool/ $dest/tools/
    mkdir -p $dest/arch/x86/boot
-   cp -r arch/x86/tools/ $dest/arch/x86/
-   cp -r arch/x86/purgatory/ $dest/arch/x86/
+   cp -r tools/{objtool,build,lib} $dest/tools/
+   cp -r arch/x86/{lib,tools,purgatory} $dest/arch/x86/
    cp arch/x86/boot/string.c $dest/arch/x86/boot/
    cp .version .config System.map Module.symvers Makefile Kbuild Kconfig $dest/
    ls | while read i
@@ -124,6 +122,7 @@ private__copy_kernel_source() {
             -name "*.h" -or \
             -name "*.bc" -or \
             -name "*.sh" -or \
+            -name "*.mak" -or \
             -name "*.tbl" -or \
             -name "*.conf" -or \
             -name "*.include" -or \
