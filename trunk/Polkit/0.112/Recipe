@@ -6,6 +6,10 @@ file_size=1429240
 file_md5=b0f2fa00a55f47c6a5d88e9b73f80127
 recipe_type=configure
 
+configure_options=(
+    --disable-man-pages
+)
+
 install_variables=(
     INTROSPECTION_GIRDIR=$target/share/gir-1.0
     INTROSPECTION_TYPELIBDIR=$target/lib/girepository-1.0
