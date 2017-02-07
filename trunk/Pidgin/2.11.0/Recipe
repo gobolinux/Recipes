@@ -7,6 +7,11 @@ file_size=10037480
 file_md5=7b167474db669aab2f71fa46835fb83f
 recipe_type=configure
 
+environment=(
+   # Workaround for GCC bug. See https://bugzilla.redhat.com/show_bug.cgi?id=1171300 for details.
+   CFLAGS="-Wall -fno-tree-vrp"
+)
+
 configure_options=(
    "--disable-dbus"
    "--disable-gnutls"
