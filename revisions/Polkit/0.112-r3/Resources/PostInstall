@@ -1,0 +1,39 @@
+#!/bin/sh
+
+source ScriptFunctions
+Import Requirements
+Process_Requirements_File $target
+
+# NOTE: The file /usr/lib/polkit-1/polkit-agent-helper-1 must be owned
+#       by root and have mode 4755 (setuid root binary)
+if [ -e "$target/lib/polkit-1/polkit-agent-helper-1" ]
+then
+   chown 0 $target/lib/polkit-1/polkit-agent-helper-1
+   chmod 4755 $target/lib/polkit-1/polkit-agent-helper-1
+fi
+
+# NOTE: The file ${exec_prefix}/bin/pkexec must be owned by root and
+#       have mode 4755 (setuid root binary)
+if [ -e "$target/bin/pkexec" ]
+then
+   chown 0 $target/bin/pkexec
+   chmod 4755 $target/bin/pkexec
+fi
+
+# NOTE: The directory /System/Settings/polkit-1/rules.d must be owned
+#       by user 'polkitd' and have mode 700
+if [ -d "$settings_target/polkit-1/rules.d" ]
+then
+   chown polkitd $settings_target/polkit-1/rules.d
+   chown polkitd $goboSettings/polkit-1/rules.d
+   chmod 700 $settings_target/polkit-1/rules.d
+   chmod 700 $goboSettings/polkit-1/rules.d
+fi
+
+# NOTE: The directory ${datarootdir}/polkit-1/rules.d must be owned
+#       by user 'polkitd' and have mode 700
+if [ -d "$target/share/polkit-1/rules.d" ]
+then
+   chown polkitd $target/share/polkit-1/rules.d
+   chmod 700 $target/share/polkit-1/rules.d
+fi
