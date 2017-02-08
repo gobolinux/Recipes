@@ -1,0 +1,11 @@
+# Recipe for version 2.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Feb 8 21:07:47 BRST 2017
+# Recipe (MakeRecipe) for Listener by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jul 4 09:24:35 BRT 2005
+compile_version=1.8.0
+url="https://github.com/gobolinux/Listener/releases/download/2.1/Listener-2.1.tar.gz"
+file_size=11614
+file_md5=1a0ec456c5a716463abac5c40eba6e40
+recipe_type=makefile
+make_variables=(
+   "DESTDIR=$target"
+   "SYSCONFDIR=$settings_target"
+)
