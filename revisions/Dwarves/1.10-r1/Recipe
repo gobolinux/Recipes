@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for Dwarves by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Feb 9 14:48:43 BRST 2017
+# Recipe for version 1.10 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Feb 9 14:48:43 BRST 2017
+compile_version=016
+url="https://fedorapeople.org/~acme/dwarves/dwarves-1.10.tar.bz2"
+file_size=96919
+file_md5=4a9c508f9343d057d00599e05fdb4ee5
+dir='dwarves-1.10'
+recipe_type=cmake
+unpack_files=files_in_root
+
+cmake_options=(
+    -DLIB_INSTALL_DIR=$target/lib
+)
