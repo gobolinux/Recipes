@@ -1,0 +1,20 @@
+Fixes the following build error:
+
+  CCLD     vlc-static
+  /Data/Compile/Sources/vlc-2.2.4/src/.libs/libvlccore.a(subtitles.o):subtitles.c:function subtitles_Detect: error: undefined reference to 'strlcpy'
+  /Data/Compile/Sources/vlc-2.2.4/src/.libs/libvlccore.a(subtitles.o):subtitles.c:function subtitles_Detect: error: undefined reference to 'strlcpy'
+  collect2: error: ld returned 1 exit status
+
+Patch taken from https://trac.videolan.org/vlc/ticket/5933
+
+--- vlc-2.2.4/bin/Makefile.am.orig	2017-02-13 17:24:25.486255791 -0200
++++ vlc-2.2.4/bin/Makefile.am	2017-02-13 17:24:39.588256055 -0200
+@@ -44,7 +44,7 @@ vlc_static_CFLAGS = $(AM_CFLAGS) \
+ 	-DTOP_SRCDIR=\"$$(cd "$(top_srcdir)"; pwd)\" \
+ 	$(NULL)
+ vlc_static_DEPENDENCIES = $(vlc_DEPENDENCIES)
+-vlc_static_LDADD = $(vlc_LDADD)
++vlc_static_LDADD = $(vlc_LDADD) ../compat/libcompat.la
+ vlc_static_LDFLAGS = $(vlc_LDFLAGS)
+ 
+ if HAVE_WIN32

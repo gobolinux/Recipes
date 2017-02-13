@@ -11,6 +11,18 @@ configure_options=(
    --disable-a52
 )
 
+environment=(
+   CFLAGS="$CFLAGS -fPIC"
+)
+
 install_variables=(
    soliddatadir=$target/share/apps/solid/actions
 )
+
+pre_build() {
+    if [ ! -e .bootstrapped ]
+    then
+       autoreconf -i
+       touch .bootstrapped
+    fi
+}
