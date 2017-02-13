@@ -1,0 +1,28 @@
+# Recipe for version 2.2.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Oct 23 18:24:17 BRST 2016
+# Recipe (MakeRecipe) for VLC by keisangi, on Sun Feb 17 01:23:41 JST 2008
+compile_version=1.10.2
+url="http://download.videolan.org/pub/videolan/vlc/2.2.4/vlc-2.2.4.tar.xz"
+file_size=22199316
+file_md5=55666c9898f658c7fcca12725bf7dd1b
+recipe_type=configure
+configure_options=(
+   "--with-kde-solid=$target/share/apps/solid/actions"
+   --disable-lua
+   --disable-a52
+)
+
+environment=(
+   CFLAGS="$CFLAGS -fPIC"
+)
+
+install_variables=(
+   soliddatadir=$target/share/apps/solid/actions
+)
+
+pre_build() {
+    if [ ! -e .bootstrapped ]
+    then
+       autoreconf -i
+       touch .bootstrapped
+    fi
+}
