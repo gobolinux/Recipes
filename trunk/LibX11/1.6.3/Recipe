@@ -8,8 +8,8 @@ recipe_type=configure
 part_of=Xorg-Lib
 
 make_variables=(
-    libintldir=lib
-    X11dir=lib/X11
-    x11datadir=share/X11
-    x11localedir=share/X11/locale
+    libintldir=$target/lib
+    X11dir=$target/lib/X11
+    x11datadir=$target/share/X11
+    x11localedir=$target/share/X11/locale
 )
