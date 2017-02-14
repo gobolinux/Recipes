@@ -1,0 +1,19 @@
+Remove DEL character from end of title string
+
+Without this patch, the makefile sets the preprocessor define to """",
+rather than an actually empty string, causing a U+007f character to
+appear unwantedly. With this patch, this character does not appear.
+
+Origin: https://lists.fedoraproject.org/pipermail/scm-commits/2011-June/619993.html
+
+--- mozilla-release/browser/base/Makefile.in.orig	2011-11-12 10:39:30.697392876 +1300
++++ mozilla-release/browser/base/Makefile.in	2011-11-12 10:39:41.430877938 +1300
+@@ -61,7 +61,7 @@
+ 
+ include $(topsrcdir)/config/rules.mk
+ 
+-PRE_RELEASE_SUFFIX := ""
++PRE_RELEASE_SUFFIX := 
+ 
+ DEFINES += \
+ 	-DMOZ_APP_VERSION=$(MOZ_APP_VERSION) \
