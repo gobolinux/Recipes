@@ -1,0 +1,15 @@
+compile_version=016
+url="https://download.jetbrains.com/python/pycharm-community-2016.3.2.tar.gz"
+file_size=215633678
+file_md5=59f9a9d20d2d70c05ab6b975fc9ff74f
+recipe_type=manifest
+
+manifest=(
+	"bin:bin"
+        "help:help"
+        "helpers:helpers"
+        "jre:jre"
+        "lib:lib"
+        "license:license"
+        "plugins:plugins"
+)
