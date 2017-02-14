@@ -1,0 +1,11 @@
+# Recipe for version 3.6.1 by leviathanone <leviathanone@protonmail.ch>, on Sat Feb 11 08:46:14 GMT 2017
+compile_version=1.8.0
+url="http://openbox.org/dist/openbox/openbox-3.6.1.tar.xz"
+file_size=659056
+file_md5=46bf5f1edda0eda0d9e824b585988be9
+recipe_type=configure
+
+configure_options=(
+   --with-x
+   --enable-startup-notification
+)
