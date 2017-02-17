@@ -1,3 +1,7 @@
+This patch updates the directory where MagickWand header files are installed.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
 --- WindowMaker-0.95.7/wrlib/load_magick.c.orig	2017-02-17 13:13:10.520248381 -0200
 +++ WindowMaker-0.95.7/wrlib/load_magick.c	2017-02-17 13:13:55.359249222 -0200
 @@ -22,7 +22,7 @@

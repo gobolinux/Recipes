@@ -13,3 +13,7 @@ environment=(
 configure_options=(
     --with-gnustepdir=$target/GNUstep
 )
+
+pre_build() {
+    autoreconf
+}
