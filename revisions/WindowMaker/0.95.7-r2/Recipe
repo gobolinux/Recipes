@@ -1,0 +1,19 @@
+# Recipe for version 0.95.7 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Feb 17 13:07:13 BRST 2017
+compile_version=1.8.2
+url="http://windowmaker.org/pub/source/release/WindowMaker-0.95.7.tar.gz"
+file_size=3238325
+file_md5=082c31d4b7b573518a960e8a879679d7
+recipe_type=configure
+
+# GCC 4 fix
+environment=(
+    ac_cv_c_inline_asm=no
+)
+
+configure_options=(
+    --with-gnustepdir=$target/GNUstep
+)
+
+pre_build() {
+    autoreconf
+}
