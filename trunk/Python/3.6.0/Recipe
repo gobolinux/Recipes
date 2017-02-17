@@ -8,5 +8,6 @@ needs_safe_linking=yes
 
 configure_options=(
   "--enable-shared"
+  "--enable-loadable-sqlite-extensions"
 #  "--with-cxx=no"
 )
