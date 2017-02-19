@@ -1,0 +1,11 @@
+[Name] LZip
+[Summary] Lzip is a lossless file compressor based on the LZMA algorithm.
+[Description] Lzip is a lossless file compressor based on the LZMA (Lempel-Ziv-Markov
+chain-Algorithm) algorithm designed by Igor Pavlov. The high compression
+of LZMA comes from combining two basic, well-proven compression ideas:
+sliding dictionaries (i.e. LZ77/78), and markov models (i.e. the thing
+used by every compression algorithm that uses a range encoder or similar
+order-0 entropy coder as its last stage) with segregation of contexts
+according to what the bits are used for.
+[License] GNU General Public License version 3
+[Homepage] http://www.nongnu.org/lzip/lzip.html
