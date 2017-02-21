@@ -1,0 +1,42 @@
+# Recipe for version 5.3.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Feb 21 10:10:18 BRT 2017
+compile_version=1.10.2
+url=http://www.lua.org/ftp/lua-5.3.4.tar.gz
+file_size=303586
+file_md5=53a9c68bcc0eda58bdc2095ad5cdfc63
+recipe_type=makefile
+build_target=linux
+
+docs=(
+  "doc/*.html"
+)
+
+make_variables=(
+  INSTALL_TOP=$target
+  INSTALL_MAN=$target/share/man/man1
+)
+
+pre_link() {
+mkdir -p $target/lib/pkgconfig
+cat << EOF > $target/lib/pkgconfig/lua.pc
+V=5.3
+R=5.3.4
+
+prefix=/usr
+INSTALL_BIN=${prefix}/bin
+INSTALL_INC=${prefix}/include
+INSTALL_LIB=${prefix}/lib
+INSTALL_MAN=${prefix}/share/man/man1
+INSTALL_LMOD=${prefix}/share/lua/${V}
+INSTALL_CMOD=${prefix}/lib/lua/${V}
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: Lua
+Description: An Extensible Extension Language
+Version: ${R}
+Requires:
+Libs: {libdir}/liblua.so.${V} -lm -ldl
+Cflags: -I${includedir}
+EOF
+}
