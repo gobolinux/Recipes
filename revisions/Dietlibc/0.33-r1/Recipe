@@ -1,0 +1,10 @@
+compile_version=016
+url="http://www.fefe.de/dietlibc/dietlibc-0.33.tar.bz2"
+file_size=626885
+file_md5=9d541b9a6623b04ec12e5248b82db7c0
+dir='dietlibc-0.33'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+)
