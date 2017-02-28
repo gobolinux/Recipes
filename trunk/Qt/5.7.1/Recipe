@@ -1,0 +1,54 @@
+# Recipe for version 5.7.1 by Demian Florentin <demianflorentin@gmail.com>, on Sun Dec 25 13:45:29 PYST 2016
+# by Andre Detsch
+
+compile_version=1.9.0
+url="http://download.qt.io/official_releases/qt/5.7/5.7.1/single/qt-everywhere-opensource-src-5.7.1.tar.gz"
+file_size=442752752
+file_md5=031fb3fd0c3cc0f1082644492683f18d
+recipe_type=configure
+dir='qt-everywhere-opensource-src-5.7.1'
+
+configure_options=(
+    -release
+    -prefix "$target"
+    #-nomake "examples demos docs"
+    -dbus
+    -no-separate-debug-info
+    -sql-sqlite
+    -system-sqlite
+    -opensource
+    -confirm-license
+    -optimized-qmake
+    -no-gstreamer
+)
+
+#with_mysql="-plugin-sql-mysql"
+#with_sqlite=(-plugin-sql-sqlite -system-sqlite)
+#with_odbc="-plugin-sql-odbc"
+#with_nas="-system-nas-sound"
+with_webkit="-webkit"
+
+environment=(
+   # Workaround to fix build error due to missing libQtCLucene.so
+   LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$dir/lib"
+)
+
+install_variables=(
+   INSTALL_ROOT=$target
+)
+
+pre_link() {
+   if [ -d "$target/usr" ]
+   then
+      Quiet pushd "$target"
+      find . -type d -empty | grep -v "./Resources\|./usr" | xargs rmdir -p >& /dev/null
+      mv usr/* .
+      rmdir usr
+      Quiet popd
+   fi
+
+   # clean out debug files
+   find ${target} -name "*.debug" | xargs rm -f
+   # create a config file to prevent hardcoded paths from being used
+   echo -e "[Paths]\nPrefix = $target" > $target/bin/qt.conf
+}
