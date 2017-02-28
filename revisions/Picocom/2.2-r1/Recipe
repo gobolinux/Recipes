@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for Picocom by Aitor P. Iturri <atuin@tuta.io>, on jue feb 23 19:41:38 CET 2017
+# Recipe for version 2.2 by Aitor P. Iturri <atuin@tuta.io>, on jue feb 23 19:41:38 CET 2017
+compile_version=git
+url="https://github.com/npat-efault/picocom/archive/2.2.tar.gz"
+file="picocom-2.2.tar.gz"
+file_size=88670
+file_md5=65da5cd32f8cfa456bbe79bbcc908daf
+dir='picocom-2.2'
+recipe_type=makefile
+makefile='Makefile'
+do_install=no
+pre_link() {
+    strip picocom
+    $sudo_exec install -m 755 picocom $target/bin
+    $sudo_exec install -m 644 picocom.1 $target/share/man/man1
+}
