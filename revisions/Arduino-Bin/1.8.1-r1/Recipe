@@ -1,0 +1,24 @@
+# Recipe (MakeRecipe) for Arduino-Bin by Aitor P. Iturri <atuin@tuta.io>, on lun feb 20 22:16:30 CET 2017
+# Recipe for version 1.8.1 by Aitor P. Iturri <atuin@tuta.io>, on lun feb 20 22:16:30 CET 2017
+compile_version=git
+dir='arduino-1.8.1'
+recipe_type=manifest
+do_install() {
+    arduino_data_dir="$target/share/arduino"
+    arduino_bin_dir="$target/bin"
+    # Patch wrapper script to point to /Programs and install it
+    cat arduino | awk -v ver=${dir##*-} \
+        '{if (NR==3) 
+            print("APPDIR=/Program/Arduino-Bin/" ver "/share/arduino/")
+            else print($0)}' \
+        > arduino_patched
+
+    # Install data
+    $sudo_exec install -m 755 arduino_patched $arduino_bin_dir/arduino
+    data="examples hardware arduino-builder java lib libraries reference tools tools-builder"
+    $sudo_exec mkdir -p $arduino_data_dir
+    for d in ${data}; do
+        $sudo_exec cp -r $d ${arduino_data_dir}
+    done
+}
+ 
