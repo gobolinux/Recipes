@@ -1,0 +1,10 @@
+# Recipe for version 1.2_rc4 by Wilson Moura <wilsonmourati@gmail.com>, on ter fev 28 09:00:36 BRT 2017
+# Recipe (MakeRecipe) for Aircrack-ng by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Mar 14 23:55:34 PDT 2008
+compile_version=1.10.1
+url="http://download.aircrack-ng.org/aircrack-ng-1.2-rc4.tar.gz"
+file_size=4379880
+file_md5=3bbc7d5035a98ec01e78774d05c3fcce
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=( prefix=$target )
