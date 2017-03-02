@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for BuildLiveCD by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Mar 31 14:51:29 BRT 2008
+# Recipe for version svn by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Mar 31 14:51:29 BRT 2008
+compile_version=1.10.2
+git="https://github.com/gobolinux/BuildLiveCD"
+tag=016.01
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   VERSION="$version"
+   PREFIX="$target"
+)
