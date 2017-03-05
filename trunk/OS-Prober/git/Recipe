@@ -11,8 +11,6 @@ install_variables=(
 
 pre_link() {
     mkdir -p $goboVariable/lib/os-prober
-    mkdir -p $target/share/os-prober
-    cp -v $target/lib/common.sh $target/share/os-prober/
 }
 
 unmanaged_files=(
