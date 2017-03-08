@@ -1,6 +1,6 @@
 # Recipe for version 4.2.6 by Andre Destch
 # by Jonatan Liljedahl
-url=$httpSourceforge/gimp-print/gimp-print-4.2.6.tar.gz
+url="$httpSourceforge/gimp-print/gimp-print-4.2.6.tar.gz"
 compile_version=1.7.1
 recipe_type=configure
 install_variables=(

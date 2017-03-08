@@ -1,4 +1,4 @@
-url=$ftpGnu/ncurses/ncurses-5.3.tar.gz
+url="$ftpGnu/ncurses/ncurses-5.3.tar.gz"
 compile_version=1.7.1
 recipe_type=configure
 needs_safe_linking=yes

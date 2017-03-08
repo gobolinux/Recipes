@@ -1,4 +1,4 @@
-url=$ftpGnu/m4/m4-1.4.tar.gz
+url="$ftpGnu/m4/m4-1.4.tar.gz"
 compile_version=1.7.1
 recipe_type=configure
 configure_options=(

@@ -1,6 +1,6 @@
 # by Leandro Motta Barros
 
-url=$httpSourceforge/fltk/fltk-1.1.4-source.tar.bz2
+url="$httpSourceforge/fltk/fltk-1.1.4-source.tar.bz2"
 dir=fltk-1.1.4
 compile_version=1.7.1
 recipe_type=configure

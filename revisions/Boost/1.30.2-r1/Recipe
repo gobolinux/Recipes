@@ -6,7 +6,7 @@
 
 # I don't know if this still works with the latest 'Compile'.
 
-url=$httpSourceforge/boost/boost-1.30.2.tar.bz2
+url="$httpSourceforge/boost/boost-1.30.2.tar.bz2"
 compile_version=1.7.1
 recipe_type=makefile
 do_build=no

@@ -2,7 +2,7 @@
 # 2004.01.06 19:27
 # 2.1.5 by roko
 
-url=http://mirrors.isc.org/pub/postfix/official/postfix-2.1.5.tar.gz
+url="http://mirrors.isc.org/pub/postfix/official/postfix-2.1.5.tar.gz"
 compile_version=1.7.1
 recipe_type=makefile
 pre_build()

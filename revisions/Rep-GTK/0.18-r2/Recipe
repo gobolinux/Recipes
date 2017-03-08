@@ -1,4 +1,4 @@
-url=$httpSourceforge/rep-gtk/rep-gtk-0.18.tar.gz
+url="$httpSourceforge/rep-gtk/rep-gtk-0.18.tar.gz"
 compile_version=1.8.0
 recipe_type=configure
 configure_options=(

@@ -1,7 +1,7 @@
 # Recipe for version 3.12 by Andre Detsch
 # by Andre Detsch
 
-url=http://www.river-bank.demon.co.uk/download/PyQt/PyQt-x11-gpl-3.12.tar.gz
+url="http://www.river-bank.demon.co.uk/download/PyQt/PyQt-x11-gpl-3.12.tar.gz"
 compile_version=1.7.1
 recipe_type=makefile
 pre_build() {

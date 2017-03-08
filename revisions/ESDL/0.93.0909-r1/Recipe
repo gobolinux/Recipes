@@ -6,7 +6,7 @@
 # compile Wings3D. Anyway, I can't imagine any other project using
 # ESDL apart of Wings3D...
 
-url=$httpSourceforge/esdl/esdl-0.93.0909.src.tar.gz
+url="$httpSourceforge/esdl/esdl-0.93.0909.src.tar.gz"
 dir=esdl-0.93.0909
 compile_version=1.7.1
 recipe_type=makefile

@@ -1,5 +1,5 @@
 # Recipe for version 0.6.13 by Andre Detsch <detsch@gobolinux.org>, on Sat Jul 1 18:00:21 BRT 2006
-url=$httpSourceforge/libexif/libexif-0.6.13.tar.bz2
+url="$httpSourceforge/libexif/libexif-0.6.13.tar.bz2"
 compile_version=1.7.1
 recipe_type=configure
 pre_build() {

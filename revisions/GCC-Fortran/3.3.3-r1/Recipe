@@ -1,7 +1,7 @@
 # by Guilherme Bedin
 # 02/12/2003
 
-url=$ftpGnu/gcc/releases/gcc-3.3.3/gcc-3.3.3.tar.bz2
+url="$ftpGnu/gcc/releases/gcc-3.3.3/gcc-3.3.3.tar.bz2"
 compile_version=1.7.1
 recipe_type=configure
 needs_build_directory=yes

@@ -1,5 +1,5 @@
 # Recipe for version 1.38 by Andre Detsch, on Fri Jul 22 16:36:39 BRT 2005
-url=$httpSourceforge/e2fsprogs/e2fsprogs-1.38.tar.gz
+url="$httpSourceforge/e2fsprogs/e2fsprogs-1.38.tar.gz"
 compile_version=1.7.1
 recipe_type=configure
 configure_options=(

@@ -1,6 +1,6 @@
 # by Guilherme Bedin
 
-url=$httpSourceforge/amsn/amsn-0_91.tar.gz
+url="$httpSourceforge/amsn/amsn-0_91.tar.gz"
 dir=msn
 compile_version=1.7.1
 recipe_type=makefile

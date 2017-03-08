@@ -1,7 +1,7 @@
 # Recipe for version 21.4 by roko, <ro.ko@mcnon.com>, on Mon Mar 7 12:52:46 CET 2005
 # by Leandro Motta Barros
 
-url=$ftpGnu/emacs/emacs-21.4.tar.gz
+url="$ftpGnu/emacs/emacs-21.4.tar.gz"
 compile_version=1.7.1
 recipe_type=configure
 

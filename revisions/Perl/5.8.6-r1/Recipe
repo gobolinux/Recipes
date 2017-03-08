@@ -1,5 +1,5 @@
 # Recipe for version 5.8.6 by Andre Detsch, on Mon Mar 7 21:12:09 BRT 2005
-url=http://www.perl.com/CPAN/src/perl-5.8.6.tar.gz
+url="http://www.perl.com/CPAN/src/perl-5.8.6.tar.gz"
 compile_version=1.7.1
 recipe_type=makefile
 pre_build() {

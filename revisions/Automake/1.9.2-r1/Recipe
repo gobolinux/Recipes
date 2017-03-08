@@ -1,5 +1,5 @@
 # Recipe for version 1.9.2 by Andre Detsch, on Mon Sep 27 22:14:02 BRT 2004
-url=$ftpGnu/automake/automake-1.9.2.tar.gz
+url="$ftpGnu/automake/automake-1.9.2.tar.gz"
 compile_version=1.7.1
 recipe_type=configure
 pre_install() {

@@ -1,7 +1,7 @@
 # Recipe for version 3.10.1 by Andre Destch
 # by Andre Detsch
 
-url=http://www.river-bank.demon.co.uk/download/sip/sip-3.10.1.tar.gz
+url="http://www.river-bank.demon.co.uk/download/sip/sip-3.10.1.tar.gz"
 compile_version=1.7.1
 recipe_type=makefile
 pre_build() {
