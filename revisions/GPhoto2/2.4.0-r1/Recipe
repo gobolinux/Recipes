@@ -1,6 +1,6 @@
 # Recipe for version 2.4.0 by Giambattista Bloisi <giamby@infinito.it>, on Thu Jan 17 09:30:35 CET 2008
 compile_version=1.8.2
-url=$httpSourceforge/gphoto/gphoto2-2.4.0.tar.gz
+url="$httpSourceforge/gphoto/gphoto2-2.4.0.tar.gz"
 file_size=866020
 file_md5=ff05a9edd40331447b33d72d87b38b4c
 recipe_type=configure

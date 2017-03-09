@@ -3,7 +3,7 @@
 
 # by Jason Stubbs
 
-url=http://mirrors.isc.org/pub/postfix/official/postfix-2.0.16.tar.gz
+url="http://mirrors.isc.org/pub/postfix/official/postfix-2.0.16.tar.gz"
 compile_version=1.7.1
 recipe_type=makefile
 pre_build()

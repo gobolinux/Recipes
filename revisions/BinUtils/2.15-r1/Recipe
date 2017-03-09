@@ -1,5 +1,5 @@
 # Recipe for version 2.15 by Andre Destch
-url=$ftpGnu/binutils/binutils-2.15.tar.bz2
+url="$ftpGnu/binutils/binutils-2.15.tar.bz2"
 needs_build_directory=yes
 needs_safe_linking=yes
 compile_version=1.7.1

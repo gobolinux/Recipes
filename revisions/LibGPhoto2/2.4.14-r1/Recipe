@@ -1,6 +1,6 @@
 # Recipe for version 2.4.14 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Apr 28 14:31:41 NZST 2012
 compile_version=1.8.2
-url=$httpSourceforge/gphoto/libgphoto2-2.4.14.tar.gz
+url="$httpSourceforge/gphoto/libgphoto2-2.4.14.tar.gz"
 file_size=5619231
 file_md5=492bec63dd610906c3a28030be77e650
 recipe_type=configure

@@ -2,7 +2,7 @@
 # by Guilherme Bedin
 # 02/12/2003
 compile_version=1.7.1
-url=http://ftp.gnu.org/pub/gnu/glibc/glibc-2.4.tar.gz
+url="http://ftp.gnu.org/pub/gnu/glibc/glibc-2.4.tar.gz"
 recipe_type=configure
 needs_build_directory=yes
 needs_safe_linking=yes

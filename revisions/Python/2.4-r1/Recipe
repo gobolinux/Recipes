@@ -4,7 +4,7 @@
 
 compile_version=1.7.1
 
-url=http://python.org/ftp/python/2.4/Python-2.4.tgz
+url="http://python.org/ftp/python/2.4/Python-2.4.tgz"
 recipe_type=configure
 configure_options=(
   "--enable-shared"

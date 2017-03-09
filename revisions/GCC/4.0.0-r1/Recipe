@@ -1,7 +1,7 @@
 # Recipe for version 4.0.0 by Andre Detsch, on Sat May 28 09:52:36 BRT 2005
 # by Hisham Muhammad, Guilherme Bedin
 
-url=$ftpGnu/gcc/gcc-4.0.0/gcc-4.0.0.tar.bz2
+url="$ftpGnu/gcc/gcc-4.0.0/gcc-4.0.0.tar.bz2"
 
 compile_version=1.7.1
 recipe_type=configure

@@ -1,7 +1,7 @@
 # Recipe for version 3.4.2 by Andre Detsch, on Mon Sep 13 22:14:52 BRT 2004
 # by Hisham Muhammad, Guilherme Bedin
 
-url=$ftpGnu/gcc/gcc-3.4.2/gcc-3.4.2.tar.bz2
+url="$ftpGnu/gcc/gcc-3.4.2/gcc-3.4.2.tar.bz2"
 
 compile_version=1.7.1
 recipe_type=configure

@@ -2,7 +2,7 @@
 # by Andre Detsch
 # 2004.01.06 16:54
 
-url=http://python.org/ftp/python/2.3.4/Python-2.3.4.tgz
+url="http://python.org/ftp/python/2.3.4/Python-2.3.4.tgz"
 compile_version=1.7.1
 recipe_type=configure
 configure_options=("--enable-shared")

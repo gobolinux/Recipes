@@ -1,4 +1,4 @@
-url=$ftpGnu/ed/ed-0.2.tar.gz
+url="$ftpGnu/ed/ed-0.2.tar.gz"
 compile_version=1.7.1
 recipe_type=configure
 pre_build() {

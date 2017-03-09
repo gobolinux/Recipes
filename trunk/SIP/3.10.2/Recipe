@@ -1,6 +1,6 @@
 # Recipe for version 3.10.2 by Andre Detsch
 
-url=http://pkgs.fedoraproject.org/repo/pkgs/sip/sip-3.10.2.tar.gz/58bb7a3d9b538564a943f72bde60c3bd/sip-3.10.2.tar.gz
+url="http://pkgs.fedoraproject.org/repo/pkgs/sip/sip-3.10.2.tar.gz/58bb7a3d9b538564a943f72bde60c3bd/sip-3.10.2.tar.gz"
 compile_version=1.7.1
 recipe_type=makefile
 pre_build() {

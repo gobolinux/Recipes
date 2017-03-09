@@ -1,5 +1,5 @@
 # Recipe for version 5.92 by Andre Detsch, on Mon Oct 31 16:35:28 BRST 2005
-url=$ftpGnu/coreutils/coreutils-5.92.tar.bz2
+url="$ftpGnu/coreutils/coreutils-5.92.tar.bz2"
 compile_version=1.7.1
 recipe_type=configure
 install_target="install install-root"

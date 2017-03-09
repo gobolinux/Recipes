@@ -3,7 +3,7 @@ recipe_type=manifest
 compile_version=1.11.4
 # This is a copy of http://curl.haxx.se/ca/cacert.pem.bz2 made 2009-02-08,
 # because the original file may change and invalidate the checksums.
-url=http://mwh.geek.nz/files/gobo/cacert-20090208.pem.bz2
+url="http://mwh.geek.nz/files/gobo/cacert-20090208.pem.bz2"
 file_size=97877
 file_md5=174bbe887542a2d76d31a5da5d0e4db4
 dir=cacert

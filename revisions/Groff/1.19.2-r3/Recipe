@@ -1,6 +1,6 @@
 # Recipe for version 1.19.2 by Andre Detsch <detsch@gobolinux.org>, on Sun Jun 18 10:17:09 BRT 2006
 # Revised by Hisham Muhammad based on tip by MJ Ray
-url=$ftpGnu/groff/groff-1.19.2.tar.gz
+url="$ftpGnu/groff/groff-1.19.2.tar.gz"
 file_size="2903263"
 file_md5="f7c9cf2e4b9967d3af167d7c9fadaae4"
 compile_version=1.8.0

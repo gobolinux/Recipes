@@ -1,5 +1,5 @@
 # Recipe for version 3.2 by Andre Detsch <detsch@gobolinux.org>, on Fri Nov 10 00:03:59 BRST 2006
-url=$ftpGnu/bash/bash-3.2.tar.gz
+url="$ftpGnu/bash/bash-3.2.tar.gz"
 needs_safe_linking=yes
 recipe_type=configure
 compile_version=1.7.1

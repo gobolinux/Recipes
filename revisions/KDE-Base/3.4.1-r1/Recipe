@@ -2,7 +2,7 @@
 # by Maglan C. Diemer , 3.3.2 by roko
 compile_version=1.7.1
 url="ftp://ftp.kde.org/pub/kde/stable/3.4.1/src/kdebase-3.4.1.tar.bz2"
-#url="ftp://ftp.sunet.se/pub/kde/stable/3.4.1/src/kdebase-3.4.1.tar.bz2"
+
 dir='kdebase-3.4.1'
 recipe_type=configure
 configure_options=(

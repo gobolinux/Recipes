@@ -1,5 +1,5 @@
 # by Jonatan Liljedahl
-url=$httpSourceforge/gimp-print/gimp-print-4.3.25.tar.bz2
+url="$httpSourceforge/gimp-print/gimp-print-4.3.25.tar.bz2"
 compile_version=1.8.0
 recipe_type=configure
 install_variables=(

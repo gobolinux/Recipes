@@ -1,4 +1,4 @@
-url=$httpSourceforge/e2fsprogs/e2fsprogs-1.35.tar.gz
+url="$httpSourceforge/e2fsprogs/e2fsprogs-1.35.tar.gz"
 compile_version=1.7.1
 recipe_type=configure
 configure_options=(

@@ -1,6 +1,6 @@
 # by Carlo Calica and Jason Stubbs
 
-url=$httpSourceforge/pcmcia-cs/pcmcia-cs-3.2.7.tar.gz
+url="$httpSourceforge/pcmcia-cs/pcmcia-cs-3.2.7.tar.gz"
 compile_version=1.7.1
 recipe_type=configure
 configure=Configure

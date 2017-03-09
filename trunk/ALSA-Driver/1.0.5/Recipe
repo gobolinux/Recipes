@@ -6,7 +6,7 @@
 # Assumes /etc/init.d and /etc/rc.d don't exist.
 # Will fail otherwise.
 
-url=ftp://ftp.alsa-project.org/pub/driver/alsa-driver-1.0.5.tar.bz2
+url="ftp://ftp.alsa-project.org/pub/driver/alsa-driver-1.0.5.tar.bz2"
 compile_version=1.7.1
 recipe_type=configure
 configure_options=(

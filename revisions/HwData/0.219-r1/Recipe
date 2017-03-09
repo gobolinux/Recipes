@@ -4,7 +4,7 @@ compile_version=1.9.0
 url="http://www.gobolinux.org/sources/hwdata-0.219.tar.bz2"
 file_size=717999
 file_md5=56e5b06f47a9ab804255daf1f7bfa097
-#url="http://download.fedora.redhat.com/pub/fedora/linux/development/source/SRPMS/hwdata-0.219-1.fc9.src.rpm"
+
 recipe_type=makefile
 makefile='Makefile'
 make_variables=(
