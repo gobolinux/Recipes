@@ -1,0 +1,13 @@
+# Recipe for version 4.5.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Mar 10 09:52:44 BRT 2017
+# Recipe (MakeRecipe) for Screen by Volker Wieban <buckoven@gobolinux.de>, on Son Sep 12 12:54:04 BRT 2004
+compile_version=1.8.0
+url="http://ftp.gnu.org/gnu/screen/screen-4.5.1.tar.gz"
+file_size=963153
+file_md5=a8c5da2f42f8a18fa4dada2419d1549b
+recipe_type=configure
+
+install_variables=(
+   "TERMINFO=$target/Shared/terminfo"
+)
+
+with_pam="--enable-pam"
