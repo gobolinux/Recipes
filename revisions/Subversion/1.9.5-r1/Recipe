@@ -1,0 +1,47 @@
+# Recipe for version 1.9.5 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Mar 10 10:19:02 BRT 2017
+# Recipe (MakeRecipe) for Subversion by Jonas Karlsson <jonka750@student.liu.se>, on Wed May 11 07:50:33 CEST 2005
+compile_version=1.9.0
+url="http://ftp.unicamp.br/pub/apache/subversion/subversion-1.9.5.tar.bz2"
+file_size=7904861
+file_md5=9fcbae352a5efe73d46a88c97c6bba14
+recipe_type=configure
+makefile=Makefile.build
+
+configure_options=(
+   --with-apr=/usr
+   --with-apr-util=/usr
+   --disable-mod-activation
+   --with-apxs=no
+   --with-swig
+)
+with_httpd=(
+   --with-apache-libexecdir="${goboLibraries}/httpd/modules"
+   --with-apxs=/usr/bin/apxs
+)
+
+build_target="all"
+install_target="install"
+
+pre_build() {
+   # Wrapper Makefile as JavaHL and SWIG Perl bindings doesn't support parallel builds
+   cat << EOF > Makefile.build
+% :
+	\$(MAKE) -j1 \$@
+EOF
+}
+
+pre_link() {
+   # Perl bindings
+   make swig-pl
+   make install-swig-pl PREFIX=$target
+   cp -v subversion/bindings/swig/perl/libsvn_swig_perl/.libs/libsvn_swig_perl-1.so* $target/lib
+
+   # Python bindings
+   #export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD/subversion/libsvn_client/.libs
+   #make swig-py
+   #make install-swig-py
+}
+
+install_variables=(
+   APACHE_LIBEXECDIR="${target}/lib/httpd/modules"
+)
