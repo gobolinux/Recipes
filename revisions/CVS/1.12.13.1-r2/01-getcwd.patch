@@ -1,0 +1,14 @@
+xgetcwd fails in a chroot environment
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+--- cvs-1.12.13/src/main.c	2005-10-02 15:17:21.000000000 +0000
++++ cvs-1.12.13/src/main.c.new	2008-04-30 15:15:24.000000000 +0000
+@@ -931,7 +931,7 @@
+ #endif
+ 	{
+ 	    cleanup_register (close_stdout);
+-	    CurDir = xgetcwd ();
++	    CurDir = getcwd(NULL,0);
+             if (CurDir == NULL)
+ 		error (1, errno, "cannot get working directory");
+ 	}
