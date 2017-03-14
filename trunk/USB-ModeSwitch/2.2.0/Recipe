@@ -6,12 +6,6 @@ urls=(
     "http://www.draisberghof.de/usb_modeswitch/usb-modeswitch-2.2.0.tar.bz2"
     "http://www.draisberghof.de/usb_modeswitch/usb-modeswitch-data-20140529.tar.bz2"
 )
-file_sizes=(
-    
-)
-file_md5s=(
-
-)
 unpack_files=inside_first
 recipe_type=makefile
 build_target="usb_modeswitch dispatcher-static"
