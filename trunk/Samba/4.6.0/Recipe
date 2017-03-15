@@ -16,10 +16,15 @@ configure_options=(
   "--with-quotas"
   "--without-ldap"
   "--prefix=${target}"
-  "--with-configdir=${settings_target}"
-  "--with-lockdir=${variable_target}/locks/samba"
+  "--with-statedir=${variable_target}/lib/samba"
+  "--with-privatedir=${variable_target}/lib/samba/private"
   "--with-piddir=${variable_target}/run/samba"
+  "--with-cachedir=${variable_target}/cache/samba"
+  "--with-lockdir=${variable_target}/lock/samba"
   "--with-logfilebase=${variable_target}/log/samba"
+  "--with-sockets-dir=${variable_target}/run/samba"
+  "--with-privileged-socket-dir=${variable_target}/lib/samba"
+  "--with-configdir=${settings_target}"
 )
 
 with_acl="--with-acl-support"
@@ -41,11 +46,16 @@ unmanaged_files=(
 )
 
 pre_install() {
-   mkdir -p ${variable_target}/{locks,run,log}/samba
+   mkdir -p ${variable_target}/{lock,run,log,lib,cache}/samba
+   mkdir -p ${variable_target}/lib/samba/private
 }
 
 pre_link() {
-  #Create a link to smbspool in the cups' backend directory
+  # Create a link to smbspool in the cups' backend directory
   mkdir -p ${target}/lib/cups/backend
   ln -s ${target}/bin/smbspool ${target}/lib/cups/backend/smb
+
+  # Create settings file
+  mkdir -p ${target}/Resources/Defaults/Settings
+  cp ./examples/smb.conf.default ${target}/Resources/Defaults/Settings
 }

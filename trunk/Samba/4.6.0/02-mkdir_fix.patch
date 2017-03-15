@@ -1,0 +1,16 @@
+--- samba-4.6.0/third_party/waf/wafadmin/Utils.py.orig	2017-03-15 15:55:16.755444040 -0300
++++ samba-4.6.0/third_party/waf/wafadmin/Utils.py	2017-03-15 15:55:57.291444801 -0300
+@@ -450,11 +450,11 @@ def pprint(col, str, label='', sep='\n')
+ 
+ def check_dir(path):
+ 	"""If a folder doesn't exists, create it."""
+-	if not os.path.isdir(path):
++	if not os.path.isdir(path) and not os.path.islink(path):
+ 		try:
+ 			os.makedirs(path)
+ 		except OSError, e:
+-			if not os.path.isdir(path):
++			if not os.path.isdir(path) and not os.path.islink(path):
+ 				raise WafError("Cannot create the folder '%s' (error: %s)" % (path, e))
+ 
+ def cmd_output(cmd, **kw):

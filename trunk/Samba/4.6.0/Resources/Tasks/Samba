@@ -3,8 +3,8 @@
 
 case "$1" in
 [Ss]tart)
-  /Programs/Samba/Current/sbin/smbd -D
-  /Programs/Samba/Current/sbin/nmbd -D
+  /Programs/Samba/Current/bin/smbd -D
+  /Programs/Samba/Current/bin/nmbd -D
   ;;
 [Ss]top)
   killall smbd
