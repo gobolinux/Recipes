@@ -1,0 +1,51 @@
+# Recipe for version 4.6.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Mar 15 13:45:10 BRT 2017
+# Recipe (MakeRecipe) for Samba by roko, <ro.ko@mcnon.com>, on Sun Dec 26 11:04:52 BRST 2004
+compile_version=1.8.5
+url="http://samba.org/samba/ftp/stable/samba-4.6.0.tar.gz"
+file_size=21090602
+file_md5=e80c4501c5290a058bbb1c759e46e012
+mirror_url="ftp://us4.samba.org/pub/samba/old-versions/samba-4.6.0.tar.gz"
+recipe_type=configure
+dir="samba-4.6.0"
+
+post_install_message="To finish the installation, please edit the ${settings_target}/smb.conf.default file and save it as ${settings_target}/smb.conf, then rerun 'SymlinkProgram samba'.\nAlso remember to start the samba daemon at startup by adding the following line to your ${goboSettings}/BootScripts/BootUp if you want to share folders:\n\nExec 'Starting samba service...' StartTask Samba"
+
+configure_options=(
+  "--enable-fhs"
+  "--with-automount"
+  "--with-quotas"
+  "--without-ldap"
+  "--prefix=${target}"
+  "--with-configdir=${settings_target}"
+  "--with-lockdir=${variable_target}/locks/samba"
+  "--with-piddir=${variable_target}/run/samba"
+  "--with-logfilebase=${variable_target}/log/samba"
+)
+
+with_acl="--with-acl-support"
+with_ldap="--with-ldap"
+
+make_variables=(
+  LIBTIRPC_LIBS="-ltirpc"
+)
+
+install_variables=(
+   exec_prefix=${target}
+)
+
+unmanaged_files=(
+   ${variable_target}/locks/samba
+   ${variable_target}/run/samba
+   ${variable_target}/log/samba
+   ${variable_target}/nmbd
+)
+
+pre_install() {
+   mkdir -p ${variable_target}/{locks,run,log}/samba
+}
+
+pre_link() {
+  #Create a link to smbspool in the cups' backend directory
+  mkdir -p ${target}/lib/cups/backend
+  ln -s ${target}/bin/smbspool ${target}/lib/cups/backend/smb
+}
