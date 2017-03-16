@@ -1,0 +1,12 @@
+# Recipe for version 1.6.1 by Aitor P. Iturri <atuin@tuta.io>, on sáb mar 11 23:50:07 CET 2017
+# Recipe (MakeRecipe) for LibVPX by Joshua Sako <jginsu@gmail.com>, on Sun Aug 22 23:13:50 EDT 2010
+compile_version=1.63.3
+url="https://github.com/webmproject/libvpx/archive/v1.6.1.tar.gz"
+file_size=2493087
+file_md5=b0925c8266e2859311860db5d76d1671
+recipe_type=configure
+dir=libvpx-1.6.1
+
+configure_options=(
+	"--prefix=${target}"
+)
