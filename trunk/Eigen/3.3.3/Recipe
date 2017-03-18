@@ -1,0 +1,8 @@
+# Recipe for version 3.3.3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Mar 17 02:36:02 BRT 2017
+# Recipe (MakeRecipe) for Eigen by Giambattista Bloisi <giamby@infinito.it>, on Fri Feb 22 09:39:08 CET 2008
+compile_version=1.10.2
+url="http://bitbucket.org/eigen/eigen/get/3.3.3.tar.bz2"
+file_size=1642001
+file_md5=b2ddade41040d9cf73b39b4b51e8775b
+dir="eigen-eigen-67e894c6cd8f"
+recipe_type=cmake
