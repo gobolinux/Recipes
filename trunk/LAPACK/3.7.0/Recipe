@@ -1,0 +1,26 @@
+# Recipe for version 3.7.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Mar 17 02:44:50 BRT 2017
+# Recipe (MakeRecipe) for LAPACK by Lucas C. Villa Real, on Wed Dec 13 16:44:44 BRST 2006
+compile_version=1.8.0
+url="http://www.netlib.org/lapack/lapack-3.7.0.tgz"
+file_size=7359812
+file_md5=697bb8d67c7d336a0f339cc9dd0fa72f
+recipe_type=makefile
+makefile='Makefile'
+do_install=no
+build_target="lapack_install lib"
+
+make_variables=(
+    PREFIX=$target
+)
+
+pre_build() {
+    [ -e make.inc.example ] && mv make.inc.example make.inc || true
+}
+
+pre_link() {
+    cp *.a $target/lib
+    Quiet pushd $target/lib
+    ln -s liblapack.a libflapack.a
+    ln -s libtmglib.a libftmglib.a
+    Quiet popd
+}
