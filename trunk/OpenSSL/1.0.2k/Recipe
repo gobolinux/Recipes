@@ -14,7 +14,7 @@ configure_options=(
    zlib-dynamic
 )
 
-install_variables=(
+make_variables=(
    MANDIR=$target/man
    HTMLDIR=$target/doc/html
    INSTALLTOP=$target
