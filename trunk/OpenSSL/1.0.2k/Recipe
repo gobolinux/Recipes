@@ -9,7 +9,13 @@ build_target="all"
 
 # Use /etc/ssl to search for certs
 configure_options=(
-   --openssldir=/etc/ssl
+   --openssldir=$settings_target/ssl
    --libdir=lib
    zlib-dynamic
+)
+
+install_variables=(
+   MANDIR=$target/man
+   HTMLDIR=$target/doc/html
+   INSTALLTOP=$target
 )
