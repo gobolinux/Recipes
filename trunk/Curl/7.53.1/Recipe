@@ -1,0 +1,37 @@
+# Recipe for version 7.53.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Mar 19 18:02:26 BRT 2017
+compile_version=016
+url="https://curl.haxx.se/download/curl-7.53.1.tar.bz2"
+file_size=2609559
+file_md5=fb1f03a142236840c1a77c035fa4c542
+recipe_type=configure
+
+configure_options=(
+   --disable-debug
+   --disable-verbose
+   --enable-http
+   --enable-ftp
+   --enable-file
+   --enable-proxy
+   --enable-dict
+   --enable-telnet
+   --enable-tftp
+   --enable-manual
+   --enable-ipv6
+   --enable-thread
+   --enable-crypto-auth
+   --enable-cookies
+   --without-gnutls
+   --without-ssl
+   --without-nss
+   --enable-nonblocking
+   --enable-largefile
+   --without-krb4
+   --with-ca-path=$goboSettings/ssl/certs
+)
+
+with_gnutls="--with-gnutls"
+with_openssl=("--with-ssl")
+with_nss="--with-nss"
+with_kerberos="--with-gssapi"
+with_libssh2="--with-libssh2"
+with_openldap=(--enable-ldap --enable-ldaps)
