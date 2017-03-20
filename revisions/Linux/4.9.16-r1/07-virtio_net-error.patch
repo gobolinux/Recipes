@@ -1,0 +1,38 @@
+Fixes the following warning while removing state:
+
+------------[ cut here ]------------
+WARNING: CPU: 0 PID: 598 at kernel/cpu.c:1703 __cpuhp_remove_state+0xf4/0x100
+Error: Removing state 12 which has instances left.
+Modules linked in: crct10dif_pclmul crc32_pclmul crc32c_intel ghash_clmulni_intel virtio_net(-) ppdev aesni_intel aes_x86_64 ablk_helper cryptd glue_helper lrw joydev pcspkr psmouse serio_raw acpi_cpufreq tpm_tis tpm_tis_core tpm i2c_piix4 parport_pc evdev floppy parport virtio_pci virtio_ring bochs_drm virtio qemu_fw_cfg
+CPU: 0 PID: 598 Comm: rmmod Not tainted 4.9.16-Gobo #1
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.10.1-0-g8891697-prebuilt.qemu-project.org 04/01/2014
+ ffffc9000219bdf8 ffffffff8157e430 ffffc9000219be48 0000000000000000
+ ffffc9000219be38 ffffffff81082dcb 000006a723887d80 0000000000000000
+ 000000000000000c ffffffff82640060 0000000000000800 00000000025b3010
+Call Trace:
+ [<ffffffff8157e430>] dump_stack+0x63/0x83
+ [<ffffffff81082dcb>] __warn+0xcb/0xf0
+ [<ffffffff81082e4f>] warn_slowpath_fmt+0x5f/0x80
+ [<ffffffff812246a0>] ? __fput+0x140/0x1f0
+ [<ffffffff81084e64>] __cpuhp_remove_state+0xf4/0x100
+ [<ffffffffa011af89>] virtio_net_driver_exit+0x10/0x2b [virtio_net]
+ [<ffffffff8110c063>] SyS_delete_module+0x183/0x250
+ [<ffffffff810035f8>] ? exit_to_usermode_loop+0x48/0xb0
+ [<ffffffff81f918fb>] entry_SYSCALL_64_fastpath+0x1e/0xad
+---[ end trace 2e3a5ccf61bcc5a0 ]---
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- linux-4.9.16/drivers/net/virtio_net.c.orig	2017-03-19 20:39:21.951609915 -0300
++++ linux-4.9.16/drivers/net/virtio_net.c	2017-03-19 20:40:46.312611497 -0300
+@@ -2121,8 +2121,9 @@ module_init(virtio_net_driver_init);
+ 
+ static __exit void virtio_net_driver_exit(void)
+ {
++	if (virtionet_online)
++		cpuhp_remove_multi_state(virtionet_online);
+ 	cpuhp_remove_multi_state(CPUHP_VIRT_NET_DEAD);
+-	cpuhp_remove_multi_state(virtionet_online);
+ 	unregister_virtio_driver(&virtio_net_driver);
+ }
+ module_exit(virtio_net_driver_exit);
