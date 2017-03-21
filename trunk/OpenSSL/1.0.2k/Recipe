@@ -9,7 +9,7 @@ build_target="all"
 
 # Use /etc/ssl to search for certs
 configure_options=(
-   --openssldir=$settings_target/ssl
+   --openssldir=$goboSettings/ssl
    --libdir=lib
    zlib-dynamic
 )
@@ -18,4 +18,8 @@ make_variables=(
    MANDIR=$target/man
    HTMLDIR=$target/doc/html
    INSTALLTOP=$target
+)
+
+install_variables=(
+   OPENSSLDIR=$target/Resources/Defaults/Settings/ssl
 )
