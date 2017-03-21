@@ -1,0 +1,25 @@
+# Recipe for version 1.0.2k by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jan 29 21:49:29 BRST 2017
+compile_version=016
+url="https://www.openssl.org/source/openssl-1.0.2k.tar.gz"
+file_size=5309236
+file_md5=f965fc0bf01bf882b31314b61391ae65
+recipe_type=configure
+configure=Configure
+build_target="all"
+
+# Use /etc/ssl to search for certs
+configure_options=(
+   --openssldir=$goboSettings/ssl
+   --libdir=lib
+   zlib-dynamic
+)
+
+make_variables=(
+   MANDIR=$target/man
+   HTMLDIR=$target/doc/html
+   INSTALLTOP=$target
+)
+
+install_variables=(
+   OPENSSLDIR=$target/Resources/Defaults/Settings/ssl
+)
