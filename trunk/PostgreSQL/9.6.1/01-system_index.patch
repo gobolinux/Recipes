@@ -1,0 +1,91 @@
+PostgreSQL has a built-in relocation code to support varied installation paths.
+At runtime, lookup of extensions and other executables is performed by taking
+the absolute/real path of the calling program, and then walking up the directory
+structure to determine the lookup path. For example, extensions of a PostgreSQL
+instance launched by /opt/postgresql/bin/postgres would be searched under
+/opt/postgresql/bin/../share/postgresql/extensions.
+
+The aforementioned relocation scheme works perfectly fine if both PostgreSQL
+and all subsequent extensions are installed under the same prefix. Projects
+such as GoboLinux, however, install them under different prefixes (such as
+/Programs/PostgreSQL and /Programs/PostGIS), resulting in lookup problems
+when the relocation code path is taken.
+
+This patch disables the relocation code so that PostgreSQL is able to find
+extensions on said projects and also introduces a GoboLinux specific change
+that causes lookups on /Programs/PostgreSQL/<version> to be redirected to
+the multiplexed /System/Index tree.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- postgresql-9.6.1/src/port/path.c.orig	2017-03-22 21:03:50.220969341 -0300
++++ postgresql-9.6.1/src/port/path.c	2017-03-22 22:14:35.471048984 -0300
+@@ -539,6 +539,9 @@ static void
+ make_relative_path(char *ret_path, const char *target_path,
+ 				   const char *bin_path, const char *my_exec_path)
+ {
++#if 1
++	strncpy(ret_path, target_path, MAXPGPATH-1);
++#else
+ 	int			prefix_len;
+ 	int			tail_start;
+ 	int			tail_len;
+@@ -586,6 +589,7 @@ make_relative_path(char *ret_path, const
+ no_match:
+ 	strlcpy(ret_path, target_path, MAXPGPATH);
+ 	canonicalize_path(ret_path);
++#endif
+ }
+ 
+ 
+--- postgresql-9.6.1/src/common/exec.c.orig	2017-03-22 23:20:47.166123496 -0300
++++ postgresql-9.6.1/src/common/exec.c	2017-03-22 23:13:23.057115164 -0300
+@@ -203,6 +203,39 @@ find_my_exec(const char *argv0, char *re
+ 	return -1;
+ }
+ 
++/*
++ * to_system_index - converts an absolute path under /Programs/PostgreSQL
++ * into its symbolic link on /System/Index.
++ */
++static int
++to_system_index(char *path)
++{
++	if (strstr(path, "/Programs/PostgreSQL/") == path)
++	{
++		/*
++		 * Use the multiplexed /System/Index tree rather than /Programs.
++		 * This fixes access to extensions installed under other programs'
++		 * share/postgresql/extensions.
++		 */
++		size_t pgsql = strlen("/Programs/PostgreSQL/");
++		char *pstart = &path[pgsql+1];
++		char *pslash = strchr(pstart, '/');
++		if (pslash)
++		{
++			struct stat statbuf;
++			char *path_copy = strdup(path);
++			size_t sysindexlen = strlen("/System/Index");
++			sprintf(path, "/System/Index");
++			memmove(&path[sysindexlen], pslash, strlen(pslash));
++			path[sysindexlen+strlen(pslash)] = '\0';
++			if (stat(path, &statbuf) != 0)
++				/* Rollback */
++				strcpy(path, path_copy);
++			free(path_copy);
++		}
++	}
++	return 0;
++}
+ 
+ /*
+  * resolve_symlinks - resolve symlinks to the underlying file
+@@ -295,7 +328,7 @@ resolve_symlinks(char *path)
+ 	}
+ #endif   /* HAVE_READLINK */
+ 
+-	return 0;
++	return to_system_index(path);
+ }
+ 
+ 
