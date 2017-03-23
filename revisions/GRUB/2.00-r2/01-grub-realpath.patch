@@ -1,0 +1,119 @@
+--- grub-2.00/util/ieee1275/ofpath.c.orig	2014-02-08 01:15:28.000000000 +0000
++++ grub-2.00/util/ieee1275/ofpath.c	2014-02-08 01:17:16.000000000 +0000
+@@ -154,21 +154,6 @@ find_obppath (const char *sysfs_path_ori
+ }
+ 
+ static char *
+-xrealpath (const char *in)
+-{
+-  char *out;
+-#ifdef PATH_MAX
+-  out = xmalloc (PATH_MAX);
+-  out = realpath (in, out);
+-#else
+-  out = realpath (in, NULL);
+-#endif
+-  if (!out)
+-    grub_util_error (_("failed to get canonical path of %s"), in);
+-  return out;
+-}
+-
+-static char *
+ block_device_get_sysfs_path_and_link(const char *devicenode)
+ {
+   char *rpath;
+--- grub-2.00/util/getroot.c.orig	2014-02-07 19:15:34.000000000 -0500
++++ grub-2.00/util/getroot.c	2014-02-07 19:19:16.000000000 -0500
+@@ -1644,7 +1673,7 @@ convert_system_partition_to_system_disk
+ #if defined(__linux__)
+   char *path = xmalloc (PATH_MAX);
+ 
+-  if (! realpath (os_dev, path))
++  if (! (path = xrealpath (os_dev)))
+     return NULL;
+ 
+   if (strncmp ("/dev/", path, 5) == 0)
+--- grub-2.00/include/grub/emu/misc.h.orig	2014-02-07 19:24:52.000000000 -0500
++++ grub-2.00/include/grub/emu/misc.h	2014-02-07 19:25:41.000000000 -0500
+@@ -61,6 +61,7 @@ void * EXPORT_FUNC(xmalloc) (grub_size_t
+ void * EXPORT_FUNC(xrealloc) (void *ptr, grub_size_t size) __attribute__ ((warn_unused_result));
+ char * EXPORT_FUNC(xstrdup) (const char *str) __attribute__ ((warn_unused_result));
+ char * EXPORT_FUNC(xasprintf) (const char *fmt, ...) __attribute__ ((format (printf, 1, 2))) __attribute__ ((warn_unused_result));
++char * EXPORT_FUNC(xrealpath) (const char *in) __attribute__ ((warn_unused_result));
+ 
+ void EXPORT_FUNC(grub_util_warn) (const char *fmt, ...) __attribute__ ((format (printf, 1, 2)));
+ void EXPORT_FUNC(grub_util_info) (const char *fmt, ...) __attribute__ ((format (printf, 1, 2)));
+--- grub-2.00/grub-core/kern/emu/hostdisk.c.orig	2014-02-07 19:22:10.000000000 -0500
++++ grub-2.00/grub-core/kern/emu/hostdisk.c	2014-02-07 19:24:09.000000000 -0500
+@@ -1338,7 +1338,7 @@ read_device_map (const char *dev_map)
+       if (strncmp (p, "/dev/mapper/", 12) != 0)
+ 	{
+ 	  map[drive].device = xmalloc (PATH_MAX);
+-	  if (! realpath (p, map[drive].device))
++	  if (! (map[drive].device = xrealpath (p)))
+ 	    grub_util_error (_("failed to get canonical path of %s"), p);
+ 	}
+       else
+--- grub-2.00/grub-core/kern/emu/misc.c.orig	2014-02-08 01:19:38.000000000 +0000
++++ grub-2.00/grub-core/kern/emu/misc.c	2014-02-08 01:19:13.000000000 +0000
+@@ -110,6 +110,47 @@ grub_util_error (const char *fmt, ...)
+   exit (1);
+ }
+ 
++char *
++xrealpath (const char *in)
++{
++  char *out, *gobo_out;
++#ifdef PATH_MAX
++  out = xmalloc (PATH_MAX);
++  out = realpath (in, out);
++#else
++  out = realpath (in, NULL);
++#endif
++  if (!out)
++    grub_util_error (_("failed to get canonical path of %s"), in);
++
++  if (!strncmp("/System/Kernel/Devices/", out, 23))
++    {
++      gobo_out = xmalloc (strlen(out));
++      if (!gobo_out) 
++        {
++	      free (out);
++          grub_util_error (_("not enough memory"));
++        }
++      sprintf (gobo_out, "/dev/%s", &out[23]);
++	  free (out);
++	  out = gobo_out;
++	}
++  else if (!strncmp("/System/Kernel/Objects/", out, 23))
++    {
++      gobo_out = xmalloc (strlen(out));
++      if (!gobo_out) 
++        {
++	      free (out);
++          fprintf (stderr, "not enough memory\n");
++        }
++      sprintf (gobo_out, "/sys/%s", &out[23]);
++	  free (out);
++	  out = gobo_out;
++	}
++
++  return out;
++}
++
+ void *
+ xmalloc (grub_size_t size)
+ {
+@@ -230,10 +271,10 @@ canonicalize_file_name (const char *path
+     return NULL;
+ #elif defined (PATH_MAX)
+   ret = xmalloc (PATH_MAX);
+-  if (!realpath (path, ret))
++  if (! (ret = xrealpath (path)))
+     return NULL;
+ #else
+-  ret = realpath (path, NULL);
++  ret = xrealpath (path);
+ #endif
+   return ret;
+ }

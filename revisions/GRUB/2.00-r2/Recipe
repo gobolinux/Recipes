@@ -1,0 +1,46 @@
+# Recipe for version 2.00 by Lucas C. Villa Real, on Fri Feb  7 18:56:05 EST 2014
+# Recipe (MakeRecipe) for GRUB by Lucas C. Villa Real, on Fri Dec 4 16:02:55 BRST 2009
+compile_version=1.10.1
+url="$ftpGnu/grub/grub-2.00.tar.xz"
+file_size=5136412
+file_md5=a1043102fbc7bcedbf53e7ee3d17ab91
+recipe_type=configure
+
+environment=(
+    CFLAGS="-DDEVDIR=\\\"$goboDevices\\\""
+)
+
+configure_options=(
+	--enable-device-mapper
+	--disable-grub-emu-usb
+	--disable-werror
+	--disable-efiemu
+)
+
+pre_build() {
+	if [ ! -e .patched ]
+	then
+    	sed -i -e '/gets is a/d' grub-core/gnulib/stdio.in.h
+		touch .patched
+	fi
+}
+
+pre_install() {
+	if grep -q "Apple Internal Keyboard / Trackpad" /sys/class/input/*/name 2> /dev/null
+	then
+		mkdir -p "$target/Resources/Unmanaged/$goboBoot"
+		dd if=/dev/mem of="$target/Resources/Unmanaged/$goboBoot/vbios.bin" bs=65536 skip=12 count=1
+		dd if=/dev/mem of="$target/Resources/Unmanaged/$goboBoot/int10.bin" bs=4     skip=16 count=1
+
+		#Quiet pushd grub-core
+		#../grub-mkimage -d . -o bootx64.efi -O x86_64-efi -p /efi/boot `find *.mod | xargs | sed -e 's/.mod//g'`
+		#../grub-mkimage -d . -o boot-i386.efi -O -i386-efi -p /efi/boot `find *.mod | xargs | sed -e 's/.mod//g'`
+		#Quiet popd
+	fi
+}
+
+pre_link() {
+	case $(uname -m) in
+		x86_64) ln -sv lib $target/lib64 ;;
+	esac
+}
