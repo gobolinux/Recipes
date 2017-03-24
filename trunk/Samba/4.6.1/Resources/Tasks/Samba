@@ -1,0 +1,17 @@
+#!/bin/sh
+# by Maglan C. Diemer
+
+case "$1" in
+[Ss]tart)
+  /Programs/Samba/Current/bin/smbd -D
+  /Programs/Samba/Current/bin/nmbd -D
+  ;;
+[Ss]top)
+  killall smbd
+  killall nmbd
+  ;;
+esac
+
+
+
+
