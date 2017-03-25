@@ -10,7 +10,6 @@ create_dirs_first=yes
 manifest=(
 )
 environment=(
-	"GOARCH=386"
 	"GOOS=linux"
 	"GOBIN=$target/bin"
 	"GOROOT_FINAL=$target/lib/go"
