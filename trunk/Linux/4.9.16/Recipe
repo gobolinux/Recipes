@@ -47,7 +47,9 @@ do_configuration() {
    [ -z "${SUDO_USER}" ] || chown ${SUDO_USER} .config
 
    # Build tools/objtool. Third-party modules may rely on it.
-   make -C tools/objtool
+   if [ ! -e tools/objtool/objtool ]
+   then make -C tools/objtool
+   fi
 }
 
 do_install() {

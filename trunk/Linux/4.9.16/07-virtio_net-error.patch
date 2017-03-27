@@ -1,4 +1,5 @@
-Fixes the following warning while removing state:
+Unregister the virtio driver before removing states. This fixes the
+following warning while booting QEMU:
 
 ------------[ cut here ]------------
 WARNING: CPU: 0 PID: 598 at kernel/cpu.c:1703 __cpuhp_remove_state+0xf4/0x100
@@ -23,16 +24,16 @@ Call Trace:
 
 Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
 
---- linux-4.9.16/drivers/net/virtio_net.c.orig	2017-03-19 20:39:21.951609915 -0300
-+++ linux-4.9.16/drivers/net/virtio_net.c	2017-03-19 20:40:46.312611497 -0300
-@@ -2121,8 +2121,9 @@ module_init(virtio_net_driver_init);
+--- linux-4.9.16/drivers/net/virtio_net.c.orig	2017-03-20 08:30:02.343409875 -0300
++++ linux-4.9.16/drivers/net/virtio_net.c	2017-03-20 08:30:13.142410078 -0300
+@@ -2121,9 +2121,9 @@ module_init(virtio_net_driver_init);
  
  static __exit void virtio_net_driver_exit(void)
  {
-+	if (virtionet_online)
-+		cpuhp_remove_multi_state(virtionet_online);
++	unregister_virtio_driver(&virtio_net_driver);
  	cpuhp_remove_multi_state(CPUHP_VIRT_NET_DEAD);
--	cpuhp_remove_multi_state(virtionet_online);
- 	unregister_virtio_driver(&virtio_net_driver);
+ 	cpuhp_remove_multi_state(virtionet_online);
+-	unregister_virtio_driver(&virtio_net_driver);
  }
  module_exit(virtio_net_driver_exit);
+ 
