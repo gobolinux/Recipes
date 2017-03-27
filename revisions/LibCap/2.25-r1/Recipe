@@ -1,0 +1,13 @@
+# Recipe for version 2.25 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Mar 26 19:10:37 BRT 2017
+# Recipe (MakeRecipe) for LibCap by Andy Feldman <nereusren@gmail.com>, on Sat Jan 17 21:39:49 CST 2009
+compile_version=1.11.3
+url="https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-2.25.tar.xz"
+file_size=63672
+file_md5=6666b839e5d46c2ad33fc8aa2ceb5f77
+recipe_type=makefile
+dir="libcap-2.25"
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+   "RAISE_SETFCAP=no"
+)
