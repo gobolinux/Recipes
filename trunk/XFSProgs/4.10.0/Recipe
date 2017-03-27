@@ -1,0 +1,28 @@
+# Recipe for version 4.10.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Mar 25 15:29:06 BRT 2017
+# Recipe (MakeRecipe) for XFSProgs by ro.ko@mcnon.com, on Tue Oct 12 00:32:49 BRST 2004
+compile_version=1.8.0
+url="https://www.kernel.org/pub/linux/utils/fs/xfs/xfsprogs/xfsprogs-4.10.0.tar.xz"
+file_size=1091648
+file_md5=ddbb04493addf014db07a7e2b96b2804
+recipe_type=configure
+install_target="install install-dev"
+
+configure_options=(
+    --exec-prefix=$goboSystem/Index
+    --libdir=$target/lib
+    --sbindir=$target/sbin
+    --enable-shared=yes
+    --enable-readline=yes
+    --enable-lib64=no
+)
+
+build_variables=(
+   DEBUG=-DNDEBUG
+)
+
+environment=(
+   # XFSProgs and related use a custom m4 macro that uses only this
+   # environment variable to locate the libtool binary if it is not
+   # in a standard location.
+   LIBTOOL="${goboExecutables}/libtool"
+)
