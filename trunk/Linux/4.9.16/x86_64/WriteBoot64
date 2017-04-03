@@ -43,7 +43,7 @@ gen_uefi_app() {
    then
        Log_Normal "Updating UEFI application"
        mv -v "$goboBoot/efi/EFI/BOOT/BOOTX64.EFI" "$goboBoot/efi/EFI/BOOT/BOOTX64.OLD"
-       mv -v "$goboBoot/$grub_cfg" "$goboBoot/efi/EFI/BOOT/grub-efi.cfg"
+       mv -v "$goboBoot/$grub_cfg" "$goboBoot/efi/EFI/BOOT/$grub_cfg"
        mv -v "$goboBoot/BOOTX64.EFI" "$goboBoot/efi/EFI/BOOT"
    else
        Log_Normal "A new UEFI application has been created. You can now activate your kernel by mounting your"
