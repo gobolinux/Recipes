@@ -1,0 +1,12 @@
+# Recipe for version 0.1.9 by Hisham Muhammad <hisham@gobolinux.org>, on Wed Mar 15 20:51:30 BRT 2017
+# Recipe (MakeRecipe) for APulse by Hisham Muhammad <hisham@gobolinux.org>, on Wed Mar 8 18:11:50 BRT 2017
+compile_version=git
+url="https://github.com/i-rinat/apulse/archive/v0.1.9.tar.gz"
+file_size=106767
+file_md5=b0b013a21ab7bee55e9c0c62f9e38a75
+file="apulse-0.1.9.tar.gz"
+dir='apulse-0.1.9'
+recipe_type=cmake
+cmake_options=(
+   -DCMAKE_BUILD_TYPE=Release
+)
