@@ -1,0 +1,23 @@
+# Recipe for version 1.2.8 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Apr 3 01:23:11 BRT 2017
+# Recipe (MakeRecipe) for NFS-Utils by Otto Barnes, on Wed Dec 15 20:26:08 BRST 2004
+compile_version=1.8.2
+url="http://downloads.sourceforge.net/nfs/nfs-utils-1.2.8.tar.bz2"
+file_size=2747577
+file_md5=6e7d97de51e428a0b8698c16ca23db77
+recipe_type=configure
+
+configure_options=(
+	"--disable-gss"
+    "--disable-ipv6"
+	"--sysconfdir=$settings_target"
+	"--with-statedir=$goboVariable/lib/nfs"
+	"--localstatedir=$goboVariable/lib/nfs"
+)
+
+install_variables=(
+    sbindir=$target/sbin
+)
+
+unmanaged_files=(
+    $goboVariable/lib/nfs
+)
