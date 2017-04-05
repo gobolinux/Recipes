@@ -5,6 +5,8 @@ url="https://ftp.postgresql.org/pub/source/v9.6.1/postgresql-9.6.1.tar.bz2"
 file_size=19260568
 file_md5=92ae6d7cdf18e648b3c22d0aa015565d
 recipe_type=configure
+build_target="world"
+install_target="install install-world"
 
 configure_options=(
    "--with-perl"
