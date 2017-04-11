@@ -1,0 +1,85 @@
+Patch adding iTerm2 theme Argonaut <https://github.com/mbadolato/iTerm2-Color-Schemes#argonaut>
+--- st-0.7.orig/config.def.h	2017-04-04 21:19:54.715080493 +0200
++++ st-0.7/config.def.h	2017-04-04 21:36:50.023105564 +0200
+@@ -82,44 +82,37 @@
+  */
+ static unsigned int tabspaces = 8;
+ 
+-/* Terminal colors (16 first used in escape sequence) */
+ static const char *colorname[] = {
+-	/* 8 normal colors */
+-	"black",
+-	"red3",
+-	"green3",
+-	"yellow3",
+-	"blue2",
+-	"magenta3",
+-	"cyan3",
+-	"gray90",
+-
+-	/* 8 bright colors */
+-	"gray50",
+-	"red",
+-	"green",
+-	"yellow",
+-	"#5c5cff",
+-	"magenta",
+-	"cyan",
+-	"white",
+-
+-	[255] = 0,
+-
+-	/* more colors can be added after 255 to use with DefaultXX */
+-	"#cccccc",
+-	"#555555",
++        "#222222",              /* 0: ANSI Color 0 */
++        "#ff000f",              /* 1: ANSI Color 1 */
++        "#8ce00a",              /* 2: ANSI Color 2 */
++        "#ffb900",              /* 3: ANSI Color 3 */
++        "#008df8",              /* 4: ANSI Color 4 */
++        "#6c43a5",              /* 5: ANSI Color 5 */
++        "#00d7eb",              /* 6: ANSI Color 6 */
++        "#ffffff",              /* 7: ANSI Color 7 */
++        "#444444",              /* 8: ANSI Color 8 */
++        "#ff273f",              /* 9: ANSI Color 9 */
++        "#abe05a",              /* 10: ANSI Color 10 */
++        "#ffd141",              /* 11: ANSI Color 11 */
++        "#0092ff",              /* 12: ANSI Color 12 */
++        "#9a5feb",              /* 13: ANSI Color 13 */
++        "#67ffef",              /* 14: ANSI Color 14 */
++        "#ffffff",              /* 15: ANSI Color 15 */
++        [255] = 0,
++        [256] = "#0d0f18",              /* 256: Background */
++        [257] = "#fffaf3",              /* 257: Foreground */
++        [258] = "#ff0017",              /* 258: Cursor */
++        [259] = "#ff0017",              /* 259: Cursor Text */
++        /* No support for text highlight coloring; would be #ffffff. */
++        /* No support for highlight coloring; would be #002a3a. */
++        /* No support for bold coloring; would be #9d9b99. */
+ };
+ 
+-
+-/*
+- * Default colors (colorname index)
+- * foreground, background, cursor, reverse cursor
+- */
+-static unsigned int defaultfg = 7;
+-static unsigned int defaultbg = 0;
+-static unsigned int defaultcs = 256;
+-static unsigned int defaultrcs = 257;
++static unsigned int defaultfg  = 257;
++static unsigned int defaultbg  = 256;
++static unsigned int defaultcs  = 258;
++static unsigned int defaultrcs = 259;
+ 
+ /*
+  * Default shape of cursor
+@@ -128,7 +121,7 @@
+  * 6: Bar ("|")
+  * 7: Snowman ("☃")
+  */
+-static unsigned int cursorshape = 2;
++static unsigned int cursorshape = 4;
+ 
+ /*
+  * Default colour and shape of the mouse cursor

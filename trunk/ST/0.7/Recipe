@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for ST by Aitor P. Iturri <atuin@tuta.io>, on mar abr 4 22:11:21 CEST 2017
+# Recipe for version 0.7 by Aitor P. Iturri <atuin@tuta.io>, on mar abr 4 22:11:21 CEST 2017
+compile_version=git
+url="http://dl.suckless.org/st/st-0.7.tar.gz"
+file_size=42418
+file_md5=29b2a599cf1511c8062ed8f025c84c63
+dir='st-0.7'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+    "PREFIX=$target"
+)
