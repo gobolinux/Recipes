@@ -1,0 +1,13 @@
+# Recipe for version 2.7.4 by Hisham Muhammad <hisham@gobolinux.org>, on Wed Apr 5 03:13:52 BRT 2017
+# Recipe (MakeRecipe) for Audit by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue May 20 00:41:36 BRT 2008
+compile_version=1.10.1
+url="http://people.redhat.com/sgrubb/audit/audit-2.7.4.tar.gz"
+file_size=1111258
+file_md5=001fa3779d66c77c9c3240cd48fcbe0b
+recipe_type=configure
+autogen_before_configure=yes
+configure_options=(
+   --without-python
+   --without-python3
+   --without-go
+)
