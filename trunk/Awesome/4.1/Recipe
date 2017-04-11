@@ -1,0 +1,10 @@
+# Recipe for version 4.1 by Aitor P. Iturri <atuin@tuta.io>, on miÃ© abr 5 21:47:34 CEST 2017
+# Recipe (MakeRecipe) for Awesome by Viola Zoli; Hungary, violazoli@gmail.com, on 2008. márc. 24., hétfõ, 12.54.10 CET
+compile_version=1.10.2
+url="https://github.com/awesomeWM/awesome-releases/raw/master/awesome-4.1.tar.xz"
+file_size=960768
+file_md5=1150a3bec7dcb784e978701b0e662997
+recipe_type=cmake
+cmake_options=(
+   -DSYSCONFDIR="$settings_target"
+)
