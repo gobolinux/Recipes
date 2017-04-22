@@ -1,0 +1,18 @@
+# Recipe for version 25.2 by Demian Florentin <demianflorentin@gmail.com>, on Sat Apr 22 16:45:54 PYT 2017
+compile_version=1.8.5
+url="http://mirror.nbtelecom.com.br/gnu/emacs/emacs-25.2.tar.xz"
+file_size=46900336
+file_md5=06442d867158754bdde793eca420ca49
+recipe_type=configure
+
+unmanaged_files=(
+   $goboVariable/games/emacs
+)
+
+with_gtk=(
+   "--with-x-toolkit=gtk"
+)
+
+with_motif=(
+   "--with-x-toolkit=motif"
+)
