@@ -1,4 +1,4 @@
-# Recipe for version 5.7.1 by Demian Florentin <demianflorentin@gmail.com>, on Sun Dec 25 13:45:29 PYST 2016
+# Recipe for version 5.7.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Jan 4 12:12:36 BRST 2017
 # by Andre Detsch
 
 compile_version=1.9.0
@@ -11,22 +11,28 @@ dir='qt-everywhere-opensource-src-5.7.1'
 configure_options=(
     -release
     -prefix "$target"
-    #-nomake "examples demos docs"
-    -dbus
+    -docdir "$target/share/doc/qt"
+    -headerdir "$target/include/qt"
+    -archdatadir "$target/lib/qt"
+    -datadir "$target/share/qt"
+    -sysconfdir "$settings_target/xdg"
+    -examplesdir "$target/share/doc/qt/examples"
+    -dbus-linked
+    -no-journald
+    -no-pulseaudio
+    -no-compile-examples
     -no-separate-debug-info
-    -sql-sqlite
-    -system-sqlite
+    -nomake examples
+    -qt-sql-sqlite
     -opensource
+    -openssl-linked
     -confirm-license
-    -optimized-qmake
-    -no-gstreamer
+    -optimized-tools
 )
 
-#with_mysql="-plugin-sql-mysql"
-#with_sqlite=(-plugin-sql-sqlite -system-sqlite)
-#with_odbc="-plugin-sql-odbc"
-#with_nas="-system-nas-sound"
-with_webkit="-webkit"
+with_mysql="-plugin-sql-mysql"
+with_sqlite=(-plugin-sql-sqlite -system-sqlite)
+with_odbc="-plugin-sql-odbc"
 
 environment=(
    # Workaround to fix build error due to missing libQtCLucene.so
@@ -43,7 +49,10 @@ pre_link() {
       Quiet pushd "$target"
       find . -type d -empty | grep -v "./Resources\|./usr" | xargs rmdir -p >& /dev/null
       mv usr/* .
-      rmdir usr
+      rmdir usr || {
+        cp -a usr/* .
+        rm -rf usr
+      }
       Quiet popd
    fi
 
