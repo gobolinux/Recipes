@@ -1,0 +1,29 @@
+# Recipe for version git by Wilson Moura <wilsonmourati@gmail.com>, on qui mai 4 13:32:53 BRT 2017
+# Recipe (MakeRecipe) for Vim by Matthias Wolf, on Tue Sep 21 12:10:37 CEST 2004
+compile_version=1.8.2
+git="https://github.com/vim/vim.git"
+dir='vim80/src'
+recipe_type=configure
+
+configure_options=(
+   --prefix="$target"
+   --exec-prefix="$target"
+   --enable-gui=no
+   --enable-multibyte
+   --disable-selinux
+   --datadir="$target/share"
+   --mandir="$target/share/man"
+)
+with_perl=(
+   --enable-perlinterp
+)
+with_python=(
+   --enable-pythoninterp
+)
+
+with_gtk2="--enable-gui=gtk2"
+with_gtk3="--enable-gui=gtk3"
+
+pre_link() {
+	ln -s vim $target/bin/vi
+}
