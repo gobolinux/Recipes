@@ -1,0 +1,10 @@
+# Recipe for version git by Wilson Moura <wilsonmourati@gmail.com>, on sáb mai 6 07:46:28 BRT 2017
+# Recipe (MakeRecipe) for APulse by Hisham Muhammad <hisham@gobolinux.org>, on Wed Mar 8 18:11:50 BRT 2017
+compile_version=git
+git="https://github.com/i-rinat/apulse.git"
+file="apulse-git.tar.gz"
+dir='apulse-git'
+recipe_type=cmake
+cmake_options=(
+   -DCMAKE_BUILD_TYPE=Release
+)
