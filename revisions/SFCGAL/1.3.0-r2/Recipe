@@ -1,0 +1,20 @@
+# Recipe (MakeRecipe) for SFCGAL by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Mar 17 15:03:00 BRT 2017
+# Recipe for version 1.3.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Mar 17 15:03:00 BRT 2017
+compile_version=016.01
+url="https://github.com/Oslandia/SFCGAL/archive/v1.3.0.tar.gz"
+file="SFCGAL-1.3.0.tar.gz"
+file_size=2401586
+file_md5=2734d221e6305057d8b452efc7738244
+dir='SFCGAL-1.3.0'
+recipe_type=cmake
+
+cmake_options=(
+    -DSFCGAL_WITH_OSG=1
+)
+
+cmake_do_build() {
+    echo "Patching"
+    find . -name "*.make" | xargs GrepReplace -B "isystem" "I"
+    echo "Building"
+    make
+}
