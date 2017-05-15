@@ -8,6 +8,10 @@ file_md5=2734d221e6305057d8b452efc7738244
 dir='SFCGAL-1.3.0'
 recipe_type=cmake
 
+cmake_options=(
+    -DSFCGAL_WITH_OSG=1
+)
+
 cmake_do_build() {
     echo "Patching"
     find . -name "*.make" | xargs GrepReplace -B "isystem" "I"
