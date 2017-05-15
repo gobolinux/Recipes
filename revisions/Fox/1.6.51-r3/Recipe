@@ -1,0 +1,10 @@
+# Recipe for version 1.6.51 by Hugo Barrocas <barrocas75@gmail.com>, on Seg Out 17 21:23:43 UTC 2016
+compile_version=2.0
+url="ftp://ftp.fox-toolkit.org/pub/fox-1.6.51.tar.gz"
+file_size=4383165
+file_md5=07642f226afba5515b0b0c09c4b47633
+recipe_type=configure
+configure_options=(
+ --enable-release
+ --with-xft         #     enable Xft support
+ )
