@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for CGAL by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Mar 17 02:00:06 BRT 2017
+# Recipe for version 4.9 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Mar 17 02:00:06 BRT 2017
+compile_version=016.01
+url="https://github.com/CGAL/cgal/archive/releases/CGAL-4.9.tar.gz"
+file="cgal-releases-CGAL-4.9.tar.gz"
+file_size=116507925
+file_md5=7b628db3e5614347f776c046b7666089
+dir='cgal-releases-CGAL-4.9'
+recipe_type=cmake
+
+cmake_do_build() {
+    echo "Patching"
+    find . -name "*.make" | xargs GrepReplace -B "isystem" "I"
+    echo "Building"
+    make
+}
