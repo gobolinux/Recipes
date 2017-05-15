@@ -1,0 +1,13 @@
+# Recipe for version 3.4.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed May 3 20:47:50 BRT 2017
+# Recipe (MakeRecipe) for OpenSceneGraph by Fabio Mierlo <geromao@gmail.com>, on Fri Aug 1 05:24:57 BRT 2008
+compile_version=1.11.1
+url="http://www.openscenegraph.org/downloads/stable_releases/OpenSceneGraph-3.4.0/source/OpenSceneGraph-3.4.0.zip"
+file_size=7975023
+file_md5=a5e762c64373a46932e444f6f7332496
+recipe_type=cmake
+
+cmake_options=(
+  "-D BUILD_OSG_EXAMPLES:BOOL=ON"
+  "-D SDL_INCLUDE_DIR=$goboHeaders/SDL"
+  "-D CMAKE_DISABLE_FIND_PACKAGE_FFmpeg=1"
+)
