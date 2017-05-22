@@ -1,0 +1,19 @@
+# Recipe for version 8u121 by Hugo Barrocas <barrocas75@gmail.com>, on sex mai 19 09:18:20 WEST 2017
+# Recipe (MakeRecipe) for JRE by Hugo Barrocas <barrocas75@gmail.com>, on Qui Jul 31 01:39:30 UTC 2014
+
+compile_version=2.0
+recipe_type=manifest
+
+manifest=(
+	'bin:bin'
+	'lib:lib'
+	'man:man'
+	'plugin:plugin'
+	'COPYRIGHT:doc/COPYRIGHT'
+	'LICENSE:doc/LICENSE'
+	'README:doc/README'
+	'release:doc/release'
+	'THIRDPARTYLICENSEREADME-JAVAFX.txt:doc/THIRDPARTYLICENSEREADME-JAVAFX.txt'
+	'THIRDPARTYLICENSEREADME.txt:doc/THIRDPARTYLICENSEREADME.txt'
+	'Welcome.html:doc/Welcome.html'
+)

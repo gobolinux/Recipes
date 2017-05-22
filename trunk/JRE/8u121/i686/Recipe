@@ -1,0 +1,16 @@
+url="http://ftp.osuosl.org/pub/funtoo/distfiles/oracle-java/jre-8u121-linux-i586.tar.gz"
+file_size=76293286
+file_md5=b3c499fd4be692e22e5d849177bcfa3f
+
+dir='jre1.8.0_121'
+unpack_files=files_in_root
+
+pre_link() {
+	# Remove previous plugin link (if exists).
+		rm $firefox_path/firefox/browser/plugins/libjavaplugin_oji.so
+		rm $firefox_path/firefox/browser/plugins/libnpjp2.so
+	# Create the Firefox plugin directory if it does not exist.
+		mkdir -p $firefox_path/firefox/browser/plugins
+	# Create a link to the java plugin in the Firefox plugin directory.
+		ln -s $target/lib/i386/libnpjp2.so $firefox_path/firefox/browser/plugins
+}
