@@ -1,0 +1,11 @@
+# Recipe for version 0.92.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri May 19 16:35:07 BRT 2017
+# Recipe (MakeRecipe) for Inkscape by Leandro Motta Barrros, on Sun Apr 2 12:52:59 BRT 20.480.486
+compile_version=2.0
+url="https://launchpad.net/inkscape/0.92.x/0.92.1/+download/inkscape-0.92.1.tar.bz2"
+file_size=31222684
+file_md5=db2eb2a566cf35ff949fc9ccb172889a
+recipe_type=configure
+
+pre_build() {
+    ./autogen.sh
+}
