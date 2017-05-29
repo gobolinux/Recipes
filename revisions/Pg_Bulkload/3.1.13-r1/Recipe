@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Pg_Bulkload by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon May 29 17:25:20 BRT 2017
+# Recipe for version 3.1.13 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon May 29 17:25:20 BRT 2017
+compile_version=016
+url="https://github.com/ossc-db/pg_bulkload/archive/VERSION3_1_13.tar.gz"
+file="pg_bulkload-VERSION3_1_13.tar.gz"
+file_size=273662
+file_md5=36c4036de418e96a7d65aeb2a4788b04
+dir='pg_bulkload-VERSION3_1_13'
+recipe_type=makefile
+makefile='Makefile'
