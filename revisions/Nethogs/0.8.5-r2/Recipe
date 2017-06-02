@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for Nethogs by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri May 26 10:51:36 BRT 2017
+# Recipe for version 0.8.5 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri May 26 10:51:36 BRT 2017
+compile_version=016
+url="http://pkgs.fedoraproject.org/repo/pkgs/nethogs/nethogs-0.8.5.tar.gz/002fd7227d8ed2a8b0fcb0a1b44731bf/nethogs-0.8.5.tar.gz"
+file_size=112385
+file_md5=002fd7227d8ed2a8b0fcb0a1b44731bf
+dir='nethogs-0.8.5'
+recipe_type=makefile
+makefile='Makefile'
