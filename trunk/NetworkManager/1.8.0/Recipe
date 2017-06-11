@@ -1,0 +1,25 @@
+# Recipe for version 1.8.0-r1 by Ivan Florentin <ivanflorentin@gmail.com>, on Sat Jun 10 20:08:08 PYT 2017
+# Recipe (MakeRecipe) for NetworkManager by Giambattista Bloisi <giamby@infinito.it>, on Sat Mar 8 01:02:11 CET 2008
+compile_version=1.10.2
+url="https://download.gnome.org/sources/NetworkManager/1.8/NetworkManager-1.8.0.tar.xz"
+file_size=3811100
+file_md5=de0e70933a17ee6a682e8440015c9b1e
+recipe_type=configure
+
+configure_options=(
+   --with-udev-dir=$target/lib/udev
+   --enable-polkit=no
+   --with-consolekit=no
+   --with-session-tracking=no
+   --enable-qt=no
+)
+
+install_variables=(
+   DBUS_SYS_DIR=$settings_target/dbus-1/system.d
+   UDEV_BASE_DIR=$target/lib/udev
+)
+
+unmanaged_files=(
+   $goboVariable/run/NetworkManager
+   $goboVariable/lib/NetworkManager
+)
