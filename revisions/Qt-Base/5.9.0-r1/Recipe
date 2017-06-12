@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for QtBase-Opensource-SRC by Ivan Florentin <ivanflorentin@gmail.com>, on Fri Jun 9 20:15:26 PYT 2017
+# Recipe for version 5.9.0 by Ivan Florentin <ivanflorentin@gmail.com>, on Fri Jun 9 20:15:26 PYT 2017
+compile_version=016.01
+url="http://download.qt.io/official_releases/qt/5.9/5.9.0/submodules/qtbase-opensource-src-5.9.0.tar.xz"
+file_size=44893232
+file_md5=d9984e18fb826fa3bb63457dc90ba14a
+dir='qtbase-opensource-src-5.9.0'
+recipe_type=configure
+configure_options=(
+"-opensource"
+"-confirm-license"
+)
