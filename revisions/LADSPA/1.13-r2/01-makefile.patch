@@ -1,0 +1,15 @@
+--- ladspa_sdk/src/makefile	2007-11-06 07:42:45.000000000 -0300
++++ ladspa_sdk/src/makefile.new	2017-06-12 10:16:21.251116284 -0400
+@@ -59,9 +59,9 @@
+ 	@echo Test complete.
+ 
+ install:	targets
+-	-mkdirhier $(INSTALL_PLUGINS_DIR)
+-	-mkdirhier $(INSTALL_INCLUDE_DIR)
+-	-mkdirhier $(INSTALL_BINARY_DIR)
++	mkdir -p $(INSTALL_PLUGINS_DIR)
++	mkdir -p $(INSTALL_INCLUDE_DIR)
++	mkdir -p $(INSTALL_BINARY_DIR)
+ 	cp ../plugins/* $(INSTALL_PLUGINS_DIR)
+ 	cp ladspa.h $(INSTALL_INCLUDE_DIR)
+ 	cp ../bin/* $(INSTALL_BINARY_DIR)
