@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for PaleMoon by Wilson Moura <wilsonmoura@tuta.io>, on dom jun 18 11:05:38 BRT 2017
+# Recipe for version 27.3.0 by Wilson Moura <wilsonmoura@tuta.io>, on dom jun 18 11:05:38 BRT 2017
+compile_version=20170606-GIT
+url="http://linux.palemoon.org/datastore/release/palemoon-27.3.0.en-US.linux-x86_64.tar.bz2"
+file_size=42986194
+file_md5=d31119b52e29b3021f9353353b42906e
+dir='palemoon'
+recipe_type='manifest'
+
+manifest=(
+	"bin:bin"
+	"browser:browser"
+	"components:components"
+	"defaults:defaults"
+	"dictionaries:dictionaries"
+)
