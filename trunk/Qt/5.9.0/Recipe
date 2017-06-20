@@ -1,0 +1,63 @@
+# Recipe for version 5.9.0 by Ivan Florentin <ivanflorentin@gmail.com>, on Sat Jun 10 10:03:56 PYT 2017
+# by Andre Detsch
+
+compile_version=1.9.0
+url="https://download.qt.io/archive/qt/5.9/5.9.0/single/qt-everywhere-opensource-src-5.9.0.tar.xz"
+file_size=460540904
+file_md5=9c8bc8b828c2b56721980368266df9d9
+recipe_type=configure
+dir='qt-everywhere-opensource-src-5.9.0'
+
+configure_options=(
+    -release
+    -prefix "$target"
+    -docdir "$target/share/doc/qt"
+    -headerdir "$target/include/qt"
+    -archdatadir "$target/lib/qt"
+    -datadir "$target/share/qt"
+    -sysconfdir "$settings_target/xdg"
+    -examplesdir "$target/share/doc/qt/examples"
+    -dbus-linked
+    -no-journald
+    -no-pulseaudio
+    -no-compile-examples
+    -no-separate-debug-info
+    -nomake examples
+#    -qt-sql-sqlite
+    -opensource
+    -openssl-linked
+    -confirm-license
+    -optimized-tools
+)
+
+with_mysql="-plugin-sql-mysql"
+#with_sqlite=(-plugin-sql-sqlite -system-sqlite)
+with_odbc="-plugin-sql-odbc"
+
+environment=(
+   # Workaround to fix build error due to missing libQtCLucene.so
+   LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$dir/lib"
+)
+
+install_variables=(
+   INSTALL_ROOT=$target
+)
+
+pre_link() {
+   if [ -d "$target/usr" ]
+   then
+      Quiet pushd "$target"
+      find . -type d -empty | grep -v "./Resources\|./usr" | xargs rmdir -p >& /dev/null
+      mv usr/* .
+      rmdir usr || {
+        cp -a usr/* .
+        rm -rf usr
+      }
+      Quiet popd
+   fi
+
+   # clean out debug files
+   find ${target} -name "*.debug" | xargs rm -f
+   # create a config file to prevent hardcoded paths from being used
+   echo -e "[Paths]\nPrefix = $target" > $target/bin/qt.conf
+}
