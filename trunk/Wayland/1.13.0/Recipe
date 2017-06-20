@@ -1,0 +1,10 @@
+# Recipe for version 1.13.0-r1 by Ivan Florentin <ivanflorentin@gmail.com>, on Sun Jun 11 02:46:07 PYT 2017
+compile_version=2.0
+url="https://wayland.freedesktop.org/releases/wayland-1.13.0.tar.xz"
+file_size=414508
+file_md5=cae152ed956da6de53f9727bc1c45039
+recipe_type=configure
+
+configure_options=(
+    --disable-documentation
+)
