@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for Expat by Hisham Muhammad <hisham@gobolinux.org>, on Wed Jun 28 15:28:45 BRT 2017
+# Recipe for version 2.2.1 by Hisham Muhammad <hisham@gobolinux.org>, on Wed Jun 28 15:28:45 BRT 2017
+compile_version=git
+url="https://downloads.sourceforge.net/project/expat/expat/2.2.1/expat-2.2.1.tar.bz2"
+file_size=405441
+file_md5=d9c3baeab58774cefc2f04faf29f2cf8
+dir='expat-2.2.1'
+recipe_type=cmake
