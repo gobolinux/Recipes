@@ -35,7 +35,8 @@ case "$op" in
    mkdir -p $goboVariable/run/dbus/
    if [ -e $goboVariable/run/dbus/pid ]
    then
-      if ps `cat $goboVariable/run/dbus/pid` &> /dev/null
+      dbus_pid=`cat $goboVariable/run/dbus/pid 2> /dev/null` 
+      if [ "$dbus_pid" ] && ps "$dbus_pid" &> /dev/null
       then
          echo "Already running."
          exit 1
