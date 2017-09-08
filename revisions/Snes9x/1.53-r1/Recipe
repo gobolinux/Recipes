@@ -1,0 +1,15 @@
+# Recipe for version 1.53 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Sep 8 12:46:34 BRT 2017
+# Recipe (MakeRecipe) for Snes9x by Lucas C. Villa Real, on Thu Jan 18 00:23:01 BRST 2007
+compile_version=1.8.0
+url="http://files.ipherswipsite.com/snes9x/snes9x-1.53-src.tar.bz2"
+file_size=1838746
+file_md5=69ec1743a1da7de7b5d55a43b0e2ed10
+recipe_type=configure
+do_install=no
+dir="snes9x-1.53-src/unix"
+
+pre_install() {
+    cp snes9x $target/bin
+    mkdir -p $target/Resources/Defaults/Settings/snes9x
+    cp ../docs/snes9x.conf.default $target/Resources/Defaults/Settings/snes9x/snes9x.conf
+}
