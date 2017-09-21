@@ -1,0 +1,19 @@
+Don't run the gold linker with a plugin, as that will trigger an
+assertion that breaks the build.
+
+See https://bugzilla.kernel.org/show_bug.cgi?id=177741 for details.
+
+Reviewed-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+diff --git a/scripts/Makefile.build b/scripts/Makefile.build
+index 7675d11ee65e..9d08f236104f 100644
+--- a/scripts/Makefile.build
++++ b/scripts/Makefile.build
+@@ -81,7 +81,6 @@ endif
+ 
+ ifneq ($(strip $(lib-y) $(lib-m) $(lib-)),)
+ lib-target := $(obj)/lib.a
+-obj-y += $(obj)/lib-ksyms.o
+ endif
+ 
+ ifneq ($(strip $(obj-y) $(obj-m) $(obj-) $(subdir-m) $(lib-target)),)
