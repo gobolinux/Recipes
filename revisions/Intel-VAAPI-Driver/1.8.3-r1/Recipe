@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for Intel-VAAPI-Driver by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Sep 20 22:12:18 BRT 2017
+# Recipe for version 1.8.3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Sep 20 22:12:18 BRT 2017
+compile_version=016
+url="https://github.com/01org/intel-vaapi-driver/releases/download/1.8.3/intel-vaapi-driver-1.8.3.tar.bz2"
+file_size=2195234
+file_md5=f2476b4db83954b360281dddb2d1430e
+dir='intel-vaapi-driver-1.8.3'
+recipe_type=configure
