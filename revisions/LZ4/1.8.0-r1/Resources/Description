@@ -1,0 +1,5 @@
+[Name] LZ4
+[Summary] Extremely fast compression library
+[Description] LZ4 is lossless compression algorithm, providing compression speed at 400 MB/s per core (0.16 Bytes/cycle). It features an extremely fast decoder, with speed in multiple GB/s per core (0.71 Bytes/cycle). A high compression derivative, called LZ4_HC, is available, trading customizable CPU time for compression ratio. LZ4 library is provided as open source software using a BSD license.
+[License] BSD 2-Clause license (libs), GPL version 2 (everything else)
+[Homepage] http://lz4.github.io/lz4/
