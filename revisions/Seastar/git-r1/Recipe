@@ -1,0 +1,41 @@
+# Recipe (MakeRecipe) for Seastar by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Sep 26 14:40:22 BRT 2017
+# Recipe for version git by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Sep 26 14:40:22 BRT 2017
+compile_version=016
+git="https://github.com/scylladb/seastar.git"
+recipe_type=makefile
+do_build=no
+do_install=no
+
+environment=(
+    # Avoid interference from Python 2.x
+    PYTHONPATH=
+)
+
+pre_build() {
+    python3 ./configure.py
+    ninja
+}
+
+pre_install() {
+    # Seastar, as of Sep 26 2017, does not have an "install" target yet.
+
+    mkdir -p $target/include/core
+    cp -v core/*.hh $target/include/core
+
+    mkdir -p $target/include/util
+    cp -v util/*.hh $target/include/util
+
+    mkdir -p $target/include/net
+    cp -v net/*.hh $target/include/net
+
+    mkdir -p $target/include/fmt
+    cp -v fmt/fmt/*.{cc,h} $target/include/fmt
+
+    mkdir -p $target/lib/pkgconfig
+    cp -v build/release/*.pc $target/lib/pkgconfig
+
+    cp -v build/release/*.a $target/lib
+
+    cp -Rv build/release/gen $target/include 2>&1 | grep -v "\.o'\|\.o.d'"
+    find $target/include -name "*.o" -or -name "*.o.d" | xargs rm
+}
