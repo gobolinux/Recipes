@@ -1,0 +1,10 @@
+# Recipe for version 1.2.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Sep 26 16:11:48 BRT 2017
+compile_version=1.2.10.0
+url="http://download.savannah.nongnu.org/releases/libunwind/libunwind-1.2.1.tar.gz"
+file_size=780774
+file_md5=06ba9e60d92fd6f55cd9dadb084df19e
+recipe_type=configure
+
+environment=(
+    CFLAGS="-fPIC"
+)
