@@ -1,0 +1,12 @@
+# Recipe for version 3.0.3 by Hisham Muhammad <hisham@gobolinux.org>, on Wed Aug 23 18:11:03 BRT 2017
+# Recipe (MakeRecipe) for WxWidgets by Demian Florentin <demianflorentin@gmail.com>, on Fri Dec 23 10:55:33 PYST 2016
+compile_version=016
+url="https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.3/wxWidgets-3.0.3.tar.bz2"
+file_size=20054446
+file_md5=ba23578300f33eeb26bc75894b9aaf11
+dir='wxWidgets-3.0.3'
+recipe_type=configure
+
+configure_options=(
+    --enable-unicode
+)
