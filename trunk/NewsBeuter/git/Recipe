@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for NewsBeuter by Aitor P. Iturri <atuin@tuta.io>, on mar jul 11 19:34:47 CEST 2017
+# Recipe for version git by Aitor P. Iturri <atuin@tuta.io>, on mar jul 11 19:34:47 CEST 2017
+compile_version=git
+git="https://github.com/akrennmair/newsbeuter.git"
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+)
