@@ -1,0 +1,13 @@
+# Recipe for version 4.19.3 by Aitor P. Iturri <atuin@tuta.io>, on jue jul 6 21:50:55 CEST 2017
+# on Sat Apr 16 13:31:22 CEST 2005
+
+compile_version=1.8.2
+url="https://sourceforge.net/projects/pyqt/files/sip/sip-4.19.3/sip-4.19.3.tar.gz"
+file_size=1007481
+file_sha=740df844f80cc45dcc9b23294a92492923bc403ce88e68c35783f27c177c4b74
+recipe_type=makefile
+pre_build() {
+   pythonversion=`python --version 2>&1 | awk {'print $2'} | cut -b1-3`
+   sitepackages="$target/lib/python${pythonversion}/site-packages"
+   python configure.py -b $target/bin -e $target/include -d $sitepackages -v $target/share/sip
+}
