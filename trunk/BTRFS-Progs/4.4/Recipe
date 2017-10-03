@@ -1,0 +1,16 @@
+# Recipe for version 4.4 by Yulin Wu <drm343@gmail.com>, on Wed Jul 26 13:54:45 CST 2017
+# Recipe (MakeRecipe) for BTRFS-Progs by Michael Homer <michael@gobolinux.org>, on Tue Dec 8 15:57:40 NZDT 2009
+compile_version=1.12.0
+url="https://git.kernel.org/pub/scm/linux/kernel/git/mason/btrfs-progs.git/snapshot/btrfs-progs-4.4.tar.gz"
+file_size=1355508
+file_md5=f259faf5ce86a2f0695acdf5b7c6b451
+recipe_type=configure
+autogen_before_configure=yes
+configure_options=(
+    "--prefix=$target"
+    "--disable-documentation"
+)
+make_variables=(
+    "prefix=$target"
+)
+build_target="all"
