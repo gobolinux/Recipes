@@ -1,0 +1,11 @@
+# Recipe for version 1.6.30 by Yulin Wu <drm343@gmail.com>, on Tue Jul 25 16:09:11 CST 2017
+compile_version=1.8.5
+url="ftp://ftp.simplesystems.org/pub/png/src/libpng16/libpng-1.6.30.tar.gz"
+file_size=1492308
+file_md5=eafaa5ae36898da07a3dac1ad08f8ecc
+recipe_type=configure
+
+pre_link() {
+    ln -sf libpng16 $target/include/libpng
+    ln -sf libpng.so $target/lib/libpng.so.0
+}
