@@ -1,0 +1,23 @@
+# Recipe for version 1.10 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Nov 16 23:49:44 BRST 2017
+# Recipe (MakeRecipe) for Netcat by Rafael Guterres Jeffman, on Mon Oct 30 15:20:00 BRST 2006
+compile_version=1.8.0
+url="https://downloads.sourceforge.net/project/nc110/unix%20netcat%201.10%20by%20_Hobbit_/%5BUnnamed%20release%5D/nc110.tgz"
+file_size=75267
+file_md5=402632f2fe01c169ff19a0ad6e9d608c
+recipe_type=makefile
+unpack_files=files_in_root
+build_target=linux
+do_install=no
+
+pre_build() {
+    # Build instructions taken from:
+    # http://www.linuxfromscratch.org/hints/downloads/files/OLD/netcat.txt
+    mv netcat.c netcat.c~ &&
+    sed -e 's/res_init();/\/\* res_init(); \*\//' <netcat.c~ >netcat.c &&
+    mv Makefile Makefile~ &&
+    sed -e 's/CFLAGS =/# CFLAGS =/' -e 's/\$(STATIC)//' <Makefile~ >Makefile
+}
+
+pre_install() {
+    cp -v nc $target/bin
+}
