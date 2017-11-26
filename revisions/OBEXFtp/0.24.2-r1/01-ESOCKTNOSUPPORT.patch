@@ -1,0 +1,13 @@
+--- obexftp-0.24.2-Source/obexftp/client.c.orig	2017-10-30 14:32:32.858547490 -0400
++++ obexftp-0.24.2-Source/obexftp/client.c	2017-10-30 14:33:03.104548058 -0400
+@@ -43,7 +43,9 @@
+ #ifdef HAVE_BLUETOOTH
+ #include "bt_kit.h"
+ #else
+-#define ESOCKTNOSUPPORT	WSAESOCKTNOSUPPORT
++#ifndef ESOCKTNOSUPPORT
++# define ESOCKTNOSUPPORT	WSAESOCKTNOSUPPORT
++#endif
+ #endif /* HAVE_BLUETOOTH */
+ 
+ #include <openobex/obex.h>

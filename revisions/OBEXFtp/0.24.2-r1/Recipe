@@ -1,0 +1,14 @@
+# Recipe for version 0.24.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Oct 30 14:27:24 EDT 2017
+# Recipe (MakeRecipe) for OBEXFtp by Henrique <teique at gmail>, on Sun Jan 14 17:46:56 BRST 2007
+compile_version=1.8.0
+url="https://downloads.sourceforge.net/project/openobex/obexftp/0.24.2/obexftp-0.24.2-Source.tar.gz"
+file_size=110291
+file_md5=157a9d1b2ed220203f7084db906de73c
+recipe_type=cmake
+
+cmake_options=(
+    -DENABLE_PERL=NO
+    -DENABLE_PYTHON=NO
+    -DENABLE_RUBY=NO
+    -DENABLE_TCL=NO
+)
