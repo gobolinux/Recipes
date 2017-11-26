@@ -1,0 +1,15 @@
+# Recipe for version 8.41 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Nov 13 19:00:05 BRST 2017
+# by Jeremy Vernon
+compile_version=2.0
+url="ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.41.tar.bz2"
+file_size=1561874
+file_md5=c160d22723b1670447341b08c58981c1
+recipe_type=configure
+
+configure_options=(
+   --enable-unicode-properties
+   --enable-utf8
+   --enable-pcre16
+   --enable-pcre32
+   #unicode and utf-8 support are needed here for at least Goffice 0.5.2 and Glib 2.50.1 (Hugo Barrocas)
+)
