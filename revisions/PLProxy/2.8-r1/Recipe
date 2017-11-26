@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for PLProxy by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Oct 26 09:31:00 EDT 2017
+# Recipe for version 2.8 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Oct 26 09:31:00 EDT 2017
+compile_version=016
+url="https://plproxy.github.io/downloads/files/2.8/plproxy-2.8.tar.gz"
+file_size=79698
+file_md5=1ecd3ba86b39375f7c8ba8d482eb77ff
+dir='plproxy-2.8'
+recipe_type=makefile
+makefile='Makefile'
+do_install=no
+
+pre_install() {
+    mkdir -p $target/lib/postgresql
+    cp -v plproxy.so $target/lib/postgresql
+}
