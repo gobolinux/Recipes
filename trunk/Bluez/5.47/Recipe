@@ -9,6 +9,7 @@ recipe_type=configure
 configure_options=(
    --disable-systemd
    --enable-threads
+   --enable-library
 )
 make_variables=(
    rulesdir="$target/lib/udev/rules.d"
