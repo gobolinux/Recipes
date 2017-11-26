@@ -1,0 +1,14 @@
+#!/bin/sh
+
+. ScriptFunctions
+
+Log_Normal "Installing prepared tables"
+PGDATA=$goboVariable/PostgreSQL/data
+if [ ! -d "$PGDATA" ]
+then
+   mkdir -p $PGDATA
+   chown postgres:postgres $goboVariable/PostgreSQL
+   chown postgres:postgres $goboVariable/PostgreSQL/data
+   sudo -u postgres /bin/initdb -D $PGDATA
+fi
+
