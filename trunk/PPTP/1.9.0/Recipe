@@ -1,0 +1,12 @@
+# Recipe for version 1.9.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 4 12:47:57 BRST 2018
+# Recipe (MakeRecipe) for PPTP by Fabio Mierlo <geromao@gmail.com>, on Fri Jan 2 16:26:30 BRST 2009
+compile_version=1.11.4
+url="$httpSourceforge/pptpclient/pptp-1.9.0.tar.gz"
+file_size=87591
+file_md5=b2117b377f65294a9786f80f0235d308
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=(
+  "DESTDIR=$target"
+)
