@@ -8,3 +8,8 @@ recipe_type=configure
 install_variables=(
    DESTDIR=$target
 )
+
+pre_install() {
+   mkdir -p $settings_target/ppp
+   cp etc.ppp/* $settings_target/ppp
+}
