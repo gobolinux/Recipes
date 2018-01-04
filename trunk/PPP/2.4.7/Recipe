@@ -10,6 +10,6 @@ install_variables=(
 )
 
 pre_install() {
-   mkdir -p $settings_target/ppp
+   mkdir -p $settings_target/ppp/peers
    cp etc.ppp/* $settings_target/ppp
 }
