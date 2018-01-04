@@ -1,0 +1,12 @@
+diff -Nur ppp-2.4.3-old/pppd/plugins/radius/sendserver.c ppp-2.4.3/pppd/plugins/radius/sendserver.c
+--- ppp-2.4.3-old/pppd/plugins/radius/sendserver.c	2005-08-12 00:03:14.000000000 +0200
++++ ppp-2.4.3/pppd/plugins/radius/sendserver.c	2005-08-12 00:03:25.000000000 +0200
+@@ -16,7 +16,7 @@
+ 
+ #include <includes.h>
+ #include <radiusclient.h>
+-#include <pathnames.h>
++#include "pathnames.h"
+ 
+ static void rc_random_vector (unsigned char *);
+ static int rc_check_reply (AUTH_HDR *, int, char *, unsigned char *, unsigned char);
