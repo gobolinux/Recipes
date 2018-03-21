@@ -5,7 +5,12 @@ url="$httpSourceforge/net-snmp/net-snmp-5.7.3.tar.gz"
 file_size=6382428
 file_md5=d4a3459e1577d0efa8d96ca70a885e53
 recipe_type=configure
+
 configure_options=(
-   --with-perl-modules=prefix="$target"
-   --with-default-snmp-version="3"
+   "--with-perl-modules=$target"
+   "--with-defaults"
+)
+
+install_variables=(
+   INSTALL_BASE=$target
 )
