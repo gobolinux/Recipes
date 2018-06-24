@@ -1,0 +1,22 @@
+# Recipe for version 3.3.9 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Jan 27 14:45:24 BRST 2017
+# Recipe (MakeRecipe) for Maven by Kevin Quick <quick@sparq.org>, on Mon Jul 12 11:30:24 MST 2010
+compile_version=1.13.3
+url="http://www-us.apache.org/dist/maven/maven-3/3.3.9/source/apache-maven-3.3.9-src.tar.gz"
+file_size=3845425
+file_md5=030ce5b3d369f01aca6249b694d4ce03
+dir='apache-maven-3.3.9'
+recipe_type=manifest
+pre_install() {
+  export M2_HOME=$target/apache-maven-3.3.9
+  export PATH=${M2_HOME}/bin:$PATH
+  ant
+}
+environment=(
+  M2_HOME=$target/apache-maven-3.3.9
+)
+manifest=(
+  "$target/apache-maven-3.3.9/bin/*:bin"
+  "$target/apache-maven-3.3.9/boot/*:boot"
+  "$target/apache-maven-3.3.9/lib/*:lib"
+  "$target/apache-maven-3.3.9/conf/*:$target_settings"
+)
