@@ -1,0 +1,20 @@
+# Recipe for version 878.1.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Nov 26 01:17:09 BRST 2017
+# Recipe (MakeRecipe) for MDNSResponder by Maglan C. Diemer, maglan@univates.br, on Seg Dez 5 13:33:29 BRST 2005
+compile_version=1.8.0
+url="https://opensource.apple.com/tarballs/mDNSResponder/mDNSResponder-878.1.1.tar.gz"
+file_size=2462985
+file_md5=aa14508863ec2b6a0eddabc558a989da
+recipe_type=makefile
+dir='mDNSResponder-878.1.1/mDNSPosix'
+makefile='Makefile'
+make_variables=(
+    "os=linux"
+)
+
+symlink_options=(
+    --conflict overwrite
+)
+
+pre_build() {
+    make os=linux -i
+}
