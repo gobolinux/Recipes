@@ -1,0 +1,12 @@
+# Recipe for version 1.22 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jun 16 20:08:29 BRT 2018
+# Recipe (MakeRecipe) for Intel-GPU-Tools by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Mar 14 16:15:00 NZDT 2012
+compile_version=1.13.3
+url="https://www.x.org/archive/individual/app/intel-gpu-tools-1.22.tar.xz"
+file_size=1022396
+file_md5=965c591b23a132084113c2a0604f537a
+recipe_type=configure
+part_of=Xorg-App
+
+pre_build() {
+    ./autogen.sh
+}
