@@ -1,0 +1,25 @@
+# Recipe for version 2.4.3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Mar 5 16:34:57 BRT 2018
+# Recipe (MakeRecipe) for PostGIS by Lucas C. Villa Real, on Tue May 17 12:54:32 BRT 2011
+compile_version=1.12.1
+url="http://download.osgeo.org/postgis/source/postgis-2.4.3.tar.gz"
+file_size=12601055
+file_md5=60395f3dc96505ca4e313449d6463c6a
+recipe_type=configure
+
+configure_options=(
+    --with-gui
+    --disable-gtktest
+    --with-pgconfig=$dir/pg_config.sh
+)
+
+
+pre_build() {
+    cat << EOF > pg_config.sh
+#!/bin/sh
+if echo \$@ | grep -q "pgxs\|includedir"
+then pg_config \$@
+else pg_config \$@ | sed 's,$postgresql_path,$target,g'
+fi
+EOF
+    chmod +x pg_config.sh
+}
