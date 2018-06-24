@@ -1,0 +1,11 @@
+# Recipe for version 3.1.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Oct 11 16:41:26 BRT 2017
+# Recipe (MakeRecipe) for LASzip by Lucas C. Villa Real, on Fri Oct 28 14:01:50 BRST 2011
+compile_version=1.12.1
+url="https://github.com/LASzip/LASzip/releases/download/3.1.1/laszip-src-3.1.1.tar.gz"
+file_size=190735
+file_md5=d31fc8b1fc070336a1825beb32595153
+recipe_type=cmake
+
+pre_build() {
+    GrepReplace "isystem" "I" $dir/cmake/unix_compiler_options.cmake
+}
