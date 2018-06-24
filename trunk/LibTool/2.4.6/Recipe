@@ -9,3 +9,12 @@ recipe_type=configure
 make_variables=(
     LIBTOOL=$dir/libtool
 )
+
+pre_link() {
+    gcc_version=$(gcc -dumpversion)
+    gcc_machine=$(gcc -dumpmachine)
+    GrepReplace -B \
+        "/$gcc_machine/$gcc_version" \
+        '/$(gcc -dumpmachine)/$(gcc -dumpversion)' \
+        $target/bin/libtool
+}
