@@ -5,3 +5,8 @@ url="http://downloads.sf.net/gtkglext/gtkglextmm-1.2.0.tar.bz2"
 file_size=623815
 file_md5=27c05f4d45c5fd07b6fb0f044add3056
 recipe_type=configure
+
+environment=(
+    CFLAGS="-DGLIBMM_DISABLE_DEPRECATED"
+    CXXFLAGS="-DGLIBMM_DISABLE_DEPRECATED"
+)
