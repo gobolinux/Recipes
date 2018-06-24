@@ -1,0 +1,36 @@
+# Recipe for version 6.4.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Dec 3 00:38:49 BRST 2017
+# Recipe (MakeRecipe) for MLT by Mark Kimsal <mark2@mt2009.com>, on Sat May 23 19:38:42 EDT 2009
+compile_version=2.0.0
+url="https://github.com/mltframework/mlt/releases/download/v6.4.1/mlt-6.4.1.tar.gz"
+file_size=1344030
+file_md5=bfa7b4009be616d6f858393a88fbbb32
+recipe_type=configure
+
+configure_options=(
+    "--enable-gpl" 
+    "--enable-gpl3" 
+    "--swig-languages=perl python lua"
+)
+
+pre_link() {
+    Quiet pushd "$dir/src/swig/lua"
+    install -D -m 0755 mlt.so $(pkg-config --variable INSTALL_CMOD lua)/mlt.so
+    Quiet popd
+    
+    Quiet pushd "$dir/src/swig/perl"
+    mkdir -p ${target}/share/perl5
+    install -D -m 0644 mlt.pm ${target}/share/perl5/mlt.pm
+    install -D -m 0755 play.pl ${target}/share/perl5/play.pl
+    install -D -m 0755 blib/arch/auto/mlt/mlt.so \
+      ${target}/lib/perl5/auto/mlt/mlt.so
+    install -D -m 0644 blib/arch/auto/mlt/mlt.bs \
+      ${target}/lib/perl5/auto/mlt/mlt.bs
+    Quiet popd
+    
+    Quiet pushd "$dir/src/swig/python"
+    PYTHONSITEPKG=$(python -c "import sys, os; print os.path.join('python%s' % sys.version[:3], 'site-packages')")
+    mkdir -p ${target}/lib/$PYTHONSITEPKG
+    install -D -m 0755 _mlt.so ${target}/lib/$PYTHONSITEPKG/_mlt.so
+    install -D -m 0755 mlt.py ${target}/lib/$PYTHONSITEPKG/mlt.py
+    Quiet popd
+}
