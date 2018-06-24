@@ -1,0 +1,29 @@
+# Recipe for version 5.10.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Mar 19 15:09:51 BRT 2018
+# on Sat Apr 16 12:56:40 CEST 2005
+compile_version=1.9.0
+url="https://sourceforge.net/projects/pyqt/files/PyQt5/PyQt-5.10.1/PyQt5_gpl-5.10.1.tar.gz"
+file_size=3110469
+file_md5=be36c2abaffc9daa8b993f1ca982968f
+recipe_type=makefile
+
+environment=(
+    PYTHONPATH=
+)
+
+pre_build() {
+    pythonversion=`python3 --version 2>&1 | awk {'print $2'} | cut -b1-3`
+    sitepackages="$target/lib/python${pythonversion}/site-packages"
+    #[ -z "$QMAKESPEC" ] && export QMAKESPEC="$qt_path/share/qt4/mkspecs/linux-g++"
+
+    # Adjust for SIP 4.19 (see https://bugs.gentoo.org/show_bug.cgi?id=604284 for details)
+    sed -i -E 's/Instance(.*)sipClass_/Type\1sipType_/' sip/*/*.sip
+
+    python3 configure.py \
+        -b $target/bin \
+        -v $target/share/sip/PyQt5 \
+        -d $sitepackages \
+        --confirm-license \
+        --designer-plugindir=$target/lib/qt/plugins/designer \
+        --qml-plugindir=$target/lib/qt/plugins/PyQt5
+    chmod -R a+rw .
+}
