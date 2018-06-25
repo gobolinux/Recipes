@@ -4,7 +4,7 @@ source GoboPath
 
 case "$1" in
 	[sS]tart)
-		listener -c "$goboSettings/listener.conf"
+		BackgroundExec listener -c "$goboSettings/listener.conf"
 		;;
 	[sS]top)
 		killall -9 listener
