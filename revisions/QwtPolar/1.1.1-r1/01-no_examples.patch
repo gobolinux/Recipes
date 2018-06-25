@@ -1,0 +1,13 @@
+--- qwtpolar-1.1.1/qwtpolar.pro.orig	2017-01-22 23:30:03.256078298 -0200
++++ qwtpolar-1.1.1/qwtpolar.pro	2017-01-22 23:30:10.254078429 -0200
+@@ -17,10 +17,6 @@ contains(QWT_POLAR_CONFIG, QwtPolarDesig
+     SUBDIRS += designer
+ }
+ 
+-contains(QWT_POLAR_CONFIG, QwtPolarExamples ) {
+-    SUBDIRS += examples
+-}
+-
+ qwtpolarspec.files  = qwtpolarconfig.pri qwtpolarfunctions.pri qwtpolar.prf
+ qwtpolarspec.path  = $${QWT_POLAR_INSTALL_FEATURES}
+ 
