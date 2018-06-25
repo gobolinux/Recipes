@@ -1,0 +1,25 @@
+[Name] VidStab
+[Summary] Video stabilization library
+[Description] Vidstab is a video stabilization library which can be plugged-in with Ffmpeg and Transcode.
+
+Why is it needed:
+
+A video acquired using a hand-held camera or a camera mounted on a vehicle, typically suffers from undesirable shakes and jitters. Activities such as surfing, skiing, riding and walking while shooting videos are especially prone to erratic camera shakes. Vidstab targets these video contents to help create smoother and stable videos.
+
+Some of the features include:
+
+Fast detection of subsequent transformations e.g. translation and rotations up to a given extent.
+Low pass filtered smoothing with adjustable horizon.
+Detection algorithms:
+Smart and fast multi measurement fields algorithm with contrast selection.
+Brute force algorithm only for translations.
+Clipping options: keep blank (black) or keep from previous frames.
+Optional drawing of measurement fields and detected transformations for visual analysis.
+Zooming possible to get rid of jiggling borders (automatic mode).
+Resulting images are interpolated (different algorithms).
+Sharpening of the stabilized movie to compensate for interpolation effects due to rotation/zooming (only with Transcode).
+Single pass filter for streaming applications(only with Transcode).
+Virtual-tripod-mode to get a tripod experience.
+
+[License] GNU General Public License version 2 or above
+[Homepage] https://github.com/georgmartius/vid.stab
