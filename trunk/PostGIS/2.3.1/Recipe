@@ -10,9 +10,6 @@ configure_options=(
     --with-gui
     --disable-gtktest
     --with-pgconfig=$dir/pg_config.sh
-    # DEBUG
-    --enable-debug
-    --enable-profile
 )
 
 
