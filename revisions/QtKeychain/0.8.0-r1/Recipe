@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for QtKeychain by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Mar 19 19:00:44 BRT 2018
+# Recipe for version 0.8.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Mar 19 19:00:44 BRT 2018
+compile_version=016
+url="https://github.com/frankosterfeld/qtkeychain/archive/v0.8.0.tar.gz"
+file="qtkeychain-0.8.0.tar.gz"
+file_size=34686
+file_md5=d741e7e55ae48a130cb95264fbe732b7
+dir='qtkeychain-0.8.0'
+recipe_type=cmake
