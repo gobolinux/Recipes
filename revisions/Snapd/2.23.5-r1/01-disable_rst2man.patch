@@ -1,0 +1,12 @@
+--- snapd-2.23.5/cmd/configure.ac.orig	2017-03-26 14:32:36.443580194 -0300
++++ snapd-2.23.5/cmd/configure.ac	2017-03-26 14:32:48.684580423 -0300
+@@ -167,9 +167,6 @@ AS_IF([test "x$enable_caps_over_setuid"
+     AC_DEFINE([CAPS_OVER_SETUID], [1],
+         [Use capabilities rather than setuid bit])])
+ 
+-AC_PATH_PROGS([HAVE_RST2MAN],[rst2man rst2man.py])
+-AS_IF([test "x$HAVE_RST2MAN" = "x"], [AC_MSG_ERROR(["cannot find the rst2man tool, install python-docutils or similar"])])
+-
+ AC_PATH_PROG([HAVE_SHELLCHECK],[shellcheck])
+ AM_CONDITIONAL([HAVE_SHELLCHECK], [test "x${HAVE_SHELLCHECK}" != "x"])
+ AS_IF([test "x$HAVE_SHELLCHECK" = "x"], [AC_MSG_WARN(["cannot find the shellcheck tool, will not run syntax checks for shell code"])])
