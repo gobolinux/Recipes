@@ -11,3 +11,14 @@ configure_options=(
   "--enable-loadable-sqlite-extensions"
 #  "--with-cxx=no"
 )
+
+pre_build() {
+   # Make sure that the /S/Aliens patch file is sane.
+   patchfile="${recipedir}/01-search-SLL.patch.in"
+   declared_minor=$(grep "+PYTHON_MINOR" "$patchfile" | awk {'print $3'})
+   recipe_minor=$(echo "$version" | cut -d. -f2)
+   if [ "$declared_minor" != "$recipe_minor" ]
+   then
+      Die "Please update PYTHON_MINOR in $patchfile"
+   fi
+}
