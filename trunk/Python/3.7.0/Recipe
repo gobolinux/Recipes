@@ -1,0 +1,13 @@
+# Recipe for version 3.7.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Aug 1 14:29:24 BRT 2018
+compile_version=1.8.5
+url="https://www.python.org/ftp/python/3.7.0/Python-3.7.0.tar.xz"
+file_size=16922100
+file_md5=eb8c2a6b1447d50813c02714af4681f3
+recipe_type=configure
+needs_safe_linking=yes
+
+configure_options=(
+  "--enable-shared"
+  "--enable-loadable-sqlite-extensions"
+#  "--with-cxx=no"
+)
