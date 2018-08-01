@@ -1,0 +1,32 @@
+Python searches each element of PREFIXES + 'lib/pythonx.y/site-packages'
+for modules, and also for .pth files. This patch ensures that the
+$goboSystem/Aliens/PIP tree is included in that, allowing other packages
+to provide their own .pth files when necessary. It relies on the legacy tree in
+order to keep the patch simple - the 'lib/pythonx.y/site-packages'
+suffix is hard-coded later on.
+
+--- Python-3.7.0/Lib/site.py.orig	2018-06-27 00:07:35.000000000 -0300
++++ Python-3.7.0/Lib/site.py	2018-08-01 17:48:34.027298799 -0300
+@@ -74,8 +74,21 @@ import os
+ import builtins
+ import _sitebuiltins
+ 
++# Prefixes for packages installed under GoboLinux's $goboSystem/Aliens/PIP.
++# We let a program to import modules from older Python versions that
++# share the same major number. We reverse the list in order to prioritize
++# modules based on the version of the Python interpreter (most recent first.)
++# PYTHON_MINOR reflects the version of the Python interpreter (i.e., the "x"
++# on 3.x.y). Make sure to update it each time you prepare a new version of
++# the Python recipe.
++PYTHON_MINOR = 7
++ALIENS_DIRS = list(reversed([
++    "@%Compile_goboSystem%@/Aliens/PIP/3.{}".format(x)
++    for x in range(0, PYTHON_MINOR+1)
++]))
++
+ # Prefixes for site-packages; add additional prefixes like /usr/local here
+-PREFIXES = [sys.prefix, sys.exec_prefix]
++PREFIXES = [sys.prefix, sys.exec_prefix] + ALIENS_DIRS
+ # Enable per user site-packages directory
+ # set it to False to disable the feature or True to force the feature
+ ENABLE_USER_SITE = None
