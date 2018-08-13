@@ -7,4 +7,5 @@ file_md5=bc6ef72481cfd13c61bc1740ef42a6b3
 recipe_type=cmake
 cmake_options=(
    -DSYSCONFDIR="$settings_target"
+   -DGENERATE_MANPAGES=OFF
 )
