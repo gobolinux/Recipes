@@ -1,0 +1,10 @@
+--- glibc-2.7/nptl/sysdeps/powerpc/tcb-offsets.sym.orig	2008-02-22 02:51:34.000000000 +0000
++++ glibc-2.7/nptl/sysdeps/powerpc/tcb-offsets.sym	2008-02-22 02:52:32.000000000 +0000
+@@ -15,4 +15,6 @@
+ PID				thread_offsetof (pid)
+ TID				thread_offsetof (tid)
+ POINTER_GUARD			(offsetof (tcbhead_t, pointer_guard) - TLS_TCB_OFFSET - sizeof (tcbhead_t))
+-PRIVATE_FUTEX_OFFSET		thread_offsetof (header.private_futex)
++#ifndef __ASSUME_PRIVATE_FUTEX
++PRIVATE_FUTEX_OFFSET           offsetof (tcbhead_t, private_futex)
++#endif
