@@ -1,0 +1,16 @@
+http://bugs.gentoo.org/479808
+http://lists.linuxtogo.org/pipermail/openembedded-core/2013-February/036049.html
+
+TRUE & FALSE have to be undefined in order to define the boolean enum
+
+--- a/jmorecfg.h
++++ a/jmorecfg.h
+@@ -260,6 +260,8 @@ typedef void noreturn_t;
+ #define TRUE	1
+ #endif
+ #else
++#undef TRUE
++#undef FALSE
+ typedef enum { FALSE = 0, TRUE = 1 } boolean;
+ #endif
+ 

@@ -1,0 +1,14 @@
+# Recipe for version 9c by stratact <stratact1@gmail.com>, on Thu Aug 30 23:45:16 UTC 2018
+# by Carlo Calica
+# 2004.01.06 16:54
+
+url="http://www.ijg.org/files/jpegsrc.v9c.tar.gz"
+file_size=1028134
+file_md5=93c62597eeef81a84d988bccbda1e990
+dir=jpeg-9c
+compile_version=2.0
+recipe_type=configure
+
+configure_options=(
+   "--enable-shared"
+)
