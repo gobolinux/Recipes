@@ -1,0 +1,15 @@
+--- upx-1.25.orig/src/Makefile.bld	2006-02-06 21:23:56.000000000 +0100
++++ upx-1.25/src/Makefile.bld	2006-02-06 21:27:09.000000000 +0100
+@@ -151,10 +151,8 @@
+ 
+ ifeq ($(target),linux)
+ include $(srcdir)/Makedefs.gcc
+-override arch := $(shell uname -m | sed -e 's/^i[3456789]86$$/i386/')
+-ifeq ($(arch),i386)
+-  CCARCH += -march=i386 -mcpu=i686
+-endif
++override arch := $(shell uname -m) 
++CCARCH += -march=$(arch)
+ DEFS += -D_FILE_OFFSET_BITS=64
+ LDLIBS += -lmcheck
+ ##CFLAGS_WERROR = -Werror
