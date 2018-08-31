@@ -1,0 +1,34 @@
+# Recipe for OpenLdap by Maglan C. Diemer, maglan@univates.br
+compile_version=1.8.4
+url="ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/openldap-2.4.46.tgz"
+file_size=5700204
+file_md5=829016c5a9f45c51adc50073ac6f9fd7
+recipe_type=configure
+configure_options=(
+   --libexecdir=$target/lib
+   --localstatedir="${goboVariable}/lib/openldap"
+   --with-cyrus-sasl=no
+   --with-tls=no
+   --enable-slapd=no
+)
+with_cyrus_sasl="--with-cyrus-sasl=yes"
+with_openssl="--with-tls=openssl"
+
+environment=(
+   CPP="cpp -P" # GCC 5.x fix
+)
+
+make_variables=(
+   LIBTOOL="${goboExecutables}/libtool --tag=CC"
+)
+
+pre_install() {
+   mkdir -p "${goboVariable}/lib/openldap"
+}
+
+sandbox_options=(
+    "--allow-leftovers"
+)
+unmanaged_files=(
+    "${goboVariable}/lib/openldap"
+)
