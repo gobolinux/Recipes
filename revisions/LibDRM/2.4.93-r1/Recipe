@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for LibDRM by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jan 9 17:56:36 BRST 2.4.936
+compile_version=2.0
+url="https://dri.freedesktop.org/libdrm/libdrm-2.4.93.tar.bz2"
+file_size=826579
+file_md5=0ba45ad1551b2c1b6df0797a3e65f827
+recipe_type=configure
+symlink_options=(--conflict=overwrite)
+configure_options=(
+   --enable-intel
+)
+with_udev=(
+   --enable-udev
+)
