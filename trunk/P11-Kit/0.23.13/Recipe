@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for P11-Kit by Leandro Motta Barros <lmb@stackedboxes.org>, on Wed Sep 21 23:43:38 BRT 2011
+compile_version=1.13.3
+url="https://github.com/p11-glue/p11-kit/releases/download/0.23.13/p11-kit-0.23.13.tar.gz"
+file_size=1264090
+file_md5=9fb1daab59c6b9d90261f6bddf00d0f1
+recipe_type=configure
+configure_options=(
+   --without-trust-paths
+)
+
+install_variables=(
+	p11_system_config=$settings_target/pkcs11
+	p11_system_config_file=$settings_target/pkcs11/pkcs11.conf
+	p11_system_config_modules=$settings_target/pkcs11/modules
+)
