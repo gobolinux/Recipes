@@ -1,0 +1,13 @@
+# Recipe for version 1.4.2 by stratact <stratact1@gmail.com>, on Fri Aug 31 06:08:46 UTC 2018
+# Recipe (MakeRecipe) for IceWM by  Ozgur Ulukir, on Tue Dec 21 21:23:03 EET 2004
+compile_version=1.8.0
+url="https://github.com/bbidulock/icewm/releases/download/1.4.2/icewm-1.4.2.tar.bz2"
+file_size=1731772
+file_md5=3e7c3a95e7f8518346267f48a11966cd
+recipe_type=configure
+
+configure_options=(
+   "--enable-gradients"
+   "--enable-corefonts"
+)
+
