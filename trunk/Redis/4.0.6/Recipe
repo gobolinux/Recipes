@@ -1,0 +1,10 @@
+# Recipe for version 4.0.6 by M. Drake <therainingmonkey@googlemail.com>, on Fri Dec 15 20:52:54 CET 2017
+# Recipe (MakeRecipe) for Redis by Michael Homer <michael@gobolinux.org>, on Sun Oct 4 14:30:36 NZDT 2009
+compile_version=1.12.0
+url="http://download.redis.io/releases/redis-4.0.6.tar.gz"
+file_size=1723533
+file_md5=cfabc118ba000923b36420c35b95a400
+recipe_type=makefile
+make_variables=(
+	"PREFIX=$target"
+)
