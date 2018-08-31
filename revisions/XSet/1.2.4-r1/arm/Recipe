@@ -1,0 +1,6 @@
+pre_build() {
+	if [ "$cross_compiling" ]
+	then
+	    GrepReplace "LIBS = @LIBS@" "LIBS = @LIBS@ -lXau" Makefile.in
+	fi
+}
