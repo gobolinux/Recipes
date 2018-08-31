@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for LibMD by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Feb 24 22:15:10 BRT 2016
+compile_version=2.0
+url="https://github.com/guillemj/libmd/archive/1.0.0.tar.gz"
+file_size=32745
+file_md5=f1dcb285e8fc9098af2da18e14bc4c82
+recipe_type=configure
+dir=libmd-1.0.0
+autogen_before_configure=yes
+autogen=autogen
