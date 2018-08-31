@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for PM-Utils by Fabio Mierlo <geromao@gmail.com>, on Sun Apr 27 11:27:17 BRT 2014
+# Recipe for version 1.1.0 by Fabio Mierlo <geromao@gmail.com>, on Sun Apr 27 11:27:17 BRT 2014
+compile_version=1.13.3
+url="https://github.com/VictorLowther/pm-utils/archive/pm-utils-1.1.0.tar.gz"
+file="pm-utils-pm-utils-1.1.0.tar.gz"
+file_size=31619
+file_md5=f0a32bad0d2588820c17d43718cf5eaf
+dir='pm-utils-pm-utils-1.1.0'
+recipe_type=configure
+autogen_before_configure=yes

@@ -1,0 +1,9 @@
+# Man don't have a flag to disable it and needs docbook2man to build
+--- pm-utils-pm-utils-1.1.0/Makefile.am-orig	2014-04-27 11:34:05.000000000 -0300
++++ pm-utils-pm-utils-1.1.0/Makefile.am	2014-04-27 11:34:17.000000000 -0300
+@@ -1,4 +1,4 @@
+-SUBDIRS = pm man src
++SUBDIRS = pm src
+ 
+ pkgconfigdir = $(libdir)/pkgconfig
+ pkgconfig_DATA = pm-utils.pc
