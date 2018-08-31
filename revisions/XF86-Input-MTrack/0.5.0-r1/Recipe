@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for XF86-Input-MTrack by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Aug 7 23:33:48 GMT 2016
+compile_version=2.0
+url="https://github.com/p2rkw/xf86-input-mtrack/archive/v0.5.0.tar.gz"
+file_size=392925
+file_md5=f935f526835ec4e6b9eb9e52d77c9ca1
+file="xf86-input-mtrack-0.5.0.tar.gz"
+dir='xf86-input-mtrack-0.5.0'
+recipe_type=configure
+part_of=Xorg-Driver
