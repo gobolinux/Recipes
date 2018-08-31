@@ -1,0 +1,2 @@
+required_groups=( "lp" "lpadmin" )
+required_users=("lp groups=lp,lpadmin")
