@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Hdparm by  Ozgur Ulukir, on Fri Dec 17 22:07:37 EET 2004
+compile_version=1.8.2
+url="$httpSourceforge/hdparm/hdparm-9.56.tar.gz"
+file_size=137213
+file_md5=7900608e32834f65d2654fdb696e71a0
+recipe_type=makefile
+makefile='Makefile'
+
+install_variables=(
+    manprefix=$target
+    binprefix=$target
+)
