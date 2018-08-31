@@ -1,0 +1,37 @@
+# Recipe (MakeRecipe) for recipe-store by Carlo J. Calica <ccalica@gmail.com>, on Sat Oct 1 17:29:57 PDT 2005
+compile_version=1.12.2
+url="http://dbus.freedesktop.org/releases/dbus/dbus-1.12.10.tar.gz"
+file_size=2073510
+file_md5=c3e12b4206e2a7da39d7cc42567790ef
+recipe_type=configure
+configure_options=(
+    "--with-x"
+    "--with-xml"
+    "--localstatedir=$variable_target"
+    "--libexecdir=$target/lib"
+    "--with-console-auth-dir=$goboVariable/run/console"
+    "--with-session-socket-dir=$goboTemp"
+    "--with-test-socket-dir=$goboTemp"
+    "--without-systemdsystemunitdir"
+    "--disable-doxygen-docs"
+    "--disable-xml-docs"
+    "--disable-systemd"
+    "--enable-verbose-mode"
+    "--enable-epoll"
+    "--enable-inotify"
+)
+
+install_variables=(
+    DBUS_DAEMONDIR=$target/bin
+)
+
+pre_link() {
+    mkdir -p $settings_target/dbus-1/system.d
+}
+
+unmanaged_files=(
+    $goboVariable/run/console/
+    $goboVariable/run/dbus/
+    $goboVariable/lib/dbus/
+    /run
+)
