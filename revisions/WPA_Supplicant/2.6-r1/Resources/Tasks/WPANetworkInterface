@@ -1,0 +1,138 @@
+#!/bin/bash
+
+source ScriptFunctions
+Import Array
+
+source "${goboSettings}/BootOptions"
+if [ -r "${goboSetttings}/NetworkOptions" ]; then
+   source "${goboSettings}/NetworkOptions" 2> /dev/null
+fi
+source "${goboSettings}/WPATasks"
+
+#
+# WPA support for NetworkInterface
+# Intended to be called by the Network task, not directly by the user.
+# The WPA_Supplicant task must have already been started!
+# 
+# This task processes additional declarations from NetworkOptions.
+# Here are some example NetworkOptions declarations:
+#
+#   # wlan0 will connect to PrivateNetwork if possible,
+#   # and then alternatively to any unsecured network
+#   
+#   wlan0_BootProto=WPA
+#   wlan0_Networks=( PrivateNetwork any )
+#   # wlan0_WPAConf="/System/Settings/wpa_supplicant.conf"
+#   
+#   PrivateNetwork_BootProto=Static
+#   PrivateNetwork_IP=192.168.2.13
+#   PrivateNetwork_WPA=(
+#      priority:2
+#      ssid:"My Private Network"
+#      psk:"SuperSecretP4ss*pHraze!"
+#      proto:RSN
+#      key_mgmt:WPA-PSK
+#      pairwise:CCMP
+#   )
+#   
+#   any_BootProto=DHCP
+#   any_WPA=(
+#      key_mgmt:NONE
+#   )
+#
+# Alternatively, networks may be provided in wpa_supplicant.conf .
+# For example, NetworkOptions could just contain this:
+#
+#   # wlan0 will only connect to networks listed in the default config file
+#   wlan0_BootProto=WPA
+#
+#   # any of those with a network id of "dhcpNetwork" will get dhcp
+#   dhcpNetwork_BootProto=DHCP
+#
+#   # any of those with a network id of "homeNetwork" will get a static address
+#   homeNetwork_BootProto=Static
+#   homeNetwork_IP=192.168.2.13
+#
+# And in wpa_supplicant.conf:
+#
+#   network={
+#      id_str="homeNetwork"
+#      priority=2
+#      ssid="My Private Network"
+#      psk="SuperSecretP4ss*pHraze!"
+#      proto=RSN
+#      key_mgmt:WPA-PSK
+#      pairwise:CCMP
+#   }
+#   network={
+#      id_str="dhcpNetwork"
+#      key_mgmt:NONE
+#   }
+#
+# wpa_supplicant.conf may be configured with wpa_gui. 
+# "Network ID" must be set to the name used in NetworkOptions
+#
+
+interface="$2"
+
+eval 'ifaceNetworks=$'${interface}'_Networks'
+eval 'ifaceConfig=$'${interface}'_WPAConf'
+
+
+function SetNetworkOption() {
+
+   # break out text up until the first ':' and assign it to $option; put the rest in $value
+   eval `sed 's/^/option="/;s/:/"; value="/;s/$/"/' <<<"$*"`
+
+   # put quotes around string values if the contents aren't hex
+   case "$option" in
+      ssid|psk|wep_key*|password|*identity|*_path|*_cert|*_file|*_path2|*_cert2|*_file2|*_key|*_key2|*_passwd|phase*|id_str|*_match|*_match2)
+         value=$(sed '/^hash:[0-9a-fA-F]\{32\}$/q;/^\([0-9a-fA-F]\{2\}\)*$/q;s/.*/"&"/' <<<"$value")
+         ;;
+   esac
+
+   # set
+   Log_Verbose "$option=$value": $(wpa_cli -p "$wpaControlPath" -i "$interface" set_network "$netID" "$option" "$value")
+}
+
+case "$1" in
+   [Ss]tart)
+      if [ ! -S "${wpaGlobalControl}" ]; then Log_Error WPA_Supplicant not started; return 3; fi
+      if [ -S "${wpaControlPath}/${interface}" ]; then Log_Error WPA already started on $interface; return 2; fi
+      if [ ! -w "${wpaGlobalControl}" ]; then Log_Error Lack permissions to communicate with WPA_Supplicant via "${wpaGlobalControl}"; return 4; fi
+   
+      # add interface
+      result=$(wpa_cli -g "$wpaGlobalControl" interface_add "$interface" "${ifaceConfig:-$wpaConfig}" '' "$wpaControlPath")
+      if [ "$result" != "OK" ]; then
+         Log_Error "$result"
+         # Some error occurred; run wpa_supplicant directly to see it
+         # A timeout is enforced, just in case the error does not reoccur
+         wpa_supplicant -i "$interface" -c "${ifaceConfig:-$wpaConfig}" -C "${wpaControlPath}" &
+         usleep 1000000
+         kill $! 2>/dev/null
+         return 255
+      fi
+
+      # enable the connect/disconnect handler
+      # log FDs are closed for the daemon, which doesn't know of them to close them
+      wpa_cli -p "$wpaControlPath" -i "$interface" -a "${wpaActionHandler}" -B \
+         {questionFD}>&- {verboseFD}>&- {normalFD}>&- {terseFD}>&- {errorFD}>&- {debugFD}>&- {logFD}>&-
+
+      # add networks
+      if (( ${#ifaceNetworks} == 0 )); then return; fi
+      For_Each "ifaceNetworks" '
+         netID=$( wpa_cli -p "$wpaControlPath" -i "$interface" add_network )
+         network=$each
+         Log_Verbose $network: $netID
+
+         For_Each "${network}_WPA" '\''SetNetworkOption "$each"'\''
+         SetNetworkOption "id_str:$network"
+
+         Log_Verbose $network: $(wpa_cli -p "$wpaControlPath" -i "$interface" enable_network "$netID")
+         '
+      ;;
+   [Ss]top)
+      [ "$(wpa_cli -g "$wpaGlobalControl" interface_remove "$interface")" = "OK" ]
+      ;;
+esac
+
