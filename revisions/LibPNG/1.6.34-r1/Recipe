@@ -1,0 +1,11 @@
+# Recipe for version 1.6.34 by Jason Chandler, on Tue May 1 00:34:08 PDT 2018
+compile_version=1.8.5
+url="ftp://ftp.simplesystems.org/pub/png/src/libpng16/libpng-1.6.34.tar.gz"
+file_size=1505138
+file_md5=03fbc5134830240104e96d3cda648e71
+recipe_type=configure
+
+pre_link() {
+    ln -sf libpng16 $target/include/libpng
+    ln -sf libpng.so $target/lib/libpng.so.0
+}
