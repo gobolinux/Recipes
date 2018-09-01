@@ -3,6 +3,12 @@
 compile_version=1.10.2
 git="git://github.com/awesomewm/awesome"
 recipe_type=cmake
+
+# Avoid link errors with liblua by explicitly depending on libdl
+environment=(
+   LDFLAGS="-ldl"
+)
+
 cmake_options=(
    -DSYSCONFDIR="$settings_target"
 )
