@@ -1,0 +1,17 @@
+# Recipe for version 3.12.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Sep 5 22:29:59 BRT 2018
+compile_version=2.0
+url="https://cmake.org/files/v3.12/cmake-3.12.1.tar.gz"
+file_size=8090272
+file_md5=10109246a51102bfda45ff3935275fbf
+recipe_type=configure
+
+configure_options=(
+   --prefix=$target
+)
+
+pre_install() {
+    if [ ! -z "$goboIndex" -a -d "$goboIndex" ]
+    then
+        GrepReplace "$goboIndex" "$target" cmake_install.cmake
+    fi
+}
