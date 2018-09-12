@@ -1,0 +1,53 @@
+The generated libtool includes ".." elements by default. This patch
+changes that by using absolute pathnames for the following variables:
+
+  $compiler_lib_search_path
+  $compiler_lib_search_dirs
+  $predep_objects
+  $postdep_objects
+
+With this patch, what used to read like this:
+predep_objects=/System/Index/bin/../lib/gcc/x86_64-pc-linux-gnu/6.2.0/../../../../lib64/crti.o /System/Index/lib/gcc/x86_64-pc-linux-gnu/6.2.0/crtbeginS.o "
+
+Effectively becomes:
+predep_objects="/System/Index/lib64/crti.o  /System/Index/lib/gcc/x86_64-pc-linux-gnu/6.2.0/crtbeginS.o "
+
+This is especially needed by the GoboLinux distribution due to sandboxing side-effects.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- gcc-8.2.0/libtool.m4.orig	2018-09-10 19:37:59.434467142 -0300
++++ gcc-8.2.0/libtool.m4	2018-09-10 19:40:31.532470130 -0300
+@@ -6534,9 +6534,9 @@ if AC_TRY_EVAL(ac_compile); then
+ 	   # provided the user.  The postdeps already come after the
+ 	   # user supplied libs so there is no need to process them.
+ 	   if test -z "$_LT_TAGVAR(compiler_lib_search_path, $1)"; then
+-	     _LT_TAGVAR(compiler_lib_search_path, $1)="${prev}${p}"
++	     _LT_TAGVAR(compiler_lib_search_path, $1)="${prev}`echo ${p} | xargs realpath -s | tr -s '\n' ' '`"
+ 	   else
+-	     _LT_TAGVAR(compiler_lib_search_path, $1)="${_LT_TAGVAR(compiler_lib_search_path, $1)} ${prev}${p}"
++	     _LT_TAGVAR(compiler_lib_search_path, $1)="${_LT_TAGVAR(compiler_lib_search_path, $1)} ${prev}`echo ${p} | xargs realpath -s | tr -s '\n' ' '`"
+ 	   fi
+ 	   ;;
+ 	 # The "-l" case would never come before the object being
+@@ -6561,9 +6561,9 @@ if AC_TRY_EVAL(ac_compile); then
+ 
+        if test "$pre_test_object_deps_done" = no; then
+ 	 if test -z "$_LT_TAGVAR(predep_objects, $1)"; then
+-	   _LT_TAGVAR(predep_objects, $1)="$p"
++	   _LT_TAGVAR(predep_objects, $1)="`echo $p | xargs realpath -s | tr -s '\n' ' '`"
+ 	 else
+-	   _LT_TAGVAR(predep_objects, $1)="$_LT_TAGVAR(predep_objects, $1) $p"
++	   _LT_TAGVAR(predep_objects, $1)="$_LT_TAGVAR(predep_objects, $1) `echo $p | xargs realpath -s | tr -s '\n' ' '`"
+ 	 fi
+        else
+ 	 if test -z "$_LT_TAGVAR(postdep_objects, $1)"; then
+@@ -6650,7 +6650,7 @@ case " $_LT_TAGVAR(postdeps, $1) " in
+ esac
+  _LT_TAGVAR(compiler_lib_search_dirs, $1)=
+ if test -n "${_LT_TAGVAR(compiler_lib_search_path, $1)}"; then
+- _LT_TAGVAR(compiler_lib_search_dirs, $1)=`echo " ${_LT_TAGVAR(compiler_lib_search_path, $1)}" | ${SED} -e 's! -L! !g' -e 's!^ !!'`
++ _LT_TAGVAR(compiler_lib_search_dirs, $1)=`echo " ${_LT_TAGVAR(compiler_lib_search_path, $1)}" | ${SED} -e 's! -L! !g' -e 's!^ !!' | xargs realpath -s | tr -s '\n' ' '`
+ fi
+ _LT_TAGDECL([], [compiler_lib_search_dirs], [1],
+     [The directories searched by this compiler when creating a shared library])
