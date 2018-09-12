@@ -1,0 +1,17 @@
+# Recipe for version 3.12.2 by stratact <stratact1@gmail.com>, on Sat Sep 8 15:32:51 UTC 2018
+compile_version=2.0
+url="https://cmake.org/files/v3.12/cmake-3.12.2.tar.gz"
+file_size=8388114
+file_md5=6e7c550cfa1c2e216b35903dc70d80af
+recipe_type=configure
+
+configure_options=(
+   --prefix=$target
+)
+
+pre_install() {
+    if [ ! -z "$goboIndex" -a -d "$goboIndex" ]
+    then
+        GrepReplace "$goboIndex" "$target" cmake_install.cmake
+    fi
+}
