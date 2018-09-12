@@ -62,6 +62,12 @@ pre_install() {
          -e "s,postdep_objects=\"/.*\",postdep_objects=\"$postdep\",g" \
          -e "s,compiler_lib_search_path=\"-.*\",compiler_lib_search_path=\"$libsearch\",g"
    fi
+
+   # Let libtool install files on a prefix different than the one used at build time
+   find "$dir/_build" -name libtool | while read filename
+   do
+      sed -i "$filename" -e 's,func_fatal_error \"error: cannot install,echo \"warning: installing,g'
+   done
 }
 
 pre_link() {
