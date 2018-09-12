@@ -1,0 +1,36 @@
+# Recipe for Golang 1.11 by Djordje Marcetin <marcetin@gmail.com>
+compile_version=2.0
+url="https://dl.google.com/go/go1.11.src.tar.gz"
+file_size=21091932
+file_md5=19a4e7ce81d67e8d98cf92c3c0b36596
+dir='go'
+recipe_type=manifest
+create_dirs_first=yes
+manifest=(
+)
+environment=(
+	"GOOS=linux"
+	"GOBIN=$target/bin"
+	"GOROOT_FINAL=$target/lib/go"
+    "CGO_ENABLED=0"
+    "GOROOT_BOOTSTRAP=$golang_path"
+)
+sandbox_options=(
+    --no-sandbox
+)
+do_build()
+{
+    $sudo_exec chown -R "$(whoami)" "$target"
+    pushd src
+    bash ./make.bash
+    popd
+    $sudo_exec chown -R "$(SuperUserName)" "$target"
+}
+do_install() {
+   $sudo_exec mkdir -p "$target/lib/go"
+   $sudo_exec cp -a pkg "$target/lib/go"
+   $sudo_exec cp -a bin "$target"
+   # This is a little hack since the value at GOROOT_FINAL it's not picked by the ./make.bash script
+   # If you know how to correct this, you're encouraged to do so. Please, by all means.
+   $sudo_exec ln -s "$target/lib/go/pkg" "$target/pkg"
+}
