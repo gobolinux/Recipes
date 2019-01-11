@@ -1,0 +1,10 @@
+# Recipe for version 0.9.5_svn by Raqui333, on Fri Jan 11 03:58:22 BRST 2019
+# Recipe (MakeRecipe) for Dzen by Raqui333, on Fri Jan 11 03:53:03 BRST 2019
+compile_version=016.01
+url="https://github.com/robm/dzen/archive/master.tar.gz"
+file_size=38178
+file_md5=52ab04b53c7bec3077a6c3ce5c1423bf
+file="dzen-master.tar.gz"
+dir='dzen-master'
+recipe_type=makefile
+makefile='Makefile'
