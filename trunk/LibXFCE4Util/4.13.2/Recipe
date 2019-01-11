@@ -1,0 +1,13 @@
+# Recipe for version 4.13.2 by marcetin <marcetin@gmail.com>, on Mon Dec 24 16:30:36 CET 2018
+# Recipe (MakeRecipe) for LibXFCE4Util by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:19:39 CEST 2006
+compile_version=1.9.0
+url="archive.xfce.org/src/xfce/libxfce4util/4.13/libxfce4util-4.13.2.tar.bz2"
+file_size=509280
+file_md5=e3e8b9dd7e12028d3e642345b85d6ef1
+recipe_type=configure
+configure_options=(
+   --enable-debug=no
+)
+with_doc=(
+   --enable-gtk-doc
+)
