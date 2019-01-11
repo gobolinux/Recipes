@@ -1,0 +1,11 @@
+# Recipe for version 3.0-r2 by marcetin <marcetin@gmail.com>, on Mon Dec 24 19:01:37 CET 2018
+# Recipe (MakeRecipe) for LibWNCK by roko, <ro.ko@mcnon.com>, on Thu Nov 18 01:04:47 BRST 2004
+compile_version=1.9.0
+url="napoleon.acc.umu.se/pub/GNOME/sources/libwnck/3.0/libwnck-3.0.2.tar.gz"
+file_size=1150786
+file_md5=86ae4328f483c4b0c9ace6d643dcb788
+recipe_type=configure
+make_variables=(
+   INTROSPECTION_GIRDIR="$target/share/gir-1.0"
+   INTROSPECTION_TYPELIBDIR="$target/lib/girepository-1.0"
+)
