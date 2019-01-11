@@ -1,0 +1,19 @@
+# Recipe for version 4.2.14 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Jan 11 00:22:05 BRST 2019
+# Recipe (MakeRecipe) for HDF4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Mar 12 17:17:16 BRT 2013
+compile_version=1.0.1
+url="http://www.hdfgroup.org/ftp/HDF/releases/HDF4.2.14/src/hdf-4.2.14.tar.bz2"
+file_size=3616042
+file_md5=3f3bd5da84015e9221d26fb5a80094b4
+recipe_type=configure
+
+configure_options=(
+   --disable-fortran
+   --disable-netcdf  # NetCDF support breaks support for HDF-EOS datasets (e.g., MODIS)
+   --disable-static
+   --enable-shared
+)
+with_gcc_fortran=("--enable-fortran")
+
+make_variables=(
+   LIBTOOL=$dir/libtool
+)
