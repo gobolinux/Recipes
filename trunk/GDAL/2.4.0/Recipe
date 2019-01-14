@@ -10,7 +10,7 @@ makefile=GNUmakefile
 configure_options=(
     --with-hdf4
     --with-hdf5
-    --with-jasper=no
+    --with-jasper=no # Jasper cannot decode large JP2 files. Use OpenJPEG instead.
     --with-netcdf=${netcdf_path}
     --with-curl
     --with-geos=${geos_path}/bin/geos-config
@@ -30,7 +30,7 @@ environment=(
 
 install_variables=(
     PY_HAVE_SETUPTOOLS=n
-    PYTHONPATH=$PYTHONPATH:/usr/lib/python$(python3 --version 2>&1 | awk {'print $2'} | cut -d. -f1-2)/site-packages
+    PYTHONPATH=/usr/lib/python$(python3 --version 2>&1 | awk {'print $2'} | cut -d. -f1-2)/site-packages
 )
 
 pre_install() {
