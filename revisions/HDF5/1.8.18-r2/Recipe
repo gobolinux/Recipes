@@ -1,0 +1,29 @@
+# Recipe for version 1.8.18 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Nov 25 11:59:29 BRST 2016
+# Recipe (MakeRecipe) for HDF5 by Leandro Motta Barros <lmb@stackedboxes.org>, on Sat Oct 8 00:14:04 BRT 2011
+compile_version=1.13.3
+url="https://support.hdfgroup.org/ftp/HDF5/current18/src/hdf5-1.8.18.tar.bz2"
+file_size=10081294
+file_md5=29117bf488887f89888f9304c8ebea0b
+mirror_url="http://www.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8.18/src/hdf5-1.8.18.tar.bz2"
+recipe_type=configure
+
+configure_options=(
+	--enable-cxx
+	--enable-shared
+)
+
+pre_link() {
+    mkdir -p $target/lib/pkgconfig
+    cat << EOF > $target/lib/pkgconfig/hdf5.pc
+prefix=/usr
+exec_prefix=\${prefix}
+libdir=\${exec_prefix}/lib
+includedir=\${prefix}/include
+
+Name: HDF5
+Description: Hierarchical Data Format 5 (HDF5)
+Version: @UPSTREAM_VER@
+Libs: -L\${libdir} -lhdf5
+Cflags: -I\${includedir}
+EOF
+}
