@@ -1,0 +1,113 @@
+Support pixel-by-pixel resize.
+
+The original behavior of rxvt is that resizes snap to the size of the next
+character cell. This leaves ugly gaps when stacking rxvt instances in a tiling 
+window manager. This patch adds the --enable-pixel-resize option, which changes
+this behavior.
+
+diff -ru rxvt-unicode-9.22/configure.ac rxvt-unicode-9.22-hisham/configure.ac
+--- rxvt-unicode-9.22/configure.ac	2015-06-17 08:57:42.000000000 -0300
++++ rxvt-unicode-9.22-hisham/configure.ac	2016-12-30 11:33:20.808958019 -0200
+@@ -78,6 +78,7 @@
+ support_frills=yes
+ support_inheritpixmap=yes
+ support_fading=yes
++support_pixel_resize=yes
+ support_keepscrolling=yes
+ support_selectionscrolling=yes
+ support_mousewheel=yes
+@@ -111,6 +112,7 @@
+        support_frills=no
+        support_inheritpixmap=no
+        support_fading=no
++       support_pixel_resize=no
+        support_keepscrolling=no
+        support_selectionscrolling=no
+        support_lastlog=no
+@@ -139,6 +141,7 @@
+        support_frills=yes
+        support_inheritpixmap=yes
+        support_fading=yes
++       support_pixel_resize=yes
+        support_keepscrolling=yes
+        support_selectionscrolling=yes
+        support_lastlog=yes
+@@ -249,6 +252,12 @@
+     support_fading=$enableval
+   fi])
+ 
++AC_ARG_ENABLE(pixel-resize,
++  [  --enable-pixel-resize   enable resizing by pixel intervals],
++  [if test x$enableval = xyes -o x$enableval = xno; then
++    support_pixel_resize=$enableval
++  fi])
++
+ AC_ARG_ENABLE(rxvt-scroll,
+   [  --enable-rxvt-scroll    enable rxvt style scrollbar],
+   [if test x$enableval = xyes -o x$enableval = xno; then
+@@ -657,6 +666,9 @@
+ if test x$support_fading = xyes; then
+   AC_DEFINE(OFF_FOCUS_FADING, 1, Define if you want faded colors when focus is lost)
+ fi
++if test x$support_pixel_resize = xyes; then
++  AC_DEFINE(PIXEL_RESIZE, 1, Define if you want resize to be pixel-by-pixel)
++fi
+ if test x$support_keepscrolling = xno; then
+   AC_DEFINE(NO_SCROLLBAR_BUTTON_CONTINUAL_SCROLLING, 1, Define for continual scrolling when you keep the scrollbar button pressed)
+ fi
+Only in rxvt-unicode-9.22-hisham/doc: Makefile
+diff -ru rxvt-unicode-9.22/src/main.C rxvt-unicode-9.22-hisham/src/main.C
+--- rxvt-unicode-9.22/src/main.C	2016-01-18 17:35:08.000000000 -0200
++++ rxvt-unicode-9.22-hisham/src/main.C	2016-12-30 11:26:24.919965467 -0200
+@@ -737,8 +737,13 @@
+         window_vt_x += sb_w;
+     }
+ 
++#ifdef PIXEL_RESIZE
++  szHint.width_inc  = 1;
++  szHint.height_inc = 1;
++#else
+   szHint.width_inc  = fwidth;
+   szHint.height_inc = fheight;
++#endif
+   szHint.min_width  = szHint.base_width + szHint.width_inc;
+   szHint.min_height = szHint.base_height + szHint.height_inc;
+ 
+@@ -773,6 +778,16 @@
+   ncol = width  / fwidth;
+   nrow = height / fheight;
+ 
++#ifdef PIXEL_RESIZE
++  int textwidth  = ncol * fwidth;
++  int textheight = nrow * fheight;
++  vt_width = width;
++  vt_height = height;
++  if (width > textwidth)
++    XClearArea (dpy, vt, textwidth, 0, width, height, False);
++  if (height > textheight)
++    XClearArea (dpy, vt, 0, textheight, width, height, False);
++#else
+   // When the size of the vt window is not a multiple of the cell
+   // size, i.e., when the wm does not honour our size hints, there are
+   // extra areas not covered by the terminal screen. Such gaps, when a
+@@ -781,6 +796,7 @@
+   // vt window so as to avoid creating gaps.
+   vt_width  = ncol * fwidth;
+   vt_height = nrow * fheight;
++#endif
+ }
+ 
+ /*----------------------------------------------------------------------*/
+diff -u rxvt-unicode-9.22/src/xdefaults.C rxvt-unicode-9.22-hisham/src/xdefaults.C
+--- rxvt-unicode-9.22/src/xdefaults.C	2016-01-23 16:38:47.000000000 -0200
++++ rxvt-unicode-9.22-hisham/src/xdefaults.C	2016-12-30 11:42:48.929947845 -0200
+@@ -371,6 +371,9 @@
+ #if defined(SMART_RESIZE)
+                                     "smart-resize,"
+ #endif
++#if defined(PIXEL_RESIZE)
++                                    "pixel-resize,"
++#endif
+ #if defined(CURSOR_BLINK)
+                                     "cursorBlink,"
+ #endif
