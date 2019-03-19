@@ -1,0 +1,23 @@
+# Recipe for version 1.10.5 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Mar 19 11:35:45 BRT 2019
+# Recipe (MakeRecipe) for HDF5 by Leandro Motta Barros <lmb@stackedboxes.org>, on Sat Oct 8 00:14:04 BRT 2011
+compile_version=1.13.3
+url="https://support.hdfgroup.org/ftp/HDF5/current/src/hdf5-1.10.5.tar.bz2"
+file_size=8706317
+file_md5=7c19d6b81ee2a3ba7d36f6922b2f90d3
+recipe_type=configure
+
+configure_options=(
+    --with-default-plugindir=$goboLibraries/hdf5/plugin
+    --enable-shared
+    --enable-optimization=high
+    --enable-build-mode=production
+    --enable-threadsafe
+    --disable-hl         # the high-level library is incompatible with --enable-threadsafe
+#    --enable-cxx        # incompatible with --enable-threadsafe
+#    --enable-java       # incompatible with --enable-threadsafe
+#    --enable-symbols="-g -ggdb"
+#    --enable-debug=all
+#    --enable-codestack
+#    --enable-trace
+#    --enable-instrument
+)
