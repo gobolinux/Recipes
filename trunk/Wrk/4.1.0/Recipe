@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for Wrk by Hisham Muhammad <hisham@gobolinux.org>, on Mon Jan 28 18:32:45 -02 2019
+# Recipe for version 4.1.0 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Jan 28 18:32:45 -02 2019
+compile_version=016.01
+url="https://github.com/wg/wrk/archive/4.1.0.tar.gz"
+file="wrk-4.1.0.tar.gz"
+dir=wrk-4.1.0
+file_size=6478125
+file_md5=1dffe26f74b7ae3408cfbcd9700d4d4f
+recipe_type=makefile
+do_install=no
+pre_link() {
+   cp wrk $target/bin
+}
