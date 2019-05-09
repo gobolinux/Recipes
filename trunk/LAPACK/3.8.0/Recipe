@@ -1,0 +1,11 @@
+# Recipe for version 3.8.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu May 9 14:36:37 BRT 2019
+# Recipe (MakeRecipe) for LAPACK by Lucas C. Villa Real, on Wed Dec 13 16:44:44 BRST 2006
+compile_version=1.8.0
+url="http://www.netlib.org/lapack/lapack-3.8.0.tar.gz"
+file_size=7426094
+file_md5=96591affdbf58c450d45c1daa540dbd2
+recipe_type=cmake
+
+cmake_options=(
+    -DBUILD_SHARED_LIBS=ON
+)
