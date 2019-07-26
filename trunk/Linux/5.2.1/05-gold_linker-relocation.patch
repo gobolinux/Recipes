@@ -1,0 +1,34 @@
+Matt Whitlock 2016-11-16 09:40:26 UTC
+https://bugzilla.kernel.org/show_bug.cgi?id=187841
+
+While executing the recipe for arch/x86/entry/vdso/vdsox32.so:
+
+  gcc -nostdlib -o arch/x86/entry/vdso/vdsox32.so.dbg -fPIC -shared  -Wl,--hash-style=both  -Wl,--build-id -Wl,-Bsymbolic  -Wl,-m,elf32_x86_64 -Wl,-soname=linux-vdso.so.1 -Wl,-z,max-page-size=4096 -Wl,-z,common-page-size=4096 -Wl,-T,arch/x86/entry/vdso/vdsox32.lds arch/x86/entry/vdso/vdso-note-x32.o arch/x86/entry/vdso/vclock_gettime-x32.o arch/x86/entry/vdso/vgetcpu-x32.o && sh ./arch/x86/entry/vdso/checkundef.sh 'nm' 'arch/x86/entry/vdso/vdsox32.so.dbg'
+
+arch/x86/entry/vdso/vclock_gettime-x32.o:vclock_gettime.c:function __vdso_clock_gettime: error: relocation overflow: reference to 'vvar_vsyscall_gtod_data'
+arch/x86/entry/vdso/vclock_gettime-x32.o:vclock_gettime.c:function __vdso_gettimeofday: error: relocation overflow: reference to 'vvar_vsyscall_gtod_data'
+arch/x86/entry/vdso/vclock_gettime-x32.o:vclock_gettime.c:function __vdso_time: error: relocation overflow: reference to 'vvar_vsyscall_gtod_data'
+collect2: error: ld returned 1 exit status
+
+This error causes the subsequent call to objcopy to fail, thus aborting the build.
+
+  objcopy -S  arch/x86/entry/vdso/vdsox32.so.dbg arch/x86/entry/vdso/vdsox32.so
+objcopy: 'arch/x86/entry/vdso/vdsox32.so.dbg': No such file
+make[3]: *** [arch/x86/entry/vdso/Makefile:124: arch/x86/entry/vdso/vdsox32.so] Error 1
+
+
+$ ld --version | head -n1
+GNU gold (Gentoo 2.27 p1.0 2.27) 1.12
+
+A workaround is to force usage of the BFD linker when linking the x32 VDSO:
+
+--- linux-4.9.4/arch/x86/entry/vdso/Makefile.orig	2017-01-16 21:10:06.900368738 -0200
++++ linux-4.9.4/arch/x86/entry/vdso/Makefile	2017-01-16 21:10:23.498369049 -0200
+@@ -97,6 +97,7 @@ CFLAGS_REMOVE_vvar.o = -pg
+ 
+ CPPFLAGS_vdsox32.lds = $(CPPFLAGS_vdso.lds)
+ VDSO_LDFLAGS_vdsox32.lds = -Wl,-m,elf32_x86_64 \
++			   -fuse-ld=bfd \
+ 			   -Wl,-soname=linux-vdso.so.1 \
+ 			   -Wl,-z,max-page-size=4096 \
+ 			   -Wl,-z,common-page-size=4096
