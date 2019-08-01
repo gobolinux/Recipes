@@ -1,0 +1,12 @@
+# Recipe for version 1.16.0 by Demian Florentin <demianflorentin@gmail.com>, on Wed Jul 10 12:57:59 PYT 2019
+# Recipe (MakeRecipe) for GST-Plugins-Base by Hisham Muhammad <hisham@gobolinux.org>, on Tue Apr 8 20:40:10 BRT 2014
+compile_version=016
+url="https://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-1.16.0.tar.xz"
+file_size=3924664
+file_md5=41dde92930710c75cdb49169c5cc6dfc
+recipe_type=meson
+
+meson_variables=(
+  "-Dbuildtype=release"
+  "-Dgtk_doc=disabled"
+)
