@@ -1,0 +1,10 @@
+# Recipe for version 1.2.1 by Demian Florentin <demianflorentin@gmail.com>, on Wed Jul 10 08:09:45 PYT 2019
+# A console-based IRC client
+# Recipe by Julio Biason <slow@cscience.org>
+
+url="https://github.com/irssi/irssi/releases/download/1.2.1/irssi-1.2.1.tar.xz"
+file_size=1140380
+file_md5=37a0a6f1eb7e0169da3c5199cd76f753
+compile_version=1.8.2
+recipe_type=configure
+dir=irssi-1.2.1
