@@ -1,0 +1,36 @@
+[Name] TGT
+[Summary] Linux SCSI target framework
+[Description]
+The Linux target framework (tgt) is a user space SCSI target framework
+that supports the iSCSI and iSER transport protocols and that also
+supports multiple methods for accessing block storage. Tgt consists of
+a user-space daemon and user-space tools.
+
+Currently, tgt supports the following SCSI transport protocols:
+- iSCSI software target driver for Ethernet NICs
+- iSER software target driver for Infiniband and RDMA NICs
+
+Tgt supports the following methods for accessing local storage:
+- aio, the asynchronous I/O interface also known as libaio.
+- rdwr, smc and mmc, synchronous I/O based on the pread() and pwrite()
+  system calls.
+- null, discards all data and reads zeroes.
+- ssc, SCSI tape support.
+- sg and bsg, SCSI pass-through.
+- glfs, the GlusterFS network filesystem.
+- rbd, Ceph's distributed-storage RADOS Block Device.
+- sheepdog, a distributed object storage system.
+
+Tgt can emulate the following SCSI device types:
+- SBC: a virtual disk drive that can use a file to store the content.
+- SMC: a virtual media jukebox that can be controlled by the "mtx"
+  tool.
+- MMC: a virtual DVD drive that can read DVD-ROM iso files and create
+  burnable DVD+R. It can be combined with SMC to provide a fully
+  operational DVD jukebox.
+- SSC: a virtual tape device (aka VTL) that can use a file to store
+  the content.
+- OSD: a virtual object-based storage device that can use a file to
+  store the content.
+[License] GNU General Public License version 2
+[Homepage] http://stgt.sourceforge.net/
