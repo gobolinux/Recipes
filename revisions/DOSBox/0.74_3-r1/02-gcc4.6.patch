@@ -1,0 +1,13 @@
+Fixes compilation problems with GCC 4.6.
+From http://sourceforge.net/tracker/index.php?func=detail&aid=3308354&group_id=52551&atid=467232
+
+--- a/include/dos_inc.h.old	2011-03-28 18:43:27.000000000 +0200
++++ b/include/dos_inc.h	2011-03-28 18:43:35.000000000 +0200
+@@ -27,6 +27,7 @@
+ #ifndef DOSBOX_MEM_H
+ #include "mem.h"
+ #endif
++#include <stddef.h>
+ 
+ #ifdef _MSC_VER
+ #pragma pack (1)
