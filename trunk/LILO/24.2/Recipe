@@ -1,0 +1,23 @@
+# Official download site no longer exists.
+compile_version=1.8.2
+url="http://archive.ubuntu.com/ubuntu/pool/main/l/lilo/lilo_24.2.orig.tar.gz"
+file_size=777400
+file_md5=fe5e8c9754cee342b958b5fcbbb6eb51
+mirror_url="ftp://linux.mathematik.tu-darmstadt.de/pub/linux/distributions/misc/slackware/slackware-14.2/source/a/lilo/lilo-24.2.tar.gz"
+#file_size=437555
+#file_md5=72765f2aafd20e23ecf07ebd22baeec7
+recipe_type=makefile
+makefile='Makefile'
+dir='lilo-24.2'
+
+make_variables=(
+    SBIN_DIR=$target/sbin
+    CFG_DIR=$settings_target
+    BOOT_DIR=$goboBoot
+    USRSBIN_DIR=$target/sbin
+    MAN_DIR=$target/man
+)
+
+unmanaged_files=(
+    $goboBoot
+)
