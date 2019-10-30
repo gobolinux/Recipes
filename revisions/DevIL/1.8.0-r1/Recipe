@@ -1,0 +1,8 @@
+# Recipe for version 1.8.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Oct 30 10:17:57 -03 2019
+# Recipe (MakeRecipe) for DevIL by Michael Farrell <michael@xinomorph.org>, on Sun Nov 7 01:18:52 CST 2004
+compile_version=1.8.0
+url="$httpSourceforge/openil/DevIL-1.8.0.tar.gz"
+file_size=3084833
+file_md5=4d8c21aa4822ac86d77e44f8d7c9becd
+dir="DevIL/DevIL"
+recipe_type=cmake
