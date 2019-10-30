@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for TZData by Hisham Muhammad <hisham@gobolinux.org>, on Wed Oct 30 15:16:53 -03 2019
+# Recipe for version 2019c by Hisham Muhammad <hisham@gobolinux.org>, on Wed Oct 30 15:16:53 -03 2019
+compile_version=016.01
+url="https://data.iana.org/time-zones/releases/tzdb-2019c.tar.lz"
+file_size=474856
+recipe_type=makefile
+make_variables=(
+   USRDIR="$target"
+)
