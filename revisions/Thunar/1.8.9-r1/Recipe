@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Thunar by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:15:56 CEST 2006
+compile_version=2.0
+url="https://archive.xfce.org/xfce/4.14/src/Thunar-1.8.9.tar.bz2"
+file_size=2375302
+file_md5=fd1166e879294e4490d5fa9dccfdd9da
+recipe_type=configure
+configure_options=(
+   --enable-debug
+)
+with_doc=(
+   --enable-gtk-doc
+)
