@@ -1,0 +1,13 @@
+# Recipe for version 4.14.0 by Skunkworks <ascendingturkey@protonmail.com>, on Fri Jan 3 15:40:24 EST 2020
+# Recipe (MakeRecipe) for LibXFCE4Util by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:19:39 CEST 2006
+compile_version=1.9.0
+url="https://archive.xfce.org/xfce/4.14/src/libxfce4util-4.14.0.tar.bz2"
+file_size=516358
+file_md5=46f44e36acc3abf1a5ba814c22a773cb
+recipe_type=configure
+configure_options=(
+   --enable-debug=no
+)
+with_doc=(
+   --enable-gtk-doc
+)
