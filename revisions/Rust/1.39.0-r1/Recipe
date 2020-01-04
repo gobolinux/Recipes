@@ -1,0 +1,11 @@
+# Recipe for version 1.39.0 by Demian Florentin <demianflorentin@gmail.com>, on Tue Nov 26 09:38:39 PYST 2019
+# Recipe (MakeRecipe) for Rust by Hisham Muhammad <hisham@gobolinux.org>, on Mon Apr 20 20:38:12 BRT 2015
+compile_version=git
+url="https://static.rust-lang.org/dist/rust-1.39.0-x86_64-unknown-linux-gnu.tar.gz"
+file_size=386201361
+file_md5=33926ca331369ab20181ba1c91a5ee4a
+recipe_type=manifest
+pre_link() {
+   ./install.sh --prefix=$target
+}
+
