@@ -161,5 +161,6 @@ private__link_at_system_kernel_boot() {
    
    dest=$target/Resources/Unmanaged/$goboBoot
    ln -fs kernel-$fullversion $dest/kernel
+   ln -fs vmlinuz-$fullversion $dest/vmlinuz
    ln -fs System.map-$fullversion $dest/System.map
 }
