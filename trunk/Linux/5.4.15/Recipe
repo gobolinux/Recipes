@@ -7,6 +7,10 @@ recipe_type=makefile
 build_target="all"
 install_target="modules_install"
 
+make_variables=(
+    LD=ld.bfd
+)
+
 install_variables=(
    INSTALL_FW_PATH="$target/lib/firmware"
 )
@@ -25,7 +29,7 @@ do_configuration() {
          if Ask "Do you want to use a configuration based on the one from the running kernel?"
          then
             zcat $goboStatus/config.gz > .config
-            yes "" | make oldconfig
+            yes "" | make LD=ld.bfd oldconfig
          else
             Log_Normal "Using the kernel configuration shipped with the recipe"
             cp "$archsubdir"/dot-config .config
@@ -43,12 +47,12 @@ do_configuration() {
    then Die "Reported version ($reported) does not match version ($version). Please fix recipe."
    fi
 
-   make menuconfig || Die "'menuconfig' failed."
+   make LD=ld.bfd menuconfig || Die "'menuconfig' failed."
    [ -z "${SUDO_USER}" ] || chown ${SUDO_USER} .config
 
    # Build tools/objtool. Third-party modules may rely on it.
    if [ ! -e tools/objtool/objtool ]
-   then make -C tools/objtool
+   then make LD=ld.bfd -C tools/objtool
    fi
 }
 
@@ -150,7 +154,7 @@ private__copy_kernel_source() {
    Quiet popd
    
    Quiet pushd $dest
-   make prepare
+   make LD=ld.bfd prepare
    Quiet popd
 }
 
