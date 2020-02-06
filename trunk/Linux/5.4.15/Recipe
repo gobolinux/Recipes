@@ -153,9 +153,9 @@ private__copy_kernel_source() {
    done
    Quiet popd
    
-   Quiet pushd $dest
-   make LD=ld.bfd prepare
-   Quiet popd
+   #Quiet pushd $dest
+   #make LD=ld.bfd prepare
+   #Quiet popd
 }
 
 private__link_at_system_kernel_boot() {
@@ -165,6 +165,5 @@ private__link_at_system_kernel_boot() {
    
    dest=$target/Resources/Unmanaged/$goboBoot
    ln -fs kernel-$fullversion $dest/kernel
-   ln -fs vmlinuz-$fullversion $dest/vmlinuz
    ln -fs System.map-$fullversion $dest/System.map
 }

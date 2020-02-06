@@ -1,9 +1,9 @@
 diff -Nurp -X linux-5.4.15/Documentation/dontdiff linux-5.4.15/fs/gobohide.c linux-5.4.15-gobohide/fs/gobohide.c
 --- linux-5.4.15/fs/gobohide.c	1969-12-31 21:00:00.000000000 -0300
 +++ linux-5.4.15-gobohide/fs/gobohide.c	2020-01-28 11:03:49.408495435 -0300
-@@ -0,0 +1,646 @@
+@@ -0,0 +1,650 @@
 +/*
-+ * Copyright (C) 2002-2011 GoboLinux.org
++ * Copyright (C) 2002-2020 GoboLinux.org
 + *
 + * These modifications are released under the GNU General Public License
 + * version 2 or later, incorporated herein by reference.
@@ -26,10 +26,10 @@ diff -Nurp -X linux-5.4.15/Documentation/dontdiff linux-5.4.15/fs/gobohide.c lin
 + *               Security updates. Thanks to Dan Rosenberg for his code review.
 + *
 + * 18-May-2007 - Lucas C. Villa Real
-+ *               Added support to unionfs.
++ *               Added support for unionfs.
 + *
 + * 04-Jul-2006 - Lucas C. Villa Real
-+ *               Added GoboHide support to all filesystems through the VFS.
++ *               Added GoboHide support for all filesystems through the VFS.
 + *
 + * 21-Feb-2004 - Lucas C. Villa Real
 + *               Added an extra check for the inode's VFS root, so that
@@ -51,11 +51,11 @@ diff -Nurp -X linux-5.4.15/Documentation/dontdiff linux-5.4.15/fs/gobohide.c lin
 + *               Fixed get_free_page() to work on 64-bit archs as well.
 + *
 + * 12-Apr-2003 - Lucas C. Villa Real
-+ *               Removed support for UID's different than 0 hide inodes.
++ *               Disallow UID's different than 0 to hide inodes.
 + *
 + * 24-Mar-2003 - Lucas C. Villa Real
 + *               Modified struct hide and calls so we have pathnames related
-+ *               to the "real" root dir and not the the mount point.
++ *               to the "real" root dir and not the mount point.
 + *
 + * 17-Mar-2003 - Lucas C. Villa Real
 + *               Added support for full pathname, rather than dealing only
@@ -78,12 +78,11 @@ diff -Nurp -X linux-5.4.15/Documentation/dontdiff linux-5.4.15/fs/gobohide.c lin
 +#include <linux/stat.h>
 +#include <linux/mount.h>
 +#include <linux/path.h>
++#include <linux/magic.h>
 +#include <net/genetlink.h>
-+#include "mount.h"
-+
 +#include <asm/uaccess.h>
-+
-+#define GOBOHIDE_INODE_EQUALS(p,i) (d_inode((p)->dentry)->i_ino == i)
++#include "overlayfs/ovl_entry.h"
++#include "mount.h"
 +
 +static int gobohide_inode_list_count;
 +static LIST_HEAD(gobohide_inode_list);
@@ -389,6 +388,13 @@ diff -Nurp -X linux-5.4.15/Documentation/dontdiff linux-5.4.15/fs/gobohide.c lin
 +	return hiddenlist;
 +}
 +
++/* From overlayfs/util.c */
++struct dentry *overlay_dentry_lower(struct dentry *dentry)
++{
++	struct ovl_entry *oe = dentry->d_fsdata;
++	return oe->numlower ? oe->lowerstack[0].dentry : NULL;
++}
++
 +/**
 + * gobohide_add - Add the inode to the "must hide" list
 + * @ino: inode to be added
@@ -399,7 +405,7 @@ diff -Nurp -X linux-5.4.15/Documentation/dontdiff linux-5.4.15/fs/gobohide.c lin
 +	int len, ret;
 +	struct path *path;
 +	struct hide *entry, *old;
-+	struct dentry *dentry;
++	struct dentry *dentry, *lower = NULL;
 +	unsigned long flags;
 +
 +	entry = kmalloc(sizeof(struct hide), GFP_KERNEL);
@@ -413,10 +419,6 @@ diff -Nurp -X linux-5.4.15/Documentation/dontdiff linux-5.4.15/fs/gobohide.c lin
 +	ret = kern_path(pathname, 0, path);
 +	if (ret)
 +		goto out_free;
-+	else if (! GOBOHIDE_INODE_EQUALS(path, ino)) {
-+		ret = -ENOENT;
-+		goto out_path_put;
-+	}
 +
 +	entry->filp = dentry_open(path, O_NOFOLLOW|O_PATH, current_cred());
 +	if (IS_ERR(entry->filp)) {
@@ -428,12 +430,19 @@ diff -Nurp -X linux-5.4.15/Documentation/dontdiff linux-5.4.15/fs/gobohide.c lin
 +		ret = len;
 +		goto out_fput;
 +	}
-+	dentry = entry->filp->f_path.dentry;
++	dentry = file_dentry(entry->filp);
 +	if (! dentry) {
 +		ret = -ENOENT;
 +		goto out_free_page;
 +	}
-+	entry->i_ino = d_inode(dentry)->i_ino;
++	if (dentry->d_sb->s_magic == OVERLAYFS_SUPER_MAGIC) {
++		lower = overlay_dentry_lower(dentry);
++		entry->i_ino = d_inode(lower)->i_ino;
++	} else
++		entry->i_ino = d_inode(dentry)->i_ino;
++
++	pr_debug("gobohide_add(%ld): real_ino=%ld lower=%ld\n",
++			ino, entry->i_ino, lower ? d_inode(lower)->i_ino : 0);
 +
 +	write_lock_irqsave(&gobohide_inode_rwlock, flags);
 +	old = gobohide_get_unlocked(entry->i_ino, dentry->d_name.name,
@@ -496,10 +505,6 @@ diff -Nurp -X linux-5.4.15/Documentation/dontdiff linux-5.4.15/fs/gobohide.c lin
 +	ret = kern_path(pathname, 0, path);
 +	if (ret)
 +		return ret;
-+	else if (! GOBOHIDE_INODE_EQUALS(path, ino)) {
-+		ret = -ENOENT;
-+		goto out_path_put;
-+	}
 +
 +	n.filp = dentry_open(path, O_NOFOLLOW|O_PATH, current_cred());
 +	if (IS_ERR(n.filp)) {
@@ -511,17 +516,15 @@ diff -Nurp -X linux-5.4.15/Documentation/dontdiff linux-5.4.15/fs/gobohide.c lin
 +		ret = len;
 +		goto out_fput;
 +	}
-+	ino = d_inode(n.filp->f_path.dentry)->i_ino;
++	ino = file_inode(n.filp)->i_ino;
 +
 +	ret = -ENOENT;
 +	write_lock_irqsave(&gobohide_inode_rwlock, flags);
 +	if (gobohide_inode_list_count) {
 +		list_for_each_entry_safe(entry, aux, &gobohide_inode_list, head) {
-+			struct file *filp = entry->filp;
-+			struct dentry *filp_dentry = filp->f_path.dentry;
-+			struct mount *mnt = real_mount(filp->f_path.mnt)->mnt_parent;
-+			struct dentry *mnt_dentry = mnt->mnt_mountpoint;
-+			ino_t mnt_ino = mnt_dentry->d_inode->i_ino;
++			struct dentry *filp_dentry = file_dentry(entry->filp);
++			struct dentry *mnt_dentry = filp_dentry->d_sb->s_root;
++			ino_t mnt_ino = d_inode(mnt_dentry)->i_ino;
 +
 +			if ((entry->i_ino == ino && path->dentry->d_sb == filp_dentry->d_sb) ||
 +				(mnt_ino == ino && path->dentry->d_sb == mnt_dentry->d_sb)) {
@@ -609,12 +612,13 @@ diff -Nurp -X linux-5.4.15/Documentation/dontdiff linux-5.4.15/fs/gobohide.c lin
 +	if (! ino || ! gobohide_inode_list_count)
 +		return NULL;
 +
++	pr_debug("gobohide_get(%ld|%.*s|%s)\n",
++		ino, namelen, filename, parent->d_sb->s_id);
++
 +	list_for_each_entry(entry, &gobohide_inode_list, head) {
-+		struct file *filp = entry->filp;
-+		struct dentry *filp_dentry = filp->f_path.dentry;
-+		struct mount *mnt = real_mount(filp->f_path.mnt);
-+		struct dentry *mnt_dentry = mnt->mnt_mountpoint;
-+		ino_t mnt_ino = mnt_dentry->d_inode->i_ino;
++		struct dentry *filp_dentry = file_dentry(entry->filp);
++		struct dentry *mnt_dentry = filp_dentry->d_sb->s_root;
++		ino_t mnt_ino = d_inode(mnt_dentry)->i_ino;
 +
 +		if ((entry->i_ino == ino && parent->d_sb == filp_dentry->d_sb) || 
 +			(mnt_ino == ino && parent->d_sb == mnt_dentry->d_sb)) {
@@ -795,7 +799,7 @@ diff -Nurp -X linux-5.4.15/Documentation/dontdiff linux-5.4.15/fs/readdir.c linu
  	if (!f.file)
  		return -EBADF;
  
-+	buf.dentry = f.file->f_path.dentry;
++	buf.dentry = file_dentry(f.file);
  	error = iterate_dir(f.file, &buf.ctx);
  	if (buf.result)
  		error = buf.result;
@@ -815,7 +819,27 @@ diff -Nurp -X linux-5.4.15/Documentation/dontdiff linux-5.4.15/fs/readdir.c linu
  	int reclen = ALIGN(offsetof(struct linux_dirent, d_name) + namlen + 2,
  		sizeof(long));
  
-@@ -302,12 +307,14 @@ struct getdents_callback64 {
+@@ -235,6 +240,11 @@ static int filldir(struct dir_context *c
+ 	dirent = buf->previous;
+ 	if (dirent && signal_pending(current))
+ 		return -EINTR;
++	hidden = gobohide_get(d_ino, name, namlen, buf->dentry);
++	if (hidden) {
++		gobohide_put(hidden);
++		return 0;
++	}
+ 
+ 	/*
+ 	 * Note! This range-checks 'previous' (which may be NULL).
+@@ -282,6 +292,7 @@ SYSCALL_DEFINE3(getdents, unsigned int,
+ 	if (!f.file)
+ 		return -EBADF;
+ 
++	buf.dentry = file_dentry(f.file);
+ 	error = iterate_dir(f.file, &buf.ctx);
+ 	if (error >= 0)
+ 		error = buf.error;
+@@ -302,12 +313,14 @@ struct getdents_callback64 {
  	struct linux_dirent64 __user * previous;
  	int count;
  	int error;
@@ -830,7 +854,7 @@ diff -Nurp -X linux-5.4.15/Documentation/dontdiff linux-5.4.15/fs/readdir.c linu
  	struct getdents_callback64 *buf =
  		container_of(ctx, struct getdents_callback64, ctx);
  	int reclen = ALIGN(offsetof(struct linux_dirent64, d_name) + namlen + 1,
-@@ -322,6 +329,11 @@ static int filldir64(struct dir_context
+@@ -322,6 +335,11 @@ static int filldir64(struct dir_context
  	dirent = buf->previous;
  	if (dirent && signal_pending(current))
  		return -EINTR;
@@ -842,15 +866,15 @@ diff -Nurp -X linux-5.4.15/Documentation/dontdiff linux-5.4.15/fs/readdir.c linu
  
  	/*
  	 * Note! This range-checks 'previous' (which may be NULL).
-@@ -329,6 +341,7 @@ static int filldir64(struct dir_context
- 	 */
- 	if (!user_access_begin(dirent, sizeof(*dirent)))
- 		goto efault;
-+
- 	if (dirent)
- 		unsafe_put_user(offset, &dirent->d_off, efault_end);
- 	dirent = buf->current_dir;
-@@ -403,6 +416,7 @@ struct compat_readdir_callback {
+@@ -369,6 +387,7 @@ int ksys_getdents64(unsigned int fd, str
+ 	if (!f.file)
+ 		return -EBADF;
+ 
++	buf.dentry = file_dentry(f.file);
+ 	error = iterate_dir(f.file, &buf.ctx);
+ 	if (error >= 0)
+ 		error = buf.error;
+@@ -403,6 +422,7 @@ struct compat_readdir_callback {
  	struct dir_context ctx;
  	struct compat_old_linux_dirent __user *dirent;
  	int result;
@@ -858,15 +882,15 @@ diff -Nurp -X linux-5.4.15/Documentation/dontdiff linux-5.4.15/fs/readdir.c linu
  };
  
  static int compat_fillonedir(struct dir_context *ctx, const char *name,
-@@ -452,6 +466,7 @@ COMPAT_SYSCALL_DEFINE3(old_readdir, unsi
+@@ -452,6 +472,7 @@ COMPAT_SYSCALL_DEFINE3(old_readdir, unsi
  	if (!f.file)
  		return -EBADF;
  
-+	buf.dentry = f.file->f_path.dentry;
++	buf.dentry = file_dentry(f.file);
  	error = iterate_dir(f.file, &buf.ctx);
  	if (buf.result)
  		error = buf.result;
-@@ -473,6 +488,7 @@ struct compat_getdents_callback {
+@@ -473,6 +494,7 @@ struct compat_getdents_callback {
  	struct compat_linux_dirent __user *previous;
  	int count;
  	int error;
@@ -874,7 +898,7 @@ diff -Nurp -X linux-5.4.15/Documentation/dontdiff linux-5.4.15/fs/readdir.c linu
  };
  
  static int compat_filldir(struct dir_context *ctx, const char *name, int namlen,
-@@ -482,6 +498,7 @@ static int compat_filldir(struct dir_con
+@@ -482,6 +504,7 @@ static int compat_filldir(struct dir_con
  	struct compat_getdents_callback *buf =
  		container_of(ctx, struct compat_getdents_callback, ctx);
  	compat_ulong_t d_ino;
@@ -882,7 +906,7 @@ diff -Nurp -X linux-5.4.15/Documentation/dontdiff linux-5.4.15/fs/readdir.c linu
  	int reclen = ALIGN(offsetof(struct compat_linux_dirent, d_name) +
  		namlen + 2, sizeof(compat_long_t));
  
-@@ -493,6 +510,11 @@ static int compat_filldir(struct dir_con
+@@ -493,6 +516,11 @@ static int compat_filldir(struct dir_con
  		buf->error = -EOVERFLOW;
  		return -EOVERFLOW;
  	}
@@ -894,13 +918,11 @@ diff -Nurp -X linux-5.4.15/Documentation/dontdiff linux-5.4.15/fs/readdir.c linu
  	dirent = buf->previous;
  	if (dirent) {
  		if (signal_pending(current))
-@@ -540,6 +562,9 @@ COMPAT_SYSCALL_DEFINE3(getdents, unsigne
+@@ -540,6 +568,7 @@ COMPAT_SYSCALL_DEFINE3(getdents, unsigne
  	if (!f.file)
  		return -EBADF;
  
-+	buf.dentry = f.file->f_path.dentry;
-+	buf.dentry = f.file->f_path.dentry;
-+	buf.dentry = f.file->f_path.dentry;
++	buf.dentry = file_dentry(f.file);
  	error = iterate_dir(f.file, &buf.ctx);
  	if (error >= 0)
  		error = buf.error;

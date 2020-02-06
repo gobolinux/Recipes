@@ -24,7 +24,6 @@ private__copy_kernel_image() {
    mkdir -p $dest
    cp arch/x86_64/boot/bzImage $dest/kernel-$fullversion
    cp System.map $dest/System.map-$fullversion
-   cp vmlinuz $dest/vmlinuz-$fullversion
 }
 
 private__check_firmware () {
