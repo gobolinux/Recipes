@@ -1,0 +1,22 @@
+commit 423a2bf6e04aaecbeb5c2d5689cb3b832c240df0
+Author: Arnaldo Carvalho de Melo <acme@redhat.com>
+Date:   Fri Aug 30 17:01:58 2019 -0300
+
+    srcdir awk
+    
+    Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+
+diff --git a/tools/perf/util/intel-pt-decoder/Build b/tools/perf/util/intel-pt-decoder/Build
+index 1530f5cfd1b8..bc629359826f 100644
+--- a/tools/perf/util/intel-pt-decoder/Build
++++ b/tools/perf/util/intel-pt-decoder/Build
+@@ -1,7 +1,7 @@
+ perf-$(CONFIG_AUXTRACE) += intel-pt-pkt-decoder.o intel-pt-insn-decoder.o intel-pt-log.o intel-pt-decoder.o
+ 
+-inat_tables_script = ../../arch/x86/tools/gen-insn-attr-x86.awk
+-inat_tables_maps = ../../arch/x86/lib/x86-opcode-map.txt
++inat_tables_script = $(srctree)/tools/arch/x86/tools/gen-insn-attr-x86.awk
++inat_tables_maps = $(srctree)/tools/arch/x86/lib/x86-opcode-map.txt
+ 
+ $(OUTPUT)util/intel-pt-decoder/inat-tables.c: $(inat_tables_script) $(inat_tables_maps)
+ 	$(call rule_mkdir)
