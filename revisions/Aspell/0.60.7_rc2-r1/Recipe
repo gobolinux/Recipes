@@ -1,0 +1,26 @@
+# Recipe for version 0.60.7_rc2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jul 15 21:23:00 BRT 2019
+compile_version=1.8.2
+url="https://github.com/GNUAspell/aspell/archive/rel-0.60.7-rc2.tar.gz"
+file_size=1029372
+file_md5=56dd00a81ac4aaee6c295561f9b75bc3
+recipe_type=configure
+dir=aspell-rel-0.60.7-rc2
+
+pre_build() {
+    ./autogen
+}
+
+configure_options=(
+   "--enable-pkgdatadir=${goboLibraries}/aspell"
+   "--enable-pkglibdir=${goboLibraries}/aspell"
+)
+install_variables=(
+   pkgdatadir="${target}/lib/aspell"
+   pkglibdir="${target}/lib/aspell"
+   LIBTOOL=$goboExecutables/libtool
+)
+pre_install() {
+   # *sigh* libtool again... FixDirReferences will revert this after
+   # installation.
+   find . -type f -name "*.la" -print0 | xargs -0 sed -i 's,'"$goboLibraries"','"$target/lib"','
+}
