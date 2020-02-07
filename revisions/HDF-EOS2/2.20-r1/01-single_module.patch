@@ -1,0 +1,17 @@
+GNU ld 2.27 seems to fail to recognize -single_module. According
+to the documentation, that's the default anyway, so removing it
+from LDFLAGS seems to be the best workaround for the problem.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- hdfeos/src/Makefile.in.orig	2019-01-11 00:39:33.904387220 -0200
++++ hdfeos/src/Makefile.in	2019-01-11 00:39:48.167386596 -0200
+@@ -126,7 +126,7 @@ INSTALL_SCRIPT = @INSTALL_SCRIPT@
+ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+ 
+ # Set LDFLAGS to alow the HDF-EOS library to use extern variables from HDF4
+-LDFLAGS = -Wl,-single_module
++LDFLAGS =
+ LIBOBJS = @LIBOBJS@
+ LIBS = @LIBS@
+ LIBTOOL = @LIBTOOL@
