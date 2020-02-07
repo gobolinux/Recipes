@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for LibOSTree by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Mar 7 13:11:42 BRT 2019
+# Recipe for version 2019.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Mar 7 13:11:42 BRT 2019
+compile_version=016
+url="https://github.com/ostreedev/ostree/releases/download/v2019.1/libostree-2019.1.tar.xz"
+file_size=1955952
+file_md5=d1ce091c15202085ac1226fb2527e3a2
+dir='libostree-2019.1'
+recipe_type=configure
