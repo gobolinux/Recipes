@@ -1,0 +1,12 @@
+# Recipe for version 0.1.11 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Mar 16 00:10:27 BRT 2018
+# Recipe (MakeRecipe) for APulse by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Mar 16 00:10:02 BRT 2018
+compile_version=016
+url="https://github.com/i-rinat/apulse/archive/v0.1.11.tar.gz"
+file_size=116244
+file_md5=47e1f922b127b5ac0b1a7b3a79c3c898
+file="apulse-0.1.11.tar.gz"
+dir='apulse-0.1.11'
+recipe_type=cmake
+cmake_options=(
+   -DCMAKE_BUILD_TYPE=Release
+)
