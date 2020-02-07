@@ -1,0 +1,24 @@
+# Recipe for version 2.33.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Jan 28 17:21:49 -03 2020
+url=$ftpGnu/binutils/binutils-2.33.1.tar.bz2
+file_size=32160315
+file_md5=56a3be5f8f8ee874417a4f19ef3f10c8
+compile_version=1.8.0
+needs_build_directory=yes
+needs_safe_linking=yes
+recipe_type=configure
+configure_options=(
+   "--enable-shared"
+   "--enable-gold=default"
+   "--enable-plugins"
+)
+make_variables=(
+   "tooldir=$target"
+)
+install_variables=(
+   target_header_dir="${target}/include"
+   PATH="${binutils_path}/bin:$PATH"
+)
+
+pre_install() {
+   cp ../include/libiberty.h $target/include
+}
