@@ -1,0 +1,7 @@
+# arch=i686
+
+configure_options=(
+    ${configure_options[@]}
+    --disable-efiemu
+    --target="i386"
+)
