@@ -1,0 +1,14 @@
+# Recipe for version 2019.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 2 00:42:07 -03 2020
+# Recipe (MakeRecipe) for XorgProto by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jun 16 19:36:40 BRT 2018
+compile_version=016
+url="https://github.com/freedesktop/xorg-xorgproto/archive/xorgproto-2019.2.tar.gz"
+file_size=965338
+file_md5=c92017350f02649211cb0ee50b46b613
+dir="xorg-xorgproto-xorgproto-2019.2"
+recipe_type=configure
+autogen_before_configure=yes
+
+configure_options=(
+    --datarootdir=$target/lib
+    --docdir=$target/doc
+)
