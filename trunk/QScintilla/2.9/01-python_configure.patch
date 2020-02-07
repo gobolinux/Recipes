@@ -1,0 +1,20 @@
+--- QScintilla-gpl-2.9/Python/configure.py.orig	2015-08-29 20:56:45.000000000 -0300
++++ QScintilla-gpl-2.9/Python/configure.py	2015-08-30 18:34:15.000000000 -0300
+@@ -275,6 +275,8 @@ class ModuleConfiguration(object):
+ 
+         path = os.path.join(target_configuration.qsci_sip_dir, 'Qsci')
+         files = glob.glob('sip/*.sip')
++        if len(files) == 0:
++            files = glob.glob('../sip/*.sip')
+ 
+         return path, files
+ 
+@@ -1223,7 +1225,7 @@ def _generate_code(target_config, opts,
+ 
+         # Add PyQt's .sip files to the search path.
+         argv.append('-I')
+-        argv.append(target_config.pyqt_sip_dir)
++        argv.append('/usr/share/sip')
+ 
+     if module_config.qscintilla_api_file and target_config.api_dir != '':
+         # Generate the API file.
