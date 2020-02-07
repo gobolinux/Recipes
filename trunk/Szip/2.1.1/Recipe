@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for Szip by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Nov 18 12:37:29 -03 2019
+# Recipe for version 2.1.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Nov 18 12:37:29 -03 2019
+compile_version=016
+url="https://support.hdfgroup.org/ftp/lib-external/szip/2.1.1/src/szip-2.1.1.tar.gz"
+file_size=415774
+file_md5=5addbf2a5b1bf928b92c47286e921f72
+dir='szip-2.1.1'
+recipe_type=cmake
