@@ -1,0 +1,12 @@
+# Recipe for version 1.0.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat 08 Feb 2020 02:35:11 AM BRST
+# Recipe (MakeRecipe) for XSM by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 19:23:05 BRT 2005
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/app/xsm-1.0.4.tar.bz2"
+file_size=170933
+file_md5=bd32c14f09d58f46084b6a8f20e6e8f1
+recipe_type=configure
+part_of=Xorg-App
+
+make_variables=(
+    "appdefaultdir=$target/Shared/X11/app-defaults"
+)
