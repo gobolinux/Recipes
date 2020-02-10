@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for LibCLC by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun 09 Feb 2020 12:19:29 AM BRST
+# Recipe for version git by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun 09 Feb 2020 12:19:29 AM BRST
+compile_version=016
+git="https://github.com/llvm-mirror/libclc.git"
+recipe_type=configure
+configure=configure.py
+
+pre_build() {
+    GrepReplace -B '#!/usr/bin/python$' '#!/usr/bin/python3' configure.py
+}
