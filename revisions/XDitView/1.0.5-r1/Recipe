@@ -1,0 +1,11 @@
+# Recipe for version 1.0.5 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat 08 Feb 2020 02:30:47 AM BRST
+# Recipe (MakeRecipe) for XDitView by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 18:43:33 BRT 2005
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/app/xditview-1.0.5.tar.bz2"
+file_size=151313
+file_md5=3a909116a3b2abe3845215cf49e09fa5
+recipe_type=configure
+part_of=Xorg-App
+install_variables=(
+   appdefaultdir=${target}/Shared/X11/app-defaults
+)
