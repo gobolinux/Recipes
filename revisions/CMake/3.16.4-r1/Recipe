@@ -1,0 +1,17 @@
+# Recipe for version 3.16.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun 09 Feb 2020 06:17:41 PM BRST
+compile_version=2.0
+url="https://cmake.org/files/v3.16/cmake-3.16.4.tar.gz"
+file_size=9113021
+file_md5=e3dacb6b612a6b06f7054c7fb4e18616
+recipe_type=configure
+
+configure_options=(
+   --prefix=$target
+)
+
+pre_install() {
+    if [ ! -z "$goboIndex" -a -d "$goboIndex" ]
+    then
+        GrepReplace "$goboIndex" "$target" cmake_install.cmake
+    fi
+}
