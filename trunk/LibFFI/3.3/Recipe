@@ -1,0 +1,11 @@
+# Recipe for version 3.3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun 09 Feb 2020 06:47:10 AM BRST
+# Recipe (MakeRecipe) for LibFFI by Samuel A. Falvo II, on Sat Feb 23 11:30:25 PST 2008
+compile_version=1.10.0
+url="ftp://sourceware.org/pub/libffi/libffi-3.3.tar.gz"
+file_size=1305466
+file_md5=6313289e32f1d38a9df4770b014a2ca7
+recipe_type=configure
+
+configure_options=(
+    --enable-portable-binary
+)
