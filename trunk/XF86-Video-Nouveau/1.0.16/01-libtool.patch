@@ -1,0 +1,13 @@
+Add AC_PROG_LIBTOOL as autogen.sh will fail otherwise.
+
+diff -ur xf86-video-nouveau-0.0.16_pre20111109-orig/configure.ac xf86-video-nouveau-0.0.16_pre20111109/configure.ac
+--- xf86-video-nouveau-0.0.16_pre20111109-orig/configure.ac	2011-11-10 00:13:11.000000000 +0100
++++ xf86-video-nouveau-0.0.16_pre20111109/configure.ac	2012-02-26 15:19:49.000000000 +0100
+@@ -49,6 +49,7 @@
+ 
+ # Checks for programs.
+ AC_DISABLE_STATIC
++AC_PROG_LIBTOOL
+ LT_INIT
+ AC_PROG_CC
+ 
