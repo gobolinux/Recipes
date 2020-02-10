@@ -1,0 +1,46 @@
+# Recipe for version 19.3.3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat 08 Feb 2020 11:29:25 PM BRST
+# Recipe (MakeRecipe) for Mesa by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Nov 23 03:32:41 BRST 2004
+compile_version=2.0
+url="https://mesa.freedesktop.org/archive/mesa-19.3.3.tar.xz"
+file_size=11938700
+file_md5=00010e0bb8f6641276ff6cb3e9386114
+recipe_type=meson
+
+environment=(
+    GALLIUM_DRV=
+    DRI_DRIVERS=
+)
+
+meson_variables=(
+    -Dbuildtype=release
+    -Db_lto=false
+    -Db_ndebug=true
+    -Dplatforms=x11,drm,surfaceless
+    -Ddri-drivers=i915,i965,r100,r200,nouveau
+    -Dgallium-drivers=r300,r600,radeonsi,nouveau,virgl,svga,swrast,swr,iris
+    -Dvulkan-drivers=amd,intel
+    -Dvulkan-overlay-layer=true
+    -Dswr-arches=avx,avx2
+    -Ddri3=true
+    -Degl=true
+    -Dgallium-extra-hud=true
+    -Dgallium-nine=true
+    -Dgallium-va=true
+    -Dgallium-vdpau=true
+    -Dgallium-xa=true
+    -Dgallium-xvmc=false
+    -Dgbm=true
+    -Dgles1=false
+    -Dgles2=true
+    -Dglvnd=true
+    -Dglx=dri
+    -Dlibunwind=true
+    -Dllvm=true
+    -Dlmsensors=true
+    -Dosmesa=gallium
+    -Dshared-glapi=true
+)
+
+symlink_options=(
+   --conflict=overwrite
+)
