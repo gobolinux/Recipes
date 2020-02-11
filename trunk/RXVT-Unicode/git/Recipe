@@ -14,7 +14,7 @@ configure_options=(
    --enable-pixel-resize
 )
 pre_build () {
-   local libev=libev-4.25.tar.gz
+   local libev=libev-4.31.tar.gz
    local libptytty=libptytty-1.8.tar.gz
 
    mkdir -p "$target/lib/urxvt"
