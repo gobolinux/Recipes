@@ -1,0 +1,14 @@
+# Recipe for version 3.6.6 by Demian Florentin <demianflorentin@gmail.com>, on Thu Mar 21 19:32:27 PYST 2019
+# Recipe (MakeRecipe) for Gnutls by Jonas Karlsson <jonka750@student.liu.se>, on Thu Apr 7 23:33:28 CEST 2005
+compile_version=1.9.0
+url="ftp://ftp.gnutls.org/gcrypt/gnutls/v3.6/gnutls-3.6.12.tar.xz"
+file_size=5942064
+file_md5=a23900f14980a467bdce3a0fd31dfa18
+mirror_url="ftp://ftp.gnutls.org/pub/gnutls/attic/gnutls-3.6.12.tar.bz2"
+recipe_type=configure
+
+configure_options=(
+    --with-included-unistring
+)
+
+with_gtk_doc="--enable-gtk-doc"
