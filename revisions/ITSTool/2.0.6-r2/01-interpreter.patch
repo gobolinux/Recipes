@@ -1,0 +1,8 @@
+--- itstool-2.0.6/itstool.in.orig	2020-02-13 07:45:07.202114502 -0200
++++ itstool-2.0.6/itstool.in	2020-02-13 07:45:20.362114749 -0200
+@@ -1,4 +1,4 @@
+-#!@PYTHON@ -s
++#!/usr/bin/env @PYTHON@
+ #
+ # Copyright (c) 2010-2018 Shaun McCance <shaunm@gnome.org>
+ #
