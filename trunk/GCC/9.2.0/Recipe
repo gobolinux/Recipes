@@ -24,6 +24,9 @@ configure_options=(
    --enable-languages="c,c++,objc"
    --with-system-zlib
    --disable-bootstrap
+   --enable-lto
+   --enable-plugin
+   --enable-install-libiberty
 )
 with_gcj=("--enable-languages=java")
 
