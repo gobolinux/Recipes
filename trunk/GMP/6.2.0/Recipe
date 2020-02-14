@@ -9,4 +9,5 @@ recipe_type=configure
 configure_options=(
    --enable-cxx
    --enable-fat
+   --disable-static
 )
