@@ -5,3 +5,12 @@ file_size=473527
 file_md5=08d66d062055080ff699ab4869726ea2
 recipe_type=configure
 part_of=Xorg-Driver
+
+environment=(
+  CFLAGS="-fPIC"
+)
+
+configure_options=(
+  --enable-vmwarectrl-client
+  --with-pic
+)
