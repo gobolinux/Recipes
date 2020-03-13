@@ -1,0 +1,16 @@
+# Recipe for version 1.0.8 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat 22 Feb 2020 01:41:08 AM BRT
+url="https://sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz"
+file_size=810029
+file_md5=67e051268d0c475ea773822f7500d0e5
+compile_version=1.8.2
+recipe_type=makefile
+install_variables=(
+   "PREFIX=$target"
+)
+pre_build() {
+   make -f Makefile-libbz2_so
+}
+pre_link() {
+   cp -a libbz2.so* $target/lib
+   ln -nfs $target/lib/libbz2.so.1.0.8 $target/lib/libbz2.so.1
+}
