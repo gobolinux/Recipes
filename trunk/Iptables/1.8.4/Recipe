@@ -1,0 +1,11 @@
+# Recipe for version 1.8.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon 24 Feb 2020 04:21:01 PM BRT
+# Recipe (MakeRecipe) for Iptables by  Ozgur Ulukir, on Mon Dec 20 23:37:07 EET 2004
+compile_version=1.8.0
+url="http://www.netfilter.org/projects/iptables/files/iptables-1.8.4.tar.bz2"
+file_size=704312
+file_md5=9b201107957fbf62709c3d8226239b0d
+recipe_type=configure
+
+configure_options=(
+--disable-nftables
+)
