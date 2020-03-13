@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for SOF-Firmware by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri 21 Feb 2020 11:40:57 PM BRT
+# Recipe for version 1.4.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri 21 Feb 2020 11:40:57 PM BRT
+compile_version=016
+url="ftp://ftp.alsa-project.org/pub/misc/sof/sof-firmware-1.4.2.tar.bz2"
+file_size=1036448
+file_md5=3162849d32d232752285dde4f12a3bde
+recipe_type=manifest
+dir="usr"
+
+manifest=(
+    lib:lib
+)
