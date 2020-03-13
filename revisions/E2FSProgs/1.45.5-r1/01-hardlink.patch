@@ -1,0 +1,16 @@
+Fixes an attempt to cross-device when creating a hard link:
+/System/Index/bin/ln: failed to create hard link './com_err.h' => 'et/com_err.h': Invalid cross-device link
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@br.ibm.com>
+
+--- e2fsprogs-1.45.5/lib/et/Makefile.in.orig	2020-02-23 12:21:33.188176393 -0300
++++ e2fsprogs-1.45.5/lib/et/Makefile.in	2020-02-23 13:41:45.011671915 -0300
+@@ -116,7 +116,7 @@ install:: compile_et libcom_err.a $(HFIL
+ 		$(INSTALL_DATA) $(srcdir)/$$i $(DESTDIR)$(includedir)/et/$$i; \
+ 	done
+ 	$(Q) (cd $(DESTDIR)$(includedir) ;\
+-		$(LN) $(LINK_INSTALL_FLAGS) et/com_err.h . )
++		$(INSTALL_DATA) et/com_err.h . )
+ 	$(Q) for i in $(SHARE_FILES); do \
+ 		echo "	INSTALL_DATA $(datadir)/et/$$i"; \
+ 		$(INSTALL_DATA) $(srcdir)/$$i $(DESTDIR)$(datadir)/et/$$i; \
