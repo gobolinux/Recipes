@@ -1,0 +1,14 @@
+# Recipe for version 37 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun 23 Feb 2020 08:33:14 PM BRT
+# Recipe (MakeRecipe) for EFIVar by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Oct 23 18:24:17 BRST 2016
+compile_version=2.0
+url="https://github.com/rhinstaller/efivar/releases/download/37/efivar-37.tar.bz2"
+file_size=109431
+file_md5=9f067275c5f7aafdd75bfb364280ac9c
+dir='efivar-37'
+recipe_type=makefile
+makefile='Makefile'
+
+environment=(
+    # Workaround for build errors with the gold linker
+    LDFLAGS="-fuse-ld=bfd"
+)
