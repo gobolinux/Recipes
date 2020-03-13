@@ -1,0 +1,8 @@
+# Recipe for version 0.4.31 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue 25 Feb 2020 11:18:48 AM BRT
+# Recipe (MakeRecipe) for ORC by Joshua Sako <jginsu@gmail.com>, on Tue Aug 24 13:04:49 EDT 2010
+compile_version=1.13.3
+url="https://github.com/GStreamer/orc/archive/0.4.31.tar.gz"
+file_size=268899
+file_md5=15899586e4f777561319b008e662b8a3
+recipe_type=meson
+dir=orc-0.4.31
