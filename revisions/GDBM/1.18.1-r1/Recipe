@@ -1,0 +1,12 @@
+# Recipe for version 1.18.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon 24 Feb 2020 04:06:48 PM BRT
+# Recipe (MakeRecipe) for GDBM by Laurent Pelecq (laurent.pelecq at soleil.org), on dim avr 16 00:27:12 CEST 2006
+compile_version=1.8.0
+url="ftp://ftp.gnu.org/pub/gnu/gdbm/gdbm-1.18.1.tar.gz"
+file_size=941863
+file_md5=988dc82182121c7570e0cb8b4fcd5415
+recipe_type=configure
+make_variables=(
+    "BINOWN=0"
+    "BINGRP=0"
+)
+
