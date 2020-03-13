@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for LibiCal by Jonas Karlsson <jonka750@student.liu.se>, on Fri Sep 5 23:49:20 CEST 2008
+compile_version=1.8.0
+url="https://github.com/libical/libical/releases/download/v3.0.7/libical-3.0.7.tar.gz"
+file_size=881352
+file_md5=8a5d07a7fba9e73a85e67f76258bf042
+recipe_type=cmake
+
+cmake_options=(
+    -DCMAKE_INSTALL_LIBDIR=lib
+    -DENABLE_GTK_DOC=OFF
+)
