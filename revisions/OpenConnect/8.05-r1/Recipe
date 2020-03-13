@@ -1,0 +1,12 @@
+# Recipe for version 8.05 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed 26 Feb 2020 02:46:25 PM BRT
+# Recipe (MakeRecipe) for OpenConnect by Lucas C. Villa Real, on Fri Dec 23 11:40:07 BRST 2016
+compile_version=2.0
+url="ftp://ftp.infradead.org/pub/openconnect/openconnect-8.05.tar.gz"
+file_size=1922100
+file_md5=6f649c04114435961b87036deb484f47
+dir='openconnect-8.05'
+recipe_type=configure
+
+configure_options=(
+    --with-vpnc-script=$goboSettings/vpnc/vpnc-script
+)
