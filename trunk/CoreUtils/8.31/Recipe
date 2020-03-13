@@ -1,0 +1,23 @@
+# Recipe for version 8.31 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri 14 Feb 2020 10:50:00 AM -03
+url="http://ftp.gnu.org/gnu/coreutils/coreutils-8.31.tar.xz"
+file_size=5410140
+file_md5=0009a224d8e288e8ec406ef0161f9293
+recipe_type=configure
+install_target="install"
+compile_version=1.12.0
+autogen_before_configure=yes
+autogen="autoreconf -fiv"
+configure_options=(
+	--prefix=$target
+	--bindir=$target/bin
+	--libexecdir=$target/lib
+    --enable-no-install-program=kill,uptime
+)
+
+environment=(
+    FORCE_UNSAFE_CONFIGURE=1
+)
+
+pre_link() {
+    mv $target/bin/install $target/bin/real_install
+}
