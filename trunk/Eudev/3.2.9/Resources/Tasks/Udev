@@ -15,10 +15,6 @@ case "$cmd" in
    mountpoint -q "$goboDevices/pts" || mount -t devpts devpts "$goboDevices/pts"
    mountpoint -q "$goboVariable/run/udev" || mount -t tmpfs none "$goboVariable/run/udev"
 
-   # Udev handles uevents itself, so we don't need to have
-   # the kernel call out to any binary in response to them
-   echo "" > "$goboStatus/sys/kernel/hotplug"
-
    # Start the udev daemon to continually watch for, and act on,
    # uevents
    $goboExecutables/udevd --daemon
