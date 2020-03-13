@@ -1,0 +1,15 @@
+# Recipe for version 1.19.7 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue 25 Feb 2020 06:17:03 PM BRT
+# Recipe (MakeRecipe) for DPKG_1.19.18 by Zbigniew Baniewski <zb@ispid.com.pl>, on Sun Nov 16 16:14:01 BRST 2008
+compile_version=1.11.3
+url="http://ftp.wa.au.debian.org/debian/pool/main/d/dpkg/dpkg_1.19.7.tar.xz"
+file_size=4716724
+file_md5=60f57c5494e6dfa177504d47bfa0e383
+dir='dpkg-1.19.7'
+recipe_type=configure
+
+configure_options=(
+    --disable-static
+    --disable-dselect
+    --disable-start-stop-daemon
+    --disable-update-alternatives
+)
