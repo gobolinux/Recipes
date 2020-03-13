@@ -1,0 +1,11 @@
+url=$ftpGnu/inetutils/inetutils-1.9.4.tar.gz
+file_size=2281970
+file_md5=04852c26c47cc8c6b825f2b74f191f52
+compile_version=1.8.0
+recipe_type=configure
+configure_options=(
+   "--disable-syslogd"
+   "--disable-logger"
+   "--disable-whois"
+   "--disable-servers"
+)
