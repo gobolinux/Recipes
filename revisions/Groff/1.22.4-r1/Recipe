@@ -1,0 +1,20 @@
+# Recipe for version 1.22.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon 24 Feb 2020 07:54:17 PM BRT
+# Revised by Hisham Muhammad based on tip by MJ Ray
+url=$ftpGnu/groff/groff-1.22.4.tar.gz
+file_size=4137480
+file_md5=08fb04335e2f5e73f23ea4c3adbf0c5f
+compile_version=1.8.0
+recipe_type=configure
+configure_options=(
+   "--with-appresdir=$target/lib/X11/app-defaults"
+)
+make_variables=(
+   PAGE=A4
+)
+pre_link() {
+   pushd $target/bin
+   ln -s soelim zsoelim
+   ln -s eqn geqn
+   ln -s tbl gtbl
+   popd
+}
