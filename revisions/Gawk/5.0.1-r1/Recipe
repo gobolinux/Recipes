@@ -1,0 +1,15 @@
+# Recipe for version 5.0.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun 16 Feb 2020 01:24:46 PM BRT
+url="http://ftp.gnu.org/gnu/gawk/gawk-5.0.1.tar.xz"
+file_size=3136004
+file_md5=f9db3f6715207c6f13719713abc9c707
+compile_version=1.9.0
+recipe_type=configure
+
+configure_options=(
+    --disable-mpfr
+)
+
+pre_link()
+{
+    ln -sf gawk $target/bin/awk
+}
