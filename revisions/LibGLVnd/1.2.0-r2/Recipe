@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for LibGLVnd by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun 09 Feb 2020 07:44:32 PM BRST
+# Recipe for version 1.2.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun 09 Feb 2020 07:44:32 PM BRST
+compile_version=016
+url="https://github.com/NVIDIA/libglvnd/releases/download/v1.2.0/libglvnd-1.2.0.tar.gz"
+file_size=2030275
+file_md5=59068b27ff62bf2ad31a028673ab58da
+dir='libglvnd-1.2.0'
+recipe_type=configure
