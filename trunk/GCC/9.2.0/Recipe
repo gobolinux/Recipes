@@ -27,6 +27,7 @@ configure_options=(
    --enable-lto
    --enable-plugin
    --enable-install-libiberty
+   --with-mpfr=/Programs/MPFR/4.0.2
 )
 with_gcj=("--enable-languages=java")
 
