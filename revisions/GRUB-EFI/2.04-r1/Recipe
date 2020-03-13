@@ -1,0 +1,43 @@
+# Recipe for version 2.04 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon 24 Feb 2020 08:21:02 PM BRT
+# Recipe (MakeRecipe) for GRUB by Lucas C. Villa Real, on Fri Dec 4 16:02:55 BRST 2009
+compile_version=1.10.1
+urls=(
+    "$ftpGnu/grub/grub-2.04.tar.xz"
+    "http://unifoundry.com/pub/unifont/unifont-12.1.04/unifont-12.1.04.tar.gz"
+)
+file_sizes=(
+    6393864
+    20970589
+)
+file_md5s=(
+    5aaca6713b47ca2456d8324a58755ac7
+    b227ac14cefc5c437d66572b0d139d7b
+)
+recipe_type=configure
+
+environment=(
+    CFLAGS=
+    CXXFLAGS=
+    CPPFLAGS=
+    LDFLAGS=
+    MAKEFLAGS=
+)
+
+configure_options=(
+    --enable-device-mapper
+    --enable-nls
+    --enable-grub-mount
+    --enable-grub-mkfont
+    --disable-silent-rules
+    --disable-grub-emu-usb
+    --disable-werror
+    --with-platform="efi"
+    --program-suffix="-efi"
+)
+
+pre_link() {
+    ./grub-mkfont -o unicode.pf2 $compileArchivesDir/unifont-12.1.04.pcf.gz
+    mkdir -p $target/share/grub
+    cp -v unicode.pf2 $target/share/grub
+    rm -f $settings_target/grub.d/*_*efi
+}
