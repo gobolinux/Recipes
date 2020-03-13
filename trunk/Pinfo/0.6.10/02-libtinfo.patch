@@ -1,0 +1,82 @@
+--- pinfo-0.6.10/macros/curses.m4.orig	2020-02-17 17:36:58.826606211 +0000
++++ pinfo-0.6.10/macros/curses.m4	2020-02-17 17:46:29.722616921 +0000
+@@ -182,68 +182,45 @@ AC_DEFUN([AC_SEARCH_CURSES_H], [
+ 	if test "x$curses_location" != "xfalse"
+ 	then
+ 		dnl  check this particular location
+-		AC_SEARCH_CURSES_FILE($curses_location/include, ncursesw/ncurses.h, 
+-					-L$curses_location/lib -lncursesw, 
+-					-I$curses_location/include )
+-		AC_SEARCH_CURSES_FILE($curses_location/include, ncursesw.h, 
+-					-L$curses_location/lib -lncursesw, 
+-					-I$curses_location/include )
+ 		AC_SEARCH_CURSES_FILE($curses_location/include, ncurses/ncurses.h, 
+-					-L$curses_location/lib -lncurses, 
++					-L$curses_location/lib -lncurses -ltinfo, 
+ 					-I$curses_location/include )
+ 		AC_SEARCH_CURSES_FILE($curses_location/include, ncurses.h, 
+-					-L$curses_location/lib -lncurses, 
++					-L$curses_location/lib -lncurses -ltinfo, 
+ 					-I$curses_location/include )
+ 		AC_SEARCH_CURSES_FILE($curses_location/include, curses.h, 
+-					-L$curses_location/lib -lncurses, 
++					-L$curses_location/lib -lncurses -ltinfo, 
+ 					-I$curses_location/include )
+ 	
+ 	else
+-		dnl  check lots of default locations
+-
+-		dnl  first preference is ncursesw
+-		AC_SEARCH_CURSES_FILE(/usr/local/include, ncursesw/ncurses.h, 
+-					-L/usr/local/lib -lncursesw, 
+-					-I/usr/local/include )
+-		AC_SEARCH_CURSES_FILE(/usr/local/include/, ncursesw.h, 
+-					-L/usr/local/lib -lncursesw, 
+-					-I/usr/local/include )
+-	
+-		AC_SEARCH_CURSES_FILE(/usr/include, ncursesw/ncurses.h, 
+-					-L/usr/lib -lncursesw, 
+-					-I/usr/include )
+-		AC_SEARCH_CURSES_FILE(/usr/include/, ncursesw.h, 
+-					-L/usr/lib -lncursesw, 
+-					-I/usr/include )
+-			
+ 		dnl  after that, look for normal ncurses
+ 		AC_SEARCH_CURSES_FILE(/usr/local/include, ncurses.h, 
+-					-L/usr/local/lib -lncurses, 
++					-L/usr/local/lib -lncurses -ltinfo, 
+ 					-I/usr/local/include )
+ 		AC_SEARCH_CURSES_FILE(/usr/local/include, ncurses/ncurses.h, 
+-					-L/usr/local/lib -lncurses, 
++					-L/usr/local/lib -lncurses -ltinfo, 
+ 					-I/usr/local/include )
+ 	
+ 		AC_SEARCH_CURSES_FILE(/usr/include, ncurses.h, 
+-					-L/usr/lib -lncurses,
++					-L/usr/lib -lncurses -ltinfo,
+ 					-I/usr/include )
+ 		AC_SEARCH_CURSES_FILE(/usr/include, ncurses/ncurses.h, 
+-					-L/usr/lib -lncurses, 
++					-L/usr/lib -lncurses -ltinfo, 
+ 					-I/usr/include )
+ 
+ 		dnl  after that, look for curses
+ 		AC_SEARCH_CURSES_FILE(/usr/local/include, curses.h, 
+-					-L/usr/local/lib -lncurses, 
++					-L/usr/local/lib -lncurses -ltinfo, 
+ 					-I/usr/local/include )
+ 		AC_SEARCH_CURSES_FILE(/usr/local/include, curses/curses.h, 
+-					-L/usr/local/lib -lncurses, 
++					-L/usr/local/lib -lncurses -ltinfo, 
+ 					-I/usr/local/include )
+ 	
+ 		AC_SEARCH_CURSES_FILE(/usr/include, curses.h, 
+-					-L/usr/lib -lncurses,
++					-L/usr/lib -lncurses -ltinfo,
+ 					-I/usr/include )
+ 		AC_SEARCH_CURSES_FILE(/usr/include, curses/curses.h, 
+-					-L/usr/lib -lncurses, 
++					-L/usr/lib -lncurses -ltinfo, 
+ 					-I/usr/include )
+ 	fi
+ 
