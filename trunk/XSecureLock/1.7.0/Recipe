@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for XSecureLock by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu 27 Feb 2020 04:00:16 PM BRT
+# Recipe for version 1.7.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu 27 Feb 2020 04:00:16 PM BRT
+compile_version=016
+url="https://github.com/google/xsecurelock/releases/download/v1.7.0/xsecurelock-1.7.0.tar.gz"
+file_size=219377
+file_md5=4c218794b31b847c6ac71ebe5eec641b
+dir='xsecurelock-1.7.0'
+recipe_type=configure
+
+configure_options=(
+    --with-pam-service-name=screenlock
+    --libexecdir=/usr/lib
+)
