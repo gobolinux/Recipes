@@ -63,7 +63,7 @@ diff -Nur lua-5.3.0.old/src/Makefile lua-5.3.0/src/Makefile
  	$(CC) -o $@ $(LDFLAGS) $(LUAC_O) $(LUA_A) $(LIBS)
  
 +$(LUA_SO): $(CORE_O) $(LIB_O)
-+	$(LD) $(MYFLAGS) $? -shared -lm -lpthread -o $@
++	$(LD) $(MYFLAGS) $? -shared -lm -lpthread -ldl -o $@
 +
  clean:
  	$(RM) $(ALL_T) $(ALL_O)
