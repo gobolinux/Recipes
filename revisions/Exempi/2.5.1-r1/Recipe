@@ -1,0 +1,10 @@
+# Recipe for version 2.5.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon 24 Feb 2020 04:34:43 PM BRT
+# Recipe (MakeRecipe) for Exempi by Jonas Karlsson <jonka750@student.liu.se>, on Sun Aug 10 17:08:20 CEST 2008
+compile_version=1.10.0
+url="https://libopenraw.freedesktop.org/download/exempi-2.5.1.tar.bz2"
+file_size=3659352
+file_md5=c32bcd9feed5a0c1523d5652ef1804b0
+recipe_type=configure
+configure_options=(
+   --enable-unittest=no
+)
