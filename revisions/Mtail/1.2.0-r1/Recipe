@@ -1,0 +1,14 @@
+# Recipe for version 1.2.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat 22 Feb 2020 01:34:03 AM BRT
+# Recipe (MakeRecipe) for Mtail by Andre Detsch <detsch@gobolinux.org>, on Sat Jun 17 18:33:48 BRT 2006
+compile_version=1.8.0
+url="http://matt.immute.net/src/mtail/mtail-1.2.0.tgz"
+file_size=10798
+file_md5=cae74635933dedc78a769552f1e1b22a
+recipe_type=manifest
+manifest=( 
+   mtail:bin
+   CHANGES:doc
+   mtailrc.sample:doc
+#   LICENSE:doc
+#   README:doc 
+)

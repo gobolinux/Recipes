@@ -1,0 +1,296 @@
+--- mtail-1.2.0/mtail.orig	2020-02-22 01:42:38.563450585 -0300
++++ mtail-1.2.0/mtail	2020-02-23 00:35:57.170075868 -0300
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python
++#!/usr/bin/env python3
+ 
+ # file tailer/colorer.
+ #
+@@ -34,7 +34,7 @@ except:
+     signal = None
+ 
+ # config file location. this should be made platform-independent...
+-if os.environ.has_key('HOME'):
++if 'HOME' in os.environ:
+     config_file = os.environ['HOME']+os.sep+'.mtailrc'
+ else:
+     config_file = None
+@@ -96,7 +96,7 @@ class TailerThread(threading.Thread):
+         global active
+         try:
+             self.do_run()
+-        except Exception, e:
++        except Exception as e:
+             pass
+         lock.acquire()
+         active = active - 1
+@@ -113,7 +113,7 @@ class TailerThread(threading.Thread):
+             tailer.seek_lines(self.initial_lines)
+         else:
+             if not multiple and not silent:
+-                print >>sys.stderr, '*** reading stdin, will just follow...'
++                print('*** reading stdin, will just follow...', file=sys.stderr)
+             self.filename = 'standard input'
+             ansi, colors, filter = self.config.getstdinconfig()
+             tailer = sys.stdin
+@@ -137,11 +137,11 @@ class TailerThread(threading.Thread):
+                 if (multiple or verbose) and (not silent) \
+                         and last_filename != self.filename:
+                     last_filename = self.filename
+-                    print
+-                    print docolor(ansi, colors, '==> %s <==' % self.filename)
+-                print docolor(ansi, colors, line)
++                    print()
++                    print(docolor(ansi, colors, '==> %s <==' % self.filename))
++                print(docolor(ansi, colors, line))
+             except Exception:
+-                print ansi['reset']
++                print(ansi['reset'])
+                 sys.exit(1)
+             sys.stdout.flush()
+             lock.release()
+@@ -159,8 +159,8 @@ def processargs():
+         opts, pargs = getopt.getopt(sys.argv[1:], 'fn:?hvq', ["follow",
+             "lines=", "help", "verbose", "quiet", "silent", "config=", "tty"])
+     except getopt.error:
+-        print >>sys.stderr, 'unrecognized option!'
+-        print >>sys.stderr
++        print('unrecognized option!', file=sys.stderr)
++        print(file=sys.stderr)
+         usage()
+         sys.exit(1)
+     for opt in opts:
+@@ -179,10 +179,9 @@ def processargs():
+             if hasattr(sys.stdout, 'isatty'):
+                 tty_only = 1
+             else:
+-                print >>sys.stderr, \
+-                    'this platform does not provide tty detection. '\
+-                    + 'ignoring --tty...'
+-                print >>sys.stderr
++                print('this platform does not provide tty detection. '\
++                    + 'ignoring --tty...', file=sys.stderr)
++                print(file=sys.stderr)
+                 tty_only = 0
+         elif opt[0] in ['--config']:
+             config_file = opt[1]
+@@ -200,7 +199,7 @@ def processargs():
+ # prints a usage message.
+ def usage():
+     global version_number
+-    print >>sys.stderr, '''
++    print('''
+ mtail %s by matt hellige (matt@immute.net)
+ 
+ usage: %s [option]... [<filename>]...
+@@ -224,7 +223,7 @@ follows a particular file descriptor rat
+ this version does not support the --follow=name behavior of gnu
+ tail.
+ 
+-''' % (version_number, sys.argv[0])
++''' % (version_number, sys.argv[0]), file=sys.stderr)
+ 
+ # colorizes a line, returning a string suitable for printing to a 
+ # terminal.
+@@ -279,20 +278,20 @@ class TailFile:
+     def __init__(self, filename, follow = 0):
+         self.filename = filename
+         if not os.path.exists(filename):
+-            print >>sys.stderr, "no such file: '"+filename+"'."
++            print("no such file: '"+filename+"'.", file=sys.stderr)
+             sys.exit(1)
+         if os.path.isdir(filename):
+-            print >>sys.stderr, "file '"+filename+"' is a directory."
++            print("file '"+filename+"' is a directory.", file=sys.stderr)
+             sys.exit(1)
+         if not os.access(filename, os.R_OK):
+-            print >>sys.stderr, "cannot read file '" + filename \
+-                + "'. permission denied."
++            print("cannot read file '" + filename \
++                + "'. permission denied.", file=sys.stderr)
+             sys.exit(1)
+         self.file = open(self.filename, 'r')
+         self.follow = follow
+ 
+     def readline(self):
+-        index = string.find(self.readbuf, '\n')
++        index = self.readbuf.find('\n')
+         while index == -1:
+             try:
+                 n = self.more_to_read()
+@@ -306,7 +305,7 @@ class TailFile:
+             else:
+                 # TODO: comment this...
+                 self.readbuf = self.readbuf + self.file.read(int(n))
+-                index = string.find(self.readbuf, '\n')
++                index = self.readbuf.find('\n')
+         line = self.readbuf[:index+1]
+         self.readbuf = self.readbuf[index+1:]
+         return line
+@@ -438,8 +437,8 @@ class ConfigFile:
+         # checks whether a character is a valid regexp marker. if so,
+         # the character is returned. if not, a ConfigException is raised.
+         def check_re_marker(sep):
+-            if (string.find(string.digits, sep) != -1 or 
+-                    string.find(string.letters, sep) != -1):
++            if (string.digits.find(sep) != -1 or 
++                    string.ascii_letters.find(sep) != -1):
+                 raise ConfigException("invalid regexp marker")
+             return sep
+ 
+@@ -448,39 +447,39 @@ class ConfigFile:
+         # ConfigException if anything goes wrong...
+         def parse_re(line):
+             sep = check_re_marker(line[0])
+-            reend = string.index(line, sep, 1)
++            reend = line.index(sep, 1)
+             if reend == -1:
+                 raise ConfigException("missing regexp end marker")
+             rexp = line[1:reend]
+-            rexp = string.replace(rexp, '\\'+sep, sep)
++            rexp = rexp.replace('\\'+sep, sep)
+             return rexp, reend
+ 
+         # parses a filter specification (allow, deny, or replace) from the
+         # given string. returns a filter object or raises ConfigException.
+         def parse_filter(line):
+             # a line like "deny /foo/" becomes a deny filter...
+-            if string.find(line, 'deny') == 0:
+-                line = string.strip(line[4:])
++            if line.find('deny') == 0:
++                line = line[4:].strip()
+                 (rexp, _) = parse_re(line)
+                 return self.AllowDenyFilter(re.compile(rexp), 0)
+             # a line like "allow /foo/" becomes an allow filter...
+-            elif string.find(line, 'allow') == 0:
+-                line = string.strip(line[5:])
++            elif line.find('allow') == 0:
++                line = line[5:].strip()
+                 (rexp, _) = parse_re(line)
+                 return self.AllowDenyFilter(re.compile(rexp), 1)
+             # and a line like "/regex/subst/" becomes a substitution filter...
+             else:
+                 sep = check_re_marker(line[0])
+-                subend = string.index(line, sep, 1)
++                subend = line.index(sep, 1)
+                 if subend == -1:
+                     raise ConfigException("missing second filter marker")
+                 sub = line[1:subend]
+-                sub = string.replace(sub, '\\'+sep, sep)
+-                replend = string.index(line, sep, subend+1)
++                sub = sub.replace('\\'+sep, sep)
++                replend = line.index(sep, subend+1)
+                 if subend == -1:
+                     raise ConfigException("missing final filter marker")
+                 repl = line[subend+1:replend]
+-                repl = string.replace(repl, '\\'+sep, sep)
++                repl = repl.replace('\\'+sep, sep)
+                 return self.SubstitutionFilter(re.compile(sub), repl)
+ 
+         # parses a coloring specification from the given string.
+@@ -488,16 +487,16 @@ class ConfigFile:
+         # ConfigException.
+         def parse_ansi(line):
+             sep = check_re_marker(line[0])
+-            nameend = string.index(line, sep, 1)
++            nameend = line.index(sep, 1)
+             if nameend == -1:
+                 raise ConfigException("missing second ansi marker")
+             name = line[1:nameend]
+-            name = string.replace(name, '\\'+sep, sep)
+-            seqend = string.index(line, sep, nameend+1)
++            name = name.replace('\\'+sep, sep)
++            seqend = line.index(sep, nameend+1)
+             if seqend == -1:
+                 raise ConfigException("missing final ansi marker")
+             seq = line[nameend+1:seqend]
+-            seq = string.replace(seq, '\\'+sep, sep)
++            seq = seq.replace('\\'+sep, sep)
+             return (name, seq)
+ 
+         config = None
+@@ -508,40 +507,40 @@ class ConfigFile:
+         try:
+             for line in file.readlines():
+                 lineno = lineno+1
+-                line = string.strip(line)
++                line = line.strip()
+                 if len(line) > 0 and line[0] != '#':
+-                    if string.find(line, "files:") == 0:
++                    if line.find("files:") == 0:
+                         add_config(config)
+                         config = self.Config()
+                         state = None
+                         filesre = None
+-                        files = string.strip(line[6:])
++                        files = line[6:].strip()
+                         while len(files) > 0:
+-                            if string.find(files, 'stdin') == 0:
++                            if files.find('stdin') == 0:
+                                 config.stdin = 1
+-                                files = string.lstrip(files[5:])
+-                            elif string.find(files, 'default') == 0:
++                                files = files[5:].lstrip()
++                            elif files.find('default') == 0:
+                                 config.default = 1
+-                                files = string.lstrip(files[7:])
++                                files = files[7:].lstrip()
+                             else:
+                                 (rexp, reend) = parse_re(files)
+                                 if filesre is None:
+                                     filesre = '('+rexp+')'
+                                 else:
+                                     filesre = filesre+'|('+rexp+')'
+-                                files = string.lstrip(files[reend+1:])
++                                files = files[reend+1:].lstrip()
+                         if filesre is not None:
+                             config.files = re.compile(filesre)
+-                    elif string.find(line, 'ansi:') == 0:
++                    elif line.find('ansi:') == 0:
+                         add_config(config)
+                         config = None
+                         state = ANSI
+-                    elif string.find(line, 'colors:') == 0:
++                    elif line.find('colors:') == 0:
+                         if config is None:
+                             raise ConfigException(\
+                                 "'colors:' found outside of 'files:' block")
+                         state = COLORS
+-                    elif string.find(line, 'filters:') == 0:
++                    elif line.find('filters:') == 0:
+                         if config is None:
+                             raise ConfigException(\
+                                 "'filters:' found outside of 'files:' block")
+@@ -549,7 +548,7 @@ class ConfigFile:
+                     else:
+                         if state == COLORS:
+                             (rexp, reend) = parse_re(line)
+-                            color = string.strip(line[reend+1:])
++                            color = line[reend+1:].strip()
+                             if len(color)==0:
+                                 raise ConfigException("missing color")
+                             config.colors.append((re.compile(rexp), color))
+@@ -563,10 +562,10 @@ class ConfigFile:
+                                 "this line doesn't belong here!")
+             add_config(config)
+             self.checkconfigs()
+-        except ConfigException, e:
+-            print >>sys.stderr, "configuration error! " + str(e) \
+-                + " at line " + str(lineno) + "."
+-            print >>sys.stderr, "using no config!"
++        except ConfigException as e:
++            print("configuration error! " + str(e) \
++                + " at line " + str(lineno) + ".", file=sys.stderr)
++            print("using no config!", file=sys.stderr)
+             self.reset()
+             return
+ 
+@@ -575,7 +574,7 @@ class ConfigFile:
+     def checkconfigs(self):
+         for config in self.configs + [self.stdinconfig, self.default]:
+             for color in config.colors:
+-                if not self.ansi.has_key(color[1]):
++                if color[1] not in self.ansi:
+                     config.colors.remove(color)
+ 
+     # returns a function to filter input lines by applying the specified
