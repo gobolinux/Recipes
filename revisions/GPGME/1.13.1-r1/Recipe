@@ -1,0 +1,8 @@
+# Recipe for version 1.13.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri 13 Mar 2020 12:18:25 AM BRT
+# Recipe (MakeRecipe) for GPGME by roko, <ro.ko@mcnon.com>, on Mon Mar 28 13:47:05 CEST 2005
+compile_version=1.8.0
+#url="ftp://ftp.sunet.se/pub/security/tools/crypt/gcrypt/gpgme/gpgme-1.13.3.tar.bz2"
+url="https://github.com/gpg/gpgme/archive/gpgme-1.13.1.tar.gz"
+file_size=1643003
+file_md5=b8b7f45b20e65276608555ff8385d977
+recipe_type=configure
