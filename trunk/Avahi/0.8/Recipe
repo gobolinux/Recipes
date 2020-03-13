@@ -1,0 +1,17 @@
+# Recipe for version 0.8 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue 25 Feb 2020 06:59:33 PM BRT
+# Recipe (MakeRecipe) for Avahi by Giambattista Bloisi <giamby@infinito.it>, on Wed Dec 12 20:58:25 CET 2007
+compile_version=1.9.0
+url="https://github.com/lathiat/avahi/releases/download/v0.8/avahi-0.8.tar.gz"
+file_size=1591458
+file_md5=229c6aa30674fc43c202b22c5f8c2be7
+recipe_type=configure
+configure_options=(
+    --with-distro=none
+    #--disable-gtk3
+    --disable-gtk
+    --disable-qt3 
+    --disable-qt4
+    --disable-qt5
+    --disable-mono
+    --disable-python
+)
