@@ -1,0 +1,29 @@
+# Recipe for version 1.72.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon 24 Feb 2020 04:43:55 PM BRT
+compile_version=1.8.2
+url="https://dl.bintray.com/boostorg/release/1.72.0/source/boost_1_72_0.tar.bz2"
+file_size=106907358
+file_md5=cb40943d2a2cb8ce08d42bc48b0f84f0
+recipe_type=makefile
+
+# Sadly, Boost 1.45 no longer provides a configure script, so we need to
+# resort to a very procedural recipe using Boost's completely nonstandard
+# build system.
+
+do_configuration() {
+   ./bootstrap.sh --prefix=$target
+}
+
+do_build() {
+   ./b2 variant=release threading=multi stage
+}
+
+do_install() {
+   $sudo_exec ./b2 install
+
+   # Manually install docs
+   $sudo_exec mkdir -p $target/doc
+   $sudo_exec cp -R doc/html $target/doc
+
+   # Install bjam for use by e.g. BGL-Python
+   $sudo_exec cp b2 $target/bin
+}
