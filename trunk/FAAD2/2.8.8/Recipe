@@ -1,0 +1,13 @@
+# Recipe for version 2.8.8 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon 24 Feb 2020 12:38:08 AM BRT
+# Recipe (MakeRecipe) for FAAD2 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sat Nov 26 10:54:10 BRST 2005
+compile_version=1.8.2
+url="https://sourceforge.net/projects/faac/files/faad2-src/faad2-2.8.0/faad2-2.8.8.tar.gz"
+file_size=1069044
+file_md5=28f6116efdbe9378269f8a6221767d1f
+recipe_type=configure
+
+configure_options=(
+    --without-drm
+    --without-xmms
+    --without-mpeg4ip
+)
