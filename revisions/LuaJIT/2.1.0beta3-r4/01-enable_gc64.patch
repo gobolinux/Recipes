@@ -1,0 +1,15 @@
+Build with 64-bit support by default.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- LuaJIT-2.1.0-beta3/src/Makefile.orig	2019-10-03 10:26:58.569764757 -0300
++++ LuaJIT-2.1.0-beta3/src/Makefile	2019-10-03 10:27:45.694762728 -0300
+@@ -111,7 +111,7 @@ XCFLAGS=
+ #XCFLAGS+= -DLUAJIT_NUMMODE=2
+ #
+ # Enable GC64 mode for x64.
+-#XCFLAGS+= -DLUAJIT_ENABLE_GC64
++XCFLAGS+= -DLUAJIT_ENABLE_GC64
+ #
+ ##############################################################################
+ 
