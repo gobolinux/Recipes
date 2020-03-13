@@ -1,0 +1,13 @@
+# Recipe for version 3.8.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri 07 Feb 2020 03:23:15 PM BRST
+compile_version=1.8.5
+url="https://www.python.org/ftp/python/3.8.1/Python-3.8.1.tar.xz"
+file_size=17828408
+file_md5=b3fb85fd479c0bf950c626ef80cacb57
+recipe_type=configure
+needs_safe_linking=yes
+
+configure_options=(
+  "--enable-shared"
+  "--enable-loadable-sqlite-extensions"
+#  "--with-cxx=no"
+)
