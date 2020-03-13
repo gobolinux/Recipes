@@ -1,0 +1,31 @@
+# Recipe for version 4.25 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun 16 Feb 2020 11:59:35 AM BRT
+# Recipe (MakeRecipe) for NSPR by Jonas Karlsson <jonka750@student.liu.se>, on Sun Sep 24 11:30:09 CEST 2006
+compile_version=1.8.2
+url="https://ftp.mozilla.org/pub/mozilla.org/nspr/releases/v4.25/src/nspr-4.25.tar.gz"
+file_size=1079633
+file_md5=4ca4d75a424f30fcdc766296bb103d17
+recipe_type=configure
+dir="nspr-4.25/nspr"
+
+configure_options=(
+   --enable-optimize
+   --disable-debug
+   --with-mozilla
+   --with-pthreads
+   $([ $(uname -m) = x86_64 ] && echo --enable-64bit)
+)
+
+pre_build() {
+   sed -ri 's#^(RELEASE_BINS =).*#\1#' pr/src/misc/Makefile.in
+   sed -i 's#$(LIBRARY) ##' config/rules.mk
+}
+
+pre_link() {
+   pushd ${target}/lib &&
+   for lib in *.so
+   do
+      mv ${lib} ${lib}.7
+      ln -s ${lib}.7 ${lib}
+   done &&
+   popd
+}
