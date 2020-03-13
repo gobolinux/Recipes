@@ -1,0 +1,10 @@
+compile_version=1.11.0
+url="https://ftp.gnu.org/gnu/texinfo/texinfo-6.7.tar.xz"
+file_size=4337984
+file_md5=d4c5d8cc84438c5993ec5163a59522a6
+recipe_type=configure
+dir='texinfo-6.7'
+install_variables=(
+   "TEXMF=$target/share/texmf"
+)
+install_target="install install-tex"
