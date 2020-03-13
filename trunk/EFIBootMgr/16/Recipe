@@ -6,6 +6,10 @@ file_md5=ab7cf46774fda951a0e8a40beb65a90e
 recipe_type=makefile
 makefile='Makefile'
 
+make_variables=(
+    EFIDIR=boot
+)
+
 install_variables=(
 	BINDIR=$target/bin
 )
