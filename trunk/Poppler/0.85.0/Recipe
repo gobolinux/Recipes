@@ -1,0 +1,17 @@
+# Recipe (MakeRecipe) for Poppler by Harald Klimach, on Mon Mar 6 13:01:20 CET 2006
+compile_version=1.8.2
+url="https://poppler.freedesktop.org/poppler-0.85.0.tar.xz"
+file_size=1588616
+file_md5=5315084523a4d73e9514f51eef78a332
+recipe_type=cmake
+
+cmake_options=(
+    -DCMAKE_BUILD_TYPE=Release
+    -DCMAKE_INSTALL_PREFIX:PATH=/usr
+    -DCMAKE_INSTALL_LIBDIR:PATH=/usr/lib
+    -DENABLE_XPDG_HEADERS=ON
+    -DENABLE_ZLIB=ON
+    -DENABLE_LIBCURL=ON
+    -DENABLE_LIBOPENJPEG=none
+    -DENABLE_GTK_DOC=OFF
+)
