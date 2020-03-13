@@ -1,4 +1,4 @@
-# Recipe for version 4.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Jan 28 07:34:58 -03 2020
+# Recipe for version 4.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat 15 Feb 2020 11:39:13 PM BRST
 # Recipe for Squashfs-Tools by Lucas Correia Villa Real <lucasvr@gobolinux.org>
 compile_version=1.8.2
 url="http://downloads.sourceforge.net/squashfs/squashfs4.4.tar.gz"
@@ -10,13 +10,6 @@ do_install=no
 
 environment=(
     PREFIX="$target"
-)
-
-build_variables=(
-    XZ_SUPPORT=1
-    LZO_SUPPORT=1
-    LZ4_SUPPORT=1
-    ZSTD_SUPPORT=1
 )
 
 pre_link() {
