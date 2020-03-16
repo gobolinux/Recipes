@@ -13,7 +13,7 @@ environment=(
 configure_options=(
     --without-python
     --without-java
-    --enable-debug    # needed to disable broken optimizations
+    --disable-openmp
 )
 
 pre_link() {
