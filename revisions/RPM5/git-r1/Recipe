@@ -1,0 +1,22 @@
+# Recipe (MakeRecipe) for RPM5 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat 14 Mar 2020 12:25:11 AM BRT
+# Recipe for version git by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat 14 Mar 2020 12:25:11 AM BRT
+compile_version=016
+git="https://abf.io/soft/rpm5.git"
+recipe_type=configure
+
+configure_options=(
+    --without-apidocs
+    --without-selinux
+    --without-python
+    --without-perl
+    --without-lua
+    --without-syck
+    --without-dmalloc
+    --without-efence
+    --with-sqlite
+    --disable-nls
+)
+
+unmanaged_files=(
+    $goboVariable/lib/rpm
+)
