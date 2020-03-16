@@ -1,0 +1,33 @@
+# Recipe for version 5.4.12 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri 13 Mar 2020 11:44:48 PM BRT
+# Recipe (MakeRecipe) for RPM by Lucas C. Villa Real, on Mon Feb 26 01:11:39 BRT 2007
+compile_version=1.9.0
+url="https://github.com/avokhmin/RPM5/archive/rpm-5.4.12-release.tar.gz"
+file_size=5687990
+file_md5=aaa40863099f76a6f0859ee9998762fb
+recipe_type=configure
+dir=RPM5-rpm-5.4.12-release
+
+configure_options=(
+    --without-apidocs
+    --without-selinux
+    --without-python
+    --without-perl
+    --without-lua
+    --without-syck
+    --without-dmalloc
+    --without-efence
+    --with-db
+    --disable-nls
+)
+
+pre_build() {
+    find . -name Makefile.am | xargs GrepReplace -B "@WITH_LUA_CPPFLAGS@" ""
+    find . -name Makefile.am | xargs GrepReplace -B "@WITH_LUA_LDFLAGS@" ""
+    find . -name Makefile.am | xargs GrepReplace -B "@WITH_LUA_SUBDIR@" ""
+    find . -name Makefile.am | xargs GrepReplace -B "@WITH_LUA_LIBS@" ""
+    [ -e configure ] || ./autogen.sh
+}
+
+unmanaged_files=(
+    $goboVariable/lib/rpm
+)

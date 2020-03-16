@@ -1,0 +1,110 @@
+--- RPM5-rpm-5.4.12-release/configure.ac.orig	2013-07-25 17:58:54.000000000 -0300
++++ RPM5-rpm-5.4.12-release/configure.ac	2020-03-14 00:12:26.287605701 -0300
+@@ -1185,34 +1185,6 @@ AC_SUBST(WITH_PERL_SUBDIR)
+ AC_SUBST(WITH_PERL_SUBPACKAGE)
+ AC_SUBST(WITH_PERL_LIBS)
+ 
+-dnl # optional Perl-URPM language bindings
+-WITH_PERL_URPM_SUBDIR=""
+-WITH_PERL_URPM_SUBPACKAGE=0
+-WITH_PERL_URPM_LIBS=""
+-if test ".$WITH_PTHREADS" = .yes; then
+-    WITH_PERL_URPM_LIBS="$LIBS"
+-fi
+-AC_ARG_WITH(perl-urpm, AS_HELP_STRING([--with-perl-urpm], [build with Perl URPM language bindings]), [
+-    if test ".$withval" != .no; then
+-	PERL_URPM_INSTALLDIRS=""
+-	   if test "$withval" == "vendor"; then
+-		    PERL_URPM_INSTALLDIRS="'INSTALLDIRS'	=> 'vendor',"
+-	    fi
+-	    if test "$withval" == "site"; then
+-		    PERL_URPM_INSTALLDIRS="'INSTALLDIRS'     => 'site',"
+-	    fi
+-	    AC_DEFINE_UNQUOTED([PERL_URPM_INSTALLDIRS], [$PERL_URPM_INSTALLDIRS], [Perl install directory (vendor/site)])
+-	    AC_SUBST(PERL_URPM_INSTALLDIRS)
+-        WITH_PERL_URPM_SUBDIR=perl-URPM
+-        WITH_PERL_URPM_SUBPACKAGE=1
+-        AC_CONFIG_FILES([perl-URPM/Makefile.PL])
+-        AC_CONFIG_FILES([perl-URPM/Makefile])
+-    fi
+-])
+-AC_SUBST(WITH_PERL_URPM_SUBDIR)
+-AC_SUBST(WITH_PERL_URPM_SUBPACKAGE)
+-AC_SUBST(WITH_PERL_URPM_LIBS)
+-
+ dnl # optional Python language bindings
+ WITH_PYTHON_SUBDIR=""
+ WITH_PYTHON_SUBPACKAGE=0
+@@ -1871,34 +1843,10 @@ RPM_CHECK_LIB(
+     ], [])
+ 
+ dnl # Lua
+-WITH_LUA_SUBDIR_DEF=""
+-WITH_LUA_SUBDIR_LIB=""
+ USE_LUA_SHADOW=no
+ USE_LUA_CHKCONFIG=no
+ USE_LUA_CRYPTO=no
+ USE_LUA_SOCKET=no
+-RPM_CHECK_LIB(
+-    [Lua], [lua],
+-    [lua], [lua_newstate], [lua.h],
+-    [no,internal:external:none], [lua:local],
+-    [ if test ".$RPM_CHECK_LIB_LOCATION" = .internal; then
+-          AC_CHECK_LIB(m, fabs)
+-          AC_CHECK_LIB(dl, dlopen)
+-          AC_CHECK_FUNC(dlopen, [ WITH_LUA_SUBDIR_DEF="$WITH_LUA_SUBDIR_DEF -DLUA_USE_DLOPEN" ])
+-          AC_CHECK_FUNC(regcomp, [ WITH_LUA_SUBDIR_DEF="$WITH_LUA_SUBDIR_DEF -DLUA_USE_POSIX" ])
+-dnl       case "$host" in
+-dnl           *-*-linux* ) USE_LUA_SHADOW=yes; USE_LUA_CHKCONFIG=yes; ;;
+-dnl       esac
+-          AC_DEFINE(WITH_LUA_INTERNAL, 1, [Define if building with internal Lua])
+-          AC_CONFIG_FILES([lua/Makefile])
+-      else
+-          AC_CHECK_LIB(m, fabs)
+-          AC_CHECK_LIB(dl, dlopen)
+-          AC_CHECK_FUNC(dlopen)
+-      fi
+-    ], [])
+-AC_SUBST(WITH_LUA_SUBDIR_DEF)
+-AC_SUBST(WITH_LUA_SUBDIR_LIB)
+ AM_CONDITIONAL(USE_LUA_SHADOW, [ test ".$USE_LUA_SHADOW" = .yes ])
+ AM_CONDITIONAL(USE_LUA_CHKCONFIG, [ test ".$USE_LUA_CHKCONFIG" = .yes ])
+ AM_CONDITIONAL(USE_LUA_CRYPTO, [ test ".$USE_LUA_CRYPTO" = .yes ])
+@@ -1925,9 +1873,6 @@ RPM_CHECK_LIB(
+ 	  AC_DEFINE(HAVE_LIBPCRE, 1, [Define to 1 if you have the 'pcre' library (-lpcre).])
+           AC_DEFINE(WITH_PCRE_POSIX, 1, [Define as 1 if PCRE's POSIX API is available])
+ 	  WITH_PCRE_LIBS="-lpcreposix" # override, not prepend! (see attention above)
+-          if test ".$WITH_LUA" = .yes; then
+-              WITH_LUA_SUBDIR_DEF="$WITH_LUA_SUBDIR_DEF -DREX_POSIX_INCLUDE=\"<pcreposix.h>\""
+-          fi
+ 	  AC_SUBST(WITH_PCRE_LIBS)
+       else
+ 	dnl # make sure PCRE POSIX API can be really _USED_ by RPM
+@@ -1937,17 +1882,11 @@ RPM_CHECK_LIB(
+           AC_LANG_PROGRAM([#include <pcreposix.h>], [(void)regcomp(0, 0, 0)])
+ 	], [
+           AC_DEFINE(WITH_PCRE_POSIX, 1, [Define as 1 if PCRE's POSIX API is available])
+-          if test ".$WITH_LUA" = .yes; then
+-              WITH_LUA_SUBDIR_DEF="$WITH_LUA_SUBDIR_DEF -DREX_POSIX_INCLUDE=\"<pcreposix.h>\""
+-          fi
+ 	], [
+           LIBS="$LIBS_SAVED"
+ 	])
+       fi
+       dnl # enable PCRE native API support for embedded Lua
+-      if test ".$WITH_LUA" = .yes; then
+-          WITH_LUA_SUBDIR_DEF="$WITH_LUA_SUBDIR_DEF -DLUA_USE_PCRE"
+-      fi
+     ], [])
+     dnl # check PCRE 
+     if test ".$WITH_PCRE" = .no; then
+@@ -1967,9 +1906,6 @@ RPM_CHECK_LIB(
+     [ossp-uuid uuid], [uuid_import], [uuid.h],
+     [no,external:none], [],
+     [ dnl # enable OSSP uuid native API support for embedded Lua
+-      if test ".$WITH_LUA" = .yes; then
+-          WITH_LUA_SUBDIR_DEF="$WITH_LUA_SUBDIR_DEF -DLUA_USE_UUID"
+-      fi
+     ], [])
+ case "$host" in
+     *-*-darwin* )
