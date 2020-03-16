@@ -1,0 +1,416 @@
+--- beecrypt-4.1.2.orig/c++/provider/beecrypt.conf
++++ beecrypt-4.1.2/c++/provider/beecrypt.conf
+@@ -0,0 +1 @@
++provider.1=/usr/lib/beecrypt/base.so
+--- beecrypt-4.1.2.orig/debian/control
++++ beecrypt-4.1.2/debian/control
+@@ -0,0 +1,51 @@
++Source: beecrypt
++Section: devel
++Priority: optional
++Maintainer: Anibal Monsalve Salazar <anibal@debian.org>
++Build-Depends: debhelper (>= 5), m4, python-dev
++Standards-Version: 3.7.2
++
++Package: libbeecrypt6-dev
++Architecture: any
++Depends: libbeecrypt6 (>=${Source-Version})
++Provides: beecrypt-dev, beecrypt2-dev
++Conflicts: beecrypt-dev, beecrypt2-dev
++Description: header files for beecrypt, a library of cryptographic algorithms
++ BeeCrypt is an open source cryptography library that contains
++ highly optimized C and assembler implementations of many well-known
++ algorithms including Blowfish, SHA-1, Diffie-Hellman, and ElGamal.
++ .
++ Unlike some other crypto libraries, BeeCrypt is not designed to
++ solve one specific problem, like file encryption, but to be a
++ general purpose toolkit which can be used in a variety of
++ applications.
++ .
++ There are also no patent or royalty issues associated with
++ BeeCrypt, and it is released under the GNU LGPL license, which
++ means it can be used for free in both open source and closed
++ source commercial projects. 
++ .
++  Homepage: http://beecrypt.sourceforge.net/
++
++Package: libbeecrypt6
++Section: libs
++Priority: optional
++Architecture: any
++Depends: ${shlibs:Depends}, ${misc:Depends}
++Conflicts: beecrypt, beecrypt2
++Description: open source C library of cryptographic algorithms
++ BeeCrypt is an open source cryptography library that contains
++ highly optimized C and assembler implementations of many well-known
++ algorithms including Blowfish, SHA-1, Diffie-Hellman, and ElGamal.
++ .
++ Unlike some other crypto libraries, BeeCrypt is not designed to
++ solve one specific problem, like file encryption, but to be a
++ general purpose toolkit which can be used in a variety of
++ applications.
++ .
++ There are also no patent or royalty issues associated with
++ BeeCrypt, and it is released under the GNU LGPL license, which
++ means it can be used for free in both open source and closed
++ source commercial projects. 
++ .
++  Homepage: http://beecrypt.sourceforge.net/
+--- beecrypt-4.1.2.orig/debian/rules
++++ beecrypt-4.1.2/debian/rules
+@@ -0,0 +1,70 @@
++#!/usr/bin/make -f
++# Copyright (C) 2005 Anibal Monsalve Salazar <anibal@debian.org>
++
++PATH=/usr/bin:/bin
++
++DEB_BUILD_GNU_TYPE := $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
++DEB_HOST_GNU_TYPE  := $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
++
++export DH_VERBOSE=1
++export DH_COMPAT=5
++export DH_OPTIONS
++
++configure: configure-stamp
++configure-stamp:
++	dh_testdir
++	-test -r /usr/share/misc/config.sub && cp -f /usr/share/misc/config.sub config.sub
++	-test -r /usr/share/misc/config.guess && cp -f /usr/share/misc/config.guess config.guess
++	./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --disable-javaglue --disable-optimized --enable-static
++	touch $@
++
++build: build-stamp
++build-stamp: configure
++	dh_testdir
++	$(MAKE)
++	touch $@
++
++clean:
++	dh_testdir
++	dh_testroot
++	-$(MAKE) distclean
++	-rm -f build-stamp configure-stamp
++	-test -r /usr/share/misc/config.sub && rm -f config.sub
++	-test -r /usr/share/misc/config.guess && rm -f config.guess
++	-rm beecrypt *.o .libs/* python/.libs/* python/*.o
++	-rm -f `find . -name Makefile`
++	dh_clean
++
++install: DH_OPTIONS=
++install: build
++	dh_testdir
++	dh_testroot
++	dh_clean -k
++	dh_installdirs
++	$(MAKE) install DESTDIR=`pwd`/debian/tmp
++	dh_movefiles
++
++binary-indep: DH_OPTIONS=-i
++binary-indep: 
++# nothing to do
++
++binary-arch: DH_OPTIONS=-a
++binary-arch: build install
++	dh_testdir
++	dh_testroot
++	dh_installdebconf
++	dh_installdocs
++	dh_installchangelogs
++	dh_strip
++	dh_link
++	dh_compress
++	dh_fixperms
++	dh_makeshlibs
++	dh_installdeb
++	dh_shlibdeps
++	dh_gencontrol
++	dh_md5sums
++	dh_builddeb
++
++binary: binary-indep binary-arch
++.PHONY: configure build clean binary-indep binary-arch binary install
+--- beecrypt-4.1.2.orig/debian/changelog
++++ beecrypt-4.1.2/debian/changelog
+@@ -0,0 +1,142 @@
++beecrypt (4.1.2-6) unstable; urgency=medium
++
++  * Fixed "FTBFS: Error: Unrecognized opcode: `stmg'". Closes: #376832.
++    Added variables DEB_{HOST,BUILD}_GNU_TYPE as parameters to
++    configure.
++
++ -- Anibal Monsalve Salazar <anibal@debian.org>  Wed, 09 Aug 2006 15:05:48 +1000
++
++beecrypt (4.1.2-5) unstable; urgency=low
++
++  * Set Standards-Version to 3.7.2.
++  * Set DH_COMPAT to 5.
++  * Fixed homepage link in debian/control.
++
++ -- Anibal Monsalve Salazar <anibal@debian.org>  Wed, 05 Jul 2006 18:38:10 +1000
++
++beecrypt (4.1.2-4) unstable; urgency=low
++
++  * Fixed watch file.
++  * Set DH_COMPAT to 4.
++
++ -- Anibal Monsalve Salazar <anibal@debian.org>  Sun, 01 Jan 2006 22:46:53 +1100
++
++beecrypt (4.1.2-3) unstable; urgency=low
++
++  * Fixed "beecrypt(GNU/k*BSD): FTBFS: out of date
++    config.sub/config.guess", closes: #332769.
++
++ -- Anibal Monsalve Salazar <anibal@debian.org>  Fri, 14 Oct 2005 16:04:46 +1000
++
++beecrypt (4.1.2-2) unstable; urgency=low
++
++  * Set Standards-Version to 3.6.2.
++  * Added m4 to build-depends, closes: #320425, #323506.
++  * Updated postal address of the FSF in debian/copyright.
++
++ -- Anibal Monsalve Salazar <anibal@debian.org>  Wed, 31 Aug 2005 19:40:39 +1000
++
++beecrypt (4.1.2-1) unstable; urgency=low
++
++  * New upstream release, closes: #306768.
++    Sync with ubuntu.
++
++ -- Anibal Monsalve Salazar <anibal@debian.org>  Sun, 01 May 2005 13:38:31 +1000
++
++beecrypt (2.2.0-pre1-5) unstable; urgency=low
++
++  * Fixed "configure built with broken libtool.m4" (Closes: #295427).
++  * Removed autoconf and autotools-dev from Build-Depends.
++  * New maintainer (Closes: #266469).
++
++ -- Anibal Monsalve Salazar <anibal@debian.org>  Sat, 19 Feb 2005 19:49:37 +1100
++
++beecrypt (2.2.0-pre1-4) unstable; urgency=low
++
++  * QA Upload
++  * Changed Maintainer to Debian QA Group <packages@qa.debian.org>
++
++ -- Stephen Quinney <stephen@jadevine.org.uk>  Tue, 15 Feb 2005 13:42:55 +0000
++
++beecrypt (2.2.0-pre1-3) unstable; urgency=low
++
++  * debian/watch: updated to version 2 
++
++ -- Luca Filipozzi <lfilipoz@debian.org>  Sun,  2 Jun 2002 18:35:06 -0700
++
++beecrypt (2.2.0-pre1-2) unstable; urgency=low
++
++  * moving from non-us to main 
++
++ -- Luca Filipozzi <lfilipoz@debian.org>  Mon, 25 Mar 2002 20:10:23 -0800
++
++beecrypt (2.2.0-pre1-1) unstable; urgency=low
++
++  * New upstream release
++    - this version includes DSA (closes: Bug#138639)
++    - NB: this version no longer has config.h and config.gnu.h (files I was
++      including into /usr/include to make it easy to use beecrypt); these
++      files are now automatically installed by upstream as beecrypt.h and
++      beecrypt.gnu.h; any source that was including config.h must now include
++      beecrypt.h instead
++
++ -- Luca Filipozzi <lfilipoz@debian.org>  Sun, 24 Mar 2002 06:58:57 -0800
++
++beecrypt (2.1.0-3) unstable; urgency=low
++
++  * builds static library [thanks David Kimdon for patch ] (closes: Bug#127269)
++
++ -- Luca Filipozzi <lfilipoz@debian.org>  Tue,  1 Jan 2002 15:58:28 -0800
++
++beecrypt (2.1.0-2) unstable; urgency=low
++
++  * added watch file
++
++ -- Luca Filipozzi <lfilipoz@debian.org>  Wed, 26 Dec 2001 12:55:23 -0800
++
++beecrypt (2.1.0-1) unstable; urgency=low
++
++  * New upstream release
++
++ -- Luca Filipozzi <lfilipoz@debian.org>  Wed, 24 Oct 2001 11:45:19 -0700
++
++beecrypt (2.0.0-3) unstable; urgency=low
++
++  * fixed upstream configure.in and Makefile.in to allow
++    beecrypt to compile on hppa (Closes: #101065, #102753)
++  * added conflict on beecrypt to beecrypt2 (Closes: #100951)
++  * fixed silly dependency on libc6-dev
++  * removed erroneous debian/beecrypt2.substvars file
++
++ -- Luca Filipozzi <lfilipoz@debian.org>  Sun, 15 Jul 2001 20:01:24 -0700
++
++beecrypt (2.0.0-2) unstable; urgency=low
++
++  * Fixes packaging problems 
++
++ -- Luca Filipozzi <lfilipoz@debian.org>  Wed,  6 Jun 2001 08:59:23 -0700
++
++beecrypt (2.0.0-1) unstable; urgency=low
++
++  * New upstream release
++
++ -- Luca Filipozzi <lfilipoz@debian.org>  Sun,  3 Jun 2001 22:21:01 -0700
++
++beecrypt (1.1.2-2) unstable; urgency=low
++
++  * debian/rules changed to address two problems:
++    + /usr/lib/libbeecrypt.so now points to /usr/lib/libbeecrypt.so.1 correctly
++    + config.h and gnu/config.gnu.h installed into /usr/include/beecrypt since
++      the upstream author has a horrible way of dealing with system types
++
++ -- Luca Filipozzi <lfilipoz@debian.org>  Mon, 12 Feb 2001 23:44:08 -0800
++
++beecrypt (1.1.2-1) unstable; urgency=low
++
++  * Initial release.
++
++ -- Luca Filipozzi <lfilipoz@debian.org>  Sun, 21 Jan 2001 10:35:15 -0800
++
++Local variables:
++mode: debian-changelog
++End:
+--- beecrypt-4.1.2.orig/debian/copyright
++++ beecrypt-4.1.2/debian/copyright
+@@ -0,0 +1,28 @@
++This package was debianized by Luca Filipozzi lfilipoz@debian.org on
++Sun, 21 Jan 2001 10:35:15 -0800.
++
++It currently mantained by Anibal Monsalve Salazar <anibal@debian.org>.
++
++It was downloaded from http://sourceforge.net/projects/beecrypt/
++
++Copyright:
++  Copyright (c) 1997-2000 Virtual Unlimited B.V.
++
++  This library is free software; you can redistribute it and/or
++  modify it under the terms of the GNU Lesser General Public
++  License as published by the Free Software Foundation; either
++  version 2.1 of the License, or (at your option) any later version.
++
++  This library is distributed in the hope that it will be useful,
++  but WITHOUT ANY WARRANTY; without even the implied warranty of
++  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++  Lesser General Public License for more details.
++
++  You should have received a copy of the GNU Lesser General Public
++  License along with this library; if not, write to the Free Software
++  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301,
++  USA.
++
++  On Debian systems, a copy of the GNU Lesser General Public License can
++  be found in the /usr/share/common-licenses/LGPL-2.1 file.
++
+--- beecrypt-4.1.2.orig/debian/todo
++++ beecrypt-4.1.2/debian/todo
+@@ -0,0 +1,2 @@
++- report bug upstream that 'configure' must add -fpic and -DPIC for gcc
++- suggest to upstream that he should use doxygen to document his code
+--- beecrypt-4.1.2.orig/debian/libbeecrypt6.files
++++ beecrypt-4.1.2/debian/libbeecrypt6.files
+@@ -0,0 +1 @@
++usr/lib/*.so.*
+--- beecrypt-4.1.2.orig/debian/libbeecrypt6-dev.docs
++++ beecrypt-4.1.2/debian/libbeecrypt6-dev.docs
+@@ -0,0 +1,4 @@
++BENCHMARKS
++BUGS
++README
++docs/*.html
+--- beecrypt-4.1.2.orig/debian/libbeecrypt6-dev.files
++++ beecrypt-4.1.2/debian/libbeecrypt6-dev.files
+@@ -0,0 +1,4 @@
++usr/lib/libbeecrypt.la
++usr/lib/libbeecrypt.so
++usr/lib/libbeecrypt.a
++usr/include/*
+--- beecrypt-4.1.2.orig/debian/watch
++++ beecrypt-4.1.2/debian/watch
+@@ -0,0 +1,2 @@
++version=2
++http://prdownloads.sourceforge.net/beecrypt/beecrypt-([\d\.]+).tar.gz debian uupdate
+--- beecrypt-4.1.2.orig/debian/libbeecrypt6.README.debian
++++ beecrypt-4.1.2/debian/libbeecrypt6.README.debian
+@@ -0,0 +1,35 @@
++beecrypt for Debian
++-------------------
++
++beecrypt is a library that provides a variety of cryptographic algorithms.
++
++Important Notes
++---------------
++Please note that the upstream author returns message digests in network
++byte order. This is different than what OpenSSL does. I have to contact the
++upstream author to discuss this issue.
++
++Also note that his cipher algorithms can only operate on data buffers that
++are an integer number of 'blocksizes'. OpenSSL is able to operate on arbitrary
++sized buffers when running in CBC or ECB mode.
++
++Finally, please note that you MUST include <beecrypt/config.h> as your first
++beecrypt configuration file. Unfortunately, the author uses a non-standard way
++of defining type sizes in his package.
++
++Less Important Notes
++--------------------
++beecrypt for Debian has been compiled with the java glue code disabled and
++with all optimizations disabled. 
++
++If you want the java glue code, you should get the package source (apt-get
++source beecrypt-dev) and modify debian/rules to --enable-javaglue. You will
++need to have a JDK installed.
++
++If you want the optimizations, you should get the package source (apt-get
++source beecrypt-dev) and modify debian/rules to --enable-optimizations.
++
++Unfortunately, beecrypt is not well documented. I suggest that you review the
++header files packaged in beecrypt-dev and found in /usr/include/beecrypt/*.
++
++Luca Filipozzi <lfilipoz@debian.org>, Sun, 21 Jan 2001 10:35:15 -0800
+--- beecrypt-4.1.2.orig/debian/libbeecrypt6-dev.dirs
++++ beecrypt-4.1.2/debian/libbeecrypt6-dev.dirs
+@@ -0,0 +1,2 @@
++usr/lib
++usr/include
+--- beecrypt-4.1.2.orig/debian/libbeecrypt6-dev.README.debian
++++ beecrypt-4.1.2/debian/libbeecrypt6-dev.README.debian
+@@ -0,0 +1,35 @@
++beecrypt for Debian
++-------------------
++
++beecrypt is a library that provides a variety of cryptographic algorithms.
++
++Important Notes
++---------------
++Please note that the upstream author returns message digests in network
++byte order. This is different than what OpenSSL does. I have to contact the
++upstream author to discuss this issue.
++
++Also note that his cipher algorithms can only operate on data buffers that
++are an integer number of 'blocksizes'. OpenSSL is able to operate on arbitrary
++sized buffers when running in CBC or ECB mode.
++
++Finally, please note that you MUST include <beecrypt/config.h> as your first
++beecrypt configuration file. Unfortunately, the author uses a non-standard way
++of defining type sizes in his package.
++
++Less Important Notes
++--------------------
++beecrypt for Debian has been compiled with the java glue code disabled and
++with all optimizations disabled. 
++
++If you want the java glue code, you should get the package source (apt-get
++source beecrypt2-dev) and modify debian/rules to --enable-javaglue. You will
++need to have a JDK installed.
++
++If you want the optimizations, you should get the package source (apt-get
++source beecrypt2-dev) and modify debian/rules to --enable-optimizations.
++
++Unfortunately, beecrypt is not well documented. I suggest that you review the
++header files packaged in beecrypt2-dev and found in /usr/include/beecrypt/*.
++
++Luca Filipozzi <lfilipoz@debian.org>, Sun, 21 Jan 2001 10:35:15 -0800
