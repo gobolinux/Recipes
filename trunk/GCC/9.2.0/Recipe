@@ -21,7 +21,7 @@ configure_options=(
    --enable-threads="posix"
    --enable-__cxa_atexit
    --enable-clocale="gnu"
-   --enable-languages="c,c++,objc"
+   --enable-languages="c,c++,objc,fortran"
    --with-system-zlib
    --disable-bootstrap
    --enable-lto
