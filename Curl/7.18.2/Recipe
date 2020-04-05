@@ -1,0 +1,12 @@
+# Recipe for version 7.18.2 by Hoppar Tamas <htraki@indamail.hu>, on 2008. jún. 25., szerda, 06.41.18 CEST
+compile_version=1.9.0
+url="http://curl.oc1.mirrors.redwire.net/download/curl-7.18.2.tar.bz2"
+file_size=1744472
+file_md5=c389be5b0525276e58865956b7465562
+recipe_type=configure
+
+configure_options=(
+   "--disable-debug"
+   "--disable-verbose"
+   "--mandir=${target}/man"
+)

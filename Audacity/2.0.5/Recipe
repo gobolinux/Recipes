@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for Audacity by Hisham Muhammad <hisham@gobolinux.org>, on Sun Jul 27 14:35:59 BRT 2014
+# Recipe for version 2.0.5 by Hisham Muhammad <hisham@gobolinux.org>, on Sun Jul 27 14:35:59 BRT 2014
+compile_version=2.0
+url="$httpSourceforge/project/audacity/audacity/2.0.5/audacity-minsrc-2.0.5.tar.xz"
+file_size=5314060
+file_md5=657f71a5a214fe84731ed9842e09fa04
+dir='audacity-src-2.0.5'
+recipe_type=configure

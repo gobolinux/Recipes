@@ -1,0 +1,10 @@
+# Recipe for version 1.3.4 by Hisham Muhammad <hisham@gobolinux.org>, on Wed Sep 10 18:45:52 BRT 2014
+# Recipe for YAFC 1.3.4 by Hisham H. Muhammad
+compile_version=1.8.0
+url="http://www.yafc-ftp.com/upload/yafc-1.3.4.tar.xz"
+file_size=361312
+file_md5=ee1c88e522882e3070562c813872ff9b
+recipe_type=configure
+make_variables=(
+   TEXINFOS=""
+)

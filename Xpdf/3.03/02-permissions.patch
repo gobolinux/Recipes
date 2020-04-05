@@ -1,0 +1,95 @@
+Origin: http://patch-tracker.debian.org/patch/series/dl/xpdf/3.03-5/02-permissions.patch
+description: remove pdf file permission checks
+Index: xpdf/xpdf/PDFCore.cc
+===================================================================
+--- xpdf.orig/xpdf/PDFCore.cc	2011-08-28 19:53:44.000000000 -0400
++++ xpdf/xpdf/PDFCore.cc	2011-08-28 19:54:16.000000000 -0400
+@@ -4,6 +4,8 @@
+ //
+ // Copyright 2004 Glyph & Cog, LLC
+ //
++// Modified for Debian by Hamish Moffatt, 18 August 2005.
++//
+ //========================================================================
+ 
+ #include <aconf.h>
+@@ -1619,9 +1621,11 @@
+   int x0, y0, x1, y1, t;
+   GString *s;
+ 
++#ifdef ENFORCE_PERMISSIONS
+   if (!doc->okToCopy()) {
+     return NULL;
+   }
++#endif
+   if ((page = findPage(pg))) {
+     cvtUserToDev(pg, xMin, yMin, &x0, &y0);
+     cvtUserToDev(pg, xMax, yMax, &x1, &y1);
+Index: xpdf/xpdf/XPDFCore.cc
+===================================================================
+--- xpdf.orig/xpdf/XPDFCore.cc	2011-08-28 19:53:44.000000000 -0400
++++ xpdf/xpdf/XPDFCore.cc	2011-08-28 19:54:16.000000000 -0400
+@@ -4,6 +4,8 @@
+ //
+ // Copyright 2002-2003 Glyph & Cog, LLC
+ //
++// Modified for Debian by Hamish Moffatt, 22 May 2002.
++//
+ //========================================================================
+ 
+ #include <aconf.h>
+@@ -384,12 +386,16 @@
+ #ifndef NO_TEXT_SELECT
+       if (selectULX != selectLRX &&
+ 	  selectULY != selectLRY) {
++#ifdef ENFORCE_PERMISSIONS
+ 	if (doc->okToCopy()) {
+ 	  copySelection();
+ 	} else {
+ 	  error(errNotAllowed, -1,
+ 		"Copying of text from this document is not allowed.");
+ 	}
++#else
++        copySelection();
++#endif
+       }
+ #endif
+     }
+@@ -408,9 +414,11 @@
+   int pg;
+   double ulx, uly, lrx, lry;
+ 
++#ifdef ENFORCE_PERMISSIONS
+   if (!doc->okToCopy()) {
+     return;
+   }
++#endif
+   if (getSelection(&pg, &ulx, &uly, &lrx, &lry)) {
+     //~ for multithreading: need a mutex here
+     if (currentSelection) {
+Index: xpdf/xpdf/XPDFViewer.cc
+===================================================================
+--- xpdf.orig/xpdf/XPDFViewer.cc	2011-08-28 19:53:44.000000000 -0400
++++ xpdf/xpdf/XPDFViewer.cc	2011-08-28 19:54:16.000000000 -0400
+@@ -4,6 +4,8 @@
+ //
+ // Copyright 2002-2003 Glyph & Cog, LLC
+ //
++// Modified for Debian by Hamish Moffatt, 22 May 2002.
++//
+ //========================================================================
+ 
+ #include <aconf.h>
+@@ -3492,10 +3494,12 @@
+   PSOutputDev *psOut;
+ 
+   doc = viewer->core->getDoc();
++#ifdef ENFORCE_PERMISSIONS
+   if (!doc->okToPrint()) {
+     error(errNotAllowed, -1, "Printing this document is not allowed.");
+     return;
+   }
++#endif
+ 
+   viewer->core->setBusyCursor(gTrue);
+ 

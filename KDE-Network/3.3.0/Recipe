@@ -1,0 +1,11 @@
+# by Maglan C. Diemer && Andre Detsch
+
+url="ftp://ftp.kde.org/pub/kde/stable/3.3/src/kdenetwork-3.3.0.tar.bz2"
+file_size=6971120
+file_md5=ae7d989594ec2a7c073478e4535c284b
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+)

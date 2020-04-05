@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for Linux-UVC by Fabio Mierlo <geromao@gmail.com>, on Tue Sep 23 19:55:56 BRT 2008
+# Recipe for version svn by Fabio Mierlo <geromao@gmail.com>, on Tue Sep 23 19:55:56 BRT 2008
+compile_version=1.11.2
+svn="svn://svn.berlios.de/linux-uvc/linux-uvc/trunk"
+recipe_type=makefile
+makefile='Makefile'
+do_install=no
+
+pre_install(){
+    cp -a uvcvideo.ko "$goboModules/$(readlink $goboModules/Current)/kernel/drivers/media/video"
+}
+
+unmanaged_files=(
+    "$goboModules/$(readlink $goboModules/Current)/kernel/drivers/usb/media/uvcvideo.ko"
+)

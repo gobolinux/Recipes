@@ -1,0 +1,49 @@
+# Recipe for version 3.5.10 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Aug 29 11:48:03 GMT 2008
+# by Maglan C. Diemer && Andre Detsch, 3.3.2 by roko
+
+compile_version=1.9.0
+url="ftp://ftp.kde.org/pub/kde/stable/3.5.10/src/kdelibs-3.5.10.tar.bz2"
+file_size=15614607
+file_md5=43cd55ed15f63b5738d620ef9f9fd568
+recipe_type=configure
+part_of=KDE-Libs
+
+configure_options=(
+   --disable-debug
+   --disable-dependency-tracking
+   --disable-warnings
+   --with-alsa
+   --enable-fast-malloc=no
+   --with-distribution=GoboLinux
+   --enable-dnotify
+   --enable-inotify
+   --with-libart
+   --with-ssl
+   --with-libidn
+   --disable-libsuffix
+   --x-libraries="${goboLibraries}"
+   --x-includes="${goboHeaders}"
+#  "DO_NOT_COMPILE="
+#  dcop libltdl kdefx  kdecore  kdeui  kdesu  kjs  kwallet  kio arts kab  kconf_update  kdoctools  kimgio  kioslave  knewstuff
+# kparts  kresources   ksmartcard  kstyles  kutils  libkmid  libscreensaver  licenses  mimetypes  pics  doc  kcert  interfaces  kinit # kdeprint  kac  kspell2  kmdi  khtml  kate  kdewidgets
+)
+
+with_acl=(--with-acl)
+with_aspell=(--with-aspell)
+with_cups=(--enable-cups)
+with_fam=(--enable-libfam)
+with_jpeg2000=(--with-jasper)
+with_kerberos=(--with-gssapi)
+with_lua=(--with-lua)
+with_openexr=(--with-openexr)
+with_tiff=(--with-tiff)
+
+install_variables=(
+    cups_modeldir="${target}/Shared/cups/model"
+)
+
+pre_build() {
+   # Look for Qt3 specific binaries in ./configure
+   GrepReplace "\$dir/moc" "\$dir/moc-qt3" configure
+   GrepReplace "\$dir/uic" "\$dir/uic-qt3" configure
+}

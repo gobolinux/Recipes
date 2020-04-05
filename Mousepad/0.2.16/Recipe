@@ -1,0 +1,10 @@
+# Recipe for version 0.2.16 by Giambattista Bloisi <giamby@infinito.it>, on Sat Mar 21 13:31:43 CET 2009
+# Recipe (MakeRecipe) for Mousepad by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:20:44 CEST 2006
+compile_version=1.8.2
+url="http://www.us.xfce.org/archive/xfce-4.6.0/src/mousepad-0.2.16.tar.bz2"
+file_size=332253
+file_md5=d98854edb76d823ac20b266fdf5a64a1
+recipe_type=configure
+configure_options=(
+    '--enable-debug=no'
+)

@@ -1,0 +1,29 @@
+# Recipe (MakeRecipe) for BashBurn by Aitor Perez Iturri, on dom abr 6 16:10:07 CEST 2008
+# Recipe for version 2.1.2 by Aitor Perez Iturri, on dom abr 6 16:10:07 CEST 2008
+compile_version=1.10.2
+url="$httpSourceforge/bashburn/BashBurn-2.1.2.tar.gz"
+file_size=77517
+file_md5=7ffe68291307aff24ec43d45d6866f6d
+recipe_type=manifest
+docs=(
+	"HOWTO"
+)
+manifest=(
+	"BashBurn.sh:share/BashBurn/BashBurn.sh"
+	"burning:share/BashBurn/burning"
+	"config:share/BashBurn/config"
+	"convert:share/BashBurn/convert"
+	"lang:share/BashBurn/lang"
+	"menus:share/BashBurn/menus"
+	"misc:share/BashBurn/misc"
+	"func:share/BashBurn/func"
+	"bashburnrc:Resources/Defaults/Settings/bashburnrc"
+)
+
+pre_install () {
+    GrepReplace "BBROOTDIR:.*" "BBROOTDIR: $target/share/BashBurn" bashburnrc
+}
+
+pre_link () {
+	ln -s $target/Shared/BashBurn/BashBurn.sh $target/bin/bashburn
+}

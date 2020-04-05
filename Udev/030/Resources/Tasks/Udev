@@ -1,0 +1,27 @@
+#!/bin/sh
+
+function make_extra_nodes() {
+    ln -s /System/Kernel/Status/self/fd   /System/Kernel/Devices/fd
+    ln -s /System/Kernel/Status/self/fd/0 /System/Kernel/Devices/stdin
+    ln -s /System/Kernel/Status/self/fd/1 /System/Kernel/Devices/stdout
+    ln -s /System/Kernel/Status/self/fd/2 /System/Kernel/Devices/stderr
+    ln -s /System/Kernel/Status/kcore     /System/Kernel/Devices/core
+    mkdir /System/Kernel/Devices/pts
+    mkdir /System/Kernel/Devices/shm
+    mknod /dev/tty1 c 4 1
+    mknod /dev/tty2 c 4 2
+    mknod /dev/tty3 c 4 3
+    mknod /dev/tty4 c 4 4
+    mknod /dev/tty5 c 4 5
+}
+
+# Assure that udev is the hotplug handler
+mount -t proc  none /System/Kernel/Status
+mount -t sysfs none /System/Kernel/Objects
+echo "/System/Links/Executables/udev" > /System/Kernel/Status/sys/kernel/hotplug
+mount -n -t ramfs ramfs /System/Kernel/Devices
+
+udevstart
+make_extra_nodes
+mount /System/Kernel/Devices/pts
+mount /System/Kernel/Devices/shm

@@ -1,0 +1,5 @@
+# Recipe (MakeRecipe) for FreeRDP by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Mar 24 17:14:28 BRT 2014
+# Recipe for version git by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Mar 24 17:14:28 BRT 2014
+compile_version=1.0.1
+git="https://github.com/FreeRDP/FreeRDP.git"
+recipe_type=cmake

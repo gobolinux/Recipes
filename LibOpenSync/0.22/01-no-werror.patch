@@ -1,0 +1,89 @@
+Compiling with -Werror causes compilation errors in recent GCC versions. So, we
+disable this option.
+
+diff -aur libopensync-0.22-vanilla/formats/Makefile.in libopensync-0.22-fixed/formats/Makefile.in
+--- libopensync-0.22-vanilla/formats/Makefile.in        2007-03-27 09:22:03.000000000 -0300
++++ libopensync-0.22-fixed/formats/Makefile.in  2011-09-28 17:04:25.000000000 -0300
+@@ -255,7 +255,7 @@
+ sharedstatedir = @sharedstatedir@
+ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
+-AM_CFLAGS = -Werror -DOPENSYNC_FORMATSDIR=\"@OPENSYNC_FORMATSDIR@\" -Wall @XML_CFLAGS@ @GCOV_CFLAGS@
++AM_CFLAGS = -DOPENSYNC_FORMATSDIR=\"@OPENSYNC_FORMATSDIR@\" -Wall @XML_CFLAGS@ @GCOV_CFLAGS@
+ formatsdir = @OPENSYNC_FORMATSDIR@
+ opensyncheaderdir = @OPENSYNC_HEADERDIR@
+ opensyncheader_HEADERS = file.h
+diff -aur libopensync-0.22-vanilla/opensync/Makefile.in libopensync-0.22-fixed/opensync/Makefile.in
+--- libopensync-0.22-vanilla/opensync/Makefile.in       2007-03-27 09:22:04.000000000 -0300
++++ libopensync-0.22-fixed/opensync/Makefile.in 2011-09-28 17:04:41.000000000 -0300
+@@ -237,7 +237,7 @@
+ sharedstatedir = @sharedstatedir@
+ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
+-AM_CFLAGS = -Wall @XML_CFLAGS@ -Werror @GCOV_CFLAGS@ -DOPENSYNC_PLUGINDIR=\"@OPENSYNC_PLUGINDIR@\" -DOPENSYNC_CONFIGDIR=\"@OPENSYNC_CONFIGDIR@\" -DOPENSYNC_FORMATSDIR=\"@OPENSYNC_FORMATSDIR@\"
++AM_CFLAGS = -Wall @XML_CFLAGS@ @GCOV_CFLAGS@ -DOPENSYNC_PLUGINDIR=\"@OPENSYNC_PLUGINDIR@\" -DOPENSYNC_CONFIGDIR=\"@OPENSYNC_CONFIGDIR@\" -DOPENSYNC_FORMATSDIR=\"@OPENSYNC_FORMATSDIR@\"
+ INCLUDES = @PACKAGE_CFLAGS@
+ lib_LTLIBRARIES = libopensync.la
+ opensyncincludedir = @OPENSYNC_HEADERDIR@
+diff -aur libopensync-0.22-vanilla/osengine/Makefile.in libopensync-0.22-fixed/osengine/Makefile.in
+--- libopensync-0.22-vanilla/osengine/Makefile.in       2007-03-27 09:22:05.000000000 -0300
++++ libopensync-0.22-fixed/osengine/Makefile.in 2011-09-28 17:05:02.000000000 -0300
+@@ -235,7 +235,7 @@
+ sharedstatedir = @sharedstatedir@
+ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
+-AM_CFLAGS = -Werror -Wall @GCOV_CFLAGS@ @XML_CFLAGS@
++AM_CFLAGS = -Wall @GCOV_CFLAGS@ @XML_CFLAGS@
+ INCLUDES = -I$(top_srcdir) @PACKAGE_CFLAGS@ 
+ @BUILD_ENGINE_TRUE@lib_LTLIBRARIES = libosengine.la
+ @BUILD_ENGINE_TRUE@osengineincludedir = @OPENSYNC_ENGINEHEADERDIR@
+diff -aur libopensync-0.22-vanilla/osplugin/Makefile.in libopensync-0.22-fixed/osplugin/Makefile.in
+--- libopensync-0.22-vanilla/osplugin/Makefile.in       2007-03-27 09:22:06.000000000 -0300
++++ libopensync-0.22-fixed/osplugin/Makefile.in 2011-09-28 17:05:16.000000000 -0300
+@@ -220,7 +220,7 @@
+ sharedstatedir = @sharedstatedir@
+ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
+-AM_CFLAGS = -Wall @XML_CFLAGS@ -Werror @GCOV_CFLAGS@ -DOPENSYNC_PLUGINDIR=\"@OPENSYNC_PLUGINDIR@\" -DOPENSYNC_CONFIGDIR=\"@OPENSYNC_CONFIGDIR@\" -DOPENSYNC_FORMATSDIR=\"@OPENSYNC_FORMATSDIR@\"
++AM_CFLAGS = -Wall @XML_CFLAGS@ @GCOV_CFLAGS@ -DOPENSYNC_PLUGINDIR=\"@OPENSYNC_PLUGINDIR@\" -DOPENSYNC_CONFIGDIR=\"@OPENSYNC_CONFIGDIR@\" -DOPENSYNC_FORMATSDIR=\"@OPENSYNC_FORMATSDIR@\"
+ INCLUDES = -I$(top_srcdir) @PACKAGE_CFLAGS@ @XML_CFLAGS@ -I$(top_srcdir)/osengine -I$(top_srcdir)/opensync
+ ospluginincludedir = @OPENSYNC_HEADERDIR@
+ osplugin_SOURCES = osplugin.c
+diff -aur libopensync-0.22-vanilla/tests/Makefile.in libopensync-0.22-fixed/tests/Makefile.in
+--- libopensync-0.22-vanilla/tests/Makefile.in  2007-03-27 09:22:06.000000000 -0300
++++ libopensync-0.22-fixed/tests/Makefile.in    2011-09-28 17:05:50.000000000 -0300
+@@ -288,7 +288,7 @@
+ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
+ SUBDIRS = mock-plugin
+-AM_CFLAGS = @XML_CFLAGS@ -Wall -Werror @GCOV_CFLAGS@ -DOPENSYNC_TESTDATA=\"$(srcdir)/\"
++AM_CFLAGS = @XML_CFLAGS@ -Wall @GCOV_CFLAGS@ -DOPENSYNC_TESTDATA=\"$(srcdir)/\"
+ INCLUDES = -I$(top_srcdir) @PACKAGE_CFLAGS@ -I$(top_srcdir)/osengine
+ EXTRA_DIST = \
+        data \
+diff -aur libopensync-0.22-vanilla/tests/mock-plugin/Makefile.in libopensync-0.22-fixed/tests/mock-plugin/Makefile.in
+--- libopensync-0.22-vanilla/tests/mock-plugin/Makefile.in      2007-03-27 09:22:07.000000000 -0300
++++ libopensync-0.22-fixed/tests/mock-plugin/Makefile.in        2011-09-28 17:05:35.000000000 -0300
+@@ -232,7 +232,7 @@
+ 
+ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
+ INCLUDES = @PACKAGE_CFLAGS@ -I$(top_srcdir)
+-AM_CFLAGS = -Wall -Werror @XML_CFLAGS@ @GCOV_CFLAGS@
++AM_CFLAGS = -Wall @XML_CFLAGS@ @GCOV_CFLAGS@
+ AM_LDFLAGS = -rpath @libdir@
+ EXTRA_DIST = mock_sync.h Makefile.in
+ @ENABLE_TESTS_TRUE@formatsdir = @OPENSYNC_FORMATSDIR@
+diff -aur libopensync-0.22-vanilla/tools/Makefile.in libopensync-0.22-fixed/tools/Makefile.in
+--- libopensync-0.22-vanilla/tools/Makefile.in  2007-03-27 09:22:07.000000000 -0300
++++ libopensync-0.22-fixed/tools/Makefile.in    2011-09-28 17:06:04.000000000 -0300
+@@ -240,7 +240,7 @@
+ sharedstatedir = @sharedstatedir@
+ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
+-AM_CFLAGS = -Wall -Werror @GCOV_CFLAGS@
++AM_CFLAGS = -Wall @GCOV_CFLAGS@
+ INCLUDES = -I$(top_srcdir) @PACKAGE_CFLAGS@ @XML_CFLAGS@ -I$(top_srcdir)/osengine
+ osyncdump_SOURCES = osyncdump.c
+ osyncdump_LDFLAGS = @PACKAGE_LIBS@ @XML_LIBS@ -R $(libdir) @GCOV_LDFLAGS@
+diff -aur libopensync-0.22-vanilla/wrapper/Makefile.in libopensync-0.22-fixed/wrapper/Makefile.in

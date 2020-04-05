@@ -1,0 +1,26 @@
+## Lua 51 Environment
+#####################
+
+## LUA_PATH:
+if [ -z $LUA_PATH ]
+then
+	export LUA_PATH="?;?.lua;?/init.lua;?/?.lua;/System/Links/Libraries/lua/lmod/51/?.lua;/System/Links/Libraries/lua/lmod/51/?;/System/Links/Libraries/lua/lmod/51/?/init.lua;/System/Links/Libraries/lua/lmod/51/?/?.lua;/System/Links/Libraries/lua/lmod/?.lua;/System/Links/Libraries/lua/lmod/?;/System/Links/Libraries/lua/lmod/?/init.lua;/System/Links/Libraries/lua/lmod/?/?.lua"
+else
+	export LUA_PATH="$LUA_PATH;/System/Links/Libraries/lua/lmod/51/?.lua;/System/Links/Libraries/lua/lmod/51/?;/System/Links/Libraries/lua/lmod/51/?/init.lua;/System/Links/Libraries/lua/lmod/51/?/?.lua"
+fi
+
+## LUA_CPATH:
+if [ -z $LUA_CPATH ]
+then
+	export LUA_CPATH="?.so;?/?.so;/System/Links/Libraries/lua/cmod/51/?.so;/System/Links/Libraries/lua/cmod/51/?/?.so;/System/Links/Libraries/lua/cmod/?.so;/System/Links/Libraries/lua/?.so"
+else
+	export LUA_CPATH="$LUA_CPATH;System/Links/Libraries/lua/cmod/51/?.so;/System/Links/Libraries/lua/cmod/51/?/?.so"
+fi
+
+## LUA_VERSIONS:
+if [ -z $LUA_VERSIONS]
+then
+	export LUA_VERSIONS="51"
+else
+	export LUA_VERSIONS="$LUA_VERSIONS;51"
+fi

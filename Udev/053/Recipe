@@ -1,0 +1,34 @@
+# Recipe for version 053 by Paul Reuter, on Sat Feb 19 22:49:39 CET 2005
+# Recipe for Udev 053 by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.7.1
+url="http://www.kernel.org/pub/linux/utils/kernel/hotplug/udev-053.tar.bz2"
+recipe_type=makefile
+makefile='Makefile'
+
+build_target="all etc/udev/udev.conf"
+build_variables=(
+   "prefix=$target"
+   "etcdir=$target/../Settings"
+   "udevdir=$goboDevices"
+)
+
+install_variables=(
+   "DESTDIR=$target"
+)
+pre_build() {
+   sed -i "s:\@configdir@:$goboSettings\/udev:" etc/udev/udev.conf.in
+}
+pre_link() {
+   pushd $target
+   mkdir Resources/Defaults
+   mkdir Resources/Defaults/Settings
+   cp -a etc/* Resources/Defaults/Settings/
+   rm -rf etc
+   rmdir udev
+   mv usr/bin/* bin/
+   mv usr/share/man/man8/* man/man8
+   rm -rf usr
+   ln -sf $target/sbin/udev $target/../Settings/hotplug.d/default/udev.hotplug
+   ln -sf $target/sbin/udevsend $target/../Settings/hotplug.d/default/10-udev.hotplug
+   popd
+}

@@ -1,0 +1,12 @@
+# Recipe for version 1.11.1.1 by Hugo Barrocas <barrocas@iol.pt>, on Qui Jul 22 23:12:22 WEST 2010
+url="$ftpGnu/automake/automake-1.11.1.tar.bz2"
+file_size=1066685
+file_md5=c2972c4d9b3e29c03d5f2af86249876f
+compile_version=1.11.1
+recipe_type=configure
+pre_install() {
+   pushd "${target}/share"
+   ln -s automake-1.11 automake
+   ln -s aclocal-1.11 aclocal
+   popd
+}

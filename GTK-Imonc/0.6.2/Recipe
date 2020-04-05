@@ -1,0 +1,11 @@
+# Recipe for GTK-Imonc 0.6.2 by Schmoeller Michael
+compile_version=1.7.1
+url="http://userpage.fu-berlin.de/~zeank/gtk-imonc/download/gtk-imonc-0.6.2.tar.gz"
+file_size=293640
+file_md5=200c5fe17f87b4c18cbd767d7a43438e
+recipe_type=configure
+configure_options=(
+    "LDFLAGS=-L/System/Links/Libraries"
+    "CPPFLAGS=-I/System/Links/Headers"
+    "PKG_CONFIG_PATH=/System/Links/Libraries/pkgconfig"
+  )

@@ -1,0 +1,11 @@
+# Recipe for version 2.3.3.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jan 13 10:25:34 GMT 2014
+# Recipe (MakeRecipe) for CLucene by Giambattista Bloisi <giamby@infinito.it>, on Sun Nov 11 09:03:47 CET 2007
+compile_version=1.9.0
+url="http://downloads.sourceforge.net/clucene/clucene-core-2.3.3.4.tar.gz"
+file_size=2241498
+file_md5=48d647fbd8ef8889e5a7f422c1bfda94
+recipe_type=cmake
+
+pre_link() {
+	GrepReplace "lclucene-core" "lclucene-core -lclucene-shared" $target/lib/pkgconfig/libclucene-core.pc
+}

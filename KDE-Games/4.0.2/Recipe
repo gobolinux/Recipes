@@ -1,0 +1,16 @@
+# Recipe for version 4.0.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Mar 10 15:24:55 PDT 2008
+# Recipe (MakeRecipe) for KDE-Games by Giambattista Bloisi <giamby@infinito.it>, on Fri Jan 18 09:17:08 CET 2008
+compile_version=1.10.0
+url="ftp://ftp.kde.org/pub/kde/stable/4.0.2/src/kdegames-4.0.2.tar.bz2"
+file_size=23801812
+file_md5=861e95f08997b132e7169c6e2fc374ac
+file="kdegames-4.0.2.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+    "-DGGZ_FORCEREGISTRY=1"
+)
+
+unmanaged_files=(
+    "$ggz_client_libs_settings_path/ggz.modules"
+)

@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Keybinder by LeviathanOne <leviathanone@protonmail.ch>, on Mon Jan 16 16:05:27 GMT 2017
+# Recipe for version 0.3.0 by LeviathanOne <leviathanone@protonmail.ch>, on Mon Jan 16 16:05:27 GMT 2017
+compile_version=016
+url="http://pkgs.fedoraproject.org/repo/pkgs/keybinder/keybinder-0.3.0.tar.gz/2a0aed62ba14d1bf5c79707e20cb4059/keybinder-0.3.0.tar.gz"
+file_size=377765
+file_md5=2a0aed62ba14d1bf5c79707e20cb4059
+dir='keybinder-0.3.0'
+recipe_type=configure
+
+configure_options=(
+	"--disable-lua"
+)

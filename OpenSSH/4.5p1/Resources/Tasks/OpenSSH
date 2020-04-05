@@ -1,0 +1,12 @@
+#!/bin/sh
+# by Maglan C. Diemer
+
+case "$1" in
+[Ss]tart)
+  /Programs/OpenSSH/Current/sbin/sshd
+  ;;
+[Ss]top)
+  killall sshd
+  ;;
+esac
+

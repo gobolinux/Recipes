@@ -1,0 +1,15 @@
+# Recipe for version 2.82 by Hisham Muhammad <hisham@gobolinux.org>, on Sat Apr 12 20:59:05 BRT 2014
+# Recipe (MakeRecipe) for Transmission by Nathan Middleton, on Mon Oct 8 22:07:45 CDT 2007
+compile_version=1.9.0
+url="http://download.transmissionbt.com/files/transmission-2.82.tar.xz"
+file_size=3172024
+file_md5=a5ef870c0410b12d10449c2d36fa4661
+recipe_type=configure
+dir="transmission-2.82"
+
+configure_options=(
+    --enable-cli
+    --with-gtk
+    --enable-daemon
+    --with-inotify
+)

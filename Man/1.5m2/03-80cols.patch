@@ -1,0 +1,14 @@
+diff -Naur man-1.5l.orig/src/man.c man-1.5l/src/man.c
+--- man-1.5l.orig/src/man.c	2002-12-17 16:28:14.000000000 -0700
++++ man-1.5l/src/man.c	2003-04-24 16:49:05.000000000 -0600
+@@ -546,7 +546,9 @@
+ 	       /* we should set line length and title line length */
+ 	       /* however, a .lt command here fails, only
+ 		  .ev 1; .lt ...; .ev helps for my version of groff */
+-	       sprintf(eos(bufh), "echo \".ll %d.%di\"; ", ll/10, ll%10);
++		  /* use the LL register instead of .ll to keep up with
++		  * changes in the groff-1.18 series */
++		  sprintf(eos(bufh), "echo \".nr LL %d.%di\"; ", ll/10, ll%10);
+ #if 0
+ 	       sprintf(eos(bufh), "echo \".lt %d.%di\"; ", ll/10, ll%10);
+ #endif

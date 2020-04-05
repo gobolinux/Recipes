@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for Madwifi-Tools by Lucas C. Villa Real, on Wed Apr 11 03:33:19 BRT 2007
+# Recipe for version 0.9.3 by Lucas C. Villa Real, on Wed Apr 11 03:33:19 BRT 2007
+compile_version=1.8.2
+url="$httpSourceforge/madwifi/madwifi-0.9.3.tar.bz2"
+file_size=3488332
+file_md5=26c31e8e1528fd098e3aaa11c0d34d99
+recipe_type=makefile
+makefile='Makefile'
+build_target="tools"
+install_target="install-tools"
+
+make_variables=(
+   BINDIR=${target}/bin
+   MANDIR=${target}/man
+)

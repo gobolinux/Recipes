@@ -1,0 +1,13 @@
+# Recipe for version 2.2.32 by Fernando Santos <kosh.linux at gmail.com>, on Tue Oct 18 09:58:04 BRST 2005
+# Recipe (MakeRecipe) for ACL by ro.ko@mcnon.com, on Tue Oct 12 00:32:04 BRST 2004
+compile_version=1.8.0
+url="ftp://oss.sgi.com/projects/xfs/download/cmd_tars/acl-2.2.32.src.tar.gz"
+recipe_type=configure
+dir="acl-2.2.32"
+configure_options=(
+--libexecdir=$target/lib
+)
+install_target="install install-lib install-dev" 
+pre_link() {
+   ln -sf $target/lib/libacl.so.1.1.0 $target/lib/libacl.so
+}

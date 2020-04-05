@@ -1,0 +1,25 @@
+--- dcron-2.3.3/Makefile	1997-09-05 21:42:44.000000000 +0200
++++ dcron-2.3.3/Makefile	2005-04-11 10:00:02.000000000 +0200
+@@ -9,6 +9,7 @@
+ D_SRCS = crontab.c subs.c
+ D_OBJS = crontab.o subs.o
+ PROTOS= protos.h
++PREFIX=/usr/local
+ 
+ all:	${PROTOS} crond crontab
+ 
+@@ -30,10 +31,10 @@
+ 	rm -f *.o dcron.tgz $(PROTOS)
+ 
+ install: crond crontab
+-	install -o root -g root -m 0755 crond /usr/sbin
+-	install -o root -g root -m 4755 crontab /usr/bin
+-	install -o root -g root crontab.1 /usr/man/man1
+-	install -o root -g root  crond.8 /usr/man/man8
++	install -o 0 -g 0 -m 0755 crond ${PREFIX}/sbin
++	install -o 0 -g 0 -m 4755 crontab ${PREFIX}/bin
++	install -o 0 -g 0 crontab.1 ${PREFIX}/man/man1
++	install -o 0 -g 0  crond.8 ${PREFIX}/man/man8
+ 
+ tar: cleano
+ 	(cd ..; tar cvf - dcron | gzip -9 >dcron.tgz.tmp)

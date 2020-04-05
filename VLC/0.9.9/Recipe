@@ -1,0 +1,11 @@
+# Recipe for version 0.9.9 by Dominique Juergensen <brokolie@vollbio.de>, on Mon May 11 12:54:43 CEST 2009
+# Recipe (MakeRecipe) for VLC by keisangi, on Sun Feb 17 01:23:41 JST 2008
+compile_version=1.10.2
+url="http://download.videolan.org/pub/videolan/vlc/0.9.9/vlc-0.9.9.tar.bz2"
+file_size=17285964
+file_md5=b7c2a75194ad5c73979c3d880aebbe38
+recipe_type=configure
+configure_options=(
+    "--enable-dvdread"
+    "--disable-swscale"
+)

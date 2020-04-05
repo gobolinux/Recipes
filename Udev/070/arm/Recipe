@@ -1,0 +1,12 @@
+pre_link() {
+   pushd $target
+   mkdir -p Resources/Defaults
+   mkdir -p Resources/Defaults/Settings
+   cp -a etc/* Resources/Defaults/Settings/
+   rm -rf etc
+   rmdir udev
+   mv usr/bin/* bin/
+   mv usr/share/man/man8/* man/man8
+   rm -rf usr
+   popd
+}

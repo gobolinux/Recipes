@@ -1,0 +1,11 @@
+# Recipe for version 1.7.4 by Leandro Motta Barros <lmb@stackedboxes.org>, on Sun Sep 18 21:57:34 BRT 2011
+# Recipe (MakeRecipe) for PCSC-Lite by Kosh <kosh.linux at gmail.com>, on Fri Nov 4 14:14:11 BRST 2005
+compile_version=1.8.0
+url="https://alioth.debian.org/frs/download.php/3598/pcsc-lite-1.7.4.tar.bz2"
+file_size=503848
+file_md5=1caf0b8ca2ecbf82fe3b035b3fff22dd
+recipe_type=configure
+
+install_variables=(
+	confdir=$settings_target
+)

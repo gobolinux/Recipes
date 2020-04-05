@@ -1,0 +1,23 @@
+Provides a main Makefile to make things easier for Compile.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- /dev/null	2007-12-29 17:56:53.663012102 -0800
++++ acpica-unix-20061109/Makefile	2008-01-05 04:15:33.000000000 -0800
+@@ -0,0 +1,16 @@
++PREFIX ?= /usr
++
++all:
++	cd compiler && make
++	cd tools/acpisrc && make
++	cd tools/acpixtract && make
++
++install:
++	cp compiler/iasl $(PREFIX)/bin
++	cp tools/acpisrc/acpisrc $(PREFIX)/bin
++	cp tools/acpixtract/acpixtract $(PREFIX)/bin
++
++clean:
++	cd compiler && make clean
++	cd tools/acpisrc && make clean
++	cd tools/acpixtract && make clean

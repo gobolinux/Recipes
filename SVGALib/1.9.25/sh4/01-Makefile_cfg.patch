@@ -1,0 +1,157 @@
+--- svgalib-1.9.25/Makefile.cfg.orig	2006-08-02 10:04:30.000000000 -0300
++++ svgalib-1.9.25/Makefile.cfg	2006-08-02 10:04:49.000000000 -0300
+@@ -139,144 +139,21 @@ INSTALLMODULE = installmodule
+ #
+ # Comment out any driver that you don't want included in the library.
+ 
+-# These drivers are obsolete and quite likely broken:
+-
+-#INCLUDE_ET4000_DRIVER = y
+-#INCLUDE_OAK_DRIVER = y
+-#INCLUDE_EGA_DRIVER = y
+-#INCLUDE_MACH32_DRIVER = y
+-#INCLUDE_ET3000_DRIVER = y
+-#INCLUDE_GVGA6400_DRIVER = y
+-#INCLUDE_ATI_DRIVER = y
+-
+-# End of obsolete drivers.
+-
+-INCLUDE_CHIPS_DRIVER = y
+-
+-INCLUDE_APM_DRIVER = y
+-INCLUDE_NV3_DRIVER = y
+-INCLUDE_G400_DRIVER = y
+-INCLUDE_R128_DRIVER = y
+-INCLUDE_VESA_DRIVER = y
+-INCLUDE_MX_DRIVER = y
+-INCLUDE_RENDITION_DRIVER = y
+-INCLUDE_RAGE_DRIVER = y
+-INCLUDE_BANSHEE_DRIVER = y
+-INCLUDE_SIS_DRIVER = y
+-INCLUDE_I740_DRIVER = y
+-INCLUDE_I810_DRIVER = y
+-INCLUDE_LAGUNA_DRIVER = y
+-INCLUDE_TRIDENT_DRIVER = y
+-INCLUDE_SAVAGE_DRIVER = y
+-INCLUDE_MILLENNIUM_DRIVER = y
+-##INCLUDE_G450C2_DRIVER = y
+-INCLUDE_PM2_DRIVER = y
+-INCLUDE_UNICHROME_DRIVER = y
+-
+-INCLUDE_NEO_DRIVER = y
+-INCLUDE_ET6000_DRIVER = y
+ INCLUDE_FBDEV_DRIVER = y
+ 
+-# These drivers are obsolete, but most likely still work:
+-
+-INCLUDE_PARADISE_DRIVER = y
+-INCLUDE_ARK_DRIVER = y
+-INCLUDE_S3_DRIVER = y
+-INCLUDE_CIRRUS_DRIVER = y
+-INCLUDE_TVGA_DRIVER = y
+-INCLUDE_ALI_DRIVER = y
+-
+-
+-#
+-# Comment out any adapter you don't want to autodetect.
+-#
+-#INCLUDE_ET4000_DRIVER_TEST = y
+-INCLUDE_CIRRUS_DRIVER_TEST = y
+-INCLUDE_TVGA_DRIVER_TEST = y
+-INCLUDE_OAK_DRIVER_TEST = y
+-INCLUDE_EGA_DRIVER_TEST = y
+-INCLUDE_MACH32_DRIVER_TEST = y
+-INCLUDE_GVGA6400_DRIVER_TEST = y
+-INCLUDE_S3_DRIVER_TEST = y
+-INCLUDE_ET3000_DRIVER_TEST = y
+-INCLUDE_ARK_DRIVER_TEST = y
+-INCLUDE_ATI_DRIVER_TEST = y
+-INCLUDE_ALI_DRIVER_TEST = y
+-INCLUDE_CHIPS_DRIVER_TEST = y
+-INCLUDE_APM_DRIVER_TEST = y
+-INCLUDE_NV3_DRIVER_TEST = y
+-INCLUDE_G400_DRIVER_TEST = y
+-INCLUDE_R128_DRIVER_TEST = y
+-INCLUDE_ET6000_DRIVER_TEST = y
+-INCLUDE_MX_DRIVER_TEST = y
+-INCLUDE_TRIDENT_DRIVER_TEST = y
+-INCLUDE_PARADISE_DRIVER_TEST = y
+-INCLUDE_RAGE_DRIVER_TEST = y
+-INCLUDE_BANSHEE_DRIVER_TEST = y
+-INCLUDE_SIS_DRIVER_TEST = y
+-INCLUDE_I740_DRIVER_TEST = y
+-INCLUDE_I810_DRIVER_TEST = y
+-INCLUDE_LAGUNA_DRIVER_TEST = y
+-INCLUDE_NEO_DRIVER_TEST = y
+-INCLUDE_SAVAGE_DRIVER_TEST = y
+-INCLUDE_MILLENNIUM_DRIVER_TEST = y
+-INCLUDE_RENDITION_DRIVER_TEST = y
+-INCLUDE_PM2_DRIVER_TEST = y
+-INCLUDE_UNICHROME_DRIVER_TEST = y
+-
+-#INCLUDE_FBDEV_DRIVER_TEST = y
+-
+-#Might be too dangerous:
+-#INCLUDE_VESA_DRIVER_TEST = y
+-
+ #
+ # Comment out any dac support that you don't want included in the library.
+ #
+ # you must include SIERRA_DAC, if you include any of SCxxxx DACs.
+ 
+-
+ INCLUDE_NORMAL_DAC = y
+-INCLUDE_S3_SDAC_DAC = y
+-INCLUDE_S3_GENDAC_DAC = y
+-INCLUDE_S3_TRIO64_DAC = y
+-INCLUDE_SIERRA_DAC = y
+-INCLUDE_SC15025_DAC = y
+-INCLUDE_ATT20C490_DAC = y
+-INCLUDE_ATT20C498_DAC = y
+-INCLUDE_ICW_DAC = y
+-INCLUDE_IBMRGB52x_DAC = y
+-INCLUDE_SC1148X_DAC = y
+-INCLUDE_ICS_GENDAC_DAC = y
+-
+-#
+-# Comment out any dac you don't want to autodetect.
+-# (not all dacs can be autodetected, at this time)
+-#
+-INCLUDE_S3_SDAC_DAC_TEST = y
+-INCLUDE_S3_GENDAC_DAC_TEST = y
+-INCLUDE_SC15025_DAC_TEST = y
+-INCLUDE_ATT20C490_DAC_TEST = y
+-INCLUDE_IBMRGB52x_DAC_TEST = y
+-INCLUDE_SC1148X_DAC_TEST = y
+-INCLUDE_ICS_GENDAC_DAC_TEST = y
+ 
+ # LRMI - disbaled for non i386
+-LRMI = lrmi
++#LRMI = lrmi
+ 
+ # Location of the svgalib configuration file.
+ SVGALIB_CONFIG_FILE = $(datadir)/libvga.config
+ 
+-# Defining DYNAMIC enables runtime parsing of the file defined by
+-# ET4000_REGS (usually /etc/libvga.et4000) for the et4000 
+-# driver. See et4000/README for details. Commenting this out again
+-# saves binary space.
+-#
+-# If you just want to use the et4000.regs in the source directory,
+-# comment out the definition of DYNAMIC.  DYNAMIC allows development of new
+-# resolutions without recompiling.
+-DYNAMIC = y
+-ET4000_REGS = $(datadir)/libvga.et4000
+-
+ # The EGA driver may load additional modes (SuperEGA cards) like the
+ # et4000 driver does. Just define the configuration file below.
+ # [This should be taken with a grain of salt, EGA is untested.]
+@@ -320,7 +197,7 @@ DLLFLAGS = -fPIC -DPIC
+ 
+ # Utilites used.
+ AR	  = ar
+-INSTALL_PROGRAM	= install -sm755
++INSTALL_PROGRAM	= install -m755
+ INSTALL_SCRIPT	= install -m755
+ INSTALL_SHLIB	= install -m755
+ INSTALL_DATA	= install -m644

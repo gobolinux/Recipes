@@ -1,0 +1,10 @@
+# Recipe for version 1.2.9 by Nick Matteo, on Wed Sep 21 09:48:57 UTC 2005
+compile_version=1.7.1
+url="http://www.libsdl.org/release/SDL-1.2.9.tar.gz"
+recipe_type=configure
+
+pre_link() {
+	pushd $target/include >& /dev/null
+	ln -s SDL/* .
+	popd >& /dev/null
+}

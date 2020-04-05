@@ -1,0 +1,10 @@
+# Recipe for version 1.6.36 by Muhammad Najib Bin Ibrahim, on Thu Jun 11 10:28:15 MYT 2009
+compile_version=1.8.0
+url="http://www.fox-toolkit.org/ftp/fox-1.6.36.tar.gz"
+file_size=4344694
+file_md5=5fdc89446185fbbf024cec44eb50a239
+recipe_type=configure
+configure_options=(
+ --enable-release
+ --with-xft         #     enable Xft support
+ )

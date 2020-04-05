@@ -1,0 +1,11 @@
+# Recipe for version 1.1.0 by Karim Belbachir <karim@eml.cc>, on Wed Dec 2 12:52:12 GMT 2009
+# Recipe (MakeRecipe) for Transcode by Andy Feldman (nereusren@gmail.com), on Fri Feb 10 17:35:37 CST 2006
+compile_version=1.8.0
+url="http://fromani.exit1.org/transcode-1.1.0.tar.bz2"
+mirror_urls=(
+  "http://download.berlios.de/tcforge/transcode-1.1.0.tar.bz2"
+  "http://download2.berlios.de/tcforge/transcode-1.1.0.tar.bz2"
+)
+file_size=2066731
+file_md5=5ca205e32b546402a48ea8004a7b3232
+recipe_type=configure

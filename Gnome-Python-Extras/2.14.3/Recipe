@@ -1,0 +1,10 @@
+# Recipe for version 2.14.3 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jan. 3., szombat, 00.49.30 CET
+# Recipe (MakeRecipe) for Gnome-Python-Extras by Jonas Karlsson <jonka750@student.liu.se>, on Sun Aug 27 02:31:15 CEST 2006
+compile_version=1.8.0
+url="http://ftp.gnome.org/pub/GNOME/sources/gnome-python-extras/2.14/gnome-python-extras-2.14.3.tar.bz2"
+file_size=363684
+file_md5=7d3414838ccb94cfcecc0a48f68c012d
+recipe_type=configure
+make_variables=(
+    PYGTK_CODEGEN=$goboExecutables/pygobject-codegen-2.0
+)

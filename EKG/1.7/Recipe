@@ -1,0 +1,37 @@
+# Recipe (MakeRecipe) for EKG by Jonas Karlsson <jonka750@student.liu.se>, on Sun Sep 21 23:01:52 CEST 2008
+# Recipe for version 1.7 by Jonas Karlsson <jonka750@student.liu.se>, on Sun Sep 21 23:01:52 CEST 2008
+compile_version=1.11.0
+url="http://ekg.chmurka.net/ekg-1.7.tar.gz"
+mirror_url="http://ekg.chmurka.net/archive/ekg-1.7.tar.gz"
+file_size=530314
+file_md5=2aa92b56517fdf09d75519a105772b74
+recipe_type=configure
+autogen_before_configure=yes
+
+configure_options=(
+   --with-pthread
+   --enable-dynamic
+   --enable-shared
+   --enable-static
+   --enable-ioctld
+   --with-libungif
+   --with-libjpeg
+)
+with_aspell="--enable-aspell"
+with_python="--with-python"
+using_openssl() {
+   configure_options=(
+   "${configure_options[@]}"
+   --with-openssl
+   --enable-libgadu-openssl
+   )
+}
+
+using_ncurses() {
+   configure_options=(
+   "${configure_options[@]}"
+   --enable-ui-ncurses
+   --enable-force-ncurses
+   --without-termcap
+   )
+}

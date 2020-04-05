@@ -1,0 +1,11 @@
+# Recipe for version 4.8.1 by Lucas C. Villa Real, on Mon Mar 26 00:13:01 BRT 2012
+# Recipe (MakeRecipe) for KDE-Games by Giambattista Bloisi <giamby@infinito.it>, on Fri Jan 18 09:17:08 CET 2008
+compile_version=1.10.0
+url="ftp://ftp.kde.org/pub/kde/stable/4.8.1/src/kdegames-4.8.1.tar.xz"
+file_size=58053984
+file_md5=450d31446cbf978d8f104a63ebeafdec
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)

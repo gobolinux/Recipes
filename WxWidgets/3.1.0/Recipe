@@ -1,0 +1,12 @@
+# Recipe for version 3.1.0 by Demian Florentin <demianflorentin@gmail.com>, on Fri Dec 23 11:00:30 PYST 2016
+# Recipe (MakeRecipe) for WxWidgets by Demian Florentin <demianflorentin@gmail.com>, on Fri Dec 23 10:55:33 PYST 2016
+compile_version=016
+url="https://github.com/wxWidgets/wxWidgets/releases/download/v3.1.0/wxWidgets-3.1.0.tar.bz2"
+file_size=19693651
+file_md5=e20c14bb9bf5d4ec0979a3cd7510dece
+dir='wxWidgets-3.1.0'
+recipe_type=configure
+
+configure_options=(
+    --enable-unicode
+)

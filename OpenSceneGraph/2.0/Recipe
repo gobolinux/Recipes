@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for OpenSceneGraph by Fabio Mierlo, on Sat Jun 23 14:47:03 BRT 2007
+# Recipe for version 2.0 by Fabio Mierlo, on Sat Jun 23 14:47:03 BRT 2007
+compile_version=1.8.2
+url="http://www.openscenegraph.com/downloads/stable_releases/OpenSceneGraph-2.0.zip"
+file_size=4871475
+file_md5=9e8d8311868f2acce377a6d7d69c26c2
+dir='OpenSceneGraph'
+recipe_type=configure
+
+configure_options=(
+    "-DBUILD_OSG_EXAMPLES=ON"
+    "-DBUILD_OSG_WRAPPERS=ON"
+    "-DCMAKE_COLOR_MAKEFILE=OFF"
+    "-DCMAKE_INSTALL_PREFIX=$target"
+)

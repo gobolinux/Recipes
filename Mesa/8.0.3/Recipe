@@ -1,0 +1,52 @@
+# Recipe for version 8.0.3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat May 26 19:05:42 BRT 2012
+# Recipe (MakeRecipe) for Mesa by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Nov 23 03:32:41 BRST 2004
+compile_version=1.8.5
+urls=(
+   ftp://ftp.freedesktop.org/pub/mesa/8.0.3/MesaLib-8.0.3.tar.bz2
+   ftp://ftp.freedesktop.org/pub/mesa/glut/MesaGLUT-7.9.2.tar.bz2
+)
+file_sizes=(
+    5737289
+    200406
+)
+file_md5s=(
+    cc5ee15e306b8c15da6a478923797171
+    18abe6cff4fad8ad4752c7b7ab548e5d
+)
+unpack_files=inside_first
+recipe_type=configure
+dir='Mesa-8.0.3'
+
+configure_options=(
+    --enable-xcb
+    --enable-dri
+    --enable-glx
+    --enable-xorg
+    --enable-xa
+    --enable-xvmc
+    --enable-vdpau
+    --enable-va
+    --disable-ttm-api
+    --enable-glx-tls
+    --enable-driglx-direct
+    
+    --with-dri-driverdir="${goboLibraries}/xorg/modules/dri"
+    --without-gallium-drivers
+)
+
+install_variables=(
+   DRI_DRIVER_INSTALL_DIR="${target}/lib/xorg/modules/dri"
+)
+
+symlink_options=(
+   --conflict=overwrite
+)
+
+pre_build() {
+    if [ -d Mesa-7.9.2 ]
+    then
+        mv Mesa-7.9.2/src/glut src/
+        mv Mesa-7.9.2/include/GL/* include/GL/
+        rm -rf -- Mesa-7.9.2
+    fi
+}

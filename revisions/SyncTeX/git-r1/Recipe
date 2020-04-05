@@ -1,9 +1,0 @@
-# Recipe (MakeRecipe) for SyncTeX by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue 10 Mar 2020 03:24:06 PM BRT
-# Recipe for version git by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue 10 Mar 2020 03:24:06 PM BRT
-compile_version=016
-git="https://github.com/jlaurens/synctex.git"
-recipe_type=makefile
-
-install_variables=(
-    PREFIX=$target
-)

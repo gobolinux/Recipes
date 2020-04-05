@@ -1,0 +1,10 @@
+# Recipe for version 1.47.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Jul 29 20:28:03 GMT 2016
+url="https://ftp.gnu.org/gnu/help2man/help2man-1.47.4.tar.xz"
+file_size=189456
+file_md5=544aca496a7d89de3e5d99e56a2f03d3
+dir='help2man-1.47.4'
+compile_version=1.13.0
+recipe_type=configure
+make_variables=(
+   "LINGUAS="
+)

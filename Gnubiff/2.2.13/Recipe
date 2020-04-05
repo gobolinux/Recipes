@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Gnubiff by kenneth marken <k-marken@online.no>, on ma. 21. juni 08:29:09 +0200 2010
+# Recipe for version 2.2.13 by kenneth marken <k-marken@online.no>, on ma. 21. juni 08:29:09 +0200 2010
+compile_version=1.13.3
+url="$httpSourceforge/project/gnubiff/gnubiff/2.2.13/gnubiff-2.2.13.tar.gz"
+file_size=848538
+file_md5=65423957eb027b94c9e661611c0e4271
+recipe_type=configure
+
+configure_options=(
+    --disable-gnome
+)

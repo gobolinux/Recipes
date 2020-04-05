@@ -1,0 +1,5 @@
+Cyrus-SASL >= 2.1.18 [cyrus_sasl]
+DB >= 4.2, < 4.7 #why <4.7: http://www.openldap.org/lists/openldap-bugs/200805/msg00155.html
+Glibc 2.4
+OpenSSL >= 0.9.7 [openssl]
+PCRE

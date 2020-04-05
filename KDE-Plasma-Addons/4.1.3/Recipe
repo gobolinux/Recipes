@@ -1,0 +1,11 @@
+# Recipe for version 4.1.3 by Giambattista Bloisi <giamby@infinito.it>, on Thu Nov 6 09:12:55 CET 2008
+# Recipe (MakeRecipe) for KDE-Plasma-Addons by Giambattista Bloisi <giamby@infinito.it>, on Sat Nov 1 17:09:32 CET 2008
+compile_version=1.11.3
+url="http://download.kde.org/stable/4.1.3/src/kdeplasma-addons-4.1.3.tar.bz2"
+file_size=4074696
+file_md5=72d2d1c95b55fadbbce0e9cd201f1b80
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)

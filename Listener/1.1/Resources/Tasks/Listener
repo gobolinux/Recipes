@@ -1,0 +1,12 @@
+#!/bin/sh
+
+source GoboPath
+
+case "$1" in
+	[sS]tart)
+		listener >> $goboVariable/log/listener.log &
+		;;
+	[sS]top)
+		killall -9 listener
+		;;
+esac

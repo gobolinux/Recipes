@@ -1,0 +1,10 @@
+# Recipe for version 1.4.2 by Baffo32 <baffo32@gmail.com>, on Thu Apr 22 12:47:18 EDT 2010
+# Recipe (MakeRecipe) for APR by Kosh <kosh.linux at gmail.com>, on Tue Feb 28 22:02:35 BRT 2006
+compile_version=1.8.2
+url="http://archive.apache.org/dist/apr/apr-1.4.2.tar.bz2"
+file_size=766793
+file_md5=4b00e8f70c067893d075577962656b35
+recipe_type=configure
+configure_options=(
+   --enable-layout=GoboLinux
+)

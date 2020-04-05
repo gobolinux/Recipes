@@ -1,0 +1,11 @@
+--- busybox-1.1.2/Rules.mak.orig	2006-05-20 03:35:16.000000000 -0300
++++ busybox-1.1.2/Rules.mak	2006-05-20 03:32:32.000000000 -0300
+@@ -56,7 +56,7 @@ LC_ALL:= C
+ # If you want to add some simple compiler switches (like -march=i686),
+ # especially from the command line, use this instead of CFLAGS directly.
+ # For optimization overrides, it's better still to set OPTIMIZATION.
+-CFLAGS_EXTRA=$(subst ",, $(strip $(EXTRA_CFLAGS_OPTIONS)))
++CFLAGS_EXTRA=$(subst "%",%, $(strip $(EXTRA_CFLAGS_OPTIONS)))
+ 
+ # To compile vs some other alternative libc, you may need to use/adjust
+ # the following lines to meet your needs...

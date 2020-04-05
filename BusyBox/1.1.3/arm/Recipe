@@ -1,0 +1,18 @@
+pre_build() {
+    source "/System/Settings/Compile/Cross/Cross-ResetEnv.conf"
+
+    if [ ! -f .config ]
+    then
+        cp "$archsubdir"/dot-config .config
+#		yes "" | make oldconfig
+    fi
+
+    GrepReplace "PREFIX=\"./_install\"" "PREFIX=\"$target\"" .config
+    GrepReplace "# USING_CROSS_COMPILER is not set" "USING_CROSS_COMPILER=y" .config
+    GrepReplace "# EXTRA_CFLAGS_OPTIONS is not set" "EXTRA_CFLAGS_OPTIONS=\"-nostdinc\"" .config
+
+    make menuconfig
+
+    GrepReplace "CROSS_COMPILER_PREFIX=/usr/i386-linux-uclibc/bin/i386-uclibc-" \
+                "CROSS_COMPILER_PREFIX=$toolchainBinDir/$crossCompiler" .config
+}

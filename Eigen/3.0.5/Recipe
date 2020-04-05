@@ -1,0 +1,8 @@
+# Recipe for version 3.0.5 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed May 2 21:52:00 BRT 2012
+# Recipe (MakeRecipe) for Eigen by Giambattista Bloisi <giamby@infinito.it>, on Fri Feb 22 09:39:08 CET 2008
+compile_version=1.10.2
+url="http://bitbucket.org/eigen/eigen/get/3.0.5.tar.bz2"
+file_size=960679
+file_md5=43070952464a5bf21694e082e7fb8fce
+dir='eigen-eigen-6e7488e20373'
+recipe_type=cmake

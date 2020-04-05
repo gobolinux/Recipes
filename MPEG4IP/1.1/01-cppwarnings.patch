@@ -1,0 +1,11 @@
+--- mpeg4ip-1.1/lib/bitstream/Makefile.in.orig	2005-11-26 12:49:23.000000000 -0200
++++ mpeg4ip-1.1/lib/bitstream/Makefile.in	2005-11-26 12:56:52.000000000 -0200
+@@ -218,7 +218,7 @@
+ 
+ AM_CFLAGS = -D_REENTRANT -fexceptions @BILLS_CWARNINGS@
+ 
+-AM_CXXFLAGS = -D_REENTRANT -DNOCONTROLS -fexceptions @BILLS_CPPWARNINGS@
++AM_CXXFLAGS = -D_REENTRANT -DNOCONTROLS -fexceptions
+ subdir = lib/bitstream
+ ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
+ mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs

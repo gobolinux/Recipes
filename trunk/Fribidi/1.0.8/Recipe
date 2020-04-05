@@ -1,9 +1,0 @@
-# Recipe (MakeRecipe) for Fribidi by Rafael Guterres Jeffman (rafasgj), on Thu Sep 8 10:06:14 BRT 2005
-compile_version=1.13.3
-url="https://github.com/fribidi/fribidi/releases/download/v1.0.8/fribidi-1.0.8.tar.bz2"
-file_size=2077095
-file_md5=962c7d8ebaa711d4e306161dbe14aa55
-recipe_type=configure
-configure_options=(
-    --enable-charsets
-)

@@ -1,0 +1,13 @@
+# Recipe for version 0.96.6 by kenneth marken <k-marken@online.no>, on ti. 07. april 19:59:46 +0200 2009
+# Recipe (MakeRecipe) for GTK-Gnutella by Zbigniew Baniewski <zb@ispid.com.pl>, on czw, 25 gru 2008, 03:59:16 BRST
+compile_version=1.11.4
+url="$httpSourceforge/gtk-gnutella/gtk-gnutella-0.96.6.tar.bz2"
+file_size=15739240
+file_md5=0f8f1241faf5c204b77a4ddfd878c148
+#file="gtk-gnutella-snapshot.tar.bz2"
+#dir='gtk-gnutella-snapshot'
+recipe_type=makefile
+makefile='Makefile'
+pre_build() {
+   ./build.sh --prefix=${target}
+}

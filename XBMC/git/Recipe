@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for XBMC by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jun 29 10:35:35 BRT 2013
+# Recipe for version git by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jun 29 10:35:35 BRT 2013
+compile_version=1.0.1
+git="git://github.com/xbmc/xbmc.git"
+recipe_type=configure
+create_dirs_first=yes
+
+pre_build() {
+    ./bootstrap
+}
+
+configure_options=(
+    --disable-mysql
+)

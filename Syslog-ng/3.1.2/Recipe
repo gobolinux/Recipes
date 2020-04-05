@@ -1,0 +1,14 @@
+# Recipe for version 3.1.2 by JPaul Hatungimana <jhatungimana@netscape.net>, on Thu Sep 30 08:03:42 CEST 2010
+# Recipe (MakeRecipe) for Syslog-ng by Volker Wieban <buckoven@gobolinux.de>, on Fri Sep 24 12:27:08 BRT 2004
+compile_version=1.12.0
+url="http://www.balabit.com/downloads/files/syslog-ng/open-source-edition/3.1.2/source/syslog-ng_3.1.2.tar.gz"
+file_size=717194
+file_md5=b9f45d9783a4ebeb84ec5acd158502fb
+recipe_type=configure
+dir="syslog-ng-3.1.2"
+configure_options=(
+  "--enable-dynamic-linking"
+  "--localstatedir=$goboVariable"
+  "--with-pidfile-dir=$goboVariable/run"
+  "--sysconfdir=$settings_target"
+)

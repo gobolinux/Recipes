@@ -1,0 +1,25 @@
+--- cg/Makefile	2003-05-26 12:16:40.000000000 -0300
++++ cg.new/Makefile	2006-05-29 18:18:52.000000000 -0300
+@@ -23,15 +23,18 @@
+ 
+ 
+ 
+-
++BINDIR=/usr/bin
+ 
+ .INIT:
+ 	echo "USE: make all or clean or  tar"
+ all: compile
+-	cg_test
++	./cgtest
+ compile:
+-	CC -g  vco.cc -o vco
+-	CC -g g2v.cc -o g2v
++	g++ -g  vco.cc -o vco
++	g++ -g g2v.cc -o g2v
++	g++ -g cgtest.c -o cgtest
++install:
++	cp vco g2v $(BINDIR)
+ clean:
+ 	-rm -f vco
+ 	-rm -f g2v

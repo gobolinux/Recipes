@@ -1,0 +1,38 @@
+Remove unnecessary apport support files.
+
+Ubuntu has an "Apport" problem-report system which Bazaar, being a Canonical
+product, apparently has to support at the expense of being a usable system
+anywhere else.
+
+The problem has been reported upstream and they have elected not to change
+the behaviour, so this patch will continue to be necessary for the
+indefinite future. See thread starting from Forwarded for details. The patch
+should be carried forward as long as it applies.
+
+Author: Michael Homer <michael@gobolinux.org>
+Forwarded: https://lists.ubuntu.com/archives/bazaar/2010q3/069631.html
+Last-Updated: 2010-09-21
+
+--- ./setup.py.how-broken-is-this	2010-08-07 11:35:57.000000000 +1200
++++ ./setup.py	2010-08-07 11:37:32.000000000 +1200
+@@ -727,18 +727,8 @@
+         # easy_install one
+         DATA_FILES = [('man/man1', ['bzr.1'])]
+ 
+-    if sys.platform != 'win32':
+-        # see https://wiki.kubuntu.org/Apport/DeveloperHowTo
+-        #
+-        # checking the paths and hardcoding the check for root is a bit gross,
+-        # but I don't see a cleaner way to find out the locations in a way
+-        # that's going to align with the hardcoded paths in apport.
+-        if os.geteuid() == 0:
+-            DATA_FILES += [
+-                ('/usr/share/apport/package-hooks',
+-                    ['apport/source_bzr.py']),
+-                ('/etc/apport/crashdb.conf.d/',
+-                    ['apport/bzr-crashdb.conf']),]
++    # Apport is Ubuntu-specific garbage that has absolutely no place in
++    # generic software. Installing the files for it breaks the build.
+ 
+     # std setup
+     ARGS = {'scripts': ['bzr'],

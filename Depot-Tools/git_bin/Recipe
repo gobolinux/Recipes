@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for Depot_Tools by Pedro Flores <pdavidflores@gmail.com>, on Fri Dec 23 10:07:48 GMT 2016
+# Recipe for version Depot_tools by Pedro Flores <pdavidflores@gmail.com>, on Fri Dec 23 10:07:48 GMT 2016
+compile_version=016
+git="https://chromium.googlesource.com/chromium/tools/depot_tools.git"
+recipe_type=manifest
+manifest=(
+   "*:bin"
+)

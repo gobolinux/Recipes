@@ -1,0 +1,14 @@
+# Recipe for version 4.8.1.1 by Andre Detsch <detsch@gobolinux.org>, on Wed Jul 1 11:13:08 BRT 2009
+# on Sat Apr 16 13:31:22 CEST 2005
+
+compile_version=1.8.2
+url="http://www.riverbankcomputing.co.uk/static/Downloads/sip4/sip-4.8.1.tar.gz"
+file_size=614105
+file_md5=859e5b103ba5a083e4f2021eb6d99b26
+
+recipe_type=makefile
+pre_build() {
+   pythonversion=`python --version 2>&1 | awk {'print $2'} | cut -b1-3`
+   sitepackages="$target/lib/python${pythonversion}/site-packages"
+   python configure.py -b $target/bin -e $target/include -d $sitepackages -v $target/share/sip
+}

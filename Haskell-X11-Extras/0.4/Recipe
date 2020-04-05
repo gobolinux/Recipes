@@ -1,0 +1,15 @@
+# Recipe for version 0.4 by Fabian Bergstrom, on tor okt 18 08:51:42 CEST 2007
+# Recipe (MakeRecipe) for Haskell-X11-Extras by Aitor Perez Iturri, on lun sep 10 11:30:59 CEST 2007
+compile_version=1.9.0
+url="http://hackage.haskell.org/packages/archive/X11-extras/0.4/X11-extras-0.4.tar.gz"
+file_size=48853
+file_md5=e68ce25e94477b054744001bbef41a34
+recipe_type=configure
+do_build=no
+do_install=no
+
+pre_link () {
+	runhaskell Setup.lhs configure --prefix=$target
+	runhaskell Setup.lhs build
+	runhaskell Setup.lhs install
+}

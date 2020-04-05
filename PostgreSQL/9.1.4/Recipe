@@ -1,0 +1,36 @@
+# Recipe for version 9.1.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jun 18 16:38:10 BRT 2012
+# Recipe (MakeRecipe) for PostgreSQL by Maglan C. Diemer, maglan@univates.br, on Qui Dez 8 19:22:05 BRST 2005
+compile_version=1.8.0
+url="http://ftp.postgresql.org/pub/source/v9.1.4/postgresql-9.1.4.tar.bz2"
+file_size=15631894
+file_md5=a8035688dba988b782725ac1aec60186
+recipe_type=configure
+
+configure_options=(
+   "--with-perl"
+   "--with-python"
+   "--with-tcl"
+   "--with-openssl"
+)
+
+pre_install() {
+   if ! grep -q postgres $goboSettings/group
+   then
+      Log_Normal "Adding group postgres"
+      groupadd postgres
+   fi
+
+   if ! grep -q "postgres:x:" $goboSettings/passwd
+   then
+      Log_Normal "Adding user postgres"
+      useradd postgres -g postgres -c 'Added by Compile for PostgreSQL' -d $target -s $goboExecutables/false
+   fi
+}
+
+post_install() {
+    Log_Normal "Installing prepared tables"
+    PGDATA=$variable_target/PostgreSQL/data
+    mkdir -p $PGDATA
+    chown postgres:postgres $variable_target/PostgreSQL/data
+    sudo -u postgres $target/bin/initdb -D $PGDATA
+}

@@ -1,0 +1,206 @@
+--- hplip-0.9.10/Makefile.am.orig	2006-04-26 15:30:35.000000000 -0300
++++ hplip-0.9.10/Makefile.am	2006-04-26 15:34:45.000000000 -0300
+@@ -164,13 +164,13 @@ install-exec-hook: test-destdir
+ #
+ #       Do full install if not rpm_install.
+ 	if [ "$(rpm_install)" = "no" ]; then \
+-	   ln -sf ../$(SOLONG) $(DESTDIR)$(sanedir)/$(SONOVER); \
+-	   ln -sf ../$(SOLONG) $(DESTDIR)$(sanedir)/$(SOSHORT); \
+-	   ln -sf ../$(SOLONG) $(DESTDIR)$(sanedir)/$(SOLONG); \
+-	   if [ -f $(DESTDIR)/etc/sane.d/dll.conf ]; then \
+-	      if ! grep ^hpaio $(DESTDIR)/etc/sane.d/dll.conf >/dev/null 2>/dev/null ; then \
+-	         echo "Adding hpaio entry to /etc/sane.d/dll.conf." ; \
+-	         echo hpaio >>$(DESTDIR)/etc/sane.d/dll.conf ; \
++	   ln -sf ../$(SOLONG) $(destdir)$(sanedir)/$(SONOVER); \
++	   ln -sf ../$(SOLONG) $(destdir)$(sanedir)/$(SOSHORT); \
++	   ln -sf ../$(SOLONG) $(destdir)$(sanedir)/$(SOLONG); \
++	   if [ -f $(sysconfdir)/sane.d/dll.conf ]; then \
++	      if ! grep ^hpaio $(sysconfdir)/sane.d/dll.conf >/dev/null 2>/dev/null ; then \
++	         echo "Adding hpaio entry to $(sysconfdir)/sane.d/dll.conf." ; \
++	         echo hpaio >>$(sysconfdir)/sane.d/dll.conf ; \
+ 	      fi \
+ 	   fi \
+ 	fi
+@@ -197,78 +197,78 @@ install-data-hook: test-destdir
+ 	   echo -e "                mimetypes=\"\" accept_url=\"false\" multiple_files=\"true\"" >> $(srcdir)/$(ICON_FILE); \
+ 	fi
+ 	if [ "$(ICON_FILE)" != "" ]; then \
+-	   $(INSTALL_DATA)  $(srcdir)/$(ICON_FILE) $(DESTDIR)$(icondir); \
++	   $(INSTALL_DATA)  $(srcdir)/$(ICON_FILE) $(destdir)$(icondir); \
+ 	   rm -f $(srcdir)/$(ICON_FILE); \
+ 	fi
+ #
+ #       Do full install if not rpm_install.
+ 	if [ "$(rpm_install)" = "no" ]; then \
+ 	   if [ "$(ICON_FILE)" != "" ]; then \
+-	      if [ -d $(DESTDIR)$(ICON_PATH) ]; then \
+-	         ln -sf $(icondir)/$(ICON_FILE) $(DESTDIR)$(ICON_PATH)/$(ICON_FILE); \
++	      if [ -d $(destdir)$(ICON_PATH) ]; then \
++	         ln -sf $(icondir)/$(ICON_FILE) $(destdir)$(ICON_PATH)/$(ICON_FILE); \
+ 	      fi \
+ 	   fi \
+ 	fi
+ #
+ #       Install pcard extension.
+ 	cd pcard/pcardext; \
+-	if [ "$(DESTDIR)" = "" ]; then \
++	if [ "$(destdir)" = "" ]; then \
+ 	   $(PYTHON) setup.py install; \
+ 	else \
+-	   $(PYTHON) setup.py install --root=$(DESTDIR) --prefix=$(prefix); \
++	   $(PYTHON) setup.py install --root=$(destdir) --prefix=$(prefix); \
+ 	fi
+ #
+ #       Install cups extension.
+ 	cd prnt/cupsext; \
+-	if [ "$(DESTDIR)" = "" ]; then \
++	if [ "$(destdir)" = "" ]; then \
+ 	   $(PYTHON) setup.py install; \
+ 	else \
+-	   $(PYTHON) setup.py install --root=$(DESTDIR) --prefix=$(prefix); \
++	   $(PYTHON) setup.py install --root=$(destdir) --prefix=$(prefix); \
+ 	fi
+ ##
+ #       Remove .py extensions in destdir and if not rpm_install create hp-xxx commands in bindir.
+ 	for i in $(dist_cmd_SCRIPTS); do \
+ 	    newname=$${i%.*}; \
+-	    mv $(DESTDIR)$(hplipdir)/$$i $(DESTDIR)$(hplipdir)/$$newname; \
++	    mv $(destdir)$(hplipdir)/$$i $(destdir)$(hplipdir)/$$newname; \
+ 	    if [ "$(rpm_install)" = "no" ]; then \
+-	      ln -sf ../share/$(PACKAGE)/$$newname $(DESTDIR)$(bindir)/hp-$$newname; \
++	      ln -sf ../share/$(PACKAGE)/$$newname $(destdir)$(bindir)/hp-$$newname; \
+ 	    fi \
+ 	done
+ #
+ #       Edit hpiod.conf in destdir.
+-	echo -e "\n[$(PACKAGE)]\nversion=$(VERSION)\njdprobe=0\n" >> $(DESTDIR)$(hplipdir)/$(PACKAGE).conf
+-	echo -e "[dirs]\nhome=$(hplipdir)\nrun=$(rundir)\nppd=$(hpppddir)\n" >> $(DESTDIR)$(hplipdir)/$(PACKAGE).conf
+-	echo -ne "# Following values are determined at configure time and cannot be changed.\n[configure]\n" >> $(DESTDIR)$(hplipdir)/$(PACKAGE).conf
++	echo -e "\n[$(PACKAGE)]\nversion=$(VERSION)\njdprobe=0\n" >> $(destdir)$(hplipdir)/$(PACKAGE).conf
++	echo -e "[dirs]\nhome=$(hplipdir)\nrun=$(rundir)\nppd=$(hpppddir)\n" >> $(destdir)$(hplipdir)/$(PACKAGE).conf
++	echo -ne "# Following values are determined at configure time and cannot be changed.\n[configure]\n" >> $(destdir)$(hplipdir)/$(PACKAGE).conf
+ 	if [ "$(rpm_install)" = "yes" ]; then \
+-	   echo -ne "rpm-install=1\n" >> $(DESTDIR)$(hplipdir)/$(PACKAGE).conf; \
++	   echo -ne "rpm-install=1\n" >> $(destdir)$(hplipdir)/$(PACKAGE).conf; \
+ 	else \
+-	   echo -ne "rpm-install=0\n" >> $(DESTDIR)$(hplipdir)/$(PACKAGE).conf; \
++	   echo -ne "rpm-install=0\n" >> $(destdir)$(hplipdir)/$(PACKAGE).conf; \
+ 	fi 
+ 	if [ "$(network_build)" = "yes" ]; then \
+-	   echo -ne "network-build=1\n" >> $(DESTDIR)$(hplipdir)/$(PACKAGE).conf; \
++	   echo -ne "network-build=1\n" >> $(destdir)$(hplipdir)/$(PACKAGE).conf; \
+ 	else \
+-	   echo -ne "network-build=0\n" >> $(DESTDIR)$(hplipdir)/$(PACKAGE).conf; \
++	   echo -ne "network-build=0\n" >> $(destdir)$(hplipdir)/$(PACKAGE).conf; \
+ 	fi
+ 	if [ "$(pp_build)" = "yes" ]; then \
+-	   echo -ne "pp-build=1\n" >> $(DESTDIR)$(hplipdir)/$(PACKAGE).conf; \
++	   echo -ne "pp-build=1\n" >> $(destdir)$(hplipdir)/$(PACKAGE).conf; \
+ 	else \
+-	   echo -ne "pp-build=0\n" >> $(DESTDIR)$(hplipdir)/$(PACKAGE).conf; \
++	   echo -ne "pp-build=0\n" >> $(destdir)$(hplipdir)/$(PACKAGE).conf; \
+ 	fi
+-	echo -ne "internal-tag=$(PACKAGE_BUGREPORT)\n" >> $(DESTDIR)$(hplipdir)/$(PACKAGE).conf;
++	echo -ne "internal-tag=$(PACKAGE_BUGREPORT)\n" >> $(destdir)$(hplipdir)/$(PACKAGE).conf;
+ 
+ #
+ #       Edit hpiod.sh in destdir.
+-	sed 's:HPIODDIR=:HPIODDIR=$(sbindir):' < $(DESTDIR)$(hplipdir)/$(PACKAGE).sh > $(DESTDIR)$(hplipdir)/$(PACKAGE).tmp; \
+-	sed 's:HPSSDDIR=:HPSSDDIR=$(hplipdir):' < $(DESTDIR)$(hplipdir)/$(PACKAGE).tmp > $(DESTDIR)$(hplipdir)/$(PACKAGE); \
+-	rm -f $(DESTDIR)$(hplipdir)/$(PACKAGE).tmp
++	sed 's:HPIODDIR=:HPIODDIR=$(sbindir):' < $(destdir)$(hplipdir)/$(PACKAGE).sh > $(destdir)$(hplipdir)/$(PACKAGE).tmp; \
++	sed 's:HPSSDDIR=:HPSSDDIR=$(hplipdir):' < $(destdir)$(hplipdir)/$(PACKAGE).tmp > $(destdir)$(hplipdir)/$(PACKAGE); \
++	rm -f $(destdir)$(hplipdir)/$(PACKAGE).tmp
+ #
+ #       Do full install if not rpm_install. Also only run chkconfig/install_initd if DESTDIR="". 
+ 	if [ "$(rpm_install)" = "no" ]; then \
+-	   $(mkinstalldirs) $(DESTDIR)/etc/hp; \
+-	   $(INSTALL_DATA) $(DESTDIR)$(hplipdir)/$(PACKAGE).conf $(DESTDIR)/etc/hp; \
+-	   if [ -d $(DESTDIR)/etc/init.d ]; then \
+-	      $(INSTALL_SCRIPT) $(DESTDIR)$(hplipdir)/$(PACKAGE) $(DESTDIR)/etc/init.d; \
+-	      if [ "$(DESTDIR)" = "" ]; then \
++	   $(mkinstalldirs) $(sysconfdir)/hp; \
++	   $(INSTALL_DATA) $(destdir)$(hplipdir)/$(PACKAGE).conf $(sysconfdir)/hp; \
++	   if [ -d $(sysconfdir)/init.d ]; then \
++	      $(INSTALL_SCRIPT) $(destdir)$(hplipdir)/$(PACKAGE) $(sysconfdir)/init.d; \
++	      if [ "$(destdir)" = "" ]; then \
+ 	         if [ "$(INSTALLINITD)" != "" ]; then \
+ 	            $(INSTALLINITD) $(PACKAGE); \
+ 	         else \
+@@ -280,52 +280,52 @@ install-data-hook: test-destdir
+ #
+ #       For internal testing.
+ 	if [ "$(SHADOW)" != "" ]; then \
+-	   cp -f data/xml/unreleased/*.xml $(DESTDIR)$(hplipdir)/data/xml/; \
++	   cp -f data/xml/unreleased/*.xml $(destdir)$(hplipdir)/data/xml/; \
+ 	fi
+ #
+ #       Install fax support. Let hpijs symlink hpppddir to cupsppddir.
+-	mv $(DESTDIR)$(hpfaxdir)/hpfax.py $(DESTDIR)$(hpfaxdir)/hpfax 
++	mv $(destdir)$(hpfaxdir)/hpfax.py $(destdir)$(hpfaxdir)/hpfax 
+ 	if [ "$(rpm_install)" = "no" ]; then \
+-	   $(mkinstalldirs) $(DESTDIR)$(cupsdir); \
+-	   $(INSTALL_SCRIPT) $(DESTDIR)$(hpfaxdir)/hpfax $(DESTDIR)$(cupsdir); \
+-	   $(mkinstalldirs) $(DESTDIR)$(hpppddir)/fax; \
+-	   $(INSTALL_DATA) $(DESTDIR)$(faxppddir)/HP-Fax-hplip.ppd $(DESTDIR)$(hpppddir)/fax; \
+-	   gzip -f $(DESTDIR)$(hpppddir)/fax/HP-Fax-hplip.ppd; \
++	   $(mkinstalldirs) $(destdir)$(cupsdir); \
++	   $(INSTALL_SCRIPT) $(destdir)$(hpfaxdir)/hpfax $(destdir)$(cupsdir); \
++	   $(mkinstalldirs) $(destdir)$(hpppddir)/fax; \
++	   $(INSTALL_DATA) $(destdir)$(faxppddir)/HP-Fax-hplip.ppd $(destdir)$(hpppddir)/fax; \
++	   gzip -f $(destdir)$(hpppddir)/fax/HP-Fax-hplip.ppd; \
+ 	fi
+ 
+ uninstall-hook:
+ #       Remove Icon file. 
+-	rm -f $(DESTDIR)$(icondir)/$(ICON_FILE)
+-	rm -f $(DESTDIR)$(ICON_PATH)/$(ICON_FILE)
++	rm -f $(destdir)$(icondir)/$(ICON_FILE)
++	rm -f $(destdir)$(ICON_PATH)/$(ICON_FILE)
+ #
+ #       Remove hp-xxx commands.
+ 	for i in $(dist_cmd_SCRIPTS); do \
+ 	    newname=$${i%.*}; \
+-	    rm -f $(DESTDIR)$(hplipdir)/$$newname; \
+-	    rm -f $(DESTDIR)$(bindir)/hp-$$newname; \
++	    rm -f $(destdir)$(hplipdir)/$$newname; \
++	    rm -f $(destdir)$(bindir)/hp-$$newname; \
+ 	done
+ #
+ #       Remove hplip.conf and hplip start/stop script.
+-	rm -f $(DESTDIR)/etc/hp/$(PACKAGE).conf
+-	rm -f $(DESTDIR)/etc/init.d/$(PACKAGE)
++	rm -f $(sysconfdir)/hp/$(PACKAGE).conf
++	rm -f $(sysconfdir)/init.d/$(PACKAGE)
+ #
+ #       Remove fax support.
+-	rm -f $(DESTDIR)$(hpfaxdir)/hpfax 
+-	rm -f $(DESTDIR)$(cupsdir)/hpfax
+-	rm -f $(DESTDIR)$(hpppddir)/fax/HP-Fax-hplip.ppd.gz
++	rm -f $(destdir)$(hpfaxdir)/hpfax 
++	rm -f $(destdir)$(cupsdir)/hpfax
++	rm -f $(destdir)$(hpppddir)/fax/HP-Fax-hplip.ppd.gz
+ 
+ #
+ # Add prerequisites for testing (or building?) "make install DESTDIR=/build".
+ test-destdir:
+-	if [ "$(DESTDIR)" != "" ]; then \
+-	   $(mkinstalldirs) $(DESTDIR)/etc/init.d; \
+-	   $(mkinstalldirs) $(DESTDIR)/etc/sane.d; \
+-	   if [ ! -f $(DESTDIR)/etc/sane.d/dll.conf ]; then \
+-	      touch $(DESTDIR)/etc/sane.d/dll.conf; \
++	if [ "$(destdir)" != "" ]; then \
++	   $(mkinstalldirs) $(sysconfdir)/init.d; \
++	   $(mkinstalldirs) $(sysconfdir)/sane.d; \
++	   if [ ! -f $(sysconfdir)/sane.d/dll.conf ]; then \
++	      touch $(sysconfdir)/sane.d/dll.conf; \
+ 	   fi; \
+-	   $(mkinstalldirs) $(DESTDIR)$(sanedir); \
+-	   $(mkinstalldirs) $(DESTDIR)/usr/share/applications; \
+-	   $(mkinstalldirs) $(DESTDIR)/usr/bin; \
++	   $(mkinstalldirs) $(destdir)$(sanedir); \
++	   $(mkinstalldirs) $(destdir)/share/applications; \
++	   $(mkinstalldirs) $(destdir)/bin; \
+ 	fi
+ 
+ dist-hook:

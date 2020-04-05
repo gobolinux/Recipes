@@ -1,0 +1,8 @@
+# Recipe for version 1.0alpha4 by MJ Ray <mjr@phonecoop.coop>, on dimanĉo Aŭgusto 14 12:21:29 +0100 2005
+# by Jeremy Vernon
+url="http://downloads.xiph.org/releases/theora/libtheora-1.0alpha4.tar.gz"
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+   "--enable-shared"
+)

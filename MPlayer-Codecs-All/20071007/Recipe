@@ -1,0 +1,8 @@
+# Recipe for version 20071007 by Hisham Muhammad, on Sun Nov 4 00:45:53 BRST 2007
+url="http://www1.mplayerhq.hu/MPlayer/releases/codecs/all-20071007.tar.bz2"
+recipe_type=manifest
+
+pre_install() {
+   mkdir -p $target/share/mplayer-codecs
+   cp * $target/share/mplayer-codecs/
+}

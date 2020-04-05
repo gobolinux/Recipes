@@ -1,0 +1,23 @@
+# Recipe (MakeRecipe) for Nominatim by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jun 18 18:34:04 BRT 2012
+# Recipe for version git by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jun 18 18:34:04 BRT 2012
+compile_version=1.0.1
+git="git://github.com/twain47/Nominatim.git"
+dir="Nominatim-git/nominatim"
+recipe_type=configure
+autogen_before_configure=yes
+
+pre_build() {
+    cd ../module
+    make
+}
+
+pre_install() {
+    if [ ! -f default.style ]
+    then
+        touch default.style
+    fi
+
+    mkdir -p $target/nominatim
+    cp -R ../* $target/nominatim/
+    rm -rf $target/nominatim/nominatim
+}

@@ -1,0 +1,10 @@
+diff -Naur 915resolution-0.5.3/Makefile 915resolution-0.5.3.new/Makefile
+--- 915resolution-0.5.3/Makefile	2007-04-15 09:31:29.000000000 +0200
++++ 915resolution-0.5.3.new/Makefile	2008-04-24 19:27:26.000000000 +0200
+@@ -11,5 +11,5 @@
+ 	rm -f ${OBJS} ${PRG} *~ 
+ 
+ install: ${PRG}
+-	cp ${PRG} /usr/sbin
++	cp ${PRG} "${BINDIR}"
+ 

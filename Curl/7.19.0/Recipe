@@ -1,0 +1,12 @@
+# Recipe for version 7.19.0 by Giambattista Bloisi <giamby@infinito.it>, on Tue Oct 14 23:24:28 CEST 2008
+compile_version=1.9.0
+url="http://curl.oc1.mirrors.redwire.net/download/curl-7.19.0.tar.bz2"
+file_size=2125703
+file_md5=c299c5e0f20f633791b4c4f7ced4effe
+recipe_type=configure
+
+configure_options=(
+   "--disable-debug"
+   "--disable-verbose"
+   "--mandir=${target}/man"
+)

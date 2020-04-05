@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for LibSelinux by roko, <ro.ko@mcnon.com>, on Fri Apr 8 02:26:58 CEST 2005
+# Recipe for version 1.22 by roko, <ro.ko@mcnon.com>, on Fri Apr 8 02:26:58 CEST 2005
+compile_version=1.7.1
+url="http://www.nsa.gov/selinux/archives/libselinux-1.22.tgz"
+file_size=81142
+file_md5=43b7640652d1fd85e6ab3df9b873ddd3
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(PREFIX="$target")
+install_variables=(DESTDIR="$target")
+pre_link() { 
+ln -sf $target/lib/libselinux.so.1 $target/lib/libselinux.so
+mv -fv $target/usr/share/man/man3/* $target/man/man3
+mv -fv $target/usr/share/man/man8/* $target/man/man8
+rm -Rf $target/usr
+} 

@@ -1,0 +1,17 @@
+compile_version=1.8.5
+url="http://ftp.gnu.org/gnu/emacs/emacs-25.1.tar.xz"
+file_size=42498944
+file_md5=4f3d42fb22823a659e16bfa89078a74c
+recipe_type=configure
+
+unmanaged_files=(
+   $goboVariable/games/emacs
+)
+
+with_gtk=(
+   "--with-x-toolkit=gtk"
+)
+
+with_motif=(
+   "--with-x-toolkit=motif"
+)

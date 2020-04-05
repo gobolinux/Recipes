@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for TA-Lib by Hisham Muhammad <hisham@gobolinux.org>, on Sat Apr 10 19:25:32 BRT 2010
+# Recipe for version 0.4.0 by Hisham Muhammad <hisham@gobolinux.org>, on Sat Apr 10 19:25:32 BRT 2010
+compile_version=1.9.0
+url="$httpSourceforge/project/ta-lib/ta-lib/0.4.0/ta-lib-0.4.0-src.tar.gz"
+file_size=1330299
+file_md5=308e53b9644213fc29262f36b9d3d9b9
+dir='ta-lib'
+recipe_type=configure

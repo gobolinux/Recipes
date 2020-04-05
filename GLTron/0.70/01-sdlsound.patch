@@ -1,0 +1,36 @@
+diff -Naur gltron-0.70-orig/nebu/include/audio/nebu_SoundSystem.h gltron-0.70/nebu/include/audio/nebu_SoundSystem.h
+--- gltron-0.70-orig/nebu/include/audio/nebu_SoundSystem.h	2003-06-21 05:12:05.000000000 -0300
++++ gltron-0.70/nebu/include/audio/nebu_SoundSystem.h	2005-01-13 16:37:04.000000000 -0200
+@@ -8,7 +8,7 @@
+ #include "audio/nebu_Source.h"
+ #include "base/nebu_Vector3.h"
+ 
+-#include "SDL_sound.h"
++#include "SDL/SDL_sound.h"
+ 
+ namespace Sound {
+   extern "C" {
+diff -Naur gltron-0.70-orig/src/audio/sound_glue.cpp gltron-0.70/src/audio/sound_glue.cpp
+--- gltron-0.70-orig/src/audio/sound_glue.cpp	2003-12-05 10:45:38.000000000 -0200
++++ gltron-0.70/src/audio/sound_glue.cpp	2005-01-13 16:38:44.000000000 -0200
+@@ -7,7 +7,7 @@
+ #include "audio/sound_glue.h"
+ 
+ #include "SDL.h"
+-#include "SDL_sound.h"
++#include "SDL/SDL_sound.h"
+ 
+ static Sound::System *sound = NULL;
+ static Sound::SourceMusic *music = NULL;
+diff -Naur gltron-0.70-orig/src/include/audio/audio.h gltron-0.70/src/include/audio/audio.h
+--- gltron-0.70-orig/src/include/audio/audio.h	2003-07-12 14:15:17.000000000 -0300
++++ gltron-0.70/src/include/audio/audio.h	2005-01-13 16:38:55.000000000 -0200
+@@ -12,7 +12,7 @@
+ };
+ 
+ #include "SDL.h"
+-#include "SDL_sound.h"
++#include "SDL/SDL_sound.h"
+ 
+ #include <zlib.h>
+ #include <assert.h>

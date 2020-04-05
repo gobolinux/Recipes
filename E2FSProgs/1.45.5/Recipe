@@ -1,0 +1,15 @@
+# Recipe for version 1.45.5 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun 23 Feb 2020 01:04:01 AM BRT
+url=$httpSourceforge/e2fsprogs/e2fsprogs-1.45.5.tar.gz
+file_size=7938826
+file_md5=6d35428e4ce960cb7e875afe5849c0f3
+recipe_type=configure
+needs_safe_linking=yes
+compile_version=1.9.0
+configure_options=(
+   "--enable-elf-shlibs"
+   "--disable-libblkid"
+   "--disable-libuuid"
+   "--disable-uuid"
+   "--disable-fsck"
+)
+install_target="install install-libs"

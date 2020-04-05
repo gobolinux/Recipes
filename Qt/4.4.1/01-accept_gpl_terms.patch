@@ -1,0 +1,12 @@
+--- qt-x11-opensource-src-4.3.3/configure.orig	2008-05-12 02:18:22.637888942 -0300
++++ qt-x11-opensource-src-4.3.3/configure	2008-05-12 02:21:28.582089392 -0300
+@@ -3153,7 +3153,8 @@ elif [ "$Edition" = "OpenSource" ]; then
+             else
+                 echo "Do you accept the terms of $affix license? \c"
+             fi
+-            read acceptance
++            #read acceptance
++            acceptance=yes
+         fi
+         echo
+         if [ "$acceptance" = "yes" ]; then

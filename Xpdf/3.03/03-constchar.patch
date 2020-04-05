@@ -1,0 +1,16 @@
+This patch prevents -fpermissive failing on this const char *->char *
+conversion.
+
+Author: Michael Homer <michael@gobolinux.org>
+
+--- xpdf-3.03/xpdf/XPDFViewer.cc.orig	2011-08-16 09:08:53.000000000 +1200
++++ xpdf-3.03/xpdf/XPDFViewer.cc	2011-10-09 15:26:32.376769736 +1300
+@@ -1803,7 +1805,7 @@
+   menuPane = XmCreatePulldownMenu(toolBar, "zoomMenuPane", args, n);
+   for (i = 0; i < nZoomMenuItems; ++i) {
+     n = 0;
+-    s = XmStringCreateLocalized(zoomMenuInfo[i].label);
++    s = XmStringCreateLocalized((char *)(zoomMenuInfo[i].label));
+     XtSetArg(args[n], XmNlabelString, s); ++n;
+     XtSetArg(args[n], XmNuserData, (XtPointer)i); ++n;
+     sprintf(buf, "zoom%d", i);

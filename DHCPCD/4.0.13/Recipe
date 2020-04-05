@@ -1,0 +1,14 @@
+# Recipe for version 4.0.13 by Jonas Karlsson <jonas@gobolinux.org>, on Sun May 17 09:29:31 CEST 2009
+compile_version=1.9.0
+url="http://roy.marples.name/downloads/dhcpcd/dhcpcd-4.0.13.tar.bz2"
+file_size=52669
+file_md5=88ce2c79d6c4c5f76a3cbcedb155b6d7
+recipe_type=makefile
+
+make_variables=(
+   PREFIX="$target"
+   MANPREFIX="$target/share"
+   CFLAGS="-D RUNDIR=\\\"$variable_target/run\\\""
+   SYSCONFDIR="$settings_target"
+   DBDIR="$variable_target/lib/dhcpcd"
+)

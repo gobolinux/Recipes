@@ -1,0 +1,15 @@
+# Recipe for version 4.1.2 by Jonas Karlsson <jonas@gobolinux.org>, on Mon Mar 8 22:53:41 CET 2010
+url="http://ftp.gnu.org/gnu/bash/bash-4.1.tar.gz"
+file_size=6598300
+file_md5=9800d8724815fd84994d9be65ab5e7b8
+
+recipe_type=configure
+compile_version=1.13.2
+
+configure_options=(
+    "--with-installed-readline"
+)
+
+pre_link() {
+    ln -s bash ${target}/bin/sh
+}

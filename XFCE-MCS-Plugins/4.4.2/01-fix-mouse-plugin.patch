@@ -1,0 +1,30 @@
+Index: plugins/mouse_plugin/mouse_plugin.c
+===================================================================
+--- a/plugins/mouse_plugin/mouse_plugin.c	(revision 26490)
++++ b/plugins/mouse_plugin/mouse_plugin.c	(working copy)
+@@ -174,7 +174,7 @@ set_xinput_mouse_values (gboolean right_
+     unsigned char *buttons;
+     gint n_buttons, n_devices, i;
+     gint idx_1 = 0, idx_3 = 1;
+-    gsize buttons_capacity = 16;
++    gsize buttons_capacity = DEFAULT_PTR_MAP_SIZE;
+ 
+     device_info = XListInputDevices (GDK_DISPLAY (), &n_devices);
+ 
+@@ -204,11 +204,12 @@ set_xinput_mouse_values (gboolean right_
+             continue;
+         }
+ 
+-        n_buttons = XGetDeviceButtonMapping (GDK_DISPLAY (), device, buttons, DEFAULT_PTR_MAP_SIZE);
+-        if (n_buttons > DEFAULT_PTR_MAP_SIZE)
++        n_buttons = XGetDeviceButtonMapping (GDK_DISPLAY (), device, buttons, buttons_capacity);
++        if (n_buttons > buttons_capacity)
+         {
+-            buttons = g_alloca (n_buttons);
+-            n_buttons = XGetDeviceButtonMapping (GDK_DISPLAY (), device, buttons, n_buttons);
++            buttons = g_realloc (buttons, n_buttons);
++            buttons_capacity = n_buttons;
++            n_buttons = XGetDeviceButtonMapping (GDK_DISPLAY (), device, buttons, buttons_capacity);
+         }
+ 
+         for (i = 0; i < n_buttons; i++)

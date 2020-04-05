@@ -1,0 +1,42 @@
+Fixes build due to API changes on JPEG9.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- nxcomp/Jpeg.cpp.orig	2014-07-03 14:55:11.000000000 -0300
++++ nxcomp/Jpeg.cpp	2014-07-03 14:56:31.000000000 -0300
+@@ -440,7 +440,7 @@ int DecompressJpeg16(unsigned char *comp
+ 
+   JpegSetSrcManager(&cinfo, compressedData, compressedLen);
+ 
+-  jpeg_read_header(&cinfo, 1);
++  jpeg_read_header(&cinfo, TRUE);
+ 
+   if (jpegError) goto AbortDecompressJpeg16;
+ 
+@@ -581,7 +581,7 @@ int DecompressJpeg24(unsigned char *comp
+ 
+   JpegSetSrcManager(&cinfo, compressedData, compressedLen);
+ 
+-  jpeg_read_header(&cinfo, 1);
++  jpeg_read_header(&cinfo, TRUE);
+ 
+   if (jpegError) goto AbortDecompressJpeg24;
+ 
+@@ -718,7 +718,7 @@ int DecompressJpeg32(unsigned char *comp
+ 
+   JpegSetSrcManager(&cinfo, compressedData, compressedLen);
+ 
+-  jpeg_read_header(&cinfo, 1);
++  jpeg_read_header(&cinfo, TRUE);
+ 
+   if (jpegError) goto AbortDecompressJpeg32;
+ 
+@@ -833,7 +833,7 @@ static boolean JpegFillInputBuffer(j_dec
+   jpegSrcManager.bytes_in_buffer = jpegBufferLen;
+   jpegSrcManager.next_input_byte = (JOCTET *)jpegBufferPtr;
+ 
+-  return 1;
++  return TRUE;
+ }
+ 
+ static void JpegSkipInputData(j_decompress_ptr cinfo, long num_bytes)

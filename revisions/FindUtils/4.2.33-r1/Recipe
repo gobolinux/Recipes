@@ -1,9 +1,0 @@
-# Recipe (MakeRecipe) for FindUtils by roko, <ro.ko@mcnon.com>, , on Fri Oct 22 20:28:10 BRST 2004
-compile_version=1.8.2
-url="$ftpGnu/findutils/findutils-4.2.33.tar.gz"
-file_size=1455067
-file_md5=b7e35aa175778c84942b1fee4144988b
-recipe_type=configure
-configure_options=(
-   "--mandir=${target}/man"
-)

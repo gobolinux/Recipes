@@ -1,0 +1,14 @@
+# Recipe for version 2.74 by Isaac Dupree <id@isaac.cedarswampstudios.org>, on Sat Dec 22 15:43:49 EST 2007
+compile_version=1.9.0
+url="ftp://ftp.kernel.org/pub/linux/docs/manpages/man-pages-2.74.tar.bz2"
+file_size=1858077
+file_md5=399659d35cd85f785b4a1270ef5bd02d
+recipe_type=makefile
+do_build=no
+install_variables=(
+   "MANDIR=$target/man"
+)
+pre_link() {
+   # we have our own hier man page.
+   $sudo_exec rm -f $target/man/man7/hier.7
+}

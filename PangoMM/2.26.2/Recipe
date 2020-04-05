@@ -1,0 +1,12 @@
+# Recipe for version 2.26.2 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. jún. 15., kedd, 23.46.05 CEST
+# Recipe (MakeRecipe) for PangoMM by Giambattista Bloisi <giamby@infinito.it>, on Fri Oct 17 20:38:37 CEST 2008
+compile_version=1.11.2
+url="http://ftp.gnome.org/pub/gnome/sources/pangomm/2.26/pangomm-2.26.2.tar.bz2"
+file_size=979801
+file_md5=b363b09faf884db8bf8d1458d719ff00
+recipe_type=configure
+
+configure_options=(
+    --disable-documentation
+)
+with_docs="--enable-documentation"

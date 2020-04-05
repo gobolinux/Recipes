@@ -1,0 +1,11 @@
+--- subversion-1.3.2.clean/configure	2006-09-14 13:25:38.000000000 +0200
++++ subversion-1.3.2/configure	2006-09-14 13:38:36.000000000 +0200
+@@ -19430,7 +19430,7 @@
+ 
+ if test -n "$APXS" -a "$APXS" != "no"; then
+     BINNAME=mod_dav_svn.so
+-    INSTALL_IT="\$(APXS) -i -a -n dav_svn $BINNAME"
++    INSTALL_IT="\$(APXS) -S LIBEXECDIR=@%Compile_target%@/lib/httpd/modules -i -n dav_svn $BINNAME"
+ 
+     APXS_CC="`$APXS -q CC`"
+     APACHE_INCLUDES="$APACHE_INCLUDES -I$APXS_INCLUDE"

@@ -1,0 +1,11 @@
+configure_options=(
+	"--with-devdir=$goboDevices"
+	"--with-kerneldir=$goboModules/`uname -r`/build"
+	"--with-moduledir=$goboModules/`uname -r`/"
+	"--with-transmitter"
+	"--with-x"
+	"--with-driver=serial"
+	"--with-major=61"
+	"--with-port=0x3f8"
+	"--with-irq=4"
+)

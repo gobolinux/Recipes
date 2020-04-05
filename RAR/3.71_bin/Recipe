@@ -1,0 +1,25 @@
+# Recipe for version 3.71 by Nathan Middleton, on Wed Nov 21 01:18:39 CST 2007
+url="http://www.rarlabs.com/rar/rarlinux-3.7.1.tar.gz"
+file_size=777260
+file_md5=b52249002e279a3e97afc25b5758ec7c
+dir='rar'
+compile_version=1.9.0
+recipe_type=manifest
+
+manifest=(
+   'rar:bin/rar'
+   'unrar:bin/unrar'
+   'default.sfx:lib'
+   'license.txt:Resources/COPYING'
+   'order.htm:Shared/doc/RAR/order.htm'
+   'rar.txt:Shared/doc/RAR/rar.txt'
+   'whatsnew.txt:Shared/doc/RAR/whatsnew.txt'
+   'technote.txt:Shared/doc/RAR/technote.txt'
+   'readme.txt:Shared/doc/RAR/readme.txt'
+)
+
+pre_link() {
+    mkdir -p ${settings_target}
+    cp rarfiles.lst ${settings_target}
+}
+ 

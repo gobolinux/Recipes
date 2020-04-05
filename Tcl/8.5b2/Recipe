@@ -1,0 +1,12 @@
+# Recipe for version 8.5b2 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Oct 27 19:06:07 CEST 2007
+compile_version=1.8.5
+url="$httpSourceforge/tcl/tcl8.5b2-src.tar.gz"
+file_size=4290031
+file_md5=43aeaa5bb1ad18a1588ca91675dcfa34
+dir='tcl8.5b2/unix'
+recipe_type=configure
+install_target='install install-private-headers'
+pre_link(){
+    ln -nfs ${target}/bin/tclsh8.5 ${target}/bin/tclsh
+    ln -nfs ${goboLibraries}/tk8.5 ${target}/lib/tk8.5
+}

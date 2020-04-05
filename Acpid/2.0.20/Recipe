@@ -1,0 +1,12 @@
+# Recipe for version 2.0.20 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Dec 1 20:52:12 BRST 2013
+# Recipe (MakeRecipe) for Acpid by Jonas Karlsson <jonka750@student.liu.se>, on Sat May 14 09:17:12 CEST 2005
+compile_version=1.8.0
+url="http://sourceforge.net/projects/acpid2/files/acpid-2.0.20.tar.xz"
+file_size=151380
+file_md5=1b740e6419cf45aaeb2bd78d589f27f9
+recipe_type=configure
+
+pre_link() {
+    mkdir -p $settings_target/acpi/events
+    cp -r samples/* $settings_target/acpi
+}

@@ -1,0 +1,12 @@
+Cairo >= 1.0.0
+GConf >= 2.0.0 [gconf,gnome]
+GHC >= 6.4 | GHC-Bin >= 6.4
+Gnome-VFS >= 2.14 [gnome,gnome-vfs]
+GLib >= 2.16.4
+GTK+ >= 2.8.0
+GStreamer >= 0.10 [gstreamer]
+GST-Plugins-Base >= 0.10 [gstreamer]
+GtkSourceView >= 2.0.2 [gnome]
+LibGlade >= 2.0.0 [gnome]
+LibRSVG >= 2.16.0
+Haskell-mtl

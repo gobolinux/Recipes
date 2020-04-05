@@ -1,0 +1,21 @@
+--- mpeg4ip-1.1/configure.in.orig	2006-01-05 15:56:24.000000000 -0200
++++ mpeg4ip-1.1/configure.in	2006-01-05 16:07:40.000000000 -0200
+@@ -411,7 +411,6 @@ fi
+ if test x$haveglib20 = xno; then 
+    AM_PATH_GLIB(, [glib_gtk=yes], [glib_gtk=no])
+    if test x$glib_gtk = xyes; then
+-      AM_PATH_GTK(, [glib_gtk=yes], [glib_gtk=no])
+       AC_DEFINE(HAVE_GTK, 1, [Have GTK on system])
+    fi
+ fi
+@@ -486,8 +485,8 @@ AC_SUBST(SDL_LIB_LIBS)
+ AC_SUBST(SUN_LIBS)
+ 
+ dnl
+-BILLS_CWARNINGS="-Wall -Werror -Wmissing-prototypes -Wmissing-declarations -Wno-char-subscripts -Wno-unknown-pragmas"
+-BILLS_CPPWARNINGS="-Wall -Werror -Wmissing-prototypes -Wno-char-subscripts -Woverloaded-virtual -Wno-unknown-pragmas -Wno-deprecated"
++BILLS_CWARNINGS="-Wall -Wmissing-declarations -Wno-char-subscripts -Wno-unknown-pragmas"
++BILLS_CPPWARNINGS="-Wall -Wno-char-subscripts -Woverloaded-virtual -Wno-unknown-pragmas -Wno-deprecated"
+ MY_CHECK_CC_OPT([-Wformat=2], mpeg4ip_ok)
+ if test $mpeg4ip_ok = yes; then
+    BILLS_CWARNINGS="$BILLS_CWARNINGS -Wformat=2"

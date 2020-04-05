@@ -1,0 +1,11 @@
+# Recipe for version 2.06 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Jun 3 17:46:23 BRT 2014
+# Recipe (MakeRecipe) for LZO by Roko <ro.ko@mcnon.com>, on Thu Sep 30 21:46:16 BRT 2004
+compile_version=1.8.0
+url="http://www.oberhumer.com/opensource/lzo/download/lzo-2.06.tar.gz"
+file_size=583045
+file_md5=95380bd4081f85ef08c5209f4107e9f8
+recipe_type=configure
+
+configure_options=(
+    "--enable-shared=yes"
+)

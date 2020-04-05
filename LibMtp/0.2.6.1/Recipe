@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for LibMtp by Daniele Maccari <daniele.maccari@gmail.com>, on Sun Mar 30 17:39:01 CEST 2008
+# Recipe for version 0.2.6.1 by Daniele Maccari <daniele.maccari@gmail.com>, on Sun Mar 30 17:39:01 CEST 2008
+compile_version=1.10.2
+url="$httpSourceforge/libmtp/libmtp-0.2.6.1.tar.gz"
+file_size=534773
+file_md5=02770a7b4bfb91cd9e1bd26eaa84770b
+recipe_type=configure
+
+pre_link(){
+  mkdir -p ${settings_target}/udev/rules.d
+  cp libmtp.rules ${settings_target}/udev/rules.d
+}

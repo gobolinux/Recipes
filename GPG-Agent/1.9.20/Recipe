@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for GPG-Agent by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:50:31 CEST 2006
+# Recipe for version 1.9.20 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:50:31 CEST 2006
+compile_version=1.7.1
+url="ftp://ftp.gnupg.org/gcrypt/alpha/gnupg/gnupg-1.9.20.tar.bz2"
+file_size=1810059
+file_md5=93899203fc0530f03e146d49b65c1e28
+recipe_type=configure
+configure_options=(
+    '--enable-agent-only'
+)

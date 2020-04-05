@@ -1,0 +1,16 @@
+--- frozen-bubble-1.0.0-org/c_stuff/Makefile	2003-01-06 23:52:45.000000000 +0100
++++ frozen-bubble-1.0.0/c_stuff/Makefile	2005-04-08 23:44:21.000000000 +0200
+@@ -1,11 +1,11 @@
+ .PHONY: clean
+ 
+ fb_c_stuff: %: %.xs
+-	test -e Makefile_c || perl Makefile.PL INSTALLDIRS=$(INSTALLDIRS)
++	test -e Makefile_c || perl Makefile.PL PREFIX=$(PREFIX)
+ 	$(MAKE) -f Makefile_c
+ 
+ install:
+-	test -e Makefile_c || perl Makefile.PL INSTALLDIRS=$(INSTALLDIRS)
++	test -e Makefile_c || perl Makefile.PL PREFIX=$(PREFIX)
+ 	$(MAKE) -f Makefile_c install
+ 
+ clean:

@@ -1,0 +1,11 @@
+# Recipe for version 4.8.0 by Hisham Muhammad <hisham@gobolinux.org>, on Tue Sep 4 01:00:47 BRT 2012
+# Recipe (MakeRecipe) for XFCE4-Mixer by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:26:34 CEST 2006
+compile_version=1.8.2
+url="http://archive.xfce.org/src/apps/xfce4-mixer/4.8/xfce4-mixer-4.8.0.tar.bz2"
+file_size=494990
+file_md5=3fa3a9973e18c04da26709a654e242ff
+recipe_type=configure
+configure_options=(
+   --libexecdir="${target}/lib"
+   --enable-debug=no
+)

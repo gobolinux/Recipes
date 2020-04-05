@@ -1,0 +1,30 @@
+# Recipe for version 3.5.8 by Andre Detsch <detsch@gobolinux.org>, on Thu Oct 18 22:35:21 BRT 2007
+# by Maglan C. Diemer , 3.3.2 by roko
+compile_version=1.9.0
+url="http://download.kde.org/stable/3.5.8/src/kdebase-3.5.8.tar.bz2"
+file_size=24200172
+file_md5=9990c669229daaaa8fca4c5e354441fd
+dir='kdebase-3.5.8'
+recipe_type=configure
+create_dirs_first=yes
+
+pre_build() {
+  ln -sf ${KDE-Libs_path}/3.5.8/include/kbookmarknotifier.h $target/include/kbookmarknotifier.h
+}
+
+post_install() {
+  rm -f $target/include/kbookmarknotifier.h
+  GrepReplace "/Xorg/\([0-9].[0-9].[0-9]\)/" "/Xorg/Current/" $target/Shared/config/kdm/kdmrc
+}
+
+configure_options=(
+   "--disable-debug"
+   "--with-shadow"
+   "--disable-libsuffix"             
+#  "DO_NOT_COMPILE="
+#libkonq applnk doc drkonqi kappfinder kate kcheckpass kcminit  kcontrol  kdcop  kdebugdialog  kdepasswd  kdeprint  kdesu  kdialog  kfind  khelpcenter khotkeys  kicker  kioslave  klipper  kmenuedit  konsole  kpager  kpersonalizer  kreadconfig  kscreensaver  ksmserver  ksplashml  kstart  ksysguard ksystraycmd  ktip  kwin  kxkb  l10n  nsplugins  pics  konqueror  kdesktop kdm
+)
+
+unmanaged_files=(
+   $goboVariable/lib/kdm
+)

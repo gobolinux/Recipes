@@ -1,0 +1,17 @@
+# Recipe for version 4.7.25 by Raphael J. Schmid <raphael.schmid@gmail.com>, on Wed Dec 17 03:22:02 CET 2008
+# Recipe (MakeRecipe) for DB by roko, <ro.ko@mcnon.com>, on Wed Feb 2 15:29:24 CET 2005
+compile_version=1.11.4
+url="http://download.oracle.com/berkeley-db/db-4.7.25.tar.gz"
+file_size=13124129
+file_md5=ec2b87e833779681a0c3a814aa71359e
+recipe_type=configure
+dir=db-4.7.25/build_unix
+configure=../dist/configure
+configure_options=(
+   --enable-compat185
+   --enable-cxx        #     Build C++ API.
+#   --enable-java      #     Build Java API.
+#   --enable-rpc       #     Build RPC client/server.
+#   --enable-tcl       #     Build Tcl API.
+#   --enable-test      #     Configure to run the test suite.
+)

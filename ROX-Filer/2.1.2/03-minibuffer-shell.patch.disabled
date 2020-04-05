@@ -1,0 +1,213 @@
+--- rox-2.1.2/ROX-Filer/src/minibuffer.c.shell	2004-04-21 11:07:16.000000000 +0200
++++ rox-2.1.2/ROX-Filer/src/minibuffer.c	2004-05-01 16:26:07.957956640 +0200
+@@ -66,6 +66,8 @@
+ static void show_help(FilerWindow *filer_window);
+ static gboolean grab_focus(GtkWidget *minibuffer);
+ static gboolean select_if_glob(ViewIter *iter, gpointer data);
++static void select_return_pressed(FilerWindow *filer_window, guint etime,
++				  int hide, int history);
+ 
+ /****************************************************************
+  *			EXTERNAL INTERFACE			*
+@@ -166,22 +168,7 @@
+ 			break;
+ 		case MINI_SHELL:
+ 		{
+-			DirItem *item;
+-			view_get_cursor(filer_window->view, &cursor);
+-			item = cursor.peek(&cursor);
+-			pos = 0;
+-			if (view_count_selected(filer_window->view) > 0)
+-				gtk_entry_set_text(mini, " \"$@\"");
+-			else if (item)
+-			{
+-				guchar *tmp;
+-
+-				tmp = g_strconcat(" ", item->leafname, NULL);
+-				gtk_entry_set_text(mini, tmp);
+-				g_free(tmp);
+-			}
+-			else
+-				gtk_entry_set_text(mini, "");
++			gtk_entry_set_text(mini, "");
+ 			filer_window->mini_cursor_base = -1;	/* History */
+ 			break;
+ 		}
+@@ -729,8 +716,13 @@
+ 	close_on_exec(STDOUT_FILENO, FALSE);
+ }
+ 
++static gboolean invert_cb(ViewIter *iter, gpointer data)
++{
++	return !view_get_selected((ViewIface *) data, iter);
++}
++
+ /* Either execute the command or make it the default run action */
+-static void shell_return_pressed(FilerWindow *filer_window)
++static void shell_return_pressed(FilerWindow *filer_window, GdkEventKey	*event)
+ {
+ 	GPtrArray	*argv;
+ 	const gchar	*entry;
+@@ -738,7 +730,12 @@
+ 	pid_t		child;
+ 	DirItem		*item;
+ 	ViewIter	iter;
++	GtkEntry	*mini;
++
++	g_return_if_fail(filer_window != NULL);
++	g_return_if_fail(filer_window->minibuffer != NULL);
+ 
++	mini = GTK_ENTRY(filer_window->minibuffer);
+ 	entry = mini_contents(filer_window);
+ 
+ 	if (!entry)
+@@ -746,6 +743,63 @@
+ 
+ 	add_to_history(entry);
+ 
++	if (strncmp("sel ", entry, 4)  == 0) {
++		GtkEditable 	*edit = GTK_EDITABLE(filer_window->minibuffer);
++
++		gtk_editable_delete_text(edit, 0, 4);
++
++		if (*entry == '\0' || strcmp(entry, "clear") == 0) {
++			g_return_if_fail(window_with_focus != NULL);
++
++			window_with_focus->temp_item_selected = FALSE;
++			view_clear_selection(window_with_focus->view);
++		} else if (strcmp(entry, "all") == 0) {
++			g_return_if_fail(window_with_focus != NULL);
++			
++			window_with_focus->temp_item_selected = FALSE;
++			view_select_all(window_with_focus->view);
++		} else if (strcmp(entry, "clear") == 0) {
++			g_return_if_fail(window_with_focus != NULL);
++
++			window_with_focus->temp_item_selected = FALSE;
++			view_clear_selection(window_with_focus->view);
++		} else if (strcmp(entry, "invert") == 0) {
++			g_return_if_fail(window_with_focus != NULL);
++
++			window_with_focus->temp_item_selected = FALSE;
++
++			view_select_if(window_with_focus->view, invert_cb,
++				       window_with_focus->view);
++		} else {
++			select_return_pressed(filer_window, event->time, 0, 0);
++		}
++	} else
++	if (strcmp("close", entry) == 0 || strcmp("exit", entry) == 0) {
++		g_return_if_fail(window_with_focus != NULL);
++		
++		if (!filer_window_delete(window_with_focus->window, NULL,
++					 window_with_focus))
++			gtk_widget_destroy(window_with_focus->window);
++	} else
++	if (strcmp("cd", entry) == 0) {
++		g_return_if_fail(window_with_focus != NULL);
++		
++		filer_change_to(window_with_focus, home_dir, NULL);
++	} else
++	if (strncmp("cd ", entry, 3) == 0) {
++		GtkEditable 	*edit = GTK_EDITABLE(filer_window->minibuffer);
++
++		gtk_editable_delete_text(edit, 0, 3);
++		if (entry[0] != '/') {
++			int pos = 0;
++			
++			gtk_editable_insert_text(edit, "/", strlen("/"), &pos);
++			pos = 0;
++			gtk_editable_insert_text(edit, filer_window->sym_path, strlen(filer_window->sym_path), &pos);
++		}
++		path_changed(filer_window);
++	} else
++	{
+ 	argv = g_ptr_array_new();
+ 	g_ptr_array_add(argv, "sh");
+ 	g_ptr_array_add(argv, "-c");
+@@ -776,10 +830,32 @@
+ 	else
+ 		on_child_death(child, (CallbackFn) shell_done, filer_window);
+ 
+-	g_ptr_array_free(argv, TRUE);
++	g_ptr_array_free(argv, TRUE);	
++	}
+ 
+ out:
+-	minibuffer_hide(filer_window);
++	gtk_entry_set_text(mini, "");
++}
++
++static void shell_insert(FilerWindow *filer_window)
++{
++	GtkEditable 	*edit = GTK_EDITABLE(filer_window->minibuffer);
++	GtkEntry 	*entry = GTK_ENTRY(edit);
++	int		pos;
++	guchar		*esc = "\"$@\"";
++
++	g_return_if_fail(filer_window->mini_type == MINI_SHELL);
++
++	gtk_editable_delete_selection(edit);
++	pos = gtk_editable_get_position(edit);
++
++	if (pos > 0 && gtk_entry_get_text(entry)[pos - 1] != ' ')
++		gtk_editable_insert_text(edit, " ", 1, &pos);
++
++	gtk_editable_insert_text(edit, esc, strlen(esc), &pos);
++	gtk_editable_set_position(edit, pos);
++
++	g_free(esc);
+ }
+ 
+ /* Move through the shell history */
+@@ -829,7 +905,7 @@
+ 			find_test_condition(data->cond, &data->info);
+ }
+ 
+-static void select_return_pressed(FilerWindow *filer_window, guint etime)
++static void select_return_pressed(FilerWindow *filer_window, guint etime, int hide, int history)
+ {
+ 	const gchar	*entry;
+ 	SelectData	data;
+@@ -839,7 +915,8 @@
+ 	if (!entry)
+ 		goto out;
+ 
+-	add_to_history(entry);
++	if (history)
++		add_to_history(entry);
+ 
+ 	data.cond = find_compile(entry);
+ 	if (!data.cond)
+@@ -856,7 +933,8 @@
+ 
+ 	find_condition_free(data.cond);
+ out:
+-	minibuffer_hide(filer_window);
++	if (hide)
++		minibuffer_hide(filer_window);
+ }
+ 
+ static void filter_return_pressed(FilerWindow *filer_window, guint etime)
+@@ -934,7 +1012,10 @@
+ 					break;
+ 				case GDK_Return:
+ 				case GDK_KP_Enter:
+-					shell_return_pressed(filer_window);
++					shell_return_pressed(filer_window, event);
++					break;
++				case GDK_Insert:
++					shell_insert(filer_window);
+ 					break;
+ 				default:
+ 					return FALSE;
+@@ -954,7 +1035,7 @@
+ 				case GDK_Return:
+ 				case GDK_KP_Enter:
+ 					select_return_pressed(filer_window,
+-								event->time);
++								event->time, 1, 1);
+ 					break;
+ 				default:
+ 					return FALSE;
+

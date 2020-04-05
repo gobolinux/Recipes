@@ -1,0 +1,128 @@
+# fix: compile in kernel >= 2.6.30
+diff -ur zaptel-1.2.27-patch/xpp/card_fxo.c zaptel-1.2.27/xpp/card_fxo.c
+--- zaptel-1.2.27-patch/xpp/card_fxo.c	2010-01-21 13:29:11.000000000 -0200
++++ zaptel-1.2.27/xpp/card_fxo.c	2010-01-21 13:10:05.000000000 -0200
+@@ -406,7 +406,7 @@
+ 		XPD_ERR(xpd, "Failed to create proc file '%s'\n", PROC_FXO_INFO_FNAME);
+ 		goto err;
+ 	}
+-	priv->fxo_info->owner = THIS_MODULE;
++//	priv->fxo_info->owner = THIS_MODULE;
+ #ifdef	WITH_METERING
+ 	XPD_DBG(PROC, xpd, "Creating Metering tone file\n");
+ 	priv->meteringfile = create_proc_read_entry(PROC_METERING_FNAME, 0444, xpd->proc_xpd_dir,
+diff -ur zaptel-1.2.27-patch/xpp/card_fxs.c zaptel-1.2.27/xpp/card_fxs.c
+--- zaptel-1.2.27-patch/xpp/card_fxs.c	2010-01-21 13:29:11.000000000 -0200
++++ zaptel-1.2.27/xpp/card_fxs.c	2010-01-21 13:10:23.000000000 -0200
+@@ -342,7 +342,7 @@
+ 		XPD_ERR(xpd, "Failed to create proc file '%s'\n", PROC_FXS_INFO_FNAME);
+ 		goto err;
+ 	}
+-	priv->fxs_info->owner = THIS_MODULE;
++//	priv->fxs_info->owner = THIS_MODULE;
+ #ifdef	WITH_METERING
+ 	XPD_DBG(PROC, xpd, "Creating Metering tone file\n");
+ 	priv->meteringfile = create_proc_entry(PROC_METERING_FNAME, 0200, xpd->proc_xpd_dir);
+diff -ur zaptel-1.2.27-patch/xpp/card_global.c zaptel-1.2.27/xpp/card_global.c
+--- zaptel-1.2.27-patch/xpp/card_global.c	2010-01-21 13:29:11.000000000 -0200
++++ zaptel-1.2.27/xpp/card_global.c	2010-01-21 13:27:32.000000000 -0200
+@@ -380,7 +380,7 @@
+ 		XPD_ERR(xpd, "Failed to create proc file '%s'\n", CHIP_REGISTERS);
+ 		goto err;
+ 	}
+-	xpd->proc_xpd_chipregs->owner = THIS_MODULE;
++//	xpd->proc_xpd_chipregs->owner = THIS_MODULE;
+ 	xpd->proc_xpd_chipregs->write_proc = proc_xpd_register_write;
+ 	xpd->proc_xpd_chipregs->read_proc = proc_xpd_register_read;
+ 	xpd->proc_xpd_chipregs->data = xpd;
+diff -ur zaptel-1.2.27-patch/xpp/card_pri.c zaptel-1.2.27/xpp/card_pri.c
+--- zaptel-1.2.27-patch/xpp/card_pri.c	2010-01-21 13:29:11.000000000 -0200
++++ zaptel-1.2.27/xpp/card_pri.c	2010-01-21 13:10:43.000000000 -0200
+@@ -412,7 +412,7 @@
+ 		XPD_ERR(xpd, "Failed to create proc '%s'\n", PROC_PRI_INFO_FNAME);
+ 		goto err;
+ 	}
+-	priv->pri_info->owner = THIS_MODULE;
++//	priv->pri_info->owner = THIS_MODULE;
+ 	priv->pri_info->write_proc = proc_pri_info_write;
+ 	priv->pri_info->read_proc = proc_pri_info_read;
+ 	priv->pri_info->data = xpd;
+diff -ur zaptel-1.2.27-patch/xpp/xbus-core.c zaptel-1.2.27/xpp/xbus-core.c
+--- zaptel-1.2.27-patch/xpp/xbus-core.c	2010-01-21 13:29:11.000000000 -0200
++++ zaptel-1.2.27/xpp/xbus-core.c	2010-01-21 13:11:45.000000000 -0200
+@@ -985,7 +985,7 @@
+ 			XBUS_ERR(xbus, "Failed to create proc file '%s'\n", PROC_XBUS_WAITFOR_XPDS);
+ 			goto err;
+ 		}
+-		worker->proc_xbus_waitfor_xpds->owner = THIS_MODULE;
++//		worker->proc_xbus_waitfor_xpds->owner = THIS_MODULE;
+ 	}
+ #endif
+ 	return worker;
+@@ -1194,7 +1194,7 @@
+ 		err = -EIO;
+ 		goto nobus;
+ 	}
+-	xbus->proc_xbus_summary->owner = THIS_MODULE;
++//	xbus->proc_xbus_summary->owner = THIS_MODULE;
+ #ifdef	PROTOCOL_DEBUG
+ 	xbus->proc_xbus_command = create_proc_entry(PROC_XBUS_COMMAND, 0200, xbus->proc_xbus_dir);
+ 	if (!xbus->proc_xbus_command) {
+@@ -1204,7 +1204,7 @@
+ 	}
+ 	xbus->proc_xbus_command->write_proc = proc_xbus_command_write;
+ 	xbus->proc_xbus_command->data = xbus;
+-	xbus->proc_xbus_command->owner = THIS_MODULE;
++//	xbus->proc_xbus_command->owner = THIS_MODULE;
+ #endif
+ #endif
+ #ifdef	XPP_DEBUGFS
+@@ -1649,7 +1649,7 @@
+ 		ret = -EFAULT;
+ 		goto err;
+ 	}
+-	proc_xbuses->owner = THIS_MODULE;
++//	proc_xbuses->owner = THIS_MODULE;
+ #endif
+ #ifdef	XPP_DEBUGFS
+ 	DBG(GENERAL, "Creating debugfs xpp root\n");
+diff -ur zaptel-1.2.27-patch/xpp/xpp_usb.c zaptel-1.2.27/xpp/xpp_usb.c
+--- zaptel-1.2.27-patch/xpp/xpp_usb.c	2010-01-21 13:29:11.000000000 -0200
++++ zaptel-1.2.27/xpp/xpp_usb.c	2010-01-21 13:28:02.000000000 -0200
+@@ -756,7 +756,7 @@
+ 		retval = -EIO;
+ 		goto probe_failed;
+ 	}
+-	procsummary->owner = THIS_MODULE;
++//	procsummary->owner = THIS_MODULE;
+ #endif
+ 	bus_count++;
+ 	xusb->xbus_num = xbus->num;
+diff -ur zaptel-1.2.27-patch/xpp/xpp_zap.c zaptel-1.2.27/xpp/xpp_zap.c
+--- zaptel-1.2.27-patch/xpp/xpp_zap.c	2010-01-21 13:29:11.000000000 -0200
++++ zaptel-1.2.27/xpp/xpp_zap.c	2010-01-21 13:27:08.000000000 -0200
+@@ -160,13 +160,13 @@
+ 		XPD_ERR(xpd, "Failed to create proc file '%s'\n", PROC_XPD_SUMMARY);
+ 		goto err;
+ 	}
+-	xpd->proc_xpd_summary->owner = THIS_MODULE;
++//	xpd->proc_xpd_summary->owner = THIS_MODULE;
+ 	xpd->proc_xpd_ztregister = create_proc_entry(PROC_XPD_ZTREGISTER, 0644, xpd->proc_xpd_dir);
+ 	if (!xpd->proc_xpd_ztregister) {
+ 		XPD_ERR(xpd, "Failed to create proc file '%s'\n", PROC_XPD_ZTREGISTER);
+ 		goto err;
+ 	}
+-	xpd->proc_xpd_ztregister->owner = THIS_MODULE;
++//	xpd->proc_xpd_ztregister->owner = THIS_MODULE;
+ 	xpd->proc_xpd_ztregister->data = xpd;
+ 	xpd->proc_xpd_ztregister->read_proc = proc_xpd_ztregister_read;
+ 	xpd->proc_xpd_ztregister->write_proc = proc_xpd_ztregister_write;
+@@ -175,7 +175,7 @@
+ 		XPD_ERR(xpd, "Failed to create proc file '%s'\n", PROC_XPD_BLINK);
+ 		goto err;
+ 	}
+-	xpd->proc_xpd_blink->owner = THIS_MODULE;
++//	xpd->proc_xpd_blink->owner = THIS_MODULE;
+ 	xpd->proc_xpd_blink->data = xpd;
+ 	xpd->proc_xpd_blink->read_proc = proc_xpd_blink_read;
+ 	xpd->proc_xpd_blink->write_proc = proc_xpd_blink_write;

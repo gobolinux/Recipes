@@ -1,0 +1,26 @@
+# Recipe (MakeRecipe) for MPlayer by Hisham Muhammad <hisham@gobolinux.org>, on Sun Jun 27 01:02:35 BRT 2010
+# Recipe for version 1.0_rc3 by Hisham Muhammad <hisham@gobolinux.org>, on Sun Jun 27 01:02:35 BRT 2010
+compile_version=1.9.0
+urls=(
+   "http://www.mplayerhq.hu/MPlayer/releases/MPlayer-1.0rc3.tar.bz2"
+   "http://www1.mplayerhq.hu/MPlayer/skins/plastik-2.0.tar.bz2"
+)
+file_size=9650074
+file_md5=e1221be5fcad74a2a4185f67ba6c9ae0
+recipe_type=configure
+configure_options=(
+   "--enable-gui"
+   "--win32codecsdir=$goboShared/mplayer-codecs"
+   "--codecsdir=$target/share/mplayer-codecs"
+   "--enable-largefiles"
+   "--language=all"
+   "--disable-arts"
+)
+
+pre_install() {
+   skindir="$target/share/mplayer/skins"
+   mkdir -p ${skindir}
+   cp -a ../plastik ${skindir}
+   ln -nfs plastik ${skindir}/default
+   ln -sfn "$goboShared/fonts/TTF/DejaVuSans.ttf" ${target}/share/mplayer/subfont.ttf
+}

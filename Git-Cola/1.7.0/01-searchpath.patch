@@ -1,0 +1,25 @@
+From: Michael Homer <mwh@mwh.geek.nz>
+Subject: Make library search path symlink-aware
+
+Previously, git-cola would find the directory two up from the running
+file and append some path components to it without reference to the
+filesystem. When git-cola (and hence __file__) was a symlink this
+would break, causing the application to fail to find its own
+libraries. Instead, resolve any symlink using os.path.realpath at the
+beginning, before any path manipulation.
+
+diff --git a/bin/git-cola b/bin/git-cola
+index 4ec0413..d74726a 100755
+--- a/bin/git-cola
++++ b/bin/git-cola
+@@ -24,8 +24,8 @@ def cola_init():
+     """Provides access to the cola modules"""
+     # Try to detect where it is run from and set prefix and the search path.
+     # It is assumed that the user installed Cola using the --prefix= option
+-    prefix = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+-
++    prefix = os.path.dirname(os.path.dirname(
++        os.path.realpath(os.path.abspath(__file__))))
+     # Look for modules in the source or install trees
+     cola_mod = os.path.join(prefix, 'cola', '__init__.py')
+     if os.path.exists(cola_mod):

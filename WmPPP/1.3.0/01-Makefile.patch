@@ -1,0 +1,34 @@
+--- wmppp.app/wmppp/Makefile.orig	2009-10-18 19:56:28.000000000 -0200
++++ wmppp.app/wmppp/Makefile	2009-10-18 19:58:11.000000000 -0200
+@@ -1,3 +1,5 @@
++DESTDIR = /usr/local
++SYSCONFDIR = /etc
+ LIBDIR = -L/usr/X11R6/lib
+ LIBS   = -lXpm -lXext -lX11
+ CFLAGS = -O2
+@@ -21,15 +23,14 @@ clean::
+ 	rm wmppp getmodemspeed
+ 
+ install::
+-	
+-	cp -f wmppp /usr/local/bin/
+-	chmod 755 /usr/local/bin/wmppp
+-	chown root:root /usr/local/bin/wmppp
+-	cp getmodemspeed /etc/ppp/
+-	chmod 755 /etc/ppp/getmodemspeed
+-	chown root.root /etc/ppp/getmodemspeed
+-	cp -f user.wmppprc /etc/wmppprc
+-	chmod 644 /etc/wmppprc
+-	chown root.root /etc/wmppprc
+-	cp -f user.wmppprc $(HOME)/.wmppprc
++	cp -f wmppp $(DESTDIR)/bin/
++	chmod 755 $(DESTDIR)/bin/wmppp
++	chown 0:0 $(DESTDIR)/bin/wmppp
++	mkdir -p $(SYSCONFDIR)/ppp
++	cp getmodemspeed $(SYSCONFDIR)/ppp/
++	chmod 755 $(SYSCONFDIR)/ppp/getmodemspeed
++	chown 0:0 $(SYSCONFDIR)/ppp/getmodemspeed
++	cp -f user.wmppprc $(SYSCONFDIR)/wmppprc
++	chmod 644 $(SYSCONFDIR)/wmppprc
++	chown 0:0 $(SYSCONFDIR)/wmppprc
+ 	echo "WMPPP installation finished."

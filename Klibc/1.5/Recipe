@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Klibc by Aitor Perez Iturri, on dom abr 8 22:56:49 CEST 2007
+# Recipe for version 1.5 by Aitor Perez Iturri, on dom abr 8 22:56:49 CEST 2007
+compile_version=1.8.2
+url="ftp://ftp.kernel.org/pub/linux/libs/klibc/Stable/Stable/klibc-1.5.tar.gz"
+file_size=599055
+file_md5=d55ce89c0656a7d6896ec0b2af07b5dc
+recipe_type=makefile
+makefile='Makefile'
+environment=(
+	PREFIX=$target	
+)

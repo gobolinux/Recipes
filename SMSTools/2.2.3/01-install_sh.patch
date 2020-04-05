@@ -1,0 +1,72 @@
+--- smstools/install.sh.orig	2006-07-01 03:33:01.000000000 -0300
++++ smstools/install.sh	2006-07-01 03:36:25.000000000 -0300
+@@ -1,6 +1,10 @@
+ #!/bin/sh
+ #Do not run directly. This is a helper script for make.
+ 
++PREFIX=/Programs/SMSTools/2.2.3
++SYSCONFDIR=/Programs/SMSTools/Settings
++LOCALSTATEDIR=/Programs/SMSTools/Variable
++
+ copy()
+ {
+   if [ -f $2 ]; then
+@@ -47,41 +51,32 @@ if [ ! -f src/smsd ] && [ ! -f src/smsd.
+ fi
+ 
+ echo "Installing binary program files"
+-makedir /usr/local
+-makedir /usr/local/bin
++makedir $PREFIX
++makedir $PREFIX/bin
+ if [ -f src/smsd.exe ]; then
+-  forcecopy src/smsd.exe /usr/local/bin/smsd.exe
++  forcecopy src/smsd.exe $PREFIX/bin/smsd.exe
+ else
+-  forcecopy src/smsd /usr/local/bin/smsd
++  forcecopy src/smsd $PREFIX/bin/smsd
+ fi
+-delete /usr/local/bin/getsms
+-delete /usr/local/bin/putsms
++delete $PREFIX/bin/getsms
++delete $PREFIX/bin/putsms
+ 
+ echo "Installing some scripts"
+-copy scripts/pkill /usr/local/bin/pkill
+-copy scripts/sendsms /usr/local/bin/sendsms
+-copy scripts/sms2html /usr/local/bin/sms2html
+-copy scripts/sms2unicode /usr/local/bin/sms2unicode
+-copy scripts/unicode2sms /usr/local/bin/unicode2sms
++copy scripts/pkill $PREFIX/bin/pkill
++copy scripts/sendsms $PREFIX/bin/sendsms
++copy scripts/sms2html $PREFIX/bin/sms2html
++copy scripts/sms2unicode $PREFIX/bin/sms2unicode
++copy scripts/unicode2sms $PREFIX/bin/unicode2sms
+ 
+ echo "Installing config file"
+-copy examples/smsd.conf.easy /etc/smsd.conf
++copy examples/smsd.conf.easy $SYSCONFDIR/smsd.conf
+ 
+ echo "Creating minimum spool directories"
+-makedir /var/spool
+-makedir /var/spool/sms
+-makedir /var/spool/sms/incoming
+-makedir /var/spool/sms/outgoing
+-makedir /var/spool/sms/checked
+-
+-echo "Installing start-script"
+-if [ -d /etc/init.d ]; then
+-  copy scripts/sms /etc/init.d/sms 
+-elif [ -d /sbin/init.d ]; then
+-   copy scripts/sms /sbin/init.d/sms
+-else
+-  echo "  I do not know where to copy scripts/sms. Please find out yourself."
+-fi
++makedir $LOCALSTATEDIR/spool
++makedir $LOCALSTATEDIR/spool/sms
++makedir $LOCALSTATEDIR/spool/sms/incoming
++makedir $LOCALSTATEDIR/spool/sms/outgoing
++makedir $LOCALSTATEDIR/spool/sms/checked
+ 
+ echo ""
+ echo "Example script files are not installed automatically."

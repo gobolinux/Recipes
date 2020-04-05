@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Rhythmbox by Andreas Köhler <andi5.py@gmx.net>, on Fri Aug 22 01:14:26 CEST 2008
+# Recipe for version 0.11.6 by Andreas Köhler <andi5.py@gmx.net>, on Fri Aug 22 01:14:26 CEST 2008
+compile_version=1.11.2
+url="ftp://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.11/rhythmbox-0.11.6.tar.bz2"
+file_size=4683400
+file_md5=b827e047d13954ba956c3c4ea940935e
+recipe_type=configure
+configure_options=(
+   --disable-scrollkeeper
+)

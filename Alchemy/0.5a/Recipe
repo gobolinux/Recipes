@@ -1,0 +1,28 @@
+# Recipe (MakeRecipe) for Alchemy by Baffo32 <baffo32@gmail.com>, on Wed Mar 17 09:02:55 EDT 2010
+# Recipe for version 0.5a by Baffo32 <baffo32@gmail.com>, on Wed Mar 17 09:02:55 EDT 2010
+compile_version=1.13.2
+url="http://download.macromedia.com/pub/labs/alchemy/alchemy_sdk_ubuntu_p1_121008.zip"
+file_size=47780154
+file_md5=db9a70e76c2a4f97719b70c87d3d6323
+dir='alchemy-ubuntu-v0.5a'
+recipe_type='manifest'
+
+docs=(
+   LICENSE
+   CHANGES
+   README.ubuntu
+)
+
+manifest=(
+   achacks:achacks
+   avm2-libc:avm2-libc
+   bin:bin
+   flashlibs:flashlibs
+   samples:samples
+)
+
+pre_link() {
+   mkdir -p "$target"/usr/local/lib
+   ln -sf "llvm-gcc4-ubuntu-install/gcc" "$target/bin/llvm-gcc"
+   ln -sf "llvm-gcc4-ubuntu-install/g++" "$target/bin/llvm-g++"
+}

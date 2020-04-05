@@ -1,0 +1,40 @@
+--- gaim-0.82.1.orig/src/protocols/oscar/oscar.c	2004-08-25 18:29:00.000000000 -0700
++++ gaim-0.82.1/src/protocols/oscar/oscar.c	2004-08-28 12:44:40.202965861 -0700
+@@ -427,7 +427,10 @@
+ 		else
+ 			charsetstr = "ISO-8859-1";
+ 	else if (charset == AIM_CHARSET_ASCII)
+-		charsetstr = "UTF-8";
++		if ((sourcesn != NULL) && isdigit(sourcesn[0]))
++			charsetstr = gaim_account_get_string(account, "encoding", OSCAR_DEFAULT_CUSTOM_ENCODING);
++		else
++			charsetstr = "UTF-8";
+ 	else if (charset == 0x000d)
+ 		/* Mobile AIM client on a Nokia 3100 and an LG VX6000 */
+ 		charsetstr = "UTF-8";
+@@ -3581,9 +3584,11 @@
+ 
+ static int incomingim_chan4(aim_session_t *sess, aim_conn_t *conn, aim_userinfo_t *userinfo, struct aim_incomingim_ch4_args *args, time_t t) {
+ 	GaimConnection *gc = sess->aux_data;
++	GaimAccount *account = gaim_connection_get_account(gc);
+ 	gchar **msg1, **msg2;
+ 	GError *err = NULL;
+ 	int i, numtoks;
++	const gchar *charsetstr;
+ 
+ 	if (!args->type || !args->msg || !args->uin)
+ 		return 1;
+@@ -3595,9 +3600,12 @@
+ 	msg1 = g_strsplit(args->msg, "\376", 0);
+ 	for (numtoks=0; msg1[numtoks]; numtoks++);
+ 	msg2 = (gchar **)g_malloc((numtoks+1)*sizeof(gchar *));
++	charsetstr = "ISO-8859-1";
++	if (isdigit(*(gaim_account_get_username(account))))
++		charsetstr = gaim_account_get_string(account, "encoding", OSCAR_DEFAULT_CUSTOM_ENCODING);
+ 	for (i=0; msg1[i]; i++) {
+ 		gaim_str_strip_cr(msg1[i]);
+-		msg2[i] = g_convert(msg1[i], strlen(msg1[i]), "UTF-8", "ISO-8859-1", NULL, NULL, &err);
++		msg2[i] = g_convert(msg1[i], strlen(msg1[i]), "UTF-8", charsetstr, NULL, NULL, &err);
+ 		if (err) {
+ 			gaim_debug_error("oscar",
+ 					   "Error converting a string from ISO-8859-1 to "

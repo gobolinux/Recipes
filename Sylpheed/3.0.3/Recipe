@@ -1,0 +1,15 @@
+# Recipe for version 3.0.3 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. júl. 4., vasárnap, 18.29.36 CEST
+# Recipe (MakeRecipe) for Sylpheed by Volker Wieban <buckoven@yaklinux.org>, on Sat Dec 18 15:38:43 BRST 2004
+compile_version=1.8.0
+url="http://sylpheed.sraoss.jp/sylpheed/v3.0/sylpheed-3.0.3.tar.bz2"
+file_size=2975743
+file_md5=c69e5787868c7a8b5fe74cc24ffca189
+recipe_type=configure
+configure_options=(
+#    --disable-deprecated 
+    --enable-ldap 
+    --disable-gtkspell
+)
+pre_install(){
+    GrepReplace -R "/usr/local/lib" "$target/lib" *.la
+}

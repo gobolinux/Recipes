@@ -1,0 +1,19 @@
+--- setup.py.bak	2008-11-20 13:24:45.000000000 +0100
++++ setup.py	2008-11-20 13:43:27.000000000 +0100
+@@ -181,12 +181,12 @@
+                     get_files('share/blueman/icons', "icons", ".*\.(png|svg)$") +
+ 		    [('share/icons/hicolor/48x48/apps', ["icons_sys/blueman.png"]),
+ 		    ('share/icons/hicolor/scalable/apps', ["icons_sys/blueman.svg"]),
+-		    ('/usr/share/dbus-1/system-services', ["sys/org.blueman.Mechanism.service"]),
+-		    ('/etc/dbus-1/system.d', ["sys/org.blueman.Mechanism.conf"]),
++		    ('share/dbus-1/system-services', ["sys/org.blueman.Mechanism.service"]),
++		    ('../Settings/dbus-1/system.d', ["sys/org.blueman.Mechanism.conf"]),
+ 		    ('lib/blueman', ["src/script/blueman-mechanism"]),
+ 		    ('lib/blueman', ["src/script/blueman-mechanism"]),
+-		    ('/etc/bluetooth', ["sys/network.conf"]),
+-		    ('/usr/bin', ["sys/blueman-ifup"])
++		    ('../Settings/bluetooth', ["sys/network.conf"]),
++		    ('bin', ["sys/blueman-ifup"])
+ 		    ],
+ 
+         cmdclass = {"build" : build_extra.build_extra,

@@ -1,0 +1,2 @@
+[ -d "${goboVariable}/mime" ] || mkdir -p ${goboVariable}/mime
+[ -d "${goboVariable}/mime/packages" ] || ln -s ${goboShared}/mime/packages ${goboVariable}/mime

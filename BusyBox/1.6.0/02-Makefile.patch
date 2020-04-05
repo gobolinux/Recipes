@@ -1,0 +1,22 @@
+--- busybox-1.6.0_old/Makefile	2007-06-01 16:25:04.000000000 +0200
++++ busybox-1.6.0/Makefile	2007-06-07 15:32:06.000000000 +0200
+@@ -273,7 +273,9 @@
+ # Make variables (CC, etc...)
+ 
+ AS		= $(CROSS_COMPILE)as
+-CC		= $(CROSS_COMPILE)gcc
++ifndef CC
++	CC		= $(CROSS_COMPILE)gcc
++endif
+ LD		= $(CC) -nostdlib
+ CPP		= $(CC) -E
+ AR		= $(CROSS_COMPILE)ar
+@@ -570,7 +572,7 @@
+       -o $@ -Wl,-M \
+       -Wl,--warn-common -Wl,--sort-common -Wl,--gc-sections \
+       -Wl,--start-group $(busybox-all) -Wl,--end-group \
+-      $(LDLIBS)
++      $(LDLIBS) -lrt
+ 
+ # Generate System.map
+ quiet_cmd_sysmap = SYSMAP

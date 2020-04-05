@@ -1,0 +1,13 @@
+--- xcalib-0.8/Makefile.orig	2007-08-26 18:30:34.000000000 -0300
++++ xcalib-0.8/Makefile	2010-12-14 14:54:13.000000000 -0200
+@@ -62,8 +62,8 @@ win_xcalib: xcalib.c
+ 	$(CC) $(CFLAGS) -mwindows -lm resource.o -o xcalib xcalib.o
+ 
+ install:
+-	cp ./xcalib $(DESTDIR)/usr/local/bin/
+-	chmod 0644 $(DESTDIR)/usr/local/bin/xcalib
++	cp ./xcalib $(DESTDIR)/bin/
++	chmod 0755 $(DESTDIR)/bin/xcalib
+ 
+ clean:
+ 	rm -f xcalib.o

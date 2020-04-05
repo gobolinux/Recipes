@@ -1,0 +1,5 @@
+[Name] portmap
+[Summary] RPC connection manager
+[License] BSD License (original)
+[Description] The portmapper manages RPC connections, which are used by protocols such as NFS and NIS. The portmap server must be running on machines which act as servers for protocols which make use of the RPC mechanism. This portmapper supports hosts.{allow,deny} type access control.
+[Homepage] ftp://ftp.porcupine.org/pub/security/index.html

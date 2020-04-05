@@ -1,0 +1,21 @@
+This patch disables the installation of html documents, as they are
+62MB (!).
+
+-
+Jonas Karlsson
+
+--- qt-x11-opensource-src-4.3.1/projects.pro	2007-08-07 15:08:56.000000000 +0200
++++ qt-x11-opensource-src-4.3.1/projects.pro.new	2007-09-02 08:23:44.000000000 +0200
+@@ -101,9 +101,9 @@
+ ### installations ####
+ 
+ #docs
+-htmldocs.files = $$QT_BUILD_TREE/doc/html/*
+-htmldocs.path = $$[QT_INSTALL_DOCS]/html
+-INSTALLS += htmldocs
++#htmldocs.files = $$QT_BUILD_TREE/doc/html/*
++#htmldocs.path = $$[QT_INSTALL_DOCS]/html
++#INSTALLS += htmldocs
+ 
+ #translations
+ translations.path=$$[QT_INSTALL_TRANSLATIONS]

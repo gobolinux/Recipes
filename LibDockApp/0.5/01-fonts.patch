@@ -1,0 +1,16 @@
+Remove entries not shipped with the package, as installation fails when they 
+are not found.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- dockapp/fonts/Makefile.am.orig	2010-03-28 01:40:05.000000000 -0300
++++ dockapp/fonts/Makefile.am	2010-03-28 01:40:13.000000000 -0300
+@@ -8,7 +8,7 @@
+ XFONTDIR = $(DESTDIR)/usr/X11R6/lib/X11/fonts
+ 
+ MYFONTDIR = /dockapp
+-MYDATA = luxel-ascii-06x09.pcf.gz seg7-ascii-05x07.pcf.gz fonts.dir fonts.alias
++MYDATA = luxel-ascii-06x09.pcf.gz seg7-ascii-05x07.pcf.gz
+ 
+ install-data-local:
+ 	$(INSTALL) -d $(XFONTDIR)$(MYFONTDIR)

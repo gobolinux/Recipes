@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for GPSTk by Nick Matteo <kundor@kundor.org>, on Sat Feb 21 15:57:07 EST 2009
+# Recipe for version 1.5 by Nick Matteo <kundor@kundor.org>, on Sat Feb 21 15:57:07 EST 2009
+compile_version=1.12.0
+url="$httpSourceforge/gpstk/gpstk1.5.src.tar.gz"
+file_size=7050592
+file_md5=098dd76b484599366506d7504fe5996a
+dir='gpstk1.5'
+recipe_type=configure
+
+pre_build() {
+    libtoolize --force
+    ./autogen.sh
+}

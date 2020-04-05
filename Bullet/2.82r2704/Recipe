@@ -1,0 +1,21 @@
+# Recipe for version 2.82r2704 by Hisham Muhammad <hisham@gobolinux.org>, on Tue Apr 8 18:27:15 BRT 2014
+# Recipe (MakeRecipe) for Bullet by Filipe Vieira, on Fri Jan 18 20:42:37 WET 2008
+compile_version=1.10.0
+url="http://bullet.googlecode.com/files/bullet-2.82-r2704.tgz"
+file="bullet-2.82-r2704.tar.gz"
+recipe_type=configure
+autogen_before_configure=yes
+
+pre_link()
+{
+   # Enlightenment 18 will ask for the missing headers below
+   for i in ./src/BulletSoftBody/btSoftBodySolvers.h \
+            ./src/BulletSoftBody/btDefaultSoftBodySolver.h \
+            ./src/BulletSoftBody/btSoftBodySolverVertexBuffer.h \
+   do
+      cp -v $i $target/include/bullet/BulletSoftBody
+   done
+              
+   cp -v ./src/BulletDynamics/ConstraintSolver/btFixedConstraint.h \
+      $target/include/bullet/BulletDynamics/ConstraintSolver
+}

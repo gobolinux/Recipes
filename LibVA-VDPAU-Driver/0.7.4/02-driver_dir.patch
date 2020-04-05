@@ -1,0 +1,18 @@
+--- libva-vdpau-driver-0.7.4/configure.ac.orig	2013-06-30 00:50:17.000000000 -0300
++++ libva-vdpau-driver-0.7.4/configure.ac	2013-06-30 00:50:42.000000000 -0300
+@@ -158,10 +158,12 @@ AC_DEFINE_UNQUOTED([VA_DRIVER_INIT_FUNC]
+     [Define driver entry-point])
+ 
+ dnl Check for VA-API drivers path
+-AC_MSG_CHECKING([for VA drivers path])
+-LIBVA_DRIVERS_PATH=`$PKG_CONFIG libva --variable driverdir`
+ if test -z "$LIBVA_DRIVERS_PATH"; then
+-    LIBVA_DRIVERS_PATH="/usr/lib/xorg/modules/drivers"
++    AC_MSG_CHECKING([for VA drivers path])
++    LIBVA_DRIVERS_PATH=`$PKG_CONFIG libva --variable driverdir`
++    if test -z "$LIBVA_DRIVERS_PATH"; then
++        LIBVA_DRIVERS_PATH="/usr/lib/xorg/modules/drivers"
++    fi
+ fi
+ AC_MSG_RESULT([$LIBVA_DRIVERS_PATH])
+ AC_SUBST(LIBVA_DRIVERS_PATH)

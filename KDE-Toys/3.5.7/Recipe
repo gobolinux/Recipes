@@ -1,0 +1,14 @@
+# Recipe for version 3.5.7 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Aug 17 11:12:59 CEST 2007
+# by Maglan C. Diemer
+
+url="http://download.kde.org/stable/3.5.7/src/kdetoys-3.5.7.tar.bz2"
+file_size=3257711
+file_md5=946e58b53ac4e6374051736a0eb4cf92
+compile_version=1.8.5
+recipe_type=configure
+configure_options=(
+   "--disable-debug"
+   "--disable-dependency-tracking"
+   "--disable-libsuffix"
+   #"DO_NOT_COMPILE=kmoon ktux"
+)

@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for LibDV by ro.ko@mcnon.com, on Sat Oct 16 01:59:34 BRST 2004
+# Recipe for version 0.103 by ro.ko@mcnon.com, on Sat Oct 16 01:59:34 BRST 2004
+compile_version=1.7.1
+url="$httpSourceforge/libdv/libdv-0.103.tar.gz"
+file_size=529106
+file_md5=b5c7d0db672a76528e100828dd866a79
+recipe_type=configure
+configure_options=(
+	"--enable-sdl"  
+)

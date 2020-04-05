@@ -1,0 +1,11 @@
+# Recipe for version 1.2 by Lucas C. Villa Real, on Mon May 3 11:36:34 BRT 2010
+# Recipe (MakeRecipe) for SystemTap by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Sep 24 21:08:53 BRT 2008
+compile_version=1.10.1
+url="http://sourceware.org/systemtap/ftp/releases/systemtap-1.2.tar.gz"
+file_size=1605296
+file_md5=8761f9a55f9de6fa4020f52f15ece39b
+recipe_type=configure
+
+configure_options=(
+	--without-rpm
+)

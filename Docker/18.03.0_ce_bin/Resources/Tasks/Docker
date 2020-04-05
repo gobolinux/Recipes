@@ -1,0 +1,16 @@
+#!/bin/sh
+
+source GoboPath
+
+case "$1" in
+[Ss]tart)
+   cgroupfs-mount
+   dockerd &> "$goboVariable/log/docker.log" &
+   sleep 0.1
+   ps aux | grep -q dockerd && echo "Docker started!"
+   ;;
+[Ss]top)
+   killall dockerd
+   ;;
+esac # is ridiculous
+

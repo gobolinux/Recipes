@@ -1,0 +1,87 @@
+Allow symlinks in $prefix/include, as that's not our installation prefix.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- glibc-2.10.1/sysdeps/unix/sysv/linux/configure.in.orig	2009-12-15 17:02:37.000000000 -0200
++++ glibc-2.10.1/sysdeps/unix/sysv/linux/configure.in	2009-12-15 17:04:52.000000000 -0200
+@@ -259,34 +259,5 @@ case "$machine" in
+ esac
+ changequote([,])
+ 
+-if test $host = $build; then
+-  # If $prefix/include/{net,scsi} are symlinks, make install will
+-  # clobber what they're linked to (probably a kernel tree).
+-  # test -L ought to work on all Linux boxes.
+-  if test "x$prefix" != xNONE; then
+-    ac_prefix=$prefix
+-  else
+-    ac_prefix=$ac_default_prefix
+-  fi
+-  AC_MSG_CHECKING([for symlinks in ${ac_prefix}/include])
+-  ac_message=
+-  if test -L ${ac_prefix}/include/net; then
+-    ac_message="$ac_message
+-   ${ac_prefix}/include/net is a symlink"
+-  fi
+-  if test -L ${ac_prefix}/include/scsi; then
+-    ac_message="$ac_message
+-   ${ac_prefix}/include/scsi is a symlink"
+-  fi
+-  if test -n "$ac_message"; then
+-    AC_MSG_ERROR([$ac_message
+-\`make install' will destroy the target of the link(s).
+-Delete the links and re-run configure, or better still, move the entire
+-${ac_prefix}/include directory out of the way.])
+-  else
+-    AC_MSG_RESULT(ok)
+-  fi
+-fi
+-
+ # We have inlined syscalls.
+ AC_DEFINE(HAVE_INLINED_SYSCALLS)
+--- glibc-2.11/sysdeps/unix/sysv/linux/configure.orig	2009-12-15 17:13:07.000000000 -0200
++++ glibc-2.11/sysdeps/unix/sysv/linux/configure	2009-12-15 17:13:18.000000000 -0200
+@@ -431,43 +431,6 @@ case "$machine" in
+     ;;
+ esac
+ 
+-
+-if test $host = $build; then
+-  # If $prefix/include/{net,scsi} are symlinks, make install will
+-  # clobber what they're linked to (probably a kernel tree).
+-  # test -L ought to work on all Linux boxes.
+-  if test "x$prefix" != xNONE; then
+-    ac_prefix=$prefix
+-  else
+-    ac_prefix=$ac_default_prefix
+-  fi
+-  { $as_echo "$as_me:$LINENO: checking for symlinks in ${ac_prefix}/include" >&5
+-$as_echo_n "checking for symlinks in ${ac_prefix}/include... " >&6; }
+-  ac_message=
+-  if test -L ${ac_prefix}/include/net; then
+-    ac_message="$ac_message
+-   ${ac_prefix}/include/net is a symlink"
+-  fi
+-  if test -L ${ac_prefix}/include/scsi; then
+-    ac_message="$ac_message
+-   ${ac_prefix}/include/scsi is a symlink"
+-  fi
+-  if test -n "$ac_message"; then
+-    { { $as_echo "$as_me:$LINENO: error: $ac_message
+-\`make install' will destroy the target of the link(s).
+-Delete the links and re-run configure, or better still, move the entire
+-${ac_prefix}/include directory out of the way." >&5
+-$as_echo "$as_me: error: $ac_message
+-\`make install' will destroy the target of the link(s).
+-Delete the links and re-run configure, or better still, move the entire
+-${ac_prefix}/include directory out of the way." >&2;}
+-   { (exit 1); exit 1; }; }
+-  else
+-    { $as_echo "$as_me:$LINENO: result: ok" >&5
+-$as_echo "ok" >&6; }
+-  fi
+-fi
+-
+ # We have inlined syscalls.
+ cat >>confdefs.h <<\_ACEOF
+ #define HAVE_INLINED_SYSCALLS 1

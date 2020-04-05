@@ -1,0 +1,20 @@
+--- licq-1.3.0/plugins/console/configure	2005-01-24 14:45:52.000000000 -0200
++++ licq-1.3.0-fabio.m/plugins/console/configure	2005-01-24 14:46:32.000000000 -0200
+@@ -15917,7 +15917,7 @@
+   echo $ECHO_N "(cached) $ECHO_C" >&6
+ else
+   ac_check_lib_save_LIBS=$LIBS
+-LIBS="-lcdk  $LIBS"
++LIBS="-lcdk -lm  $LIBS"
+ cat >conftest.$ac_ext <<_ACEOF
+ #line $LINENO "configure"
+ /* confdefs.h.  */
+@@ -15970,7 +15970,7 @@
+ #define HAVE_LIBCDK 1
+ _ACEOF
+ 
+-  LIBS="-lcdk $LIBS"
++  LIBS="-lcdk -lm $LIBS"
+ 
+ else
+   { { echo "$as_me:$LINENO: error:

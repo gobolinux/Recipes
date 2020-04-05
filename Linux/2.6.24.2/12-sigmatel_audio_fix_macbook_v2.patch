@@ -1,0 +1,30 @@
+Fixes audio on Macbook v2.
+
+From: Marek Sterzik <marek@milimetr.org>
+
+
+---
+
+ sound/pci/hda/patch_sigmatel.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/sound/pci/hda/patch_sigmatel.c b/sound/pci/hda/patch_sigmatel.c
+index c0e626b..e7995f6 100644
+--- a/sound/pci/hda/patch_sigmatel.c
++++ b/sound/pci/hda/patch_sigmatel.c
+@@ -81,6 +81,7 @@ enum {
+ 	/* for backward compatibility */
+ 	STAC_MACMINI,
+ 	STAC_MACBOOK,
++	STAC_MACBOOK_V2,
+ 	STAC_MACBOOK_PRO_V1,
+ 	STAC_MACBOOK_PRO_V2,
+ 	STAC_IMAC_INTEL,
+@@ -905,6 +906,7 @@ static const char *stac922x_models[STAC_922X_MODELS] = {
+ 	/* for backward compatibility */
+ 	[STAC_MACMINI]	= "macmini",
+ 	[STAC_MACBOOK]	= "macbook",
++	[STAC_MACBOOK_V2]	= "macbook-v2",
+ 	[STAC_MACBOOK_PRO_V1]	= "macbook-pro-v1",
+ 	[STAC_MACBOOK_PRO_V2]	= "macbook-pro",
+ 	[STAC_IMAC_INTEL] = "imac-intel",

@@ -1,0 +1,15 @@
+# Recipe for version 2.84 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Aug 1 00:53:25 BRT 2014
+# Recipe (MakeRecipe) for Transmission by Nathan Middleton, on Mon Oct 8 22:07:45 CDT 2007
+compile_version=1.9.0
+url="http://download.transmissionbt.com/files/transmission-2.84.tar.xz"
+file_size=3077836
+file_md5=411aec1c418c14f6765710d89743ae42
+recipe_type=configure
+dir="transmission-2.84"
+
+configure_options=(
+    --enable-cli
+    --with-gtk
+    --enable-daemon
+    --with-inotify
+)

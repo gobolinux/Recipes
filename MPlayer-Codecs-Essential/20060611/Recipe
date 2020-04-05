@@ -1,0 +1,10 @@
+# Recipe for version 20061022 by Lucas C. Villa Real, on Sat Apr  7 02:33:54 BRT 2007
+url="http://www1.mplayerhq.hu/MPlayer/releases/codecs/essential-20061022.tar.bz2"
+file_size=10080104
+file_md5=abcf4a3abc16cf88c9df7e0a77e9b941
+recipe_type=manifest
+
+pre_install() {
+   mkdir -p $target/share/mplayer-codecs
+   cp * $target/share/mplayer-codecs/
+}

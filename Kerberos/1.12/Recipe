@@ -1,0 +1,30 @@
+# Recipe for version 1.12 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jan 4 03:35:40 GMT 2014
+# Recipe (MakeRecipe) for Kerberos by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Jul 12 09:23:04 BRT 2005
+compile_version=1.8.0
+url="http://web.mit.edu/kerberos/dist/krb5/1.12/krb5-1.12-signed.tar"
+file_size=11929600
+file_md5=b6eb0570d55db010fff04d533208d908
+recipe_type=configure
+unpack_files=files_in_root
+configure_options=(
+   --enable-ipv6
+)
+
+install_variables=(
+   FILE_MANDIR=$target/man/man5
+   FILE_CATDIR=$target/man/cat5
+   ADMIN_MANDIR=$target/man/man8
+   ADMIN_CATDIR=$target/man/cat8
+   SERVER_MANDIR=$target/man/man8
+   SERVER_CATDIR=$target/man/cat8
+   CLIENT_MANDIR=$target/man/man1
+   CLIENT_CATDIR=$target/man/cat1
+)
+
+pre_build() {
+   tar -zxvf krb5-1.12.tar.gz
+   chown -R `ls -l krb5-1.12.tar.gz.asc| awk '{print $3}'` krb5-1.12
+   mv krb5-1.12/src/* .
+   mv krb5-1.12/doc .
+   rm -rf krb5-1.12*
+}

@@ -1,0 +1,23 @@
+# Recipe (MakeRecipe) for HaXe by Baffo32 <baffo32@gmail.com>, on Wed Sep 29 19:18:13 EDT 2010
+# Recipe for version 2.06 by Baffo32 <baffo32@gmail.com>, on Wed Sep 29 19:18:13 EDT 2010
+compile_version=1.13.3
+recipe_type=manifest
+
+manifest=(
+   "haxe:bin"
+   "haxedoc:bin"
+   "haxelib:sbin"
+   "doc:doc"
+   "CHANGES.txt:doc"
+   "LICENSE.txt:doc"
+   "std:lib/haxe/std"
+)
+
+
+pre_link() {
+   haxelibdir="${goboSystem}/Aliens/HaXeLib"
+   settingsdir="${target}/Resources/Defaults/Settings"
+
+   mkdir -p "${settingsdir}" "${haxelibdir}"
+   echo -n "${haxelibdir}" > "${settingsdir}/.haxelib"
+}

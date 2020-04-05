@@ -1,0 +1,14 @@
+# Recipe for version 2.69 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Dec 15 18:21:15 CET 2007
+compile_version=1.9.0
+url="ftp://ftp.kernel.org/pub/linux/docs/manpages/man-pages-2.69.tar.bz2"
+file_size=1857024
+file_md5=ab97c10a35c58ca22d97070340241aa6
+recipe_type=makefile
+do_build=no
+install_variables=(
+   "MANDIR=$target/man"
+)
+pre_link() {
+   # we have our own hier man page.
+   $sudo_exec rm -f $target/man/man7/hier.7
+}

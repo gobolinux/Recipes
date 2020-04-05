@@ -1,0 +1,15 @@
+We have LibExif headers in a subdir
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+
+--- libexif-gtk-0.3.5/configure.old	2009-01-03 12:02:47.000000000 +0100
++++ libexif-gtk-0.3.5/configure	2009-01-03 12:02:36.000000000 +0100
+@@ -27383,7 +27383,7 @@
+ cat confdefs.h >>conftest.$ac_ext
+ cat >>conftest.$ac_ext <<_ACEOF
+ /* end confdefs.h.  */
+-#include <exif-mem.h>
++#include <libexif/exif-mem.h>
+ _ACEOF
+ if { (eval echo "$as_me:$LINENO: \"$ac_cpp conftest.$ac_ext\"") >&5
+   (eval $ac_cpp conftest.$ac_ext) 2>conftest.er1

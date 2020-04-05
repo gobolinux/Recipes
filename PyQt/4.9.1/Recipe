@@ -1,0 +1,15 @@
+# Recipe for version 4.9.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu May 3 13:58:14 BRT 2012
+# on Sat Apr 16 12:56:40 CEST 2005
+
+compile_version=1.9.0
+url="http://www.riverbankcomputing.com/static/Downloads/PyQt4/PyQt-x11-gpl-4.9.1.tar.gz"
+file_size=9742132
+file_md5=7f495dc49f71e3bfb64bf942e0d8bb3c
+
+recipe_type=makefile
+pre_build() {
+    pythonversion=`python --version 2>&1 | awk {'print $2'} | cut -b1-3`
+    sitepackages="$target/lib/python${pythonversion}/site-packages"
+    echo yes | python configure.py -b $target/bin -v $target/Shared/sip -d $sitepackages -p $target/plugins 
+    chmod -R a+rw .
+}

@@ -1,0 +1,13 @@
+--- gtk+-2.6.8/Makefile.in.orig	2006-08-30 15:57:58.000000000 -0300
++++ gtk+-2.6.8/Makefile.in	2006-08-30 15:58:51.000000000 -0300
+@@ -285,8 +285,8 @@ sharedstatedir = @sharedstatedir@
+ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
+ 
+-SRC_SUBDIRS = gdk-pixbuf gdk gtk modules demos tests contrib
+-SUBDIRS = po po-properties $(SRC_SUBDIRS) docs build m4macros
++SRC_SUBDIRS = gdk-pixbuf gdk gtk modules
++SUBDIRS = po po-properties $(SRC_SUBDIRS) build m4macros
+ 
+ # require automake 1.4
+ AUTOMAKE_OPTIONS = 1.7

@@ -1,0 +1,34 @@
+Need to include <cstdio> to build properly on gcc version 4.4.2.
+diff -pruN strigi-0.6.4/src/daemon/eventlistener/inotifylistener.cpp strigi-0.6.4.new/src/daemon/eventlistener/inotifylistener.cpp
+--- strigi-0.6.4/src/daemon/eventlistener/inotifylistener.cpp	2009-02-01 20:55:57.000000000 +0100
++++ strigi-0.6.4.new/src/daemon/eventlistener/inotifylistener.cpp	2009-11-13 19:57:11.000000000 +0100
+@@ -27,6 +27,7 @@
+ #include "indexreader.h"
+ #include "../strigilogging.h"
+ 
++#include <cstdio>
+ #include <cerrno>
+ #include <cstring>
+ #include <sys/resource.h>
+diff -pruN strigi-0.6.4/src/daemon/strigithread.cpp strigi-0.6.4.new/src/daemon/strigithread.cpp
+--- strigi-0.6.4/src/daemon/strigithread.cpp	2009-02-01 20:56:01.000000000 +0100
++++ strigi-0.6.4.new/src/daemon/strigithread.cpp	2009-11-13 19:57:35.000000000 +0100
+@@ -27,6 +27,7 @@
+ #include <signal.h>
+ #include <vector>
+ #include <stdlib.h>
++#include <cstdio>
+ #include <unistd.h>
+ #include <sys/resource.h>
+ #include <sys/syscall.h>
+diff -pruN strigi-0.6.4/src/luceneindexer/jsgzipcompressstream.h strigi-0.6.4.new/src/luceneindexer/jsgzipcompressstream.h
+--- strigi-0.6.4/src/luceneindexer/jsgzipcompressstream.h	2009-02-01 20:55:38.000000000 +0100
++++ strigi-0.6.4.new/src/luceneindexer/jsgzipcompressstream.h	2009-11-13 19:58:01.000000000 +0100
+@@ -20,6 +20,7 @@
+ #ifndef GZIPCOMPRESSSTREAM_H
+ #define GZIPCOMPRESSSTREAM_H
+ 
++#include <cstdio>
+ #include <strigi/strigiconfig.h>   // (u)int64_t
+ #include <CLucene/util/streambase.h>
+ #include <CLucene/util/bufferedstream.h>

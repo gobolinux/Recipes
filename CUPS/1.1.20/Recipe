@@ -1,0 +1,15 @@
+url="ftp://ftp2.easysw.com/pub/cups/1.1.20/cups-1.1.20-source.tar.bz2"
+file_size=3741510
+file_md5=09d0be2bad1b0617bc0eba6eef81f6e9
+dir='cups-1.1.20'
+compile_version=1.7.1
+recipe_type=configure
+
+configure_options=(
+	"--with-rcdir=$target"
+	"--with-doc=$target/doc"
+	"--with-fontpath=/Files/Fonts/Ghostscript"
+	"--with-cups-user=gobo"
+	"--with-cups-group=sys"
+	"--with-python"
+)

@@ -1,5 +1,0 @@
-[Name] runit
-[Summary] A cross platform UNIX init scheme with service supervision.
-[License] BSD License (revised)
-[Description] runit is a daemontools alike replacement for SysV-init and other init schemes. It currently runs on GNU/Linux, OpenBSD, FreeBSD, Mac OS X, and Solaris, and can easily be adapted to other Unix operating systems. runit implements a simple three-stage concept. Stage 1 performs the system's one-time initialization tasks. Stage 2 starts the system's uptime services (via the runsvdir program). Stage 3 handles the tasks necessary to shutdown and halt or reboot.
-[Homepage] http://smarden.org/runit/

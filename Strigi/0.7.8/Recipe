@@ -1,0 +1,20 @@
+# Recipe for version 0.7.8 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jan 13 13:09:54 GMT 2014
+# Recipe (MakeRecipe) for Strigi by Giambattista Bloisi <giamby@infinito.it>, on Sat Jan 12 17:05:03 CET 2008
+compile_version=1.10.0
+url="http://www.vandenoever.info/software/strigi/strigi-0.7.8.tar.bz2"
+file_size=810574
+file_md5=d69443234f4286d71997db9de543331a
+file="strigi-0.7.8.tar.bz2"
+recipe_type=cmake
+
+pre_build() {
+    sed -i "s|BufferedStream :|STREAMS_EXPORT &|" $dir/libstreams/include/strigi/bufferedstream.h
+}
+
+pre_link() {
+    GrepReplace -B "\${PACKAGE_PREFIX_DIR}" "$target" \
+		$target/lib/cmake/LibSearchClient/LibSearchClientConfig.cmake \
+		$target/lib/cmake/LibStreamAnalyzer/LibStreamAnalyzerConfig.cmake \
+		$target/lib/cmake/LibStreams/LibStreamsConfig.cmake \
+		$target/lib/cmake/Strigi/StrigiConfig.cmake
+}

@@ -1,0 +1,12 @@
+# Recipe for version 3.5.5 by Andre Detsch <detsch@gobolinux.org>, on Wed Nov 8 16:44:59 BRST 2006
+# by Maglan C. Diemer , 3.5.5 by roko
+compile_version=1.8.0
+url="ftp://ftp.oregonstate.edu/pub/kde/stable/3.5.5/src/kdeutils-3.5.5.tar.bz2"
+recipe_type=configure
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+  "--disable-libsuffix"
+  #"DO_NOT_COMPILE=kedit kdelirc"
+  # ark charselectapplet doc kcalc kcardtools kcharselect kdelirc kdessh kdf kedit kfloppy kgpg khexedit kjots klaptopdaemon kmilo kregexpeditor ksim ktimer kwallet
+)

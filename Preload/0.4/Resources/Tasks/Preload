@@ -1,0 +1,44 @@
+#!/bin/sh
+#
+# Starts the preload daemon. Adapted for GoboLinux by Daniele Maccari.
+
+start() {
+	# Check if it is already running
+	if [ ! -f /var/lock/preload ]; then
+	    preload && touch /var/lock/preload
+	fi
+}
+
+stop() {
+	killall preload
+	rm -f /var/lock/preload
+}
+
+
+restart() {
+	stop
+	start
+}
+
+# Check for the preload executable to exist.
+[ -x /sbin/preload ] || die "Preload couldn't be found"
+
+#
+# See how we were called.
+#
+case "$1" in
+	[sS]tart)
+		start
+		;;
+	[sS]top)
+		stop
+		;;
+	[rR]estart)
+		restart
+		;;
+	*)
+		echo "Usage: $0 {start|stop|restart}"
+		;;
+esac
+
+exit 0

@@ -1,0 +1,11 @@
+# Recipe for version 2.6 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Feb 3 09:43:07 BRST 2008
+# Recipe (MakeRecipe) for LibConfuse by Harald Klimach, on Wed Feb 8 23:45:32 CET 2006
+compile_version=1.8.0
+url="http://bzero.se/confuse/confuse-2.6.tar.gz"
+file_size=504017
+file_md5=0e883d66f0f58fc33585b430c652aa30
+recipe_type=configure
+
+configure_options=(
+    --enable-shared
+)

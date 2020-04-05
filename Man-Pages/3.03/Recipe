@@ -1,0 +1,14 @@
+# Recipe for version 3.03 by Jonas Karlsson <jonka750@student.liu.se>, on Thu Jul 10 06:58:43 GMT 2008
+compile_version=1.9.0
+url="ftp://ftp.kernel.org/pub/linux/docs/manpages/man-pages-3.03.tar.bz2"
+file_size=939749
+file_md5=5fe88f327023ccc8ac16fb123c6f24d7
+recipe_type=makefile
+do_build=no
+install_variables=(
+   "MANDIR=$target/man"
+)
+pre_link() {
+   # we have our own hier man page.
+   $sudo_exec rm -f $target/man/man7/hier.7
+}

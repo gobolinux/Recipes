@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for Snes9express by Lucas C. Villa Real, on Sun Jan 21 11:38:06 BRST 2007
+# Recipe for version 1.42 by Lucas C. Villa Real, on Sun Jan 21 11:38:06 BRST 2007
+compile_version=1.8.0
+url="$httpSourceforge/snes9express/snes9express-1.42.tar.gz"
+file_size=367561
+file_md5=53dbfe0641d8393e0782f152cf75b9e9
+recipe_type=configure
+
+pre_build() {
+    if [ ! -f memcmp.cc ]
+    then
+        touch memcmp.cc
+        $CXX -c memcmp.cc 
+    fi
+}

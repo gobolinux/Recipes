@@ -1,0 +1,12 @@
+# Recipe for version 1.15 by Jonas Karlsson <jonas@gobolinux.org>, on Tue May 12 23:40:44 CEST 2009
+compile_version=1.8.0
+url="http://ftp.altlinux.com/pub/people/legion/kbd/kbd-1.15.tar.gz"
+file_size=1319187
+file_md5=ba3fd20e6c79e58422c3cc6b28718939
+recipe_type=configure
+
+pre_patch(){
+   sed -i -e '1i KEYCODES_PROGS = @KEYCODES_PROGS@' \
+      -e '1i RESIZECONS_PROGS = @RESIZECONS_PROGS@' src/Makefile.in
+   sed -i "s/ifdef OPTIONAL_PROGS/ifeq (\$(OPTIONAL_PROGS),yes)/" man/Makefile.in
+}

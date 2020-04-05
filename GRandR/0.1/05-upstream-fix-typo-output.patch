@@ -1,0 +1,34 @@
+From 0bd487e19cfc2ff0f7886aa2aab333d98edde7e9 Mon Sep 17 00:00:00 2001
+From: Julien Cristau <jcristau@debian.org>
+Date: Fri, 21 Sep 2007 12:12:16 +0000
+Subject: Fix typo: "Outpus" -> "Outputs"
+
+---
+diff --git a/grandr.glade b/grandr.glade
+index f1f0f91..6c21a17 100644
+--- a/grandr.glade
++++ b/grandr.glade
+@@ -202,7 +202,7 @@ THE SOFTWARE.
+ 		      <child>
+ 			<widget class="GtkLabel" id="label9">
+ 			  <property name="visible">True</property>
+-			  <property name="label" translatable="yes">Outpus     </property>
++			  <property name="label" translatable="yes">Outputs     </property>
+ 			  <property name="use_underline">False</property>
+ 			  <property name="use_markup">False</property>
+ 			  <property name="justify">GTK_JUSTIFY_LEFT</property>
+diff --git a/src/interface.c b/src/interface.c
+index 8cc1427..6ef4ab0 100644
+--- a/src/interface.c
++++ b/src/interface.c
+@@ -179,7 +179,7 @@ create_main_win (void)
+   gtk_widget_show (vbox2);
+   gtk_container_add (GTK_CONTAINER (viewport1), vbox2);
+ 
+-  label9 = gtk_label_new (_("Outpus     "));
++  label9 = gtk_label_new (_("Outputs     "));
+   gtk_widget_show (label9);
+   gtk_box_pack_start (GTK_BOX (vbox2), label9, FALSE, FALSE, 0);
+ 
+--
+cgit v0.8.3-6-g21f6

@@ -1,0 +1,16 @@
+[Name] LibIrman
+[Summary] Library for accessing the Irman infrared hardware
+[Description] libirman is a library that allows access to Irman Infra
+Red hardware from Linux and other Unix systems. 
+
+For general application programming, the preferred interface for
+infra-red control is lirc', as lirc supports multiple programs sharing
+the same infra-red receiver. It does this by providing a socket based
+interface to which several programs can connect. 
+
+lirc uses libirman to interface with the Irman Infra Red hardware, so
+in single use applications directly using libirman is simpler and uses
+less system resources. Currently, lirc only works on Linux systems, so
+programs written using libirman directly are more portable.
+[License] GNU General Public License version 2, GNU Library General Public License version 2
+[Homepage] http://www.lirc.org/

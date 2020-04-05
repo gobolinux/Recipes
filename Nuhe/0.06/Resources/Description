@@ -1,0 +1,6 @@
+[Name] Nuhe
+[Summary] A rule based log monitoring system
+[Description] Nuhe is
+a rule based log monitoring system, which is capable of action when rules are matched againsts log(s) activity. Default Nuhe mode is to run on background (daemon), but it can also be used in foreground and log analyzer mode. Log analyzer mode just analyzes given logs and prints results to stdout; no action is taken when Nuhe is in analyzer mode.  
+[License] GNU General Public License version 2
+[Homepage] http://nuhe.sourceforge.net/

@@ -1,0 +1,11 @@
+--- cups-1.4.2/scripting/php/Makefile.orig	2010-01-06 05:21:02.770489837 -0200
++++ cups-1.4.2/scripting/php/Makefile	2010-01-06 05:25:16.916680796 -0200
+@@ -20,7 +20,7 @@ include ../../Makedefs
+ # Where to install and how to compile the PHP module...
+ #
+ 
+-PHPDIR	=	$(BUILDROOT)`$(PHPCONFIG) --extension-dir`
++PHPDIR	=	$(BUILDROOT)`$(PHPCONFIG) --extension-dir | sed "s,@%Compile_goboIndex%@,@%Compile_target%@,g"`
+ OPTIONS	=	$(PHPOPTIONS)
+ 
+ 

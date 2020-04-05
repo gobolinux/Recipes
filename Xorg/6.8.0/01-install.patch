@@ -1,0 +1,20 @@
+diff -Naur xc/config/cf/host.def xc-new/config/cf/host.def
+--- xc/config/cf/host.def	1969-12-31 21:00:00.000000000 -0300
++++ xc-new/config/cf/host.def	2004-09-10 18:12:43.000000000 -0300
+@@ -0,0 +1,16 @@
++#define ProjectRoot /Programs/Xorg/6.8.0
++#define EtcX11Directory /Programs/Xorg/Settings/X11
++#define FontconfigFontsConfDir /Programs/Fontconfig/Settings/fonts
++#define Build75DpiFonts 		NO
++#define Build100DpiFonts 		NO
++#define BuildSpeedoFonts 		NO
++#define BuildType1Fonts 		NO
++#define BuildCIDFonts 			NO
++#define BuildTrueTypeFonts 		NO
++#define BuildCyrillicFonts 		NO
++#define HasFontconfig			YES
++#define HasFreetype2			YES
++#define HasExpat			YES
++#define HasLibpng			YES
++#define HasZlib				YES
++#define NothingOutsideProjectRoot	YES

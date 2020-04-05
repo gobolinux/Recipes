@@ -1,0 +1,11 @@
+# Recipe for version 1.60 by David Karell <mccoy@doctor.com>, on Mon Nov 3 20:45:55 CET 2008
+compile_version=1.8.0
+url="http://alumnit.ca/download/wvdial-1.60.tar.gz"
+file_size=100264
+file_md5=27fbbde89f8fd9f6e735a8efa5217fc9
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+   "PPPDIR=$settings_target/ppp/peers"
+)

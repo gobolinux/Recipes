@@ -1,0 +1,10 @@
+# Recipe for version 0.12.3 by Giambattista Bloisi <giamby@infinito.it>, on Sun Jan 13 01:33:14 CET 2008
+
+compile_version=1.8.4
+url="http://downloads.pilot-link.org/pilot-link-0.12.3.tar.bz2"
+file_size=960812
+file_md5=257124484d50552679c53cae8e118aa3
+recipe_type=configure
+install_variables=(
+   udevdir="${settings_target}/udev/rules.d"
+)

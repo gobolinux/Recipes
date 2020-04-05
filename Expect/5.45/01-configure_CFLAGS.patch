@@ -1,0 +1,14 @@
+--- expect-5.44.1/configure	2006-01-31 18:00:26.000000000 +0100
++++ expect-5.44.1.new/configure	2006-10-17 23:24:05.000000000 +0200
+@@ -16927,9 +16927,9 @@
+ 
+     # These are escaped so that only CFLAGS is picked up at configure time.
+     # The other values will be substituted at make time.
+-    CFLAGS="${CFLAGS} \${CFLAGS_DEFAULT} \${CFLAGS_WARNING}"
++    CFLAGS="${CFLAGS} ${CFLAGS_DEFAULT} ${CFLAGS_WARNING}"
+     if test "${SHARED_BUILD}" = "1" ; then
+-	CFLAGS="${CFLAGS} \${SHLIB_CFLAGS}"
++	CFLAGS="${CFLAGS} ${SHLIB_CFLAGS}"
+     fi
+ 
+ 

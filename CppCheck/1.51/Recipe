@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for CppCheck by Hisham Muhammad <hisham@gobolinux.org>, on Mon Oct 24 21:08:41 BRST 2011
+# Recipe for version 1.51 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Oct 24 21:08:41 BRST 2011
+compile_version=1.9.0
+url="http://sourceforge.net/projects/cppcheck/files/cppcheck/1.51/cppcheck-1.51.tar.bz2"
+file_size=920230
+file_md5=8349ab90472801b9d377cfabf846ca28
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)

@@ -1,0 +1,25 @@
+# Recipe (MakeRecipe) for WPA_Supplicant by Jonas Karlsson <jonka750@student.liu.se>, on Sun Jul 24 09:52:31 CEST 2005
+compile_version=1.9.0
+url="http://hostap.epitest.fi/releases/wpa_supplicant-0.5.10.tar.gz"
+file_size=720661
+file_md5=9e7b99da67c47d81121368c6d580d069
+recipe_type=makefile
+#makefile='Makefile'
+
+environment=(
+	QMAKESPEC="linux-g++"
+)
+
+make_variables=(
+    "DESTDIR=$target"
+    "INSTALLDIR="
+)
+pre_build(){
+    make mkconfig
+}
+pre_install(){
+    make wpa_gui
+}
+pre_link(){
+    cp wpa_gui/wpa_gui $target/sbin
+}

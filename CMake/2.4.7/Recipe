@@ -1,0 +1,10 @@
+# Recipe for version 2.4.7 by Jonas Karlsson <jonka750@student.liu.se>, on Wed Sep 19 19:59:35 CEST 2007
+compile_version=1.7.1
+url="http://www.cmake.org/files/v2.4/cmake-2.4.7.tar.gz"
+file_size=2600960
+file_md5=4476c423b8f74266136964e42ea88028
+recipe_type=configure
+
+configure_options=(
+   --prefix=$target
+)

@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Amarok by roko, <ro.ko@mcnon.com>, on Mon Jan 31 01:23:03 CET 2005
+compile_version=1.7.1
+url="http://umn.dl.sourceforge.net/sourceforge/amarok/amarok-1.4.0.tar.bz2"
+recipe_type=configure
+configure_options=(
+  "--prefix=$installprefix"
+  "--with-extra-libs=$goboLibraries"
+  "--with-extra-includes=$goboHeaders"
+  "--with-arts"
+  "--with-xine"
+  "--with-gstreamer"
+)

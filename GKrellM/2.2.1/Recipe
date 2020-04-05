@@ -1,0 +1,14 @@
+# Recipe by Bill Burdick
+
+compile_version=1.7.1
+url="http://web.wt.net/~billw/gkrellm/gkrellm-2.2.1.tar.bz2"
+file_size=663952
+file_md5=56b96f14881c30753f3eb1251ef71068
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "INSTALLROOT=$target"
+)
+pre_install() {
+   mkdir -p $target/lib/gkrellm2/plugins
+}

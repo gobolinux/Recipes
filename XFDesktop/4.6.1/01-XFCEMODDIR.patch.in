@@ -1,0 +1,49 @@
+Make xfce to look for modules under the global  instead
+for under its own prefix
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+
+--- xfdesktop-4.6.1/src/Makefile.am.old	2009-04-21 07:01:00.000000000 +0200
++++ xfdesktop-4.6.1/src/Makefile.am	2009-04-21 07:00:01.000000000 +0200
+@@ -55,7 +55,7 @@
+ 	-DLOCALEDIR=\"$(localedir)\" \
+ 	-DDATADIR=\"$(datadir)\" \
+ 	-DSYSCONFDIR=\"$(sysconfdir)\" \
+-	-DXFCEMODDIR=\"$(libdir)/xfce4/modules\" \
++	-DXFCEMODDIR=\"@%Compile_goboLibraries%@/xfce4/modules\" \
+ 	$(LIBX11_CFLAGS)	\
+ 	$(GTHREAD_CFLAGS) \
+ 	$(GMODULE_CFLAGS) \
+--- xfdesktop-4.6.1/src/Makefile.in.old	2009-04-21 08:22:28.000000000 +0200
++++ xfdesktop-4.6.1/src/Makefile.in	2009-04-21 07:01:22.000000000 +0200
+@@ -420,7 +420,7 @@
+ 	-DWNCK_I_KNOW_THIS_IS_UNSTABLE -DBINDIR=\"$(bindir)\" \
+ 	-DLOCALEDIR=\"$(localedir)\" -DDATADIR=\"$(datadir)\" \
+ 	-DSYSCONFDIR=\"$(sysconfdir)\" \
+-	-DXFCEMODDIR=\"$(libdir)/xfce4/modules\" $(LIBX11_CFLAGS) \
++	-DXFCEMODDIR=\"@%Compile_goboLibraries%@/xfce4/modules\" $(LIBX11_CFLAGS) \
+ 	$(GTHREAD_CFLAGS) $(GMODULE_CFLAGS) $(LIBXFCEGUI4_CFLAGS) \
+ 	$(LIBWNCK_CFLAGS) $(XFCONF_CFLAGS) $(am__append_3) \
+ 	$(am__append_6)
+--- xfdesktop-4.6.1/common/Makefile.am.old	2009-04-21 08:23:26.000000000 +0200
++++ xfdesktop-4.6.1/common/Makefile.am	2009-04-21 08:23:12.000000000 +0200
+@@ -22,7 +22,7 @@
+ libxfdesktop_menu_la_CFLAGS = \
+ 	$(GMODULE_CFLAGS) \
+ 	$(GTK_CFLAGS) \
+-	-DXFCEMODDIR=\"$(libdir)/xfce4/modules\"
++	-DXFCEMODDIR=\"@%Compile_goboLibraries%@/xfce4/modules\"
+ 
+ libxfdesktop_menu_utils_la_SOURCES = \
+ 	desktop-menu-utils.c \
+--- xfdesktop-4.6.1/common/Makefile.in.old	2009-04-21 08:23:50.000000000 +0200
++++ xfdesktop-4.6.1/common/Makefile.in	2009-04-21 08:23:38.000000000 +0200
+@@ -336,7 +336,7 @@
+ @BUILD_DESKTOP_MENU_TRUE@libxfdesktop_menu_la_CFLAGS = \
+ @BUILD_DESKTOP_MENU_TRUE@	$(GMODULE_CFLAGS) \
+ @BUILD_DESKTOP_MENU_TRUE@	$(GTK_CFLAGS) \
+-@BUILD_DESKTOP_MENU_TRUE@	-DXFCEMODDIR=\"$(libdir)/xfce4/modules\"
++@BUILD_DESKTOP_MENU_TRUE@	-DXFCEMODDIR=\"@%Compile_goboLibraries%@/xfce4/modules\"
+ 
+ @BUILD_DESKTOP_MENU_TRUE@libxfdesktop_menu_utils_la_SOURCES = \
+ @BUILD_DESKTOP_MENU_TRUE@	desktop-menu-utils.c \

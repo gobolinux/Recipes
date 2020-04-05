@@ -1,0 +1,12 @@
+# Recipe for version 0.8.2 by Joseph Wallace <JosephWallace@letu.edu>, 
+# on Mon Oct 5 19:07:38 CDT 2009
+# Recipe (MakeRecipe) for Compiz by Giambattista Bloisi <giamby@infinito.it>, on Sun Nov 4 20:52:47 CET 2007
+compile_version=1.9.0
+url="http://releases.compiz-fusion.org/0.8.2/compiz-0.8.2.tar.bz2"
+file_size=1086003
+file_md5=c161975eb0fe8deac7be8d99408a80fc
+recipe_type=configure
+
+environment=(
+    KDE_WINDOW_DECORATOR_CFLAGS="-I$goboHeaders/dbus-1.0 -I$goboLibraries/dbus-1.0/include"
+)

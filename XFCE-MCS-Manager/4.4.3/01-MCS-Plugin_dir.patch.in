@@ -1,0 +1,24 @@
+diff -Naur xfce-mcs-manager-4.4.1/xfce-mcs-manager/Makefile.am xfce-mcs-manager-4.4.1.new/xfce-mcs-manager/Makefile.am
+--- xfce-mcs-manager-4.4.1/xfce-mcs-manager/Makefile.am	2007-01-25 21:50:27.000000000 +0100
++++ xfce-mcs-manager-4.4.1.new/xfce-mcs-manager/Makefile.am	2007-04-17 08:00:53.000000000 +0200
+@@ -5,7 +5,7 @@
+ 	-I$(top_srcdir)							\
+ 	-DG_LOG_DOMAIN=\"xfce-mcs-manager\"				\
+ 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"				\
+-	-DPLUGINSDIR=\"$(libdir)/xfce4/mcs-plugins\"			\
++	-DPLUGINSDIR=\"@%Compile_goboLibraries%@/xfce4/mcs-plugins\"			\
+ 	$(PLATFORM_CPPFLAGS)
+ 
+ bin_PROGRAMS =								\
+diff -Naur xfce-mcs-manager-4.4.1/xfce-mcs-manager/Makefile.in xfce-mcs-manager-4.4.1.new/xfce-mcs-manager/Makefile.in
+--- xfce-mcs-manager-4.4.1/xfce-mcs-manager/Makefile.in	2007-04-09 17:55:46.000000000 +0200
++++ xfce-mcs-manager-4.4.1.new/xfce-mcs-manager/Makefile.in	2007-04-17 08:01:29.000000000 +0200
+@@ -263,7 +263,7 @@
+ 	-I$(top_srcdir)							\
+ 	-DG_LOG_DOMAIN=\"xfce-mcs-manager\"				\
+ 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"				\
+-	-DPLUGINSDIR=\"$(libdir)/xfce4/mcs-plugins\"			\
++	-DPLUGINSDIR=\"@%Compile_goboLibraries%@/xfce4/mcs-plugins\"			\
+ 	$(PLATFORM_CPPFLAGS)
+ 
+ @HAVE_CYGWIN_TRUE@develdir = $(datadir)/xfce4/devel

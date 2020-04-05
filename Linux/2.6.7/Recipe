@@ -1,0 +1,46 @@
+# Recipe for Linux 2.6.6 by Lucas Correia Villa Real
+compile_version=1.7.1
+url="http://www.kernel.org/pub/linux/kernel/v2.6/linux-2.6.7.tar.bz2"
+file_size=34896138
+file_md5=5218790bc3db41e77a7422969639a9ad
+
+# Will not use a different directory for it, so just keep the default
+# dir=
+
+# Recipe type
+recipe_type=makefile
+
+# Targets
+build_target="all"
+install_target="modules_install"
+
+sandbox_options=(
+	"--no-sandbox"
+)
+
+pre_build() {
+	ln -nfs /System/Kernel/Modules/$version-Gobo /lib/modules
+	cp "$recipedir"/dot-config ./.config
+	make menuconfig
+}
+
+post_install() {
+	#
+	# This is arch-dependent. It should be preferred to parse .config
+	# and discover the architecture, but this is ok for now.
+	#
+	count=`ls /System/Kernel/Boot/kernel-$version* 2> /dev/null | sort -n | wc -l | awk '{print $1}'`
+	[ "$count" = "0" ] && {
+		suffix="-Gobo"
+	} || {
+		let count="$count"+1
+		suffix="-$count-Gobo"
+	}
+	
+	# Copy and symlink the kernel image
+	cp arch/i386/boot/bzImage /System/Kernel/Boot/kernel-$version$suffix
+	cp System.map /System/Kernel/Boot/System.map-$version$suffix
+	ln -sf kernel-$version$suffix /System/Kernel/Boot/kernel
+	ln -sf System.map-$version$suffix /System/Kernel/Boot/System.map
+	ln -nfs /System/Kernel/Modules/$version-Gobo /System/Kernel/Modules/Current
+}

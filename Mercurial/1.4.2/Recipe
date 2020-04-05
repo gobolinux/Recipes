@@ -1,0 +1,13 @@
+# Recipe for version 1.4.2 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. jan. 9., szombat, 19.43.01 CET
+# Recipe for mercurial by Frederico Recsky frederico at gmail.com
+compile_version=1.4.2.0
+url="http://www.selenic.com/mercurial/release/mercurial-1.4.2.tar.gz"
+file_size=1922947
+file_md5=cf23b0887f0437c8601d5b89ae4663a6
+build_script="setup.py"
+recipe_type=python
+
+pre_link() {
+  install contrib/hgk $target/bin/
+  install contrib/hgdiff $target/bin/
+}

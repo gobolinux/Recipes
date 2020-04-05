@@ -1,0 +1,21 @@
+# Recipe for version 005 by Andreas Köhler <andi5.py@gmx.net>, on So 19. Feb 19:15:52 CET 2012
+# Recipe (MakeRecipe) for USBUtils by David Smith <dsmith@algonet.se>, on Sun Feb 6 10:19:22 CET 2005
+compile_version=1.8.0
+git="git://github.com/gregkh/usbutils.git"
+recipe_type=configure
+
+pre_build() {
+	git checkout v$version || return 1
+	git submodule update --init
+	autoreconf --install --symlink
+}
+post_install() {
+	mount | grep usbfs  >/dev/null 2>&1 || {
+		echo "=============================================================="
+		echo
+		echo "Note: You need to have USB device filesystem compiled into the"
+		echo "      kernel and mount usbfs at /proc/bus/usb to use lsusb."
+		echo
+		echo "=============================================================="
+	}
+}

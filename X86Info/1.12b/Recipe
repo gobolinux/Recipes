@@ -1,0 +1,12 @@
+# Recipe for version 1.12b by Andre Detsch <detsch@gobolinux.org>, on Wed Jun 21 22:21:49 BRT 2006
+# Recipe (MakeRecipe) for X86Info by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon May 16 14:26:31 BRT 2005
+compile_version=1.8.0
+url="http://www.codemonkey.org.uk/projects/x86info/x86info-1.12b.tgz"
+recipe_type=makefile
+makefile='Makefile'
+install_target=x86info
+
+pre_link() {
+	cp x86info $target/bin
+	cp x86info.1 $target/man/man1
+}

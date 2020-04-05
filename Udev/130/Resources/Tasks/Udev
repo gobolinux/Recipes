@@ -1,0 +1,40 @@
+#!/bin/bash
+
+source GoboPath
+
+cmd="$1"
+[ "$cmd" ] || cmd=Start
+
+case "$cmd" in
+
+[Ss]tart)
+
+   mount -t tmpfs tmpfs "$goboDevices"
+   cp -a -f "$goboLibraries"/udev/devices/* "$goboDevices"
+   mount -t devpts devpts "$goboDevices/pts"
+
+   # udevd listens for hotplug events through netlink
+   $goboExecutables/udevd --daemon
+   echo "" > "$goboStatus/sys/kernel/hotplug"
+
+   # wait for events to finish
+   udevadm trigger
+   udevadm settle --timeout=10
+
+   ;;
+   
+[Ss]top)
+
+   killall udevd
+
+   ;;
+   
+[Rr]estart)
+
+   cp -a -f "$goboLibraries"/udev/devices/* "$goboDevices"
+   udevadm trigger
+   udevadm settle --timeout=10
+
+   ;;
+
+esac

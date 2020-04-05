@@ -1,0 +1,17 @@
+# Recipe (MakeRecipe) for Pmount by Carlo J. Calica <ccalica@gmail.com>, on Tue Oct 4 19:32:52 PDT 2005
+compile_version=1.8.2
+url="http://www.piware.de/projects/pmount-0.9.13.tar.gz"
+
+recipe_type=configure
+
+configure_options=(
+  "--with-media-dir=/Mount/Media/"
+)
+
+pre_install() {
+  mkdir -p /Mount/Media
+}
+
+#make_variables=(
+#    "SYSCONF=$settings_target"
+#)

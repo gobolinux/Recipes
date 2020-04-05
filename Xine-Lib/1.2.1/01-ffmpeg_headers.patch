@@ -1,0 +1,33 @@
+--- xine-lib-1.2.1/configure.orig	2012-05-03 18:16:32.071393227 -0300
++++ xine-lib-1.2.1/configure	2012-05-03 18:17:35.193394922 -0300
+@@ -27702,18 +27702,7 @@ fi
+ 
+ $as_echo "#define HAVE_FFMPEG 1" >>confdefs.h
+ 
+-
+-			for ac_header in ffmpeg/avutil.h
+-do :
+-  ac_fn_c_check_header_mongrel "$LINENO" "ffmpeg/avutil.h" "ac_cv_header_ffmpeg_avutil_h" "$ac_includes_default"
+-if test "x$ac_cv_header_ffmpeg_avutil_h" = xyes; then :
+-  cat >>confdefs.h <<_ACEOF
+-#define HAVE_FFMPEG_AVUTIL_H 1
+-_ACEOF
+-
+-fi
+-
+-done
++ac_cv_header_ffmpeg_avutil_h=no
+ 
+ 	for ac_header in libavutil/avutil.h
+ do :
+@@ -27751,10 +27740,6 @@ fi
+ 
+ done
+ 
+-	if test "$ac_cv_header_ffmpeg_avutil_h" = "yes" && test "$ac_cv_header_libavutil_avutil_h" = "yes"; then
+-	    as_fn_error $? "old & new ffmpeg headers found - you need to clean up!" "$LINENO" 5
+-	fi
+-
+         # Check whether --enable-gdkpixbuf was given.
+ if test "${enable_gdkpixbuf+set}" = set; then :
+   enableval=$enable_gdkpixbuf; test x"$enableval" != x"no" && enable_gdkpixbuf="yes"

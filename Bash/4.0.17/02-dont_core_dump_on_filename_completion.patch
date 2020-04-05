@@ -1,0 +1,43 @@
+			     BASH PATCH REPORT
+			     =================
+
+Bash-Release: 4.0
+Patch-ID: bash40-002
+
+Bug-Reported-by:	phil@Arcturus.universe
+Bug-Reference-ID:	<20090221143709.13878.qmail@Arcturus.universe>
+Bug-Reference-URL:	http://lists.gnu.org/archive/html/bug-bash/2009-02/msg00142.html
+
+Bug-Description:
+
+A line inadvertenly omitted from a submitted patch results in core dumps
+when attempting filename completion while using the bash-completion
+package.
+
+Patch:
+
+*** ../bash-4.0/pcomplete.c	2009-02-01 17:12:31.000000000 -0500
+--- bash/pcomplete.c	2009-02-22 17:08:25.000000000 -0500
+***************
+*** 1033,1036 ****
+--- 1033,1037 ----
+  
+    pps = &ps;
++   save_parser_state (pps);
+    begin_unwind_frame ("gen-shell-function-matches");
+    add_unwind_protect (restore_parser_state, (char *)pps);
+*** ../bash-4.0/patchlevel.h	2009-01-04 14:32:40.000000000 -0500
+--- bash/patchlevel.h	2009-02-22 16:11:31.000000000 -0500
+***************
+*** 26,30 ****
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 1
+  
+  #endif /* _PATCHLEVEL_H_ */
+--- 26,30 ----
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 2
+  
+  #endif /* _PATCHLEVEL_H_ */

@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Mdadm by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Jun 21 16:34:18 BRT 2005
+# Recipe for version 1.12.0 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Jun 21 16:34:18 BRT 2005
+compile_version=1.7.1
+url="http://www.cse.unsw.edu.au/~neilb/source/mdadm/mdadm-1.12.0.tgz"
+file_size=98587
+file_md5=4de899ddb1ede1d2cafd183794874ce1
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "DESTDIR=$target"
+)

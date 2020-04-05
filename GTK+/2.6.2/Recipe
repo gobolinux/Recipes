@@ -1,0 +1,8 @@
+# Recipe for version 2.6.2 by roko, <ro.ko@mcnon.com>, on Mon Feb 28 02:25:43 CET 2005
+# Recipe (MakeRecipe) for GTK+ by roko, <ro.ko@mcnon.com>, on Sat Dec 25 22:23:51 BRST 2004
+compile_version=1.7.1
+url="ftp://ftp.gtk.org/pub/gtk/v2.6/gtk+-2.6.2.tar.bz2"
+recipe_type=configure
+configure_options=(
+	"--with-xinput=yes"
+)

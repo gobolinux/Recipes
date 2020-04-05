@@ -1,0 +1,10 @@
+# Recipe for version 2.24.0 by Andreas Köhler <andi5.py@gmx.net>, on Sun Oct 26 23:46:55 CET 2008
+# Recipe (MakeRecipe) for Zenity by Nathan Middleton, on Thu Oct 25 04:26:14 CDT 2007
+compile_version=1.9.0
+url="ftp://ftp.gnome.org/pub/gnome/sources/zenity/2.24/zenity-2.24.0.tar.bz2"
+file_size=2236118
+file_md5=aa4486482210856848fa7d6634fc126a
+recipe_type=configure
+configure_options=(
+   --disable-scrollkeeper
+)

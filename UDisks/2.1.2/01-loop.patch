@@ -1,0 +1,17 @@
+Make sure that LOOP_CTL_GET_FREE is defined.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- udisks-1.97.0/src/udiskslinuxmanager.c.orig	2012-05-21 17:18:27.000000000 -0300
++++ udisks-1.97.0/src/udiskslinuxmanager.c	2012-05-21 17:18:56.000000000 -0300
+@@ -43,6 +43,10 @@
+ #include "udiskscleanup.h"
+ #include "udiskslinuxblockobject.h"
+ 
++#ifndef LOOP_CTL_GET_FREE
++#define LOOP_CTL_GET_FREE 0x4C82
++#endif
++
+ /**
+  * SECTION:udiskslinuxmanager
+  * @title: UDisksLinuxManager

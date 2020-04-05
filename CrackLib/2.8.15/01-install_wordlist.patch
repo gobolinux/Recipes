@@ -1,0 +1,13 @@
+--- cracklib-2.8.12/dicts/Makefile.in	2007-10-02 01:31:43.000000000 +0000
++++ cracklib-2.8.12/dicts/Makefile.in.new	2008-05-07 07:25:59.000000000 +0000
+@@ -190,8 +190,8 @@
+ target_alias = @target_alias@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+-pkgdata_DATA = cracklib-small
+-EXTRA_DIST = cracklib-small
++pkgdata_DATA = cracklib-small cracklib-words-20080507
++EXTRA_DIST = cracklib-small cracklib-words-20080507
+ all: all-am
+ 
+ .SUFFIXES:

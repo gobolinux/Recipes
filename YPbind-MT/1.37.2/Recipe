@@ -1,0 +1,16 @@
+# Recipe for version 1.37.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Aug 28 18:26:27 BRT 2014
+# Recipe (MakeRecipe) for YPbind-MT by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Apr 26 12:44:23 BRT 2005
+compile_version=1.8.0
+url="http://www.linux-nis.org/download/ypbind-mt/ypbind-mt-1.37.2.tar.bz2"
+file_size=197280
+file_md5=406e2885e592f4740b8e3870e0e231f1
+recipe_type=configure
+
+make_variables=(
+    LIBS="-lpthread -lnsl -ltirpc"
+)
+
+pre_link() {
+	mkdir -p $settings_target
+	cp etc/yp.conf $settings_target
+}

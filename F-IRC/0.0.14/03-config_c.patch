@@ -1,0 +1,26 @@
+--- fi-0.0.14/config.c.orig	2005-03-06 16:31:45.000000000 -0300
++++ fi-0.0.14/config.c	2005-03-06 16:40:55.000000000 -0300
+@@ -119,7 +119,22 @@
+ 		}
+ 		else if (strcmp(cmd, "theme") == 0)
+ 		{
+-			load_theme(par);
++			struct stat status;
++			
++			if ((stat(par, &status)) < 0) 	/* file doesn't exist, look for it under SYSCONFDIR */
++			{
++				int len = strlen(SYSCONFDIR) + strlen(par) + 2;
++				char *theme_path = mymalloc(len * sizeof(char), "path");
++				
++				snprintf(theme_path, len, "%s/%s", SYSCONFDIR, par);
++				load_theme(theme_path);
++
++				free(theme_path);
++			} 
++			else
++			{
++				load_theme(par);
++			}
+ 		}
+ 		else if (strcmp(cmd, "send_after_login") == 0)
+ 		{

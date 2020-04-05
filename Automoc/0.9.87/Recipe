@@ -1,0 +1,10 @@
+# Recipe for version 0.9.87 by Demian Florentin <demianflorentin@gmail.com>, on Tue Dec 30 07:11:30 PYST 2008
+# Recipe (MakeRecipe) for Automoc by Paul Gideon Dann, on Thu Sep 18 21:45:11 BST 2008
+compile_version=1.11.2
+url="http://kde.mirrors.tds.net/pub/kde/unstable/automoc4/0.9.87/automoc4-0.9.87.tar.bz2"
+file_size=8499
+file_md5=824504508d581e82d5e1a17b01a1d684
+recipe_type=cmake
+environment=(
+   QMAKESPEC="linux-g++"
+)

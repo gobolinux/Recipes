@@ -1,0 +1,208 @@
+Index: linux-2.6.9-ck1/include/linux/mmzone.h
+===================================================================
+--- linux-2.6.9-ck1.orig/include/linux/mmzone.h	2004-10-19 08:57:12.212796569 +1000
++++ linux-2.6.9-ck1/include/linux/mmzone.h	2004-10-19 09:02:26.311776882 +1000
+@@ -113,7 +113,7 @@ struct zone {
+ 	 */
+ 	spinlock_t		lock;
+ 	unsigned long		free_pages;
+-	unsigned long		pages_min, pages_low, pages_high;
++	unsigned long		pages_min, pages_low, pages_high, pages_lots;
+ 	/*
+ 	 * protection[] is a pre-calculated number of extra pages that must be
+ 	 * available in a zone in order for __alloc_pages() to allocate memory
+Index: linux-2.6.9-ck1/include/linux/swap.h
+===================================================================
+--- linux-2.6.9-ck1.orig/include/linux/swap.h	2004-10-19 08:57:12.275786741 +1000
++++ linux-2.6.9-ck1/include/linux/swap.h	2004-10-19 09:02:26.311776882 +1000
+@@ -174,7 +174,8 @@ extern void swap_setup(void);
+ /* linux/mm/vmscan.c */
+ extern int try_to_free_pages(struct zone **, unsigned int, unsigned int);
+ extern int shrink_all_memory(int);
+-extern int vm_swappiness;
++extern int vm_mapped;
++extern int vm_hardmaplimit;
+ 
+ #ifdef CONFIG_MMU
+ /* linux/mm/shmem.c */
+Index: linux-2.6.9-ck1/include/linux/sysctl.h
+===================================================================
+--- linux-2.6.9-ck1.orig/include/linux/sysctl.h	2004-10-19 09:02:22.578359685 +1000
++++ linux-2.6.9-ck1/include/linux/sysctl.h	2004-10-19 09:02:26.312776726 +1000
+@@ -160,7 +160,7 @@ enum
+ 	VM_OVERCOMMIT_RATIO=16, /* percent of RAM to allow overcommit in */
+ 	VM_PAGEBUF=17,		/* struct: Control pagebuf parameters */
+ 	VM_HUGETLB_PAGES=18,	/* int: Number of available Huge Pages */
+-	VM_SWAPPINESS=19,	/* Tendency to steal mapped memory */
++	VM_MAPPED=19,		/* percent mapped min while evicting cache */
+ 	VM_LOWER_ZONE_PROTECTION=20,/* Amount of protection of lower zones */
+ 	VM_MIN_FREE_KBYTES=21,	/* Minimum free kilobytes to maintain */
+ 	VM_MAX_MAP_COUNT=22,	/* int: Maximum number of mmaps/address-space */
+@@ -169,6 +169,7 @@ enum
+ 	VM_HUGETLB_GROUP=25,	/* permitted hugetlb group */
+ 	VM_VFS_CACHE_PRESSURE=26, /* dcache/icache reclaim pressure */
+ 	VM_LEGACY_VA_LAYOUT=27, /* legacy/compatibility virtual address space layout */
++	VM_HARDMAPLIMIT=28,	/* Make mapped a hard limit */
+ };
+ 
+ 
+Index: linux-2.6.9-ck1/kernel/sysctl.c
+===================================================================
+--- linux-2.6.9-ck1.orig/kernel/sysctl.c	2004-10-19 09:02:22.584358749 +1000
++++ linux-2.6.9-ck1/kernel/sysctl.c	2004-10-19 09:02:26.313776570 +1000
+@@ -716,16 +716,24 @@ static ctl_table vm_table[] = {
+ 		.proc_handler	= &proc_dointvec,
+ 	},
+ 	{
+-		.ctl_name	= VM_SWAPPINESS,
+-		.procname	= "swappiness",
+-		.data		= &vm_swappiness,
+-		.maxlen		= sizeof(vm_swappiness),
++		.ctl_name	= VM_MAPPED,
++		.procname	= "mapped",
++		.data		= &vm_mapped,
++		.maxlen		= sizeof(vm_mapped),
+ 		.mode		= 0644,
+ 		.proc_handler	= &proc_dointvec_minmax,
+ 		.strategy	= &sysctl_intvec,
+ 		.extra1		= &zero,
+ 		.extra2		= &one_hundred,
+ 	},
++	{
++		.ctl_name	= VM_HARDMAPLIMIT,
++		.procname	= "hardmaplimit",
++		.data		= &vm_hardmaplimit,
++		.maxlen		= sizeof(int),
++		.mode		= 0644,
++		.proc_handler	= &proc_dointvec,
++	},
+ #ifdef CONFIG_HUGETLB_PAGE
+ 	 {
+ 		.ctl_name	= VM_HUGETLB_PAGES,
+Index: linux-2.6.9-ck1/mm/page_alloc.c
+===================================================================
+--- linux-2.6.9-ck1.orig/mm/page_alloc.c	2004-10-19 08:57:12.396767865 +1000
++++ linux-2.6.9-ck1/mm/page_alloc.c	2004-10-19 09:02:26.314776414 +1000
+@@ -1934,6 +1934,7 @@ static void setup_per_zone_pages_min(voi
+ 
+ 		zone->pages_low = zone->pages_min * 2;
+ 		zone->pages_high = zone->pages_min * 3;
++		zone->pages_lots = zone->pages_min * 6;
+ 		spin_unlock_irqrestore(&zone->lru_lock, flags);
+ 	}
+ }
+Index: linux-2.6.9-ck1/mm/vmscan.c
+===================================================================
+--- linux-2.6.9-ck1.orig/mm/vmscan.c	2004-10-19 08:57:12.412765369 +1000
++++ linux-2.6.9-ck1/mm/vmscan.c	2004-10-19 09:02:26.315776258 +1000
+@@ -116,10 +116,8 @@ struct shrinker {
+ #define prefetchw_prev_lru_page(_page, _base, _field) do { } while (0)
+ #endif
+ 
+-/*
+- * From 0 .. 100.  Higher means more swappy.
+- */
+-int vm_swappiness = 60;
++int vm_mapped = 66;
++int vm_hardmaplimit = 0;
+ static long total_memory;
+ 
+ static LIST_HEAD(shrinker_list);
+@@ -697,10 +695,13 @@ refill_inactive_zone(struct zone *zone, 
+ 	 * doesn't necessarily mean that page reclaim isn't succeeding.
+ 	 *
+ 	 * The distress ratio is important - we don't want to start going oom.
++	 * This distress value is ignored if we apply a hardmaplimit.
+ 	 *
+-	 * A 100% value of vm_swappiness overrides this algorithm altogether.
++	 * A 0% value of vm_mapped overrides this algorithm altogether.
+ 	 */
+-	swap_tendency = mapped_ratio / 2 + distress + vm_swappiness;
++	swap_tendency = mapped_ratio * 100 / (vm_mapped + 1);
++	if (!vm_hardmaplimit)
++		swap_tendency += distress;
+ 
+ 	/*
+ 	 * Now use this metric to decide whether to start moving mapped memory
+@@ -1014,7 +1015,21 @@ loop_again:
+ 						priority != DEF_PRIORITY)
+ 					continue;
+ 
+-				if (zone->free_pages <= zone->pages_high) {
++				/*
++				 * The pages_lots watermark is relaxed
++				 * till it drops to pages_high under anything
++				 * but very light stress (DEF_PRIORITY)
++				 */
++				if (priority != DEF_PRIORITY &&
++					zone->free_pages <= zone->pages_lots &&
++					zone->pages_lots > zone->pages_high) {
++						spin_lock(&zone->lru_lock);
++						zone->pages_lots = 
++							zone->free_pages - 1;
++						spin_unlock(&zone->lru_lock);
++				}
++					
++				if (zone->free_pages <= zone->pages_lots) {
+ 					end_zone = i;
+ 					goto scan;
+ 				}
+@@ -1049,7 +1064,7 @@ scan:
+ 				continue;
+ 
+ 			if (nr_pages == 0) {	/* Not software suspend */
+-				if (zone->free_pages <= zone->pages_high)
++				if (zone->free_pages <= zone->pages_lots)
+ 					all_zones_ok = 0;
+ 			}
+ 			zone->temp_priority = priority;
+@@ -1173,8 +1188,17 @@ void wakeup_kswapd(struct zone *zone)
+ {
+ 	if (zone->present_pages == 0)
+ 		return;
+-	if (zone->free_pages > zone->pages_low)
++	if (zone->free_pages > zone->pages_lots) {
++		if (zone->pages_lots < zone->pages_high * 2) {
++			spin_lock(&zone->lru_lock);
++			zone->pages_lots = zone->pages_high * 2;
++			spin_unlock(&zone->lru_lock);
++			if (zone->free_pages <= zone->pages_lots)
++				goto okscan;
++		}
+ 		return;
++	}
++okscan:
+ 	if (!waitqueue_active(&zone->zone_pgdat->kswapd_wait))
+ 		return;
+ 	wake_up_interruptible(&zone->zone_pgdat->kswapd_wait);
+Index: linux-2.6.9-ck1/security/commoncap.c
+===================================================================
+--- linux-2.6.9-ck1.orig/security/commoncap.c	2004-10-19 08:57:12.671724966 +1000
++++ linux-2.6.9-ck1/security/commoncap.c	2004-10-19 09:02:26.316776102 +1000
+@@ -308,16 +308,24 @@ int cap_syslog (int type)
+ int cap_vm_enough_memory(long pages)
+ {
+ 	unsigned long free, allowed;
++	int effective_overcommit = sysctl_overcommit_memory;
++
++	if (vm_hardmaplimit && vm_mapped)
++		/*
++		 * If we're using a hardmaplimit always overcommit to prevent
++		 * very easy oom.
++		 */
++		effective_overcommit = OVERCOMMIT_ALWAYS;
+ 
+ 	vm_acct_memory(pages);
+ 
+ 	/*
+ 	 * Sometimes we want to use more memory than we have
+ 	 */
+-	if (sysctl_overcommit_memory == OVERCOMMIT_ALWAYS)
++	if (effective_overcommit == OVERCOMMIT_ALWAYS)
+ 		return 0;
+ 
+-	if (sysctl_overcommit_memory == OVERCOMMIT_GUESS) {
++	if (effective_overcommit == OVERCOMMIT_GUESS) {
+ 		unsigned long n;
+ 
+ 		free = get_page_cache_size();

@@ -1,8 +1,0 @@
-# Recipe (MakeRecipe) for NGHTTP2 by Hisham Muhammad <hisham@gobolinux.org>, on Wed Jan 16 14:35:51 -02 2019
-# Recipe for version 1.35.1 by Hisham Muhammad <hisham@gobolinux.org>, on Wed Jan 16 14:35:51 -02 2019
-compile_version=016.01
-url="https://github.com/nghttp2/nghttp2/releases/download/v1.35.1/nghttp2-1.35.1.tar.xz"
-file_size=1614460
-file_md5=4d3d728a0700d182a3a9449940bf845a
-dir='nghttp2-1.35.1'
-recipe_type=cmake

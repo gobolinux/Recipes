@@ -1,0 +1,12 @@
+# Recipe for version 2.6.27.8 by João Felipe Santos <joao.eel@gmail.com>, on Tue Mar 17 23:44:29 BRT 2009
+compile_version=1.8.1
+url="http://www.kernel.org/pub/linux/kernel/v2.6/linux-2.6.27.8.tar.bz2"
+file_size=50384960
+file_md5=cbdc1b350ef79dd323b9aeda5cf7f1b6
+recipe_type=makefile
+do_build=no
+needs_safe_linking=yes
+install_target="headers_install"
+install_variables=(
+    "INSTALL_HDR_PATH=$target"
+)

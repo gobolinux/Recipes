@@ -1,0 +1,152 @@
+diff -urNa signing-party-1.0-orig/caff/Makefile signing-party-1.0/caff/Makefile
+--- signing-party-1.0-orig/caff/Makefile	2008-06-03 20:15:37.000000000 +1200
++++ signing-party-1.0/caff/Makefile	2008-06-03 21:05:45.000000000 +1200
+@@ -1,4 +1,5 @@
+ MAN = caff.1 pgp-clean.1 pgp-fixkey.1
++EXECUTABLES = caff pgp-fixkey pgp-clean
+ 
+ all: $(MAN)
+ 
+@@ -6,6 +7,7 @@
+ 	pod2man $< > $@
+ 
+ install:
++	for ex in $(EXECUTABLES) ; do install -D $$ex $(PREFIX)/bin/$$ex ; install -D $$ex.1 $(PREFIX)/man/man1/$$ex.1 ; done
+ 
+ clean:
+ 	rm -f $(MAN)
+diff -urNa signing-party-1.0-orig/gpg-key2ps/Makefile signing-party-1.0/gpg-key2ps/Makefile
+--- signing-party-1.0-orig/gpg-key2ps/Makefile	2008-06-03 20:15:38.000000000 +1200
++++ signing-party-1.0/gpg-key2ps/Makefile	2008-06-03 21:05:45.000000000 +1200
+@@ -1,9 +1,12 @@
++EXECUTABLES=gpg-key2ps
++
+ all: gpg-key2ps.1
+ 
+ gpg-key2ps.1: gpg-key2ps
+ 	pod2man $< > $@
+ 
+ install:
++	for ex in $(EXECUTABLES) ; do install -D $$ex $(PREFIX)/bin/$$ex ; install -D $$ex.1 $(PREFIX)/man/man1/$$ex.1 ; done
+ 
+ clean:
+ 	rm -f gpg-key2ps.1
+diff -urNa signing-party-1.0-orig/gpglist/Makefile signing-party-1.0/gpglist/Makefile
+--- signing-party-1.0-orig/gpglist/Makefile	2008-06-03 20:15:38.000000000 +1200
++++ signing-party-1.0/gpglist/Makefile	2008-06-03 21:05:45.000000000 +1200
+@@ -1,4 +1,5 @@
+ MAN = gpglist.1
++EXECUTABLES = gpglist
+ 
+ all: $(MAN)
+ 
+@@ -6,6 +7,7 @@
+ 	pod2man $< > $@
+ 
+ install:
++	for ex in $(EXECUTABLES); do install -D $$ex $(PREFIX)/bin/$$ex ; install -D $$ex.1 $(PREFIX)/man/man1/$$ex.1 ; done
+ 
+ clean:
+ 	rm -f $(MAN)
+diff -urNa signing-party-1.0-orig/gpg-mailkeys/Makefile signing-party-1.0/gpg-mailkeys/Makefile
+--- signing-party-1.0-orig/gpg-mailkeys/Makefile	1970-01-01 12:00:00.000000000 +1200
++++ signing-party-1.0/gpg-mailkeys/Makefile	2008-06-03 21:05:45.000000000 +1200
+@@ -0,0 +1,13 @@
++MAN = gpg-mailkeys.1
++EXECUTABLES = gpg-mailkeys
++
++all: $(MAN)
++
++%.1: %
++	pod2man $< > $@
++
++install:
++	for ex in $(EXECUTABLES) ; do install -D $$ex $(PREFIX)/bin/$$ex ; install -D $$ex.1 $(PREFIX)/man/man1/$$ex.1 ; done
++
++clean:
++	rm -f $(MAN)
+diff -urNa signing-party-1.0-orig/gpgparticipants/Makefile signing-party-1.0/gpgparticipants/Makefile
+--- signing-party-1.0-orig/gpgparticipants/Makefile	1970-01-01 12:00:00.000000000 +1200
++++ signing-party-1.0/gpgparticipants/Makefile	2008-06-03 21:05:45.000000000 +1200
+@@ -0,0 +1,13 @@
++MAN = gpgparticipants.1
++EXECUTABLES = gpgparticipants
++
++all: $(MAN)
++
++%.1: %
++	pod2man $< > $@
++
++install:
++	for ex in $(EXECUTABLES) ; do install -D $$ex $(PREFIX)/bin/$$ex ; install -D $$ex.1 $(PREFIX)/man/man1/$$ex.1 ; done
++
++clean:
++	rm -f $(MAN)
+diff -urNa signing-party-1.0-orig/gpgsigs/Makefile signing-party-1.0/gpgsigs/Makefile
+--- signing-party-1.0-orig/gpgsigs/Makefile	2008-06-03 20:15:38.000000000 +1200
++++ signing-party-1.0/gpgsigs/Makefile	2008-06-03 21:07:13.000000000 +1200
+@@ -4,12 +4,12 @@
+ 	pod2man $< > $@
+ 
+ install:
+-	install -D gpgsigs $(DESTDIR)/usr/bin/gpgsigs
++	install -D gpgsigs $(PREFIX)/bin/gpgsigs
+ 	install -D gpgsigs-eps-helper \
+-		$(DESTDIR)/usr/share/signing-party/gpgsigs-eps-helper
+-	install -d $(DESTDIR)/usr/share/doc/signing-party/gpgsigs/examples
++		$(PREFIX)/share/signing-party/gpgsigs-eps-helper
++	install -d $(PREFIX)/share/doc/signing-party/gpgsigs/examples
+ 	install -m644 gpgsigs-lt2k5*.txt \
+-		$(DESTDIR)/usr/share/doc/signing-party/gpgsigs/examples
++		$(PREFIX)/share/doc/signing-party/gpgsigs/examples
+ 
+ clean:
+ 	rm -f gpgsigs.1
+diff -urNa signing-party-1.0-orig/keylookup/Makefile signing-party-1.0/keylookup/Makefile
+--- signing-party-1.0-orig/keylookup/Makefile	2008-06-03 20:15:37.000000000 +1200
++++ signing-party-1.0/keylookup/Makefile	2008-06-03 21:07:34.000000000 +1200
+@@ -1,9 +1,9 @@
+ all:
+ 
+ install:
+-	install -D keylookup $(DESTDIR)/usr/bin/keylookup
+-	install -D -m644 keylookup.1 $(DESTDIR)/usr/share/man/man1/keylookup.1
++	install -D keylookup $(PREFIX)/bin/keylookup
++	install -D -m644 keylookup.1 $(PREFIX)/share/man/man1/keylookup.1
+ 	install -D -m644 NEWS \
+-		$(DESTDIR)/usr/share/doc/signing-party/NEWS.keylookup
++		$(PREFIX)/share/doc/signing-party/NEWS.keylookup
+ 
+ clean:
+diff -urNa signing-party-1.0-orig/sig2dot/Makefile signing-party-1.0/sig2dot/Makefile
+--- signing-party-1.0-orig/sig2dot/Makefile	2008-06-03 20:15:37.000000000 +1200
++++ signing-party-1.0/sig2dot/Makefile	2008-06-03 21:06:41.000000000 +1200
+@@ -1,9 +1,9 @@
+ all:
+ 
+ install:
+-	install -D sig2dot $(DESTDIR)/usr/bin/sig2dot
+-	install -D -m644 sig2dot.1 $(DESTDIR)/usr/share/man/man1/sig2dot.1
++	install -D sig2dot $(PREFIX)/bin/sig2dot
++	install -D -m644 sig2dot.1 $(PREFIX)/share/man/man1/sig2dot.1
+ 	install -D -m644 README.sig2dot \
+-		$(DESTDIR)/usr/share/doc/signing-party/README.sig2dot
++		$(PREFIX)/share/doc/signing-party/README.sig2dot
+ 
+ clean:
+diff -urNa signing-party-1.0-orig/springgraph/Makefile signing-party-1.0/springgraph/Makefile
+--- signing-party-1.0-orig/springgraph/Makefile	2008-06-03 20:15:37.000000000 +1200
++++ signing-party-1.0/springgraph/Makefile	2008-06-03 21:06:16.000000000 +1200
+@@ -1,9 +1,9 @@
+ all:
+ 
+ install:
+-	install -D springgraph $(DESTDIR)/usr/bin/springgraph
+-	install -D -m644 springgraph.1 $(DESTDIR)/usr/share/man/man1/springgraph.1
++	install -D springgraph $(PREFIX)/bin/springgraph
++	install -D -m644 springgraph.1 $(PREFIX)/share/man/man1/springgraph.1
+ 	install -D -m644 README.springgraph \
+-		$(DESTDIR)/usr/share/doc/signing-party/README.springgraph
++		$(PREFIX)/share/doc/signing-party/README.springgraph
+ 
+ clean:

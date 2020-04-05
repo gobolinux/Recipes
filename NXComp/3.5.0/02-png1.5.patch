@@ -1,0 +1,70 @@
+Fixes build due to API changes on LibPNG 1.5.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- nxcomp/Pgn.cpp.orig	2014-07-03 14:57:17.000000000 -0300
++++ nxcomp/Pgn.cpp	2014-07-03 15:05:51.000000000 -0300
+@@ -348,6 +348,8 @@ int DecompressPng16(unsigned char *compr
+ {
+   unsigned char *data;
+   unsigned int dx, dy;
++  png_uint_32 w32, h32;
++  int bitDepth, colorType, interfaceType;
+ 
+   png_structp pngPtr;
+   png_infop   infoPtr;
+@@ -413,8 +415,9 @@ int DecompressPng16(unsigned char *compr
+   }
+ 
+   png_read_info(pngPtr, infoPtr);
++  png_get_IHDR(pngPtr, infoPtr, &w32, &h32, &bitDepth, &colorType, &interfaceType, NULL, NULL);
+ 
+-  if (infoPtr -> color_type == PNG_COLOR_TYPE_PALETTE)
++  if (colorType == PNG_COLOR_TYPE_PALETTE)
+   {
+     png_set_expand(pngPtr);
+   }
+@@ -499,6 +502,8 @@ int DecompressPng24(unsigned char *compr
+ {
+   static CARD8 *pixelPtr = NULL;
+   unsigned int dx, dy;
++  png_uint_32 w32, h32;
++  int bitDepth, colorType, interfaceType;
+ 
+   png_structp pngPtr;
+   png_infop   infoPtr;
+@@ -564,8 +569,9 @@ int DecompressPng24(unsigned char *compr
+   }
+ 
+   png_read_info( pngPtr, infoPtr ) ;
++  png_get_IHDR(pngPtr, infoPtr, &w32, &h32, &bitDepth, &colorType, &interfaceType, NULL, NULL);
+ 
+-  if (infoPtr -> color_type == PNG_COLOR_TYPE_PALETTE)
++  if (colorType == PNG_COLOR_TYPE_PALETTE)
+   {
+     png_set_expand(pngPtr);
+   }
+@@ -641,9 +647,10 @@ int DecompressPng32(unsigned char *compr
+                          unsigned int w, unsigned int h, unsigned char *dstBuf, int byteOrder)
+ {
+   unsigned char *data;
+-
+   unsigned int dx, dy;
++  int bitDepth, colorType, interfaceType;
+ 
++  png_uint_32 w32, h32;
+   png_structp pngPtr;
+   png_infop   infoPtr;
+   png_bytep   rowPointers;
+@@ -707,9 +714,9 @@ int DecompressPng32(unsigned char *compr
+   }
+ 
+   png_read_info(pngPtr, infoPtr) ;
++  png_get_IHDR(pngPtr, infoPtr, &w32, &h32, &bitDepth, &colorType, &interfaceType, NULL, NULL);
+ 
+-
+-  if (infoPtr -> color_type == PNG_COLOR_TYPE_PALETTE)
++  if (colorType == PNG_COLOR_TYPE_PALETTE)
+   {
+     png_set_expand(pngPtr);
+   }

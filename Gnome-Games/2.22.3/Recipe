@@ -1,0 +1,18 @@
+# Recipe (MakeRecipe) for Gnome-Games by Andreas Köhler <andi5.py@gmx.net>, on Fri Aug 22 22:50:50 CEST 2008
+# Recipe for version 2.22.3 by Andreas Köhler <andi5.py@gmx.net>, on Fri Aug 22 22:50:50 CEST 2008
+compile_version=1.11.2
+url="ftp://ftp.gnome.org/pub/gnome/sources/gnome-games/2.22/gnome-games-2.22.3.tar.bz2"
+file_size=16406581
+file_md5=d6feb460f7db007aafb35b7a46b947be
+recipe_type=configure
+configure_options=(
+   --with-scores-user=root
+   --with-scores-group=games
+   --disable-scrollkeeper
+)
+pre_install() {
+   mkdir -p "${goboVariable}/games"
+}
+unmanaged_files=(
+   "${goboVariable}/games"
+)

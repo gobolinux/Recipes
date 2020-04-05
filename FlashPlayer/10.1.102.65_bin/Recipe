@@ -1,0 +1,11 @@
+# Recipe for version 10.1.102.65_bin by Baffo32 <baffo32@gmail.com>, on Mon Nov 29 10:33:44 EST 2010
+compile_version=1.10.2
+url="http://fpdownload.macromedia.com/get/flashplayer/current/install_flash_player_10_linux.tar.gz"
+file_size=4911328
+file_md5=f628237fc297db061a582c42b639871a
+unpack_files=files_in_root
+
+recipe_type=manifest
+manifest=(
+ 'libflashplayer.so:lib/browser-plugins/libflashplayer.so'
+)

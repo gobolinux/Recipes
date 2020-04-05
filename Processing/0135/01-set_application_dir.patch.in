@@ -1,0 +1,12 @@
+Modify the APPDIR variable to match the one the program get when installed.
+
+--- processing-0135/processing	2007-11-07 22:24:48.000000000 +0100
++++ processing-0135/processing.new	2008-02-03 14:11:21.000000000 +0100
+@@ -1,6 +1,6 @@
+ #!/bin/sh
+ 
+-APPDIR=$(dirname "$0")
++APPDIR="@%Compile_target%@"
+ 
+ # as of 0109, now using all relative paths and doing a cd to the 
+ # processing folder on run, because there are too many dependencies 

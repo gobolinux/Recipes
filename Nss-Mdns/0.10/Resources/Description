@@ -1,0 +1,34 @@
+[Name] Nss-Mdns
+[Summary] Multicast DNS plugin for the GNU Name Service Switch (NSS)
+[License] LGPL
+[Homepage] http://0pointer.de/lennart/projects/nss-mdns/
+
+[Description]
+
+nss-mdns is a plugin for the GNU Name Service Switch (NSS)
+functionality of the GNU C Library (glibc) providing host name
+resolution via Multicast DNS (aka Zeroconf, aka Apple Rendezvous, aka
+Apple Bonjour), effectively allowing name resolution by common
+Unix/Linux programs in the ad-hoc mDNS domain .local.
+
+
+GOBO SPECIFIC NOTE: If you Compile wget in Rootless on Ubuntu, wget
+may fail to run if Nss-Mdns is not also installed.
+
+
+nss-mdns provides client functionality only, which means that you have
+to run a mDNS responder daemon seperately from nss-mdns if you want to
+register the local host name via mDNS. I recommend Avahi.
+
+nss-mdns is very lightweight (9 KByte stripped binary .so compiled
+with -DNDEBUG=1 -Os on i386, gcc 4.0), has no dependencies besides the
+glibc and requires only minimal configuration.
+
+By default nss-mdns tries to contact a running avahi-daemon for
+resolving host names and addresses and making use of its superior
+record cacheing. Optionally nss-mdns can be compiled with a mini mDNS
+stack that can be used to resolve host names without a local Avahi
+installation. Both Avahi support and this mini mDNS stack are
+optional, however at least one of them needs to be enabled. If both
+are enabled a connection to Avahi is tried first, and if that fails
+the mini mDNS stack is used.

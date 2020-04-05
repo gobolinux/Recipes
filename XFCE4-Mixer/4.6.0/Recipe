@@ -1,0 +1,11 @@
+# Recipe for version 4.6.0 by Giambattista Bloisi <giamby@infinito.it>, on Sat Mar 21 13:28:57 CET 2009
+# Recipe (MakeRecipe) for XFCE4-Mixer by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:26:34 CEST 2006
+compile_version=1.8.2
+url="http://www.xfce.org/archive/xfce-4.6.0/src/xfce4-mixer-4.6.0.tar.bz2"
+file_size=410876
+file_md5=ee7956a73efe43da4b27ad9cd1f4d20b
+recipe_type=configure
+configure_options=(
+   --libexecdir="${target}/lib"
+)
+with_alsa="--with-sound=alsa"

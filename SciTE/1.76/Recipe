@@ -1,0 +1,17 @@
+# Recipe for version 1.76 by Jonas Karlsson <jonka750@student.liu.se>, on Sun Jun 29 17:20:33 CEST 2008
+# Recipe (MakeRecipe) for SciTE by Rafael Guterres Jeffman (rafasgj), on Fri Sep 23 14:23:26 BRT 2005
+compile_version=1.8.5
+url="$httpSourceforge/scintilla/scite176.tgz"
+file_size=1497197
+file_md5=c33461643c62c80420376de37125092b
+recipe_type=makefile
+dir="scite/gtk"
+makefile="makefile"
+make_variables=(
+	"prefix=$target"
+	"datadir=$target/Shared"
+)
+pre_build() {
+	make -C ../../scintilla/gtk
+}
+

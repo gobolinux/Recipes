@@ -1,0 +1,18 @@
+Specify the default plugin search directory.  Configure_options cannot be used, because
+we do not know ${GWENHYWFAR_SO_EFFECTIVE} beforehand.
+
+configure.ac |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+ 
+diff -Nur gwenhywfar-3.4.1-old/configure.ac gwenhywfar-3.4.1/configure.ac
+--- gwenhywfar-3.4.1-old/configure.ac	2008-08-16 14:09:21.000000000 +0200
++++ gwenhywfar-3.4.1/configure.ac	2008-08-20 23:42:22.260661616 +0200
+@@ -431,7 +431,7 @@
+     if test "$enable_local_install" != "no"; then
+       gwenhywfar_plugin_searchdir="lib/gwenhywfar/plugins/${GWENHYWFAR_SO_EFFECTIVE}"
+     else
+-      gwenhywfar_plugin_searchdir="$gwenhywfar_plugindir"
++      gwenhywfar_plugin_searchdir="@%Compile_goboLibraries%@/gwenhywfar/plugins/${GWENHYWFAR_SO_EFFECTIVE}"
+     fi
+   fi
+ fi

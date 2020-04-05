@@ -1,0 +1,11 @@
+--- ./lily/font-config-scheme.cc.orig	2005-12-06 01:14:57.000000000 -0200
++++ ./lily/font-config-scheme.cc	2005-12-06 01:15:43.000000000 -0200
+@@ -29,7 +29,7 @@
+ 			      "designsize", 0, &str) == FcResultMatch)
+ 	printf ("designsize %s\n ", str);
+       
+-      printf ("%s\n", font);
++      printf ("%s\n", reinterpret_cast< const char* >( font ));
+       free (font);
+     }
+ }

@@ -1,0 +1,11 @@
+# Recipe for version 1.2.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 2 14:58:29 GMT 2014
+# Recipe (MakeRecipe) for XEdit by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 18:46:05 BRT 2005
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/app/xedit-1.2.1.tar.bz2"
+file_size=520614
+file_md5=89b0800691feabe1c8a28554c3f73164
+recipe_type=configure
+part_of=Xorg-App
+install_variables=(
+   appdefaultdir=${target}/Shared/X11/app-defaults
+)

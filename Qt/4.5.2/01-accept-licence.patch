@@ -1,0 +1,32 @@
+--- qt-x11-opensource-src-4.5.1/configure.orig	2009-06-10 19:52:32.000000000 +1200
++++ qt-x11-opensource-src-4.5.1/configure	2009-06-10 19:52:59.000000000 +1200
+@@ -3703,7 +3703,8 @@
+             else
+                 echo "Do you accept the terms of $affix license? \c"
+             fi
+-            read acceptance
++            #read acceptance
++            acceptance=yes
+         fi
+         echo
+         if [ "$acceptance" = "yes" ]; then
+@@ -3738,7 +3739,8 @@
+             else
+                 echo "Do you accept the terms of the license? \c"
+             fi
+-            read acceptance
++            #read acceptance
++            acceptance=yes
+         fi
+         echo
+         if [ "$acceptance" = "yes" ]; then
+@@ -3828,7 +3830,8 @@
+             else
+                 echo "Do you accept the terms of the $TheLicense? \c"
+             fi
+-            read acceptance
++            #read acceptance
++            acceptance=yes
+         fi
+         echo
+         if [ "$acceptance" = "yes" ]; then

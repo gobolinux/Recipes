@@ -1,0 +1,10 @@
+# Recipe for version 2.02.67 by Joshua Sako jginsu@gmail.com, on Thu Jun 10 20:24:00 EDT 2010
+# Recipe (MakeRecipe) for LVM2 by Aitor Pérez Iturri, on dom mar 4 14:05:20 CET 2007
+compile_version=1.8.5
+url="ftp://sources.redhat.com/pub/lvm2/LVM2.2.02.67.tgz"
+file_size=893643
+file_md5=088d037e77660f48cd1591e91ed59d20
+recipe_type=configure
+configure_options=(
+	"--disable-realtime"
+)

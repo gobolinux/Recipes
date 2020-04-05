@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for OpenRazer by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Mar 26 16:49:05 BRT 2018
+# Recipe for version git by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Mar 26 16:49:05 BRT 2018
+compile_version=016
+git="git@github.com:openrazer/openrazer.git"
+recipe_type=makefile
+
+build_target="driver"
+install_target="driver_install python_library_install udev_install daemon_install"

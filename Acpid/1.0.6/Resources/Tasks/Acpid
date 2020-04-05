@@ -1,0 +1,13 @@
+#!/bin/sh
+
+op="$1"
+[ "$op" ] || op="start"
+
+case "$op" in
+[Ss]tart)
+   acpid
+   ;;
+[Ss]top)
+   killall acpid 
+   ;;
+esac

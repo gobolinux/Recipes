@@ -1,0 +1,16 @@
+Fixes a build error due to a prototype mismatch between this and
+Xorg-Lib/7.6/include/X11/fonts/fontmisc.h.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- xfs-1.1.1/include/difs.h.orig	2012-03-14 21:59:30.267614645 +1300
++++ xfs-1.1.1/include/difs.h	2012-03-14 22:00:18.994283346 +1300
+@@ -42,7 +42,7 @@ extern ReplySwapFunc ReplySwapVector[NUM
+ /* FIXME: this is derived from fontstruct.h; should integrate it */
+ 
+ /* difs/atom.c */
+-extern Atom MakeAtom ( char *string, unsigned len, Bool makeit );
++extern Atom MakeAtom ( const char *string, unsigned len, int makeit );
+ extern int ValidAtom ( Atom atom );
+ extern char * NameForAtom ( Atom atom );
+ extern void InitAtoms ( void );

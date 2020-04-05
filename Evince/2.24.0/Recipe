@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Evince by kenneth marken <k-marken@online.no>, on Wed Oct 8 21:27:05 CEST 2008
+# Recipe for version 2.24.0 by kenneth marken <k-marken@online.no>, on Wed Oct 8 21:27:05 CEST 2008
+compile_version=1.11.2
+url="http://ftp.gnome.org/pub/GNOME/sources/evince/2.24/evince-2.24.0.tar.gz"
+file_size=2560929
+file_md5=ad07f1dd3242f0d900877f3802841b00
+recipe_type=configure
+configure_options=(
+   --disable-scrollkeeper
+)

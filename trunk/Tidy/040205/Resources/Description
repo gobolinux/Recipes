@@ -1,5 +1,0 @@
-[Name] tidy
-[Summary] tidy cleans up system log files created by syslogd
-[License] GNU General Public License (GPL)
-[Description] For a system administrator it is a bothersome job to sort out the interesting (and sometimes alarming) log entries from the pile of standard entries. Tidy distinguishes different services (telnet, finger, etc.) and removes standard entries. Furthermore tidy tries to extract a remote host from the messages. These remote hosts are added to a statistics database. The number of contacts of each service is saved together with the time/date stamp of the last contact. The statistics can be printed out as simple ASCII or HTML.
-[Homepage] 

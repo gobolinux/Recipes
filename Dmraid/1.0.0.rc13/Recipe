@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for Dmraid by Guilherme B. Bedin, on Thu Feb 1 10:02:22 BRST 2007
+# Recipe for version 1.0.0.rc13 by Guilherme B. Bedin, on Thu Feb 1 10:02:22 BRST 2007
+compile_version=1.8.2
+url="http://people.redhat.com/~heinzm/sw/dmraid/src/dmraid-1.0.0.rc13.tar.bz2"
+mirror_url="http://people.redhat.com/~heinzm/sw/dmraid/src/old/dmraid-1.0.0.rc13.tar.bz2"
+file_size=170497
+file_md5=a2a8948de7717e2e76a1291fc1daf9d1
+dir='dmraid/1.0.0.rc13'
+recipe_type=configure

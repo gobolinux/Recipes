@@ -1,0 +1,18 @@
+# Recipe for version 2.8.2 by Lucas C. Villa Real, on Mon Feb 1 21:59:12 BRST 2010
+# Recipe (MakeRecipe) for Fuse by roko, <ro.ko@mcnon.com>, on Wed Mar 23 22:07:09 CET 2005
+compile_version=1.8.2
+url="$httpSourceforge/fuse/fuse-2.8.2.tar.gz"
+file_size=500150
+file_md5=f1a407a0abe9f9bf28bb49181d61a754
+recipe_type=configure
+
+install_variables=(
+    INIT_D_PATH="$settings_target/init.d"
+)
+
+configure_options=(
+    MOUNT_FUSE_PATH=${target}/sbin
+    UDEV_RULES_PATH=$settings_target/udev/rules.d
+    --enable-lib
+    --enable-util
+)

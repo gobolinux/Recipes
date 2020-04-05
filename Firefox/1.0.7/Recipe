@@ -1,0 +1,22 @@
+# Recipe for version 1.0.7 by Jonas Karlsson <jonka750@student.liu.se>, on Wed Sep 21 12:41:39 CEST 2005
+# Recipe (MakeRecipe) for Firefox by Jonas Karlsson <jonka750@student.liu.se>, on Sun May 1 10:13:41 CEST 2005
+compile_version=1.7.1
+url="ftp://ftp.mozilla.org/pub/mozilla.org/firefox/releases/1.0.7/source/firefox-1.0.7-source.tar.bz2"
+dir='mozilla'
+recipe_type=configure
+configure_options=(
+"--enable-optimize"
+"--enable-application=firefox"
+"--with-distribution-id=GoboLinux"
+"--enable-pango "
+"--enable-default-toolkit=gtk2"
+"--enable-xft"
+"--disable-debug"
+)
+
+# This will enable the official FireFox logo but due to legal issues it is dissabled by default
+#post_install()
+#{
+#  mkdir -p ${target}/lib/firefox-1.0.7/chrome/icons/default
+#  cp -f other-licenses/branding/firefox/* ${target}/lib/firefox-1.0.7/chrome/icons/default/
+#}

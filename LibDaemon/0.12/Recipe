@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for LibDaemon by Jonas Karlsson <jonka750@student.liu.se>, on Tue Aug 21 12:11:35 CEST 2007
+# Recipe for version 0.12 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Aug 21 12:11:35 CEST 2007
+compile_version=1.8.5
+url="http://0pointer.de/lennart/projects/libdaemon/libdaemon-0.12.tar.gz"
+file_size=355167
+file_md5=76596823cc1a6d1cdf7779b782ff0ee6
+recipe_type=configure
+configure_options=(
+   '--disable-lynx'
+)

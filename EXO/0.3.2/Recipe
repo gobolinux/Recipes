@@ -1,0 +1,11 @@
+# Recipe for version 0.3.2 by Jonas Karlsson <jonka750@student.liu.se>, on Sun Mar 4 23:14:57 CET 2007
+# Recipe (MakeRecipe) for EXO by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:16:44 CEST 2006
+compile_version=1.8.2
+url="http://www.de.xfce.org/archive/xfce-4.4.0/src/exo-0.3.2.tar.bz2"
+file_size=1121928
+file_md5=8b73acc98d0938d1193b31316823b6db
+recipe_type=configure
+configure_options=(
+    '--enable-python'
+    '--enable-debug=no'
+)

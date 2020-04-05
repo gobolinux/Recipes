@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for R8168 by Fabio Mierlo <geromao@gmail.com>, on Tue Nov 24 10:33:04 BRST 2009
+# Recipe for version 8.014.00 by Fabio Mierlo <geromao@gmail.com>, on Tue Nov 24 10:33:04 BRST 2009
+compile_version=1.12.3
+url="ftp://WebUser:2mG8dBW@202.65.194.212/cn/nic/r8168-8.014.00.tar.bz2"
+file_size=41414
+file_md5=d69944138d576edf3f92adfe6242e753
+recipe_type=makefile
+makefile='Makefile'
+
+unmanaged_files=(
+  "$goboModules/$(readlink $goboModules/Current)/kernel/drivers/net/r8168.ko"
+)
+
+make_variables=(
+  "KMISC=$target/Resources/Unmanaged/$goboModules/$(readlink $goboModules/Current)/kernel/drivers/net/r8168.ko"
+)

@@ -1,0 +1,15 @@
+# Recipe for version 2009.4.4 by Andre Detsch <detsch@gobolinux.org>, on Sun May 24 14:33:20 BRT 2009
+# Recipe (MakeRecipe) for NTFS-3G by Lucas C. Villa Real, on Thu Feb 22 02:10:40 BRT 2007
+compile_version=1.8.2
+url="http://ntfs-3g.org/ntfs-3g-2009.4.4.tgz"
+file_size=652496
+file_md5=e0b5c170f088a8d82968f0a6b34d31da
+recipe_type=configure
+
+configure_options=(
+    "--disable-ldconfig"
+)
+
+make_variables=(
+    DESTDIR=$target
+)

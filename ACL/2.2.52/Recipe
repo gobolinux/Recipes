@@ -1,0 +1,22 @@
+# Recipe for version 2.2.52 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 9 00:18:43 GMT 2014
+# Recipe (MakeRecipe) for ACL by ro.ko@mcnon.com, on Tue Oct 12 00:32:04 BRST 2004
+compile_version=1.8.5
+url="http://mirror.lihnidos.org/GNU/savannah/acl/acl-2.2.52.src.tar.gz"
+file_size=386604
+file_md5=a61415312426e9c2212bd7dc7929abda
+recipe_type=configure
+dir='acl-2.2.52'
+configure_options=(
+   --libexecdir="$target/lib/acl"
+)
+install_variables=(
+   libdir="${target}/lib"
+   libexecdir="${target}/lib/acl"
+   PKG_DEVLIB_DIR="${target}/lib/acl"
+)
+	  
+install_target="install install-lib install-dev" 
+
+pre_link() {
+   ln -snf $target/lib/libacl.so.1.1.0 $target/lib/libacl.so
+}

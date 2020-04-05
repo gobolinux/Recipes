@@ -1,0 +1,29 @@
+Thu Nov 16 16:54:10 CET 2006  hanwen@lilypond.org
+  * export $(CROSS_COMPILING) into module building. Strip "-Wl," from
+  LDFLAGS. ( -- warning: GNU Make dependent)
+diff -rN -u old-Python-2.5.cross/Makefile.pre.in new-Python-2.5.cross/Makefile.pre.in
+--- old-Python-2.5.cross/Makefile.pre.in	2006-11-16 17:47:45.000000000 +0100
++++ new-Python-2.5.cross/Makefile.pre.in	2006-11-16 17:47:45.000000000 +0100
+@@ -115,6 +115,10 @@
+ BLDSHARED=	@BLDSHARED@
+ DESTSHARED=	$(BINLIBDEST)/lib-dynload
+ 
++comma=,
++BLDFLAGS=$(subst -Wl$(comma),,$(LDFLAGS))
++
++
+ # Executable suffix (.exe on Windows and Mac OS X)
+ EXE=		@EXEEXT@
+ BUILDEXE=	@BUILDEXEEXT@
+@@ -371,8 +375,8 @@
+ # Build the shared modules
+ sharedmods: @CROSS_COMMENT@ $(BUILDPYTHON)
+ 	case $$MAKEFLAGS in \
+-	*-s*) $(RUNSHARED) CC='$(CC)' LDSHARED='$(BLDSHARED)' OPT='$(OPT)' ./$(BUILDPYTHON) -E $(srcdir)/setup.py -q build;; \
+-	*) $(RUNSHARED) CC='$(CC)' LDSHARED='$(BLDSHARED)' OPT='$(OPT)' ./$(BUILDPYTHON) -E $(srcdir)/setup.py build;; \
++	*-s*) $(RUNSHARED) CC='$(CC)' LDFLAGS="$(BLDFLAGS)" CROSS_COMPILING='$(CROSS_COMPILING)' LDSHARED='$(BLDSHARED)' OPT='$(OPT)' $(PYTHON_FOR_BUILD) -E $(srcdir)/setup.py -q build;; \
++	*) $(RUNSHARED) CC='$(CC)' LDFLAGS="$(BLDFLAGS)" CROSS_COMPILING='$(CROSS_COMPILING)' LDSHARED='$(BLDSHARED)' OPT='$(OPT)' $(PYTHON_FOR_BUILD) -E $(srcdir)/setup.py build;; \
+ 	esac
+ 
+ # Build static library
+

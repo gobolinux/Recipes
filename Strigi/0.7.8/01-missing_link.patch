@@ -1,0 +1,6 @@
+--- strigi-0.7.8/libstreamanalyzer/plugins/indexers/cluceneindexer/indexdump/CMakeLists.txt.orig	2014-01-13 14:09:05.000000000 +0000
++++ strigi-0.7.8/libstreamanalyzer/plugins/indexers/cluceneindexer/indexdump/CMakeLists.txt	2014-01-13 14:09:26.000000000 +0000
+@@ -1,2 +1,2 @@
+ add_executable(indexdump indexdump.cpp ../tcharutils.cpp)
+-target_link_libraries(indexdump streamanalyzer ${CLUCENE_LIBRARY})
++target_link_libraries(indexdump streamanalyzer ${CLUCENE_LIBRARY} clucene-shared)

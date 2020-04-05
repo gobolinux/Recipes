@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for ATTR by ro.ko@mcnon.com, on Tue Oct 12 00:31:42 BRST 2004
+# Recipe for version 2.4.19.src by ro.ko@mcnon.com, on Tue Oct 12 00:31:42 BRST 2004
+compile_version=1.7.1
+url="ftp://oss.sgi.com/projects/xfs/download/cmd_tars/attr-2.4.19.src.tar.gz"
+file_size=103596
+file_md5=f08b2602e455a28578b24fd7d0afe292
+recipe_type=configure
+dir="attr-2.4.19"
+configure_options=(
+--libexecdir=$target/lib
+)
+install_target="install install-lib install-dev" 
+pre_link() {
+   ln -sf $target/lib/libattr.so.1.1.0 $target/lib/libattr.so
+}

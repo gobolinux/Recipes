@@ -1,0 +1,12 @@
+# Recipe for version 3.4.92 by Fernando Santos <kosh.linux at gmail.com>, on Wed Oct 19 07:45:32 BRST 2005
+# by Maglan C. Diemer , 3.4.92 by roko
+
+url="ftp://ftp.oregonstate.edu/pub/kde/unstable/3.5-beta2/src/kdeutils-3.4.92.tar.bz2"
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+  #"DO_NOT_COMPILE=kedit kdelirc"
+  # ark charselectapplet doc kcalc kcardtools kcharselect kdelirc kdessh kdf kedit kfloppy kgpg khexedit kjots klaptopdaemon kmilo kregexpeditor ksim ktimer kwallet
+)

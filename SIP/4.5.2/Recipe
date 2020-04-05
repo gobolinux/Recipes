@@ -1,0 +1,15 @@
+# Recipe for version 4.5.2 by Lucas C. Villa Real, on Sat Mar 10 14:20:06 BRT 2007
+# on Sat Apr 16 13:31:22 CEST 2005
+
+compile_version=1.8.2
+url="http://www.riverbankcomputing.com/Downloads/sip4/sip-4.5.2.tar.gz"
+file_size=417298
+file_md5=0fdb0cbdcbbe158009196437711eb8bd
+
+recipe_type=makefile
+pre_build() {
+   PrepareProgram -t SIP 4.5.2
+   mkdir -p $target/include/python2.4
+   mkdir -p $target/lib/python2.4/site-packages/
+   python configure.py -b $target/bin -e $target/include -d $target/lib/python2.4/site-packages/
+}

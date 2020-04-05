@@ -1,0 +1,16 @@
+# Recipe for version 1.1.10 by Michael Homer <michael@gobolinux.org>, on Fri Jun 26 17:45:48 NZST 2009
+# Recipe (MakeRecipe) for WebKit by Daniele Maccari <daniele.maccari@gmail.com>, on Wed Feb 13 11:45:17 CET 2008
+compile_version=1.10.1
+url="http://www.webkitgtk.org/webkit-1.1.10.tar.gz"
+file_size=6343872
+file_md5=b852753b3e21f010f565312132f88311
+recipe_type=configure
+makefile='GNUmakefile'
+configure_options=(
+   --enable-fast-malloc   
+)
+with_gtk2="--with-font-backend=pango"
+with_html5_media="--enable-video"
+with_gnome=(
+   --enable-gnomekeyring
+)

@@ -1,0 +1,16 @@
+# Recipe for version 2.5.1 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Jan 21 13:11:25 CET 2006
+# Recipe (MakeRecipe) for Fuse by roko, <ro.ko@mcnon.com>, on Wed Mar 23 22:07:09 CET 2005
+compile_version=1.7.1
+url="$httpSourceforge/fuse/fuse-2.5.1.tar.gz"
+recipe_type=configure
+
+configure_options=(
+        --disable-kernel-module
+        --enable-lib
+        --enable-util
+        MOUNT_FUSE_PATH=${target}/sbin
+        UDEV_RULES_PATH=${target}/../Settings/udev/rules.d
+)
+post_install(){
+        udevstart
+        }

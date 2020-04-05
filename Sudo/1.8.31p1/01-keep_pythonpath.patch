@@ -1,0 +1,14 @@
+Don't mess with PYTHONPATH.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- sudo-1.8.31p1/plugins/sudoers/env.c.orig	2020-03-31 21:09:56.677998021 -0300
++++ sudo-1.8.31p1/plugins/sudoers/env.c	2020-03-31 21:35:08.231347378 -0300
+@@ -194,7 +194,6 @@ static const char *initial_badenv_table[
+     "ZDOTDIR",			/* zsh, search path for dot files */
+     "TMPPREFIX",		/* zsh, prefix for temporary files */
+     "PYTHONHOME",		/* python, module search path */
+-    "PYTHONPATH",		/* python, search path */
+     "PYTHONINSPECT",		/* python, allow inspection */
+     "PYTHONUSERBASE",		/* python, per user site-packages directory */
+     "RUBYLIB",			/* ruby, library load path */

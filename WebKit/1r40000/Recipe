@@ -1,0 +1,15 @@
+# Recipe for version 40000 by Jonas Karlsson <jonas@gobolinux.org>, on Sun Jan 18 13:41:21 CET 2009
+# Recipe (MakeRecipe) for WebKit by Daniele Maccari <daniele.maccari@gmail.com>, on Wed Feb 13 11:45:17 CET 2008
+compile_version=1.10.1
+url="http://builds.nightly.webkit.org/files/trunk/src/WebKit-r40000.tar.bz2"
+file_size=10232349
+file_md5=a62e5a791d352e745586963f4503809c
+recipe_type=configure
+autogen_before_configure=yes
+makefile='GNUmakefile'
+configure_options=(
+   --enable-fast-malloc   
+)
+with_gtk2="--with-font-backend=pango"
+with_html5_media="--enable-video"
+with_gnome="--with-http-backend=soup"

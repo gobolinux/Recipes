@@ -1,0 +1,10 @@
+url='http://www.parallelrealities.co.uk/download.php?file=starfighter-1.1-1.tar.gz&type=zip&ref=3e4c98e5572c39fe1504def0bd853322'
+dir='starfighter-1.1'
+compile_version=1.8.0
+recipe_type=makefile
+makefile='makefile'
+make_variables=(
+   "BINDIR=$target/bin/"
+   "DATADIR=$target/share/games/parallelrealities/"
+   "DOCDIR=$target/doc/"
+)

@@ -1,0 +1,10 @@
+# Recipe for version 0.5.8 by Jonas Karlsson <jonka750@student.liu.se>, on Sun Oct 8 11:31:26 CEST 2006
+# Recipe (MakeRecipe) for GXine by Ozgur Ulukir ozgurulukir@yahoo.com, on Sun Dec 26 00:42:54 EET 2004
+compile_version=1.8.0
+url="$httpSourceforge/xine/gxine-0.5.8.tar.bz2"
+file_size=1014295
+file_md5=e6bc2be9c6b3a13a101d462b2034b035
+recipe_type=configure
+configure_options=(
+    --without-browser-plugin
+)

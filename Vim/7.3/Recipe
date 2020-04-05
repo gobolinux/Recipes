@@ -1,0 +1,30 @@
+# Recipe for version 7.3 by Michael Homer <michael@gobolinux.org>, on Sun Oct 10 13:42:48 NZDT 2010
+# Recipe (MakeRecipe) for Vim by Matthias Wolf, on Tue Sep 21 12:10:37 CEST 2004
+compile_version=1.8.2
+url="ftp://ftp.vim.org/pub/vim/unix/vim-7.3.tar.bz2"
+file_size=9080692
+file_md5=5b9510a17074e2b37d8bb38ae09edbf2
+dir='vim73/src'
+recipe_type=configure
+
+configure_options=(
+   --prefix="$target"
+   --exec-prefix="$target"
+   --enable-gui=no
+   --enable-multibyte
+   --disable-selinux
+   --datadir="$target/share"
+   --mandir="$target/Shared/man"
+)
+with_perl=(
+   --enable-perlinterp
+)
+with_python=(
+   --enable-pythoninterp
+)
+
+with_gtk2="--enable-gui=gtk2"
+
+pre_link() {
+	ln -s vim $target/bin/vi
+}

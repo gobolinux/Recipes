@@ -1,0 +1,12 @@
+# Recipe for version 1.1.13 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jun 18 00:13:33 BRT 2017
+# Recipe (MakeRecipe) for LibMtp by Daniele Maccari <daniele.maccari@gmail.com>, on Sun Mar 30 17:39:01 CEST 2008
+compile_version=1.10.2
+url="http://sourceforge.net/projects/libmtp/files/libmtp/1.1.13/libmtp-1.1.13.tar.gz"
+file_size=801519
+file_md5=6d557bf2671cf9db496b3b90a5f9622b
+recipe_type=configure
+
+configure_options=(
+    --disable-mtpz                # This will disable support for Zune and Windows 7 phones
+    --with-udev=$target/lib/udev
+)

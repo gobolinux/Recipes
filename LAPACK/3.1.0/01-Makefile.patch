@@ -1,0 +1,24 @@
+--- lapack-3.1.0/Makefile.orig	2006-12-13 16:57:21.000000000 -0200
++++ lapack-3.1.0/Makefile	2006-12-13 17:32:16.000000000 -0200
+@@ -6,13 +6,19 @@
+ 
+ include make.inc
+ 
++PREFIX := /usr
++LIBDIR := $(PREFIX)/lib
++
+ all: lapack_install lib lapack_testing blas_testing
+ 
+-lib: lapacklib tmglib
+-#lib: blaslib lapacklib tmglib
++#lib: lapacklib tmglib
++lib: blaslib lapacklib tmglib
+ 
+ clean: cleanlib cleantesting cleanblas_testing 
+ 
++install:
++	@cp -v *.a $(LIBDIR)
++
+ lapack_install:
+ 	( cd INSTALL; $(MAKE); ./testlsame; ./testslamch; \
+ 	  ./testdlamch; ./testsecond; ./testdsecnd; ./testversion )

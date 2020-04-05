@@ -1,0 +1,50 @@
+Added IDs for macbook3,1 trackpad
+
+From: Chris Irwin <chris@chrisirwin.ca>
+
+
+---
+
+ drivers/input/mouse/appletouch.c |   15 ++++++++++++++-
+ 1 files changed, 14 insertions(+), 1 deletions(-)
+
+diff --git a/drivers/input/mouse/appletouch.c b/drivers/input/mouse/appletouch.c
+index 17381a9..dcd9a0d 100644
+--- a/drivers/input/mouse/appletouch.c
++++ b/drivers/input/mouse/appletouch.c
+@@ -62,6 +62,11 @@
+ #define GEYSER4_ISO_PRODUCT_ID	0x021B
+ #define GEYSER4_JIS_PRODUCT_ID	0x021C
+ 
++/* Macbook3,1 devices */
++#define GEYSER4_HF_ANSI_PRODUCT_ID	0x0229
++#define GEYSER4_HF_ISO_PRODUCT_ID	0x022A
++#define GEYSER4_HF_JIS_PRODUCT_ID	0x021B
++
+ #define ATP_DEVICE(prod)					\
+ 	.match_flags = USB_DEVICE_ID_MATCH_DEVICE |		\
+ 		       USB_DEVICE_ID_MATCH_INT_CLASS |		\
+@@ -93,6 +98,11 @@ static struct usb_device_id atp_table [] = {
+ 	{ ATP_DEVICE(GEYSER4_ISO_PRODUCT_ID) },
+ 	{ ATP_DEVICE(GEYSER4_JIS_PRODUCT_ID) },
+ 
++	/* Core2 Duo MacBook3,1 */
++	{ ATP_DEVICE(GEYSER4_HF_ANSI_PRODUCT_ID) },
++	{ ATP_DEVICE(GEYSER4_HF_ISO_PRODUCT_ID) },
++	{ ATP_DEVICE(GEYSER4_HF_JIS_PRODUCT_ID) },
++
+ 	/* Terminating entry */
+ 	{ }
+ };
+@@ -217,7 +227,10 @@ static inline int atp_is_geyser_3(struct atp *dev)
+ 		(productId == GEYSER3_JIS_PRODUCT_ID) ||
+ 		(productId == GEYSER4_ANSI_PRODUCT_ID) ||
+ 		(productId == GEYSER4_ISO_PRODUCT_ID) ||
+-		(productId == GEYSER4_JIS_PRODUCT_ID);
++		(productId == GEYSER4_JIS_PRODUCT_ID) ||
++		(productId == GEYSER4_HF_ANSI_PRODUCT_ID) ||
++		(productId == GEYSER4_HF_ISO_PRODUCT_ID) ||
++		(productId == GEYSER4_HF_JIS_PRODUCT_ID);
+ }
+ 
+ /*

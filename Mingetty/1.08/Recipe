@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for Mingetty by Hisham Muhammad <hisham@gobolinux.org>, on Sun Dec 5 15:15:02 BRST 2010
+# Recipe for version 1.08 by Hisham Muhammad <hisham@gobolinux.org>, on Sun Dec 5 15:15:02 BRST 2010
+compile_version=1.9.0
+url="https://downloads.sourceforge.net/project/mingetty/mingetty/1.08/mingetty-1.08.tar.gz"
+file_size=13476
+file_md5=2a75ad6487ff271424ffc00a64420990
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "DESTDIR=$target"
+   "MANDIR=/man/man8"
+)
+pre_install() {
+   mkdir -p "$target/man/man8"
+}

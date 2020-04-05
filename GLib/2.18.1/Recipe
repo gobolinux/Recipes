@@ -1,0 +1,17 @@
+# Recipe for version 2.18.1 by Giambattista Bloisi <giamby@infinito.it>, on Fri Sep 19 23:41:20 CEST 2008
+# Recipe (MakeRecipe) for GLib by  Ozgur Ulukir, on Mon Dec 20 01:48:37 EET 2004
+compile_version=1.8.2
+url="ftp://ftp.gnome.org/pub/gnome/sources/glib/2.18/glib-2.18.1.tar.bz2"
+file_size=4725213
+file_md5=51a9a33f49a4896d4d95d8e980666b9e
+recipe_type=configure
+configure_options=(
+   "--with-gio-module-dir=${goboLibraries}/gio/modules"
+   "--mandir=${target}/Shared/man"
+)
+
+pre_link() {
+    Quiet pushd $target/lib/pkgconfig
+    for i in *; do ln -s $i `echo $i | sed 's/-2.0//g'`; done
+    Quiet popd
+}

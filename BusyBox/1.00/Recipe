@@ -1,0 +1,27 @@
+# Recipe (MakeRecipe) for BusyBox by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sun Dec 19 13:55:31 BRST 2004
+# Recipe for version 1.00 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sun Dec 19 13:55:31 BRST 2004
+compile_version=1.7.1
+url="http://www.busybox.net/downloads/busybox-1.00.tar.bz2"
+file_size=1118427
+file_md5=5c7ea9b5d3b3677dfcdcec38b281a756
+recipe_type=makefile
+makefile='Makefile'
+
+sandbox_options=(
+	"--no-sandbox"
+)
+
+pre_build() {
+	if [ ! -f .config ]
+	then
+		cp "$recipedir"/dot-config .config
+		yes "" | make oldconfig
+	fi
+	make menuconfig
+}
+
+#pre_link() {
+#	cp _install/bin/* $target/bin
+#	cp _install/sbin/* $target/sbin
+#	ln -s $goboExecutables/busybox /linuxrc
+#}

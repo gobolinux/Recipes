@@ -1,3 +1,0 @@
-pre_build() {
-    [ ! -f .bootstrapped ] && echo "Running autoconf..." && autoconf && touch .bootstrapped
-}

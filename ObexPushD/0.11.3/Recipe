@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for ObexPushD by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Nov 1 10:52:54 EDT 2017
+# Recipe for version 0.11.3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Nov 1 10:52:54 EDT 2017
+compile_version=016
+url="https://downloads.sourceforge.net/project/obexpushd/0.11.3/obexpushd-0.11.3-source.tar.gz"
+file_size=77633
+file_md5=8a7ea2db1d54b999dea6c6033e2c69ee
+dir='obexpushd-0.11.3-source'
+recipe_type=cmake
+
+cmake_options=(
+    -DCMAKE_BUILD_TYPE=Debug
+)

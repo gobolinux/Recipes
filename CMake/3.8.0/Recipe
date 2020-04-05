@@ -1,0 +1,16 @@
+compile_version=2.0
+url="https://cmake.org/files/v3.8/cmake-3.8.0.tar.gz"
+file_size=7503379
+file_md5=f28cba717ba38ad82a488daed8f45b5b
+recipe_type=configure
+
+configure_options=(
+   --prefix=$target
+)
+
+pre_install() {
+    if [ ! -z "$goboIndex" -a -d "$goboIndex" ]
+    then
+        GrepReplace "$goboIndex" "$target" cmake_install.cmake
+    fi
+}

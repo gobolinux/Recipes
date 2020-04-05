@@ -1,0 +1,13 @@
+# Recipe for version 1.8.6 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 3., péntek, 16.10.40 CEST
+# Recipe for Guile 1.8.6 by Peter Eriksen <s022018@student.dtu.dk>
+compile_version=1.8.2
+url="http://ftp.gnu.org/pub/gnu/guile/guile-1.8.6.tar.gz"
+file_size=3960608
+file_md5=9e23d3dbea0e89bab8a9acc6880150de
+recipe_type=configure
+pre_build() {
+   libtoolize --force
+   aclocal
+   autoconf
+   automake --add-missing
+}

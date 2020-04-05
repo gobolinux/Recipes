@@ -1,0 +1,12 @@
+[Name] TCPWrappers
+[Summary] TCP Wrappers Toolkit
+[Description] The TCP Wrappers package allows you to monitor and filter incoming \
+requests for various network services. It provides tiny daemon wrapper programs \
+that can be installed without any changes to existing software or to existing \
+configuration files. The wrappers report the name of the client host and of the \
+requested service. The wrappers do not exchange information with the client or \
+server applications, and impose no overhead on the actual conversation between \
+the client and server applications. Additionally, the wrapper functionality is \
+available as a C API for use in other networking applications, too.
+[License] BSD
+[Homepage] http://www.web-insights.net/socket_wrappers

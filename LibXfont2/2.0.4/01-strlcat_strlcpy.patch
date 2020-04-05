@@ -1,0 +1,100 @@
+From 68f0f226e2209539290e0402b15cddbe32fe7f93 Mon Sep 17 00:00:00 2001
+From: Guillem Jover <guillem@hadrons.org>
+Date: Wed, 20 Nov 2019 01:42:52 +0100
+Subject: [PATCH libXfont] build: Fix libbsd compatibility layer
+
+Switch to use the libbsd-overlay, which implies less changes to the
+actual source code. Get the flags from pkg-config, and apply them during
+all header and compatibility checks.
+
+Signed-off-by: Guillem Jover <guillem@hadrons.org>
+---
+ Makefile.am        |  4 ++--
+ configure.ac       | 16 ++++++++++++----
+ src/util/replace.h |  6 ------
+ 3 files changed, 14 insertions(+), 12 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index 5af2e23..8732c1e 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -49,7 +49,7 @@ pkgconfig_DATA = xfont2.pc
+ lib_LTLIBRARIES = libXfont2.la
+ 
+ AM_CPPFLAGS = -I${top_srcdir}/include
+-AM_CFLAGS = $(XFONT_CFLAGS) $(OS_CFLAGS) $(CWARNFLAGS)
++AM_CFLAGS = $(XFONT_CFLAGS) $(LIBBSD_CFLAGS) $(OS_CFLAGS) $(CWARNFLAGS)
+ 
+ libXfont2_la_SOURCES =			\
+ 	src/stubs/atom.c		\
+@@ -66,7 +66,7 @@ libXfont2_la_SOURCES =			\
+ 
+ libXfont2_la_LDFLAGS = -version-number 2:0:0 -no-undefined
+ 
+-libXfont2_la_LIBADD = $(Z_LIBS) $(MATH_LIBS) $(XFONT_LIBS) $(LTLIBOBJS)
++libXfont2_la_LIBADD = $(LIBBSD_LIBS) $(Z_LIBS) $(MATH_LIBS) $(XFONT_LIBS) $(LTLIBOBJS)
+ 
+ if XFONT_FONTFILE
+ libXfont2_la_SOURCES +=			\
+diff --git a/src/util/replace.h b/src/util/replace.h
+index 53a81a2..367a1fd 100644
+--- a/src/util/replace.h
++++ b/src/util/replace.h
+@@ -32,9 +32,6 @@
+ #include <X11/Xfuncproto.h>
+ 
+ #include <stdlib.h>
+-#if defined(HAVE_LIBBSD) && defined(HAVE_REALLOCARRAY)
+-#include <bsd/stdlib.h>       /* for reallocarray */
+-#endif
+ 
+ #ifndef HAVE_REALLOCARRAY
+ extern _X_HIDDEN void *
+@@ -46,9 +43,6 @@ reallocarray(void *optr, size_t nmemb, size_t size);
+ #endif
+ 
+ #include <string.h>
+-#if defined(HAVE_LIBBSD) && defined(HAVE_STRLCPY)
+-#include <bsd/string.h>       /* for strlcpy, strlcat */
+-#endif
+ 
+ #ifndef HAVE_STRLCPY
+ extern _X_HIDDEN size_t
+-- 
+2.24.0.432.g9d3f5f5b63
+
+diff --git a/configure.ac b/configure.ac
+index e497325..7cc2fce 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -47,18 +47,26 @@ XORG_WITH_XMLTO(0.0.22)
+ XORG_WITH_FOP
+ XORG_CHECK_SGML_DOCTOOLS(1.7)
+ 
++# If the first PKG_CHECK_MODULES appears inside a conditional, pkg-config
++# must first be located explicitly.
++PKG_PROG_PKG_CONFIG
++
++PKG_CHECK_MODULES(LIBBSD, [libbsd-overlay])
++save_CFLAGS="$CFLAGS"
++save_LIBS="$LIBS"
++CFLAGS="$CFLAGS $LIBBSD_CFLAGS"
++LIBS="$LIBS $LIBBSD_LIBS"
++
+ # Checks for header files.
+ AC_CHECK_HEADERS([endian.h poll.h sys/poll.h])
+ 
+ # Checks for library functions.
+ AC_CHECK_FUNCS([poll readlink])
+-AC_SEARCH_LIBS([strlcat], [bsd])
+ AC_CONFIG_LIBOBJ_DIR([src/util])
+ AC_REPLACE_FUNCS([reallocarray strlcat strlcpy])
+ 
+-# If the first PKG_CHECK_MODULES appears inside a conditional, pkg-config
+-# must first be located explicitly.
+-PKG_PROG_PKG_CONFIG
++CFLAGS="$save_CFLAGS"
++LIBS="$save_LIBS"
+ 
+ #
+ # select libraries to include

@@ -1,0 +1,8 @@
+# Recipe for version 1.2.3 by Jonas Karlsson <jonas@gobolinux.org>, on Wed Jan 6 06:34:35 CET 2010
+# Recipe (MakeRecipe) for XF86-Video-Voodoo by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jan 9 17:20:14 BRST 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/driver/xf86-video-voodoo-1.2.3.tar.bz2"
+file_size=259096
+file_md5=c164effcc839eca1fc1d43a42f4086db
+recipe_type=configure
+part_of=Xorg-Driver

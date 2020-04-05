@@ -1,0 +1,30 @@
+# Recipe for version 20120226 by Michael Homer <michael@gobolinux.org>, on Fri Sep 9 18:26:58 NZST 2011
+recipe_type=manifest
+compile_version=1.11.4
+# Fetch from Mozilla directly and perform our own extraction, to save
+# on copying the changeable version from curl.haxx.se/ca/
+url='https://mxr.mozilla.org/mozilla/source/security/nss/lib/ckfw/builtins/certdata.txt?raw=1'
+file_size=1235178
+file_md5=6b0b652579d8021f0a27b1e023cb198b
+dir=cacert
+uncompress=no
+
+pre_build() {
+   mv 'certdata.txt?raw=1' certdata.txt
+   extract-nss-root-certs > cacert.pem
+   rm -f certdata.txt
+   echo -e "\n\n" >> cacert.pem
+   csplit --prefix=cert cacert.pem '%--BEGIN CERTIFICATE--%' '/--END CERTIFICATE--/'+3 '{*}'
+   mv cacert.pem cacert.pem.orig
+   for cert in cert*
+   do
+      mv $cert $cert.pem
+   done
+   c_rehash .
+}
+
+manifest=(
+   "*.pem:lib/ssl/certs/"
+   "cacert.pem.orig:lib/ssl/certs/cacert.pem"
+   "*.0:lib/ssl/certs/"
+)

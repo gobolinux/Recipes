@@ -1,0 +1,8 @@
+[Name] Libx86
+[Summary] A hardware-independent library for executing real-mode x86 code
+[Description] Libx86 provides an interface, lrmi, to make it easy to
+make real-mode x86 BIOS calls from userland on x86 machines. It will
+also run on platforms such as amd64 and alpha, where it uses x86emu to
+execute lrmi function calls.
+[License] Attribution, see package
+[Homepage] http://www.codon.org.uk/~mjg59/libx86/

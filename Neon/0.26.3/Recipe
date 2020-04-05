@@ -1,0 +1,18 @@
+# Recipe for version 0.26.3 by Lucas C. Villa Real, on Tue Feb 27 00:14:05 BRT 2007
+# Recipe (MakeRecipe) for Neon by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Wed Jul 13 08:44:23 BRT 2005
+compile_version=1.8.2
+url="http://www.webdav.org/neon/neon-0.26.3.tar.gz"
+file_size=789289
+file_md5=6e52cd9c03e372026d6eccbfb80f09ef
+recipe_type=configure
+
+configure_options=(
+    "--enable-shared"
+    "--with-ssl"
+)
+
+pre_link() {
+    Quiet pushd $target/include
+    ln -s neon/* .
+    Quiet popd
+}

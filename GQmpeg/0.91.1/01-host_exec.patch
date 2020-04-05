@@ -1,0 +1,11 @@
+--- gqmpeg-0.91.1/src/Makefile.in.orig	2006-08-24 10:35:08.000000000 -0300
++++ gqmpeg-0.91.1/src/Makefile.in	2006-08-24 10:35:12.000000000 -0300
+@@ -881,7 +881,7 @@ uninstall-info: uninstall-info-recursive
+ 
+ 
+ ui_icons.h: $(extra_ICONS)
+-	gdk-pixbuf-csource --raw --extern --build-list $(ICON_PAIRS) > ui_icons.h
++	/bin/gdk-pixbuf-csource --raw --extern --build-list $(ICON_PAIRS) > ui_icons.h
+ 
+ ui_spinner.c: ui_icons.h
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.

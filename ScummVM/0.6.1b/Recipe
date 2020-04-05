@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for ScummVM by Matthias Wolf, on Wed Sep 15 22:13:47 CEST 2004
+# Recipe for version 0.6.1b by Matthias Wolf, on Wed Sep 15 22:13:47 CEST 2004
+compile_version=1.8.0
+url="$httpSourceforge/scummvm/scummvm-0.6.1b.tar.bz2"
+file_size=1626950
+file_md5=143dd7cfe0995922c49e1f8a6cdf2055
+recipe_type=configure
+#recipe_type=makefile
+#makefile='Makefile'
+pre_install() {
+	echo -e "install: scummvm\n\tinstall scummvm $target/bin/scummvm" >> Makefile
+}

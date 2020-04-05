@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for 4Pane by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. dec. 27., szombat, 17.01.02 CET
+# Recipe for version 0.6.0 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. dec. 27., szombat, 17.01.02 CET
+compile_version=1.11.4
+url="$httpSourceforge/fourpane/4Pane.tar.gz"
+file_size=849407
+file_md5=c889bd57a51d369b116983e3f485338d
+recipe_type=configure
+configure_options=(
+    --enable-unicode
+)

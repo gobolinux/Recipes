@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for NetPIPE by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Dec 2 23:44:43 BRST 2012
+# Recipe for version 3.7.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Dec 2 23:44:43 BRST 2012
+compile_version=1.0.1
+url="http://www.scl.ameslab.gov/netpipe/code/NetPIPE-3.7.1.tar.gz"
+file_size=385521
+file_md5=cc458a9154f6b8c6da9fae16627beec4
+recipe_type=makefile
+makefile='makefile'
+do_install=no
+
+build_target=tcp
+pre_install() {
+    cp NPtcp $target/bin
+}

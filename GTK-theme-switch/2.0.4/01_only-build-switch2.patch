@@ -1,0 +1,19 @@
+diff -Naur gtk-theme-switch-2.0.4/Makefile gtk-theme-switch-2.0.4-r1/Makefile
+--- gtk-theme-switch-2.0.4/Makefile	2005-04-30 21:28:32.000000000 -0300
++++ gtk-theme-switch-2.0.4-r1/Makefile	2007-07-09 22:37:27.000000000 -0300
+@@ -22,12 +22,11 @@
+ clean:
+ 	-rm -f switch switch2 *~
+ 	
+-install: all
+-	strip switch
++install: switch2
+ 	mkdir -p ${PREFIX}/bin
+ 	mkdir -p ${PREFIX}/man
+-	install -c switch ${PREFIX}/bin
+-	install -c switch.1 ${PREFIX}/man
++	install -s switch2 ${PREFIX}/bin
++	install switch.1 ${PREFIX}/man
+ 
+ dist: clean
+ 	rm -rf /tmp/gtk-theme-switch-$(VERSION)

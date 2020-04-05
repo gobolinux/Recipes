@@ -1,0 +1,30 @@
+# Recipe for version 1.5.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Jun 19 13:49:41 BRT 2012
+# Recipe (MakeRecipe) for PostGIS by Lucas C. Villa Real, on Tue May 17 12:54:32 BRT 2011
+compile_version=1.12.1
+url="http://www.postgis.org/download/postgis-1.5.4.tar.gz"
+file_size=3800350
+file_md5=693d47b55f7175c8a28471687f85b742
+recipe_type=configure
+
+configure_options=(
+    --with-gui
+    --disable-gtktest
+    --with-pgconfig=$dir/pg_config.sh
+)
+
+
+pre_build() {
+    cat << EOF > pg_config.sh
+#!/bin/sh
+if echo \$@ | grep -q "pgxs\|includedir"
+then pg_config \$@
+else pg_config \$@ | sed 's,$postgresql_path,$target,g'
+fi
+EOF
+    chmod +x pg_config.sh
+}
+
+pre_link() {
+    ln -s postgresql/postgis-1.5.so lib/postgis-1.5
+    ln -s postgresql/postgis-1.5.so lib/postgis-1.5.so
+}

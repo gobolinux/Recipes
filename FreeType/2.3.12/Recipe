@@ -1,0 +1,21 @@
+# Recipe for version 2.3.12 by Hugo Barrocas <hugobarrocas@iol.pt>, on Ter Mai 25 23:56:46 WEST 2010
+# by Giusepe Casagrande, Jeremy Vernon
+url="http://downloads.sourceforge.net/project/freetype/freetype2/2.3.12/freetype-2.3.12.tar.bz2"
+file_size=1453034
+file_md5=e974a82e5939be8e05ee65f07275d7c5
+compile_version=1.8.5
+recipe_type=configure
+
+# XFree86 also has a FreeType; We want this one to be the dominant FreeType
+symlink_options=(
+   "--conflict=overwrite"
+)
+
+make_variables=(
+	C_INCLUDE_PATH=
+)
+
+pre_link() {
+	cd $target/include
+	ln -s freetype2/freetype freetype
+}

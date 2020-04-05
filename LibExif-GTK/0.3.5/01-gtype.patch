@@ -1,0 +1,15 @@
+GtkType is deprecated and not present in later versions of GTK+
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+
+--- libexif-gtk-0.3.5/gtk-extensions/gtk-menu-option.h	2002-12-15 12:41:28.000000000 +0100
++++ libexif-gtk-0.3.5/gtk-extensions/gtk-menu-option.h-new	2009-01-02 01:40:31.000000000 +0100
+@@ -50,7 +50,7 @@
+ 	void (* option_set)      (GtkMenuOption *menu, guint option);
+ };
+ 
+-GtkType    gtk_menu_option_get_type  (void);
++GType    gtk_menu_option_get_type  (void);
+ GtkWidget *gtk_menu_option_new       (GtkOptions *list);
+ void       gtk_menu_option_construct (GtkMenuOption *menu, GtkOptions *list);
+ 

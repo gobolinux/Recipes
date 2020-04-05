@@ -1,0 +1,12 @@
+Add LibTIRPC to the dependency chain.
+
+--- fam-2.7.0/configure.ac.orig	2012-03-26 19:45:40.283143769 +1300
++++ fam-2.7.0/configure.ac	2012-03-26 19:45:57.324144441 +1300
+@@ -27,6 +27,7 @@ dnl AC_PROG_RANLIB
+ 
+ # Checks for libraries.
+ AC_CHECK_LIB([rpcsvc], [pmap_set])
++AC_CHECK_LIB([tirpc], [pmap_set])
+ 
+ # Checks for header files.
+ AC_HEADER_STDC

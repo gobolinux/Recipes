@@ -1,0 +1,11 @@
+# Recipe for version 1.4.3 by Hisham Muhammad <hisham@gobolinux.org>, on Sat Jun 19 11:04:03 BRT 2010
+# Recipe (MakeRecipe) for DirectFB by roko, <ro.ko@mcnon.com>, on Wed Oct 27 01:25:07 BRST 2004
+compile_version=1.8.2
+url="http://www.directfb.org/downloads/Core/DirectFB-1.4/DirectFB-1.4.3.tar.gz"
+file_size=2898215
+file_md5=223e036da906ceb4bd44708026839ff1
+recipe_type=configure
+configure_options=(
+    "--with-gfxdrivers=all"
+    "--enable-multi"
+)

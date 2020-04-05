@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Cream by Nathan Middleton <nathan.middleton@gmail.com>, on Sat Oct 4 21:00:52 CDT 2008
+# Recipe for version 0.41 by Nathan Middleton <nathan.middleton@gmail.com>, on Sat Oct 4 21:00:52 CDT 2008
+compile_version=1.11.2
+url="$httpSourceforge/cream/cream-0.41.tar.gz"
+file_size=758620
+file_md5=1cf71bb14cbe71c62bea598aaf699ed0
+recipe_type=manifest
+pre_install () {
+    mkdir -p $target
+    bash INSTALL.sh $target
+}
+

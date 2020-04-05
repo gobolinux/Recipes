@@ -1,0 +1,14 @@
+# Recipe for version 0.5.905 by kenneth marken <k-marken@online.no>, on sø. 04. april 16:32:56 +0200 2010
+# Recipe (MakeRecipe) for GXine by Ozgur Ulukir ozgurulukir@yahoo.com, on Sun Dec 26 00:42:54 EET 2004
+compile_version=1.8.0
+url="$httpSourceforge/xine/gxine-0.5.905.tar.bz2"
+file_size=1203720
+file_md5=3c9092f1c5c8dc85e95ca327cdcc77af
+recipe_type=configure
+configure_options=(
+    --without-browser-plugin
+    --disable-mozjs
+    --disable-ffjs
+    --disable-seajs
+    --with-spidermonkey
+)

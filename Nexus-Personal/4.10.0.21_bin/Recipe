@@ -1,0 +1,29 @@
+# Recipe (MakeRecipe) for Nexus-Personal by Jonas Karlsson <jonka750@student.liu.se>, on Tue Feb 3 07:10:00 CET 2009
+# Recipe for version 4.10.0.21_bin by Jonas Karlsson <jonka750@student.liu.se>, on Tue Feb 3 07:10:00 CET 2009
+compile_version=1.11.0
+url="https://install.bankid.com/InstallFiles/LinuxPersonal.tgz"
+file_size=2867707
+file_md5=9b7fadd137351e39a44537b5a1dc31f5
+dir='personal-4.10.0.21'
+recipe_type=manifest
+manifest=(
+   personal.bin:lib/personal/personal.bin
+   persadm:lib/personal/persadm
+   res.zip:lib/personal/res.zip
+   Nexus_Personal_Help_*.htm:lib/personal/
+   *.sh:lib/personal/
+   lib*:lib/personal/
+   Personal.cfg:lib/personal/config/Personal.cfg
+   nexus_logo_32x32.png:lib/personal/icons/nexus_logo_32x32.png
+   personal.mo:lib/personal/lang/sv_SE/personal.mo
+   personal.desktop:share/applications/personal.desktop
+)
+
+pre_link() {
+   ln -s "${target}/lib/personal/libai.so" "${target}/lib"
+   ln -s "${target}/lib/personal/libtokenapi.so" "${target}/lib"
+   ln -s "${target}/lib/personal/personal.sh" "${target}/bin/personal"
+   ln -s "${target}/lib/personal/persadm.sh" "${target}/bin/persadm"
+   mkdir -p "${target}/lib/browser-plugins"
+   ln -s "${target}/lib/personal/libplugins.so" "${target}/lib/browser-plugins"
+}

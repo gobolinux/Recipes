@@ -1,0 +1,41 @@
+# Recipe for version 0.4.9_pre1 by Lucas C. Villa Real, on Mon Aug 9 00:22:59 BRT 2010
+# Recipe (MakeRecipe) for FFmpeg by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 16:03:06 BRT 20.4.9-pre1
+compile_version=1.12.1
+url="http://launchpad.net/ffmpeg/main/0.4.9-pre1/+download/ffmpeg-0.4.9-pre1.tar.gz"
+file_size=1611332
+file_md5=ea5587e3c66d50b1503b82ac4179c303
+recipe_type=configure
+
+configure_options=(
+    # Enabling this makes the package not redistributable 
+#    "--enable-nonfree"
+    "--enable-gpl"
+    "--enable-shared"
+    "--enable-postproc"
+    "--enable-swscale"
+    "--enable-pthreads"
+    "--enable-x11grab"
+#    "--disable-debug"
+#    "--cpu=k8"
+)
+
+with_libvorbis="--enable-libvorbis"
+with_theora="--enable-libtheora"
+with_speex="--enable-libspeex"
+with_faad2="--enable-libfaad"
+with_faac="--enable-libfaac"
+with_x264="--enable-libx264"
+with_lame="--enable-libmp3lame"
+with_dirac="--enable-libdirac"
+with_schroedinger="--enable-libschroedinger"
+with_openjpeg="--enable-libopenjpeg"
+with_xvid="--enable-libxvid"
+
+pre_link() {
+    pushd $target/include
+    ln -s libpostproc postproc 
+    mkdir -p ffmpeg
+    cd ffmpeg
+    find .. -type f -exec ln -s {} . \;
+    popd
+}

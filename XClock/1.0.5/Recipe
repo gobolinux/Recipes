@@ -1,0 +1,11 @@
+# Recipe for version 1.0.5 by Diogo Lima <diogo.urb@gmail.com>, on Fri Jan 28 21:50:57 BRST 2011
+# Recipe (MakeRecipe) for XClock by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 18:41:00 BRT 2005
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/releases/individual/app/xclock-1.0.5.tar.bz2"
+file_size=135240
+file_md5=eaf124bbc9d13e1a12a29faaa2ed3612
+recipe_type=configure
+part_of=Xorg-App
+install_variables=(
+   appdefaultdir=${target}/Shared/X11/app-defaults
+)

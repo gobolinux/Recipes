@@ -1,0 +1,29 @@
+Make xfce to look for modules under the global  instead
+for under its own prefix
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+
+diff -ur xfdesktop-4.10.0/src/Makefile.am xfdesktop-4.10.0.new/src/Makefile.am
+--- xfdesktop-4.10.0/src/Makefile.am	2012-04-28 17:53:05.000000000 -0300
++++ xfdesktop-4.10.0.new/src/Makefile.am	2012-09-04 00:25:40.000000000 -0300
+@@ -67,7 +67,7 @@
+ 	-DLOCALEDIR=\"$(localedir)\" \
+ 	-DDATADIR=\"$(datadir)\" \
+ 	-DSYSCONFDIR=\"$(sysconfdir)\" \
+-	-DXFCEMODDIR=\"$(libdir)/xfce4/modules\" \
++	-DXFCEMODDIR=\"@%Compile_goboLibraries%@/xfce4/modules\" \
+         $(GIO_CFLAGS) \
+ 	$(GIO_UNIX_CFLAGS) \
+         $(GLIB_CFLAGS) \
+diff -ur xfdesktop-4.10.0/src/Makefile.in xfdesktop-4.10.0.new/src/Makefile.in
+--- xfdesktop-4.10.0/src/Makefile.in	2012-04-28 17:53:11.000000000 -0300
++++ xfdesktop-4.10.0.new/src/Makefile.in	2012-09-04 00:26:08.000000000 -0300
+@@ -468,7 +468,7 @@
+ 	-DWNCK_I_KNOW_THIS_IS_UNSTABLE -DBINDIR=\"$(bindir)\" \
+ 	-DLOCALEDIR=\"$(localedir)\" -DDATADIR=\"$(datadir)\" \
+ 	-DSYSCONFDIR=\"$(sysconfdir)\" \
+-	-DXFCEMODDIR=\"$(libdir)/xfce4/modules\" $(GIO_CFLAGS) \
++	-DXFCEMODDIR=\"@%Compile_goboLibraries%@/xfce4/modules\" $(GIO_CFLAGS) \
+ 	$(GIO_UNIX_CFLAGS) $(GLIB_CFLAGS) $(GTHREAD_CFLAGS) \
+ 	$(GTK_CFLAGS) $(LIBNOTIFY_CFLAGS) $(LIBX11_CFLAGS) \
+ 	$(LIBXFCE4UTIL_CFLAGS) $(LIBXFCE4UI_CFLAGS) \

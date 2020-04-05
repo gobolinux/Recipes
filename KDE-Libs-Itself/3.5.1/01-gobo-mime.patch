@@ -1,0 +1,186 @@
+diff -Naur kdelibs-3.5.1.old/mimetypes/application/gobo-package.desktop kdelibs-3.5.1/mimetypes/application/gobo-package.desktop
+--- kdelibs-3.5.1.old/mimetypes/application/gobo-package.desktop	1970-01-01 01:00:00.000000000 +0100
++++ kdelibs-3.5.1/mimetypes/application/gobo-package.desktop	2006-03-11 19:38:04.000000000 +0100
+@@ -0,0 +1,76 @@
++[Desktop Entry]
++Encoding=UTF-8
++MimeType=application/x-gobo-package
++Comment=GoboLinux package
++Comment[af]=GoboLinux package
++Comment[ar]=GoboLinux package
++Comment[az]=GoboLinux package
++Comment[be]=GoboLinux package
++Comment[bg]=GoboLinux package
++Comment[bn]=GoboLinux package
++Comment[br]=GoboLinux package
++Comment[bs]=GoboLinux package
++Comment[ca]=GoboLinux package
++Comment[cs]=GoboLinux package
++Comment[cy]=GoboLinux package
++Comment[da]=GoboLinux-pakke
++Comment[de]=GoboLinux-verpackung
++Comment[el]=GoboLinux package
++Comment[eo]=GoboLinux package
++Comment[es]=GoboLinux package
++Comment[et]=GoboLinux package
++Comment[eu]=GoboLinux package
++Comment[fa]=GoboLinux package
++Comment[fi]=GoboLinux package
++Comment[fr]=Paquet de GoboLinux
++Comment[fy]=GoboLinux package
++Comment[ga]=GoboLinux package
++Comment[gl]=GoboLinux package
++Comment[he]=GoboLinux package
++Comment[hi]=GoboLinux package
++Comment[hr]=GoboLinux package
++Comment[hu]=GoboLinux package
++Comment[is]=GoboLinux package
++Comment[it]=GoboLinux package
++Comment[ja]=GoboLinux package
++Comment[ko]=GoboLinux package
++Comment[lt]=GoboLinux package
++Comment[mk]=GoboLinux package
++Comment[mn]=GoboLinux package
++Comment[ms]=GoboLinux package
++Comment[mt]=GoboLinux package
++Comment[nb]=GoboLinux-pakke
++Comment[nds]=GoboLinux package
++Comment[nl]=GoboLinux package
++Comment[nn]=GoboLinux-pakke
++Comment[nso]=GoboLinux package
++Comment[pa]=GoboLinux package
++Comment[pl]=GoboLinux package
++Comment[pt]=GoboLinux package
++Comment[pt_BR]=GoboLinux package
++Comment[ro]=GoboLinux package
++Comment[ru]=GoboLinux package
++Comment[se]=GoboLinux package
++Comment[sk]=GoboLinux package
++Comment[sl]=GoboLinux package
++Comment[sq]=GoboLinux package
++Comment[sr]=GoboLinux package
++Comment[sr@Latn]=GoboLinux package
++Comment[ss]=GoboLinux package
++Comment[sv]=GoboLinux-paket
++Comment[ta]=GoboLinux package
++Comment[tg]=GoboLinux package
++Comment[th]=GoboLinux package
++Comment[tr]=GoboLinux package
++Comment[uk]=GoboLinux package
++Comment[uz]=GoboLinux package
++Comment[ven]=GoboLinux package
++Comment[wa]=GoboLinux package
++Comment[xh]=GoboLinux package
++Comment[xx]=xxGoboLinux packagexx
++Comment[zh_CN]=GoboLinux package
++Comment[zh_TW]=GoboLinux package
++Comment[zu]=GoboLinux package
++Icon=document
++Type=MimeType
++Patterns=*--i686.tar.bz2;*--ppc.tar.bz2;*--PPC.tar.bz2;
+diff -Naur kdelibs-3.5.1.old/mimetypes/application/gobo-recipe.desktop kdelibs-3.5.1/mimetypes/application/gobo-recipe.desktop
+--- kdelibs-3.5.1.old/mimetypes/application/gobo-recipe.desktop	1970-01-01 01:00:00.000000000 +0100
++++ kdelibs-3.5.1/mimetypes/application/gobo-recipe.desktop	2006-03-11 19:38:04.000000000 +0100
+@@ -0,0 +1,76 @@
++[Desktop Entry]
++Encoding=UTF-8
++MimeType=application/x-gobo-recipe
++Comment=GoboLinux recipe
++Comment[af]=GoboLinux recipe
++Comment[ar]=GoboLinux recipe
++Comment[az]=GoboLinux recipe
++Comment[be]=GoboLinux recipe
++Comment[bg]=GoboLinux recipe
++Comment[bn]=GoboLinux recipe
++Comment[br]=GoboLinux recipe
++Comment[bs]=GoboLinux recipe
++Comment[ca]=GoboLinux recipe
++Comment[cs]=GoboLinux recipe
++Comment[cy]=GoboLinux recipe
++Comment[da]=GoboLinux-recept
++Comment[de]=GoboLinux-rezept
++Comment[el]=GoboLinux recipe
++Comment[eo]=GoboLinux recipe
++Comment[es]=GoboLinux recipe
++Comment[et]=GoboLinux recipe
++Comment[eu]=GoboLinux recipe
++Comment[fa]=GoboLinux recipe
++Comment[fi]=GoboLinux recipe
++Comment[fr]=Recette de GoboLinux
++Comment[fy]=GoboLinux recipe
++Comment[ga]=GoboLinux recipe
++Comment[gl]=GoboLinux recipe
++Comment[he]=GoboLinux recipe
++Comment[hi]=GoboLinux recipe
++Comment[hr]=GoboLinux recipe
++Comment[hu]=GoboLinux recipe
++Comment[is]=GoboLinux recipe
++Comment[it]=GoboLinux recipe
++Comment[ja]=GoboLinux recipe
++Comment[ko]=GoboLinux recipe
++Comment[lt]=GoboLinux recipe
++Comment[mk]=GoboLinux recipe
++Comment[mn]=GoboLinux recipe
++Comment[ms]=GoboLinux recipe
++Comment[mt]=GoboLinux recipe
++Comment[nb]=GoboLinux-resept
++Comment[nds]=GoboLinux recipe
++Comment[nl]=GoboLinux recipe
++Comment[nn]=GoboLinux-resept
++Comment[nso]=GoboLinux recipe
++Comment[pa]=GoboLinux recipe
++Comment[pl]=GoboLinux recipe
++Comment[pt]=GoboLinux recipe
++Comment[pt_BR]=GoboLinux recipe
++Comment[ro]=GoboLinux recipe
++Comment[ru]=GoboLinux recipe
++Comment[se]=GoboLinux recipe
++Comment[sk]=GoboLinux recipe
++Comment[sl]=GoboLinux recipe
++Comment[sq]=GoboLinux recipe
++Comment[sr]=GoboLinux recipe
++Comment[sr@Latn]=GoboLinux recipe
++Comment[ss]=GoboLinux recipe
++Comment[sv]=GoboLinux-recept
++Comment[ta]=GoboLinux recipe
++Comment[tg]=GoboLinux recipe
++Comment[th]=GoboLinux recipe
++Comment[tr]=GoboLinux recipe
++Comment[uk]=GoboLinux recipe
++Comment[uz]=GoboLinux recipe
++Comment[ven]=GoboLinux recipe
++Comment[wa]=GoboLinux recipe
++Comment[xh]=GoboLinux recipe
++Comment[xx]=xxGoboLinux recipexx
++Comment[zh_CN]=GoboLinux recipe
++Comment[zh_TW]=GoboLinux recipe
++Comment[zu]=GoboLinux recipe
++Icon=document
++Type=MimeType
++Patterns=*--recipe.tar.bz2;
+diff -Naur kdelibs-3.5.1.old/mimetypes/application/Makefile.am kdelibs-3.5.1/mimetypes/application/Makefile.am
+--- kdelibs-3.5.1.old/mimetypes/application/Makefile.am	2006-03-11 19:37:30.000000000 +0100
++++ kdelibs-3.5.1/mimetypes/application/Makefile.am	2006-03-11 19:50:40.000000000 +0100
+@@ -66,7 +66,8 @@
+ 	vnd.oasis.opendocument.chart.desktop \
+ 	x-java-jnlp-file.desktop xml-dtd.desktop fits.desktop \
+ 	x-rar-compressed.desktop \
+-	x-sqlite2.desktop x-sqlite3.desktop chm.desktop
++	x-sqlite2.desktop x-sqlite3.desktop chm.desktop \
++	gobo-recipe.desktop gobo-package.desktop
+ 
+ mimetypeapplicationdatadir = $(kde_mimedir)/application
+ 
+diff -Naur kdelibs-3.5.1.old/mimetypes/application/Makefile.in kdelibs-3.5.1/mimetypes/application/Makefile.in
+--- kdelibs-3.5.1.old/mimetypes/application/Makefile.in	2006-03-11 19:37:30.000000000 +0100
++++ kdelibs-3.5.1/mimetypes/application/Makefile.in	2006-03-11 19:49:10.000000000 +0100
+@@ -540,7 +540,8 @@
+ 	vnd.oasis.opendocument.chart.desktop \
+ 	x-java-jnlp-file.desktop xml-dtd.desktop fits.desktop \
+ 	x-rar-compressed.desktop \
+-	x-sqlite2.desktop x-sqlite3.desktop chm.desktop
++	x-sqlite2.desktop x-sqlite3.desktop chm.desktop \
++	gobo-recipe.desktop gobo-package.desktop
+ 
+ mimetypeapplicationdatadir = $(kde_mimedir)/application
+ EXTRA_DIST = $(mimetypeapplicationdata_DATA)

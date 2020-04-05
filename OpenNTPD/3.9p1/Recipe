@@ -1,0 +1,18 @@
+# Recipe for version 3.9p1 by Harald Klimach, on Thu Jun 29 23:26:43 CEST 2006
+# Recipe (MakeRecipe) for OpenNTPD by Harald Klimach, on Sat Feb 11 22:11:56 CET 2006
+compile_version=1.8.0
+url="ftp://ftp.openbsd.org/pub/OpenBSD/OpenNTPD/openntpd-3.9p1.tar.gz"
+file_size=152700
+file_md5=afc34175f38d08867c1403d9008600b3
+recipe_type=configure
+
+pre_build() {
+   if ! [  -d $goboVariable/empty ]
+   then
+        mkdir $goboVariable/empty
+	chmod 755 $goboVariable/empty
+   fi
+
+   chown 0:sys $goboVariable/empty
+}
+

@@ -1,0 +1,33 @@
+--- openssh-4.1p1/Makefile.in.orig	2005-08-30 14:07:14.000000000 -0300
++++ openssh-4.1p1/Makefile.in	2005-08-30 14:07:34.000000000 -0300
+@@ -320,24 +320,24 @@
+ 		if [ -f "$(DESTDIR)$(sysconfdir)/ssh_host_key" ] ; then \
+ 			echo "$(DESTDIR)$(sysconfdir)/ssh_host_key already exists, skipping." ; \
+ 		else \
+-			./ssh-keygen -t rsa1 -f $(DESTDIR)$(sysconfdir)/ssh_host_key -N "" ; \
++			ssh-keygen -t rsa1 -f $(DESTDIR)$(sysconfdir)/ssh_host_key -N "" ; \
+ 		fi ; \
+ 		if [ -f $(DESTDIR)$(sysconfdir)/ssh_host_dsa_key ] ; then \
+ 			echo "$(DESTDIR)$(sysconfdir)/ssh_host_dsa_key already exists, skipping." ; \
+ 		else \
+-			./ssh-keygen -t dsa -f $(DESTDIR)$(sysconfdir)/ssh_host_dsa_key -N "" ; \
++			ssh-keygen -t dsa -f $(DESTDIR)$(sysconfdir)/ssh_host_dsa_key -N "" ; \
+ 		fi ; \
+ 		if [ -f $(DESTDIR)$(sysconfdir)/ssh_host_rsa_key ] ; then \
+ 			echo "$(DESTDIR)$(sysconfdir)/ssh_host_rsa_key already exists, skipping." ; \
+ 		else \
+-			./ssh-keygen -t rsa -f $(DESTDIR)$(sysconfdir)/ssh_host_rsa_key -N "" ; \
++			ssh-keygen -t rsa -f $(DESTDIR)$(sysconfdir)/ssh_host_rsa_key -N "" ; \
+ 		fi ; \
+ 	fi ;
+ 
+ host-key-force: ssh-keygen$(EXEEXT)
+-	./ssh-keygen -t rsa1 -f $(DESTDIR)$(sysconfdir)/ssh_host_key -N ""
+-	./ssh-keygen -t dsa -f $(DESTDIR)$(sysconfdir)/ssh_host_dsa_key -N ""
+-	./ssh-keygen -t rsa -f $(DESTDIR)$(sysconfdir)/ssh_host_rsa_key -N ""
++	ssh-keygen -t rsa1 -f $(DESTDIR)$(sysconfdir)/ssh_host_key -N ""
++	ssh-keygen -t dsa -f $(DESTDIR)$(sysconfdir)/ssh_host_dsa_key -N ""
++	ssh-keygen -t rsa -f $(DESTDIR)$(sysconfdir)/ssh_host_rsa_key -N ""
+ 
+ uninstallall:	uninstall
+ 	-rm -f $(DESTDIR)$(sysconfdir)/ssh_config

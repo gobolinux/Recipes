@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for LibKML by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Jan 11 00:55:50 BRST 2019
+# Recipe for version 1.3.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Jan 11 00:55:50 BRST 2019
+compile_version=016
+url="https://github.com/libkml/libkml/archive/1.3.0.tar.gz"
+file="libkml-1.3.0.tar.gz"
+file_size=6639857
+file_md5=e663141e9ebd480538b25d226e1b2979
+dir='libkml-1.3.0'
+recipe_type=cmake

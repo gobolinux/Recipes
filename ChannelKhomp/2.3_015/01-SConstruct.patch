@@ -1,0 +1,13 @@
+# use boost-mt lib
+diff -ur channel_2.3_rev2357-orig/SConstruct channel_2.3_rev2357/SConstruct
+--- channel_2.3_rev2357-orig/SConstruct	2009-03-17 13:41:57.000000000 -0300
++++ channel_2.3_rev2357/SConstruct	2009-04-17 16:22:07.000000000 -0300
+@@ -65,7 +65,7 @@
+ if nonstatic:
+ 	libs.append('boost_regex')
+ else:
+-	libs.append(File('/usr/lib/libboost_regex.a'))
++	libs.append(File('/usr/lib/libboost_regex-mt.a'))
+ 
+ BuildDir(builddir, './', duplicate=0)
+ 

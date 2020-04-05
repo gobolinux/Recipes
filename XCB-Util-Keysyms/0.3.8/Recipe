@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for XCB-Util-Keysyms by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Mar 20 14:52:04 NZDT 2012
+# Recipe for version 0.3.8 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Mar 20 14:52:04 NZDT 2012
+compile_version=1.13.3
+url="http://cgit.freedesktop.org/xcb/util-keysyms/snapshot/util-keysyms-0.3.8.tar.gz"
+file_size=22858
+file_md5=0ae86a57c72d6c31cdc3cc1d0730c792
+recipe_type=configure
+autogen_before_configure=yes

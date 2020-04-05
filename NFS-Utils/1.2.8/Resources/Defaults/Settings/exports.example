@@ -1,0 +1,5 @@
+# NFS Exports
+# directory machine1(option11, option12) machine2(option21, option22) 
+
+/Users		192.168.0.1(rw,sync)
+

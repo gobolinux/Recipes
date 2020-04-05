@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Xine-Lib by Guilherme Balestieri Bedin (gbedin), on Tue Sep 21 12:44:46 BRT 2004
+# Recipe for version 1rc6a by Guilherme Balestieri Bedin (gbedin), on Tue Sep 21 12:44:46 BRT 2004
+compile_version=1.7.1
+url="$httpSourceforge/xine/xine-lib-1-rc6a.tar.gz"
+file_size=7003035
+file_md5=32b231beb9b2194606a18ed7bcf2bcb3
+recipe_type=configure
+
+configure_options=(
+  "--with-w32-path=/Files/Codecs/"
+)
+

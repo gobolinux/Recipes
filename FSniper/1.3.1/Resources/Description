@@ -1,0 +1,10 @@
+[Name] FSniper
+[Summary] Scriptable directory monitoring tool.
+[Description] Fsniper is a tool that monitors a given set of directories
+for new files. Then, based on the new file's type or name, it invokes a
+script to be run (any executable via the shell) on that file. Common
+uses include making a single drop directory for all things from a
+webbrowser etc, and having semi-intelligent scripts figure out what to
+do with those files. You write the scripts yourself.
+[License] GPL v3.0
+[Homepage] http://projects.l3ib.org/trac/fsniper

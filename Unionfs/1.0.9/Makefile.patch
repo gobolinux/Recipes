@@ -1,0 +1,25 @@
+--- unionfs-1.0.9/Makefile.orig	2005-03-05 13:25:34.000000000 -0300
++++ unionfs-1.0.9/Makefile	2005-03-05 13:27:06.000000000 -0300
+@@ -3,7 +3,8 @@
+ #
+ 
+ # this should point to where your kernel headers are
+-LINUXSRC = /lib/modules/`uname -r`/build
++MODDIR = /lib/modules/`uname -r`
++LINUXSRC = ${MODDIR}/build
+ TOPINC   = -I${LINUXSRC}/include
+ # This is where the make install target will put stuff
+ PREFIX   = /usr/local
+@@ -86,10 +87,10 @@
+ 	cp man/unionfs.4 ${PREFIX}/man/man4
+ 	cp man/unionctl.8 ${PREFIX}/man/man8
+ 	cp man/uniondbg.8 ${PREFIX}/man/man8
+-	if [ -f unionfs.ko ] ; then cp unionfs.ko ${MODPREFIX}/lib/modules/`uname -r`/kernel/fs ; else cp unionfs.o ${MODPREFIX}/lib/modules/`uname -r`/kernel/fs ; fi
++	if [ -f unionfs.ko ] ; then cp unionfs.ko ${MODPREFIX}/${MODDIR}/kernel/fs ; else cp unionfs.o ${MODPREFIX}/${MODDIR}/kernel/fs ; fi
+ 
+ uninstall:
+-	if [ -f unionfs.ko ] ; then rm /lib/modules/`uname -r`/kernel/fs/unionfs.ko ; else rm /lib/modules/`uname -r`/kernel/fs/unionfs.o ; fi
++	if [ -f unionfs.ko ] ; then rm ${MODDIR}/kernel/fs/unionfs.ko ; else rm ${MODDIR}/kernel/fs/unionfs.o ; fi
+ 	rm ${PREFIX}/man/man8/unionctl.8
+ 	rm ${PREFIX}/man/man8/uniondbg.8
+ 	rm ${PREFIX}/man/man4/unionfs.4

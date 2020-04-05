@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for GFotox by Õsi Róbert <7szunyu@nordtelekom.hu>, on 2008. máj. 31., szombat, 01.08.50 CEST
+# Recipe for version 4.5 by Õsi Róbert <7szunyu@nordtelekom.hu>, on 2008. máj. 31., szombat, 01.08.50 CEST
+compile_version=1.11.0
+url="http://kornelix.squarespace.com/storage/gfotox/gfotox-4.5.tar.gz"
+file_size=1958847
+file_md5=28b7d7420414c910d13b2cd1fdebd82e
+dir='gfotox'
+recipe_type=makefile
+makefile='makefile'
+install_variables=(
+"PREFIX=$target"
+)

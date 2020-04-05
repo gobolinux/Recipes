@@ -1,0 +1,17 @@
+Produce a shared library instead of a static archive.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index ff99fff..540cbd5 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -9,7 +9,7 @@ FILE(GLOB SNOWBALL_SOURCES
+   libstemmer/libstemmer.c
+ )
+ 
+-ADD_LIBRARY(stemmer ${SNOWBALL_SOURCES})
++ADD_LIBRARY(stemmer SHARED ${SNOWBALL_SOURCES})
+ 
+ INSTALL(TARGETS stemmer DESTINATION lib)
+ INSTALL(FILES include/libstemmer.h DESTINATION include)

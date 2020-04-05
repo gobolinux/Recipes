@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for Util-Linux-NG by Giambattista Bloisi <giamby@infinito.it>, on Thu Jan 17 09:41:27 CET 2008
+compile_version=1.12.0
+url="https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.35/util-linux-2.35.1.tar.gz"
+file_size=10992883
+file_md5=85a136d982060601cd4fd98d778d447e
+recipe_type=configure
+
+configure_options=(
+   --enable-arch
+   --enable-partx
+   --enable-write
+   --disable-makeinstall-chown
+   --enable-libmount-force-mountinfo
+)

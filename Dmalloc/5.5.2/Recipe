@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for Dmalloc by Rehan Khan <rehan.khan@dsl.pipex.com>, on Wed Jul 1 11:35:21 BST 2009
+# Recipe for version 5.5.2 by Rehan Khan <rehan.khan@dsl.pipex.com>, on Wed Jul 1 11:35:21 BST 2009
+compile_version=1.12.3
+url="http://dmalloc.com/releases/dmalloc-5.5.2.tgz"
+file_size=666608
+file_md5=f92e5606c23a8092f3d5694e8d1c932e
+recipe_type=configure
+
+install_target="install installdocs"

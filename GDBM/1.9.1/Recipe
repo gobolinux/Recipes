@@ -1,0 +1,12 @@
+# Recipe for version 1.9.1 by Leandro Motta Barros <lmb@stackedboxes.org>, on Mon Sep 19 23:27:44 BRT 2011
+# Recipe (MakeRecipe) for GDBM by Laurent Pelecq (laurent.pelecq at soleil.org), on dim avr 16 00:27:12 CEST 2006
+compile_version=1.8.0
+url="ftp://ftp.gnu.org/pub/gnu/gdbm/gdbm-1.9.1.tar.gz"
+file_size=554843
+file_md5=59f6e4c4193cb875964ffbe8aa384b58
+recipe_type=configure
+make_variables=(
+    "BINOWN=0"
+    "BINGRP=0"
+)
+

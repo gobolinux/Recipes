@@ -1,0 +1,95 @@
+Include new callbacks introduced to EFL 1.9.2. Patch adapted from
+git-svn-id: http://svn.enlightenment.org/svn/e/trunk@76211 7cbeb6ba-43b4-40fd-8cce-4c39aea84d33
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+diff -urp python-evas-1.7.0.orig/evas/__init__.py python-evas-1.7.0/evas/__init__.py
+--- python-evas-1.7.0.orig/evas/__init__.py	2014-04-13 17:31:52.000000000 +0000
++++ python-evas-1.7.0/evas/__init__.py	2014-04-13 17:40:23.000000000 +0000
+@@ -62,6 +62,8 @@ EVAS_CALLBACK_CANVAS_OBJECT_FOCUS_OUT =
+ EVAS_CALLBACK_IMAGE_UNLOADED = 29
+ EVAS_CALLBACK_RENDER_PRE = 30
+ EVAS_CALLBACK_RENDER_POST = 31
++EVAS_CALLBACK_IMAGE_RESIZE = 32
++EVAS_CALLBACK_DEVICE_CHANGED = 33
+ 
+ EVAS_BUTTON_NONE = 0
+ EVAS_BUTTON_DOUBLE_CLICK = 1
+diff -urp python-evas-1.7.0.orig/evas/evas.c_evas_canvas_callbacks.pxi python-evas-1.7.0/evas/evas.c_evas_canvas_callbacks.pxi
+--- python-evas-1.7.0.orig/evas/evas.c_evas_canvas_callbacks.pxi	2014-04-13 17:31:52.000000000 +0000
++++ python-evas-1.7.0/evas/evas.c_evas_canvas_callbacks.pxi	2014-04-13 17:42:55.000000000 +0000
+@@ -132,6 +132,11 @@ cdef void cb_canvas_changed_size_hints(v
+ cdef void cb_canvas_image_preloaded(void *data, Evas *e, void *e_inf) with gil:
+     print "EVAS_CALLBACK_IMAGE_PRELOADED is not supported by canvas."
+ 
++cdef void cb_canvas_image_resize(void *data, Evas *e, void *e_inf) with gil:
++    print "EVAS_CALLBACK_IMAGE_RESIZE is not supported by canvas."
++
++cdef void cb_canvas_device_changed(void *data, Evas *e, void *e_inf) with gil:
++    print "EVAS_CALLBACK_DEVICE_CHANGED is not supported by canvas."
+ 
+ cdef void cb_canvas_canvas_focus_in(void *data, Evas *e, void *e_inf) with gil:
+     cb_canvas_dispatcher2(<Canvas>data, EVAS_CALLBACK_CANVAS_FOCUS_IN)
+@@ -178,8 +183,8 @@ cdef void cb_canvas_render_post(void *da
+ 
+ 
+ cdef int evas_canvas_event_callbacks_len
+-cdef Evas_Event_Cb evas_canvas_event_callbacks[32]
+-evas_canvas_event_callbacks_len = 32
++cdef Evas_Event_Cb evas_canvas_event_callbacks[34]
++evas_canvas_event_callbacks_len = 34
+ evas_canvas_event_callbacks[EVAS_CALLBACK_MOUSE_IN] = cb_canvas_mouse_in
+ evas_canvas_event_callbacks[EVAS_CALLBACK_MOUSE_OUT] = cb_canvas_mouse_out
+ evas_canvas_event_callbacks[EVAS_CALLBACK_MOUSE_DOWN] = cb_canvas_mouse_down
+@@ -212,3 +217,5 @@ evas_canvas_event_callbacks[EVAS_CALLBAC
+ evas_canvas_event_callbacks[EVAS_CALLBACK_IMAGE_UNLOADED] = cb_canvas_image_unloaded
+ evas_canvas_event_callbacks[EVAS_CALLBACK_RENDER_PRE] = cb_canvas_render_pre
+ evas_canvas_event_callbacks[EVAS_CALLBACK_RENDER_POST] = cb_canvas_render_post
++evas_canvas_event_callbacks[EVAS_CALLBACK_IMAGE_RESIZE] = cb_canvas_image_resize
++evas_canvas_event_callbacks[EVAS_CALLBACK_DEVICE_CHANGED] = cb_canvas_device_changed
+diff -urp python-evas-1.7.0.orig/evas/evas.c_evas_object_callbacks.pxi python-evas-1.7.0/evas/evas.c_evas_object_callbacks.pxi
+--- python-evas-1.7.0.orig/evas/evas.c_evas_object_callbacks.pxi	2014-04-13 17:31:52.000000000 +0000
++++ python-evas-1.7.0/evas/evas.c_evas_object_callbacks.pxi	2014-04-13 17:45:08.000000000 +0000
+@@ -202,6 +202,13 @@ cdef void cb_object_image_preloaded(void
+                                     Evas_Object *obj, void *e_inf) with gil:
+     cb_object_dispatcher2(<Object>data, EVAS_CALLBACK_IMAGE_PRELOADED)
+ 
++cdef void cb_object_image_resize(void *data, Evas *e,
++                                 Evas_Object *obj, void *e_inf) with gil:
++    cb_object_dispatcher2(<Object>data, EVAS_CALLBACK_IMAGE_RESIZE)
++
++cdef void cb_object_device_changed(void *data, Evas *e,
++                                   Evas_Object *obj, void *e_inf) with gil:
++    cb_object_dispatcher2(<Object>data, EVAS_CALLBACK_DEVICE_CHANGED)
+ 
+ cdef void cb_object_canvas_focus_in(void *data, Evas *e,
+                                     Evas_Object *obj, void *e_inf) with gil:
+@@ -244,8 +251,8 @@ cdef void cb_object_canvas_render_post(v
+ 
+ 
+ cdef int evas_object_event_callbacks_len
+-cdef Evas_Object_Event_Cb evas_object_event_callbacks[32]
+-evas_object_event_callbacks_len = 32
++cdef Evas_Object_Event_Cb evas_object_event_callbacks[34]
++evas_object_event_callbacks_len = 34
+ evas_object_event_callbacks[EVAS_CALLBACK_MOUSE_IN] = cb_object_mouse_in
+ evas_object_event_callbacks[EVAS_CALLBACK_MOUSE_OUT] = cb_object_mouse_out
+ evas_object_event_callbacks[EVAS_CALLBACK_MOUSE_DOWN] = cb_object_mouse_down
+@@ -278,3 +285,5 @@ evas_object_event_callbacks[EVAS_CALLBAC
+ evas_object_event_callbacks[EVAS_CALLBACK_IMAGE_UNLOADED] = cb_object_image_unloaded
+ evas_object_event_callbacks[EVAS_CALLBACK_RENDER_PRE] = cb_object_canvas_render_pre
+ evas_object_event_callbacks[EVAS_CALLBACK_RENDER_POST] = cb_object_canvas_render_post
++evas_object_event_callbacks[EVAS_CALLBACK_IMAGE_RESIZE] = cb_object_image_resize
++evas_object_event_callbacks[EVAS_CALLBACK_DEVICE_CHANGED] = cb_object_device_changed
+diff -urp python-evas-1.7.0.orig/include/evas/c_evas.pxd python-evas-1.7.0/include/evas/c_evas.pxd
+--- python-evas-1.7.0.orig/include/evas/c_evas.pxd	2014-04-13 17:31:52.000000000 +0000
++++ python-evas-1.7.0/include/evas/c_evas.pxd	2014-04-13 17:45:42.000000000 +0000
+@@ -76,6 +76,8 @@ cdef extern from "Evas.h":
+     cdef int EVAS_CALLBACK_IMAGE_UNLOADED
+     cdef int EVAS_CALLBACK_RENDER_PRE
+     cdef int EVAS_CALLBACK_RENDER_POST
++    cdef int EVAS_CALLBACK_IMAGE_RESIZE
++    cdef int EVAS_CALLBACK_DEVICE_CHANGED
+     cdef int EVAS_CALLBACK_LAST
+ 
+ 

@@ -1,0 +1,17 @@
+# Recipe for version 8.5.9 by Fabio Mierlo <geromao@gmail.com>, on Fri Oct 1 04:07:03 BRT 2010
+compile_version=1.8.5
+url="$httpSourceforge/tcl/tcl8.5.9-src.tar.gz"
+file_size=4469603
+file_md5=8512d8db3233041dd68a81476906012a
+dir='tcl8.5.9/unix'
+recipe_type=configure
+install_target='install install-private-headers'
+
+configure_options=(
+   --with-encoding="iso8859-1"
+)
+
+pre_link(){
+   $sudo_exec ln -nfs ${target}/bin/tclsh8.5 ${target}/bin/tclsh
+   $sudo_exec ln -nfs ${goboLibraries}/tk8.5 ${target}/lib/tk8.5
+}

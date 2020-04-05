@@ -1,0 +1,48 @@
+			     BASH PATCH REPORT
+			     =================
+
+Bash-Release: 4.0
+Patch-ID: bash40-022
+
+Bug-Reported-by:  Bernd Eggink <monoped@sudrala.de>
+Bug-Reference-ID: <49E65407.5010206@sudrala.de>
+Bug-Reference-URL: http://lists.gnu.org/archive/html/bug-bash/2009-04/msg00118.html
+
+Bug-Description:
+
+When parsing case statements in command substitutions, the shell did not
+note that a newline is a shell metacharacter and can legally be followed
+by a reserved word (e.g., `esac').
+
+Patch:
+
+*** ../bash-4.0-patched/parse.y	2009-03-08 21:24:47.000000000 -0400
+--- bash/parse.y	2009-04-15 22:27:56.000000000 -0400
+***************
+*** 3355,3359 ****
+  
+        /* Meta-characters that can introduce a reserved word.  Not perfect yet. */
+!       if MBTEST((tflags & LEX_RESWDOK) == 0 && (tflags & LEX_CKCASE) && (tflags & LEX_INCOMMENT) == 0 && shellmeta(ch))
+  	{
+  	  /* Add this character. */
+--- bash/3375,3379 ----
+  
+        /* Meta-characters that can introduce a reserved word.  Not perfect yet. */
+!       if MBTEST((tflags & LEX_RESWDOK) == 0 && (tflags & LEX_CKCASE) && (tflags & LEX_INCOMMENT) == 0 && (shellmeta(ch) || ch == '\n'))
+  	{
+  	  /* Add this character. */
+*** ../bash-4.0/patchlevel.h	2009-01-04 14:32:40.000000000 -0500
+--- bash/patchlevel.h	2009-02-22 16:11:31.000000000 -0500
+***************
+*** 26,30 ****
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 21
+  
+  #endif /* _PATCHLEVEL_H_ */
+--- bash/26,30 ----
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 22
+  
+  #endif /* _PATCHLEVEL_H_ */

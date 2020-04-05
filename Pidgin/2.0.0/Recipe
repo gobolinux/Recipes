@@ -1,0 +1,18 @@
+# Recipe (MakeRecipe) for Pidgin by Jonas Karlsson <jonka750@student.liu.se>, on Sat May 5 01:40:29 CEST 2007
+# Recipe for version 2.0.0 by Jonas Karlsson <jonka750@student.liu.se>, on Sat May 5 01:40:30 CEST 2007
+compile_version=1.8.2
+url="$httpSourceforge/pidgin/pidgin-2.0.0.tar.bz2"
+file_size=7521328
+file_md5=132355d7e236d9c2820a2668621eef43
+recipe_type=configure
+
+configure_options=(
+   "--enable-dbus"
+   "--with-dbus-services=${goboShared}/dbus-1/services"
+   "--enable-gnutls"
+   "--enable-tcl"
+   "--enable-tk"
+   "--enable-cyrus-sasl"
+   "--disable-nss"
+   "--mandir=${target}/man"
+)

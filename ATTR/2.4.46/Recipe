@@ -1,0 +1,22 @@
+# Recipe for version 2.4.46 by Leandro Motta Barros <lmb@stackedboxes.org>, on Mon Sep 19 17:40:57 BRT 2011
+# Recipe (MakeRecipe) for ATTR by ro.ko@mcnon.com, on Tue Oct 12 00:31:42 BRST 2004
+compile_version=1.8.5
+url="http://mirror.lihnidos.org/GNU/savannah/attr/attr-2.4.46.src.tar.gz"
+file_size=338181
+file_md5=db557c17fdfa4f785333ecda08654010
+dir="attr-2.4.46"
+recipe_type=configure
+install_target="install install-lib install-dev" 
+
+configure_options=(
+    "--libexecdir=$target/lib/attr"
+)
+install_variables=(
+   libdir="${target}/lib"
+   libexecdir="${target}/lib/attr"
+   PKG_DEVLIB_DIR="${target}/lib/attr"
+)
+
+pre_link() {
+   ln -snf $target/lib/libattr.so.1.1.0 $target/lib/libattr.so
+}

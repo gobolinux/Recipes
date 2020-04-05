@@ -1,7 +1,0 @@
-[Description] The devfsd program is a daemon, run by the system
-boot, which can provide for intelligent management
-of device entries in the Device Filesystem
-(devfs). It is desirable to start the daemon at
-the beginning of the boot scripts, in particular
-before filesystem checks.
-[Homepage] http://www.atnf.csiro.au/~rgooch/linux/

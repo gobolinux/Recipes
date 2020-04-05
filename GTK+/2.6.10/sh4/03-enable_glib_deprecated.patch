@@ -1,0 +1,10 @@
+--- gtk+-2.6.10/modules/engines/pixbuf/Makefile.in.orig	2006-08-31 15:36:48.000000000 -0300
++++ gtk+-2.6.10/modules/engines/pixbuf/Makefile.in	2006-08-31 15:37:06.000000000 -0300
+@@ -291,7 +291,6 @@ INCLUDES = \
+ 	-I$(top_srcdir) 				\
+ 	-I$(top_srcdir)/gdk				\
+ 	-I$(top_builddir)/gdk				\
+-	-DG_DISABLE_DEPRECATED	 			\
+ 	-DGDK_PIXBUF_DISABLE_DEPRECATED			\
+ 	-DGDK_DISABLE_DEPRECATED			\
+ 	$(GTK_DEP_CFLAGS)

@@ -1,0 +1,10 @@
+# Recipe for version 0.6.9 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Mar 10 23:11:09 CET 2007
+# by Maglan C. Diemer
+compile_version=1.8.2
+url="ftp://alpha.gnu.org/pub/gnu/libidn/libidn-0.6.9.tar.gz"
+file_size=2193905
+file_md5=616135837f5aaa9fac752e6b54221fb3
+recipe_type=configure
+configure_options=(
+   "--mandir=${target}/man"
+)

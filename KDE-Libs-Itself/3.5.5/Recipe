@@ -1,0 +1,22 @@
+# Recipe for version 3.5.5 by Andre Detsch <detsch@gobolinux.org>, on Wed Nov 8 16:44:16 BRST 2006
+# by Maglan C. Diemer && Andre Detsch, 3.3.2 by roko
+
+compile_version=1.8.0
+url="ftp://ftp.oregonstate.edu/pub/kde/stable/3.5.5/src/kdelibs-3.5.5.tar.bz2"
+recipe_type=configure
+dir='kdelibs-3.5.5'
+
+configure_options=(
+	"--disable-debug"
+	"--disable-dependency-tracking"
+	"--disable-warnings"
+	"--with-alsa"
+	"--enable-fast-malloc=no"
+	"--with-distribution"
+	"--enable-dnotify"
+	"--enable-inotify"
+        "--disable-libsuffix"
+#  "DO_NOT_COMPILE="
+#  dcop libltdl kdefx  kdecore  kdeui  kdesu  kjs  kwallet  kio arts kab  kconf_update  kdoctools  kimgio  kioslave  knewstuff
+# kparts  kresources   ksmartcard  kstyles  kutils  libkmid  libscreensaver  licenses  mimetypes  pics  doc  kcert  interfaces  kinit # kdeprint  kac  kspell2  kmdi  khtml  kate  kdewidgets
+)

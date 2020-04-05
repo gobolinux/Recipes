@@ -1,0 +1,16 @@
+# Recipe for version 2.12.11 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Mar 10 23:03:34 CET 2007
+# Recipe (MakeRecipe) for GLib by  Ozgur Ulukir, on Mon Dec 20 01:48:37 EET 2004
+compile_version=1.8.2
+url="http://ftp.gnome.org/pub/gnome/sources/glib/2.12/glib-2.12.11.tar.bz2"
+file_size=2925342
+file_md5=077a9917b673a9a0bc63f351786dde24
+recipe_type=configure
+configure_options=(
+   "--mandir=${target}/man"
+)
+
+pre_link() {
+    Quiet pushd $target/lib/pkgconfig
+    for i in *; do ln -s $i `echo $i | sed 's/-2.0//g'`; done
+    Quiet popd
+}

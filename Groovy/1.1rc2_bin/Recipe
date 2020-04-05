@@ -1,0 +1,18 @@
+# Recipe (MakeRecipe) for Groovy by Nathan Middleton, on Thu Nov 15 04:17:52 CST 2007
+# Recipe for version 1.1_rc2 by Nathan Middleton, on Thu Nov 15 04:17:52 CST 2007
+compile_version=1.9.0
+recipe_type=manifest
+url="http://dist.groovy.codehaus.org/distributions/groovy-binary-1.1-rc-2.zip"
+file_size=8003365
+file_md5=19654b530d822c3fe2e8c3dbfb0df9eb
+dir="groovy-1.1-rc-2"
+
+manifest=(
+    "LICENSE.txt:Shared/doc/groovy-1.1-rc-2"
+    "NOTICE.txt:Shared/doc/groovy-1.1-rc-2"
+    "ASM-LICENSE.txt:Shared/doc/groovy-1.1-rc-2"
+    "bin:bin"
+    "lib:lib"
+    "conf:conf"
+    "embeddable:embeddable"
+)

@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Bin86 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jun 19 03:09:44 BRT 2006
+# Recipe for version 0.16.17 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jun 19 03:09:44 BRT 2006
+compile_version=1.8.0
+url="http://homepage.ntlworld.com/robert.debath/dev86/bin86-0.16.17.tar.gz"
+file_size=152400
+file_md5=c9e8d72dd2e7457b52d0e3164fc199a1
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)

@@ -1,0 +1,31 @@
+diff -Naur libtrash-2.4/libtrash.conf libtrash-2.4-new/libtrash.conf
+--- libtrash-2.4/libtrash.conf	2003-12-07 17:11:49.000000000 -0200
++++ libtrash-2.4-new/libtrash.conf	2005-08-09 10:30:22.000000000 -0300
+@@ -57,7 +57,7 @@
+ # be intercepted and, if any file is overwritten, it will be stored in
+ # your trash can:
+ 
+-INTERCEPT_RENAME = YES
++INTERCEPT_RENAME = NO 
+ 
+ 
+ # This setting controls the interception of calls to fopen(). If it is
+@@ -374,7 +374,7 @@
+ 
+ # NOTE: This variable is ignored if global_protection is disabled.
+ 
+-REMOVABLE_MEDIA_MOUNT_POINTS = /media;/mnt
++REMOVABLE_MEDIA_MOUNT_POINTS = /Mount
+ 
+ 
+ # This setting is meant to allow certain programs to function correctly
+@@ -398,7 +398,8 @@
+ # feature -- not a bug -- so that mount can delete any file with a name
+ # starting with /etc/mtab.
+ 
+-EXCEPTIONS = /etc/mtab;/etc/resolv.conf;/etc/adjtime;/etc/upsstatus;/etc/dhcpc
++EXCEPTIONS = 
++#EXCEPTIONS = /etc/mtab;/etc/resolv.conf;/etc/adjtime;/etc/upsstatus;/etc/dhcpc
+ 
+ 
+ # Files which match this regular expression will be ignored.

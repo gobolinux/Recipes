@@ -1,0 +1,9 @@
+# Recipe for version 2.2.5 by Giambattista Bloisi <giamby@infinito.it>, on Sun Jan 27 14:18:12 CET 2008
+compile_version=1.9.0
+url="http://ktorrent.org/downloads/2.2.5/ktorrent-2.2.5.tar.bz2"
+file_size=2593138
+file_md5=070e84112b8dd146c1ad403c5403f076
+recipe_type=configure
+configure_options=(
+'--disable-libsuffix'
+)

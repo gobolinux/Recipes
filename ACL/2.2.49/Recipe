@@ -1,0 +1,22 @@
+# Recipe for version 2.2.49 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. febr. 10., szerda, 02.29.50 CET
+# Recipe (MakeRecipe) for ACL by ro.ko@mcnon.com, on Tue Oct 12 00:32:04 BRST 2004
+compile_version=1.8.5
+url="http://mirror.lihnidos.org/GNU/savannah/acl/acl-2.2.49.src.tar.gz"
+file_size=362743
+file_md5=181445894cca986da9ae0099d5ce2d08
+recipe_type=configure
+dir='acl-2.2.49'
+configure_options=(
+   --libexecdir="$target/lib/acl"
+)
+install_variables=(
+   libdir="${target}/lib"
+   libexecdir="${target}/lib/acl"
+   PKG_DEVLIB_DIR="${target}/lib/acl"
+)
+	  
+install_target="install install-lib install-dev" 
+
+pre_link() {
+   ln -snf $target/lib/libacl.so.1.1.0 $target/lib/libacl.so
+}

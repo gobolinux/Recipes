@@ -1,0 +1,14 @@
+Do not run depmod during 'make install'. Instead it is called from
+SymlinkProgram
+
+diff -Naur iwlwifi-1.2.23/Makefile iwlwifi-1.2.23.new/Makefile
+--- iwlwifi-1.2.23/Makefile	2008-01-07 16:29:04.000000000 +0100
++++ iwlwifi-1.2.23.new/Makefile	2008-01-07 16:29:36.000000000 +0100
+@@ -165,7 +165,6 @@
+ install: $(addprefix $(DIR),$(addsuffix .ko,$(list-m)))
+ 	@install -d $(KMISC)
+ 	@install -m 644 -c $^ $(KMISC)
+-	@/sbin/depmod -a ${KVER}
+ 	@echo -e "\nModule " $^ "(s) installed into:\n\t$(KMISC)"
+ 	@echo -e "\nDon't forget to copy firmware to your hotplug's firmware directory "
+ 	@echo "and have the hotplug tools in place."

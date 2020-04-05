@@ -1,0 +1,11 @@
+# Recipe for version 2.0.5 by Daniele Maccari, on Sat Jan 26 13:27:57 CET 2008
+# Recipe (MakeRecipe) for VSFTPD by Jonas Karlsson <jonka750@student.liu.se>, on Sat Apr 23 21:07:24 CEST 2005
+compile_version=1.8.0
+url="ftp://vsftpd.beasts.org/users/cevans/vsftpd-2.0.5.tar.gz"
+file_size=155985
+file_md5=146062e8b2f93af43ff6c2c770feea94
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+"DESTDIR=$target"
+)

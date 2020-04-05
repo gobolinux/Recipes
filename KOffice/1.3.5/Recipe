@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Koffice by roko, <ro.ko@mcnon.com>, on Fri Nov 19 22:44:40 BRST 2004
+# Recipe for version 1.3.5 by roko, <ro.ko@mcnon.com>, on Fri Nov 19 22:44:40 BRST 2004
+compile_version=1.7.1
+url="ftp://ftp.kde.org/pub/kde/stable/koffice-1.3.5/src/koffice-1.3.5.tar.bz2"
+file_size=10778584
+file_md5=dbc7e76c86647709a3e74f57c0fcf7f5
+recipe_type=configure
+configure_options=(
+--without-wv2
+)

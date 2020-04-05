@@ -1,0 +1,27 @@
+# Recipe for version 3.09.3 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Mar 20 14:14:58 CET 2007
+# Recipe (MakeRecipe) for OCaml by  Ozgur Ulukir, on Mon Dec 20 17:41:24 EET 2004
+
+url="http://caml.inria.fr/pub/distrib/ocaml-3.09/ocaml-3.09.3.tar.gz"
+file_size=2485013
+file_md5=11a91651007f70a2cb4d5ecfe20fab89
+compile_version=1.8.2
+recipe_type=makefile
+makefile='Makefile'
+pre_build() {
+        configure -prefix $target
+}
+
+# Make has to have an argument, so the "make" step does not work.
+# Use pre_install() instead:
+pre_install() {
+        make world.opt
+}
+
+# If Emacs is present install the Emacs mode.
+pre_link() {
+        if [ -x emacs ]; then
+                cd emacs
+                make install
+        fi
+}
+

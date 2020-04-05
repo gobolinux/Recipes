@@ -1,0 +1,13 @@
+# Recipe for version 4.3.2 by Michael Homer <michael@gobolinux.org>, on Wed Oct 7 15:58:21 NZDT 2009
+# Recipe (MakeRecipe) for KDE-Toys by Giambattista Bloisi <giamby@infinito.it>, on Thu Jan 17 08:59:50 CET 2008
+compile_version=1.10.0
+url="http://download.kde.org/stable/4.3.2/src/kdetoys-4.3.2.tar.bz2"
+file_size=1305686
+file_md5=a4496c504940f076997e553f257e4b3d
+file="kdetoys-4.3.2.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
+

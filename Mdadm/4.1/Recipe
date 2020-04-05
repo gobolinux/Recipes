@@ -1,0 +1,12 @@
+# Recipe for version 4.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon 24 Feb 2020 03:47:14 PM BRT
+# Recipe (MakeRecipe) for Mdadm by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Jun 21 16:34:18 BRT 2005
+compile_version=1.8.2
+url="https://mirrors.edge.kernel.org/pub/linux/utils/raid/mdadm/mdadm-4.1.tar.xz"
+file_size=440756
+file_md5=51bf3651bd73a06c413a2f964f299598
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   DESTDIR="$target"
+   CHECK_RUN_DIR=0
+)

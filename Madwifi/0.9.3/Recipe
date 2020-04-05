@@ -1,0 +1,41 @@
+# Recipe (MakeRecipe) for Madwifi by Jonas Karlsson <jonka750@student.liu.se>, on Mon Apr 2 08:58:32 CEST 2007
+# Recipe for version 0.9.3 by Jonas Karlsson <jonka750@student.liu.se>, on Mon Apr 2 08:58:32 CEST 2007
+compile_version=1.8.2
+url="$httpSourceforge/madwifi/madwifi-0.9.3.tar.bz2"
+file_size=3488332
+file_md5=26c31e8e1528fd098e3aaa11c0d34d99
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=(
+   BINDIR=${target}/bin
+   MANDIR=${target}/man
+)
+
+unmanaged_files=(
+   ${goboModules}/$(uname -r)/net/wlan_xauth.ko
+   ${goboModules}/$(uname -r)/net/wlan_scan_sta.ko
+   ${goboModules}/$(uname -r)/net/wlan_scan_ap.ko
+   ${goboModules}/$(uname -r)/net/wlan_ccmp.ko
+   ${goboModules}/$(uname -r)/net/ath_hal.ko
+   ${goboModules}/$(uname -r)/net/ath_pci.ko
+   ${goboModules}/$(uname -r)/net/wlan_acl.ko
+   ${goboModules}/$(uname -r)/net/ath_rate_amrr.ko
+   ${goboModules}/$(uname -r)/net/ath_rate_onoe.ko
+   ${goboModules}/$(uname -r)/net/ath_rate_sample.ko
+   ${goboModules}/$(uname -r)/net/wlan_wep.ko
+   ${goboModules}/$(uname -r)/net/wlan_tkip.ko
+   ${goboModules}/$(uname -r)/net/wlan.ko
+   ${goboModules}/$(uname -r)/net/wlan.ko
+   ${goboModules}/$(uname -r)/modules.alias
+   ${goboModules}/$(uname -r)/modules.dep
+   ${goboModules}/$(uname -r)/modules.inputmap
+   ${goboModules}/$(uname -r)/modules.ofmap
+   ${goboModules}/$(uname -r)/modules.seriomap
+   ${goboModules}/$(uname -r)/modules.usbmap
+   ${goboModules}/$(uname -r)/modules.ccwmap
+   ${goboModules}/$(uname -r)/modules.ieee1394map
+   ${goboModules}/$(uname -r)/modules.isapnpmap
+   ${goboModules}/$(uname -r)/modules.pcimap
+   ${goboModules}/$(uname -r)/modules.symbols
+)

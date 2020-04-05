@@ -1,0 +1,15 @@
+configure_options=(
+    ${configure_options[@]}
+    --enable-nss=no
+    --disable-screensaver
+    --disable-sm
+    --disable-startup-notification
+    --disable-gtkspell
+    --disable-gevolution
+    --disable-cap
+    --disable-gstreamer
+    --disable-perl
+    --disable-tcl
+    --disable-tk
+    --disable-doxygen
+)

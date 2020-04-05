@@ -1,0 +1,5 @@
+pre_build() {
+	# a call to autoconf is needed to fix the following problem:
+	# configure: warning: CC=arm-softfloat-linux-gnu-gcc: invalid host type
+	autoconf
+}

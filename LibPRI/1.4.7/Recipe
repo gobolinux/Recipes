@@ -1,0 +1,16 @@
+# Recipe for version 1.4.7 by Fabio Mierlo <geromao@gmail.com>, on Sat Oct 18 17:39:39 BRT 2008
+# Recipe (MakeRecipe) for LibPRI by Fabio Mierlo <geromao@gmail.com>, on Sat Oct 18 04:02:58 BRT 2008
+compile_version=1.11.2
+url="http://downloads.digium.com/pub/libpri/libpri-1.4.7.tar.gz"
+file_size=92845
+file_md5=b770e6ecdc1f51fb53636f392ab26016
+recipe_type=makefile
+makefile='Makefile'
+
+environment=(
+  DESTDIR=$target
+)
+
+pre_install() {
+  ln -nfs $target/ $target/usr
+}

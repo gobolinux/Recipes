@@ -1,0 +1,8 @@
+# Recipe for version 6.8.3 by Kevin Quick <quick@sparq.org>, on Tue Sep 9 21:23:27 MST 2008
+# Recipe (MakeRecipe) for GHC by Peter Eriksen <s022018@student.dtu.dk>, on Tue Feb 22 12:51:35 CET 2005
+compile_version=1.8.5
+url="http://www.haskell.org/ghc/dist/6.8.3/ghc-6.8.3-src.tar.bz2"
+file_size=7092076
+file_md5=dfa31028b4d06d1d226f55fe3a2ab7b3
+dir='ghc-6.8.3'
+recipe_type=configure

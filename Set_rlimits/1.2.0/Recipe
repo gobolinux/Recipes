@@ -1,0 +1,10 @@
+compile_version=1.9.0
+url="http://www.physics.adelaide.edu.au/~jwoithe/set_rlimits-1.2.0.tgz"
+file_size=41824
+file_md5=b7385886aecbfb1c3a1631c93c7311d2
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+   "SYSCONFDIR=$settings_target"
+)

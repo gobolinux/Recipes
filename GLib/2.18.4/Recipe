@@ -1,0 +1,26 @@
+# Recipe for version 2.18.4 by Nick Matteo <kundor@kundor.org>, on Wed Feb 25 12:20:36 EST 2009
+# Recipe (MakeRecipe) for GLib by  Ozgur Ulukir, on Mon Dec 20 01:48:37 EET 2004
+compile_version=1.12.0
+url="ftp://ftp.gnome.org/pub/gnome/sources/glib/2.18/glib-2.18.4.tar.bz2"
+file_size=4809051
+file_md5=ec25ed261534d870141000ab73f1a2bf
+recipe_type=configure
+configure_options=(
+   "--with-gio-module-dir=${goboLibraries}/gio/modules"
+   "--disable-fam"
+)
+with_fam="--enable-fam"
+
+install_variables=(
+   GIO_MODULE_DIR="${target}/lib/gio/modules"
+)
+
+pre_install() {
+   sed -i "s,libdir='${goboLibraries},libdir='${target}/lib," "${sourcedir}/gio/fam/libgiofam.la"
+}
+
+pre_link() {
+    Quiet pushd $target/lib/pkgconfig
+    for i in *; do ln -s $i `echo $i | sed 's/-2.0//g'`; done
+    Quiet popd
+}

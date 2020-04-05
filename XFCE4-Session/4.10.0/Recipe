@@ -1,0 +1,10 @@
+# Recipe for version 4.10.0 by Hisham Muhammad <hisham@gobolinux.org>, on Tue Sep 4 00:01:17 BRT 2012
+# Recipe (MakeRecipe) for XFCE4-Session by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:27:30 CEST 2006
+compile_version=1.8.2
+url="http://archive.xfce.org/xfce/4.10/src/xfce4-session-4.10.0.tar.bz2"
+file_size=1257385
+file_md5=4768e1a41a0287af6aad18b329a0f230
+recipe_type=configure
+with_gnome_keyring=(
+   --enable-libgnome-keyring
+)

@@ -1,0 +1,20 @@
+# Recipe for version 0.9.6.1 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. jan. 31., vasárnap, 15.11.42 CET
+# Recipe (MakeRecipe) for Falcon by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 30., csütörtök, 01.15.05 CEST
+compile_version=1.12.2
+url="http://www.falconpl.org/project_dl/_official_rel/Falcon-0.9.6-1.tar.gz"
+file_size=1745766
+file_md5=29ae45f6cdaf85a2db3222e83d91e514
+recipe_type=makefile
+dir="Falcon-0.9.6"
+do_build=no
+do_install=no
+pre_build(){
+    pushd $compileSourcesDir/Falcon-0.9.6
+    build.sh -p "$target" -f "$target" -int -b
+    popd
+}
+pre_link(){
+    pushd $compileSourcesDir/Falcon-0.9.6
+    build.sh -i
+    popd
+}

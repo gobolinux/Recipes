@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for Iwlwifi-3945-Ucode by Daniele Maccari, on Mon Jan 7 16:07:46 CET 2008
+compile_version=1.10.0
+url="http://intellinuxwireless.org/iwlwifi/downloads/iwlwifi-3945-ucode-15.28.2.8.tgz"
+file_size=66534
+file_md5=d28cf1697da981c3f11f3420af6a40c8
+file="iwlwifi-3945-ucode-15.28.2.8.tgz"
+recipe_type=manifest
+
+manifest=(
+        "iwlwifi-3945-2.ucode:lib/firmware/iwlwifi-3945-2.ucode"
+	"LICENSE.iwlwifi-3945-ucode:lib/firmware/LICENSE.iwlwifi-3945-ucode"
+)
+
+docs=(
+	"LICENSE.iwlwifi-3945-ucode"
+)

@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Wireless-Tools by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Fri Feb 25 13:07:53 BRT 2005
+# Recipe for version 27 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Fri Feb 25 13:07:53 BRT 2005
+compile_version=1.7.1
+url="http://pcmcia-cs.sourceforge.net/ftp/contrib/wireless_tools.27.tar.gz"
+file_size=187790
+file_md5=29891b66f23565e7e381d28404abb29a
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)

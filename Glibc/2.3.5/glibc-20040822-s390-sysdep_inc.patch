@@ -1,0 +1,37 @@
+Fixes error
+
+dl-runtime.c:222: error: parse error before "CFI_STARTPROC"
+make[2]: *** [crosstool-0.28-rc35/build/s390-unknown-linux-gnu/gcc-3.4.1-glibc-20040822/build-glibc/elf/dl-runtime.o] Error 1
+make[2]: Leaving directory `crosstool-0.28-rc35/build/s390-unknown-linux-gnu/gcc-3.4.1-glibc-20040822/glibc-20040822/elf'
+make[1]: *** [elf/subdir_lib] Error 2
+make[1]: Leaving directory `crosstool-0.28-rc35/build/s390-unknown-linux-gnu/gcc-3.4.1-glibc-20040822/glibc-20040822'
+make: *** [all] Error 2
+-----------------
+In-Reply-To: <412CB003.1030009@kegel.com>
+Subject: Re: glibc cvs problem on s390
+To: Dan Kegel <dank@kegel.com>
+X-Mailer: Lotus Notes Build V651_12042003 December 04, 2003
+Message-ID: <OF88608D8D.CA3C948A-ON42256EFB.005D57B6-42256EFB.005D60AC@de.ibm.com>
+From: Martin Schwidefsky <schwidefsky@de.ibm.com>
+Date: Wed, 25 Aug 2004 18:59:55 +0200
+
+Hi Dan,
+add a "#include <sysdep.h>" to dl-runtime.c and it should compile.
+
+blue skies,
+   Martin
+Linux/390 Design & Development, IBM Deutschland Entwicklung GmbH
+Schönaicherstr. 220, D-71032 Böblingen, Telefon: 49 - (0)7031 - 16-2247
+E-Mail: schwidefsky@de.ibm.com
+-----------------
+
+--- glibc-20040822/elf/dl-runtime.c.old	2004-08-25 21:53:40.000000000 -0700
++++ glibc-20040822/elf/dl-runtime.c	2004-08-25 21:54:05.000000000 -0700
+@@ -23,6 +23,7 @@
+ #include <stdlib.h>
+ #include <unistd.h>
+ #include <ldsodefs.h>
++#include <sysdep.h>
+ #include "dynamic-link.h"
+ 
+ #if (!defined ELF_MACHINE_NO_RELA && !defined ELF_MACHINE_PLT_REL) \

@@ -1,8 +1,0 @@
-#!/bin/sh
-
-if echo "$@" | grep -- '-u' >/dev/null
-then
-   /bin/sudo "$@"
-else
-   /bin/sudo -u "#0" "$@"
-fi

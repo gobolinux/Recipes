@@ -1,0 +1,11 @@
+# Recipe for version 268 by Lucas C. Villa Real, on Thu Feb 10 15:08:48 BRST 2011
+# Recipe (MakeRecipe) for XTerm by Hisham Muhammad, on Thu Feb 23 14:45:58 BRT 2006
+compile_version=1.9.0
+url="ftp://invisible-island.net/xterm/xterm-268.tgz"
+file_size=955221
+file_md5=25bfc6a4a8f965e7bcc8207f0dd2e826
+recipe_type=configure
+configure_options=(
+   # otherwise uxterm is broken!
+   --enable-wide-chars
+)

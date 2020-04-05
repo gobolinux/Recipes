@@ -1,0 +1,11 @@
+# Recipe for version 2.0.0 made by 
+compile_version=1.10.0
+url="http://delta.affinix.com/download/qca/2.0/qca-2.0.0.tar.bz2"
+file="qca-2.0.0.tar.bz2"
+file_size=5106520
+file_md5=07d54358ef4880d05b3c6f56b629aa55
+recipe_type=cmake
+
+pre_build() {
+	sed -i ../CMakeLists.txt -e '/plugins/ d';
+}

@@ -1,0 +1,17 @@
+# Recipe (MakeRecipe) for File-Roller by Matthias Wolf, on Wed Jul 27 17:13:52 CEST 2005
+# Recipe for version 2.10.4 by Matthias Wolf, on Wed Jul 27 17:13:52 CEST 2005
+compile_version=1.8.0
+url="http://ftp.gnome.org/pub/GNOME/desktop/2.10/2.10.2/sources/file-roller-2.10.4.tar.bz2"
+file_size=1307330
+file_md5=74115fe3289042cc41dc517dede3f64f
+recipe_type=configure
+
+configure_options=(
+    "--with-gconf-source=xml::${target}/../Settings/gconf/gconf.xml.defaults"
+    "--with-gconf-source-file-dir=${target}/../Settings/gconf/schemas"
+)
+
+pre_install() {
+   mkdir -m 0755 -p "${target}/../Settings/gconf/gconf.xml.defaults"
+   mkdir -m 0755 -p "${target}/../Settings/gconf/schemas"
+}

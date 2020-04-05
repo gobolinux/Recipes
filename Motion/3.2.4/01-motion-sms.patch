@@ -1,0 +1,111 @@
+Binary files motion-3.2.4-orig/.conf.c.swp and motion-3.2.4/.conf.c.swp differ
+Binary files motion-3.2.4-orig/.event.c.swp and motion-3.2.4/.event.c.swp differ
+Binary files motion-3.2.4-orig/.motion.c.swp and motion-3.2.4/.motion.c.swp differ
+diff -Nurp motion-3.2.4-orig/conf.c motion-3.2.4/conf.c
+--- motion-3.2.4-orig/conf.c	2006-05-31 02:49:01.000000000 -0300
++++ motion-3.2.4/conf.c	2006-05-31 03:04:57.000000000 -0300
+@@ -135,6 +135,7 @@ struct config conf_template = {
+ 	text_double:           0,
+ 	despeckle:             NULL,
+ 	minimum_motion_frames: 1,
++	sms_send_command:      NULL,
+ 	// debug_parameter:       0
+ };
+ 
+@@ -490,6 +491,13 @@ config_param config_params[] = {
+ 	copy_bool,
+ 	print_bool
+ 	},
++	{
++	"sms_send_command",
++	"# SMS command to send on motion (depends on gap events). (default: not defined)\n",
++	CONF_OFFSET(sms_send_command),
++	copy_string,
++	print_string
++	},
+ 
+ 	{
+ 	"output_normal",
+diff -Nurp motion-3.2.4-orig/conf.h motion-3.2.4/conf.h
+--- motion-3.2.4-orig/conf.h	2006-05-31 02:55:09.000000000 -0300
++++ motion-3.2.4/conf.h	2006-05-31 02:55:42.000000000 -0300
+@@ -117,6 +117,7 @@ struct config {
+ 	int text_double;
+ 	const char *despeckle;
+ 	int minimum_motion_frames;
++	const char *sms_send_command;
+ 	// int debug_parameter;
+ 	int argc;
+ 	char **argv;
+diff -Nurp motion-3.2.4-orig/event.c motion-3.2.4/event.c
+--- motion-3.2.4-orig/event.c	2006-05-31 02:41:21.000000000 -0300
++++ motion-3.2.4/event.c	2006-05-31 03:44:39.000000000 -0300
+@@ -110,6 +110,15 @@ static void on_motion_detected_command(s
+ 		exec_command(cnt, cnt->conf.on_motion_detected, NULL, 0);
+ }
+ 
++static void event_sms(struct context *cnt,
++            int type ATTRIBUTE_UNUSED, unsigned char *dummy1 ATTRIBUTE_UNUSED,
++            char *dummy2 ATTRIBUTE_UNUSED, void *dummy3 ATTRIBUTE_UNUSED,
++            struct tm *tm ATTRIBUTE_UNUSED)
++{
++	if (cnt->conf.sms_send_command)
++		exec_command(cnt, (char *) cnt->conf.sms_send_command, NULL, 0);
++}
++
+ #if defined(HAVE_MYSQL) || defined(HAVE_PGSQL)
+ 
+ static void event_sqlnewfile(struct context *cnt, int type  ATTRIBUTE_UNUSED,
+@@ -622,6 +631,10 @@ struct event_handlers event_handlers[] =
+ 	EVENT_STOP,
+ 	event_stop_webcam
+ 	},
++	{
++	EVENT_SMS,
++	event_sms
++	},
+ 	{0, NULL}
+ };
+ 
+diff -Nurp motion-3.2.4-orig/event.h motion-3.2.4/event.h
+--- motion-3.2.4-orig/event.h	2006-05-31 02:56:12.000000000 -0300
++++ motion-3.2.4/event.h	2006-05-31 02:57:24.000000000 -0300
+@@ -27,7 +27,7 @@
+ #define EVENT_FILECLOSE         16384
+ #define EVENT_DEBUG             65536
+ #define EVENT_CRITICAL          131072
+-#
++#define EVENT_SMS               262144
+ 
+ typedef void(* event_handler)(struct context *, int, unsigned char *, char *, void *, struct tm *);
+ 
+diff -Nurp motion-3.2.4-orig/motion.c motion-3.2.4/motion.c
+--- motion-3.2.4-orig/motion.c	2006-05-31 01:13:09.000000000 -0300
++++ motion-3.2.4/motion.c	2006-05-31 03:44:39.000000000 -0300
+@@ -645,6 +645,8 @@ static void *motion_loop(void *arg)
+ 	unsigned long long int timenow = 0, timebefore = 0;
+ 	unsigned char *newimg = NULL;     /* Pointer to where new image is stored */
+ 	int vid_return_code = 0;          /* Return code used when calling vid_next */
++	int send_sms = 1;
++	time_t diff;
+ 
+ #ifdef HAVE_FFMPEG
+ 	/* Next two variables are used for timelapse feature
+@@ -1085,7 +1087,17 @@ static void *motion_loop(void *arg)
+ 
+ 
+ 	/***** MOTION LOOP - ACTIONS AND EVENT CONTROL SECTION *****/
++		diff = cnt->currenttime - cnt->lasttime;
++		
++		if (diff == 0 && send_sms == 1 && cnt->conf.gap > 0) {
++			/* time to send a sms */
++			event(cnt, EVENT_SMS, NULL, NULL, NULL, cnt->currenttime_tm);
++			send_sms = 0;
+ 
++		} else if (((diff >= cnt->conf.gap) && cnt->conf.gap > 0)) {
++			send_sms = 1;
++		}
++		
+ 		/* If motion has been detected we take action and start saving
+ 		 * pictures and movies etc by calling motion_detected().
+ 		 * Is output_all enabled we always call motion_detected()

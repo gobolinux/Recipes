@@ -1,0 +1,27 @@
+# Recipe (MakeRecipe) for TkDVD by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jan. 6., kedd, 04.04.41 CET
+# Recipe for version 4.0.9 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jan. 6., kedd, 04.04.41 CET
+compile_version=1.11.4
+url="http://regis.damongeot.free.fr/tkdvd/dl/tkdvd-4.0.9.tar.gz"
+file_size=71046
+file_md5=b6cf7fd3518472ffa4e56f06a93fbfb1
+dir=tkdvd
+recipe_type=manifest
+manifest=(
+    "TkDVD.sh:lib/tkdvd-4.0.9"
+    "src/*.tcl:lib/tkdvd-4.0.9/src"
+    "icons/*.png:share/icons/tkdvd"
+    "README:doc"
+    "FAQ:doc"
+    "COPYING:doc"
+    "ChangeLog:doc"
+    "TODO:doc"
+)
+pre_install() {
+    mkdir -p $target/bin
+    mkdir -p $target/share/icons/tkdvd
+    mkdir -p $target/lib/tkdvd-4.0.9/src
+}
+pre_link() {
+    chmod 755 $target/lib/tkdvd-4.0.9/TkDVD.sh
+    ln -snf $target/lib/tkdvd-4.0.9/TkDVD.sh $target/bin/tkdvd
+}

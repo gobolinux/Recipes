@@ -1,0 +1,19 @@
+# Recipe for version 3.12.0 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 6., hétfő, 19.10.45 CEST
+# Recipe (MakeRecipe) for FreeImage by Filipe Vieira, on Tue Jan 15 08:23:24 WET 2008
+compile_version=1.10.0
+url="http://downloads.sourceforge.net/freeimage/FreeImage3120.zip"
+file_size=4335135
+file_md5=47b259102f776a4bcd7affc00942f3b4
+file="FreeImage3.12.0.zip"
+dir='FreeImage'
+recipe_type=makefile
+
+do_install=no
+
+pre_link(){
+	cp libfreeimage-3.10.0.so $target/lib
+	cp Dist/libfreeimage.a $target/lib
+	cp Source/*.h	$target/include
+}
+
+

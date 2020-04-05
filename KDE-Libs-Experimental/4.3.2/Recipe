@@ -1,0 +1,24 @@
+# Recipe for version 4.3.2 by Michael Homer <michael@gobolinux.org>, on Wed Oct 7 16:06:29 NZDT 2009
+# Recipe (MakeRecipe) for KDE-Libs-Experimental by Michael Homer <michael@gobolinux.org>, on Wed Aug 5 14:22:39 NZST 2009
+compile_version=1.12.0
+url="http://kde.mirrors.tds.net/pub/kde/stable/4.3.2/src/kdelibs-experimental-4.3.2.tar.bz2"
+file_size=26904
+file_md5=d473afb133b5b7d3ead9699c17fe6761
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
+
+do_install() {
+   # This is an exceptionally ugly hack to make it install where it ought
+   # (exceptional in general, not exceptional for what you ordinarily need
+   # to work around cmake's broken design; for that it's fairly clean).
+   sed '/.PHONY : install/,$ d' Makefile > Makefile.new
+   echo "	mkdir -p '$target'/Shared/dbus-1/interfaces" >> Makefile.new
+   echo "	mv $(readlink -f $goboShared/dbus-1/interfaces/org.kde.NotificationItem.xml) $target/Shared/dbus-1/interfaces" >> Makefile.new
+   echo "	mv $(readlink -f $goboShared/dbus-1/interfaces/org.kde.NotificationItemWatcher.xml) $target/Shared/dbus-1/interfaces" >> Makefile.new
+   sed -n '/.PHONY : install/,$ p' Makefile >> Makefile.new
+   mv Makefile.new Makefile
+   cmake_do_install "$@"
+}

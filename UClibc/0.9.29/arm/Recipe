@@ -1,0 +1,22 @@
+make_variables=(
+    UCLIBC_EXTRA_CFLAGS="-nostdinc"
+)
+
+pre_build() {
+  (
+    unset LD CC GCC_EXEC_PREFIX CFLAGS LDFLAGS C_INCLUDE_PATH HOSTCFLAGS HOSTLDFLAGS NATIVE_CFLAGS NATIVE_LDFLAGS
+    crosscompiler="$cross_toolchain_dir/bin/$cross_compiler"
+    if [ ! -f .config ]
+    then 
+        cp "$archsubdir"/dot-config .config
+        yes "" | make oldconfig
+    fi
+    GrepReplace "CROSS_COMPILER_PREFIX=.*" "CROSS_COMPILER_PREFIX=\"$crosscompiler\"" .config
+	make menuconfig
+    GrepReplace "CROSS_COMPILER_PREFIX=.*" "CROSS_COMPILER_PREFIX=\"$crosscompiler\"" .config
+  )
+}
+
+pre_link() {
+	GrepReplace " /lib/" " $goboLibraries/" $target/lib/libc.so
+}

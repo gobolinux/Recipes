@@ -1,0 +1,11 @@
+# Recipe for version 2.0.5 by Daniele Maccari <daniele.maccari@gmail.com>, on Sat Feb 9 19:10:41 CET 2008
+# Recipe (MakeRecipe) for LibGKSu by Daniele Maccari <daniele.maccari@gmail.com>, on Sat Feb 9 19:08:40 CET 2008
+compile_version=1.10.1
+url="http://people.debian.org/~kov/gksu/libgksu-2.0.5.tar.gz"
+file_size=497012
+file_md5=93f61258751eb7396721281f8f784c46
+recipe_type=configure
+
+configure_options=(
+	"--disable-gtk-doc"
+)

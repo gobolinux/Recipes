@@ -1,8 +1,0 @@
-[Name] Meanwhile
-[Summary] An Open Re-Implementation of Lotus Sametime
-[Description] The Meanwhile Project is an open implementation of the Lotus Sametime Community Client protocol.
-The heart of the Meanwhile Project is the Meanwhile library, providing the basic Lotus Sametime session functionality along with the core services; Presence Awareness, Instant Messaging, Multi-user Conferencing, Preferences Storage, Identity Resolution, and File Transfer. This extensible client interface allows additional services to be added to a session at runtime, allowing for simple integration of future service handlers such as the user directory and whiteboard and screen-sharing.
-The Meanwhile Project is neither endorsed by, nor affiliated with Lotus or IBM. It is an independent project aiming to fill a space Lotus has left vacant.
-It is not within the scope of this project to provide LDAP or SIP functionality, though these technologies are often associated with the usage of Sametime.
-[License] GNU Library General Public License
-[Homepage] http://meanwhile.sourceforge.net/

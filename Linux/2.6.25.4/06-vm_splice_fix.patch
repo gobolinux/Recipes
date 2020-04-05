@@ -1,0 +1,11 @@
+--- linux-2.6.24.4/fs/splice.c.orig	2008-03-29 02:36:19.000000000 -0700
++++ linux-2.6.24.4/fs/splice.c	2008-03-29 02:36:29.000000000 -0700
+@@ -1241,6 +1241,8 @@ static int get_iovec_page_array(const st
+ 		if (unlikely(!len))
+ 			break;
+ 		error = -EFAULT;
++		if (unlikely(!base))
++			break;
+ 		if (!access_ok(VERIFY_READ, base, len))
+ 			break;
+ 

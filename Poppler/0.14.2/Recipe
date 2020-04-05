@@ -1,0 +1,12 @@
+# Recipe for version 0.14.2 by Joshua Sako <jginsu@gmail.com>, on Sat Sep 4 14:47:37 EDT 2010
+# Recipe (MakeRecipe) for Poppler by Harald Klimach, on Mon Mar 6 13:01:20 CET 2006
+compile_version=1.8.2
+url="http://poppler.freedesktop.org/poppler-0.14.2.tar.gz"
+file_size=1791177
+file_md5=f050ade7438aa45e50f94b3f86848d28
+recipe_type=configure
+
+configure_options=(
+    # Required by inkscape
+    --enable-xpdf-headers
+)

@@ -1,0 +1,17 @@
+--- ./etc/Makefile.in-original	2006-04-16 19:46:22.000000000 -0300
++++ ./etc/Makefile.in	2006-04-16 19:47:10.000000000 -0300
+@@ -359,11 +359,11 @@
+ 
+ 
+ install-data-hook:
+-	test -z $(DESTDIR)/etc || mkdir -p -- $(DESTDIR)/etc
+-	$(INSTALL_DATA) $(srcdir)/pmount.allow $(DESTDIR)/etc/pmount.allow
++	test -z $(DESTDIR)/$(SYSCONF) || mkdir -p -- $(DESTDIR)/$(SYSCONF)
++	$(INSTALL_DATA) $(srcdir)/pmount.allow $(DESTDIR)/$(SYSCONF)/pmount.allow
+ 
+ uninstall-hook:
+-	rm -f $(DESTDIR)/etc/pmount.allow
++	rm -f $(DESTDIR)/$(SYSCONF)/pmount.allow
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.
+ # Otherwise a system limit (for SysV at least) may be exceeded.
+ .NOEXPORT:

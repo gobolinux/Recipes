@@ -1,0 +1,14 @@
+# Recipe for version 2.29 by Aitor P. Iturri <atuin@tuta.io>, on sáb ene 28 09:34:06 CET 2017
+# Recipe (MakeRecipe) for Util-Linux-NG by Giambattista Bloisi <giamby@infinito.it>, on Thu Jan 17 09:41:27 CET 2008
+compile_version=1.12.0
+url="https://www.kernel.org/pub/linux/utils/util-linux/v2.29/util-linux-2.29.tar.xz"
+file_size=4249020
+file_md5=07b6845f48a421ad5844aa9d58edb837
+recipe_type=configure
+
+configure_options=(
+   --enable-arch
+   --enable-partx
+   --enable-write
+   --disable-makeinstall-chown
+)

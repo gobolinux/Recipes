@@ -1,0 +1,13 @@
+# Recipe for version 0.23 by Giambattista Bloisi <giamby@infinito.it>, on Thu Apr 9 21:19:06 CEST 2009
+# Recipe (MakeRecipe) for UnionFS-Fuse by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Mar 27 22:01:11 PDT 2008
+compile_version=1.10.1
+url="http://podgorny.cz/unionfs-fuse/releases/unionfs-fuse-0.23.tar.bz2"
+file_size=27880
+file_md5=479f06c81c49c9c5b4340df44426c52a
+recipe_type=makefile
+makefile='Makefile'
+do_install=no
+
+pre_install() {
+	cp src/unionfs $target/bin
+}

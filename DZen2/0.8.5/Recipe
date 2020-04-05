@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for DZen2 by Aitor Perez Iturri, on mar sep 11 01:48:14 CEST 2007
+# Recipe for version 0.8.5 by Aitor Perez Iturri, on mar sep 11 01:48:14 CEST 2007
+compile_version=1.9.0
+url="http://gotmor.googlepages.com/dzen2-latest.tar.gz"
+file_size=33274
+file_md5=5978620c2124c8a8ad52d7f17ce94fd7
+dir='dzen2-0.8.5'
+recipe_type=makefile
+makefile='Makefile'
+install_variables=(
+	"PREFIX=$target"
+)
+install_target="install install_gadgets"

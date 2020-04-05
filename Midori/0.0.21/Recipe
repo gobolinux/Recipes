@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for Midori by kenneth marken <k-marken@online.no>, on Sat Sep 20 16:37:32 CEST 2008
+# Recipe for version 0.0.21 by kenneth marken <k-marken@online.no>, on Sat Sep 20 16:37:32 CEST 2008
+compile_version=1.11.2
+url="http://goodies.xfce.org/releases/midori/midori-0.0.21.tar.bz2"
+file_size=251841
+file_md5=0b9298d00c598137431beb51dbe1f302
+recipe_type=configure
+autogen_before_configure=yes
+autogen=legacy.sh

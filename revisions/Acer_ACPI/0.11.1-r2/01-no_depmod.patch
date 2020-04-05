@@ -1,9 +1,0 @@
-Do not run depmod from Makefile
-
---- acer_acpi-0.11.1/Makefile	2008-02-08 23:33:04.000000000 +0000
-+++ acer_acpi-0.11.1/Makefile.new	2008-02-09 21:43:03.000000000 +0000
-@@ -63,4 +63,3 @@
- install: $(TARGET)
- 	mkdir -p ${DESTDIR}/lib/modules/$(KERNELVERSION)/extra
- 	cp -v $(TARGET) ${DESTDIR}/lib/modules/$(KERNELVERSION)/extra/
--	depmod $(KERNELVERSION) -a

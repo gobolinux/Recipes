@@ -1,0 +1,20 @@
+# Recipe (MakeRecipe) for LuaCalc by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. szept. 27., vasárnap, 05.01.38 CEST
+# Recipe for version 0.7 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. szept. 27., vasárnap, 05.01.38 CEST
+compile_version=1.12.3
+url="http://prdownloads.sf.net/luacalc/luacalc-0.7.tar.bz2"
+file_size=19995
+file_md5=2dc678ade2203fdc4e152ba91f8f8a81
+recipe_type=manifest
+pre_install(){
+    make
+}
+manifest=(
+    luacalc:bin/luacalc
+    lcfunctions.lua:/share/luacalc/lcfunctions.lua	
+    lchelp.lua:/share/luacalc/lchelp.lua
+    lcselect.lua:/share/luacalc/lcselect.lua
+    lcstack.lua:/share/luacalc/lcstack.lua
+    luacalc.lua:/share/luacalc/luacalc.lua
+    stringaux.lua:/share/luacalc/stringaux.lua
+    test.lua:/share/luacalc/test.lua
+)

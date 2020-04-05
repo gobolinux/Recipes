@@ -1,0 +1,8 @@
+# Recipe for version 1.6.3 by Harald Klimach, on Wed Apr 12 19:52:20 CEST 2006
+compile_version=1.7.1
+url="http://www.fox-toolkit.org/ftp/fox-1.6.3.tar.gz"
+recipe_type=configure
+configure_options=(
+ --enable-release
+ --with-xft         #     enable Xft support
+ )

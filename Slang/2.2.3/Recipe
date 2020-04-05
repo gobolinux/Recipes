@@ -1,0 +1,8 @@
+# Recipe for version 2.2.3 by Diogo Lima <diogo.urb@gmail.com>o, on Tue Jan 25 20:41:07 BRST 2011
+url="ftp://space.mit.edu/pub/davis/slang/v2.2/slang-2.2.3.tar.bz2"
+file_size=1424726
+file_md5=17e1864de999ae9535a9f7350a010427
+compile_version=1.8.0
+recipe_type=configure
+
+install_target="install install-elf"

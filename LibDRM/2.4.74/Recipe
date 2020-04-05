@@ -1,0 +1,14 @@
+# Recipe for version 2.4.74 by Xavier Rohan <rohanone@riseup.net>, on Tue Dec 6 17:53:31 UTC 2016
+# Recipe (MakeRecipe) for LibDRM by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jan 9 17:56:36 BRST 2.4.746
+compile_version=2.0
+url="https://dri.freedesktop.org/libdrm/libdrm-2.4.74.tar.gz"
+file_size=1056909
+file_md5=b661a54514109caad3de3b520680b98e
+recipe_type=configure
+symlink_options=(--conflict=overwrite)
+configure_options=(
+   --enable-intel
+)
+with_udev=(
+   --enable-udev
+)

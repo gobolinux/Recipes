@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Meld by Andreas Köhler <andi5.py@gmx.net>, on Fri Sep 12 16:01:56 CEST 2008
+# Recipe for version 1.2 by Andreas Köhler <andi5.py@gmx.net>, on Fri Sep 12 16:01:56 CEST 2008
+compile_version=1.11.2
+url="http://ftp.gnome.org/pub/gnome/sources/meld/1.2/meld-1.2.tar.bz2"
+file_size=616975
+file_md5=08e047ab4c8a8ae383674fcddde9fb87
+recipe_type=makefile
+makefile=GNUmakefile
+install_variables=(
+   prefix="$target"
+)

@@ -1,0 +1,8 @@
+# Recipe for version 2.3.20 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Mar 3 12:35:40 CET 2006
+# Recipe for OpenLdap by Maglan C. Diemer, maglan@univates.br
+compile_version=1.7.1
+url="ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/openldap-2.3.20.tgz"
+recipe_type=configure
+pre_install() {
+    find ${target}/../Variable -type l -print0 | xargs -0 -i rm -f {}
+}

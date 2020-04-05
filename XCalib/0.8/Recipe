@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for XCalib by Lucas C. Villa Real, on Tue Dec 14 14:53:01 BRST 2010
+# Recipe for version 0.8 by Lucas C. Villa Real, on Tue Dec 14 14:53:01 BRST 2010
+compile_version=1.10.1
+url="$httpSourceforge/project/xcalib/xcalib/0.8/xcalib-source-0.8.tar.gz?r=http%3A%2F%2Fxcalib.sourceforge.net%2F&ts=1292345534&use_mirror=ufpr"
+file="xcalib-source-0.8.tar.gz"
+file_size=32782
+file_md5=1fbcae44ad8d754512fdd1e5f1b3a7e7
+dir='xcalib-0.8'
+recipe_type=makefile
+makefile='Makefile'
+
+install_variables=(
+	DESTDIR=$target
+)

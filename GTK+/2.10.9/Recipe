@@ -1,0 +1,11 @@
+# Recipe for version 2.10.9 by Lucas C. Villa Real, on Wed Mar 7 16:48:05 BRT 2007
+# Recipe (MakeRecipe) for GTK+ by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 11:55:54 BRT 2005
+compile_version=1.8.2
+url="http://ftp.acc.umu.se/pub/GNOME/sources/gtk+/2.10/gtk+-2.10.9.tar.bz2"
+file_size=14933330
+file_md5=20d763198efb38263b22dee347f69da6
+recipe_type=configure
+
+configure_options=(
+    --disable-man
+)

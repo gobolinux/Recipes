@@ -1,0 +1,431 @@
+diff -uNr postfix-2.1.5.orig/conf/aliases postfix-2.1.5/conf/aliases
+--- postfix-2.1.5.orig/conf/aliases	2002-12-08 19:41:42.000000000 -0200
++++ postfix-2.1.5/conf/aliases	2003-12-31 12:47:49.000000000 -0200
+@@ -8,33 +8,33 @@
+ #	>>>>>>>>>>      show through to Postfix.
+ #
+ 
+-# Person who should get root's mail. Don't receive mail as root!
+-#root:		you
++# Person who should get 0's mail. Don't receive mail as 0!
++#gobo:		you
+ 
+ # Basic system aliases -- these MUST be present
+ MAILER-DAEMON:	postmaster
+-postmaster:	root
++postmaster:	0
+ 
+ # General redirections for pseudo accounts
+-bin:		root
+-daemon:		root
+-named:		root
+-nobody:		root
+-uucp:		root
+-www:		root
+-ftp-bugs:	root
+-postfix:	root
++bin:		0
++daemon:		0
++named:		0
++nobody:		0
++uucp:		0
++www:		0
++ftp-bugs:	0
++postfix:	0
+ 
+ # Put your local aliases here.
+ 
+ # Well-known aliases
+-manager:	root
+-dumper:		root
+-operator:	root
++manager:	0
++dumper:		0
++operator:	0
+ abuse:		postmaster
+ 
+ # trap decode to catch security attacks
+-decode:		root
++decode:		0
+ 
+ # ALIASES(5)                                             ALIASES(5)
+ # 
+diff -uNr postfix-2.1.5.orig/conf/postfix-files postfix-2.1.5/conf/postfix-files
+--- postfix-2.1.5.orig/conf/postfix-files	2003-01-12 15:08:12.000000000 -0200
++++ postfix-2.1.5/conf/postfix-files	2003-12-31 12:47:49.000000000 -0200
+@@ -36,11 +36,11 @@
+ # it is a good idea to "u" all the files that have special ownership or
+ # permissions, so that running "make install" fixes any glitches.
+ #
+-$config_directory:d:root:-:755:u
+-$daemon_directory:d:root:-:755:u
+-$queue_directory:d:root:-:755:uc
+-$sample_directory:d:root:-:755
+-$readme_directory:d:root:-:755
++$config_directory:d:0:-:755:u
++$daemon_directory:d:0:-:755:u
++$queue_directory:d:0:-:755:uc
++$sample_directory:d:0:-:755
++$readme_directory:d:0:-:755
+ $queue_directory/active:d:$mail_owner:-:700:ucr
+ $queue_directory/bounce:d:$mail_owner:-:700:ucr
+ $queue_directory/corrupt:d:$mail_owner:-:700:ucr
+@@ -52,145 +52,145 @@
+ $queue_directory/private:d:$mail_owner:-:700:uc
+ $queue_directory/maildrop:d:$mail_owner:$setgid_group:730:uc
+ $queue_directory/public:d:$mail_owner:$setgid_group:710:uc
+-$queue_directory/pid:d:root:-:755:uc
+-$daemon_directory/bounce:f:root:-:755
+-$daemon_directory/cleanup:f:root:-:755
+-$daemon_directory/error:f:root:-:755
+-$daemon_directory/flush:f:root:-:755
+-$daemon_directory/lmtp:f:root:-:755
+-$daemon_directory/local:f:root:-:755
+-$daemon_directory/master:f:root:-:755
+-$daemon_directory/nqmgr:f:root:-:755
+-$daemon_directory/pickup:f:root:-:755
+-$daemon_directory/pipe:f:root:-:755
+-$daemon_directory/proxymap:f:root:-:755
+-$daemon_directory/qmgr:f:root:-:755
+-$daemon_directory/qmqpd:f:root:-:755
+-$daemon_directory/showq:f:root:-:755
+-$daemon_directory/smtp:f:root:-:755
+-$daemon_directory/smtpd:f:root:-:755
+-$daemon_directory/spawn:f:root:-:755
+-$daemon_directory/trivial-rewrite:f:root:-:755
+-$daemon_directory/virtual:f:root:-:755
+-$command_directory/postalias:f:root:-:755
+-$command_directory/postcat:f:root:-:755
+-$command_directory/postconf:f:root:-:755
+-$command_directory/postfix:f:root:-:755
+-$command_directory/postkick:f:root:-:755
+-$command_directory/postlock:f:root:-:755
+-$command_directory/postlog:f:root:-:755
+-$command_directory/postmap:f:root:-:755
+-$command_directory/postsuper:f:root:-:755
+-$command_directory/postdrop:f:root:$setgid_group:2755:u
+-$command_directory/postqueue:f:root:$setgid_group:2755:u
+-$sendmail_path:f:root:-:755
+-$newaliases_path:l:root:-:755
+-$mailq_path:l:root:-:755
+-$config_directory/LICENSE:f:root:-:644
+-$config_directory/access:f:root:-:644:p
+-$config_directory/aliases:f:root:-:644:p
+-$config_directory/canonical:f:root:-:644:p
+-$config_directory/main.cf:f:root:-:644:p
+-$config_directory/main.cf.default:f:root:-:644
+-$config_directory/master.cf:f:root:-:644:p
+-$config_directory/pcre_table:f:root:-:644:p
+-$config_directory/postfix-files:f:root:-:644
+-$config_directory/regexp_table:f:root:-:644:p
+-$config_directory/relocated:f:root:-:644:p
+-$config_directory/transport:f:root:-:644:p
+-$config_directory/virtual:f:root:-:644:p
+-$config_directory/postfix-script:f:root:-:755
+-$config_directory/post-install:f:root:-:755
+-$manpage_directory/man1/mailq.1:f:root:-:644
+-$manpage_directory/man1/newaliases.1:f:root:-:644
+-$manpage_directory/man1/postalias.1:f:root:-:644
+-$manpage_directory/man1/postcat.1:f:root:-:644
+-$manpage_directory/man1/postconf.1:f:root:-:644
+-$manpage_directory/man1/postdrop.1:f:root:-:644
+-$manpage_directory/man1/postfix.1:f:root:-:644
+-$manpage_directory/man1/postkick.1:f:root:-:644
+-$manpage_directory/man1/postlock.1:f:root:-:644
+-$manpage_directory/man1/postlog.1:f:root:-:644
+-$manpage_directory/man1/postmap.1:f:root:-:644
+-$manpage_directory/man1/postqueue.1:f:root:-:644
+-$manpage_directory/man1/postsuper.1:f:root:-:644
+-$manpage_directory/man1/sendmail.1:f:root:-:644
+-$manpage_directory/man5/access.5:f:root:-:644
+-$manpage_directory/man5/aliases.5:f:root:-:644
+-$manpage_directory/man5/canonical.5:f:root:-:644
+-$manpage_directory/man5/pcre_table.5:f:root:-:644
+-$manpage_directory/man5/regexp_table.5:f:root:-:644
+-$manpage_directory/man5/relocated.5:f:root:-:644
+-$manpage_directory/man5/transport.5:f:root:-:644
+-$manpage_directory/man5/virtual.5:f:root:-:644
+-$manpage_directory/man8/bounce.8:f:root:-:644
+-$manpage_directory/man8/cleanup.8:f:root:-:644
+-$manpage_directory/man8/defer.8:f:root:-:644
+-$manpage_directory/man8/error.8:f:root:-:644
+-$manpage_directory/man8/flush.8:f:root:-:644
+-$manpage_directory/man8/lmtp.8:f:root:-:644
+-$manpage_directory/man8/local.8:f:root:-:644
+-$manpage_directory/man8/master.8:f:root:-:644
+-$manpage_directory/man8/nqmgr.8:f:root:-:644
+-$manpage_directory/man8/pickup.8:f:root:-:644
+-$manpage_directory/man8/pipe.8:f:root:-:644
+-$manpage_directory/man8/proxymap.8:f:root:-:644
+-$manpage_directory/man8/qmgr.8:f:root:-:644
+-$manpage_directory/man8/qmqpd.8:f:root:-:644
+-$manpage_directory/man8/showq.8:f:root:-:644
+-$manpage_directory/man8/smtp.8:f:root:-:644
+-$manpage_directory/man8/smtpd.8:f:root:-:644
+-$manpage_directory/man8/spawn.8:f:root:-:644
+-$manpage_directory/man8/trivial-rewrite.8:f:root:-:644
+-$manpage_directory/man8/virtual.8:f:root:-:644
+-$sample_directory/sample-aliases.cf:f:root:-:644
+-$sample_directory/sample-auth.cf:f:root:-:644
+-$sample_directory/sample-canonical.cf:f:root:-:644
+-$sample_directory/sample-compatibility.cf:f:root:-:644
+-$sample_directory/sample-debug.cf:f:root:-:644
+-$sample_directory/sample-filter.cf:f:root:-:644
+-$sample_directory/sample-flush.cf:f:root:-:644
+-$sample_directory/sample-ldap.cf:f:root:-:644
+-$sample_directory/sample-lmtp.cf:f:root:-:644
+-$sample_directory/sample-local.cf:f:root:-:644
+-$sample_directory/sample-mime.cf:f:root:-:644
+-$sample_directory/sample-misc.cf:f:root:-:644
+-$sample_directory/sample-pcre-access.cf:f:root:-:644
+-$sample_directory/sample-pcre-body.cf:f:root:-:644
+-$sample_directory/sample-pcre-header.cf:f:root:-:644
+-$sample_directory/sample-qmqpd.cf:f:root:-:644
+-$sample_directory/sample-rate.cf:f:root:-:644
+-$sample_directory/sample-regexp-access.cf:f:root:-:644
+-$sample_directory/sample-regexp-body.cf:f:root:-:644
+-$sample_directory/sample-regexp-header.cf:f:root:-:644
+-$sample_directory/sample-relocated.cf:f:root:-:644
+-$sample_directory/sample-resource.cf:f:root:-:644
+-$sample_directory/sample-rewrite.cf:f:root:-:644
+-$sample_directory/sample-smtp.cf:f:root:-:644
+-$sample_directory/sample-smtpd.cf:f:root:-:644
+-$sample_directory/sample-transport.cf:f:root:-:644
+-$sample_directory/sample-virtual.cf:f:root:-:644
+-$readme_directory/ADDRESS_CLASS_README:f:root:-:644
+-$readme_directory/DB_README:f:root:-:644
+-$readme_directory/DEBUG_README:f:root:-:644
+-$readme_directory/ETRN_README:f:root:-:644
+-$readme_directory/FILTER_README:f:root:-:644
+-$readme_directory/INSTALL:f:root:-:644
+-$readme_directory/LDAP_README:f:root:-:644
+-$readme_directory/LINUX_README:f:root:-:644
+-$readme_directory/LMTP_README:f:root:-:644
+-$readme_directory/LOCAL_RECIPIENT_README:f:root:-:644
+-$readme_directory/MACOSX_README:f:root:-:644
+-$readme_directory/MAILDROP_README:f:root:-:644
+-$readme_directory/MYSQL_README:f:root:-:644
+-$readme_directory/NFS_README:f:root:-:644
+-$readme_directory/PACKAGE_README:f:root:-:644
+-$readme_directory/PCRE_README:f:root:-:644
+-$readme_directory/QMQP_README:f:root:-:644
+-$readme_directory/RELEASE_NOTES:f:root:-:644
+-$readme_directory/RESTRICTION_CLASS_README:f:root:-:644
+-$readme_directory/SASL_README:f:root:-:644
+-$readme_directory/ULTRIX_README:f:root:-:644
+-$readme_directory/UUCP_README:f:root:-:644
+-$readme_directory/VERP_README:f:root:-:644
+-$readme_directory/VIRTUAL_README:f:root:-:644
++$queue_directory/pid:d:0:-:755:uc
++$daemon_directory/bounce:f:0:-:755
++$daemon_directory/cleanup:f:0:-:755
++$daemon_directory/error:f:0:-:755
++$daemon_directory/flush:f:0:-:755
++$daemon_directory/lmtp:f:0:-:755
++$daemon_directory/local:f:0:-:755
++$daemon_directory/master:f:0:-:755
++$daemon_directory/nqmgr:f:0:-:755
++$daemon_directory/pickup:f:0:-:755
++$daemon_directory/pipe:f:0:-:755
++$daemon_directory/proxymap:f:0:-:755
++$daemon_directory/qmgr:f:0:-:755
++$daemon_directory/qmqpd:f:0:-:755
++$daemon_directory/showq:f:0:-:755
++$daemon_directory/smtp:f:0:-:755
++$daemon_directory/smtpd:f:0:-:755
++$daemon_directory/spawn:f:0:-:755
++$daemon_directory/trivial-rewrite:f:0:-:755
++$daemon_directory/virtual:f:0:-:755
++$command_directory/postalias:f:0:-:755
++$command_directory/postcat:f:0:-:755
++$command_directory/postconf:f:0:-:755
++$command_directory/postfix:f:0:-:755
++$command_directory/postkick:f:0:-:755
++$command_directory/postlock:f:0:-:755
++$command_directory/postlog:f:0:-:755
++$command_directory/postmap:f:0:-:755
++$command_directory/postsuper:f:0:-:755
++$command_directory/postdrop:f:0:$setgid_group:2755:u
++$command_directory/postqueue:f:0:$setgid_group:2755:u
++$sendmail_path:f:0:-:755
++$newaliases_path:l:0:-:755
++$mailq_path:l:0:-:755
++$config_directory/LICENSE:f:0:-:644
++$config_directory/access:f:0:-:644:p
++$config_directory/aliases:f:0:-:644:p
++$config_directory/canonical:f:0:-:644:p
++$config_directory/main.cf:f:0:-:644:p
++$config_directory/main.cf.default:f:0:-:644
++$config_directory/master.cf:f:0:-:644:p
++$config_directory/pcre_table:f:0:-:644:p
++$config_directory/postfix-files:f:0:-:644
++$config_directory/regexp_table:f:0:-:644:p
++$config_directory/relocated:f:0:-:644:p
++$config_directory/transport:f:0:-:644:p
++$config_directory/virtual:f:0:-:644:p
++$config_directory/postfix-script:f:0:-:755
++$config_directory/post-install:f:0:-:755
++$manpage_directory/man1/mailq.1:f:0:-:644
++$manpage_directory/man1/newaliases.1:f:0:-:644
++$manpage_directory/man1/postalias.1:f:0:-:644
++$manpage_directory/man1/postcat.1:f:0:-:644
++$manpage_directory/man1/postconf.1:f:0:-:644
++$manpage_directory/man1/postdrop.1:f:0:-:644
++$manpage_directory/man1/postfix.1:f:0:-:644
++$manpage_directory/man1/postkick.1:f:0:-:644
++$manpage_directory/man1/postlock.1:f:0:-:644
++$manpage_directory/man1/postlog.1:f:0:-:644
++$manpage_directory/man1/postmap.1:f:0:-:644
++$manpage_directory/man1/postqueue.1:f:0:-:644
++$manpage_directory/man1/postsuper.1:f:0:-:644
++$manpage_directory/man1/sendmail.1:f:0:-:644
++$manpage_directory/man5/access.5:f:0:-:644
++$manpage_directory/man5/aliases.5:f:0:-:644
++$manpage_directory/man5/canonical.5:f:0:-:644
++$manpage_directory/man5/pcre_table.5:f:0:-:644
++$manpage_directory/man5/regexp_table.5:f:0:-:644
++$manpage_directory/man5/relocated.5:f:0:-:644
++$manpage_directory/man5/transport.5:f:0:-:644
++$manpage_directory/man5/virtual.5:f:0:-:644
++$manpage_directory/man8/bounce.8:f:0:-:644
++$manpage_directory/man8/cleanup.8:f:0:-:644
++$manpage_directory/man8/defer.8:f:0:-:644
++$manpage_directory/man8/error.8:f:0:-:644
++$manpage_directory/man8/flush.8:f:0:-:644
++$manpage_directory/man8/lmtp.8:f:0:-:644
++$manpage_directory/man8/local.8:f:0:-:644
++$manpage_directory/man8/master.8:f:0:-:644
++$manpage_directory/man8/nqmgr.8:f:0:-:644
++$manpage_directory/man8/pickup.8:f:0:-:644
++$manpage_directory/man8/pipe.8:f:0:-:644
++$manpage_directory/man8/proxymap.8:f:0:-:644
++$manpage_directory/man8/qmgr.8:f:0:-:644
++$manpage_directory/man8/qmqpd.8:f:0:-:644
++$manpage_directory/man8/showq.8:f:0:-:644
++$manpage_directory/man8/smtp.8:f:0:-:644
++$manpage_directory/man8/smtpd.8:f:0:-:644
++$manpage_directory/man8/spawn.8:f:0:-:644
++$manpage_directory/man8/trivial-rewrite.8:f:0:-:644
++$manpage_directory/man8/virtual.8:f:0:-:644
++$sample_directory/sample-aliases.cf:f:0:-:644
++$sample_directory/sample-auth.cf:f:0:-:644
++$sample_directory/sample-canonical.cf:f:0:-:644
++$sample_directory/sample-compatibility.cf:f:0:-:644
++$sample_directory/sample-debug.cf:f:0:-:644
++$sample_directory/sample-filter.cf:f:0:-:644
++$sample_directory/sample-flush.cf:f:0:-:644
++$sample_directory/sample-ldap.cf:f:0:-:644
++$sample_directory/sample-lmtp.cf:f:0:-:644
++$sample_directory/sample-local.cf:f:0:-:644
++$sample_directory/sample-mime.cf:f:0:-:644
++$sample_directory/sample-misc.cf:f:0:-:644
++$sample_directory/sample-pcre-access.cf:f:0:-:644
++$sample_directory/sample-pcre-body.cf:f:0:-:644
++$sample_directory/sample-pcre-header.cf:f:0:-:644
++$sample_directory/sample-qmqpd.cf:f:0:-:644
++$sample_directory/sample-rate.cf:f:0:-:644
++$sample_directory/sample-regexp-access.cf:f:0:-:644
++$sample_directory/sample-regexp-body.cf:f:0:-:644
++$sample_directory/sample-regexp-header.cf:f:0:-:644
++$sample_directory/sample-relocated.cf:f:0:-:644
++$sample_directory/sample-resource.cf:f:0:-:644
++$sample_directory/sample-rewrite.cf:f:0:-:644
++$sample_directory/sample-smtp.cf:f:0:-:644
++$sample_directory/sample-smtpd.cf:f:0:-:644
++$sample_directory/sample-transport.cf:f:0:-:644
++$sample_directory/sample-virtual.cf:f:0:-:644
++$readme_directory/ADDRESS_CLASS_README:f:0:-:644
++$readme_directory/DB_README:f:0:-:644
++$readme_directory/DEBUG_README:f:0:-:644
++$readme_directory/ETRN_README:f:0:-:644
++$readme_directory/FILTER_README:f:0:-:644
++$readme_directory/INSTALL:f:0:-:644
++$readme_directory/LDAP_README:f:0:-:644
++$readme_directory/LINUX_README:f:0:-:644
++$readme_directory/LMTP_README:f:0:-:644
++$readme_directory/LOCAL_RECIPIENT_README:f:0:-:644
++$readme_directory/MACOSX_README:f:0:-:644
++$readme_directory/MAILDROP_README:f:0:-:644
++$readme_directory/MYSQL_README:f:0:-:644
++$readme_directory/NFS_README:f:0:-:644
++$readme_directory/PACKAGE_README:f:0:-:644
++$readme_directory/PCRE_README:f:0:-:644
++$readme_directory/QMQP_README:f:0:-:644
++$readme_directory/RELEASE_NOTES:f:0:-:644
++$readme_directory/RESTRICTION_CLASS_README:f:0:-:644
++$readme_directory/SASL_README:f:0:-:644
++$readme_directory/ULTRIX_README:f:0:-:644
++$readme_directory/UUCP_README:f:0:-:644
++$readme_directory/VERP_README:f:0:-:644
++$readme_directory/VIRTUAL_README:f:0:-:644
+diff -uNr postfix-2.1.5.orig/postfix-install postfix-2.1.5/postfix-install
+--- postfix-2.1.5.orig/postfix-install	2003-03-21 16:04:53.000000000 -0300
++++ postfix-2.1.5/postfix-install	2003-12-31 12:48:39.000000000 -0200
+@@ -486,7 +486,7 @@
+ 
+ test -z "$install_root" && {
+ 
+-    chown root $tempdir/junk >/dev/null 2>&1 || {
++    chown 0 $tempdir/junk >/dev/null 2>&1 || {
+ 	echo Error: you have no permission to change file ownership. 1>&2
+ 	exit 1
+     }
+@@ -568,7 +568,7 @@
+     case $install_root in
+     "") case $owner in
+ 	[$]*) eval owner=$owner;;
+-	root) owner=;;
++	0) owner=;;
+ 	esac
+ 	case $group in
+ 	[$]*) eval group=$group;;
+diff -uNr postfix-2.1.5.orig/proto/aliases0 postfix-2.1.5/proto/aliases0
+--- postfix-2.1.5.orig/proto/aliases0	2002-12-08 19:41:34.000000000 -0200
++++ postfix-2.1.5/proto/aliases0	2003-12-31 12:47:49.000000000 -0200
+@@ -8,31 +8,31 @@
+ #	>>>>>>>>>>      show through to Postfix.
+ #
+ 
+-# Person who should get root's mail. Don't receive mail as root!
+-#root:		you
++# Person who should get 0's mail. Don't receive mail as root!
++#gobo:		you
+ 
+ # Basic system aliases -- these MUST be present
+ MAILER-DAEMON:	postmaster
+-postmaster:	root
++postmaster:	0
+ 
+ # General redirections for pseudo accounts
+-bin:		root
+-daemon:		root
+-named:		root
+-nobody:		root
+-uucp:		root
+-www:		root
+-ftp-bugs:	root
+-postfix:	root
++bin:		0
++daemon:		0
++named:		0
++nobody:		0
++uucp:		0
++www:		0
++ftp-bugs:	0
++postfix:	0
+ 
+ # Put your local aliases here.
+ 
+ # Well-known aliases
+-manager:	root
+-dumper:		root
+-operator:	root
++manager:	0
++dumper:		0
++operator:	0
+ abuse:		postmaster
+ 
+ # trap decode to catch security attacks
+-decode:		root
++decode:		0
+ 

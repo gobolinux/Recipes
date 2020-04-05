@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for PTLib by Fabio Mierlo <geromao@gmail.com>, on Sun Feb 27 06:48:32 BRT 2011
+# Recipe for version 2.8.3 by Fabio Mierlo <geromao@gmail.com>, on Sun Feb 27 06:48:32 BRT 2011
+compile_version=1.13.3
+url="http://www.h323plus.org/source/download/ptlib-2.8.3.tar.bz2"
+file_size=3421970
+file_md5=0293a9029fe4164bb63ff8ca15db8703
+recipe_type=configure
+
+configure_options=(
+  --enable-openh323
+)
+
+build_target="bothdepend bothnoshared"

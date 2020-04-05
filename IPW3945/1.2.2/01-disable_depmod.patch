@@ -1,0 +1,16 @@
+Do not run depmod during 'make install'. Instead it is called from
+SymlinkProgram
+
+-- 
+Jonas Karlsson
+
+--- ipw3945-1.2.2/Makefile	2007-04-30 05:44:56.000000000 +0200
++++ ipw3945-1.2.2/Makefile.new	2007-11-02 18:20:42.000000000 +0100
+@@ -270,7 +270,6 @@
+ install:
+ 	install -d $(KMISC)
+ 	install -m 644 -c $(addsuffix .ko,$(list-m)) $(KMISC)
+-	/sbin/depmod -a ${KVER}
+ 	@echo "Don't forget to copy firmware to your hotplug's firmware directory "
+ 	@echo "and have the hotplug tools in place."
+ 	@echo "See INSTALL for more information."

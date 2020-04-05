@@ -1,8 +1,0 @@
-# Recipe for version svn by Christian Holzberger <ch@mosaik-software.de>, on Sun May 4 19:49:44 CEST 2008
-# Recipe (MakeRecipe) for PJSip by Christian Holzberger <ch@mosaik-software.de>, on Mon Apr 21 19:07:16 CEST 2008
-compile_version=1.10.2
-svn=http://svn.pjsip.org/repos/pjproject/trunk/
-recipe_type=configure
-make_variables=(
-    "prefix=$target"
-)

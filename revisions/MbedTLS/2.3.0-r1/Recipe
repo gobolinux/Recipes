@@ -1,8 +1,0 @@
-# Recipe (MakeRecipe) for MbedTLS by Hisham Muhammad <hisham@gobolinux.org>, on Fri Sep 16 15:38:42 BRT 2016
-# Recipe for version 2.3.0 by Hisham Muhammad <hisham@gobolinux.org>, on Fri Sep 16 15:38:42 BRT 2016
-compile_version=git
-url="https://tls.mbed.org/download/mbedtls-2.3.0-apache.tgz"
-file_size=1896335
-file_md5=4dab982481441ed0a0235bc06d40eb17
-dir='mbedtls-2.3.0'
-recipe_type=cmake

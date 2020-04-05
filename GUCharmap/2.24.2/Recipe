@@ -1,0 +1,11 @@
+# Recipe for version 2.24.2 by ≈êsi R√≥bert <7szunyu@nordtelekom.hu>, on 2008. dec. 21., vas√°rnap, 01.03.40 CET
+# Recipe (MakeRecipe) for GUCharmap by ’si Ω7sz¸ny¸Ω RÛbert, Hungary (7szunyu .at. nordtelekom .dOt. hu), on 2008. m·j. 5., hÈtfı, 19.12.08 CEST
+compile_version=1.10.2
+url="http://ftp.gnome.org/pub/GNOME/sources/gucharmap/2.24/gucharmap-2.24.2.tar.bz2"
+file_size=2922955
+file_md5=8e1c82736e122fe509e98a9b3059e2d6
+recipe_type=configure
+configure_options=(
+    "--enable-gtk-doc"
+    "--disable-scrollkeeper"
+)

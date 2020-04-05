@@ -1,6 +1,0 @@
-url="http://www.ignavus.net/xosd-2.2.5.tar.gz"
-compile_version=1.7.1
-recipe_type=configure
-configure_options=(
-   "--with-plugindir=$target/lib/xmms/General"
-)

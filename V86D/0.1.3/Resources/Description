@@ -1,0 +1,7 @@
+[Name] V86D
+[Summary] A daemon to run x86 code in an emulated environment.
+[Description] V86D is the userspace helper that runs x86 code in 
+an emulated environment. uvesafb will not work without V86D. 
+V86D currently supports the x86 and amd64 (x86-64) architectures.
+[License] GNU General Public License version 2
+[Homepage] http://dev.gentoo.org/~spock/projects/uvesafb/

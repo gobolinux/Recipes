@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for P7Zip by Hisham Muhammad, on Sat Jan 15 19:12:47 BRST 2005
+# Recipe for version 4.14 by Hisham Muhammad, on Sat Jan 15 19:12:47 BRST 2005
+compile_version=1.7.1
+url="$httpSourceforge/p7zip/p7zip_4.14_src.tar.bz2"
+file_size=459185
+file_md5=1452c602c04547f0b96a100e9411258b
+dir='p7zip_4.14'
+recipe_type=makefile
+makefile='makefile'
+install_variables=(
+   "DEST_BIN=$target/bin"
+   "DEST_SHARE=$target/lib/p7zip"
+)

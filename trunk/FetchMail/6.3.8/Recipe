@@ -1,8 +1,0 @@
-# Recipe for version 6.3.8 by Õsi Róbert <7szunyu@nordtelekom.hu>, on 2008. máj. 15., csütörtök, 23.25.15 CEST
-# by Jason Stubbs
-compile_version=1.8.0
-url="http://download.berlios.de/fetchmail/fetchmail-6.3.8.tar.bz2"
-file_size=1323515
-file_md5=66b97500b0a1e3c0916b3b5314f597f5
-recipe_type=configure
-configure_options=("--with-ssl")

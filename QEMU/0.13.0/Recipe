@@ -1,0 +1,17 @@
+# Recipe for version 0.13.0 by Viola Zoli <violazoli@gmail.com>, on 2010. dec. 29., szerda, 15.19.25 CET
+# Recipe (MakeRecipe) for QEMU by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sun Oct 17 23:20:23 BRST 2004
+compile_version=1.8.2
+url="http://wiki.qemu.org/download/qemu-0.13.0.tar.gz"
+file_size=5184531
+file_md5=397a0d665da8ba9d3b9583629f3d6421
+recipe_type=configure
+
+environment=(
+    CFLAGS=
+    CXXFLAGS=
+)
+
+configure_options=(
+    --enable-system
+    --enable-linux-user
+)

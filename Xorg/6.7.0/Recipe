@@ -1,0 +1,17 @@
+urls=(
+   "http://freedesktop.org/~xorg/X11R6.7.0/src/X11R6.7.0-src1.tar.gz"
+   "http://freedesktop.org/~xorg/X11R6.7.0/src/X11R6.7.0-src2.tar.gz"
+   "http://freedesktop.org/~xorg/X11R6.7.0/src/X11R6.7.0-src3.tar.gz"
+   "http://freedesktop.org/~xorg/X11R6.7.0/src/X11R6.7.0-src4.tar.gz"
+   "http://freedesktop.org/~xorg/X11R6.7.0/src/X11R6.7.0-src5.tar.gz"
+   "http://freedesktop.org/~xorg/X11R6.7.0/src/X11R6.7.0-src6.tar.gz"
+   "http://freedesktop.org/~xorg/X11R6.7.0/src/X11R6.7.0-src7.tar.gz"
+)
+compile_version=1.7.1
+recipe_type=makefile
+dir=xc
+build_variables="World"
+
+post_install() {
+	make install.man
+}

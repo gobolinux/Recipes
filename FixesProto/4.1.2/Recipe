@@ -1,0 +1,11 @@
+# Recipe for version 4.1.2 by Diogo Lima <diogo.urb@gmail.com>, on Fri Jan 28 13:40:58 BRST 2011
+# Recipe (MakeRecipe) for FixesProto by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 20:14:10 BRT 2005
+compile_version=1.7.1
+url="http://xorg.freedesktop.org/releases/individual/proto/fixesproto-4.1.2.tar.bz2"
+file_size=103043
+file_md5=bdb58ecc313b509247036d5c11fa99df
+part_of=Xorg-Proto
+recipe_type=configure
+configure_options=(
+	--without-fop
+)

@@ -1,0 +1,13 @@
+[Name] Bwmon
+[Summary] Bwmon is yet another utility that measures bandwidth utiliazation per interface basis.
+[Description]  Linux bandwidth monitor (bwmon) is yet another utility that
+measures bandwidth utiliazation per interface basis. It is coded in C and
+takes advantage of POSIX thread and curses library. It runs only on Linux
+systems since the utility reads /proc/net/dev and /proc/uptime.
+
+The utility reads /proc/net/dev and /proc/uptime files in order to print out
+bandwidth usage at user selected intervals, maximum bandwidth usage since
+initialization of the utility and average bandwidth usage since the last
+reboot. This is done per interface basis.
+[License] GPL2
+[Homepage] http://bwmon.sourceforge.net

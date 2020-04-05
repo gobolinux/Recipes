@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for Howl-Editor by M. Drake <therainingmonkey@googlemail.com>, on Sat Nov 25 21:18:50 CET 2017
+compile_version=016.01
+url="https://github.com/howl-editor/howl/archive/0.5.3.tar.gz"
+file="howl-0.5.3.tar.gz"
+file_size=14896032
+file_md5=e81b7877020047fe829df3ab55e000d2
+dir='howl-0.5.3/src'
+recipe_type=makefile
+do_build=no
+make_variables=(
+   "prefix=$target"
+)
+
+

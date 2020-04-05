@@ -1,0 +1,27 @@
+diff -Naur kdebase-3.2.0-old/startkde kdebase-3.2.0/startkde
+--- kdebase-3.2.0-old/startkde	2004-02-25 12:32:25.000000000 -0300
++++ kdebase-3.2.0/startkde	2003-10-26 08:45:35.000000000 -0200
+@@ -197,16 +197,13 @@
+ # Run scripts found in $KDEDIRS/shutdown
+ for prefix in `kde-config --path exe| sed -e 's^bin/^shutdown/^g;s^:^ ^g'`
+ do 
+-  if test `basename $prefix` = shutdown
+-  then
+-     for file in $prefix/*
+-     do 
+-       if test -f $file
+-       then 
+-          $file
+-       fi
+-     done
+-  fi
++  for file in $prefix/*
++  do 
++    if test -f $file
++    then 
++       $file
++    fi
++  done
+ done
+ 
+ echo 'startkde: Done.'  1>&2

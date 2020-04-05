@@ -1,0 +1,35 @@
+# Recipe for version 1.75.2 by Jonas Karlsson <jonas@gobolinux.org>, on Tue Jan 5 17:59:05 CET 2010
+# Recipe (MakeRecipe) for DocBook-XSL-Stylesheets by Michael Homer <michael@gobolinux.org>, on Tue Nov 25 19:46:40 NZDT 2008
+compile_version=1.11.4
+url="$httpSourceforge/docbook/docbook-xsl-1.75.2.tar.bz2"
+file_size=1543130
+file_md5=0c76a58a8e6cb5ab49f819e79917308f
+recipe_type=manifest
+manifest=(
+   "fo:Shared/xml/docbook/stylesheet/fo"
+   "lib:Shared/xml/docbook/stylesheet/lib"
+   "VERSION:Shared/xml/docbook/stylesheet/VERSION"
+   "html:Shared/xml/docbook/stylesheet/html"
+   "xhtml:Shared/xml/docbook/stylesheet/xhtml"
+   "xhtml-1_1:Shared/xml/docbook/stylesheet/xhtml-1_1"
+   "epub:Shared/xml/docbook/stylesheet/epub"
+   "htmlhelp:Shared/xml/docbook/stylesheet/htmlhelp"
+   "javahelp:Shared/xml/docbook/stylesheet/javahelp"
+   "eclipse:Shared/xml/docbook/stylesheet/eclipse"
+   "manpages:Shared/xml/docbook/stylesheet/manpages"
+   "common:Shared/xml/docbook/stylesheet/common"
+   "highlighting:Shared/xml/docbook/stylesheet/highlighting"
+   "catalog.xml:Shared/xml/docbook/stylesheet/catalog.xml"
+)
+unmanaged_files=(
+   "$goboVariable/lib/xml"
+)
+
+pre_install() {
+   cat <<EOF > "$target/Resources/XmlCatalogData"
+rewriteSystem;http://docbook.sourceforge.net/release/xsl/current/;file://\${target}/Shared/xml/docbook/stylesheet/;\${goboVariable}/lib/xml/catalog
+rewriteURI;http://docbook.sourceforge.net/release/xsl/current/;file://\${target}/Shared/xml/docbook/stylesheet/;\${goboVariable}/lib/xml/catalog
+rewriteSystem;http://docbook.sourceforge.net/release/xsl/1.75.2/;file://\${target}/Current/Shared/xml/docbook/stylesheet/;\${goboVariable}/lib/xml/catalog
+rewriteURI;http://docbook.sourceforge.net/release/xsl/1.75.2/;file://\${target}/Shared/xml/docbook/stylesheet/;\${goboVariable}/lib/xml/catalog
+EOF
+}

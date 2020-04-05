@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for MSN-Pecan by Jonas Karlsson <jonas@gobolinux.org>, on Mon Jan 12 17:26:57 CET 2009
+# Recipe for version 0.0.17 by Jonas Karlsson <jonas@gobolinux.org>, on Mon Jan 12 17:26:57 CET 2009
+compile_version=1.10.0
+url="http://msn-pecan.googlecode.com/files/msn-pecan-0.0.17.tar.bz2"
+file_size=134172
+file_md5=d0539f835d02c94774d06a7877e575ac
+recipe_type=makefile
+makefile='Makefile'
+install_target="install install_locales"
+make_variables=(
+   PURPLE_PREFIX=""
+   prefix="$target"
+)
+

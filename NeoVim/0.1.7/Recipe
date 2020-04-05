@@ -1,0 +1,15 @@
+# Recipe for version 0.1.7 by Aitor ATuin <atuin@tuta.io>, on mié ene 4 15:53:56 CET 2017
+# Recipe (MakeRecipe) for Neovim by Aitor ATuin <atuin@tuto.io>, on Sat Jul 9 10:45:02 CEST 2016
+compile_version=2.0
+url="https://github.com/neovim/neovim/archive/v0.1.7.tar.gz"
+file_size=7601279
+file_md5=f3acb6181f6888b620d11d1822fad982
+file="neovim-0.1.7.tar.gz"
+dir='neovim-0.1.7'
+recipe_type=makefile
+do_build() {
+    unset LUA_PATH
+    unset LUA_CPATH
+    mkdir build && cmake -DCMAKE_BUILD_TYPE=MinSizeRel -DCMAKE_INSTALL_PREFIX=$target ..
+    make
+}

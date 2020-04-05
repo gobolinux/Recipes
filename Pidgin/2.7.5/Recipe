@@ -1,0 +1,56 @@
+# Recipe for version 2.7.5 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Nov 1 11:13:52 BRST 2010
+# Recipe (NewVersion) for version 2.4.0 by João Felipe Santos <joao.eel@gmail.com> on Mar 31 2008.
+# Recipe (MakeRecipe) for Pidgin by Jonas Karlsson <jonka750@student.liu.se>, on Sat May 5 01:40:29 CEST 2007
+compile_version=1.13.0
+url="http://downloads.sourceforge.net/pidgin/pidgin-2.7.5.tar.bz2"
+file_size=9811543
+file_md5=f055cc137cff02a925c3d2ea08ca4978
+recipe_type=configure
+
+configure_options=(
+   "--disable-dbus"
+   "--disable-gnutls"
+   "--disable-tcl"
+   "--disable-tk"
+   "--disable-cyrus-sasl"
+   "--disable-nss"
+   "--disable-meanwhile"
+   "--disable-avahi"
+   "--disable-nm"
+   "--disable-gtkui"
+   "--disable-gtkspell"
+   "--disable-consoleui"
+   "--disable-cap"
+   "--disable-perl"
+   "--disable-gstreamer"
+   "--disable-pango"
+   "--disable-vv"
+   "--enable-trayicon-compat"
+)
+
+with_ncurses="--enable-consoleui"
+with_pango="--enable-pango"
+with_cyrus_sasl="--enable-cyrus-sasl"
+with_rtl="--enable-pango"
+with_gnutls="--enable-gnutls"
+with_gtk2="--enable-gtkui"
+with_meanwhile="--enable-meanwhile"
+with_avahi="--enable-avahi"
+with_mono="--enable-mono"
+with_nss="--enable-nss"
+with_networkmanager="--enable-nm"
+with_sqlite="--enable-cap"
+with_perl="--enable-perl"
+with_gstreamer="--enable-gstreamer"
+with_farsight2="--enable-vv"
+
+with_tcl="--enable-tcl"
+with_tk=(--enable-tk --enable-tcl)
+with_dbus=(--enable-dbus --with-dbus-services='${goboShared}/dbus-1/services')
+with_gtkspell=(--enable-gtkspell --enable-gtkui)
+
+make_variables=(
+    DESTINSTALLARCHLIB="$target/lib/perl5/`echo $perl_path | sed 's,/\(.*\)/\(.*\)/\(.*\),\3,g'`/i686-linux"
+    DESTINSTALLSITEARCH="$target/lib/perl5/`echo $perl_path | sed 's,/\(.*\)/\(.*\)/\(.*\),\3,g'`/i686-linux"
+    DESTINSTALLVENDORARCH="$target/lib/perl5/`echo $perl_path | sed 's,/\(.*\)/\(.*\)/\(.*\),\3,g'`/i686-linux"
+)

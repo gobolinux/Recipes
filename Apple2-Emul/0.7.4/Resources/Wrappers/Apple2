@@ -1,0 +1,24 @@
+#!/bin/sh
+
+. GoboPath
+
+conf="$HOME/.apple2"
+
+if [ ! -e "$conf" ]
+then
+cat <<EOF > "$conf"
+speed = 100
+mode = ][+ undocumented
+disk path = /Files/Emulation/Apple_II/Disks
+color = interpolated
+sound = pc speaker
+joystick = pc joystick
+joystick range = 256
+origin_x = 128
+origin_y = 128
+sensitivity = 3%
+system path = $goboPrograms/Apple2-Emul/Current/rom
+EOF
+fi
+
+apple2

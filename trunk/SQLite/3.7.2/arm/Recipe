@@ -1,7 +1,0 @@
-configure_options=(
-	${configure_options[@]}
-	--disable-largefile
-	--enable-threadsafe
-	--enable-tempstore=always
-	--disable-readline
-)

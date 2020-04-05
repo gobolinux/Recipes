@@ -1,0 +1,12 @@
+# Recipe for version 0.10.3 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jan. 24., szombat, 21.52.02 CET
+# Recipe (MakeRecipe) for Poppler by Harald Klimach, on Mon Mar 6 13:01:20 CET 2006
+compile_version=1.8.2
+url="http://poppler.freedesktop.org/poppler-0.10.3.tar.gz"
+file_size=1530394
+file_md5=da04d9b4099a1ce15f9a0ac8ec205346
+recipe_type=configure
+
+configure_options=(
+    # Required by inkscape
+    --enable-xpdf-headers
+)

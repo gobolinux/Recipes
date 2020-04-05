@@ -1,0 +1,7 @@
+[Name] Commoncpp2
+[Summary] GNU Common C++ is a very portable and highly optimized class framework for writing C++ applications.
+[Description] GNU Common C++ is a very portable and highly optimized class framework for writing C++ applications that need to use threads and support concurrent sychronization, and that use sockets, XML parsing, object serialization, thread-optimized String and data structure classes, etc. This framework offers a class foundation that hides platform differences from your C++ application so that you need not write platform specific code. GNU Common C++ has been ported to compile nativily on most platforms which support either posix threads, or on maybe be used with Debian hosted mingw32 to build native threading applications for Microsoft Windows.
+
+GNU Common C++ can also be used to construct embedded applications as part of GNU Telephony Open Embedded. With the "2.0" release, GNU Common C++ will optionally offer a complete runtime C++ library environment for developing deeply embedded targets without requiring the use of the ANSI C++ standard library, rtti, exception handling, or STL templates. GNU Common C++ will also build on all versions of GCC from 2.95 through 4.2, and with many other C++ compilers as well.
+[License] GNU General Public License version 2 variant see COPYING.addendum
+[Homepage] http://www.gnu.org/software/commoncpp/

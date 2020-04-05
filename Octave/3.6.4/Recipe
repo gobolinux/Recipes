@@ -1,0 +1,14 @@
+# Recipe for version 3.6.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Apr 10 13:11:22 BRT 2013
+# Recipe (MakeRecipe) for Octave by roko, <ro.ko@mcnon.com>, on Mon Dec 6 01:04:40 BRST 2004
+compile_version=1.8.0
+url="$ftpGnu/octave/octave-3.6.4.tar.bz2"
+file_size=15627315
+file_md5=e0d3e5e3d38a66d3f8593ba065c6e2fd
+recipe_type=configure
+
+configure_options=(
+    --enable-atomic-refcount
+    --enable-openmp
+    --enable-dl
+    --with-blas=$goboLibraries/libblas.a
+)

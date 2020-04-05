@@ -1,0 +1,11 @@
+# Recipe for version 4.11.0 by Hugo Barrocas <barrocas75@gmail.com>, on Qui Out 20 16:25:40 UTC 2016
+# Recipe (MakeRecipe) for XFCE4-Mixer by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:26:34 CEST 2006
+compile_version=2.0
+url="http://archive.xfce.org/src/apps/xfce4-mixer/4.11/xfce4-mixer-4.11.0.tar.bz2"
+file_size=472235
+file_md5=1b3753b91224867a3a2dfddda239c28d
+recipe_type=configure
+configure_options=(
+   --libexecdir="${target}/lib"
+   --enable-debug=no
+)

@@ -1,0 +1,24 @@
+# Recipe for version 6.5.4_6 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 30., csütörtök, 03.16.17 CEST
+# Recipe (MakeRecipe) for ImageMagick by Seb Haezebrouck, on Wed Mar 19 14:19:20 CET 2008
+compile_version=1.10.2
+url="ftp://ftp.nluug.nl/pub/ImageMagick/ImageMagick-6.5.4-6.tar.lzma"
+file_size=5877828
+file_md5=ff3750cb3d49e9b2e0d75730041732c7
+dir='ImageMagick-6.5.4-6'
+recipe_type=configure
+configure_options=(
+    --with-gs-font-dir=/Files/Fonts/Ghostscript
+    --with-windows-font-dir=/Files/Fonts/TrueType:/Files/Fonts/OpenType
+)
+make_variables=(
+    INSTALLPRIVLIB=$target/lib/perl5/5.10.0
+    INSTALLSITELIB=$target/lib/perl5/site_perl/5.10.0
+    INSTALLARCHLIB=$target/lib/perl5/5.10.0/i686-linux-thread-multi
+    INSTALLSITEARCH=$target/lib/perl5/site_perl/5.10.0/i686-linux-thread-multi
+    INSTALLSITEBIN=$target/bin
+    INSTALLSCRIPT=$target/bin
+    INSTALLMAN1DIR=$target/man/man1
+    INSTALLSITEMAN1DIR=$target/man/man1
+    INSTALLMAN3DIR=$target/man/man3
+    INSTALLSITEMAN3DIR=$target/man/man3
+)

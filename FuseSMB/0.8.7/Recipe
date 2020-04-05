@@ -1,0 +1,18 @@
+# Recipe (MakeRecipe) for Fusesmb by Daniele Maccari, on Fri Nov 23 21:16:13 CET 2007
+# Recipe for version 0.8.7 by Daniele Maccari, on Fri Nov 23 21:16:13 CET 2007
+compile_version=1.9.0
+url="http://www.ricardis.tudelft.nl/~vincent/fusesmb/download/fusesmb-0.8.7.tar.gz"
+file_size=120801
+file_md5=ff5adc291b18fd452fe4694cbe45dabd
+recipe_type=configure
+
+pre_link(){
+	mkdir -p $target/Resources/Defaults/Settings
+	cp fusesmb.conf.ex $target/Resources/Defaults/Settings/
+}
+
+post_install(){
+echo "The installation process has finished. You can find a 
+sample configuration file in 
+${settings_target}/fusesmb.conf.ex"
+}

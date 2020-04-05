@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Icon by Jonas Karlsson <jonka750@student.liu.se>, on Fri Mar 30 08:09:01 CEST 2007
+# Recipe for version 9.4.3 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Mar 30 08:09:01 CEST 2007
+compile_version=1.8.2
+url="http://www.cs.arizona.edu/icon/ftp/packages/unix/icon.v943src.tgz"
+file_size=3218627
+file_md5=4740b1fc5caf2fe7409367923dffe607
+recipe_type=makefile
+install_target="Install dest=${target}"
+
+pre_build() {
+   make X-Configure name=linux
+}

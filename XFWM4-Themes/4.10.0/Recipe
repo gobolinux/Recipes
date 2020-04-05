@@ -1,0 +1,10 @@
+# Recipe for version 4.10.0 by Hisham Muhammad <hisham@gobolinux.org>, on Tue Sep 4 00:55:54 BRT 2012
+# Recipe (MakeRecipe) for XFWM4-Themes by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:31:55 CEST 2006
+compile_version=1.8.2
+url="http://archive.xfce.org/src/art/xfwm4-themes/4.10/xfwm4-themes-4.10.0.tar.bz2"
+file_size=621206
+file_md5=eaa58362053a3549c8be0b32efd3c54f
+recipe_type=configure
+configure_options=(
+    '--enable-debug=no'
+)

@@ -1,0 +1,30 @@
+# Recipe for version 10.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Nov 26 16:45:07 BRST 2017
+# Recipe (MakeRecipe) for PostgreSQL by Maglan C. Diemer, maglan@univates.br, on Qui Dez 8 19:22:05 BRST 2005
+compile_version=1.8.0
+url="https://ftp.postgresql.org/pub/source/v10.1/postgresql-10.1.tar.bz2"
+file_size=19669989
+file_md5=0a92328d9970bfb85dcecd011817238a
+recipe_type=configure
+build_target="world"
+install_target="install install-world"
+
+configure_options=(
+   "--with-perl"
+   "--with-python"
+   "--with-tcl"
+   "--with-openssl"
+)
+
+pre_install() {
+   if ! grep -q postgres $goboSettings/group
+   then
+      Log_Normal "Adding group postgres"
+      groupadd postgres
+   fi
+
+   if ! grep -q "postgres:x:" $goboSettings/passwd
+   then
+      Log_Normal "Adding user postgres"
+      useradd postgres -g postgres -c 'Added by Compile for PostgreSQL' -d $variable_target/PostgreSQL -s $goboExecutables/zsh
+   fi
+}

@@ -1,0 +1,10 @@
+# Recipe for version 3.5.6 by Lucas C. Villa Real, on Wed Mar 28 15:16:28 BRT 2007
+url="ftp://ftp.oregonstate.edu/pub/kde/stable/3.5.6/src/kde-i18n/kde-i18n-de-3.5.6.tar.bz2"
+file_size=23483986
+file_md5=c8a52e825c610ae5779ef84d1bf7e3c5
+compile_version=1.8.2
+recipe_type=configure
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+)

@@ -1,0 +1,10 @@
+# Recipe for version 0.11 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Thu Sep 21 15:41:38 BRT 2006
+# by Leandro Motta Barros
+url="http://download.gna.org/cal3d/sources/cal3d-0.11.0.tar.gz"
+compile_version=1.8.0
+recipe_type=configure
+configure_options=(
+	--enable-static
+)
+
+#autogen_before_configure=yes

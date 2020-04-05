@@ -1,0 +1,13 @@
+Patch for fixing stack overflow in demux_audio.c (CORE-2008-1218)
+
+--- mplayer/libmpdemux/demux_audio.c	(revision 24724)
++++ mplayer/libmpdemux/demux_audio.c	(working copy)
+@@ -229,6 +229,8 @@
+           ptr += 4;
+ 
+           comment = ptr;
++          if (&comment[length] < comments || &comment[length] >= &comments[blk_len])
++            return;
+           c = comment[length];
+           comment[length] = 0;
+ 

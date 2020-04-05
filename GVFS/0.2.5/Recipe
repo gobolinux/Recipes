@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for GVFS by Andreas Köhler <andi5.py@gmx.net>, on Mon Aug 18 21:04:12 CEST 2008
+# Recipe for version 0.2.5 by Andreas Köhler <andi5.py@gmx.net>, on Mon Aug 18 21:04:12 CEST 2008
+compile_version=1.11.2
+url="ftp://ftp.gnome.org/pub/gnome/sources/gvfs/0.2/gvfs-0.2.5.tar.bz2"
+file_size=826404
+file_md5=01676053d9481022ade9a5274576541b
+recipe_type=configure
+pre_build() {
+   aclocal
+   automake
+   autoconf
+}

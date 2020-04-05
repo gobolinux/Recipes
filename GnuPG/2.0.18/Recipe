@@ -1,0 +1,18 @@
+# Recipe for version 2.0.18 by Michael Homer <michael@gobolinux.org>, on Tue Aug 30 22:27:14 NZST 2011
+# Recipe (MakeRecipe) for Gnupg by Giovani Facchini, on Qui Abr 14 17:00:52 BRT 2005
+compile_version=1.8.5
+url="ftp://ftp.gnupg.org/gcrypt/gnupg/gnupg-2.0.18.tar.bz2"
+file_size=4016606
+file_md5=2f37e0722666a0fedbe4d9f9227ac4d7
+recipe_type=configure
+
+configure_options=(
+    --with-pinentry-pgm=$goboExecutables/pinentry
+    --with-dirmngr-pgm=$goboExecutables/dirmngr
+    --with-protect-tool-pgm=$goboExecutables/protect-tool
+)
+
+pre_link(){
+	#Create a symlink to gpg2 named gpg for backward compatibility
+	ln -s -n -f $target/bin/gpg2 $target/bin/gpg
+}

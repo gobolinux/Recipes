@@ -1,0 +1,16 @@
+# Recipe for version 1.3 by JPaul Hatungimana <jhatungimana@netscape.net>, on Mon Oct 11 16:00:22 CEST 2010
+# Recipe (MakeRecipe) for Trowser by Kevin Quick <quick@sparq.org>, on Sun Mar 8 12:50:22 MST 2009
+compile_version=1.12.1
+url="http://www.nefkom.net/tomzo/prj/trowser/trowser-1.3.tar.gz"
+file_size=95868
+file_md5=a8dd31314f1c0026cb747d1f9cd9bf45
+recipe_type=manifest
+
+pre_install()
+{
+  mkdir -p $target/bin
+  mkdir -p $target/man/man1
+  cp trowser.tcl ${target}/bin/trowser
+  chmod a+x ${target}/bin/trowser
+  cp trowser.1 ${target}/man/man1/trowser.1
+}

@@ -1,0 +1,12 @@
+# Recipe for version 2.40.1 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Dec 26 10:49:09 BRST 2016
+# Recipe (MakeRecipe) for Graphviz by roko, <ro.ko@mcnon.com>, on Sun Dec 5 20:48:57 BRST 2004
+compile_version=1.8.3
+url="https://graphviz.gitlab.io/pub/graphviz/stable/SOURCES/graphviz.tar.gz"
+dir="graphviz-2.40.1"
+file_md5="4ea6fd64603536406166600bcc296fc8"
+file_size=25633455
+recipe_type=configure
+
+configure_options=(
+    --disable-php
+)

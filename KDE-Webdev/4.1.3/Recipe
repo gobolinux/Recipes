@@ -1,0 +1,11 @@
+# Recipe for version 4.1.3 by Giambattista Bloisi <giamby@infinito.it>, on Thu Nov 6 09:13:24 CET 2008
+# Recipe (MakeRecipe) for KDE-Webdev by Giambattista Bloisi <giamby@infinito.it>, on Sun Feb 10 23:09:57 CET 2008
+compile_version=1.10.2
+url="http://download.kde.org/stable/4.1.3/src/kdeutils-4.1.3.tar.bz2"
+file_size=2283868
+file_md5=2b0eee36ad16f442c9fae85ac0bfc168
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)

@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for LibSecret by Hisham Muhammad <hisham@gobolinux.org>, on Tue Mar 25 00:05:18 BRT 2014
+# Recipe for version 0.18 by Hisham Muhammad <hisham@gobolinux.org>, on Tue Mar 25 00:05:18 BRT 2014
+url="http://ftp.gnome.org/pub/gnome/sources/libsecret/0.18/libsecret-0.18.tar.xz"
+file_size=480520
+file_md5=279d723cd005e80d1d304f74a3488acc
+recipe_type=configure
+configure_options=(
+   --disable-static
+   --disable-manpages
+)

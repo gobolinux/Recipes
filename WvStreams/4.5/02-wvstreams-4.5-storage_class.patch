@@ -1,0 +1,14 @@
+Make gcc 4.3.x happy
+
+diff -Naur wvstreams-4.5-org/include/wvserialize.h wvstreams-4.5/include/wvserialize.h
+--- wvstreams-4.5-org/include/wvserialize.h	2008-07-14 21:11:35.000000000 +0200
++++ wvstreams-4.5/include/wvserialize.h	2008-11-02 21:14:02.000000000 +0100
+@@ -349,7 +349,7 @@
+  * except as the last character.
+  */
+ template <>
+-extern WvString _wv_deserialize<WvString>(WvBuf &buf);
++WvString _wv_deserialize<WvString>(WvBuf &buf);
+ 
+ 
+ /** Deserialize a WvBuf. */

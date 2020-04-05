@@ -1,2 +1,0 @@
-# pass all events to the HAL daemon
-RUN+="socket:/org/freedesktop/hal/udev_event"

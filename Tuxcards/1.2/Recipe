@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for Tuxcards by Jonas Karlsson <jonka750@student.liu.se>, on Sat Sep 17 08:40:27 CEST 2005
+# Recipe for version 1.2 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Sep 17 08:40:27 CEST 2005
+compile_version=1.8.0
+url="http://www.tifskom.de/tux/1.2/tuxcards-1.2.tar.gz"
+file_size=203129
+file_md5=ee85e2e5c23425fd031c62a5e2f6f248
+recipe_type=makefile
+make_variables=(
+  TARGET_DIR=$target
+)
+pre_build(){
+  qmake tuxcards.pro
+}

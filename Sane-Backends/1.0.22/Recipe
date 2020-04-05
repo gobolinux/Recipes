@@ -1,0 +1,11 @@
+# Recipe for version 1.0.22 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Apr 28 14:28:24 NZST 2012
+compile_version=1.8.0
+url="ftp://ftp2.sane-project.org/pub/sane/sane-backends-1.0.22/sane-backends-1.0.22.tar.gz"
+file_size=5150661
+file_md5=fadf56a60f4776bfb24491f66b617cf5
+mirror_url="ftp://ftp.sane-project.org/pub/sane/old-versions/sane-backends-1.0.22/sane-backends-1.0.22.tar.gz"
+recipe_type=configure
+
+unmanaged_files=(
+    $goboVariable/lock/sane
+)

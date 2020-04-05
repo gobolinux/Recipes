@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for LibTorrent-Rasterbar by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Apr 15 00:21:09 GMT 2014
+# Recipe for version 0.16.16 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Apr 15 00:21:09 GMT 2014
+compile_version=1.13.1
+url="$httpSourceforge/project/libtorrent/libtorrent/libtorrent-rasterbar-0.16.16.tar.gz"
+file_size=3016861
+file_md5=6895a4d355e6c4a91f35efe746a7511e
+recipe_type=configure
+
+configure_options=(
+	--enable-python-binding
+)

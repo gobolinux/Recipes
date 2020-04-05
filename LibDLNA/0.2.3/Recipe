@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for LibDLNA by Michael Homer <michael@gobolinux.org>, on Sat Dec 4 20:11:59 NZDT 2010
+# Recipe for version 0.2.3 by Michael Homer <michael@gobolinux.org>, on Sat Dec 4 20:11:59 NZDT 2010
+compile_version=1.13.0
+url="http://libdlna.geexbox.org/releases/libdlna-0.2.3.tar.bz2"
+file_size=37142
+file_md5=2c974f95b711e5fd07f78fc4ebfcca66
+recipe_type=configure
+
+do_build() {
+   # Build fails spuriously with multiple makes
+   make -j1
+}

@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for DirectFB by roko, <ro.ko@mcnon.com>, on Wed Oct 27 01:25:07 BRST 2004
+# Recipe for version 0.9.20 by roko, <ro.ko@mcnon.com>, on Wed Oct 27 01:25:07 BRST 2004
+compile_version=1.7.1
+url="http://www.directfb.org/downloads/Core/DirectFB-0.9.20.tar.gz"
+file_size=1307323
+file_md5=e42e8ae43f0ad873643f73cc0a9ae7d0
+recipe_type=configure
+configure_options=(
+"--with-gfxdrivers=all"
+)

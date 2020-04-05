@@ -1,0 +1,10 @@
+--- elfutils-0.84/src/Makefile.in.orig	2004-08-18 00:39:05.000000000 -0300
++++ elfutils-0.84/src/Makefile.in	2004-08-18 00:38:09.000000000 -0300
+@@ -162,6 +162,7 @@
+ ld_LDADD = ../libebl/libebl.so ../libelf/libelf.so ../lib/libeu.a
+ ld_LDFLAGS = -rdynamic
+ elflint_LDADD = ../libebl/libebl.so ../libelf/libelf.so ../lib/libeu.a
++elflint_LDFLAGS = -L../libebl
+ 
+ libld_elf_i386_pic_a_SOURCES = 
+ am_libld_elf_i386_pic_a_OBJECTS = i386_ld.os

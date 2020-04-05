@@ -1,0 +1,12 @@
+# Recipe for version 0.1.1 by kenneth marken <k-marken@online.no>, on to. 25. des. 17:51:31 +0100 2008
+# Recipe (MakeRecipe) for Midori by kenneth marken <k-marken@online.no>, on Sat Sep 20 16:37:32 CEST 2008
+compile_version=1.11.2
+url="http://goodies.xfce.org/releases/midori/midori-0.1.1.tar.bz2"
+file_size=309109
+file_md5=801cb2debb7b60a8c2525a237e37fa18
+recipe_type=manifest
+pre_install() {
+ waf configure --prefix=$target
+ waf build
+ waf install
+}

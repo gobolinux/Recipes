@@ -1,0 +1,46 @@
+Fix install directories from /usr prefix in target to / in prefix
+--- hwinfo-13.57/Makefile	2007-02-21 05:18:28.000000000 -0600
++++ hwinfo-13.57/Makefile.new	2008-10-05 21:43:48.000000000 -0500
+@@ -2,7 +2,7 @@
+ SUBDIRS		= src
+ TARGETS		= hwinfo hwinfo.pc
+ CLEANFILES	= hwinfo hwinfo.pc hwinfo.static hwscan hwscan.static hwscand hwscanqueue doc/libhd doc/*~
+-LIBDIR		= /usr/lib
++LIBDIR		= /lib
+ ULIBDIR		= $(LIBDIR)
+ LIBS		= -lhd
+ SLIBS		= -lhd -ldbus-1 -lhal
+@@ -71,11 +71,11 @@
+ 	@cd doc ; doxygen libhd.doxy
+ 
+ install:
+-	install -d -m 755 $(DESTDIR)/sbin $(DESTDIR)/usr/sbin $(DESTDIR)$(ULIBDIR) \
+-		$(DESTDIR)$(ULIBDIR)/pkgconfig $(DESTDIR)/usr/include
+-	install -m 755 hwinfo $(DESTDIR)/usr/sbin
+-	install -m 755 src/ids/check_hd $(DESTDIR)/usr/sbin
+-	install -m 755 src/ids/convert_hd $(DESTDIR)/usr/sbin
++	install -d -m 755 $(DESTDIR)/sbin $(DESTDIR)/sbin $(DESTDIR)$(ULIBDIR) \
++		$(DESTDIR)$(ULIBDIR)/pkgconfig $(DESTDIR)/include
++	install -m 755 hwinfo $(DESTDIR)/sbin
++	install -m 755 src/ids/check_hd $(DESTDIR)/sbin
++	install -m 755 src/ids/convert_hd $(DESTDIR)/sbin
+ 	if [ -f $(LIBHD_SO) ] ; then \
+ 		install $(LIBHD_SO) $(DESTDIR)$(ULIBDIR) ; \
+ 		ln -snf $(LIBHD_NAME) $(DESTDIR)$(ULIBDIR)/$(LIBHD_SONAME) ; \
+@@ -84,10 +84,10 @@
+ 		install -m 644 $(LIBHD) $(DESTDIR)$(ULIBDIR) ; \
+ 	fi
+ 	install -m 644 hwinfo.pc $(DESTDIR)$(ULIBDIR)/pkgconfig
+-	install -m 644 src/hd/hd.h $(DESTDIR)/usr/include
+-	install -m 755 getsysinfo $(DESTDIR)/usr/sbin
+-	install -m 755 src/isdn/cdb/mk_isdnhwdb $(DESTDIR)/usr/sbin
+-	install -d -m 755 $(DESTDIR)/usr/share/hwinfo
+-	install -m 644 src/isdn/cdb/ISDN.CDB.txt $(DESTDIR)/usr/share/hwinfo
+-	install -m 644 src/isdn/cdb/ISDN.CDB.hwdb $(DESTDIR)/usr/share/hwinfo
++	install -m 644 src/hd/hd.h $(DESTDIR)/include
++	install -m 755 getsysinfo $(DESTDIR)/sbin
++	install -m 755 src/isdn/cdb/mk_isdnhwdb $(DESTDIR)/sbin
++	install -d -m 755 $(DESTDIR)/share/hwinfo
++	install -m 644 src/isdn/cdb/ISDN.CDB.txt $(DESTDIR)/share/hwinfo
++	install -m 644 src/isdn/cdb/ISDN.CDB.hwdb $(DESTDIR)/share/hwinfo
+ 

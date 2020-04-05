@@ -1,0 +1,12 @@
+# Recipe for version 1.8.10 by Hugo Barrocas <hugobarrocas@iol.pt>, on Qua Mai 26 09:50:13 WEST 2010
+# Recipe (MakeRecipe) for Cairo by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 10:58:19 BRT 2005
+compile_version=1.8.10
+url="http://www.cairographics.org/releases/cairo-1.8.10.tar.gz"
+file_size=7102657
+file_md5=b60a82f405f9400bbfdcf850b1728d25
+recipe_type=configure
+configure_options=(
+   --enable-xcb
+   --enable-ft
+)
+with_glitz="--enable-glitz"

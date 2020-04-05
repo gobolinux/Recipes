@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for GraphicsMagick by roko, <ro.ko@mcnon.com>, on Wed Feb 2 16:01:02 CET 2005
+# Recipe for version 1.1.5 by roko, <ro.ko@mcnon.com>, on Wed Feb 2 16:01:02 CET 2005
+compile_version=1.7.1
+url="ftp://ftp.graphicsmagick.org/pub/GraphicsMagick/GraphicsMagick-1.1.5.tar.bz2"
+file_size=4949815
+file_md5=bcbfa575bda5357478b97ff6430b8bde
+recipe_type=configure
+configure_options=(
+#--enable-shared      # enable-shared requires the option --without-perl ( it tries to write into the perl folder)
+#--without-perl 
+--with-modules
+--with-gs-font-dir=/Files/Fonts/Ghostscript
+)

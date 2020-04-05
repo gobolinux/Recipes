@@ -1,0 +1,11 @@
+--- dvd+rw-tools-7.0/Makefile.m4.orig	2007-02-25 16:41:06.000000000 -0300
++++ dvd+rw-tools-7.0/Makefile.m4	2007-02-25 16:41:42.000000000 -0300
+@@ -201,8 +201,6 @@ install:	dvd+rw-tools
+ 	install $(minus_o) -m $(bin_mode) $(CHAIN) $(prefix)/bin
+ 	[[ -d $(manprefix)/man1 ]] || mkdir -p $(manprefix)/man1
+ 	install $(minus_o) -m 0644 growisofs.1 $(manprefix)/man1
+-	-[[ -f rpl8 ]] && install $(minus_o) -m $(bin_mode) rpl8 $(prefix)/bin; :
+-	-[[ -f btcflash ]] && install $(minus_o) -m $(bin_mode) btcflash $(prefix)/bin; :
+ ])
+ 
+ # common section

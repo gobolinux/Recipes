@@ -1,0 +1,22 @@
+# Recipe (MakeRecipe) for UClibc by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sun Dec 19 12:44:30 BRST 2004
+# Recipe for version 0.9.26 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sun Dec 19 12:44:30 BRST 2004
+compile_version=1.8.0
+url="http://www.kernel.org/pub/linux/libs/uclibc/uClibc-0.9.26.tar.bz2"
+file_size=1604543
+file_md5=7212713c432dd0de6ec2140c2a6212e4
+recipe_type=makefile
+makefile='Makefile'
+
+pre_build() {
+	[ ! -f .config ] && {
+		cp "$recipedir"/dot-config .config
+		yes "" | make oldconfig
+	}
+	make menuconfig
+}
+
+pre_link() {
+	mkdir -p "$target/include/sys"
+	cp "$goboHeaders/sys/stropts.h" "$target/include/sys"
+	cp "$goboHeaders/stropts.h" "$target/include"
+}

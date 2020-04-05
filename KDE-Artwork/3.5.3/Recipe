@@ -1,0 +1,22 @@
+# Recipe for version 3.5.3 by Rui Andrada <shingonoide at gmail>, on Sun Jun 4 18:50:25 BRT 2006
+# by Maglan C. Diemer ,3.4.0 by roko
+
+url="ftp://ftp.oregonstate.edu/pub/kde/stable/3.5.3/src/kdeartwork-3.5.3.tar.bz2"
+compile_version=1.8.0
+recipe_type=configure
+configure_options=(
+    "--disable-debug"
+    "--with-extra-includes=$goboHeaders"
+    "--with-extra-libs=$goboLibraries"
+    "--disable-dependency-tracking"
+#  "DO_NOT_COMPILE="
+ #IconThemes icewm-themes kscreensaver kwin-styles kworldclock sounds styles wallpapers
+)
+
+pre_build(){
+    ln -sf $goboPrograms/KDE-Base/3.5.3/lib/libkdecorations.la $goboPrograms/KDE-Libs/3.5.3/lib/libkdecorations.la
+}
+
+pre_link(){
+    rm $goboPrograms/KDE-Libs/3.5.3/lib/libkdecorations.la
+}

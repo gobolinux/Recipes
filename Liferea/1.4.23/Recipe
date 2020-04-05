@@ -1,0 +1,10 @@
+# Recipe for version 1.4.23 by kenneth marken <k-marken@online.no>, on fr. 09. jan. 16:37:18 +0100 2009
+# Recipe (MakeRecipe) for Liferea by kenneth marken <k-marken@online.no>, on Wed Oct 8 20:11:35 CEST 2008
+compile_version=1.11.2
+url="$httpSourceforge/liferea/liferea-1.4.23.tar.gz"
+file_size=1655446
+file_md5=7772f04bd3ed995b7ce36e52d26ec088
+recipe_type=configure
+configure_options=(
+--disable-gecko
+)

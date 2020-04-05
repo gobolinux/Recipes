@@ -1,0 +1,12 @@
+diff -Naur photomolo-1.2.2-vanilla/exifiron.c photomolo-1.2.2-patched/exifiron.c
+--- photomolo-1.2.2-vanilla/exifiron.c	2005-07-03 20:09:06.000000000 -0300
++++ photomolo-1.2.2-patched/exifiron.c	2005-07-03 20:09:47.000000000 -0300
+@@ -65,7 +65,7 @@
+ /* Although this file really should not have access to the library internals,
+  * it is helpful to let it call jround_up () and jcopy_block_row ().
+  */
+-#define JPEG_INTERNALS
++/*#define JPEG_INTERNALS*/
+ 
+ #include "jpeglib.h"
+ #include "jerror.h"

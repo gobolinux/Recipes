@@ -1,0 +1,13 @@
+--- sysfsutils-1.2.0/Makefile.in.orig	2004-11-22 20:08:30.000000000 -0200
++++ sysfsutils-1.2.0/Makefile.in	2004-11-22 20:09:30.000000000 -0200
+@@ -31,8 +31,8 @@
+ libdir = @libdir@
+ infodir = @infodir@
+ mandir = @mandir@
+-includedir = /usr/include/sysfs
+-oldincludedir = /usr/include
++includedir = $(prefix)/include/sysfs
++oldincludedir = $(prefix)/include
+ pkgdatadir = $(datadir)/@PACKAGE@
+ pkglibdir = $(libdir)/@PACKAGE@
+ pkgincludedir = $(includedir)/@PACKAGE@

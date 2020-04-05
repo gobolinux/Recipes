@@ -1,0 +1,18 @@
+# Recipe (MakeRecipe) for ArtisticStyle by Baffo32 <baffo32@gmail.com>, on Thu Oct 16 09:59:38 PDT 2008
+# Recipe for version 1.22 by Baffo32 <baffo32@gmail.com>, on Thu Oct 16 09:59:38 PDT 2008
+compile_version=1.11.2
+url="$httpSourceforge/astyle/astyle_1.22_linux.tar.gz"
+file_size=92580
+file_md5=f319ee4e2538f5e6255211975b4e36cc
+dir='astyle/buildgcc'
+recipe_type='makefile'
+
+build_target='shared release'
+
+install_variables=( "prefix=$target" )
+
+pre_install() {
+	cp -f ../bin/*.so "${target}/lib"
+	cp -f ../src/*.h "${target}/include"
+	cp -f ../doc/* "${target}/doc"
+}

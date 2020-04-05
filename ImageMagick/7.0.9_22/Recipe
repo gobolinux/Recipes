@@ -1,0 +1,20 @@
+# Recipe for version 7.0.9_22 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu 13 Feb 2020 05:24:23 PM BRT
+# Recipe (MakeRecipe) for ImageMagick by Seb Haezebrouck, on Wed Mar 19 14:19:20 CET 2008
+compile_version=1.10.2
+url="https://imagemagick.org/download/ImageMagick-7.0.9-22.tar.xz"
+file_size=9485092
+file_md5=54ce60b96dada05629cb536839695d84
+mirror_url="http://ftp.lfs-matrix.net/pub/blfs/conglomeration/ImageMagick/ImageMagick-7.0.9-7.tar.xz"
+recipe_type=configure
+make_variables=(
+    INSTALLPRIVLIB=$target/lib/perl5/5.10.0
+    INSTALLSITELIB=$target/lib/perl5/site_perl/5.10.0
+    INSTALLARCHLIB=$target/lib/perl5/5.10.0/i686-linux-thread-multi
+    INSTALLSITEARCH=$target/lib/perl5/site_perl/5.10.0/i686-linux-thread-multi
+    INSTALLSITEBIN=$target/bin
+    INSTALLSCRIPT=$target/bin
+    INSTALLMAN1DIR=$target/man/man1
+    INSTALLSITEMAN1DIR=$target/man/man1
+    INSTALLMAN3DIR=$target/man/man3
+    INSTALLSITEMAN3DIR=$target/man/man3
+)

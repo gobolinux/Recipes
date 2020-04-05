@@ -1,0 +1,14 @@
+# Recipe for version 8.5.6 by Zbigniew Baniewski <zb@ispid.com.pl>, on czw, 25 gru 2008, 22:44:13 BRST
+compile_version=1.8.5
+url="$httpSourceforge/tcl/tk8.5.6-src.tar.gz"
+file_size=3778532
+file_md5=7da2e00adddc7eed6080df904579d94e
+dir='tk8.5.6/unix'
+recipe_type=configure
+configure_options=(
+   --with-tcl=$tcl_path/lib
+   --enable-xft
+)
+pre_link() {
+   $sudo_exec ln -nfs ${target}/bin/wish8.5 ${target}/bin/wish
+}

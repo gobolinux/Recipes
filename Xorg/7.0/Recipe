@@ -1,0 +1,18 @@
+compile_version=1.7.1
+recipe_type=meta
+include=(
+    LibDRM--2.0
+    Xorg-Proto--7.0
+    Xorg-Lib--7.0
+    Xorg-Server--7.0
+    Xorg-Driver--7.0
+    Xorg-Data--7.0
+    Xorg-App--7.0
+    Xorg-Font-Util--7.0
+)
+
+pre_link() {
+    pushd $target/bin >& /dev/null
+    chmod +s X*
+    popd >& /dev/null
+}

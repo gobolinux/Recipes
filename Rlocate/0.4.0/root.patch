@@ -1,0 +1,148 @@
+diff -Naur rlocate-0.3.2.old/debian/cron.daily rlocate-0.3.2/debian/cron.daily
+--- rlocate-0.3.2.old/debian/cron.daily	2005-07-29 15:22:04.000000000 +0200
++++ rlocate-0.3.2/debian/cron.daily	2005-08-01 23:49:28.000000000 +0200
+@@ -8,5 +8,5 @@
+ 	else
+ 		/usr/bin/updatedb -f proc
+ 	fi
+-	chown root.rlocate /var/lib/rlocate/rlocate.db
++	chown 0.rlocate /var/lib/rlocate/rlocate.db
+ fi
+diff -Naur rlocate-0.3.2.old/debian/postinst rlocate-0.3.2/debian/postinst
+--- rlocate-0.3.2.old/debian/postinst	2005-07-29 15:22:04.000000000 +0200
++++ rlocate-0.3.2/debian/postinst	2005-08-01 23:49:28.000000000 +0200
+@@ -11,17 +11,17 @@
+ 
+ sg $RLOCATE_GROUP true 2>/dev/null || addgroup --system $RLOCATE_GROUP
+ 
+-chown root.$RLOCATE_GROUP $PROG
++chown 0.$RLOCATE_GROUP $PROG
+ chmod g+s $PROG
+ 
+-chown root.$RLOCATE_GROUP $PROG2
++chown 0.$RLOCATE_GROUP $PROG2
+ chmod g+s $PROG2
+ 
+ if [ ! -d $RLOCATE_DBPATH ]
+ then
+ 	mkdir -p $RLOCATE_DBPATH
+ fi
+-chown root.$RLOCATE_GROUP $RLOCATE_DBPATH
++chown 0.$RLOCATE_GROUP $RLOCATE_DBPATH
+ 
+ chmod 0750 $RLOCATE_DBPATH
+ 
+diff -Naur rlocate-0.3.2.old/doc/rlocate.html rlocate-0.3.2/doc/rlocate.html
+--- rlocate-0.3.2.old/doc/rlocate.html	2005-07-29 15:22:04.000000000 +0200
++++ rlocate-0.3.2/doc/rlocate.html	2005-08-01 23:49:28.000000000 +0200
+@@ -223,10 +223,10 @@
+ permissions of the rlocate and rlocated binaries. To do this execute 
+ the following commands.</p>
+ <pre>
+-        chown root:rlocate /usr/local/bin/rlocate
++        chown 0:rlocate /usr/local/bin/rlocate
+         chmod 2755 /usr/local/bin/rlocate
+         
+-        chown root:root /usr/local/sbin/rlocated 
++        chown 0:root /usr/local/sbin/rlocated 
+         chmod 0755 /usr/local/bin/rlocated</pre>
+ <p>4. To make rlocate more convenient to use, you can symlink 'rlocate' to 
+ 'locate'.</p>
+@@ -246,7 +246,7 @@
+         mkdir -p /usr/local/var/rlocate</pre>
+ <p>Now just give it the right ownership:</p>
+ <pre>
+-        chown root:rlocate /usr/local/var/rlocate</pre>
++        chown 0:rlocate /usr/local/var/rlocate</pre>
+ <p>7. Then you have to load rlocate.ko module from rlocate-module directory. 
+ You can copy it to:</p>
+ <pre>
+diff -Naur rlocate-0.3.2.old/doc/rlocate.pod rlocate-0.3.2/doc/rlocate.pod
+--- rlocate-0.3.2.old/doc/rlocate.pod	2005-07-29 15:22:04.000000000 +0200
++++ rlocate-0.3.2/doc/rlocate.pod	2005-08-01 23:49:28.000000000 +0200
+@@ -194,10 +194,10 @@
+ permissions of the rlocate and rlocated binaries. To do this execute 
+ the following commands.
+ 
+-        chown root:rlocate /usr/local/bin/rlocate
++        chown 0:rlocate /usr/local/bin/rlocate
+         chmod 2755 /usr/local/bin/rlocate
+         
+-        chown root:root /usr/local/sbin/rlocated 
++        chown 0:root /usr/local/sbin/rlocated 
+         chmod 0755 /usr/local/bin/rlocated
+ 
+ 4. To make rlocate more convenient to use, you can symlink 'rlocate' to 
+@@ -223,7 +223,7 @@
+ 
+ Now just give it the right ownership:
+ 
+-        chown root:rlocate /usr/local/var/rlocate
++        chown 0:rlocate /usr/local/var/rlocate
+ 
+ 7. Then you have to load rlocate.ko module from rlocate-module directory. 
+ You can copy it to:
+diff -Naur rlocate-0.3.2.old/Makefile.am rlocate-0.3.2/Makefile.am
+--- rlocate-0.3.2.old/Makefile.am	2005-07-29 15:22:04.000000000 +0200
++++ rlocate-0.3.2/Makefile.am	2005-08-01 23:49:28.000000000 +0200
+@@ -41,8 +41,8 @@
+ # 	-/usr/sbin/groupadd rlocate
+ # endif	
+ 	$(INSTALL) -d $(RLOCATE_DB_DIR)
+-	chown root:$(rlocate) $(DESTDIR)$(bindir)/$(rlocate)
+-	chown root:$(rlocate) $(RLOCATE_DB_DIR)
++	chown 0:$(rlocate) $(DESTDIR)$(bindir)/$(rlocate)
++	chown 0:$(rlocate) $(RLOCATE_DB_DIR)
+ 	chmod 2755 $(DESTDIR)$(bindir)/$(rlocate)
+ 	chmod 0750 $(RLOCATE_DB_DIR)
+ 	-$(LN_S) -f $(DESTDIR)$(bindir)/$(rlocate) $(DESTDIR)$(bindir)/$(updatedb)
+diff -Naur rlocate-0.3.2.old/Makefile.in rlocate-0.3.2/Makefile.in
+--- rlocate-0.3.2.old/Makefile.in	2005-07-29 15:22:04.000000000 +0200
++++ rlocate-0.3.2/Makefile.in	2005-08-01 23:49:28.000000000 +0200
+@@ -709,8 +709,8 @@
+ # 	-/usr/sbin/groupadd rlocate
+ # endif	
+ 	$(INSTALL) -d $(RLOCATE_DB_DIR)
+-	chown root:$(rlocate) $(DESTDIR)$(bindir)/$(rlocate)
+-	chown root:$(rlocate) $(RLOCATE_DB_DIR)
++	chown 0:$(rlocate) $(DESTDIR)$(bindir)/$(rlocate)
++	chown 0:$(rlocate) $(RLOCATE_DB_DIR)
+ 	chmod 2755 $(DESTDIR)$(bindir)/$(rlocate)
+ 	chmod 0750 $(RLOCATE_DB_DIR)
+ 	-$(LN_S) -f $(DESTDIR)$(bindir)/$(rlocate) $(DESTDIR)$(bindir)/$(updatedb)
+diff -Naur rlocate-0.3.2.old/rlocate-scripts/Makefile rlocate-0.3.2/rlocate-scripts/Makefile
+--- rlocate-0.3.2.old/rlocate-scripts/Makefile	2005-07-29 15:22:04.000000000 +0200
++++ rlocate-0.3.2/rlocate-scripts/Makefile	2005-08-01 23:49:28.000000000 +0200
+@@ -345,7 +345,7 @@
+ install-exec-hook:
+ #	-/usr/sbin/pw groupadd $(rlocate)
+ 	-/usr/sbin/groupadd $(rlocate)
+-	chown root:$(rlocate) $(DESTDIR)$(bindir)/rlocate-checkpoint
++	chown 0:$(rlocate) $(DESTDIR)$(bindir)/rlocate-checkpoint
+ 	chmod 2755 $(DESTDIR)$(bindir)/rlocate-checkpoint
+ 
+ uninstall-hook:
+diff -Naur rlocate-0.3.2.old/rlocate-scripts/Makefile.am rlocate-0.3.2/rlocate-scripts/Makefile.am
+--- rlocate-0.3.2.old/rlocate-scripts/Makefile.am	2005-07-29 15:22:04.000000000 +0200
++++ rlocate-0.3.2/rlocate-scripts/Makefile.am	2005-08-01 23:49:28.000000000 +0200
+@@ -22,7 +22,7 @@
+ else
+ 	-/usr/sbin/groupadd $(rlocate)
+ endif
+-	chown root:$(rlocate) $(DESTDIR)$(bindir)/rlocate-checkpoint
++	chown 0:$(rlocate) $(DESTDIR)$(bindir)/rlocate-checkpoint
+ 	chmod 2755 $(DESTDIR)$(bindir)/rlocate-checkpoint
+ 
+ uninstall-hook:
+diff -Naur rlocate-0.3.2.old/rlocate-scripts/Makefile.in rlocate-0.3.2/rlocate-scripts/Makefile.in
+--- rlocate-0.3.2.old/rlocate-scripts/Makefile.in	2005-07-29 15:22:04.000000000 +0200
++++ rlocate-0.3.2/rlocate-scripts/Makefile.in	2005-08-01 23:49:28.000000000 +0200
+@@ -345,7 +345,7 @@
+ install-exec-hook:
+ @FREEBSD_TRUE@	-/usr/sbin/pw groupadd $(rlocate)
+ @FREEBSD_FALSE@	-/usr/sbin/groupadd $(rlocate)
+-	chown root:$(rlocate) $(DESTDIR)$(bindir)/rlocate-checkpoint
++	chown 0:$(rlocate) $(DESTDIR)$(bindir)/rlocate-checkpoint
+ 	chmod 2755 $(DESTDIR)$(bindir)/rlocate-checkpoint
+ 
+ uninstall-hook:

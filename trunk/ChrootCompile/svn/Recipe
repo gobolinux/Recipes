@@ -1,7 +1,0 @@
-compile_version=1.10.1
-svn=http://svn.gobolinux.org/tools/trunk/ChrootCompile
-recipe_type=makefile
-make_variables=(
-   VERSION=$version
-   PREFIX=$target
-)

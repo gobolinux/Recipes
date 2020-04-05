@@ -1,0 +1,52 @@
+Fixes the following kind of error:
+
+    ../../../gui/image/qjpeghandler.cpp: In function 'boolean qt_fill_input_buffer(j_decompress_ptr)':
+    ../../../gui/image/qjpeghandler.cpp:163:12: error: cannot convert 'bool' to 'boolean' in return
+        return true;
+
+Patch taken from:
+    https://bugreports.qt-project.org/browse/QTBUG-33166
+
+Reviewed-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+diff -urN qt-everywhere-opensource-src-4.8.5-orig/src/gui/image/qjpeghandler.cpp qt-everywhere-opensource-src-4.8.5/src/gui/image/qjpeghandler.cpp
+--- qt-everywhere-opensource-src-4.8.5-orig/src/gui/image/qjpeghandler.cpp	2013-06-07 14:16:59 +0900
++++ qt-everywhere-opensource-src-4.8.5/src/gui/image/qjpeghandler.cpp	2013-08-13 10:49:55 +0900
+@@ -160,7 +160,7 @@
+ #if defined(Q_OS_UNIXWARE)
+     return B_TRUE;
+ #else
+-    return true;
++    return TRUE;
+ #endif
+ }
+ 
+@@ -492,7 +492,7 @@
+ #if defined(Q_OS_UNIXWARE)
+     return B_TRUE;
+ #else
+-    return true;
++    return TRUE;
+ #endif
+ }
+ 
+@@ -588,8 +588,8 @@
+         jpeg_set_quality(&cinfo, quality, B_TRUE /* limit to baseline-JPEG values */);
+         jpeg_start_compress(&cinfo, B_TRUE);
+ #else
+-        jpeg_set_quality(&cinfo, quality, true /* limit to baseline-JPEG values */);
+-        jpeg_start_compress(&cinfo, true);
++        jpeg_set_quality(&cinfo, quality, TRUE /* limit to baseline-JPEG values */);
++        jpeg_start_compress(&cinfo, TRUE);
+ #endif
+ 
+         row_pointer[0] = new uchar[cinfo.image_width*cinfo.input_components];
+@@ -754,7 +754,7 @@
+     #if defined(Q_OS_UNIXWARE)
+             (void) jpeg_read_header(&info, B_TRUE);
+     #else
+-            (void) jpeg_read_header(&info, true);
++            (void) jpeg_read_header(&info, TRUE);
+     #endif
+ 
+             int width = 0;

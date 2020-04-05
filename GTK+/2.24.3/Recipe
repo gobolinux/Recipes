@@ -1,0 +1,15 @@
+# Recipe for version 2.24.3 by Michael Homer <michael@gobolinux.org>, on Wed Mar 16 16:01:11 NZDT 2011
+# Recipe (MakeRecipe) for GTK+ by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 11:55:54 BRT 2005
+compile_version=1.9.0
+url="http://ftp.gnome.org/pub/gnome/sources/gtk+/2.24/gtk+-2.24.3.tar.bz2"
+file_size=17598600
+file_md5=2094fadbd72ccb62b43a5e0c027d3142
+recipe_type=configure
+
+configure_options=(
+    --with-xinput=yes
+    --disable-gtk-doc-html
+    --without-libjasper
+)
+
+with_jpeg2000="--with-libjasper"

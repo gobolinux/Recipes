@@ -1,0 +1,45 @@
+# Recipe (MakeRecipe) for Linux-PAM by Jonas Karlsson <jonka750@student.liu.se>, on Thu Nov 24 13:47:01 CET 2005
+compile_version=1.8.0
+url="http://www.linux-pam.org/library/Linux-PAM-1.3.0.tar.gz"
+file_size=2153258
+file_md5=642c994edb9cf39b74cb1bca0649613b
+recipe_type=configure
+needs_safe_linking=yes
+configure_options=(
+   "--enable-read-both-confs"
+   "--enable-db=ndbm"
+   "--disable-nis"
+)
+
+# Oh my...
+install_variables=(
+   LIBTOOL="${goboExecutables}/libtool"
+   DESTDIR="${target}"
+   datarootdir="/share"
+   mandir="/share/man"
+   docdir="/share/doc"
+   sysconfdir="/../Settings"
+   SCONFIGDIR="/../Settings/security"
+   SECUREDIR="/lib/security"
+   libdir="/lib"
+   sbindir="/sbin"
+   includedir="/include/security"
+)
+
+unmanaged_files=(
+   ${goboVariable}/run/sepermit/
+)
+
+pre_link(){                                            
+   # Make unix_chkpwd setuid so that non-root        
+   # processes can read shadow file.             
+   chmod u+s "${target}/sbin/unix_chkpwd"
+
+   Quiet pushd "${target}/Resources/Defaults/Settings/pam.d"
+   ln -fs system-auth system-session
+   ln -fs system-auth system-account
+   ln -fs system-auth system-password
+   Quiet popd
+}
+
+post_install_message="You must recompile Shadow to enable PAM support for it."

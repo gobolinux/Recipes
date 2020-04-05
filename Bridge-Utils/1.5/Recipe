@@ -1,0 +1,9 @@
+# Recipe for version 1.5 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Dec 11 11:26:10 BRST 2013
+# Recipe (MakeRecipe) for Bridge-Utils by Fabio Mierlo, on Wed Aug 13 02:32:21 BRT 2008
+compile_version=1.10.2
+url="$httpSourceforge/bridge/bridge-utils-1.5.tar.gz"
+file_size=33243
+file_md5=ec7b381160b340648dede58c31bb2238
+recipe_type=configure
+autogen_before_configure=yes
+autogen=autoconf

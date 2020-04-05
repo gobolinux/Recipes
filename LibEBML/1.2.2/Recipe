@@ -1,0 +1,13 @@
+# Recipe for version 1.2.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jul 15 18:53:59 BRT 2012
+# Recipe (MakeRecipe) for LibEBML by Jonas Karlsson <jonka750@student.liu.se>, on Mon Mar 20 23:54:41 CET 2006
+compile_version=1.8.0
+url="http://dl.matroska.org/downloads/libebml/libebml-1.2.2.tar.bz2"
+file_size=60802
+file_md5=726cc2bd1a525929ff35ff9854c0ebab
+recipe_type=makefile
+dir=libebml-1.2.2/make/linux
+install_variables=(
+    prefix=${target}
+)
+#make_target=staticlib
+#install_target=install_staticlib

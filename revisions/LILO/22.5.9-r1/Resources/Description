@@ -1,5 +1,0 @@
-[Name] LILO
-[Summary] LInux boot LOader.
-[License] BSD License (original)
-[Description] LILO is a Boot loader for Linux/x86 and other PC operating systems. It is responsible for loading your Linux kernel from either a floppy or a hard drive and passing control to it. It is capable of booting beyond cylinder 1024 of a hard disk if the BIOS supports EDD packet call extensions to the int 0x13 interface. LILO can also be used to boot many other operating systems, including DOS, Windows (all versions), OS/2, and the BSD variants. The LILO distribution includes full source, documentation and support files.
-[Homepage] http://lilo.go.dyndns.org/

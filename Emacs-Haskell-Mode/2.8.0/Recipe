@@ -1,0 +1,16 @@
+# Recipe for version 2.8.0 by Kevin Quick <quick@sparq.org>, on Fri Jul 2 06:43:20 MST 2010
+# Recipe (MakeRecipe) for Emacs-Haskell-Mode by Kevin Quick <quick@sparq.org>, on Sun Jun 29 10:11:24 MST 2008
+compile_version=1.11.0
+url="http://projects.haskell.org/haskellmode-emacs/haskell-mode-2.8.0.tar.gz"
+file_size=107284
+file_md5=64435a26bd070e56481b8d0ad826ac63
+recipe_type=manifest
+manifest=(
+    "*.el:Shared/emacs/site-lisp"
+)
+
+pre_install() {
+    mkdir -p $target/Shared/emacs/site-lisp
+}
+
+post_install_message="Add the following to your .emacs initialization file:\n\t(load \042haskell-site-file\042)\n\t(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)\n\t(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)  # or 'turn-on-haskell-simple-indent\n"

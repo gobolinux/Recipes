@@ -1,0 +1,98 @@
+diff -Naur rlocate-0.5.3/configure.ac rlocate-0.5.3.new/configure.ac
+--- rlocate-0.5.3/configure.ac	2006-09-26 10:44:48.000000000 +0200
++++ rlocate-0.5.3.new/configure.ac	2006-11-12 02:22:44.000000000 +0100
+@@ -36,6 +36,7 @@
+ AC_MAJOR_NUMBER
+ AC_RLOCATE_GROUP
+ AC_PATH_DEV
++AC_PATH_STATUS
+ AC_CHECK_PERL
+ 
+ dnl Checks for libraries.
+diff -Naur rlocate-0.5.3/m4/rlocate.m4 rlocate-0.5.3.new/m4/rlocate.m4
+--- rlocate-0.5.3/m4/rlocate.m4	2006-09-26 10:44:48.000000000 +0200
++++ rlocate-0.5.3.new/m4/rlocate.m4	2006-11-12 01:25:13.000000000 +0100
+@@ -240,6 +240,18 @@
+ ]
+ )
+ 
++dnl where rlocate status is located
++
++AC_DEFUN([AC_PATH_STATUS],
++[
++  AC_ARG_WITH(statusdir,
++    [  --with-statusdir=DIR       Where rlocate status file is located (/proc)],
++    statusdir=${withval},
++    statusdir="/proc")
++  AC_SUBST(statusdir)
++]
++)
++
+ dnl rlocate group
+ 
+ AC_DEFUN([AC_RLOCATE_GROUP],
+diff -Naur rlocate-0.5.3/src/Makefile.am rlocate-0.5.3.new/src/Makefile.am
+--- rlocate-0.5.3/src/Makefile.am	2006-11-12 01:41:13.000000000 +0100
++++ rlocate-0.5.3.new/src/Makefile.am	2006-11-12 01:41:51.000000000 +0100
+@@ -13,6 +13,7 @@
+ RLOCATE_GRP = $(rlocate_group)
+ RLOCATED_CMD = $(DESTDIR)$(sbindir)/$(rlocated)
+ RLOCATE_CFG = $(DESTDIR)$(sysconfdir)/$(rlocate)
++STATUSDIR = $(statusdir)
+ 
+ AM_CPPFLAGS = -DRLOCATE_DB=\"$(RLOCATE_DB)\" \
+            -DRLOCATE_DB_TMP=\"$(RLOCATE_DB_TMP)\" \
+@@ -20,7 +21,8 @@
+            -DMODULE_CFG=\"$(MODULE_CFG)\" \
+            -DRLOCATE_GRP=\"$(RLOCATE_GRP)\" \
+            -DRLOCATED_CMD=\"$(RLOCATED_CMD)\" \
+-           -DRLOCATE_CFG=\"$(RLOCATE_CFG)\"
++           -DRLOCATE_CFG=\"$(RLOCATE_CFG)\" \
++           -DSTATUSDIR=\"$(STATUSDIR)\"
+ 
+ bin_PROGRAMS = rlocate
+ rlocate_SOURCES = pidfile.h pidfile.c slocate.c slocate.h \
+diff -Naur rlocate-0.5.3/src/rlocate.c rlocate-0.5.3.new/src/rlocate.c
+--- rlocate-0.5.3/src/rlocate.c	2006-09-26 10:44:48.000000000 +0200
++++ rlocate-0.5.3.new/src/rlocate.c	2006-11-12 01:39:40.000000000 +0100
+@@ -46,7 +46,7 @@
+ #define MIN_BLK 4096
+ #define SLOC_ESC -0x80
+ 
+-#define RLOCATEPROC  "/proc/rlocate"
++#define RLOCATEPROC  STATUSDIR"/rlocate"
+ 
+ #define SLOC_UID 0
+ /* MAX_UPDATEDB_COUNT specifies a count after which a full database update will
+diff -Naur rlocate-0.5.3/src/rlocate-daemon/Makefile.am rlocate-0.5.3.new/src/rlocate-daemon/Makefile.am
+--- rlocate-0.5.3/src/rlocate-daemon/Makefile.am	2006-09-26 10:44:48.000000000 +0200
++++ rlocate-0.5.3.new/src/rlocate-daemon/Makefile.am	2006-11-12 01:39:06.000000000 +0100
+@@ -6,12 +6,14 @@
+ RLOCATE_DB_DIR = $(DESTDIR)$(localstatedir)/$(rlocate)
+ RLOCATE_DB = $(RLOCATE_DB_DIR)/$(rlocate).db
+ MODULE_CFG = $(RLOCATE_DB_DIR)/module.cfg
+ DEVDIR = $(devdir)
++STATUSDIR = $(statusdir)
+ 
+ AM_CPPFLAGS = -DRLOCATE_DB=\"$(RLOCATE_DB)\" \
+               -DMODULE_CFG=\"$(MODULE_CFG)\" \
+ 	      -DRLOCATE_GRP=\"$(rlocate_group)\" \
+-           -DDEVDIR=\"$(DEVDIR)\"
++           -DDEVDIR=\"$(DEVDIR)\" \
++           -DSTATUSDIR=\"$(STATUSDIR)\"
+ 
+ sbin_PROGRAMS = rlocated
+ rlocated_SOURCES = ../pidfile.h ../pidfile.c rlocated.c
+diff -Naur rlocate-0.5.3/src/rlocate-daemon/rlocated.c rlocate-0.5.3.new/src/rlocate-daemon/rlocated.c
+--- rlocate-0.5.3/src/rlocate-daemon/rlocated.c	2006-09-26 10:44:48.000000000 +0200
++++ rlocate-0.5.3.new/src/rlocate-daemon/rlocated.c	2006-11-12 01:34:41.000000000 +0100
+@@ -68,8 +68,8 @@
+ static char **EXCLUDE_DIR    = NULL; // is set in parse_proc
+ static char *STARTING_PATH   = NULL; // is set in parse_proc
+ static int  COUNTDOWN        = 0; // used for testing, always set it to 0
+ static char *RLOCATEDEV      = DEVDIR"/rlocate";
+-static char *RLOCATEPROC     = "/proc/rlocate";
++static char *RLOCATEPROC     = STATUSDIR"/rlocate";
+ static char *RLOCATE_DIFF_DB = NULL;
+ 
+ 

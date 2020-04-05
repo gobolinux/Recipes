@@ -1,0 +1,19 @@
+# Recipe for version 0.60.6 by Giambattista Bloisi <giamby@infinito.it>, on Sun Jun 22 16:41:59 UTC 2008
+compile_version=1.8.2
+url="$ftpGnu/aspell/aspell-0.60.6.tar.gz"
+file_size=1777930
+file_md5=bc80f0198773d5c05086522be67334eb
+recipe_type=configure
+configure_options=(
+   "--enable-pkgdatadir=${goboLibraries}/aspell"
+   "--enable-pkglibdir=${goboLibraries}/aspell"
+)
+install_variables=(
+   pkgdatadir="${target}/lib/aspell"
+   pkglibdir="${target}/lib/aspell"
+)
+pre_install() {
+   # *sigh* libtool again... FixDirReferences will revert this after
+   # installation.
+   find . -type f -name "*.la" -print0 | xargs -0 sed -i 's,'"$goboLibraries"','"$target/lib"','
+}

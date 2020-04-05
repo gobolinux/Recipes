@@ -1,0 +1,89 @@
+Submitted By: Robert Connolly <robert at linuxfromscratch dot org> (ashes)
+Date: 2006-07-19
+Initial Package Version: 2.3.5
+Upstream Status: Unknown
+Origin: http://sources.gentoo.org/viewcvs.py/gentoo/src/patchsets/glibc/2.3.5/\
+	4010_all_2.3.5-hardened-iconvconfig-unnest.patch
+Description: Move nested function to a static one so we avoid generating a trampoline.
+
+--- glibc-2.3.5/iconv/iconvconfig.c
++++ glibc-2.3.5/iconv/iconvconfig.c
+@@ -1013,6 +1013,38 @@
+                               module name offset
+                          (following last entry with step count 0)
+ */
++
++/* Function to insert the names.  */
++/* Made non-nested to avoid trampoline.
++ * Requires hash_table and hash_size to be made global,
++ * but since the caller (write_output) is called once
++ * in the only thread there should be no problem */
++static struct hash_entry *hash_table;
++static size_t hash_size;
++static void
++name_insert (const void *nodep, VISIT value, int level)
++  {
++    struct name *name;
++    unsigned int idx;
++    unsigned int hval2;
++
++    if (value != leaf && value != postorder)
++      return;
++
++    name = *(struct name **) nodep;
++    idx = name->hashval % hash_size;
++    hval2 = 1 + name->hashval % (hash_size - 2);
++
++    while (hash_table[idx].string_offset != 0)
++      if ((idx += hval2) >= hash_size)
++	idx -= hash_size;
++
++    hash_table[idx].string_offset = strtaboffset (name->strent);
++
++    assert (name->module_idx != -1);
++    hash_table[idx].module_idx = name->module_idx;
++  }
++
+ static int
+ write_output (void)
+ {
+@@ -1020,8 +1052,6 @@
+   char *string_table;
+   size_t string_table_size;
+   struct gconvcache_header header;
+-  struct hash_entry *hash_table;
+-  size_t hash_size;
+   struct module_entry *module_table;
+   char *extra_table;
+   char *cur_extra_table;
+@@ -1034,30 +1064,6 @@
+   char tmpfname[(output_file == NULL ? sizeof finalname : output_file_len + 1)
+ 		+ strlen (".XXXXXX")];
+ 
+-  /* Function to insert the names.  */
+-  auto void
+-  name_insert (const void *nodep, VISIT value, int level)
+-    {
+-      struct name *name;
+-      unsigned int idx;
+-      unsigned int hval2;
+-
+-      if (value != leaf && value != postorder)
+-	return;
+-
+-      name = *(struct name **) nodep;
+-      idx = name->hashval % hash_size;
+-      hval2 = 1 + name->hashval % (hash_size - 2);
+-
+-      while (hash_table[idx].string_offset != 0)
+-	if ((idx += hval2) >= hash_size)
+-	  idx -= hash_size;
+-
+-      hash_table[idx].string_offset = strtaboffset (name->strent);
+-
+-      assert (name->module_idx != -1);
+-      hash_table[idx].module_idx = name->module_idx;
+-    }
+ 
+   /* Open the output file.  */
+   if (output_file == NULL)

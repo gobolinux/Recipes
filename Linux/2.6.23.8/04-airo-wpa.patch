@@ -1,0 +1,1572 @@
+diff -Nurp linux-2.6.23.8/drivers/net/wireless.orig/airo.c linux-2.6.23.8/drivers/net/wireless/airo.c
+--- linux-2.6.23.8/drivers/net/wireless.orig/airo.c	2007-11-16 10:14:27.000000000 -0800
++++ linux-2.6.23.8/drivers/net/wireless/airo.c	2007-11-18 20:40:38.000000000 -0800
+@@ -16,6 +16,7 @@
+     Code was also integrated from the Cisco Aironet driver for Linux.
+     Support for MPI350 cards was added by Fabrice Bellet
+     <fabrice@bellet.info>.
++    (C) 2005-2007 Matthieu CASTET <castet.matthieu@free.fr> for WPA support
+ 
+ ======================================================================*/
+ 
+@@ -25,6 +26,7 @@
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/proc_fs.h>
++#include <linux/smp_lock.h>
+ 
+ #include <linux/sched.h>
+ #include <linux/ptrace.h>
+@@ -52,8 +54,6 @@
+ 
+ #include "airo.h"
+ 
+-#define DRV_NAME "airo"
+-
+ #ifdef CONFIG_PCI
+ static struct pci_device_id card_ids[] = {
+ 	{ 0x14b9, 1, PCI_ANY_ID, PCI_ANY_ID, },
+@@ -73,7 +73,7 @@ static int airo_pci_suspend(struct pci_d
+ static int airo_pci_resume(struct pci_dev *pdev);
+ 
+ static struct pci_driver airo_driver = {
+-	.name     = DRV_NAME,
++	.name     = "airo",
+ 	.id_table = card_ids,
+ 	.probe    = airo_pci_probe,
+ 	.remove   = __devexit_p(airo_pci_remove),
+@@ -92,6 +92,11 @@ static struct pci_driver airo_driver = {
+ #include <linux/delay.h>
+ #endif
+ 
++/* enable rx mic checking
++ *disable because it takes some time in ISR
++ */
++#define WPA_CHECK_RX_MIC
++
+ /* Hack to do some power saving */
+ #define POWER_ON_DOWN
+ 
+@@ -224,6 +229,7 @@ static
+ int maxencrypt /* = 0 */; /* The highest rate that the card can encrypt at.
+ 		       0 means no limit.  For old cards this was 4 */
+ 
++static int wpa_enabled; /* If set the card is in WPA mode. This is incompatible with WEP or open mode */
+ static int auto_wep /* = 0 */; /* If set, it tries to figure out the wep mode */
+ static int aux_bap /* = 0 */; /* Checks to see if the aux ports are needed to read
+ 		    the bap, needed on some older cards and buses. */
+@@ -251,6 +257,9 @@ module_param(basic_rate, int, 0);
+ module_param_array(rates, int, NULL, 0);
+ module_param_array(ssids, charp, NULL, 0);
+ module_param(auto_wep, int, 0);
++module_param(wpa_enabled, int, 0);
++MODULE_PARM_DESC(wpa_enabled, "If non-zero, the driver can use WPA \
++but Open and WEP mode won't be possible");
+ MODULE_PARM_DESC(auto_wep, "If non-zero, the driver will keep looping through \
+ the authentication options until an association is made.  The value of \
+ auto_wep is number of the wep keys to check.  A value of 2 will try using \
+@@ -453,6 +462,7 @@ static int do8bitIO = 0;
+ #define RID_UNKNOWN22  0xFF22
+ #define RID_LEAPUSERNAME 0xFF23
+ #define RID_LEAPPASSWORD 0xFF24
++#define RID_WPA        0xFF25
+ #define RID_STATUS     0xFF50
+ #define RID_BEACON_HST 0xFF51
+ #define RID_BUSY_HST   0xFF52
+@@ -507,6 +517,14 @@ typedef struct {
+ 	u8 key[16];
+ } WepKeyRid;
+ 
++typedef struct {
++	u16 len;
++	u16 kindex;
++	u8 mac[ETH_ALEN];
++	u16 klen;
++	u8 key[48];
++} WpaKeyRid;
++
+ /* These structures are from the Aironet's PC4500 Developers Manual */
+ typedef struct {
+ 	u16 len;
+@@ -526,6 +544,19 @@ typedef struct {
+ #define MOD_MOK 2
+ } ModulationRid;
+ 
++/* Only present on firmware >= 5.30.17 */
++typedef struct {
++	u16 _reserved5[4];
++	u16 auth_cipher;
++#define AUTH_CIPHER_NONE 1
++#define AUTH_CIPHER_WEP 0xc
++#define AUTH_CIPHER_TKIP 0x210
++	u16 auth_key;
++#define AUTH_KEY_MGMT_NONE 1
++#define AUTH_KEY_MGMT_802_1X 4
++#define AUTH_KEY_MGMT_PSK 8
++} ConfigRidExtra;
++
+ typedef struct {
+ 	u16 len; /* sizeof(ConfigRid) */
+ 	u16 opmode; /* operating mode */
+@@ -581,6 +612,7 @@ typedef struct {
+ #define AUTH_ENCRYPT 0x101
+ #define AUTH_SHAREDKEY 0x102
+ #define AUTH_ALLOW_UNENCRYPTED 0x200
++#define AUTH_ENCRYPT_WPA 0xc101
+ 	u16 associationTimeout;
+ 	u16 specifiedApTimeout;
+ 	u16 offlineScanInterval;
+@@ -644,6 +676,8 @@ typedef struct {
+ #define MAGIC_STAY_IN_CAM (1<<10)
+ 	u8 magicControl;
+ 	u16 autoWake;
++	/* Only present on firmware >= 5.30.17 */
++	ConfigRidExtra extra;
+ } ConfigRid;
+ 
+ typedef struct {
+@@ -1094,7 +1128,7 @@ static int get_dec_u16( char *buffer, in
+ static void OUT4500( struct airo_info *, u16 register, u16 value );
+ static unsigned short IN4500( struct airo_info *, u16 register );
+ static u16 setup_card(struct airo_info*, u8 *mac, int lock);
+-static int enable_MAC(struct airo_info *ai, int lock);
++static int enable_MAC( struct airo_info *ai, Resp *rsp, int lock );
+ static void disable_MAC(struct airo_info *ai, int lock);
+ static void enable_interrupts(struct airo_info*);
+ static void disable_interrupts(struct airo_info*);
+@@ -1143,10 +1177,11 @@ static u8 airo_dbm_to_pct (tdsRssiEntry 
+ 
+ static void airo_networks_free(struct airo_info *ai);
+ 
++static void airo_interrupt_tasklet(unsigned long data);
++
+ struct airo_info {
+ 	struct net_device_stats	stats;
+ 	struct net_device             *dev;
+-	struct list_head              dev_list;
+ 	/* Note, we can have MAX_FIDS outstanding.  FIDs are 16-bits, so we
+ 	   use the high bit to mark whether it is in use. */
+ #define MAX_FIDS 6
+@@ -1229,6 +1264,19 @@ struct airo_info {
+ 	unsigned int bssListFirst;
+ 	unsigned int bssListNext;
+ 	unsigned int bssListRidLen;
++	unsigned int ConfigRidLen;
++	unsigned char wpa_tx_key [8];
++	unsigned char wpa_rx_key [8];
++	unsigned char wpa_rx_key_m [8];
++	unsigned char wpa_rx_key_m_old [8];
++	u8 LLC [10];
++	struct crypto_hash *tfm_michael;
++	int wpa_enabled;
++	int wpa_key_enabled;
++
++
++	spinlock_t tasklet_lock;
++	struct tasklet_struct isr_tasklet;
+ 
+ 	struct list_head network_list;
+ 	struct list_head network_free_list;
+@@ -1252,7 +1300,7 @@ static int flashputbuf(struct airo_info 
+ static int flashrestart(struct airo_info *ai,struct net_device *dev);
+ 
+ #define airo_print(type, name, fmt, args...) \
+-	printk(type DRV_NAME "(%s): " fmt "\n", name, ##args)
++	{ printk(type "airo(%s): " fmt "\n", name, ##args); }
+ 
+ #define airo_print_info(name, fmt, args...) \
+ 	airo_print(KERN_INFO, name, fmt, ##args)
+@@ -1725,6 +1773,55 @@ static void emmh32_final(emmh32_context 
+ 	digest[3] = val & 0xFF;
+ }
+ 
++static void wpa_compute_mic(struct airo_info *ai ,char *pPacket, u8 *mic, int len, char *key)
++{
++	struct scatterlist sg[3];
++	struct hash_desc desc;
++
++	sg[0].page = virt_to_page(pPacket);
++	sg[0].offset = offset_in_page(pPacket);
++	sg[0].length = sizeof(etherHead);
++
++
++	sg[1].page = virt_to_page(ai->LLC);
++	sg[1].offset = offset_in_page(ai->LLC);
++	sg[1].length = sizeof(ai->LLC);
++
++	sg[2].page = virt_to_page(pPacket + sizeof(etherHead));
++	sg[2].offset = offset_in_page(pPacket + sizeof(etherHead));
++	sg[2].length = len - sizeof(etherHead);
++
++	crypto_hash_setkey(ai->tfm_michael, key, 8);
++
++	desc.tfm = ai->tfm_michael;
++	desc.flags = 0;
++
++	crypto_hash_digest(&desc, sg, len + sizeof(ai->LLC),
++			mic);
++}
++
++#ifdef WPA_CHECK_RX_MIC
++static int wpa_check_rx_mic(struct airo_info *ai ,char *buffer, int len)
++{
++	u8 mic[8];
++	/* multicast */
++	if (buffer[0] & 1) {
++		wpa_compute_mic(ai, buffer, mic, len, ai->wpa_rx_key_m);
++		if (memcmp(mic, buffer + len, 8)) {
++			/* we don't know the current index, try the old one */
++			wpa_compute_mic(ai, buffer, mic, len, ai->wpa_rx_key_m_old);
++			return memcmp(mic, buffer + len, 8);
++		}
++	}
++	else {
++		wpa_compute_mic(ai, buffer, mic, len, ai->wpa_rx_key);
++		return memcmp(mic, buffer + len, 8);
++	}
++	return 0;
++}
++#endif
++
++
+ static int readBSSListRid(struct airo_info *ai, int first,
+ 		      BSSListRid *list) {
+ 	int rc;
+@@ -1788,6 +1885,18 @@ static int writeWepKeyRid(struct airo_in
+ 	return rc;
+ }
+ 
++static int writeWpaKeyRid(struct airo_info*ai, WpaKeyRid *pwkr, int lock) {
++	int rc;
++	WpaKeyRid wkr = *pwkr;
++
++	wkr.len = cpu_to_le16(wkr.len);
++	wkr.kindex = cpu_to_le16(wkr.kindex);
++	wkr.klen = cpu_to_le16(wkr.klen);
++	rc = PC4500_writerid(ai, RID_WPA, &wkr, sizeof(wkr), lock);
++	if (rc!=SUCCESS) airo_print_err(ai->dev->name, "WPA set %x", rc);
++	return rc;
++}
++
+ static int readSsidRid(struct airo_info*ai, SsidRid *ssidr) {
+ 	int i;
+ 	int rc = PC4500_readrid(ai, RID_SSID, ssidr, sizeof(*ssidr), 1);
+@@ -1818,7 +1927,7 @@ static int readConfigRid(struct airo_inf
+ 	if (ai->config.len)
+ 		return SUCCESS;
+ 
+-	rc = PC4500_readrid(ai, RID_ACTUALCONFIG, &cfg, sizeof(cfg), lock);
++	rc = PC4500_readrid(ai, RID_ACTUALCONFIG, &cfg, ai->ConfigRidLen, lock);
+ 	if (rc != SUCCESS)
+ 		return rc;
+ 
+@@ -1881,7 +1990,7 @@ static int writeConfigRid(struct airo_in
+ 	for(s = &cfgr.autoWake; s <= &cfgr.autoWake; s++)
+ 		*s = cpu_to_le16(*s);
+ 
+-	return PC4500_writerid( ai, RID_CONFIG, &cfgr, sizeof(cfgr), lock);
++	return PC4500_writerid( ai, RID_CONFIG, &cfgr, ai->ConfigRidLen, lock);
+ }
+ static int readStatusRid(struct airo_info*ai, StatusRid *statr, int lock) {
+ 	int rc = PC4500_readrid(ai, RID_STATUS, statr, sizeof(*statr), lock);
+@@ -1928,54 +2037,28 @@ static int readStatsRid(struct airo_info
+ 	return rc;
+ }
+ 
+-static void try_auto_wep(struct airo_info *ai)
+-{
+-	if (auto_wep && !(ai->flags & FLAG_RADIO_DOWN)) {
+-		ai->expires = RUN_AT(3*HZ);
+-		wake_up_interruptible(&ai->thr_wait);
+-	}
+-}
+-
+ static int airo_open(struct net_device *dev) {
+-	struct airo_info *ai = dev->priv;
+-	int rc = 0;
++	struct airo_info *info = dev->priv;
++	Resp rsp;
+ 
+-	if (test_bit(FLAG_FLASHING, &ai->flags))
++	if (test_bit(FLAG_FLASHING, &info->flags))
+ 		return -EIO;
+ 
+ 	/* Make sure the card is configured.
+ 	 * Wireless Extensions may postpone config changes until the card
+ 	 * is open (to pipeline changes and speed-up card setup). If
+ 	 * those changes are not yet commited, do it now - Jean II */
+-	if (test_bit(FLAG_COMMIT, &ai->flags)) {
+-		disable_MAC(ai, 1);
+-		writeConfigRid(ai, 1);
++	if (test_bit (FLAG_COMMIT, &info->flags)) {
++		disable_MAC(info, 1);
++		writeConfigRid(info, 1);
+ 	}
+ 
+-	if (ai->wifidev != dev) {
+-		clear_bit(JOB_DIE, &ai->jobs);
+-		ai->airo_thread_task = kthread_run(airo_thread, dev, dev->name);
+-		if (IS_ERR(ai->airo_thread_task))
+-			return (int)PTR_ERR(ai->airo_thread_task);
+-
+-		rc = request_irq(dev->irq, airo_interrupt, IRQF_SHARED,
+-			dev->name, dev);
+-		if (rc) {
+-			airo_print_err(dev->name,
+-				"register interrupt %d failed, rc %d",
+-				dev->irq, rc);
+-			set_bit(JOB_DIE, &ai->jobs);
+-			kthread_stop(ai->airo_thread_task);
+-			return rc;
+-		}
+-
++	if (info->wifidev != dev) {
+ 		/* Power on the MAC controller (which may have been disabled) */
+-		clear_bit(FLAG_RADIO_DOWN, &ai->flags);
+-		enable_interrupts(ai);
+-
+-		try_auto_wep(ai);
++		clear_bit(FLAG_RADIO_DOWN, &info->flags);
++		enable_interrupts(info);
+ 	}
+-	enable_MAC(ai, 1);
++	enable_MAC(info, &rsp, 1);
+ 
+ 	netif_start_queue(dev);
+ 	return 0;
+@@ -2068,7 +2151,20 @@ static int mpi_send_packet (struct net_d
+ 	 * Firmware automaticly puts 802 header on so
+ 	 * we don't need to account for it in the length
+ 	 */
+-	if (test_bit(FLAG_MIC_CAPABLE, &ai->flags) && ai->micstats.enabled &&
++	if (ai->wpa_key_enabled) {
++		u8 mic [8];
++
++		*payloadLen = cpu_to_le16(len-sizeof(etherHead)+8);
++		ai->txfids[0].tx_desc.len += 8;
++
++		wpa_compute_mic(ai, buffer, mic, len, ai->wpa_tx_key);
++
++		dev->trans_start = jiffies;
++		/* copy data into airo dma buffer */
++		memcpy(sendbuf, buffer, len);
++		memcpy(sendbuf + len, mic, 8);
++	}
++    else if (test_bit(FLAG_MIC_CAPABLE, &ai->flags) && ai->micstats.enabled &&
+ 		(ntohs(((u16 *)buffer)[6]) != 0x888E)) {
+ 		MICBuffer pMic;
+ 
+@@ -2341,7 +2437,9 @@ static void airo_set_promisc(struct airo
+ 	cmd.cmd=CMD_SETMODE;
+ 	clear_bit(JOB_PROMISC, &ai->jobs);
+ 	cmd.parm0=(ai->flags&IFF_PROMISC) ? PROMISC : NOPROMISC;
+-	issuecommand(ai, &cmd, &rsp);
++	/* when wpa is active, promisc mode can't be set */
++	if (ai->wpa_key_enabled && cmd.parm0 != PROMISC)
++		issuecommand(ai, &cmd, &rsp);
+ 	up(&ai->sem);
+ }
+ 
+@@ -2366,13 +2464,14 @@ static int airo_set_mac_address(struct n
+ {
+ 	struct airo_info *ai = dev->priv;
+ 	struct sockaddr *addr = p;
++	Resp rsp;
+ 
+ 	readConfigRid(ai, 1);
+ 	memcpy (ai->config.macAddr, addr->sa_data, dev->addr_len);
+ 	set_bit (FLAG_COMMIT, &ai->flags);
+ 	disable_MAC(ai, 1);
+ 	writeConfigRid (ai, 1);
+-	enable_MAC(ai, 1);
++	enable_MAC(ai, &rsp, 1);
+ 	memcpy (ai->dev->dev_addr, addr->sa_data, dev->addr_len);
+ 	if (ai->wifidev)
+ 		memcpy (ai->wifidev->dev_addr, addr->sa_data, dev->addr_len);
+@@ -2387,21 +2486,6 @@ static int airo_change_mtu(struct net_de
+ 	return 0;
+ }
+ 
+-static LIST_HEAD(airo_devices);
+-
+-static void add_airo_dev(struct airo_info *ai)
+-{
+-	/* Upper layers already keep track of PCI devices,
+-	 * so we only need to remember our non-PCI cards. */
+-	if (!ai->pci)
+-		list_add_tail(&ai->dev_list, &airo_devices);
+-}
+-
+-static void del_airo_dev(struct airo_info *ai)
+-{
+-	if (!ai->pci)
+-		list_del(&ai->dev_list);
+-}
+ 
+ static int airo_close(struct net_device *dev) {
+ 	struct airo_info *ai = dev->priv;
+@@ -2419,15 +2503,12 @@ static int airo_close(struct net_device 
+ 		disable_MAC(ai, 1);
+ #endif
+ 		disable_interrupts( ai );
+-
+-		free_irq(dev->irq, dev);
+-
+-		set_bit(JOB_DIE, &ai->jobs);
+-		kthread_stop(ai->airo_thread_task);
+ 	}
+ 	return 0;
+ }
+ 
++static void del_airo_dev( struct net_device *dev );
++
+ void stop_airo_card( struct net_device *dev, int freeres )
+ {
+ 	struct airo_info *ai = dev->priv;
+@@ -2435,6 +2516,7 @@ void stop_airo_card( struct net_device *
+ 	set_bit(FLAG_RADIO_DOWN, &ai->flags);
+ 	disable_MAC(ai, 1);
+ 	disable_interrupts(ai);
++	free_irq( dev->irq, dev );
+ 	takedown_proc_entry( dev, ai );
+ 	if (test_bit(FLAG_REGISTERED, &ai->flags)) {
+ 		unregister_netdev( dev );
+@@ -2445,6 +2527,11 @@ void stop_airo_card( struct net_device *
+ 		}
+ 		clear_bit(FLAG_REGISTERED, &ai->flags);
+ 	}
++	set_bit(JOB_DIE, &ai->jobs);
++	kthread_stop(ai->airo_thread_task);
++
++	tasklet_kill(&ai->isr_tasklet);
++
+ 	/*
+ 	 * Clean out tx queue
+ 	 */
+@@ -2475,15 +2562,19 @@ void stop_airo_card( struct net_device *
+ 		}
+         }
+ 	crypto_free_cipher(ai->tfm);
+-	del_airo_dev(ai);
++	if (ai->tfm_michael)
++		crypto_free_hash(ai->tfm_michael);
++	del_airo_dev( dev );
+ 	free_netdev( dev );
+ }
+ 
+ EXPORT_SYMBOL(stop_airo_card);
+ 
++static int add_airo_dev( struct net_device *dev );
++
+ static int wll_header_parse(struct sk_buff *skb, unsigned char *haddr)
+ {
+-	memcpy(haddr, skb_mac_header(skb) + 10, ETH_ALEN);
++	memcpy(haddr, skb->mac_header + 10, ETH_ALEN);
+ 	return ETH_ALEN;
+ }
+ 
+@@ -2582,7 +2673,8 @@ static int mpi_init_descriptors (struct 
+  * 2) Map PCI memory for issueing commands.
+  * 3) Allocate memory (shared) to send and receive ethernet frames.
+  */
+-static int mpi_map_card(struct airo_info *ai, struct pci_dev *pci)
++static int mpi_map_card(struct airo_info *ai, struct pci_dev *pci,
++		    const char *name)
+ {
+ 	unsigned long mem_start, mem_len, aux_start, aux_len;
+ 	int rc = -1;
+@@ -2596,35 +2688,35 @@ static int mpi_map_card(struct airo_info
+ 	aux_start = pci_resource_start(pci, 2);
+ 	aux_len = AUXMEMSIZE;
+ 
+-	if (!request_mem_region(mem_start, mem_len, DRV_NAME)) {
+-		airo_print_err("", "Couldn't get region %x[%x]",
+-			(int)mem_start, (int)mem_len);
++	if (!request_mem_region(mem_start, mem_len, name)) {
++		airo_print_err(ai->dev->name, "Couldn't get region %x[%x] for %s",
++		       (int)mem_start, (int)mem_len, name);
+ 		goto out;
+ 	}
+-	if (!request_mem_region(aux_start, aux_len, DRV_NAME)) {
+-		airo_print_err("", "Couldn't get region %x[%x]",
+-			(int)aux_start, (int)aux_len);
++	if (!request_mem_region(aux_start, aux_len, name)) {
++		airo_print_err(ai->dev->name, "Couldn't get region %x[%x] for %s",
++		       (int)aux_start, (int)aux_len, name);
+ 		goto free_region1;
+ 	}
+ 
+ 	ai->pcimem = ioremap(mem_start, mem_len);
+ 	if (!ai->pcimem) {
+-		airo_print_err("", "Couldn't map region %x[%x]",
+-			(int)mem_start, (int)mem_len);
++		airo_print_err(ai->dev->name, "Couldn't map region %x[%x] for %s",
++		       (int)mem_start, (int)mem_len, name);
+ 		goto free_region2;
+ 	}
+ 	ai->pciaux = ioremap(aux_start, aux_len);
+ 	if (!ai->pciaux) {
+-		airo_print_err("", "Couldn't map region %x[%x]",
+-			(int)aux_start, (int)aux_len);
++		airo_print_err(ai->dev->name, "Couldn't map region %x[%x] for %s",
++		       (int)aux_start, (int)aux_len, name);
+ 		goto free_memmap;
+ 	}
+ 
+ 	/* Reserve PKTSIZE for each fid and 2K for the Rids */
+ 	ai->shared = pci_alloc_consistent(pci, PCI_SHARED_LEN, &ai->shared_dma);
+ 	if (!ai->shared) {
+-		airo_print_err("", "Couldn't alloc_consistent %d",
+-			PCI_SHARED_LEN);
++		airo_print_err(ai->dev->name, "Couldn't alloc_consistent %d",
++		       PCI_SHARED_LEN);
+ 		goto free_auxmap;
+ 	}
+ 
+@@ -2769,7 +2861,7 @@ static int airo_networks_allocate(struct
+ 	    kzalloc(AIRO_MAX_NETWORK_COUNT * sizeof(BSSListElement),
+ 		    GFP_KERNEL);
+ 	if (!ai->networks) {
+-		airo_print_warn("", "Out of memory allocating beacons");
++		airo_print_warn(ai->dev->name, "Out of memory allocating beacons");
+ 		return -ENOMEM;
+ 	}
+ 
+@@ -2778,6 +2870,8 @@ static int airo_networks_allocate(struct
+ 
+ static void airo_networks_free(struct airo_info *ai)
+ {
++	if (!ai->networks)
++		return;
+ 	kfree(ai->networks);
+ 	ai->networks = NULL;
+ }
+@@ -2797,6 +2891,7 @@ static int airo_test_wpa_capable(struct 
+ {
+ 	int status;
+ 	CapabilityRid cap_rid;
++	const char *name = ai->dev->name;
+ 
+ 	status = readCapabilityRid(ai, &cap_rid, 1);
+ 	if (status != SUCCESS) return 0;
+@@ -2804,12 +2899,13 @@ static int airo_test_wpa_capable(struct 
+ 	/* Only firmware versions 5.30.17 or better can do WPA */
+ 	if ((cap_rid.softVer > 0x530)
+ 	  || ((cap_rid.softVer == 0x530) && (cap_rid.softSubVer >= 17))) {
+-		airo_print_info("", "WPA is supported.");
++		airo_print_info(name, "WPA is supported.");
++		airo_print_info(name, "Version 5.41 is recomended");
+ 		return 1;
+ 	}
+ 
+ 	/* No WPA support */
+-	airo_print_info("", "WPA unsupported (only firmware versions 5.30.17"
++	airo_print_info(name, "WPA unsupported (only firmware versions 5.30.17"
+ 		" and greater support WPA.  Detected %s)", cap_rid.prodVer);
+ 	return 0;
+ }
+@@ -2823,31 +2919,47 @@ static struct net_device *_init_airo_car
+ 	int i, rc;
+ 
+ 	/* Create the network device object. */
+-	dev = alloc_netdev(sizeof(*ai), "", ether_setup);
+-	if (!dev) {
++        dev = alloc_etherdev(sizeof(*ai));
++        if (!dev) {
+ 		airo_print_err("", "Couldn't alloc_etherdev");
+ 		return NULL;
++        }
++	if (dev_alloc_name(dev, dev->name) < 0) {
++		airo_print_err("", "Couldn't get name!");
++		goto err_out_free;
+ 	}
+ 
+ 	ai = dev->priv;
++	/* this is needed for initialisation, the firware check will be done
++	 * latter. The windows driver, do it a different way : it reads
++	 * ConfigRid.len .
++	 */
++	ai->ConfigRidLen = sizeof(ConfigRid) - sizeof(ConfigRidExtra);
+ 	ai->wifidev = NULL;
+-	ai->flags = 1 << FLAG_RADIO_DOWN;
++	ai->flags = 0;
+ 	ai->jobs = 0;
+ 	ai->dev = dev;
+ 	if (pci && (pci->device == 0x5000 || pci->device == 0xa504)) {
+-		airo_print_dbg("", "Found an MPI350 card");
++		airo_print_dbg(dev->name, "Found an MPI350 card");
+ 		set_bit(FLAG_MPI, &ai->flags);
+ 	}
++	spin_lock_init(&ai->tasklet_lock);
++	tasklet_init(&ai->isr_tasklet, airo_interrupt_tasklet, (unsigned long)dev);
+ 	spin_lock_init(&ai->aux_lock);
+ 	sema_init(&ai->sem, 1);
+ 	ai->config.len = 0;
+ 	ai->pci = pci;
+ 	init_waitqueue_head (&ai->thr_wait);
++	ai->airo_thread_task = kthread_run(airo_thread, dev, dev->name);
++	if (IS_ERR(ai->airo_thread_task))
++		goto err_out_free;
+ 	ai->tfm = NULL;
+-	add_airo_dev(ai);
++	rc = add_airo_dev( dev );
++	if (rc)
++		goto err_out_thr;
+ 
+ 	if (airo_networks_allocate (ai))
+-		goto err_out_free;
++		goto err_out_unlink;
+ 	airo_networks_initialize (ai);
+ 
+ 	/* The Airo-specific entries in the device structure. */
+@@ -2870,22 +2982,27 @@ static struct net_device *_init_airo_car
+ 	dev->base_addr = port;
+ 
+ 	SET_NETDEV_DEV(dev, dmdev);
+-	SET_MODULE_OWNER(dev);
+ 
+ 	reset_card (dev, 1);
+ 	msleep(400);
+ 
++	rc = request_irq( dev->irq, airo_interrupt, IRQF_SHARED, dev->name, dev );
++	if (rc) {
++		airo_print_err(dev->name, "register interrupt %d failed, rc %d",
++				irq, rc);
++		goto err_out_nets;
++	}
+ 	if (!is_pcmcia) {
+-		if (!request_region(dev->base_addr, 64, DRV_NAME)) {
++		if (!request_region( dev->base_addr, 64, dev->name )) {
+ 			rc = -EBUSY;
+ 			airo_print_err(dev->name, "Couldn't request region");
+-			goto err_out_nets;
++			goto err_out_irq;
+ 		}
+ 	}
+ 
+ 	if (test_bit(FLAG_MPI,&ai->flags)) {
+-		if (mpi_map_card(ai, pci)) {
+-			airo_print_err("", "Could not map memory");
++		if (mpi_map_card(ai, pci, dev->name)) {
++			airo_print_err(dev->name, "Could not map memory");
+ 			goto err_out_res;
+ 		}
+ 	}
+@@ -2902,18 +3019,31 @@ static struct net_device *_init_airo_car
+ 	}
+ 
+ 	/* Test for WPA support */
+-	if (airo_test_wpa_capable(ai)) {
++	if (airo_test_wpa_capable(ai) && wpa_enabled) {
++		char LLC1 [] = {0, 0, 0, 0, 0xaa, 0xaa, 0x03, 0x00, 0x00, 0x00};
+ 		set_bit(FLAG_WPA_CAPABLE, &ai->flags);
+ 		ai->bssListFirst = RID_WPA_BSSLISTFIRST;
+ 		ai->bssListNext = RID_WPA_BSSLISTNEXT;
+ 		ai->bssListRidLen = sizeof(BSSListRid);
++		ai->ConfigRidLen = sizeof(ConfigRid);
++		memcpy(ai->LLC, LLC1, sizeof(ai->LLC));
++		ai->tfm_michael = crypto_alloc_hash("michael_mic", 0, CRYPTO_ALG_ASYNC);
++		if (ai->tfm_michael == NULL) {
++			printk(KERN_DEBUG "crypto API michael_mic failed. Removing WPA\n");
++		}
++		else {
++			ai->wpa_enabled = 1;
++			/* we don't want to enable wep mode : it will make the firmware 
++			 * hanging */
++			auto_wep = 0;
++		}
+ 	} else {
+ 		ai->bssListFirst = RID_BSSLISTFIRST;
+ 		ai->bssListNext = RID_BSSLISTNEXT;
+ 		ai->bssListRidLen = sizeof(BSSListRid) - sizeof(BSSListRidExtra);
++		ai->ConfigRidLen = sizeof(ConfigRid) - sizeof(ConfigRidExtra);
+ 	}
+ 
+-	strcpy(dev->name, "eth%d");
+ 	rc = register_netdev(dev);
+ 	if (rc) {
+ 		airo_print_err(dev->name, "Couldn't register_netdev");
+@@ -2936,6 +3066,8 @@ static struct net_device *_init_airo_car
+ 	if (setup_proc_entry(dev, dev->priv) < 0)
+ 		goto err_out_wifi;
+ 
++	netif_start_queue(dev);
++	SET_MODULE_OWNER(dev);
+ 	return dev;
+ 
+ err_out_wifi:
+@@ -2953,9 +3085,15 @@ err_out_map:
+ err_out_res:
+ 	if (!is_pcmcia)
+ 	        release_region( dev->base_addr, 64 );
++err_out_irq:
++	free_irq(dev->irq, dev);
+ err_out_nets:
+ 	airo_networks_free(ai);
+-	del_airo_dev(ai);
++err_out_unlink:
++	del_airo_dev(dev);
++err_out_thr:
++	set_bit(JOB_DIE, &ai->jobs);
++	kthread_stop(ai->airo_thread_task);
+ err_out_free:
+ 	free_netdev(dev);
+ 	return NULL;
+@@ -3086,8 +3224,7 @@ static int airo_thread(void *data) {
+ 	struct net_device *dev = data;
+ 	struct airo_info *ai = dev->priv;
+ 	int locked;
+-
+-	set_freezable();
++	
+ 	while(1) {
+ 		/* make swsusp happy with our thread */
+ 		try_to_freeze();
+@@ -3179,36 +3316,31 @@ static int airo_thread(void *data) {
+ 	return 0;
+ }
+ 
+-static irqreturn_t airo_interrupt ( int irq, void* dev_id) {
+-	struct net_device *dev = (struct net_device *)dev_id;
++static void airo_interrupt_tasklet(unsigned long data)
++{
++	struct net_device *dev = (struct net_device *)data;
++	unsigned long flags;
+ 	u16 status;
+ 	u16 fid;
+ 	struct airo_info *apriv = dev->priv;
+-	u16 savedInterrupts = 0;
+-	int handled = 0;
+ 
+-	if (!netif_device_present(dev))
+-		return IRQ_NONE;
++	spin_lock_irqsave(&apriv->tasklet_lock, flags);
+ 
+ 	for (;;) {
+ 		status = IN4500( apriv, EVSTAT );
+ 		if ( !(status & STATUS_INTS) || status == 0xffff ) break;
+ 
+-		handled = 1;
+-
+ 		if ( status & EV_AWAKE ) {
+ 			OUT4500( apriv, EVACK, EV_AWAKE );
+ 			OUT4500( apriv, EVACK, EV_AWAKE );
+ 		}
+ 
+-		if (!savedInterrupts) {
+-			savedInterrupts = IN4500( apriv, EVINTEN );
+-			OUT4500( apriv, EVINTEN, 0 );
+-		}
+ 
+ 		if ( status & EV_MIC ) {
+ 			OUT4500( apriv, EVACK, EV_MIC );
+-			if (test_bit(FLAG_MIC_CAPABLE, &apriv->flags)) {
++			if (apriv->wpa_enabled) {
++			}
++			else if (test_bit(FLAG_MIC_CAPABLE, &apriv->flags)) {
+ 				set_bit(JOB_MIC, &apriv->jobs);
+ 				wake_up_interruptible(&apriv->thr_wait);
+ 			}
+@@ -3252,6 +3384,8 @@ static irqreturn_t airo_interrupt ( int 
+ 			  leaving BSS */
+ #define RC_NOAUTH 9 /* Station requesting (Re)Association is not
+ 		       Authenticated with the responding station */
++			printk("status : %x\n", newStatus);
++
+ 			if (newStatus == FORCELOSS && apriv->scan_timeout > 0)
+ 				scan_forceloss = 1;
+ 			if(newStatus == ASSOCIATED || newStatus == REASSOCIATED) {
+@@ -3378,7 +3512,9 @@ static irqreturn_t airo_interrupt ( int 
+ 			} else {
+ 				MICBuffer micbuf;
+ 				bap_read (apriv, buffer, ETH_ALEN*2, BAP0);
+-				if (apriv->micstats.enabled) {
++				if (apriv->wpa_key_enabled) {
++				}
++				else if (apriv->micstats.enabled) {
+ 					bap_read (apriv,(u16*)&micbuf,sizeof(micbuf),BAP0);
+ 					if (ntohs(micbuf.typelen) > 0x05DC)
+ 						bap_setup (apriv, fid, 0x44, BAP0);
+@@ -3391,7 +3527,20 @@ static irqreturn_t airo_interrupt ( int 
+ 					}
+ 				}
+ 				bap_read(apriv,buffer+ETH_ALEN,len,BAP0);
+-				if (decapsulate(apriv,&micbuf,(etherHead*)buffer,len)) {
++				if (apriv->wpa_key_enabled) {
++					len -= 8;
++
++					//this is easy to do, but take some time in ISR
++#ifdef WPA_CHECK_RX_MIC
++					if (wpa_check_rx_mic(apriv, skb->data, len + hdrlen)) {
++						airo_print_err(apriv->dev->name, "Bad mic on RX");
++						goto badmic;
++					}
++	
++#endif
++					skb_trim (skb, len + hdrlen);
++				}
++				else if (decapsulate(apriv,&micbuf,(etherHead*)buffer,len)) {
+ badmic:
+ 					dev_kfree_skb_irq (skb);
+ badrx:
+@@ -3426,12 +3575,14 @@ badrx:
+ 			OUT4500( apriv, EVACK, EV_RX);
+ 
+ 			if (test_bit(FLAG_802_11, &apriv->flags)) {
+-				skb_reset_mac_header(skb);
++				skb->mac_header = skb->data;
+ 				skb->pkt_type = PACKET_OTHERHOST;
+ 				skb->dev = apriv->wifidev;
+ 				skb->protocol = htons(ETH_P_802_2);
+-			} else
++			} else {
++				skb->dev = dev;
+ 				skb->protocol = eth_type_trans(skb,dev);
++			}
+ 			skb->dev->last_rx = jiffies;
+ 			skb->ip_summed = CHECKSUM_NONE;
+ 
+@@ -3497,8 +3648,28 @@ exittx:
+ 				status & ~STATUS_INTS & ~IGNORE_INTS );
+ 	}
+ 
+-	if (savedInterrupts)
+-		OUT4500( apriv, EVINTEN, savedInterrupts );
++	enable_interrupts(apriv);
++
++	spin_unlock_irqrestore(&apriv->tasklet_lock, flags);
++}
++
++static irqreturn_t airo_interrupt ( int irq, void* dev_id) {
++	struct net_device *dev = (struct net_device *)dev_id;
++	struct airo_info *apriv = dev->priv;
++	int handled;
++	u16 status;
++
++	if (!netif_device_present(dev))
++		return IRQ_NONE;
++	status = IN4500( apriv, EVSTAT );
++	if ( !(status & STATUS_INTS) || status == 0xffff )
++		handled = 0;
++	else {
++		handled = 1;
++		disable_interrupts(apriv);
++		tasklet_schedule(&apriv->isr_tasklet);
++	}
++
+ 
+ 	/* done.. */
+ 	return IRQ_RETVAL(handled);
+@@ -3538,11 +3709,9 @@ static u16 IN4500( struct airo_info *ai,
+ 	return rc;
+ }
+ 
+-static int enable_MAC(struct airo_info *ai, int lock)
+-{
++static int enable_MAC( struct airo_info *ai, Resp *rsp, int lock ) {
+ 	int rc;
+-	Cmd cmd;
+-	Resp rsp;
++        Cmd cmd;
+ 
+ 	/* FLAG_RADIO_OFF : Radio disabled via /proc or Wireless Extensions
+ 	 * FLAG_RADIO_DOWN : Radio disabled via "ifconfig ethX down"
+@@ -3558,7 +3727,7 @@ static int enable_MAC(struct airo_info *
+ 	if (!test_bit(FLAG_ENABLED, &ai->flags)) {
+ 		memset(&cmd, 0, sizeof(cmd));
+ 		cmd.cmd = MAC_ENABLE;
+-		rc = issuecommand(ai, &cmd, &rsp);
++		rc = issuecommand(ai, &cmd, rsp);
+ 		if (rc == SUCCESS)
+ 			set_bit(FLAG_ENABLED, &ai->flags);
+ 	} else
+@@ -3568,12 +3737,8 @@ static int enable_MAC(struct airo_info *
+ 	    up(&ai->sem);
+ 
+ 	if (rc)
+-		airo_print_err(ai->dev->name, "Cannot enable MAC");
+-	else if ((rsp.status & 0xFF00) != 0) {
+-		airo_print_err(ai->dev->name, "Bad MAC enable reason=%x, "
+-			"rid=%x, offset=%d", rsp.rsp0, rsp.rsp1, rsp.rsp2);
+-		rc = ERROR;
+-	}
++		airo_print_err(ai->dev->name, "%s: Cannot enable MAC, err=%d",
++			__FUNCTION__, rc);
+ 	return rc;
+ }
+ 
+@@ -3626,7 +3791,9 @@ static void mpi_receive_802_3(struct air
+ 		}
+ 		buffer = skb_put(skb,len);
+ 		memcpy(buffer, ai->rxfids[0].virtual_host_addr, ETH_ALEN * 2);
+-		if (ai->micstats.enabled) {
++		if (ai->wpa_key_enabled) {
++		}
++		else if (ai->micstats.enabled) {
+ 			memcpy(&micbuf,
+ 				ai->rxfids[0].virtual_host_addr + ETH_ALEN * 2,
+ 				sizeof(micbuf));
+@@ -3641,7 +3808,19 @@ static void mpi_receive_802_3(struct air
+ 		memcpy(buffer + ETH_ALEN * 2,
+ 			ai->rxfids[0].virtual_host_addr + ETH_ALEN * 2 + off,
+ 			len - ETH_ALEN * 2 - off);
+-		if (decapsulate (ai, &micbuf, (etherHead*)buffer, len - off - ETH_ALEN * 2)) {
++		if (ai->wpa_key_enabled) {
++			len -= 8;
++
++#ifdef WPA_CHECK_RX_MIC
++			if (wpa_check_rx_mic(ai, buffer, len)) {
++				airo_print_err(ai->dev->name, "Bad mic on RX");
++				goto badmic;
++			}
++#endif
++
++			skb_trim (skb, len);
++		}
++		else if (decapsulate (ai, &micbuf, (etherHead*)buffer, len - off - ETH_ALEN * 2)) {
+ badmic:
+ 			dev_kfree_skb_irq (skb);
+ 			goto badrx;
+@@ -3660,6 +3839,7 @@ badmic:
+ 		}
+ #endif /* WIRELESS_SPY */
+ 
++		skb->dev = ai->dev;
+ 		skb->ip_summed = CHECKSUM_NONE;
+ 		skb->protocol = eth_type_trans(skb, ai->dev);
+ 		skb->dev->last_rx = jiffies;
+@@ -3767,7 +3947,7 @@ void mpi_receive_802_11 (struct airo_inf
+ 		wireless_spy_update(ai->dev, sa, &wstats);
+ 	}
+ #endif /* IW_WIRELESS_SPY */
+-	skb_reset_mac_header(skb);
++	skb->mac_header = skb->data;
+ 	skb->pkt_type = PACKET_OTHERHOST;
+ 	skb->dev = ai->wifidev;
+ 	skb->protocol = htons(ETH_P_802_2);
+@@ -3917,9 +4097,12 @@ static u16 setup_card(struct airo_info *
+ 		if ( status != SUCCESS ) return ERROR;
+ 	}
+ 
+-	status = enable_MAC(ai, lock);
+-	if (status != SUCCESS)
++	status = enable_MAC(ai, &rsp, lock);
++	if ( status != SUCCESS || (rsp.status & 0xFF00) != 0) {
++		airo_print_err(ai->dev->name, "Bad MAC enable reason = %x, rid = %x,"
++			" offset = %d", rsp.rsp0, rsp.rsp1, rsp.rsp2 );
+ 		return ERROR;
++	}
+ 
+ 	/* Grab the initial wep key, we gotta save it for auto_wep */
+ 	rc = readWepKeyRid(ai, &wkr, 1, lock);
+@@ -3931,7 +4114,10 @@ static u16 setup_card(struct airo_info *
+ 		rc = readWepKeyRid(ai, &wkr, 0, lock);
+ 	} while(lastindex != wkr.kindex);
+ 
+-	try_auto_wep(ai);
++	if (auto_wep) {
++		ai->expires = RUN_AT(3*HZ);
++		wake_up_interruptible(&ai->thr_wait);
++	}
+ 
+ 	return SUCCESS;
+ }
+@@ -4013,7 +4199,7 @@ static int bap_setup(struct airo_info *a
+ 		}
+ 		if ( !(max_tries--) ) {
+ 			airo_print_err(ai->dev->name,
+-				"BAP setup error too many retries\n");
++				"airo: BAP setup error too many retries\n");
+ 			return ERROR;
+ 		}
+ 		// -- PC4500 missed it, try again
+@@ -4334,7 +4520,10 @@ static int transmit_802_3_packet(struct 
+ 	}
+ 	len -= ETH_ALEN * 2;
+ 
+-	if (test_bit(FLAG_MIC_CAPABLE, &ai->flags) && ai->micstats.enabled && 
++	if (ai->wpa_key_enabled) {
++		miclen = 8;
++	}
++	else if (test_bit(FLAG_MIC_CAPABLE, &ai->flags) && ai->micstats.enabled && 
+ 	    (ntohs(((u16 *)pPacket)[6]) != 0x888E)) {
+ 		if (encapsulate(ai,(etherHead *)pPacket,&pMic,len) != SUCCESS)
+ 			return ERROR;
+@@ -4348,9 +4537,27 @@ static int transmit_802_3_packet(struct 
+ 	payloadLen = cpu_to_le16(len + miclen);
+ 	bap_write(ai, &payloadLen, sizeof(payloadLen),BAP1);
+ 	bap_write(ai, (const u16*)pPacket, sizeof(etherHead), BAP1);
+-	if (miclen)
+-		bap_write(ai, (const u16*)&pMic, miclen, BAP1);
+-	bap_write(ai, (const u16*)(pPacket + sizeof(etherHead)), len, BAP1);
++	if (ai->wpa_key_enabled) {
++		u8 mic[8];
++
++		wpa_compute_mic(ai, pPacket, mic, len + sizeof(etherHead), ai->wpa_tx_key);
++		//XXX ugly hack because we write per 16 bits packet
++		bap_write(ai, (const u16*)(pPacket + sizeof(etherHead)), len - (len&1), BAP1);
++		if (len&1) {
++			u8 tmp [2];
++			tmp [0] = pPacket [sizeof(etherHead) + len-1];
++			tmp [1] = mic[0];
++			bap_write(ai, (const u16*)tmp, 2, BAP1);
++			bap_write(ai, (const u16*)(mic+1), sizeof(mic)-1, BAP1);
++		}
++		else
++			bap_write(ai, (const u16*)mic, sizeof(mic), BAP1);
++	}
++	else {
++		if (miclen)
++			bap_write(ai, (const u16*)&pMic, miclen, BAP1);
++		bap_write(ai, (const u16*)(pPacket + sizeof(etherHead)), len, BAP1);
++	}
+ 	// issue the transmit command
+ 	memset( &cmd, 0, sizeof( cmd ) );
+ 	cmd.cmd = CMD_TRANSMIT;
+@@ -5161,6 +5368,7 @@ static void proc_SSID_on_close( struct i
+ 	struct net_device *dev = dp->data;
+ 	struct airo_info *ai = dev->priv;
+ 	SsidRid SSID_rid;
++	Resp rsp;
+ 	int i;
+ 	int offset = 0;
+ 
+@@ -5185,7 +5393,7 @@ static void proc_SSID_on_close( struct i
+ 		SSID_rid.len = sizeof(SSID_rid);
+ 	disable_MAC(ai, 1);
+ 	writeSsidRid(ai, &SSID_rid, 1);
+-	enable_MAC(ai, 1);
++	enable_MAC(ai, &rsp, 1);
+ }
+ 
+ static inline u8 hexVal(char c) {
+@@ -5201,6 +5409,7 @@ static void proc_APList_on_close( struct
+ 	struct net_device *dev = dp->data;
+ 	struct airo_info *ai = dev->priv;
+ 	APListRid APList_rid;
++	Resp rsp;
+ 	int i;
+ 
+ 	if ( !data->writelen ) return;
+@@ -5225,17 +5434,18 @@ static void proc_APList_on_close( struct
+ 	}
+ 	disable_MAC(ai, 1);
+ 	writeAPListRid(ai, &APList_rid, 1);
+-	enable_MAC(ai, 1);
++	enable_MAC(ai, &rsp, 1);
+ }
+ 
+ /* This function wraps PC4500_writerid with a MAC disable */
+ static int do_writerid( struct airo_info *ai, u16 rid, const void *rid_data,
+ 			int len, int dummy ) {
+ 	int rc;
++	Resp rsp;
+ 
+ 	disable_MAC(ai, 1);
+ 	rc = PC4500_writerid(ai, rid, rid_data, len, 1);
+-	enable_MAC(ai, 1);
++	enable_MAC(ai, &rsp, 1);
+ 	return rc;
+ }
+ 
+@@ -5266,6 +5476,7 @@ static int set_wep_key(struct airo_info 
+ 		       const char *key, u16 keylen, int perm, int lock ) {
+ 	static const unsigned char macaddr[ETH_ALEN] = { 0x01, 0, 0, 0, 0, 0 };
+ 	WepKeyRid wkr;
++	Resp rsp;
+ 
+ 	memset(&wkr, 0, sizeof(wkr));
+ 	if (keylen == 0) {
+@@ -5285,7 +5496,7 @@ static int set_wep_key(struct airo_info 
+ 
+ 	if (perm) disable_MAC(ai, lock);
+ 	writeWepKeyRid(ai, &wkr, perm, lock);
+-	if (perm) enable_MAC(ai, lock);
++	if (perm) enable_MAC(ai, &rsp, lock);
+ 	return 0;
+ }
+ 
+@@ -5546,6 +5757,11 @@ static int proc_close( struct inode *ino
+ 	return 0;
+ }
+ 
++static struct net_device_list {
++	struct net_device *dev;
++	struct net_device_list *next;
++} *airo_devices;
++
+ /* Since the card doesn't automatically switch to the right WEP mode,
+    we will make it do it.  If the card isn't associated, every secs we
+    will switch WEP modes to see if that will help.  If the card is
+@@ -5553,6 +5769,7 @@ static int proc_close( struct inode *ino
+    changed. */
+ static void timer_func( struct net_device *dev ) {
+ 	struct airo_info *apriv = dev->priv;
++	Resp rsp;
+ 
+ /* We don't have a link so try changing the authtype */
+ 	readConfigRid(apriv, 0);
+@@ -5579,7 +5796,7 @@ static void timer_func( struct net_devic
+ 	}
+ 	set_bit (FLAG_COMMIT, &apriv->flags);
+ 	writeConfigRid(apriv, 0);
+-	enable_MAC(apriv, 0);
++	enable_MAC(apriv, &rsp, 0);
+ 	up(&apriv->sem);
+ 
+ /* Schedule check to see if the change worked */
+@@ -5587,6 +5804,26 @@ static void timer_func( struct net_devic
+ 	apriv->expires = RUN_AT(HZ*3);
+ }
+ 
++static int add_airo_dev( struct net_device *dev ) {
++	struct net_device_list *node = kmalloc( sizeof( *node ), GFP_KERNEL );
++	if ( !node )
++		return -ENOMEM;
++
++	node->dev = dev;
++	node->next = airo_devices;
++	airo_devices = node;
++
++	return 0;
++}
++
++static void del_airo_dev( struct net_device *dev ) {
++	struct net_device_list **p = &airo_devices;
++	while( *p && ( (*p)->dev != dev ) )
++		p = &(*p)->next;
++	if ( *p && (*p)->dev == dev )
++		*p = (*p)->next;
++}
++
+ #ifdef CONFIG_PCI
+ static int __devinit airo_pci_probe(struct pci_dev *pdev,
+ 				    const struct pci_device_id *pent)
+@@ -5601,10 +5838,8 @@ static int __devinit airo_pci_probe(stru
+ 			dev = _init_airo_card(pdev->irq, pdev->resource[0].start, 0, pdev, &pdev->dev);
+ 	else
+ 			dev = _init_airo_card(pdev->irq, pdev->resource[2].start, 0, pdev, &pdev->dev);
+-	if (!dev) {
+-		pci_disable_device(pdev);
++	if (!dev)
+ 		return -ENODEV;
+-	}
+ 
+ 	pci_set_drvdata(pdev, dev);
+ 	return 0;
+@@ -5612,12 +5847,6 @@ static int __devinit airo_pci_probe(stru
+ 
+ static void __devexit airo_pci_remove(struct pci_dev *pdev)
+ {
+-	struct net_device *dev = pci_get_drvdata(pdev);
+-
+-	airo_print_info(dev->name, "Unregistering...");
+-	stop_airo_card(dev, 1);
+-	pci_disable_device(pdev);
+-	pci_set_drvdata(pdev, NULL);
+ }
+ 
+ static int airo_pci_suspend(struct pci_dev *pdev, pm_message_t state)
+@@ -5654,6 +5883,7 @@ static int airo_pci_resume(struct pci_de
+ {
+ 	struct net_device *dev = pci_get_drvdata(pdev);
+ 	struct airo_info *ai = dev->priv;
++	Resp rsp;
+ 	pci_power_t prev_state = pdev->current_state;
+ 
+ 	pci_set_power_state(pdev, PCI_D0);
+@@ -5686,7 +5916,7 @@ static int airo_pci_resume(struct pci_de
+ 		ai->APList = NULL;
+ 	}
+ 	writeConfigRid(ai, 0);
+-	enable_MAC(ai, 0);
++	enable_MAC(ai, &rsp, 0);
+ 	ai->power = PMSG_ON;
+ 	netif_device_attach(dev);
+ 	netif_wake_queue(dev);
+@@ -5742,11 +5972,9 @@ static int __init airo_init_module( void
+ 
+ static void __exit airo_cleanup_module( void )
+ {
+-	struct airo_info *ai;
+-	while(!list_empty(&airo_devices)) {
+-		ai = list_entry(airo_devices.next, struct airo_info, dev_list);
+-		airo_print_info(ai->dev->name, "Unregistering...");
+-		stop_airo_card(ai->dev, 1);
++	while( airo_devices ) {
++		airo_print_info(airo_devices->dev->name, "Unregistering...\n");
++		stop_airo_card( airo_devices->dev, 1 );
+ 	}
+ #ifdef CONFIG_PCI
+ 	pci_unregister_driver(&airo_driver);
+@@ -5910,6 +6138,7 @@ static int airo_set_essid(struct net_dev
+ 			  char *extra)
+ {
+ 	struct airo_info *local = dev->priv;
++	Resp rsp;
+ 	SsidRid SSID_rid;		/* SSIDs */
+ 
+ 	/* Reload the list of current SSID */
+@@ -5941,7 +6170,7 @@ static int airo_set_essid(struct net_dev
+ 	/* Write it to the card */
+ 	disable_MAC(local, 1);
+ 	writeSsidRid(local, &SSID_rid, 1);
+-	enable_MAC(local, 1);
++	enable_MAC(local, &rsp, 1);
+ 
+ 	return 0;
+ }
+@@ -6006,7 +6235,7 @@ static int airo_set_wap(struct net_devic
+ 		memcpy(APList_rid.ap[0], awrq->sa_data, ETH_ALEN);
+ 		disable_MAC(local, 1);
+ 		writeAPListRid(local, &APList_rid, 1);
+-		enable_MAC(local, 1);
++		enable_MAC(local, &rsp, 1);
+ 	}
+ 	return 0;
+ }
+@@ -6360,6 +6589,10 @@ static int airo_set_encode(struct net_de
+ 	int perm = ( dwrq->flags & IW_ENCODE_TEMP ? 0 : 1 );
+ 	u16 currentAuthType = local->config.authType;
+ 
++	/* In wpa mode, only wpa is allowed */
++	if (local->wpa_enabled)
++		return -EINVAL;
++
+ 	/* Is WEP supported ? */
+ 	readCapabilityRid(local, &cap_rid, 1);
+ 	/* Older firmware doesn't support this...
+@@ -6455,6 +6688,7 @@ static int airo_get_encode(struct net_de
+ 	readConfigRid(local, 1);
+ 	/* Check encryption mode */
+ 	switch(local->config.authType)	{
++		case AUTH_ENCRYPT_WPA:
+ 		case AUTH_ENCRYPT:
+ 			dwrq->flags = IW_ENCODE_OPEN;
+ 			break;
+@@ -6486,6 +6720,85 @@ static int airo_get_encode(struct net_de
+ /*
+  * Wireless Handler : set extended Encryption parameters
+  */
++static int airo_set_encodeext_wpa(struct airo_info *local,
++							struct iw_encode_ext *ext,
++							struct iw_point *encoding)
++{
++	static const unsigned char macaddr[ETH_ALEN] = { 0x01, 0, 0, 0, 0, 0 };
++	WpaKeyRid wkr;
++	int index = (encoding->flags & IW_ENCODE_INDEX) - 1;
++
++	printk("set wpa : %d %d %d %x\n", ext->alg, ext->key_len, index, ext->ext_flags);
++
++	memset(&wkr, 0, sizeof(wkr));
++	wkr.len = sizeof(wkr);
++
++	if ((encoding->flags & IW_ENCODE_DISABLED) ||
++			ext->alg == IW_ENCODE_ALG_NONE || ext->key_len == 0) {
++		wkr.kindex = index;
++		memcpy( wkr.mac, macaddr, ETH_ALEN );
++		printk(KERN_INFO "Wpa Removing key %d\n", index);
++		memset(local->wpa_tx_key, 0, 8);
++		memset(local->wpa_rx_key, 0, 8);
++		memset(local->wpa_rx_key_m, 0, 8);
++		memset(local->wpa_rx_key_m_old, 0, 8);
++		local->wpa_key_enabled = 0;
++	}
++	else if (ext->alg == IW_ENCODE_ALG_WEP)
++		return -EOPNOTSUPP;
++	else if (ext->alg == IW_ENCODE_ALG_TKIP && ext->key_len == 32) {
++		// we cannot set a WPA key in a non-WPA mode
++		if (local->config.authType != AUTH_ENCRYPT_WPA)
++			return -EINVAL;
++		wkr.kindex = index;
++		memcpy( wkr.mac, macaddr, ETH_ALEN );
++		wkr.klen = 0x30;
++
++		/* firmware use ndis order + a hole at 16-21 */
++		memcpy(wkr.key, ext->key, 16); /* temporal key */
++		memcpy(wkr.key + 40, ext->key + 16, 8); /*TX*/
++		memcpy(wkr.key + 32, ext->key + 24, 8); /*RX*/
++
++		if (ext->ext_flags & IW_ENCODE_EXT_RX_SEQ_VALID) {
++			memcpy(wkr.key + 22, ext->rx_seq, 6);
++		}
++
++		if (ext->ext_flags & IW_ENCODE_EXT_GROUP_KEY) {
++			memcpy(local->wpa_rx_key_m_old, local->wpa_rx_key_m, 8);
++			memcpy(local->wpa_rx_key_m, ext->key+24, 8);
++		}
++		else {
++			memcpy(local->wpa_tx_key, ext->key+16, 8);
++			memcpy(local->wpa_rx_key, ext->key+24, 8);
++		}
++	}
++	else
++		return -EINVAL;
++
++
++
++	if (down_interruptible(&local->sem))
++		return ERROR;
++
++	writeWpaKeyRid(local, &wkr, 0);
++
++	if (ext->ext_flags & IW_ENCODE_EXT_SET_TX_KEY) {
++		memset(&wkr, 0, sizeof(wkr));
++		wkr.len = sizeof(wkr);
++		wkr.kindex = 0xffff;
++		wkr.mac[0] = (char)index;
++		wkr.klen = 0x30;
++
++		printk(KERN_INFO "Setting default tx key to %d\n", index);
++		writeWpaKeyRid(local, &wkr, 0);
++
++		local->wpa_key_enabled = 1;
++	}
++
++	up(&local->sem);
++	return 0;
++}
++
+ static int airo_set_encodeext(struct net_device *dev,
+ 			   struct iw_request_info *info,
+ 			    union iwreq_data *wrqu,
+@@ -6508,6 +6821,8 @@ static int airo_set_encodeext(struct net
+ 	} */
+ 	readConfigRid(local, 1);
+ 
++	if (local->wpa_enabled)
++		return airo_set_encodeext_wpa(local, ext, encoding);
+ 	/* Determine and validate the key index */
+ 	idx = encoding->flags & IW_ENCODE_INDEX;
+ 	if (idx) {
+@@ -6582,6 +6897,7 @@ static int airo_get_encodeext(struct net
+ 	struct iw_encode_ext *ext = (struct iw_encode_ext *)extra;
+ 	CapabilityRid cap_rid;		/* Card capability info */
+ 	int idx, max_key_len;
++	printk("get_encode\n");
+ 
+ 	/* Is it supported ? */
+ 	readCapabilityRid(local, &cap_rid, 1);
+@@ -6607,6 +6923,7 @@ static int airo_get_encodeext(struct net
+ 
+ 	/* Check encryption mode */
+ 	switch(local->config.authType) {
++		case AUTH_ENCRYPT_WPA:
+ 		case AUTH_ENCRYPT:
+ 			encoding->flags = IW_ENCODE_ALG_WEP | IW_ENCODE_ENABLED;
+ 			break;
+@@ -6632,6 +6949,20 @@ static int airo_get_encodeext(struct net
+ }
+ 
+ 
++static void wpa_off(struct airo_info *local)
++{
++	printk(KERN_INFO"WPA dis\n");
++	local->config.authType=AUTH_OPEN;
++	local->config.extra.auth_key=AUTH_KEY_MGMT_NONE;
++}
++
++static void wpa_on(struct airo_info *local)
++{
++	printk(KERN_INFO"WPA enable\n");
++	local->config.authType=AUTH_ENCRYPT_WPA;
++	local->config.extra.auth_cipher=AUTH_CIPHER_TKIP;
++	//local->config.extra._reserved5[0]=0x40;
++}
+ /*------------------------------------------------------------------*/
+ /*
+  * Wireless Handler : set extended authentication parameters
+@@ -6646,17 +6977,55 @@ static int airo_set_auth(struct net_devi
+ 
+ 	switch (param->flags & IW_AUTH_INDEX) {
+ 	case IW_AUTH_WPA_VERSION:
++		if (param->value == IW_AUTH_WPA_VERSION_WPA)
++			wpa_on(local);
++		else if (param->value == IW_AUTH_WPA_VERSION_DISABLED)
++			wpa_off(local);
++		else
++			return -EINVAL;
++		break;
+ 	case IW_AUTH_CIPHER_PAIRWISE:
+ 	case IW_AUTH_CIPHER_GROUP:
++		if ((param->value == IW_AUTH_CIPHER_TKIP) && (local->config.authType == AUTH_ENCRYPT_WPA))
++			return 0;
++		else if (((param->value == IW_AUTH_CIPHER_WEP40) ||(param->value == IW_AUTH_CIPHER_WEP104))
++				&& (local->config.authType != AUTH_ENCRYPT_WPA))
++			return 0;
++		else if ((param->value == IW_AUTH_CIPHER_NONE) && (local->config.authType != AUTH_ENCRYPT_WPA))
++			local->config.authType = AUTH_OPEN;
++		else
++			return -EINVAL;
++		break;
+ 	case IW_AUTH_KEY_MGMT:
+-	case IW_AUTH_RX_UNENCRYPTED_EAPOL:
++		if (local->config.authType != AUTH_ENCRYPT_WPA)
++			return -EINVAL;
++		if (param->value == IW_AUTH_KEY_MGMT_802_1X)
++			local->config.extra.auth_key=AUTH_KEY_MGMT_802_1X;
++		else if (param->value == IW_AUTH_KEY_MGMT_PSK)
++			local->config.extra.auth_key=AUTH_KEY_MGMT_PSK;
++		else
++			return -EINVAL;
++		break;
+ 	case IW_AUTH_PRIVACY_INVOKED:
++		if (!param->value) {
++			if (local->config.authType == AUTH_ENCRYPT_WPA)
++				wpa_off(local);
++			else
++				wpa_on(local);
++		}
++		else
++			return 0;
++		break;
++	case IW_AUTH_RX_UNENCRYPTED_EAPOL:
++	case IW_AUTH_TKIP_COUNTERMEASURES:
+ 		/*
+ 		 * airo does not use these parameters
+ 		 */
+ 		break;
+ 
+ 	case IW_AUTH_DROP_UNENCRYPTED:
++		if (local->wpa_enabled)
++			break;
+ 		if (param->value) {
+ 			/* Only change auth type if unencrypted */
+ 			if (currentAuthType == AUTH_OPEN)
+@@ -6665,15 +7034,16 @@ static int airo_set_auth(struct net_devi
+ 			local->config.authType = AUTH_OPEN;
+ 		}
+ 
+-		/* Commit the changes to flags if needed */
+-		if (local->config.authType != currentAuthType)
+-			set_bit (FLAG_COMMIT, &local->flags);
+ 		break;
+ 
+ 	case IW_AUTH_80211_AUTH_ALG: {
+ 			/* FIXME: What about AUTH_OPEN?  This API seems to
+ 			 * disallow setting our auth to AUTH_OPEN.
+ 			 */
++			/* does not make sense with WPA */
++			if (local->config.authType == AUTH_ENCRYPT_WPA)
++				return 0;
++
+ 			if (param->value & IW_AUTH_ALG_SHARED_KEY) {
+ 				local->config.authType = AUTH_SHAREDKEY;
+ 			} else if (param->value & IW_AUTH_ALG_OPEN_SYSTEM) {
+@@ -6681,21 +7051,20 @@ static int airo_set_auth(struct net_devi
+ 			} else
+ 				return -EINVAL;
+ 			break;
+-
+-			/* Commit the changes to flags if needed */
+-			if (local->config.authType != currentAuthType)
+-				set_bit (FLAG_COMMIT, &local->flags);
+ 		}
+ 
+ 	case IW_AUTH_WPA_ENABLED:
+-		/* Silently accept disable of WPA */
+-		if (param->value > 0)
+-			return -EOPNOTSUPP;
++		if (param->value == 0)
++			wpa_off(local);
++		else
++			wpa_on(local);
+ 		break;
+ 
+ 	default:
+ 		return -EOPNOTSUPP;
+ 	}
++
++	set_bit (FLAG_COMMIT, &local->flags);
+ 	return -EINPROGRESS;
+ }
+ 
+@@ -6747,6 +7116,29 @@ static int airo_get_auth(struct net_devi
+ 	return 0;
+ }
+ 
++static int airo_disasociate(struct net_device *dev,
++		struct iw_request_info *info,
++		struct iw_point *data, char *extra)
++{
++	struct airo_info *local = dev->priv;
++	Resp rsp;
++	SsidRid SSID_rid;		/* SSIDs */
++
++	/* reset the list */
++	memset(&SSID_rid, 0, sizeof(SSID_rid));
++
++	/* Set the SSID */
++	strcpy(SSID_rid.ssids[0].ssid, "tsunami");
++	SSID_rid.ssids[0].len = 7;
++	SSID_rid.len = sizeof(SSID_rid);
++	/* Write it to the card */
++	disable_MAC(local, 1);
++	writeSsidRid(local, &SSID_rid, 1);
++	enable_MAC(local, &rsp, 1);
++
++	return 0;
++}
++
+ 
+ /*------------------------------------------------------------------*/
+ /*
+@@ -7460,6 +7852,7 @@ static int airo_config_commit(struct net
+ 			      char *extra)			/* NULL */
+ {
+ 	struct airo_info *local = dev->priv;
++	Resp rsp;
+ 
+ 	if (!test_bit (FLAG_COMMIT, &local->flags))
+ 		return 0;
+@@ -7484,7 +7877,7 @@ static int airo_config_commit(struct net
+ 	if (down_interruptible(&local->sem))
+ 		return -ERESTARTSYS;
+ 	writeConfigRid(local, 0);
+-	enable_MAC(local, 0);
++	enable_MAC(local, &rsp, 0);
+ 	if (test_bit (FLAG_RESET, &local->flags))
+ 		airo_set_promisc(local);
+ 	else
+@@ -7563,6 +7956,7 @@ static const iw_handler		airo_handler[] 
+ 	(iw_handler) airo_set_encodeext,	/* SIOCSIWENCODEEXT */
+ 	(iw_handler) airo_get_encodeext,	/* SIOCGIWENCODEEXT */
+ 	(iw_handler) NULL,			/* SIOCSIWPMKSA */
++	[SIOCSIWMLME-SIOCSIWCOMMIT] = (iw_handler) airo_disasociate,
+ };
+ 
+ /* Note : don't describe AIROIDIFC and AIROOLDIDIFC in here.
+@@ -7751,6 +8145,7 @@ static int readrids(struct net_device *d
+ 	unsigned char *iobuf;
+ 	int len;
+ 	struct airo_info *ai = dev->priv;
++	Resp rsp;
+ 
+ 	if (test_bit(FLAG_FLASHING, &ai->flags))
+ 		return -EIO;
+@@ -7762,7 +8157,7 @@ static int readrids(struct net_device *d
+ 		if (test_bit(FLAG_COMMIT, &ai->flags)) {
+ 			disable_MAC (ai, 1);
+ 			writeConfigRid (ai, 1);
+-			enable_MAC(ai, 1);
++			enable_MAC (ai, &rsp, 1);
+ 		}
+ 		break;
+ 	case AIROGSLIST:    ridcode = RID_SSID;         break;
+@@ -7819,6 +8214,7 @@ static int writerids(struct net_device *
+ 	struct airo_info *ai = dev->priv;
+ 	int  ridcode;
+         int  enabled;
++	Resp      rsp;
+ 	static int (* writer)(struct airo_info *, u16 rid, const void *, int, int);
+ 	unsigned char *iobuf;
+ 
+@@ -7852,7 +8248,7 @@ static int writerids(struct net_device *
+ 		 * same with MAC off
+ 		 */
+ 	case AIROPMACON:
+-		if (enable_MAC(ai, 1) != 0)
++		if (enable_MAC(ai, &rsp, 1) != 0)
+ 			return -EIO;
+ 		return 0;
+ 

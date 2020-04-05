@@ -1,0 +1,10 @@
+# Recipe for version 2.1.1 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 31., péntek, 17.10.40 CEST
+# Recipe (MakeRecipe) for Exempi by Jonas Karlsson <jonka750@student.liu.se>, on Sun Aug 10 17:08:20 CEST 2008
+compile_version=1.10.0
+url="http://libopenraw.freedesktop.org/download/exempi-2.1.1.tar.gz"
+file_size=3401564
+file_md5=62ecb5a01387b9f940a5429b3df67e65
+recipe_type=configure
+configure_options=(
+   --enable-unittest=no
+)

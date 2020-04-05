@@ -1,9 +1,0 @@
-# Recipe for version 0.6.16 by Thomas Queste <tqueste@free.fr>, on Sun Feb 17 13:41:00 CET 2008
-url="$httpSourceforge/libexif/libexif-0.6.16.tar.bz2"
-file_size=691528
-file_md5=deee153b1ded5a944ea05d041d959eca
-compile_version=1.8.0
-recipe_type=configure
-pre_build() {
-    GrepReplace 'SUBDIRS = m4m po libexif test doc binary' 'SUBDIRS = m4m po libexif test binary' Makefile.in
-}

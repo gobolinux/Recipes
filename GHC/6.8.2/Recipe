@@ -1,0 +1,20 @@
+# Recipe for version 6.8.2 by Kevin Quick <quick@sparq.org>, on Wed Apr 9 21:56:41 MST 2008
+# Recipe (MakeRecipe) for GHC by Peter Eriksen <s022018@student.dtu.dk>, on Tue Feb 22 12:51:35 CET 2005
+compile_version=1.8.5
+url="http://www.haskell.org/ghc/dist/6.8.2/ghc-6.8.2-src.tar.bz2"
+file_size=7072545
+file_md5=43108417594be7eba0918c459e871e40
+dir='ghc-6.8.2'
+recipe_type=configure
+
+pre_link() {
+   mkdir -p $settings_target/ghc-6.8.2
+   if [ -e $settings_target/ghc-6.8.2/package.conf ]
+   then
+      rm -f $target/lib/ghc-6.8.2/package.conf
+   else
+      mv $target/lib/ghc-6.8.2/package.conf $settings_target/ghc-6.8.2
+   fi
+   ln -s ../../../Settings/ghc-6.8.2/package.conf $target/lib/ghc-6.8.2/package.conf
+   sed -i "s!PKGCONF=$target/lib!PKGCONF=$settings_target!" $target/bin/ghc-pkg
+}

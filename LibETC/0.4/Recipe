@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for LibETC by Michael Homer <michael@gobolinux.org>, on Sat Nov 1 17:42:25 NZDT 2008
+# Recipe for version 0.4 by Michael Homer <michael@gobolinux.org>, on Sat Nov 1 17:42:25 NZDT 2008
+compile_version=1.11.3
+url="http://www.ordiluc.net/fs/libetc/libetc-0.4.tar.gz"
+file_size=19417
+file_md5=d72901834a7246c871f5985a30940f4c
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "LIBDIR=$target/lib"
+)
+environment=(
+   "CFLAGS=$CFLAGS -DXAUTH_HACK"
+)

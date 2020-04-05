@@ -1,0 +1,10 @@
+[Description] The Compact Disc Input and Control library encapsulates CD-ROM reading
+and control. Applications wishing to be oblivious of the OS- and
+device-dependent properties of a CD-ROM can use this library. Some
+support for disk image types like BIN/CUE, cdrdao, and NRG is available.
+Therefore, applications that use this library also have the ability to
+read disc images as though they were CDs. A library for working with
+ISO-9660 filesystems is included, as are utility programs for displaying
+CD and CD-ROM drive information, reading the blocks of a CD, and
+extracting files from an ISO-9660 filesytem image.
+[Homepage] http://www.gnu.org/software/libcdio/

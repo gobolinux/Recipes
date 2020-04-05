@@ -1,0 +1,10 @@
+# Recipe for version 2.6.3 by Giambattista Bloisi <giamby@infinito.it>, on Sat Mar 14 20:02:42 CET 2009
+compile_version=1.7.1
+url="http://www.cmake.org/files/v2.6/cmake-2.6.3.tar.gz"
+file_size=3594959
+file_md5=5ba47a94ce276f326abca1fd72a7e7c6
+recipe_type=configure
+
+configure_options=(
+   --prefix=$target
+)

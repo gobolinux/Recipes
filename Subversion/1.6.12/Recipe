@@ -1,0 +1,31 @@
+# Recipe for version 1.6.12 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Jun 28 02:22:34 BRT 2010
+# Recipe (MakeRecipe) for Subversion by Jonas Karlsson <jonka750@student.liu.se>, on Wed May 11 07:50:33 CEST 2005
+compile_version=1.9.0
+url="http://subversion.tigris.org/downloads/subversion-1.6.12.tar.bz2"
+file_size=5476628
+file_md5=a4b1d0d7f3a4587c59da9c1acf9dedd0
+recipe_type=configure
+makefile=Makefile.build
+configure_options=(
+   --with-apr=/usr
+   --with-apr-util=/usr
+   --disable-mod-activation
+   --with-apxs=no
+)
+with_httpd=(
+   --with-apache-libexecdir="${goboLibraries}/httpd/modules"
+   --with-apxs=/usr/bin/apxs
+)
+build_target="all"
+install_target="install"
+pre_build() {
+   # Wrapper Makefile as JavaHL and SWIG Perl bindings doesn't support parallel builds
+   cat << EOF > Makefile.build
+% :
+	\$(MAKE) -j1 \$@
+EOF
+}
+
+install_variables=(
+   APACHE_LIBEXECDIR="${target}/lib/httpd/modules"
+)

@@ -1,0 +1,13 @@
+private__pre_build() {
+   if ! grep -q sshd $goboSettings/group
+   then
+      Log_Normal "Adding group sshd"
+      groupadd sshd
+   fi
+
+   if ! grep -q "sshd:x:" $goboSettings/passwd
+   then
+      Log_Normal "Adding user sshd"
+      useradd -g sshd -c 'sshd privsep' -d $goboVariable/empty -s $goboExecutables/false sshd
+   fi
+}

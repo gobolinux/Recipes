@@ -1,0 +1,10 @@
+# Recipe for version 0.12.2 by Hisham Muhammad, on Mon Jul 23 22:17:30 BRT 2007
+
+compile_version=1.8.4
+url="http://downloads.pilot-link.org/pilot-link-0.12.2.tar.bz2"
+file_size=964014
+file_md5=c1f4db8f32a2ee916fedb9a2dac8aa26
+recipe_type=configure
+install_variables=(
+   udevdir="${settings_target}/udev/rules.d"
+)

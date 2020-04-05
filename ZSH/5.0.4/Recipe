@@ -1,0 +1,9 @@
+# Recipe for version 5.0.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jan 6 15:24:51 GMT 2014
+url="http://downloads.sourceforge.net/project/zsh/zsh/5.0.4/zsh-5.0.4.tar.bz2"
+file_size=3093541
+file_md5=9829fe8932c25740173a272e8959cf8c
+mirror_url="ftp://ftp.zsh.org/pub/old/zsh-5.0.4.tar.bz2"
+compile_version=1.8.0
+recipe_type=configure
+
+post_install_message="In ZSH 5.0.4, 'promptinit' no longer autoloads 'colors' function. You may need to add a 'autoload -U colors' statement in your '${goboSettings}/zshrc' file."

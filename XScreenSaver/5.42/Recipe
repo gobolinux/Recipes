@@ -1,0 +1,33 @@
+# Recipe for version 5.42 by Demian Florentin <demianflorentin@gmail.com>, on Wed Mar 20 20:39:28 PYST 2019
+# By Leandro Motta Barros, 02005.42-02
+compile_version=1.8.0
+url="https://www.jwz.org/xscreensaver/xscreensaver-5.42.tar.gz"
+file_size=26903469
+file_md5=881a9218ef9f95d0d9ba76303def5568
+recipe_type=configure
+
+make_variables=(
+   "GTK_DATADIR=$target/share"
+   "PAM_DIR=$settings_target/pam.d"
+   "PAM_CONF=$settings_target/pam.conf"
+   "KDEDIR=$target"
+   "datadir=$target/share"
+   "gnulocaledir=$target/share/locale"
+)
+
+configure_options=(
+"--enable-locking"
+"--libexecdir=$target/lib"
+"--with-configdir=$settings_target/xscreensaver-hacks"
+"--with-x-app-defaults=$settings_target"
+"--with-gl"
+"--with-gle"
+"--with-randr-ext"
+"--with-dpms-ext"
+"--with-proc-interrupts"
+)
+
+
+pre_build(){
+ sed -i '/^\/\//d' hacks/fontglide.c
+}

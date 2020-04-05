@@ -1,0 +1,16 @@
+[Name] USB-ModeSwitch
+[Summary] A mode switching tool for controlling "flip flop" (multiple device) USB gear
+[Description] USB_ModeSwitch is (surprise!) a mode switching tool for controlling "flip flop" (multiple device) USB gear.
+
+More and more USB devices (especially high-speed WAN stuff, based on cell phone chipsets containing that feature) have their MS Windows drivers onboard; when plugged in for the first time they act like a flash storage and start installing the driver from there. After installation (and on every consecutive plugging) the driver switches the mode internally, the storage device vanishes (in most cases), and a new device (like an USB modem) shows up. Modem maker "Option" calls that feature "ZeroCD (TM)" since it eliminates the need for shipping a separate driver carrier.
+
+In the beginning, nothing of this was documented in any form and there was hardly any Linux support available.
+On the good side, most of the known devices do work in both modes with the available Linux drivers like "usb-storage" or "option" (an optimized serial driver, the Linux standard for high-speed 3G modems).
+That leaves only the problem of the mode switching from storage to modem or whatever the thing is supposed to do.
+
+Fortunately there are things like human reason, USB sniffing programs and "libusb". It is possible to eavesdrop the communication of the MS Windows driver, to isolate the command or action that triggers the mode switching and to reproduce the same thing under the rule of Linux or the BSD variants.
+
+USB_ModeSwitch makes this process easy to handle by taking the important parameters from a configuration file and doing all the initialization and communication stuff, with heavy help from "libusb".
+It is mainly used automatically - via udev events and rules - to do the switch without any user interaction. But it can also be run as a command line tool, usually when trying to make unknown devices work with it. 
+[License] GNU General Public License version 2
+[Homepage] http://www.draisberghof.de/usb_modeswitch

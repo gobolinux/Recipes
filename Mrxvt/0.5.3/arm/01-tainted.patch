@@ -1,0 +1,20 @@
+--- mrxvt-0.5.1/src/rxvt.h.orig	2006-08-15 01:55:56.000000000 -0300
++++ mrxvt-0.5.1/src/rxvt.h	2006-08-15 01:56:06.000000000 -0300
+@@ -413,15 +413,8 @@ typedef char*		XPointer;
+  * turn is unsafe without checking. Untainted defines the type of data that is
+  * safe.
+  */
+-#ifdef __GNUC__
+-# define $tainted
+-# define $untainted
+-# define TAINTED	$tainted
+-# define UNTAINTED	$untainted
+-#else
+-# define TAINTED
+-# define UNTAINTED
+-#endif
++#define TAINTED
++#define UNTAINTED
+ 
+ 
+ /*

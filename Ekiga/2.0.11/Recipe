@@ -1,0 +1,12 @@
+# Recipe for version 2.0.11 by demian florentin demianflorentin_at_gmail.com, on Tue Oct 16 10:58:01 PYT 2007
+# Recipe (MakeRecipe) for Ekiga by demian florentin demianflorentin@gmail.com, on dom jul 29 14:43:04 BRT 2007
+compile_version=1.9.0
+url="http://www.ekiga.org/admin/downloads/latest/sources/sources/ekiga-2.0.11.tar.gz"
+file_size=6942630
+file_md5=684865225d77898e10e960f3a286b894
+recipe_type=configure
+configure_options=(
+   '--disable-avahi'
+   '--enable-dbus'
+   '--disable-scrollkeeper'
+)

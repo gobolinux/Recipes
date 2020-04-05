@@ -1,0 +1,10 @@
+# Recipe for version 1.2.3 by kenneth marken <k-marken@online.no>, on on. 30. des. 03:41:05 +0100 2009
+url="$httpSourceforge/cdrdao/cdrdao-1.2.3.tar.bz2"
+file_size=1428695
+file_md5=8d15ba6280bb7ba2f4d6be31d28b3c0c
+compile_version=1.8.2
+recipe_type=configure
+
+pre_link() {
+   chmod +s $target/bin/cdrdao
+}

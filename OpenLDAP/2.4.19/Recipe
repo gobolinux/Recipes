@@ -1,0 +1,26 @@
+# Recipe for version 2.4.19 by Lucas C. Villa Real, on Wed Nov 4 01:19:19 BRST 2009
+# Recipe for OpenLdap by Maglan C. Diemer, maglan@univates.br
+compile_version=1.8.4
+url="ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/openldap-2.4.19.tgz"
+file_size=5474200
+file_md5=4a6dab2711fcf141f19bb680bc335887
+recipe_type=configure
+configure_options=(
+   --localstatedir=${goboVariable}/openldap
+   --with-cyrus-sasl=no
+   --with-tls=no
+)
+with_cyrus_sasl="--with-cyrus-sasl=yes"
+with_openssl="--with-tls=openssl"
+
+pre_build() {
+   autoconf
+}
+
+pre_install() {
+   mkdir -p $goboVariable/openldap
+}
+
+unmanaged_files=(
+    $goboVariable/openldap
+)

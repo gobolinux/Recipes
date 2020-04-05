@@ -1,0 +1,18 @@
+# Recipe (MakeRecipe) for Gwenhywfar by Andreas Köhler <andi5.py@gmx.net>, on Wed Aug 20 22:04:43 CEST 2008
+# Recipe for version 3.4.1 by Andreas Köhler <andi5.py@gmx.net>, on Wed Aug 20 22:04:43 CEST 2008
+compile_version=1.11.2
+url="http://www2.aquamaniac.de/sites/download/download.php?package=01&release=13&file=01&dummy=gwenhywfar-3.4.1.tar.gz"
+file="gwenhywfar-3.4.1.tar.gz"
+file_size=1239835
+file_md5=c1bee825e06cf81e6811b3e788f67b44
+dir='gwenhywfar-3.4.1'
+recipe_type=configure
+pre_build() {
+    touch config.rpath
+    make -f Makefile.cvs
+}
+configure_options=(
+    --with-data-searchdir="${goboShared}/gwenhywfar"
+    --with-locale-searchdir="${goboShared}/locale"
+    --with-cfg-searchdir="${goboSettings}"
+)

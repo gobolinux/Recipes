@@ -1,0 +1,161 @@
+# Recipe for version 2.2.14 by Jonas Karlsson <jonas@gobolinux.org>, on Thu Dec 17 01:13:44 CET 2009
+# Reviced recipe for version 2.2.3 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Nov 10 17:19:03 CET 2005
+# Recipe (MakeRecipe) for Apache 2.0.53 by Volker Wieban <buckoven@yaklinux.org> 
+# derived from Recipe for ApacheHttpd 2.0 by ro.ko@mcnon.com, on Tue Oct 12 03:14:07 BRST 2004
+compile_version=1.9.0
+recipe_type=configure
+url="http://archive.apache.org/dist/httpd/httpd-2.2.14.tar.bz2"
+file_size=5147171
+file_md5=a5226203aaf97e5b941c41a71c112704
+
+unmanaged_files=(
+    ${goboData:-$goboPrefix/Files}/WWW
+    $goboVariable/httpd
+    $goboVariable/log/httpd
+    $goboVariable/run/httpd
+)
+
+configure_options=(
+  --sysconfdir=$settings_target/httpd
+  --localstatedir=$variable_target/httpd
+  --enable-layout=Gobolinux
+  --enable-mods-shared=all
+  --enable-authn-anon=shared		# Enable anonymous user access provided by mod_auth_anon.
+
+  --enable-authn-dbm=shared		# mod_auth_dbm provides for HTTP Basic Authentication,
+    			        		# where the usernames and passwords are stored in DBM
+			            		# type database files
+
+  --enable-auth-digest=shared 		# Enable RFC2617 Digest authentication provided by
+                					# mod_auth_digest. This module uses plain text files
+          		            		# to store the credentials
+
+
+  --enable-cache=shared          	# Enable dynamic file caching provided by
+                      				# mod_cache. This experimental module may be
+          	            			# interesting for servers with high load or 
+                                    # caching proxy servers.
+					                # At least one storage management module (e.g.
+                      				# mod_disk_cache or mod_mem_cache) is also necessary.
+
+  --enable-cern-meta=shared	    	# Enable the CERN-type meta files support provided by
+			                		# mod_cern_meta 
+
+  --enable-charset-lite=shared		# Enable character set translation provided
+                                    # by mod_charset_lite. This module will be installed
+                                    # by default only on EBCDIC systems.
+	                				# On other systems, you have to enable it.
+
+  --enable-dav=shared	    		# Enable the WebDAV protocol handling provided by mod_dav.
+            	    				# Support for filesystem resources is provided by the
+			                		# seperate module mod_dav_fs. This module is also 
+                                    # automatically enabled with --enable-dav.
+                					# Note: mod_dav can only be used together with the
+                      				# http protocol module.
+
+  --enable-dav-fs=shared		    # Enable DAV support for filesystem resources, 
+                                    # which is provided
+    				            	# by mod_dav_fs. This module is a provider for the
+              			        	# mod_dav module, so you should also use --enable-dav.
+
+  --enable-deflate=shared       	# Enable deflate transfer encoding provided by mod_deflate.
+
+  --enable-disk-cache=shared     	# Enable disk caching provided by mod_disk_cache.
+        
+  --enable-expires=shared        	# Enable Expires header control provided by mod_expires.
+
+  --enable-ext-filter=shared     	# Enable the external filter support provided by 
+                                    # mod_ext_filter.
+
+  --enable-file-cache=shared     	# Enable the file cache provided by mod_file_cache.
+
+  --enable-headers=shared   		# Enable control of HTTP headers provided by mod_headers.
+        
+  --enable-info=shared		    	# Enable the server information provided by mod_info.
+
+       
+  --enable-logio=shared     		# Enable logging of input and output bytes including
+                					# headers provided by mod_logio.
+
+  --enable-mem-cache=shared		    # Enable memory caching provided by mod_mem_cache.
+
+  --enable-mime-magic=shared		# Enable automatical determining of MIME types, which is  
+                                    # provided by mod_mime_magic.
+
+#  --enable-isapi=shared	    	# Enable the isapi extension support provided by
+					                # mod_isapi.
+
+  --enable-proxy=shared		    	# Enable the proxy/gateway functionality provided by
+              			        	# mod_proxy. The proxying capabilities for
+              			        	# CONNECT, FTP and HTTP are
+              			        	# provided by the seperate modules mod_proxy_connect,
+              			        	# mod_proxy_ftp and mod_proxy_http.
+              			        	# These three modules are also automatically enabled with
+              			        	# --enable-proxy.
+
+#  --enable-proxy-connect=shared	# Enable proxy support for CONNECT request handling,
+              		        		# which is provided by mod_proxy_connect. This module
+              		        		# is an extension for the mod_proxy module, so you
+              		        		# should also use --enable-proxy.
+
+#  --enable-proxy-ftp=shared		# Enable proxy support for FTP requests, which is
+              			            # provided by mod_proxy_ftp. This module
+              			    	    # is an extension for the mod_proxy module, so you
+              			        	# should also use --enable-proxy.
+
+#  --enable-proxy-http=shared		# Enable proxy support for HTTP requests, which is
+                     				# provided by mod_proxy_http. This module
+                      				# is an extension for the mod_proxy module, so you
+              		        		# should also use --enable-proxy.
+        
+  --enable-rewrite=shared	    	# Enable rule based URL manipulation provided by
+                                    # mod_rewrite.
+        
+  --enable-so			        	# Enable DSO capability provided by mod_so. This
+              			        	# module will be automatically enabled if you use the
+              	        			# --enable-mods-shared option.
+
+  --enable-speling=shared		    # Enable the functionality to correct common URL
+                					# misspelling, which is provided by mod_spelling.
+
+  --enable-ssl=shared		    	# Enable support for SSL/TLS provided by mod_ssl.
+
+  --enable-unique-id=shared	    	# Enable the generation of per-request unique ids, which
+                					# is provided by mod_unique_id.
+
+  --enable-usertrack=shared		    # Enable user-session tracking provided by mod_usertrack.
+        
+  --enable-vhost-alias=shared		# Enable mass virtual hosting provided by mod_vhost_alias.
+)
+
+# Enable LDAP caching and connection pooling services provided by mod_ldap.
+# Enable LDAP based authentication provided by mod_auth_ldap
+with_openldap="--enable-ldap=shared --enable-authnz-ldap=shared"
+
+using_openldap(){
+   grep -q openldap $apr_util_path/Resources/UseFlags || Die "APR-Util must be built with openldap enabled."
+}
+
+pre_build() {
+   mkdir -p ${goboData:-$goboPrefix/Files}/WWW
+   if [ "$goboData" ]
+   then GrepReplace -B "$goboPrefix/Files" "$goboData" config.layout
+   fi
+}
+
+pre_install() {
+   mkdir -p $goboVariable/{,log,run}/httpd
+}
+
+pre_link() {  
+   chown httpd.httpd ${goboData:-$goboPrefix/Files}/WWW
+
+   mkdir -p ${variable_target}/httpd/proxycache
+   chown -vR httpd:httpd $variable_target/httpd
+
+   mkdir -p ${target}/lib/httpd
+   mv ${target}/modules ${target}/lib/httpd
+   ln -s ${goboLibraries}/httpd/modules ${target}
+
+   mkdir -p ${settings_target}/httpd/conf
+}

@@ -1,6 +1,0 @@
-[Name]  joe
-[Summary]  A Text Editor
-[Description]  JOE (Joe's Own Editor) is a freeware ASCII editor for UNIX. Joe is similar to most IBM PC text editors. The keyboard combinations are similar to WordStar[tm] and Turbo C. Some of Joe's features include: -full support of termcap/terminfo (useful for device independent description to control screen output). -optimizing screen refresh even as GNU Emacs (Joe can even be used at 2400 baud). -easy installation. All features for UNIX integration of the VI: a marked block of text can be filtered through a UNIX command; and wherever JOE accepts a filename parameter the following can also be substituted: !command		:to redirect from/to another command >>filename		:to append onto an existing file filename,start,size	:to edit a part of a file/device -			:to use standard input/output When JOE has several files opened at the same time, each file is displayed in its own window. Additionally, JOE allows for shell-windows whereby the output of the executed commands are saved in a buffer, automatic filename completion (via TAB), help windows, undo-redo, search and replace using regular expressions.
-[Suse Category]  Productivity/Editors/Other
-[License]  GPL
-[Homepage]  http://sourceforge.net/projects/joe-editor

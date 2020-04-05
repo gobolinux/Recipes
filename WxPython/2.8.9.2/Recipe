@@ -1,0 +1,54 @@
+# Recipe for version 2.8.9.2 by Dominique Juergensen <brokolie@vollbio.de>, on Mon Mar 23 22:41:20 CET 2009
+# Recipe (MakeRecipe) for WxPython by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Aug 9 11:10:29 BRT 2005
+compile_version=1.8.0
+url="http://downloads.sourceforge.net/wxpython/wxPython-src-2.8.9.2.tar.bz2"
+file_size=29370216
+file_md5=e3d89746af98b9279e4ff39a57f6dc63
+recipe_type=configure
+
+configure_options=(
+        "--with-gtk"
+        "--with-opengl"
+        "--with-sdl"
+        "--enable-display"
+        "--enable-geometry"
+        "--enable-graphics_ctx"
+        "--enable-intl"
+        "--enable-sound"
+        "--enable-unicode"
+        "--enable-optimize"
+        "--disable-monolithic"
+)
+
+pre_link() {
+    make -C contrib/src/gizmos
+    make -C contrib/src/gizmos install
+    make -C contrib/src/stc
+    make -C contrib/src/stc install
+
+    Quiet pushd wxPython
+    python_opts="WXPORT=gtk2 UNICODE=1 EP_ADD_OPTS=1 NO_SCRIPTS=1 build_ext"
+    python setup.py $python_opts build
+    python setup.py $python_opts install --prefix=$target
+    for s in \
+        editra \
+        helpviewer \
+        img2png \
+        img2py \
+        img2xpm \
+        pyalacarte \
+        pyalamode \
+        pycrust \
+        pywrap \
+        pyshell \
+        pywxrc \
+        xrced
+    do
+        cp scripts/$s $target/bin
+    done
+    Quiet popd
+
+    Quiet pushd $target/include
+    ln -fs wx-2.8/wx .
+    Quiet popd
+}

@@ -1,0 +1,16 @@
+# LuaRocks Environment
+
+lua_version=$(lua -e "print((_VERSION:gsub('Lua ','')))")
+
+export LUA_PATH="\
+$goboSystem/Aliens/LuaRocks/share/lua/$lua_version/?.lua;\
+$goboSystem/Aliens/LuaRocks/share/lua/$lua_version/init.lua;\
+$goboSystem/Aliens/LuaRocks/lib/lua/$lua_version/?.lua;\
+$goboSystem/Aliens/LuaRocks/lib/lua/$lua_version/init.lua;\
+$LUA_PATH"
+
+export LUA_CPATH="\
+$goboSystem/Aliens/LuaRocks/lib/lua/$lua_version/?.so;\
+$goboSystem/Aliens/LuaRocks/lib/lua/$lua_version/loadall.so;\
+$LUA_CPATH"
+

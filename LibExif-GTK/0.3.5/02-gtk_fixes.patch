@@ -1,0 +1,60 @@
+This patch make it possible to build with GTK+ > 2.4
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+
+--- libexif-gtk-0.3.5.orig/libexif-gtk/Makefile.am
++++ libexif-gtk-0.3.5/libexif-gtk/Makefile.am
+@@ -3,8 +3,7 @@
+ 	-I$(top_srcdir)/intl				\
+ 	-I$(top_srcdir)/gtk-extensions			\
+ 	$(LIBEXIF_GTK_CFLAGS)				\
+-	-DG_LOG_DOMAIN=\"libexif\"			\
+-	-DGTK_DISABLE_DEPRECATED
++	-DG_LOG_DOMAIN=\"libexif\"
+ 
+ lib_LTLIBRARIES = libexif-gtk.la
+ 
+--- libexif-gtk-0.3.5.orig/libexif-gtk/Makefile.in
++++ libexif-gtk-0.3.5/libexif-gtk/Makefile.in
+@@ -251,8 +251,7 @@
+ 	-I$(top_srcdir)/intl				\
+ 	-I$(top_srcdir)/gtk-extensions			\
+ 	$(LIBEXIF_GTK_CFLAGS)				\
+-	-DG_LOG_DOMAIN=\"libexif\"			\
+-	-DGTK_DISABLE_DEPRECATED
++	-DG_LOG_DOMAIN=\"libexif\"
+ 
+ lib_LTLIBRARIES = libexif-gtk.la
+ libexif_gtkincludedir = $(includedir)/libexif-gtk
+--- libexif-gtk-0.3.5.orig/configure.in
++++ libexif-gtk-0.3.5/configure.in
+@@ -39,7 +39,7 @@
+ dnl ---------------------------------------------------------------------------
+ dnl libraries needed
+ dnl ---------------------------------------------------------------------------
+-PKG_CHECK_MODULES(LIBEXIF_GTK, gtk+-2.0 libexif >= 0.5.9)
++PKG_CHECK_MODULES(LIBEXIF_GTK, gtk+-2.0 libexif >= 0.6.12)
+ AC_SUBST(LIBEXIF_GTK_LIBS)
+ AC_SUBST(LIBEXIF_GTK_CFLAGS)
+ PKG_CHECK_MODULES(GTK, gtk+-2.0)
+--- libexif-gtk-0.3.5.orig/gtk-extensions/Makefile.am
++++ libexif-gtk-0.3.5/gtk-extensions/Makefile.am
+@@ -1,7 +1,6 @@
+ INCLUDES =				\
+ 	-I$(top_srcdir)			\
+ 	-I$(top_srcdir)/intl		\
+-	-DGTK_DISABLE_DEPRECATED	\
+ 	$(GTK_CFLAGS)
+ 
+ noinst_LTLIBRARIES = libgtk-extensions.la
+--- libexif-gtk-0.3.5.orig/gtk-extensions/Makefile.in
++++ libexif-gtk-0.3.5/gtk-extensions/Makefile.in
+@@ -219,7 +219,6 @@
+ INCLUDES = \
+ 	-I$(top_srcdir)			\
+ 	-I$(top_srcdir)/intl		\
+-	-DGTK_DISABLE_DEPRECATED	\
+ 	$(GTK_CFLAGS)
+ 
+ noinst_LTLIBRARIES = libgtk-extensions.la
+

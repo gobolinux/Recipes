@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for Kommander by Daniele Maccari, on Fri Dec 28 17:58:59 CET 2007
+# Recipe for version 1.3.0 by Daniele Maccari, on Fri Dec 28 17:58:59 CET 2007
+compile_version=1.9.0
+url="http://kommander.kdewebdev.org/download.php?id=kommander-1.3.0.tar.bz2"
+file="kommander-1.3.0.tar.bz2"
+file_size=1310433
+file_md5=8a24fc651731a61ea473d09ba7deda81
+dir='kommander-1.3.0'
+recipe_type=configure
+
+configure_options=(
+	"--disable-libsuffix"
+)

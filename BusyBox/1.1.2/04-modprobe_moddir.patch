@@ -1,0 +1,30 @@
+--- busybox-1.1.2/modutils/modprobe.c.orig	2006-05-17 15:13:49.000000000 -0300
++++ busybox-1.1.2/modutils/modprobe.c	2006-05-17 15:11:25.000000000 -0300
+@@ -23,6 +23,10 @@
+ #include <fcntl.h>
+ #include "busybox.h"
+ 
++#ifndef MODDIR
++#define MODDIR "/lib/modules"
++#endif
++
+ struct mod_opt_t {	/* one-way list of options to pass to a module */
+ 	char *  m_opt_val;
+ 	struct mod_opt_t * m_next;
+@@ -289,12 +293,14 @@ static struct dep_t *build_dep ( void )
+ 		k_version = un.release[2] - '0';
+ 	}
+ 
+-	filename = bb_xasprintf("/lib/modules/%s/modules.dep", un.release );
++	filename = bb_xasprintf("%s/%s/modules.dep", MODDIR, un.release );
+ 
+ 	if (( fd = open ( filename, O_RDONLY )) < 0 ) {
++		free(filename);
++		filename = bb_xasprintf("%s/modules.dep", MODDIR );
+ 
+ 		/* Ok, that didn't work.  Fall back to looking in /lib/modules */
+-		if (( fd = open ( "/lib/modules/modules.dep", O_RDONLY )) < 0 ) {
++		if (( fd = open ( filename, O_RDONLY )) < 0 ) {
+ 			free(filename);
+ 			return 0;
+ 		}

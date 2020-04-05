@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for SelfPortrait by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Nov 25 13:49:16 BRST 2016
+# Recipe for version git by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Nov 25 13:49:16 BRST 2016
+compile_version=2.0
+git="https://github.com/maxdebayser/SelfPortrait.git"
+recipe_type=cmake
+
+cmake_options=(
+    -DLUA_SHORT_VERSION="$(lua -v | awk {'print $2'} | cut -d. -f1-2)"
+    -DLUA_INCLUDEDIR=$goboHeaders/lua"$(lua -v | awk {'print $2'} | cut -d. -f1-2)"
+    -DLUA_LIBRARY=$goboLibraries/liblua.so."$(lua -v | awk {'print $2'} | cut -d. -f1-2)"
+    -DCMAKE_SHARED_LINKER_FLAGS="-ldl"
+)

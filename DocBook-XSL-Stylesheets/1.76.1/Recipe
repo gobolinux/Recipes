@@ -1,0 +1,35 @@
+# Recipe for version 1.76.1 by Leandro Motta Barros <lmb@stackedboxes.org>, on Fri Sep 30 19:11:06 BRT 2011
+# Recipe (MakeRecipe) for DocBook-XSL-Stylesheets by Michael Homer <michael@gobolinux.org>, on Tue Nov 25 19:46:40 NZDT 2008
+compile_version=1.11.4
+url="$httpSourceforge/docbook/docbook-xsl-1.76.1.tar.bz2"
+file_size=3682531
+file_md5=b5340507cb240cc7ce00632b9c40bff5
+recipe_type=manifest
+manifest=(
+   "fo:Shared/xml/docbook/stylesheet/docbook-xsl/fo"
+   "lib:Shared/xml/docbook/stylesheet/docbook-xsl/lib"
+   "VERSION:Shared/xml/docbook/stylesheet/docbook-xsl/VERSION"
+   "html:Shared/xml/docbook/stylesheet/docbook-xsl/html"
+   "xhtml:Shared/xml/docbook/stylesheet/docbook-xsl/xhtml"
+   "xhtml-1_1:Shared/xml/docbook/stylesheet/docbook-xsl/xhtml-1_1"
+   "epub:Shared/xml/docbook/stylesheet/docbook-xsl/epub"
+   "htmlhelp:Shared/xml/docbook/stylesheet/docbook-xsl/htmlhelp"
+   "javahelp:Shared/xml/docbook/stylesheet/docbook-xsl/javahelp"
+   "eclipse:Shared/xml/docbook/stylesheet/docbook-xsl/eclipse"
+   "manpages:Shared/xml/docbook/stylesheet/docbook-xsl/manpages"
+   "common:Shared/xml/docbook/stylesheet/docbook-xsl/common"
+   "highlighting:Shared/xml/docbook/stylesheet/docbook-xsl/highlighting"
+   "catalog.xml:Shared/xml/docbook/stylesheet/docbook-xsl/catalog.xml"
+)
+unmanaged_files=(
+   "$goboVariable/lib/xml"
+)
+
+pre_install() {
+   cat <<EOF > "$target/Resources/XmlCatalogData"
+rewriteSystem;http://docbook.sourceforge.net/release/xsl/current/;file://\${target}/Shared/xml/docbook/stylesheet/docbook-xsl/;\${goboVariable}/lib/xml/catalog
+rewriteURI;http://docbook.sourceforge.net/release/xsl/current/;file://\${target}/Shared/xml/docbook/stylesheet/docbook-xsl/;\${goboVariable}/lib/xml/catalog
+rewriteSystem;http://docbook.sourceforge.net/release/xsl/1.75.2/;file://\${target}/Current/Shared/xml/docbook/stylesheet/docbook-xsl/;\${goboVariable}/lib/xml/catalog
+rewriteURI;http://docbook.sourceforge.net/release/xsl/1.75.2/;file://\${target}/Shared/xml/docbook/stylesheet/docbook-xsl/;\${goboVariable}/lib/xml/catalog
+EOF
+}

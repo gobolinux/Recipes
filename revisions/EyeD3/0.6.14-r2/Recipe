@@ -1,9 +1,0 @@
-# Recipe (MakeRecipe) for EyeD3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Mar 20 00:30:10 PDT 2008
-# Recipe for version 0.6.14 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Mar 20 00:30:10 PDT 2008
-compile_version=1.10.1
-url="http://eyed3.nicfit.net/releases/eyeD3-0.6.14.tar.gz"
-file_size=104518
-file_md5=c4f81b3cbb72993244f27ab740abbccc
-recipe_type=configure
-
-install_variables=( SETUP_ARGS="--prefix $target" )

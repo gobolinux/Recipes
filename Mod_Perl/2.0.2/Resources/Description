@@ -1,0 +1,8 @@
+mod_perl integrates perl with the Apache2 web server. It can be used to
+allow the users to use Perll for just about anything Apache-related,
+including <Perl> sections in the config files and the famous
+Apache::Registry module for caching compiled scripts. 
+
+It can produce anywhere from a 400% to 2000% speed increase on sites using
+perl scripts, and is used on many large script-based web sites - for
+example, http://slashdot.org.

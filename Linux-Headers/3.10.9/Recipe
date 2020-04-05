@@ -1,0 +1,11 @@
+# Recipe for version 3.10.9 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Aug 25 13:08:13 BRT 2013
+compile_version=1.12.0
+url="http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.10.9.tar.bz2"
+file_size=87144318
+file_md5=f7d50dfa7ffc19d19dc785cc5a732cfc
+recipe_type=makefile
+do_build=no
+install_target="headers_install"
+install_variables=(
+    "INSTALL_HDR_PATH=$target"
+)

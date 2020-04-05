@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for WTerm by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. nov. 30., vasárnap, 23.11.53 CET
+# Recipe for version 6.2.9 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. nov. 30., vasárnap, 23.11.54 CET
+compile_version=1.11.4
+url="http://prdownloads.sf.net/wterm/wterm-6.2.9.tar.gz"
+file_size=316773
+file_md5=2d9f1de4c30fb637053dbceb3400aa3d
+recipe_type=configure
+configure_options=(
+    --enable-utmp 
+    --enable-wtmp 
+    --enable-menubar 
+    --enable-next-scroll 
+    --with-term=wterm
+)

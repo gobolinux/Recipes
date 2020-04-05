@@ -1,0 +1,13 @@
+--- xc/include/Imakefile	2004-01-01 07:24:50.000000000 -0600
++++ xc.include.Imakefile	2004-01-01 06:48:14.000000000 -0600
+@@ -73,7 +73,7 @@
+ install::
+ 	MakeDir($(DESTDIR)$(SYSTEMUSRINCDIR))
+ 	-$(RM) $(DESTDIR)$(SYSTEMUSRINCDIR)/GL
+-	@if [ ! -d $(DESTDIR)$(SYSTEMUSRINCDIR)/GL ]; then \
+-		set -x; $(LN) $(INCDIR)/GL $(DESTDIR)$(SYSTEMUSRINCDIR)/GL; \
+-	fi
++#	@if [ ! -d $(DESTDIR)$(SYSTEMUSRINCDIR)/GL ]; then \
++#		set -x; $(LN) $(INCDIR)/GL $(DESTDIR)$(SYSTEMUSRINCDIR)/GL; \
++#	fi
+ #endif

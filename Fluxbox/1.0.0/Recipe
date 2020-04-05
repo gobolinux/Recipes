@@ -1,0 +1,13 @@
+# Recipe for version 1.0.0 by Nathan Middleton, on Mon Nov 5 04:41:19 CST 2007
+# Recipe (MakeRecipe) for Fluxbox by Volker Wieban <buckoven@yaklinux.org>, on Fri Dec 10 20:17:31 BRST 2004
+compile_version=1.9.0
+url="http://prdownloads.sourceforge.net/fluxbox/fluxbox-1.0.0.tar.bz2"
+file_size=767586
+file_md5=990e276ead0d04421dce4080f485caca
+recipe_type=configure
+
+make_variables=("DEFAULT_TERM=xterm")
+
+configure_options=(
+    --enable-nls
+)

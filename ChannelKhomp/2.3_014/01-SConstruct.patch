@@ -1,0 +1,12 @@
+# use boost shared lib
+--- channel_2.3_rev1728/SConstruct	2008-09-02 03:32:44.000000000 -0300
++++ channel_2.3_rev1728/SConstruct	2008-09-02 03:34:23.000000000 -0300
+@@ -53,7 +53,7 @@
+ 
+ cpppaths = [ '.', ast_path, ast_path + '/include', 'include', 'commons' ]
+ 		
+-libs = [ libk3l, 'dl', File('/usr/lib/libboost_regex.a') ]
++libs = [ libk3l, 'dl', 'boost_regex-mt' ]
+ 
+ BuildDir('Build', './', duplicate=0)
+ 

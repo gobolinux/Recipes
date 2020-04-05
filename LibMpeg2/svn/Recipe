@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for LibMpeg2 by keisangi, on Sun Feb 17 01:27:11 JST 2008
+# Recipe for version svn by keisangi, on Sun Feb 17 01:27:11 JST 2008
+compile_version=1.10.2
+svn="svn://svn.videolan.org/libmpeg2/trunk"
+recipe_type=configure
+#autogen_before_configure=yes
+
+pre_build() {
+    ./bootstrap
+}

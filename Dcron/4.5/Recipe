@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for Dcron by Michael Homer <michael@gobolinux.org>, on Sat Nov 12 22:10:15 NZDT 2011
+# Recipe for version 4.5 by Michael Homer <michael@gobolinux.org>, on Sat Nov 12 22:10:15 NZDT 2011
+compile_version=1.13.3
+url="http://www.jimpryor.net/linux/releases/dcron-4.5.tar.gz"
+file_size=44978
+file_md5=078833f3281f96944fc30392b1888326
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+   "CRONTAB_GROUP=users"
+)
+
+unmanaged_files=(
+   /var/spool/cron
+)

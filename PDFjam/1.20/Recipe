@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for PDFjam by Lucas C. Villa Real, on Sun Feb 25 12:41:08 BRT 2007
+# Recipe for version 1.20 by Lucas C. Villa Real, on Sun Feb 25 12:41:08 BRT 2007
+compile_version=1.8.2
+url="http://www.warwick.ac.uk/go/pdfjam/pdfjam_1.20.tgz"
+file_size=52814
+file_md5=3e443fd2c0063330313c1c079053e622
+dir='pdfjam'
+recipe_type=manifest
+
+pre_install() {
+    mkdir -p $target/man/man1
+    cp man1/* $target/man/man1
+    cp scripts/* $target/bin    
+}

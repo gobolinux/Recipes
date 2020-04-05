@@ -1,0 +1,5 @@
+[Name] Haskell-Roman-Numerals
+[Summary] Parsing and pretty printing of Roman numerals
+[Description] This library provides functions for parsing and pretty printing Roman numerals. Because the notation of Roman numerals has varied through the centuries, this package allows for some customization using a configuration that is passed to the conversion functions. Exceptions are dealt with by wrapping the results of conversions in the error monad.
+[License] BSD3
+[Homepage] http://hackage.haskell.org/cgi-bin/hackage-scripts/package/roman-numerals

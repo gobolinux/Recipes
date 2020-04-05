@@ -1,0 +1,9 @@
+configure_options=(
+   ${configure_options[@]}
+   --disable-shaped-decorations
+   --disable-xinerama
+   --disable-xrandr
+   --disable-x86-asm
+   --enable-lite
+)
+

@@ -1,0 +1,28 @@
+# Recipe (MakeRecipe) for ACPI-EEEPC-Generic by Michael Homer <michael@gobolinux.org>, on Sun Mar 1 13:26:38 NZDT 2009
+# Recipe for version 1.src by Michael Homer <michael@gobolinux.org>, on Sun Mar 1 13:26:38 NZDT 2009
+compile_version=1.12.0
+url="http://acpi-eeepc-generic.googlecode.com/files/acpi-eeepc-generic-0.8.2-1.src.tar.gz"
+file_size=23551
+file_md5=9fb5ffd68ee81b3a333933f9e4fb7a63
+dir='acpi-eeepc-generic'
+recipe_type=manifest
+
+do_build() {
+   chmod a+x *.sh
+}
+
+pre_link() {
+   chmod a+x $settings_target/acpi/*.sh
+   chmod a+x $settings_target/acpi/eeepc/*.sh
+}
+manifest=(
+   "acpi-eeepc-generic-handler.sh:Resources/Defaults/Settings/acpi/"
+   "acpi-eeepc-generic-functions.sh:Resources/Defaults/Settings/acpi/"
+   "acpi-eeepc-generic-events:Resources/Defaults/Settings/acpi/events/"
+   "acpi-eeepc-generic.conf:Resources/Defaults/Settings/conf.d/"
+   "acpi-eeepc-*-events.conf:Resources/Defaults/Settings/acpi/eeepc/models/"
+   "acpi-eeepc-generic-*.rcd:Resources/Defaults/Settings/rc.d/"
+   "acpi-eeepc-generic-*.sh:Resources/Defaults/Settings/acpi/eeepc/"
+   "*.desktop:$target/share/applications/"
+   "*.png:$target/share/pixmaps/"   
+)

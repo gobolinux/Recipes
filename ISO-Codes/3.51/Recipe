@@ -1,0 +1,8 @@
+# Recipe for version 3.51 by Hisham Muhammad <hisham@gobolinux.org>, on Sat Mar 15 17:43:25 BRT 2014
+# Recipe (MakeRecipe) for ISO-Codes by Guilherme Balestieri Bedin (gbedin), on Fri Sep 2 15:29:13 BRT 2005
+compile_version=1.8.0
+url="http://pkg-isocodes.alioth.debian.org/downloads/iso-codes-3.51.tar.xz"
+file_size=3626932
+file_md5=c73f0bdfaddbec22779b9fcae970fe85
+dir='iso-codes-3.51'
+recipe_type=configure

@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for KMDAlert by Carlo J. Calica <carlo@calica.com>, on Wed Mar 26 00:17:38 PDT 2008
+# Recipe for version 0.1 by Carlo J. Calica <carlo@calica.com>, on Wed Mar 26 00:17:38 PDT 2008
+compile_version="1.10.2"
+url="http://projects.shadoware.org/kmdalert/downloads/1"
+file="kmdalert-0.1.tar.gz"
+file_size=891938
+file_md5=536e8721ca811dbe5ff6715a479c3b3d
+dir='kmdalert-0.1'
+recipe_type=configure
+configure_options=(
+   "--disable-libsuffix"
+)

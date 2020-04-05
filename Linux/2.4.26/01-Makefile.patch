@@ -1,0 +1,20 @@
+--- linux-2.4.26/Makefile.orig	2004-04-25 18:35:46.000000000 -0300
++++ linux-2.4.26/Makefile	2004-04-25 18:38:40.000000000 -0300
+@@ -1,7 +1,7 @@
+ VERSION = 2
+ PATCHLEVEL = 4
+ SUBLEVEL = 26
+-EXTRAVERSION =
++EXTRAVERSION = -Gobo
+ 
+ KERNELRELEASE=$(VERSION).$(PATCHLEVEL).$(SUBLEVEL)$(EXTRAVERSION)
+ 
+@@ -82,7 +82,7 @@
+ # makefile but the arguement can be passed to make if needed.
+ #
+ 
+-MODLIB	:= $(INSTALL_MOD_PATH)/lib/modules/$(KERNELRELEASE)
++MODLIB	:= /System/Kernel/Modules/$(KERNELRELEASE)
+ export MODLIB
+ 
+ #

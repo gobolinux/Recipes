@@ -1,0 +1,17 @@
+# Recipe (MakeRecipe) for ECL by Karim Belbachir <karim@eml.cc>, on Wed Mar 24 03:23:00 GMT 2010
+# Recipe for version 10.3.1 by Karim Belbachir <karim@eml.cc>, on Wed Mar 24 03:23:00 GMT 2010
+compile_version=1.13.2
+url="$httpSourceforge/project/ecls/ecls/10.3/ecl-10.3.1.tgz"
+file_size=5906221
+file_md5=baa63c920e7936452c03d1ffe1fc63c1
+recipe_type=configure
+configure_options=(
+   --enable-boehm=system
+   --prefix=$target
+   --enable-threads
+   --enable-unicode
+   --enable-longdouble
+   --enable-c99complex
+   --with-__thread
+   --with-clx=YES
+)

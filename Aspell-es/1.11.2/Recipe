@@ -1,0 +1,11 @@
+# Recipe for version 1.11.2 by Andreas Köhler <andi5.py@gmx.net>, on Sa 3. Mär 18:47:13 CET 2012
+# Recipe (MakeRecipe) for Aspell-es by Aitor Perez Iturri, on mar ago 7 21:31:14 CEST 2007
+compile_version=1.10.2
+url="$ftpGnu/aspell/dict/es/aspell6-es-1.11-2.tar.bz2"
+file_size=154787
+file_md5=8406336a89c64e47e96f4153d0af70c4
+recipe_type=configure
+install_variables=(
+	"dictdir=$target/lib/aspell"
+	"datadir=$target/lib/aspell"
+)

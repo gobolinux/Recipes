@@ -1,3 +1,0 @@
-#!/bin/sh
-
-GrepReplace --no-backup "\"root\"" "\"$(SuperUserName)\"" $settings_target/dbus-1/system.d/avahi-dbus.conf

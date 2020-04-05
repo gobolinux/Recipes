@@ -1,0 +1,7 @@
+# Recipe for version 3.1.4 by Volker Wieban <buckoven@yaklinux.org>, on Sam Feb 12 16:56:17 BRST 2005
+# Recipe (MakeRecipe) for Mod_Python by Volker Wieban <buckoven@yaklinux.org>, on Fri Feb 11 15:30:24 BRST 2005
+compile_version=1.7.1
+url="http://mirrorspace.org/apache/httpd/modpython/mod_python-3.1.4.tgz"
+recipe_type=configure
+configure_options=( "--with-apxs=/Programs/Apache/Current/sbin/apxs" )
+sandbox_options=( "--no-sandbox" )

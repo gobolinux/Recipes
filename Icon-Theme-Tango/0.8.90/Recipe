@@ -1,0 +1,29 @@
+# Recipe for version 0.8.90 by Giambattista Bloisi <giamby@infinito.it>, on Sun Mar 22 18:12:03 CET 2009
+# Recipe (MakeRecipe) for Icon-Theme-Tango by Nathan Middleton, on Thu Nov 15 20:46:07 CST 2007
+compile_version=1.9.0
+urls=(
+    "http://tango.freedesktop.org/releases/tango-icon-theme-0.8.90.tar.gz"
+    "http://tango.freedesktop.org/releases/tango-icon-theme-extras-0.1.0.tar.gz"
+)
+dirs=(
+    "tango-icon-theme-0.8.90"
+    "tango-icon-theme-extras-0.1.0"
+)
+recipe_type=manifest
+
+pre_link() {
+    for cnt in $(seq 0 $((${#dirs[@]} -1))); do
+        cd ${goboSources}/${dirs[$cnt]}
+        ./configure --prefix=${target}
+        make || exit 1
+        make install || exit 1
+    done
+}
+file_sizes=(
+1790489
+228375
+)
+file_md5s=(
+0795895d2f20eddcbd2bffe94ed431a6
+caaceaec7b61f1cbda0db9842f9db281
+)

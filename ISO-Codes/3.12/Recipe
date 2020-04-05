@@ -1,0 +1,8 @@
+# Recipe for version 3.12 by Jonas Karlsson <jonas@gobolinux.org>, on Sun Jan 17 16:11:34 CET 2010
+# Recipe (MakeRecipe) for ISO-Codes by Guilherme Balestieri Bedin (gbedin), on Fri Sep 2 15:29:13 BRT 2005
+compile_version=1.8.0
+url="ftp://pkg-isocodes.alioth.debian.org/pub/pkg-isocodes/iso-codes-3.12.tar.bz2"
+file_size=5592163
+file_md5=eaf4b2141513481eb03b1ab6ccaec298
+dir='iso-codes-3.12'
+recipe_type=configure

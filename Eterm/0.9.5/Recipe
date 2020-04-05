@@ -1,0 +1,14 @@
+# Recipe for version 0.9.5 by kenneth marken <k-marken@online.no>, on sø. 14. des. 02:26:29 +0100 2008
+# Eterm 0.9.5 Recipe by Volker Wieban <buckoven@gobolinux.de>
+compile_version=1.8.0
+url="http://www.eterm.org/download/Eterm-0.9.5.tar.gz"
+file_size=796872
+file_md5=87220a61f763d111a4f5fc88ef9e50f1
+recipe_type=configure
+
+pre_install () {
+	mkdir -p $target/Shared/terminfo
+	GrepReplace "/usr/share/" "$target/Shared/" Eterm.spec
+	GrepReplace "/usr/share/" "$target/Shared" doc/Makefile
+	GrepReplace "\(\$(TIC)\) \(Eterm.ti\)" "\1 -o$target/Shared/terminfo \2" doc/Makefile
+}

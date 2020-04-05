@@ -1,0 +1,23 @@
+# Recipe for version 2.4.43_1 by Jonas Karlsson <jonka750@student.liu.se>, on Sun Jul 13 15:33:29 GMT 2008
+# Recipe (MakeRecipe) for ATTR by ro.ko@mcnon.com, on Tue Oct 12 00:31:42 BRST 2004
+compile_version=1.8.5
+url="ftp://oss.sgi.com/projects/xfs/cmd_tars/attr_2.4.43-1.tar.gz"
+file_size=116991
+file_md5=91583a14bcbd637adaa9b07ea49c5d4b
+mirror_url="ftp://oss.sgi.com/projects/xfs/previous/cmd_tars/attr_2.4.43-1.tar.gz"
+dir="attr-2.4.43"
+recipe_type=configure
+install_target="install install-lib install-dev" 
+
+configure_options=(
+    "--libexecdir=$target/lib/attr"
+)
+install_variables=(
+   libdir="${target}/lib"
+   libexecdir="${target}/lib/attr"
+   PKG_DEVLIB_DIR="${target}/lib/attr"
+)
+
+pre_link() {
+   ln -snf $target/lib/libattr.so.1.1.0 $target/lib/libattr.so
+}

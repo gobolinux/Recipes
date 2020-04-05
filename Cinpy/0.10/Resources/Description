@@ -1,0 +1,5 @@
+[Name] Cinpy
+[Summary] Python library allowing inlined C code
+[Description] Cinpy is a Python library that allows you to implement functions with C in Python modules. Inlined C code is compiled with tcc (Tiny C Compiler) at runtime. The results are made callable in Python with ctypes  library. 
+[License] LGPL 2.1+
+[Homepage] http://www.cs.tut.fi/~ask/cinpy/

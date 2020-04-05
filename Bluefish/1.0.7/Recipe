@@ -1,0 +1,21 @@
+# Recipe for version 1.0.7 by Michael Homer <michael@gobolinux.org>, on Sun, 3 Jan 2010, 13:42:17 NZDT
+# Recipe (MakeRecipe) for Bluefish by Volker Wieban <buckoven@yaklinux.org>, on Tue Feb 1.0.71:52:43 BRST 2005
+compile_version=1.8.0
+url="http://www.bennewitz.com/bluefish/stable/source/bluefish-1.0.7.tar.bz2"
+file_size=1495619
+file_md5=2c3b3c9c8f8e32b9473dfd879f216dea
+recipe_type=configure
+
+configure_options=(
+   --disable-update-databases
+   --with-freedesktop_org-mime="$target/share/mime/"
+   --with-freedesktop_org-mime="$target/share/applications/"
+   --with-icon-path="$target/share/pixmaps/"
+   --with-gnome2_4-appreg="$target/share/application-registry/"
+   --with-gnome2_4-mime="$target/share/mime-info/"
+   --with-freedesktop_org-menu="$target/share/applications/"
+)
+
+pre_install() {
+   mkdir -p "$target"/share/{mime,applications,pixmaps,application-registry,mime-info,applications}
+}

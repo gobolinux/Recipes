@@ -1,0 +1,19 @@
+--- plugger-5.1.3/Makefile.in.orig	2004-10-11 16:14:29.000000000 -0200
++++ plugger-5.1.3/Makefile.in	2004-10-11 16:14:07.000000000 -0200
+@@ -19,6 +19,7 @@
+ prefix=@prefix@
+ mandir=$(prefix)/man
+ libdir=$(prefix)/lib
++sysconfdir=@sysconfdir@
+ plugindir=UNKNOWN
+ browsers=mozilla opera netscape firefox galeon
+ 
+@@ -172,7 +173,7 @@
+ 	./install-sh -c plugger-controller $(root)$(prefix)/bin/
+ 	./install-sh -c plugger-oohelper $(root)$(prefix)/bin/
+ 	./install-sh -c plugger.7 $(root)$(mandir)/man7/
+-	if [ ! -f $(root)/etc/pluggerrc-$(VERSION) ]; then ./install-sh -c pluggerrc $(root)/etc/pluggerrc-$(VERSION) ; fi
++	if [ ! -f $(root)/$(sysconfdir)/pluggerrc-$(VERSION) ]; then ./install-sh -c pluggerrc $(root)/$(sysconfdir)/pluggerrc-$(VERSION) ; fi
+ 	if [ "$(plugindir)" = "UNKNOWN" ]; then \
+ 	  ./magic-install.sh $(browsers) ; \
+ 	else \

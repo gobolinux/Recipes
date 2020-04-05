@@ -1,0 +1,10 @@
+#!/bin/sh
+
+case "$1" in
+	[sS]tart)
+		freeswitch -nc
+		;;
+	[sS]top)
+		freeswitch -stop
+		;;
+esac # is ridiculous

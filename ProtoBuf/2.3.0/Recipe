@@ -1,0 +1,26 @@
+# Recipe for version 2.3.0 by Kevin Quick <quick@sparq.org>, on Tue Jun 29 13:32:56 MST 2010
+# Recipe (MakeRecipe) for ProtoBuf by Michael Homer <michael@gobolinux.org>, on Sat Dec 20 13:48:49 NZDT 2008
+compile_version=1.11.4
+url="http://protobuf.googlecode.com/files/protobuf-2.3.0.tar.bz2"
+file_size=1424966
+file_md5=f2964f636b3c67d1e9d8b90819fa8ddb
+recipe_type=configure
+
+using_python_pre_link() {
+   # There is a regular python-type build under the "python" directory
+   # As we have no concept of nested types, this duplicates the
+   # behaviour of Type_python, but is unsandboxed.
+   pushd python
+   local pythonver=$(python -V 2>&1 | sed 's,Python \([0-9]*\.[0-9]*\).*,\1,')
+   local sitepackages="${target}/lib/python${pythonver}/site-packages"
+   local orig_PYTHONPATH="${PYTHONPATH}"
+   export PYTHONPATH="$sitepackages"
+   mkdir -p "$sitepackages"
+   python setup.py build || Die "Python build failed."
+   python setup.py build --build-lib "$sitepackages" || Die "Python build_ext failed."
+   python setup.py install --prefix "$target" || Die "Python install failed."
+   # easy_install tries to update site.py and install an egg file
+   rm -f "$sitepackages"/*.*
+   export PYTHONPATH="${orig_PYTHONPATH}"
+   popd
+}

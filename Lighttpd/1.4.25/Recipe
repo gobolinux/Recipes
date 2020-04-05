@@ -1,0 +1,47 @@
+# Recipe for version 1.4.25 by Fabio Mierlo <geromao@gmail.com>, on Fri Feb 5 04:29:24 BRST 2010
+# Recipe (MakeRecipe) for LightTPD by Harald Klimach, on Mon Feb 6 19:51:39 CET 2006
+compile_version=1.9.0
+url="http://download.lighttpd.net/lighttpd/releases-1.4.x/lighttpd-1.4.25.tar.gz"
+file_size=780629
+file_md5=87e936ec272ddaba8a2fdfecd8c6b704
+recipe_type=configure
+configure_options=(
+    "--sbindir=${target}/bin"
+    "--libdir=${target}/lib/lighttpd"
+)
+docs=(
+    'doc/*.txt'
+)
+
+pre_build() {
+    if test ! "$(grep httpd /etc/group)"
+    then
+        gid=100
+        for ngid in `egrep '^.*:[0-9]{3}:.*$' /etc/group | cut -d':' -f3 | sort | xargs`; do
+            if [ $gid -eq $ngid ]; then gid=$(($gid+1)); else break; fi
+        done
+        groupadd -g $gid httpd
+    fi
+    
+    if test ! "$(grep httpd /etc/passwd)"
+    then
+        uid=-1
+        while [ $uid -eq -1 ]; do
+            if [ "$(grep ":$gid:" /etc/passwd)" ]; then
+                gid=$(($gid+1)); else uid=$gid
+            fi
+        done
+        useradd -s /bin/false -d /Files/WWW -g httpd -u $uid httpd
+    fi
+}
+
+pre_link() {
+    mkdir -p ${target}/doc/tests
+    cp -r tests/* ${target}/doc/tests
+}
+ 
+post_install() {
+    chown -R httpd.httpd /Files/WWW
+    chown -R httpd.httpd ${goboVariable}/run/lighttpd
+    chown -R httpd.httpd ${goboVariable}/log/lighttpd
+}

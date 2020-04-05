@@ -1,0 +1,16 @@
+# Recipe for version 4.0.4 by Laercio B. S. Sousa <lbsousajr@gmail.com>, on Wed Nov 5 15:07:18 BRST 2008
+compile_version=1.9.0
+url="http://roy.marples.name/downloads/dhcpcd/dhcpcd-4.0.4.tar.bz2"
+file_size=51949
+file_md5=f57a9614e592814485c47495c53e4c30
+recipe_type=makefile
+
+unmanaged_files=(
+   "$variable_target/db/"
+)
+
+make_variables=(
+   INFOD="$variable_target/db"
+   PREFIX="$target"
+   MANPREFIX="$target"
+)

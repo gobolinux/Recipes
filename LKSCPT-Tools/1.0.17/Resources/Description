@@ -1,0 +1,19 @@
+[Name] LKSCPT-Tools
+[Summary] Utilities for the Linux Kernel SCTP Reference Implementation
+[Description] The lksctp-tools package is intended for two audiences.  
+1) SCTP application developers
+2) LKSCTP project developers
+
+For SCTP application developers, this package provides the user-level
+C language header files and a library for accessing SCTP specific
+application programming interfaces not provided by the standard sockets.
+
+For LKSCTP project developers, this package provides the API
+regression and functional tests.  Developers should also check
+lksctp_tests package that provides low level kernel tests.  These
+are available from git.kernel.org.
+
+For either role, this project provides sample code, utilities, and
+tests that one may find useful.  
+[License] GNU GPL version 2, GNU LGPL version 2.1
+[Homepage] https://github.com/sctp/lksctp-tools

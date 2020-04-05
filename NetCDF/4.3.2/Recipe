@@ -1,0 +1,17 @@
+# Recipe for version 4.3.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Jul 8 10:21:53 BRT 2014
+# Recipe (MakeRecipe) for NetCDF by Lucas C. Villa Real, on Tue Feb 8 17:01:34 BRST 2011
+compile_version=1.12.3
+url="ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-4.3.2.tar.gz"
+file_size=5013938
+file_md5=2fd2365e1fe9685368cd6ab0ada532a0
+recipe_type=configure
+
+configure_options=(
+	--enable-netcdf-4
+	--enable-shared
+	--with-pic
+)
+
+make_variables=(
+	LIBTOOL=$dir/libtool
+)

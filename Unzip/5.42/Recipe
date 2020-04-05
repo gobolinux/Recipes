@@ -1,0 +1,11 @@
+# by Jeremy Vernon
+
+url="ftp://ftp.uu.net/pub/archiving/zip/src/unzip542.tar.gz"
+compile_version=1.7.1
+recipe_type=makefile
+dir='unzip-5.42'
+makefile=unix/Makefile
+build_target=generic
+install_variables=(
+   "prefix=$target"
+)

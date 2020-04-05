@@ -1,0 +1,12 @@
+# Recipe for version 0.7.1 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. márc. 27., szombat, 19.05.26 CET
+# Recipe (MakeRecipe) for CELT by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 18., szombat, 01.12.06 CEST
+compile_version=1.12.2
+url="http://downloads.xiph.org/releases/celt/celt-0.7.1.tar.gz"
+file_size=425092
+file_md5=c7f6b8346e132b1a48dae0eff77ea9f0
+recipe_type=configure
+configure_options=(
+    --enable-fixed-point 
+    --enable-float-approx 
+    --enable-assertions
+)

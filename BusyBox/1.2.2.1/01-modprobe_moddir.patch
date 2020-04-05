@@ -1,0 +1,30 @@
+--- busybox-1.2.2.1/modutils/modprobe.c.orig	2006-12-09 19:08:00.000000000 -0200
++++ busybox-1.2.2.1/modutils/modprobe.c	2006-12-09 19:15:07.000000000 -0200
+@@ -266,6 +266,10 @@ static char *parse_command_string( char 
+ #define parse_command_string(src, dst)	(0)
+ #endif /* ENABLE_FEATURE_MODPROBE_MULTIPLE_OPTIONS */
+ 
++#ifndef MODPROBE_MODDIR
++#define MODPROBE_MODDIR "/System/Kernel/Modules"
++#endif
++
+ /*
+  * This function reads aliases and default module options from a configuration file
+  * (/etc/modprobe.conf syntax). It supports includes (only files, no directories).
+@@ -388,13 +392,14 @@ static struct dep_t *build_dep ( void )
+ 		k_version = un.release[2] - '0';
+ 	}
+ 
+-	filename = bb_xasprintf("/lib/modules/%s/modules.dep", un.release );
++	filename = bb_xasprintf("%s/%s/modules.dep", MODPROBE_MODDIR, un.release );
+ 	fd = open ( filename, O_RDONLY );
+ 	if (ENABLE_FEATURE_CLEAN_UP)
+ 		free(filename);
+ 	if (fd < 0) {
+ 		/* Ok, that didn't work.  Fall back to looking in /lib/modules */
+-		if (( fd = open ( "/lib/modules/modules.dep", O_RDONLY )) < 0 ) {
++		filename = bb_xasprintf("%s/modules.dep", MODPROBE_MODDIR );
++		if (( fd = open ( filename, O_RDONLY )) < 0 ) {
+ 			return 0;
+ 		}
+ 	}

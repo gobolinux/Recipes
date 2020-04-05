@@ -1,0 +1,31 @@
+This patch fixes issues which prevents the build of the package.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- wmtz-0.7/wmtz/wmtz.c.orig	2013-06-05 15:41:39.000000000 -0300
++++ wmtz-0.7/wmtz/wmtz.c	2013-06-05 15:43:13.000000000 -0300
+@@ -51,7 +51,7 @@
+ #define STRSIZE 10
+ #define LMST 1
+ #define GMST 0
+-#define ABOUT "xmessage -center -buttons \"Close\" \"WMTZ - Window Maker Time Zone dockapp v0.7
++#define ABOUT "xmessage -center -buttons \"Close\" \"WMTZ - Window Maker Time Zone dockapp v0.7 \
+ http://www.geocities.com/jl1n/wmtz/wmtz.html\""
+ 
+ 
+@@ -479,6 +479,7 @@ void wmtz_routine(int argc, char **argv)
+ 		   but_stat = -1;
+                    break;
+ 	    default:
++		   break;
+ 	  }
+         }  
+ 
+@@ -529,6 +530,7 @@ void handleTheMenu(int but_stat)
+ 	    exit(0);
+ 	    break;
+ 	default:
++	    break;
+       }
+     return;
+ }

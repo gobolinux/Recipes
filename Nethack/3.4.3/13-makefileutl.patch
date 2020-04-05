@@ -1,0 +1,27 @@
+--- nethack-3.4.3-orig/sys/unix/Makefile.utl	2003-12-08 00:39:13.000000000 +0100
++++ nethack-3.4.3/sys/unix/Makefile.utl	2008-03-15 06:08:31.000000000 +0100
+@@ -15,7 +15,7 @@
+ 
+ # if you are using gcc as your compiler,
+ #	uncomment the CC definition below if it's not in your environment
+-# CC = gcc
++CC = gcc
+ #
+ #	For Bull DPX/2 systems at B.O.S. 2.0 or higher use the following:
+ #
+@@ -101,11 +101,11 @@
+ 
+ # yacc/lex programs to use to generate *_comp.h, *_lex.c, and *_yacc.c.
+ # if, instead of yacc/lex you have bison/flex, comment/uncomment the following.
+-YACC     = yacc
+-LEX      = lex
+-# YACC     = bison -y
++# YACC     = yacc
++# LEX      = lex
++YACC     = bison -y
+ # YACC     = byacc
+-# LEX      = flex
++LEX      = flex
+  
+ # these are the names of the output files from YACC/LEX. Under MS-DOS
+ # and similar systems, they may differ

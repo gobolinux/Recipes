@@ -1,0 +1,11 @@
+# Recipe for version 9.15 by Andreas Köhler <andi5.py@gmx.net>, on Sa 3. Mär 18:13:23 CET 2012
+# Recipe (MakeRecipe) for RXVT-Unicode by Isaac Dupree <id@isaac.cedarswampstudios.org>, on Sun Jul 22 19.15:17 BRT 2007
+compile_version=1.9.0
+url="http://dist.schmorp.de/rxvt-unicode/rxvt-unicode-9.15.tar.bz2"
+file_size=894764
+file_md5=15595aa326167ac5eb68c28d95432faf
+mirror_url="http://dist.schmorp.de/rxvt-unicode/Attic/rxvt-unicode-9.15.tar.bz2"
+recipe_type=configure
+configure_options=(
+   --with-terminfo="$target/Shared/terminfo"
+)

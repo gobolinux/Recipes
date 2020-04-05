@@ -1,0 +1,11 @@
+--- xc/lib/Xaw3d/Imakefile	1996-10-15 12:41:19.000000000 -0200
++++ xc-fabio.m/lib/Xaw3d/Imakefile	2006-09-04 02:33:45.000000000 -0300
+@@ -41,7 +41,7 @@
+ 
+ #  EXTRA_DEFINES = -DARROW_SCROLLBAR -DUSEGRAY
+ 
+-#  EXTRA_INCLUDES = -I.
++EXTRA_INCLUDES = -I.
+ 
+ HEADERS = \
+ 	AllWidgets.h \

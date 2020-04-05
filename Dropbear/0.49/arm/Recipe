@@ -1,0 +1,11 @@
+configure_options=(
+	--disable-largefile
+	--disable-zlib
+	--disable-openpty
+	--disable-syslog
+	--disable-lastlog
+	--disable-utmp
+	--disable-utmpx
+	--disable-wtmp
+	--disable-wtmpx
+)

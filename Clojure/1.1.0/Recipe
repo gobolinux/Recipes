@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for Clojure by Karim Belbachir <karim@eml.cc>, on Tue Mar 23 03:17:11 GMT 2010
+# Recipe for version 1.1.0 by Karim Belbachir <karim@eml.cc>, on Tue Mar 23 03:17:11 GMT 2010
+compile_version=1.13.2
+url="http://clojure.googlecode.com/files/clojure-1.1.0.zip"
+file_size=2135400
+file_md5=9c9e92f85351721b76f40578f5c1a94a
+recipe_type=manifest
+manifest=(
+   "clojure.jar:share"
+   "epl-v10.html:doc"
+   "readme.txt:doc"
+   "changes.txt:doc"
+)

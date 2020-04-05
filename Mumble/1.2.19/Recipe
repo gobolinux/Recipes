@@ -1,0 +1,35 @@
+# Recipe (MakeRecipe) for Mumble by Hisham Muhammad <hisham@gobolinux.org>, on Sun Nov 26 18:53:54 BRST 2017
+# Recipe for version 1.2.19 by Hisham Muhammad <hisham@gobolinux.org>, on Sun Nov 26 18:53:54 BRST 2017
+compile_version=016.01
+url="https://github.com/mumble-voip/mumble/releases/download/1.2.19/mumble-1.2.19.tar.gz"
+file_size=3210865
+file_md5=d101068ed27ce119effdb3765a8cf8e4
+dir='mumble-1.2.19'
+recipe_type=makefile
+pre_build() {
+   qmake -r main.pro \
+   CONFIG+="no-g15 no-server no-xevie no-embed-qt-translations no-update packaged" \
+   DEFINES+="PLUGIN_PATH=$target/lib/mumble" \
+   INCLUDEPATH+="/usr/include/speech-dispatcher"
+}
+pre_link() {
+  # bin stuff
+  install -m755 -D ./release/mumble $target/bin/mumble
+  install -m755 -D ./scripts/mumble-overlay $target/bin/mumble-overlay
+
+  # lib stuff
+  install -m755 -D ./release/libmumble.so.$versionnumber $target/lib/mumble/libmumble.so.$versionnumber
+  ln -s libmumble.so.$versionnumber $target/lib/mumble/libmumble.so
+  ln -s libmumble.so.$versionnumber $target/lib/mumble/libmumble.so.1
+  ln -s libmumble.so.$versionnumber $target/lib/mumble/libmumble.so.1.2
+  install -m755 -D ./release/plugins/liblink.so $target/lib/mumble/liblink.so
+  install -m755 -D ./release/plugins/libmanual.so $target/lib/mumble/libmanual.so
+  install -m755 -D ./release/libcelt* $target/lib/mumble/
+
+  # other stuff
+  install -m644 -D ./scripts/mumble.desktop $target/share/applications/mumble.desktop
+  install -m755 -d $target/share/man/man1
+  install -m644 -D ./man/mum* $target/share/man/man1/
+  install -m644 -D ./icons/mumble.svg $target/share/icons/hicolor/scalable/apps/mumble.svg
+  install -m644 -D ./LICENSE $target/share/licenses/$pkgname/LICENSE
+}

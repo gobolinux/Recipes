@@ -1,9 +1,0 @@
-# Recipe (MakeRecipe) for ETK by C. Holzberger <ch@MOSAIK-Software.de>, on Tue Feb 12 14:19:05 CET 2008
-# Recipe for version 1.0.042 by C. Holzberger <ch@MOSAIK-Software.de>, on Tue Feb 12 14:19:05 CET 2008
-compile_version=1.10.2
-cvs=:pserver:anonymous@anoncvs.enlightenment.org:/var/cvs/e
-cvs_module=e17/libs/etk
-
-
-recipe_type=configure
-autogen_before_configure=yes

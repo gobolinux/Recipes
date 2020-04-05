@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Pkgconfig by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 11:10:39 BRT 2005
+compile_version=2.0
+url="https://pkg-config.freedesktop.org/releases/pkg-config-0.29.2.tar.gz"
+file_size=2016830
+file_md5=f6e931e319531b736fadc017f470e68a
+recipe_type=configure
+
+configure_options=(
+    "--with-internal-glib"
+    "--disable-host-tool"
+)

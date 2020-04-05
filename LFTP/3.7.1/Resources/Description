@@ -1,0 +1,4 @@
+[Summary] Command-line file transfer program supporting FTP, HTTP, SFTP, and FISH.
+[Description] lftp is a sophisticated command line based file transfer program. Supported protocols include FTP, HTTP, SFTP, and FISH. It has a multithreaded design allowing you to issue and execute multiple commands simultaneously or in the background. It also features mirroring capabilities and will reconnect and continue transfers in the event of a disconnection. Also, if you quit the program while transfers are still in progress, it will switch to nohup mode and finish the transfers in the background. Additional protocols supported: FTP over HTTP proxy, HTTPS and FTP over SSL. There are lots of tunable parameters, including rate limitation, number of connections limitation and more.
+[Homepage] http://lftp.yar.ru/
+[License] GNU GPL 2

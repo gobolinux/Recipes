@@ -1,0 +1,24 @@
+# Recipe (MakeRecipe) for Samba by roko, <ro.ko@mcnon.com>, on Mon Dec 6 00:40:05 BRST 2004
+# Recipe for version 3.0.9 by roko, <ro.ko@mcnon.com>, on Mon Dec 6 00:40:05 BRST 2004
+# Task modified by Otto Barnes <otto.barnes@gmail.com>, on Wed Dec 15 23:30:06 EST 2004
+
+compile_version=1.7.1
+url="http://us1.samba.org/samba/ftp/samba-3.0.9.tar.gz"
+file_size=15172821
+file_md5=9cf2bcef71509a81687dec8732545400
+recipe_type=configure
+dir="samba-3.0.9/source"
+
+configure_options=(
+	"--with-automount"
+	"--with-smbmount"
+	"--with-quotas"
+	"--with-acl-support"		# Include ACL support (default=no)
+	"--with-configdir=$target/../Settings"
+)
+
+pre_link() {
+	cp -Rv examples $target/doc 
+	cp -v examples/smb.conf.default $target/../Settings
+}
+

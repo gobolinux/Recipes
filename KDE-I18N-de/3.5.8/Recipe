@@ -1,0 +1,10 @@
+# Recipe for version 3.5.8 by Andre Detsch <detsch@gobolinux.org>, on Sat Oct 20 14:41:24 BRT 2007
+url="ftp://ftp.oregonstate.edu/pub/kde/stable/3.5.8/src/kde-i18n/kde-i18n-de-3.5.8.tar.bz2"
+file_size=21358368
+file_md5=541d0f5189126addfdece3410027a6cd
+compile_version=1.9.0
+recipe_type=configure
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+)

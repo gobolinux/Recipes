@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for CGDI by Hisham Muhammad, on Mon May 29 18:15:31 BRT 2006
+# Recipe for version 1.0 by Hisham Muhammad, on Mon May 29 18:15:31 BRT 2006
+compile_version=1.8.0
+url="http://www.ida.liu.se/~vaden/cgdi/cg.tar.gz"
+file_size=11377
+file_md5=71d602c8f30f4df93cd8fe93e037f519
+unpack_files=files_in_root
+recipe_type=makefile
+install_variables=(
+   BINDIR="$target/bin"
+)

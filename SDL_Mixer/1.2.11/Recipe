@@ -1,0 +1,15 @@
+# Recipe for version 1.2.11 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. dec. 22., kedd, 05.12.10 CET
+compile_version=1.7.1
+url="http://www.libsdl.org/projects/SDL_mixer/release/SDL_mixer-1.2.11.tar.gz"
+file_size=2690654
+file_md5=65ada3d997fe85109191a5fb083f248c
+recipe_type=configure
+
+configure_options=(
+   --with-sdl-prefix=$sdl_path
+   --enable-music-mp3-mad-gpl
+)
+
+#pre_build() {
+#    [ ! -f .bootstrapped ] && ./autogen.sh && touch .bootstrapped
+#}

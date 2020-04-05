@@ -1,0 +1,10 @@
+# Recipe for version 3.4.9 by AitorATuin, on Wed Jul 13 15:39:01 CEST 2016
+# Recipe (MakeRecipe) for Gnutls by Jonas Karlsson <jonka750@student.liu.se>, on Thu Apr 7 23:33:28 CEST 2005
+compile_version=1.9.0
+url="ftp://ftp.gnutls.org/gcrypt/gnutls/v3.4/gnutls-3.4.9.tar.xz"
+file_size=6627640
+file_md5=1b3b6d55d0e2b6d01a54f53129f1da9b
+mirror_url="ftp://ftp.gnutls.org/pub/gnutls/attic/gnutls-3.4.9.tar.bz2"
+recipe_type=configure
+
+with_gtk_doc="--enable-gtk-doc"

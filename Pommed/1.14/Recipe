@@ -1,0 +1,31 @@
+# Recipe (MakeRecipe) for Pommed by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Feb 3 09:41:46 BRST 2008
+# Recipe for version 1.14 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Feb 3 09:41:46 BRST 2008
+compile_version=1.10.1
+url="http://alioth.debian.org/frs/download.php/2223/pommed-1.14.tar.gz"
+file_size=997497
+file_md5=1b54269bbadb6b43bd9e45566dd1b6ef
+recipe_type=makefile
+makefile='Makefile'
+do_install=no
+
+pre_link() {
+    mkdir $target/Shared/pommed
+    mkdir $target/Shared/gpomme
+    mkdir $target/Shared/applications
+    mkdir -p $settings_target/dbus-1/system.d
+    
+    cp pommed/pommed $target/bin
+    cp pommed/data/* $target/Shared/pommed
+    cp pommed.conf.mactel $settings_target/pommed.conf
+    cp dbus-policy.conf $settings_target/dbus-1/system.d/pommed.conf
+    GrepReplace --no-backup root 0 $settings_target/dbus-1/system.d/pommed.conf
+    cp pommed.init $target/Resources/Tasks/Pommed
+    chmod +x $target/Resources/Tasks/Pommed
+
+    cp gpomme/gpomme $target/bin
+    cp gpomme/themes $target/Shared/gpomme -a
+    cp gpomme/gpomme*.desktop $target/Shared/applications
+    cp gpomme/gpomme.glade $target/Shared/gpomme
+
+    cp wmpomme/wmpomme $target/bin
+}

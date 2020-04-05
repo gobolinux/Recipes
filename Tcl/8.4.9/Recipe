@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for Tcl by  Ozgur Ulukir, on Mon Dec 20 19:16:58 EET 2004
+# Recipe for version 8.4.9 by  Ozgur Ulukir, on Mon Dec 20 19:16:58 EET 2004
+compile_version=1.7.1
+url="$httpSourceforge/tcl/tcl8.4.9-src.tar.gz"
+file_size=3496364
+file_md5=7e01b409925e4eb59ad44a4c12b9c681
+dir='tcl8.4.9/unix'
+recipe_type=configure

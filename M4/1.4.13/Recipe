@@ -1,0 +1,9 @@
+# Recipe for version 1.4.13 by Giambattista Bloisi <giamby@infinito.it>, on Sun Apr 19 10:56:25 CEST 2009
+compile_version=1.10.2
+url="$ftpGnu/m4/m4-1.4.13.tar.bz2"
+file_size=1008418
+file_md5=28f9ccd3ac4da45409251008b911d677
+recipe_type=configure
+configure_options=(
+   "--enable-changeword"
+)

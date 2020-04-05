@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for Vim by Matthias Wolf, on Tue Sep 21 12:10:37 CEST 2004
+compile_version=1.9.0
+url="ftp://ftp.vim.org/pub/vim/unix/vim-7.1.tar.bz2"
+file_size=6876053
+file_md5=44c6b4914f38d6f9aa959640b89da329
+dir='vim71'
+recipe_type=configure
+
+configure_options=(
+	"--prefix=$target"
+)
+
+pre_link() {
+	ln -s vim $target/bin/vi
+}

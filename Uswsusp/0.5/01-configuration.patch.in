@@ -1,0 +1,51 @@
+diff -Naur suspend-0.5/config.h suspend-0.5.new/config.h
+--- suspend-0.5/config.h	2006-11-07 22:13:33.000000000 +0100
++++ suspend-0.5.new/config.h	2007-04-28 23:28:24.000000000 +0200
+@@ -23,4 +23,4 @@
+ 
+ void usage(char *my_name, struct option options[]);
+ 
+-#define CONFIG_FILE	"/etc/suspend.conf"
++#define CONFIG_FILE	"@%Compile_settings_target%@/suspend.conf"
+diff -Naur suspend-0.5/Makefile suspend-0.5.new/Makefile
+--- suspend-0.5/Makefile	2006-11-12 15:43:54.000000000 +0100
++++ suspend-0.5.new/Makefile	2007-04-28 23:32:08.000000000 +0200
+@@ -1,12 +1,12 @@
+-#CONFIG_COMPRESS=yes
+-#CONFIG_ENCRYPT=yes
++CONFIG_COMPRESS=yes
++CONFIG_ENCRYPT=yes
+ #CONFIG_SPLASHY=yes
+ #CONFIG_UDEV=yes
+ 
+ ARCH:=$(shell uname -m)
+ 
+-CC_FLAGS=-I/usr/local/include
+-LD_FLAGS=-L/usr/local/lib
++CC_FLAGS=-I@%Compile_goboHeaders%@
++LD_FLAGS=-L@%Compile_goboLibraries%@
+ 
+ CFLAGS := -O2 -Wall
+ 
+@@ -22,17 +22,17 @@
+ LD_FLAGS	+= $(GCRYPT_LD_FLAGS)
+ endif
+ 
+-SUSPEND_DIR=/usr/local/sbin
+-CONFIG_DIR=/etc
++SUSPEND_DIR=@%Compile_target%@/bin
++CONFIG_DIR=@%Compile_settings_target%@
+ RESUME_DEVICE=<path_to_resume_device_file>
+-BOOT_DIR=/boot
++BOOT_DIR=@%Compile_goboBoot%@
+ 
+ S2BOTH=s2both
+ S2DISK=s2disk
+ CONFIGFILE=suspend.conf
+ 
+ ifndef CONFIG_UDEV
+-SNAPSHOT=$(DESTDIR)/dev/snapshot
++SNAPSHOT=@%Compile_goboDevices%@/snapshot
+ endif
+ 
+ ifdef CONFIG_ENCRYPT

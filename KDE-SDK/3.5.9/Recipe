@@ -1,0 +1,15 @@
+# Recipe for version 3.5.9 by Jerome St-Louis <jerstlouis@gmail.com>, on Tue Aug 26 23:35:28 EDT 2008
+
+url="ftp://ftp.kde.org/pub/kde/stable/3.5.9/src/kdesdk-3.5.9.tar.bz2"
+file_size=5250576
+file_md5=fd86abfe0ac7c5af61b15eb5367d0399
+compile_version=1.8.5
+recipe_type=configure
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+  "--enable-pcm"
+  "--disable-libsuffix"
+  #"DO_NOT_COMPILE=cervisia" 
+ # doc kapptemplate kbabel kbugbuster kcachegrind kdeaccounts-plugin kdepalettes kfile.plugins kmtrace kompare kprofilemethod kspy kstartperf kuiviewer poxml scheck scripts umbrello
+)

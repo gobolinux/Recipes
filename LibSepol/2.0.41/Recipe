@@ -1,0 +1,16 @@
+# Recipe for version 2.0.41 by Hugo Barrocas <barrocas@iol.pt>, on Dom Jul 11 18:45:34 WEST 2010
+# Recipe (MakeRecipe) for LibSepol by roko, <ro.ko@mcnon.com>, on Fri Apr 8 20:49:15 CEST 2005
+compile_version=1.8.0
+url="http://userspace.selinuxproject.org/releases/20100525/devel/libsepol-2.0.41.tar.gz"
+file_size=194700
+file_md5=38cd0e996b679e849764d429d4afe5bd
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(PREFIX="$target")
+install_variables=(DESTDIR="$target")
+pre_link() { 
+ln -sf $target/lib/libsepol.so.1 $target/lib/libsepol.so
+mv -fv $target/usr/share/man/man3/* $target/man/man3
+mv -fv $target/usr/share/man/man8/* $target/man/man8
+rm -Rf $target/usr
+} 

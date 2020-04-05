@@ -1,0 +1,15 @@
+# Recipe for version 0.26.1 by Hisham Muhammad <hisham@gobolinux.org>, on Tue Jun 17 19:12:59 BRT 2014
+# Recipe (MakeRecipe) for Poppler by Harald Klimach, on Mon Mar 6 13:01:20 CET 2006
+compile_version=1.8.2
+url="http://poppler.freedesktop.org/poppler-0.26.1.tar.xz"
+file_size=1592884
+file_md5=3e864e1e94fc8432e90afe9bab1a5603
+recipe_type=configure
+
+configure_options=(
+    # Required by inkscape
+    --enable-xpdf-headers
+    --disable-poppler-qt4
+    --enable-zlib
+    --enable-libcurl
+)

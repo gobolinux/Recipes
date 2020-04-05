@@ -1,0 +1,17 @@
+# Recipe for version 3.05 by Joshua Sako <jginsu@gmail.com>, on Wed Aug 18 18:09:32 EDT 2010
+# Recipe (MakeRecipe) for UPX by Harald Klimach, on Mon Feb 6 20:52:25 CET 2006
+compile_version=1.8.0
+url="http://upx.sourceforge.net/download/upx-3.05-src.tar.bz2"
+file_size=861139
+file_md5=1f0ca94c8c26a816402274dd7e628334
+dir='upx-3.05-src/src'
+recipe_type=makefile
+do_install=no
+environment=(
+   "UCLDIR=$target/UCL/Current"
+   "UPX_MAKE_TARGET=linux"
+)
+
+pre_link() {
+  cp upx.out $target/bin/upx
+}

@@ -1,0 +1,14 @@
+Drop privileges to BitlBee, running as root is *stupid*.
+
+diff -Naur bitlbee-1.2.3/bitlbee.conf bitlbee-1.2.3.new/bitlbee.conf
+--- bitlbee-1.2.3/bitlbee.conf	2008-09-06 14:33:13.000000000 +0200
++++ bitlbee-1.2.3.new/bitlbee.conf	2008-11-12 19:00:41.000000000 +0100
+@@ -23,7 +23,7 @@
+ ## If BitlBee is started by root as a daemon, it can drop root privileges,
+ ## and change to the specified user.
+ ##
+-# User = bitlbee
++User = bitlbee
+ 
+ ## DaemonPort/DaemonInterface:
+ ##

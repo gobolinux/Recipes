@@ -1,0 +1,14 @@
+# Recipe for version 1.2.26 by Giambattista Bloisi <giamby@infinito.it>, on Tue Apr 8 21:10:53 CEST 2008
+compile_version=1.8.5
+url="$httpSourceforge/libpng/libpng-1.2.26.tar.bz2"
+file_size=627569
+file_md5=1f743f4a3e5a9c12ea16eff0c60c3f8e
+recipe_type=configure
+configure_options=(
+   "--mandir=${target}/man"
+)
+
+pre_link() {
+    ln -sf libpng12 $target/include/libpng
+    ln -sf libpng.so $target/lib/libpng.so.0
+}

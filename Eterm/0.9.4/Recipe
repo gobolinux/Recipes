@@ -1,0 +1,14 @@
+# Recipe for version 0.9.4 by Aitor Perez Iturri, on dom abr 6 12:52:32 CEST 2008
+# Eterm 0.9.4 Recipe by Volker Wieban <buckoven@gobolinux.de>
+compile_version=1.8.0
+url="http://www.eterm.org/download/Eterm-0.9.4.tar.gz"
+file_size=814823
+file_md5=b8869ee9c9b9516231af9eefa595cee3
+recipe_type=configure
+
+pre_install () {
+	mkdir -p $target/Shared/terminfo
+	GrepReplace "/usr/share/" "$target/Shared/" Eterm.spec
+	GrepReplace "/usr/share/" "$target/Shared" doc/Makefile
+	GrepReplace "\(\$(TIC)\) \(Eterm.ti\)" "\1 -o$target/Shared/terminfo \2" doc/Makefile
+}

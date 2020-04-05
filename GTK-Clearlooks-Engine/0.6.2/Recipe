@@ -1,0 +1,12 @@
+# Recipe for version 0.6.2 by Matthias Wolf, on Fri Jul 1 12:16:19 CEST 2005
+# Recipe (MakeRecipe) for GTK-Engine-Clearlooks by Matthias Wolf, on Thu Mar 10 11:11:45 CET 20.6.2
+compile_version=1.8.0
+url="$httpSourceforge/clearlooks/clearlooks-0.6.2.tar.bz2"
+recipe_type=configure
+
+configure_options=(
+	"--enable-animation"
+)
+environment=(
+	"target=$target"
+)

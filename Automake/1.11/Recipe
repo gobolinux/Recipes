@@ -1,0 +1,12 @@
+# Recipe for version 1.11 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 3., péntek, 15.12.35 CEST
+url="$ftpGnu/automake/automake-1.11.tar.bz2"
+file_size=1058759
+file_md5=4db4efe027e26b33930a7e151de19d0f
+compile_version=1.11
+recipe_type=configure
+pre_install() {
+   pushd "${target}/share"
+   ln -s automake-1.10 automake
+   ln -s aclocal-1.10 aclocal
+   popd
+}

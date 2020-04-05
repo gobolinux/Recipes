@@ -1,0 +1,9 @@
+# Recipe for version 1.3.3 by Andre Detsch <detsch@gobolinux.org>, on Sat Dec 9 14:36:17 BRST 2006
+# Recipe (MakeRecipe) for Git by Jonas Karlsson <jonka750@student.liu.se>, on Sat Apr 15 18:45:06 CEST 2006
+compile_version=1.7.1
+url="http://www.kernel.org/pub/software/scm/git/git-1.3.3.tar.bz2"
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+)

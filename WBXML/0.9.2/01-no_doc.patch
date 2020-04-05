@@ -1,0 +1,12 @@
+The source contain no doc/ dir.
+
+--- wbxml2-0.9.2/Makefile.am	2006-07-11 11:47:43.000000000 +0000
++++ wbxml2-0.9.2/Makefile.am.new	2008-02-18 17:45:43.000000000 +0000
+@@ -26,7 +26,6 @@
+ 
+ install-data-local:
+ 	$(mkinstalldirs) $(DESTDIR)$(wbxmldocdir)/manual
+-	cp -Rp doc/* $(DESTDIR)$(wbxmldocdir)/manual
+ 
+ dist-bz2: distdir
+ 	sed -e "s/tar.gz/tar.bz2/g" $(distdir)/wbxml2.spec > $(distdir)/wbxml2.spec.aux

@@ -1,0 +1,13 @@
+# Recipe for version 1.16.43 by Leandro Motta Barros <lmb@stackedboxes.org>, on Tue Nov 13 14:02:41 BRST 2012
+# Recipe (MakeRecipe) for XMLRPC-C by Leandro Motta Barros <lmb@stackedboxes.org>, on Tue Nov 13 13:43:18 BRST 2012
+compile_version=1.13.3
+url="$httpSourceforge/project/xmlrpc-c/Xmlrpc-c%20Super%20Stable/1.16.43/xmlrpc-c-1.16.43.tgz"
+file_size=758869
+file_md5=9d58d8579b520fda265454a670ffb333
+recipe_type=configure
+makefile=GNUmakefile
+
+# Curl support seems to be broken.
+configure_options=(
+   --disable-curl-client
+) 

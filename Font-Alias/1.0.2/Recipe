@@ -1,0 +1,11 @@
+# Recipe for version 1.0.2 by Jonas Karlsson <jonas@gobolinux.org>, on Tue Jan 12 01:37:59 CET 2010
+# Recipe (MakeRecipe) for Font-Alias by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jun 4 15:10:58 BRT 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/releases/individual/font/font-alias-1.0.2.tar.bz2"
+file_size=93678
+file_md5=9d40dba6fb8cb58dacb433fc7bcaafca
+recipe_type=configure
+part_of=Xorg-Font
+configure_options=(
+    --with-fontrootdir="${target}/share/fonts"
+)

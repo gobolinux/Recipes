@@ -1,0 +1,12 @@
+# Recipe for version 4.1.2 by Giambattista Bloisi <giamby@infinito.it>, on Tue Oct 28 21:38:26 CET 2008
+# Recipe (MakeRecipe) for KDE-Graphics by Giambattista Bloisi <giamby@infinito.it>, on Thu Jan 17 08:56:50 CET 2008
+compile_version=1.10.0
+url="ftp://ftp.kde.org/pub/kde/stable/4.1.2/src/kdegraphics-4.1.2.tar.bz2"
+file_size=3435287
+file_md5=f29e68dfe91cc0d2a5fbe2e4f7920054
+file="kdegraphics-4.1.2.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)

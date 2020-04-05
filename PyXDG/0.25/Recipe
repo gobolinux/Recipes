@@ -1,0 +1,11 @@
+# Recipe for version 0.25 by Leandro Motta Barros <lmb@stackedboxes.org>, on Tue Apr 23 21:20:48 BRT 2013
+# Recipe (MakeRecipe) for PyXDG by Nathan Middleton, on Mon Oct 22 15:26:35 CDT 2007
+compile_version=1.9.0
+url="https://pypi.python.org/packages/source/p/pyxdg/pyxdg-0.25.tar.gz"
+file_size=48935
+file_md5=bedcdb3a0ed85986d40044c87f23477c
+recipe_type=python
+
+environment=(
+    "PYTHONPATH=.:${goboLibraries}/python2.5/site-packages"
+)

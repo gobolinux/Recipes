@@ -1,0 +1,9 @@
+# Recipe for version 1.4.16 by Joshua Sako <jginsu@gmail.com>, on Sat May 14 14:09:39 EST 2011
+compile_version=1.10.2
+url="$ftpGnu/m4/m4-1.4.16.tar.bz2"
+file_size=1258362
+file_md5=8a7cef47fecab6272eb86a6be6363b2f
+recipe_type=configure
+configure_options=(
+   "--enable-changeword"
+)

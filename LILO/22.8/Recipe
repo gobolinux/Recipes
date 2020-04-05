@@ -1,0 +1,21 @@
+# Recipe for version 22.8 by Lucas C. Villa Real, on Tue Feb 27 03:37:35 BRT 2007
+compile_version=1.8.2
+url="http://home.san.rr.com/johninsd/pub/linux/lilo/lilo-22.8.src.tar.gz"
+mirror_url="http://home.san.rr.com/johninsd/pub/linux/lilo/obsolete/lilo-22.8.src.tar.gz"
+file_size=437555
+file_md5=72765f2aafd20e23ecf07ebd22baeec7
+recipe_type=makefile
+makefile='Makefile'
+dir='lilo-22.8'
+
+make_variables=(
+    SBIN_DIR=$target/sbin
+    CFG_DIR=$settings_target
+    BOOT_DIR=$goboBoot
+    USRSBIN_DIR=$target/sbin
+    MAN_DIR=$target/man
+)
+
+unmanaged_files=(
+    $goboBoot
+)

@@ -1,0 +1,21 @@
+diff -Naur dcd-0.99.2/Makefile dcd-0.99.2-patched/Makefile
+--- dcd-0.99.2/Makefile	2003-08-27 22:44:07.000000000 -0300
++++ dcd-0.99.2-patched/Makefile	2004-07-23 22:47:31.000000000 -0300
+@@ -45,7 +45,7 @@
+ ## If you want to disable the network code, try this. It probably doesn't
+ ## work, but you're welcome to try ... Just comment out the next line.
+ 
+-NETWORK = 1
++#NETWORK = 1
+ 
+ ## Here be dragons... (Non-configurable parts past here.)
+ 
+@@ -107,7 +107,7 @@
+ 	install -m 755 -s dcd ${PREFIX}/bin
+ 	install -m 755 -d ${PREFIX}/man/man1
+ 	install -m 644 dcd.1 ${PREFIX}/man/man1
+-	install -m 755 -d ${HOME}/${CDI}
++#	install -m 755 -d ${HOME}/${CDI}
+ 
+ depend:
+ 	makedepend -- ${CFLAGS} ${EXTRA_CFLAGS} -- ${SRCS}

@@ -1,0 +1,12 @@
+# Recipe for version 20060125 by Laurent Pelecq (laurent.pelecq at soleil.org), on mar mar 28 23:33:57 CEST 2006
+compile_version=1.8.0
+url="$httpSourceforge/fontforge/fontforge_full-20060125.tar.bz2"
+recipe_type=configure
+dir="fontforge-20060125"
+configure_options=(
+    --with-freetype-bytecode           # Control whether we build with the bytecode interpreter
+ # --with-freetype-src=dir              # Specify freetype source directory
+    --with-multilayer                        # Control whether we build with support for type3/svg fonts containing multilayered drawing with strokes, fills, images, etc.
+    --with-devicetables                    # Control whether we build with support for device tables which allow fine control of kerning (etc.) at small point sizes
+ # --with-gtk                                   #  Control whether we build using the gtk toolkit (does not work yet)
+)

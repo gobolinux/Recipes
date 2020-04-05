@@ -1,0 +1,12 @@
+#!/bin/sh
+
+#
+# Task to store and restore alsa volume settings
+# Created by Jonas Karlsson <jonka750@student.liu.se> Tue Nov 14 14:17
+#
+case "$1" in
+[sS]tart) option="restore" ;;
+[sS]top) option="store" ;;
+esac # hmm...
+alsactl $option
+

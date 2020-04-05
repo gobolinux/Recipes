@@ -1,0 +1,10 @@
+# Recipe for version 1.82
+url="http://mirrors.igsobe.com/nongnu/texi2html/texi2html-1.82.tar.bz2"
+file_size=5046530
+file_md5=a8a9193c0ac1bec2f3ca7be40a5a82eb
+dir='texi2html-1.82'
+compile_version=1.13.0
+recipe_type=configure
+make_variables=(
+   "LINGUAS="
+)

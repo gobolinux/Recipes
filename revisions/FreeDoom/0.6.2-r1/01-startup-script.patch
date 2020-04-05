@@ -1,9 +1,0 @@
-Patch to add a startup script.
-
-Author: John Robert Beshir <namegduf@fudgeman.org>
-Submitted Upstream: No. Patch is specific to the installation.
---- M1A1-old/freedoom	1969-12-31 21:00:00.000000000 -0300
-+++ M1A1/freedoom	2008-06-10 17:14:33.000000000 -0300
-@@ -0,0 +1,2 @@
-+#!/bin/sh
-+prboom -iwad FreeDoom.wad

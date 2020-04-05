@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for LibPcap by Evandro Clivatti Dall'Agnol, on Wed Sep 1 19:51:16 BRT 2004
+# Recipe for version 0.8.3 by Evandro Clivatti Dall'Agnol, on Wed Sep 1 19:51:16 BRT 2004
+compile_version=1.7.1
+# configure_options changed to compile tcpdump 3.8.3 (by roko)
+url="http://www.tcpdump.org/release/libpcap-0.8.3.tar.gz"
+file_size=302551
+file_md5=56a9d4615d8354fcfe8cff8c8443c77b
+recipe_type=configure
+configure_options=(
+--enable-yydebug
+)

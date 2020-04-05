@@ -1,0 +1,16 @@
+# Recipe for version 2.24.22 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 9 17:59:01 GMT 2014
+# Recipe (MakeRecipe) for GTK+ by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 11:55:54 BRT 2005
+compile_version=1.9.0
+url="http://ftp.gnome.org/pub/gnome/sources/gtk+/2.24/gtk+-2.24.22.tar.xz"
+file_size=13376344
+file_md5=5fbbfb7637bbd571a572a2dae0e736d2
+recipe_type=configure
+dir='gtk+-2.24.22'
+
+configure_options=(
+    --disable-gtk-doc-html
+)
+
+install_variables=(
+    RUN_QUERY_IMMODULES_TEST=false
+)

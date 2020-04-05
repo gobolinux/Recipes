@@ -1,0 +1,10 @@
+--- busybox-1.1.2/shell/ash.c.orig	2006-05-10 11:44:45.000000000 -0300
++++ busybox-1.1.2/shell/ash.c	2006-05-10 11:47:28.000000000 -0300
+@@ -1353,6 +1353,7 @@ static const struct builtincmd builtincm
+ 	{ BUILTIN_SPEC_REG_ASSG "readonly", exportcmd },
+ 	{ BUILTIN_SPEC_REG      "return", returncmd },
+ 	{ BUILTIN_SPEC_REG      "set", setcmd },
++	{ BUILTIN_SPEC_REG      "source", dotcmd },
+ 	{ BUILTIN_SPEC_REG      "shift", shiftcmd },
+ 	{ BUILTIN_SPEC_REG      "times", timescmd },
+ 	{ BUILTIN_SPEC_REG      "trap", trapcmd },

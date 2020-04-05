@@ -1,0 +1,11 @@
+# Recipe for version 2.5.4 by Nick Matteo <kundor@kundor.org>, on Fri Mar 13 03:42:16 EDT 2009
+# Recipe (MakeRecipe) for Grep by Andre Detsch, on Wed Mar 9 17:46:19 BRT 2005
+compile_version=1.9.0
+url="ftp://ftp.gnu.org/pub/gnu/grep/grep-2.5.4.tar.bz2"
+file_size=723181
+file_md5=5650ee2ae6ea4b39e9459d7d0585b315
+recipe_type=configure
+needs_safe_linking=yes
+configure_options=(
+    "--without-included-regex"
+)

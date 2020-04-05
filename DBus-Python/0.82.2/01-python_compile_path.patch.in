@@ -1,0 +1,22 @@
+This patch makes py-compile put the resulting byte files in the
+correct prefix
+
+-- 
+/Jonas Karlsson
+
+--- dbus-python-0.82.2/dbus/Makefile.in	2007-08-01 21:05:31.000000000 +0200
++++ dbus-python-0.82.2/dbus/Makefile.in.new	2007-09-14 07:35:20.000000000 +0200
+@@ -260,11 +260,8 @@
+ 	  else :; fi; \
+ 	done; \
+ 	if test -n "$$dlist"; then \
+-	  if test -z "$(DESTDIR)"; then \
+-	    PYTHON=$(PYTHON) $(py_compile) --basedir "$(pythondbusdir)" $$dlist; \
+-	  else \
+-	    PYTHON=$(PYTHON) $(py_compile) --destdir "$(DESTDIR)" --basedir "$(pythondbusdir)" $$dlist; \
+-	  fi; \
++	  echo PYTHON=$(PYTHON) $(py_compile) --destdir "$(pythondbusdir)" --basedir "@%Compile_goboLibraries%@/python$(PYTHON_VERSION)/site-packages" $$dlist; \
++	  PYTHON=$(PYTHON) $(py_compile) --destdir "$(pythondbusdir)" $$dlist; \
+ 	else :; fi
+ 
+ uninstall-nobase_pythondbusPYTHON:

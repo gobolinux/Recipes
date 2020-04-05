@@ -1,0 +1,18 @@
+# Recipe for version 1.42.04 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. dec. 14., hétfő, 01.14.34 CET
+# Recipe (MakeRecipe) for ESpeak by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. dec. 28., vasárnap, 02.24.22 CET
+compile_version=1.12.0
+url="$httpSourceforge/espeak/espeak-1.42.04-source.zip"
+file_size=1537076
+file_md5=a4cbbe5f2e2a37ccc0aa1a687a6e4c11
+recipe_type=makefile
+dir="espeak-1.42.04-source/src"
+make_variables=(
+    PREFIX=$target
+)
+pre_build() {
+    rm -f portaudio*.h
+}
+do_install() {
+   makefile_do_install "$@"
+   install -m 755 "${compileSourcesDir}"/espeak-1.42.04-source/src/speak "$target"/bin
+}

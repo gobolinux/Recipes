@@ -1,0 +1,15 @@
+# Recipe for version 3.5.8 by Andre Detsch <detsch@gobolinux.org>, on Fri Oct 19 16:08:24 BRT 2007
+
+url="http://download.kde.org/stable/3.5.8/src/kdegraphics-3.5.8.tar.bz2"
+file_size=7444011
+file_md5=a3a31fc0e5b791ef330dd0627095d90f
+recipe_type=configure
+compile_version=1.9.0
+configure_options=(
+   "--disable-debug"
+   "--disable-dependency-tracking"
+   "--disable-libsuffix"
+#  "DO_NOT_COMPILE="
+#kamera kcoloredit kdvi kfax kfaxview kfile-plugins kgamma kghostview kiconedit kmrml kolourpaint kooka 
+#kpdf kpovmodeler kruler ksnapshot ksvg kuickshow kview kvieshell libkscan
+)

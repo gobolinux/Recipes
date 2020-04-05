@@ -1,0 +1,20 @@
+# Recipe for version 4.6.2 by Jonas Karlsson <jonas@gobolinux.org>, on Mon Jan 11 23:39:18 CET 2010
+# Recipe (MakeRecipe) for LibXFcegui4 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:20:12 CEST 2006
+compile_version=1.8.2
+url="http://mocha.xfce.org/archive/src/xfce/libxfcegui4/4.6/libxfcegui4-4.6.2.tar.bz2"
+file_size=669487
+file_md5=e520b93351d87194b5fcc1315acd8617
+recipe_type=configure
+configure_options=(
+   --enable-debug=no
+)
+with_libglade=(
+   --with-libglade-module-path=$target/lib/libglade/2.0
+)
+with_glade=(
+   --with-gladeui-data-root="$target/share/glade3"
+   --with-gladeui-module-path="$target/lib/glade3/modules"
+)
+with_doc=(
+   --enable-gtk-doc
+)

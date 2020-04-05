@@ -1,0 +1,35 @@
+AbiWord >= 2.6
+Boost >= 1.33.1 [boost]
+DBus >= 1.0.1
+DBus-GLib >= 0.70
+Fontconfig >= 1.0
+Fribidi >= 0.10.4 [fribidi,rtl]
+GCC 4.2.4
+GLib >= 2.0
+Glibc 2.8
+#Gnome-Scan >= 0.5.1, < 0.6.0 [ocr] # Currently broken
+Goffice >= 0.4.0 [goffice,gnome]
+GTK+ >= 2.0
+GTKMathView >= 0.7.5
+LibGDA >= 1.2.0 # Database plugin
+LibGlade >= 2.0.0 [libglade,gnome]
+LibGnomeDB >= 1.2.0 # Database plugin
+LibGnomePrint >= 2.2.1 [libgnomeprint,gnome]
+LibGnomePrintui >= 2.2.1 [libgnomeprint,gnome]
+LibGnomeui >= 2.0 [libgnomeui,gnome]
+LibGSF >= 1.14.4
+LibPNG >= 1.2
+LibRSVG >= 2.0
+LibSoup >= 2.4.1
+LibWMF >= 0.2.8 # Windows MetaFile
+LibWPD >= 0.8.0 # For WordPerfect documents
+LibWPG >= 0.1.0 # For WordPrefect Graphics
+LibWPS >= 0.1.0 # For MS Works files
+LibXML2 >= 2.4.20
+Link-Grammar >= 4.2.1
+LoudMouth >= 1.0.1 [xmpp]
+Nautilus >= 2.0 [nautilus,gnome]
+OTS >= 0.5.0 # Open text summary
+Psiconv >= 0.9.1 [psion5]
+Xorg-Lib >= 7.0
+ZLib >= 1.2.1

@@ -1,0 +1,11 @@
+--- strace-4.5.8/configure.ac.orig	2006-02-17 17:18:57.000000000 -0200
++++ strace-4.5.8/configure.ac	2006-02-17 17:19:11.000000000 -0200
+@@ -91,7 +91,7 @@ hppa*|parisc*)
+ 	arch=hppa
+ 	AC_DEFINE([HPPA], 1, [Define for the HPPA architecture.])
+ 	;;
+-sh)
++sh|sh4)
+ 	arch=sh
+ 	AC_DEFINE([SH], 1, [Define for the SH architecture.])
+ 	;;

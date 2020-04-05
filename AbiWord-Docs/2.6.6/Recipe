@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for AbiWord-Docs by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jan. 25., vasárnap, 00.53.44 CET
+# Recipe for version 2.6.6 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jan. 25., vasárnap, 00.53.44 CET
+compile_version=1.11.4
+url="http://www.abisource.com/downloads/abiword/2.6.6/source/abiword-docs-2.6.6.tar.gz"
+file_size=1447039
+file_md5=833129f266e699b3cf0f3774e005a312
+recipe_type=configure
+autogen_before_configure=yes
+make_variables=(
+    ABIWORD_EXTRAS_PKGDATADIR=$target/share/abiword-2.6
+)

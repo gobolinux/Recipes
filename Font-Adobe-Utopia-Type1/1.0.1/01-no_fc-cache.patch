@@ -1,0 +1,11 @@
+--- font-adobe-utopia-type1-X11R7.0-1.0.1/Makefile.in	2005-12-21 08:16:32.000000000 +0000
++++ font-adobe-utopia-type1-X11R7.0-1.0.1/Makefile.in.new	2008-06-01 20:02:24.000000000 +0000
+@@ -388,7 +388,7 @@
+ 	$(MKFONTSCALE) $(DESTDIR)$(fontdir)
+ 	@rm -f $(DESTDIR)$(fontdir)/font.dir
+ 	$(MKFONTDIR) $(DESTDIR)$(fontdir)
+-	$(FCCACHE) $(DESTDIR)$(fontdir)
++#	$(FCCACHE) $(DESTDIR)$(fontdir)
+ 
+ distuninstallcheck:
+ 	@:

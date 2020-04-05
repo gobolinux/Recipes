@@ -1,0 +1,10 @@
+# Recipe for version 2.4.6 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Mar 30 23:28:54 GMT 2014
+# Recipe (MakeRecipe) for PPP by Andreas Koehler, on Thu Aug 11 23:57:09 CEST 2005
+compile_version=1.8.2
+url="http://www.mirrorservice.org/sites/www.ibiblio.org/gentoo/distfiles/ppp-2.4.6.tar.gz"
+file_size=687744
+file_md5=3434d2cc9327167a0723aaaa8670083b
+recipe_type=configure
+install_variables=(
+   DESTDIR=$target
+)

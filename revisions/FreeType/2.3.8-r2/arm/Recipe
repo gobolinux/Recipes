@@ -1,3 +1,0 @@
-pre_build() {
-	$HOSTCC -o objs/apinames src/tools/apinames.c
-}

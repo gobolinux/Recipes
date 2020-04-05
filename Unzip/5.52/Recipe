@@ -1,0 +1,14 @@
+# Recipe for version 5.52 by roko, <ro.ko@mcnon.com>, on Sat Mar 12 20:36:46 CET 2005
+compile_version=1.8.1
+url="ftp://sunsite.icm.edu.pl/pub/unix/archiving/info-zip/src/unzip552.tar.gz"
+file_size=1140291
+file_md5=9d23919999d6eac9217d1f41472034a9
+recipe_type=makefile
+dir="unzip-5.52"
+makefile="unix/Makefile"
+build_target=generic
+
+install_variables=(
+  "prefix=$target"
+)
+

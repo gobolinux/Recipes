@@ -1,0 +1,29 @@
+# Recipe for version 2.0 by Leandro Motta Barros <lmb@stackedboxes.org>, on Sat Oct 8 22:28:43 BRT 2011
+# Recipe (MakeRecipe) for JBIG-KIT by Daniele Maccari, on Sat Jan 26 22:30:52 CET 2008
+compile_version=1.10.0
+url="http://www.cl.cam.ac.uk/~mgk25/download/jbigkit-2.0.tar.gz"
+file_size=435027
+file_md5=3dd87f605abb1a97a22dc79d8b3e8f6c
+file="jbigkit-2.0.tar.gz"
+dir='jbigkit'
+recipe_type=manifest
+
+pre_install(){
+	make
+}
+
+docs=(
+	"ANNOUNCE"
+	"CHANGES"
+)
+
+manifest=(
+	"libjbig/libjbig.a:lib"
+	"libjbig/jbig.h:include"
+	"pbmtools/jbgtopbm:bin"
+	"pbmtools/pbmtojbg:bin"
+	"pbmtools/jbgtopbm.1:man/man1"
+	"pbmtools/pbmtojbg.1:man/man1"
+	"pbmtools/pbm.5:man/man5"
+	"pbmtools/pgm.5:man/man5"
+)

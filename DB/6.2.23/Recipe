@@ -1,0 +1,21 @@
+# Recipe for version 6.2.23 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jul 30 07:10:55 BRT 2016
+# Recipe (MakeRecipe) for DB by roko, <ro.ko@mcnon.com>, on Wed Feb 2 15:29:24 CET 2005
+compile_version=1.12.4
+url="http://download.oracle.com/berkeley-db/db-6.2.23.tar.gz"
+file_size=44305964
+file_md5=9da126afb937a48171ff1e569ce67cf1
+recipe_type=configure
+dir=db-6.2.23/build_unix
+configure=../dist/configure
+environment=(
+   CC=gcc
+)
+configure_options=(
+   --enable-compat185
+   --enable-cxx        #     Build C++ API.
+#   --enable-java      #     Build Java API.
+#   --enable-rpc       #     Build RPC client/server.
+   --enable-tcl       #     Build Tcl API.
+   "--with-tcl=$tcl_path/lib"
+#   --enable-test      #     Configure to run the test suite.
+)

@@ -1,0 +1,11 @@
+# Recipe for version 6.13.2 by Diogo Lima <diogo.urb@gmail.com>, on Fri Jan 28 16:56:55 BRST 2011
+# Recipe (MakeRecipe) for XF86-Video-ATI by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jan 9 17:15:50 BRST 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/driver/xf86-video-ati-6.13.2.tar.bz2"
+file_size=985673
+file_md5=a8f92fe3c458e511f4e2ead7f92c02b0
+recipe_type=configure
+part_of=Xorg-Driver
+configure_options=(
+   --enable-dri
+)

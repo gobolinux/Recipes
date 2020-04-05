@@ -1,0 +1,26 @@
+# Recipe (MakeRecipe) for Xynth by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Apr 11 11:06:00 BRT 2006
+# Recipe for version 0.8.20 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Apr 11 11:06:00 BRT 2006
+compile_version=1.8.0
+url="$httpSourceforge/xynth/xynth-0.8.20.tar.bz2"
+file_size=1431079
+file_md5=7146576b44bf913832c64d91c4dee32f
+dir='xynth'
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=(
+	CONFDIR="$target/../Settings/"
+	INSTALLDIR="$target/"
+	_INSTALLDIR="$target/"
+	SHAREDIR="Shared/xynth/"
+	_SHAREDIR="Shared/xynth/"
+)
+
+pre_build() {
+	pushd $dir >& /dev/null
+	GrepReplace "VIDEO_SDL       = Y"       "VIDEO_SDL       = N"       Makefile.cfg
+	GrepReplace "VIDEO_SVGALib   = Y"       "VIDEO_SVGALib   = N"       Makefile.cfg
+	GrepReplace "DEBUG       = Y"           "DEBUG       = N"           Makefile.cfg
+	GrepReplace "\$(_INSTALLDIR)/\$(_SHAREDIR)/\$(_CONFDIR)" "$target/../Settings/" Makefile.cfg
+	popd >& /dev/null
+}

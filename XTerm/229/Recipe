@@ -1,0 +1,11 @@
+# Recipe for version 229 by Giambattista Bloisi <giamby@infinito.it>, on Tue Nov 27 20:52:44 CET 2007
+# Recipe (MakeRecipe) for XTerm by Hisham Muhammad, on Thu Feb 23 14:45:58 BRT 2006
+compile_version=1.9.0
+url="ftp://invisible-island.net/xterm/xterm-229.tgz"
+file_size=841542
+file_md5=f7b04a66dc401dc22f5ddb7f345be229
+recipe_type=configure
+configure_options=(
+   # otherwise uxterm is broken!
+   --enable-wide-chars
+)

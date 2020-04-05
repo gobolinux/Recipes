@@ -1,0 +1,13 @@
+[Name] ECL
+[Summary] Embeddable Common-Lisp
+[Description] ECL stands for Embeddable Common-Lisp and it is a full 
+implementation of the Common-Lisp language as defined by the ANSI Standard.
+The most relevant features:
+* A bytecodes compiler and interpreter.
+* Compiles Lisp also with any C/C++ compiler.
+* It can build standalone executables and libraries.
+* ASDF, Sockets, Gray streams, MOP, and other useful components.
+* Extremely portable.
+* A reasonable license.
+[License] GNU Lesser General Public License (LGPL)
+[Homepage] http://ecls.sourceforge.net/

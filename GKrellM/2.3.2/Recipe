@@ -1,0 +1,15 @@
+# Recipe for version 2.3.2 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. nov. 26., szerda, 04.40.26 CET
+# Recipe by Volker Wieban (buckoven@yaklinux.org)
+
+compile_version=1.8.0
+url="http://members.dslextreme.com/users/billw/gkrellm/gkrellm-2.3.2.tar.bz2"
+file_size=747697
+file_md5=d5543a439ee77950282d06b000048be7
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "INSTALLROOT=$target"
+)
+pre_install() {
+   mkdir -p $target/lib/gkrellm2/plugins
+}

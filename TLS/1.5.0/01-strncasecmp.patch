@@ -1,0 +1,11 @@
+--- tls1.4/strncasecmp.c.orig	2005-05-23 10:42:24.000000000 -0300
++++ tls1.4/strncasecmp.c	2005-05-23 10:42:31.000000000 -0300
+@@ -12,7 +12,7 @@
+  * SCCS: @(#) strncasecmp.c 1.7 96/10/24 15:23:36
+  */
+ 
+-#include "tclPort.h"
++#include "tcl.h"
+ 
+ /*
+  * This array is designed for mapping upper and lower case letter

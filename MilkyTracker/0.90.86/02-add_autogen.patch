@@ -1,0 +1,15 @@
+Add autogen.sh, so that patch 01 can take effect.
+
+diff -Nur milkytracker-0.90.86.old/autogen.sh milkytracker-0.90.86/autogen.sh
+--- milkytracker-0.90.86.old/autogen.sh	1969-12-31 21:00:00.000000000 -0300
++++ milkytracker-0.90.86/autogen.sh	2014-07-15 20:48:32.279785438 -0300
+@@ -0,0 +1,9 @@
++#!/bin/sh
++
++aclocal -I m4
++autoconf
++autoheader
++libtoolize --copy --force
++automake --add-missing --copy
++
++

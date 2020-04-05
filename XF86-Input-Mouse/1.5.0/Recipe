@@ -1,0 +1,8 @@
+# Recipe for version 1.5.0 by Jonas Karlsson <jonas@gobolinux.org>, on Wed Jan 6 06:02:33 CET 2010
+# Recipe (MakeRecipe) for XF86-Input-Mouse by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jan 9 17:14:40 BRST 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/driver/xf86-input-mouse-1.5.0.tar.bz2"
+file_size=308189
+file_md5=c58629fddf0782dad5c02da6aeb35521
+recipe_type=configure
+part_of=Xorg-Driver

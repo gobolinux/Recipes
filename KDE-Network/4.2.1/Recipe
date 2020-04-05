@@ -1,0 +1,13 @@
+# Recipe for version 4.2.1 by Giambattista Bloisi <giamby@infinito.it>, on Sat Mar 14 17:43:17 CET 2009
+# Recipe (MakeRecipe) for KDE-Network by Giambattista Bloisi <giamby@infinito.it>, on Sat Jan 19 00:53:44 CET 2008
+compile_version=1.10.0
+url="http://download.kde.org/stable/4.2.1/src/kdenetwork-4.2.1.tar.bz2"
+file_size=7462237
+file_md5=17ba9800af0bfcf20a49337624f9946a
+file="kdenetwork-4.2.1.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
+

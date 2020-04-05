@@ -1,6 +1,0 @@
-
-environment=(
-    CFLAGS="$CFLAGS -mno-altivec"
-    CXXFLAGS="$CXXFLAGS -mno-altivec"
-)
-

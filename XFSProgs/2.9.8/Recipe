@@ -1,0 +1,31 @@
+# Recipe for version 2.9.8 by Baffo32 <baffo32@gmail.com>, on Fri Dec 26 10:41:07 PST 2008
+# Recipe (MakeRecipe) for XFSProgs by ro.ko@mcnon.com, on Tue Oct 12 00:32:49 BRST 2004
+compile_version=1.8.0
+url="ftp://oss.sgi.com/projects/xfs/previous/cmd_tars/xfsprogs_2.9.8-1.tar.gz"
+file_size=1003288
+file_md5=f32ab3282c3e02ce25128f7a6c2d5157
+recipe_type=configure
+dir="xfsprogs-2.9.8"
+install_target="install install-dev"
+configure_options=(
+    --libexecdir=$target/lib
+    --enable-shared=yes
+)
+
+build_variables=(
+   DEBUG=-DNDEBUG
+)
+
+environment=(
+   # XFSProgs and related use a custom m4 macro that uses only this
+   # environment variable to locate the libtool binary if it is not
+   # in a standard location.
+   LIBTOOL="${goboExecutables}/libtool"
+)
+
+pre_link() {
+   # Fix broken symlink created by "make install"
+   # Because of the circular reference, ln dies unless it is removed
+   rm "${target}/lib/libhandle.so"
+   ln -s libhandle.so.1.0.3 "${target}/lib/libhandle.so"
+}

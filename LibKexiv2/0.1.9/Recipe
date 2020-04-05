@@ -1,0 +1,10 @@
+# Recipe for version 0.1.9 by Hugo Barrocas <barrocas@iol.pt>, on Qui Jul 22 22:45:18 WEST 2010
+# Recipe (MakeRecipe) for LibKexiv2 by Michael Homer, on Mon Oct 15 12:18:58 NZDT 2007
+compile_version=1.9.0
+url="$httpSourceforge/kipi/libkexiv2-0.1.9.tar.bz2"
+file_size=432834
+file_md5=6e6fc9edbfad4506f6f59508d9aa45d6
+recipe_type=configure
+configure_options=(
+ '--disable-libsuffix'
+)

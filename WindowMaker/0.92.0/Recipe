@@ -1,0 +1,22 @@
+# Recipe for version 0.92.0 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jul 15 12:12:36 CEST 2005
+compile_version=1.8.2
+url="http://windowmaker.info/pub/source/release/WindowMaker-0.92.0.tar.bz2"
+file_size=2202748
+file_md5=aaac5421b686ed2d3e6ab65229c98097
+recipe_type=configure
+
+# GCC 4 fix
+environment=(
+    ac_cv_c_inline_asm=no
+)
+
+configure_options=(
+    --with-gnustepdir=$target/GNUstep
+)
+
+pre_build() {
+    echo "Running aclocal..." && aclocal
+    echo "Running libtoolize..." && libtoolize
+    echo "Running automake..." && automake
+    echo "Running autoconf..." && autoconf
+}

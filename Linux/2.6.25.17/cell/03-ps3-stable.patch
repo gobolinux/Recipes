@@ -1,0 +1,943 @@
+Subject: PS3: Add ps3_get_speid routine
+
+From: Takashi Yamamoto <TakashiA.Yamamoto@jp.sony.com>
+
+Add a new routine ps3_get_speid() which returns the logical
+SPE ID.  This ID is needed for profiling support.
+
+Signed-off-by: Takashi Yamamoto <TakashiA.Yamamoto@jp.sony.com>
+Signed-off-by: Geoff Levand <geoffrey.levand@am.sony.com>
+---
+ arch/powerpc/platforms/ps3/spu.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
+
+--- a/arch/powerpc/platforms/ps3/spu.c
++++ b/arch/powerpc/platforms/ps3/spu.c
+@@ -27,6 +27,7 @@
+ #include <asm/spu.h>
+ #include <asm/spu_priv1.h>
+ #include <asm/lv1call.h>
++#include <asm/ps3.h>
+ 
+ #include "../cell/spufs/spufs.h"
+ #include "platform.h"
+@@ -140,6 +141,12 @@ static void _dump_areas(unsigned int spe
+ 	pr_debug("%s:%d: shadow:  %lxh\n", func, line, shadow);
+ }
+ 
++inline u64 ps3_get_spe_id(void *arg)
++{
++	return spu_pdata(arg)->spe_id;
++}
++EXPORT_SYMBOL_GPL(ps3_get_spe_id);
++
+ static unsigned long get_vas_id(void)
+ {
+ 	unsigned long id;
+Subject: PS3: Bootwrapper improvements
+
+Improve the debugging support of the PS3 bootwraper code:
+
+ o Increase the size of the PS3 bootwrapper overlay from 256 to 512 bytes to
+   allow for more debugging code in the overlay.
+ o Use the dot symbol to set the size of __system_reset_overlay.  The
+   assembler will then emit an error if the overlay code is too big.
+ o Remove some unused instructions.
+ o Update the text describing the PS3 bootwrapper overlay.
+ o Add a check for null pointer writes.
+ o Change hcall return value from s64.
+
+Signed-off-by: Geoff Levand <geoffrey.levand@am.sony.com>
+---
+v2:
+  o Cleanup null check code.
+
+ arch/powerpc/boot/ps3-head.S |   25 ++++++++++++++++---------
+ arch/powerpc/boot/ps3.c      |   23 +++++++++++++++--------
+ arch/powerpc/boot/wrapper    |   21 +++++++++++----------
+ 3 files changed, 42 insertions(+), 27 deletions(-)
+
+--- a/arch/powerpc/boot/ps3-head.S
++++ b/arch/powerpc/boot/ps3-head.S
+@@ -27,8 +27,9 @@
+ /*
+  * __system_reset_overlay - The PS3 first stage entry.
+  *
+- * The bootwraper build script copies the 0x100 bytes at symbol
+- * __system_reset_overlay to offset 0x100 of the rom image.
++ * The bootwraper build script copies the 512 bytes at symbol
++ * __system_reset_overlay to offset 0x100 of the rom image.  This symbol
++ * must occupy 512 or less bytes.
+  *
+  * The PS3 has a single processor with two threads.
+  */
+@@ -47,8 +48,6 @@ __system_reset_overlay:
+ 
+ 	mfspr	r3, 0x88
+ 	cntlzw.	r3, r3
+-	li	r4, 0
+-	li	r5, 0
+ 	beq	1f
+ 
+ 	/* Secondary goes to __secondary_hold in kernel. */
+@@ -57,8 +56,14 @@ __system_reset_overlay:
+ 	mtctr	r4
+ 	bctr
+ 
+-	/* Primary delays then goes to _zimage_start in wrapper. */
+ 1:
++	/* Save the value at addr zero for a null pointer write check later. */
++
++	li	r4, 0
++	lwz	r3, 0(r4)
++
++	/* Primary delays then goes to _zimage_start in wrapper. */
++
+ 	or	31, 31, 31 /* db16cyc */
+ 	or	31, 31, 31 /* db16cyc */
+ 
+@@ -67,16 +72,18 @@ __system_reset_overlay:
+ 	mtctr	r4
+ 	bctr
+ 
++	. = __system_reset_overlay + 512
++
+ /*
+  * __system_reset_kernel - Place holder for the kernel reset vector.
+  *
+- * The bootwrapper build script copies 0x100 bytes from offset 0x100
++ * The bootwrapper build script copies 512 bytes from offset 0x100
+  * of the rom image to the symbol __system_reset_kernel.  At runtime
+- * the bootwrapper program copies the 0x100 bytes at __system_reset_kernel
+- * to ram address 0x100.  This symbol must occupy 0x100 bytes.
++ * the bootwrapper program copies the 512 bytes at __system_reset_kernel
++ * to ram address 0x100.  This symbol must occupy 512 bytes.
+  */
+ 
+ 	.globl __system_reset_kernel
+ __system_reset_kernel:
+ 
+-	. = __system_reset_kernel + 0x100
++	. = __system_reset_kernel + 512
+--- a/arch/powerpc/boot/ps3.c
++++ b/arch/powerpc/boot/ps3.c
+@@ -27,10 +27,10 @@
+ #include "page.h"
+ #include "ops.h"
+ 
+-extern s64 lv1_panic(u64 in_1);
+-extern s64 lv1_get_logical_partition_id(u64 *out_1);
+-extern s64 lv1_get_logical_ppe_id(u64 *out_1);
+-extern s64 lv1_get_repository_node_value(u64 in_1, u64 in_2, u64 in_3,
++extern int lv1_panic(u64 in_1);
++extern int lv1_get_logical_partition_id(u64 *out_1);
++extern int lv1_get_logical_ppe_id(u64 *out_1);
++extern int lv1_get_repository_node_value(u64 in_1, u64 in_2, u64 in_3,
+ 	u64 in_4, u64 in_5, u64 *out_1, u64 *out_2);
+ 
+ #ifdef DEBUG
+@@ -46,6 +46,7 @@ BSS_STACK(4096);
+  * edit the command line passed to vmlinux (by setting /chosen/bootargs).
+  * The buffer is put in it's own section so that tools may locate it easier.
+  */
++
+ static char cmdline[COMMAND_LINE_SIZE]
+ 	__attribute__((__section__("__builtin_cmdline")));
+ 
+@@ -75,7 +76,7 @@ static void ps3_exit(void)
+ 
+ static int ps3_repository_read_rm_size(u64 *rm_size)
+ {
+-	s64 result;
++	int result;
+ 	u64 lpar_id;
+ 	u64 ppe_id;
+ 	u64 v2;
+@@ -114,16 +115,17 @@ void ps3_copy_vectors(void)
+ {
+ 	extern char __system_reset_kernel[];
+ 
+-	memcpy((void *)0x100, __system_reset_kernel, 0x100);
+-	flush_cache((void *)0x100, 0x100);
++	memcpy((void *)0x100, __system_reset_kernel, 512);
++	flush_cache((void *)0x100, 512);
+ }
+ 
+-void platform_init(void)
++void platform_init(unsigned long null_check)
+ {
+ 	const u32 heapsize = 0x1000000 - (u32)_end; /* 16MiB */
+ 	void *chosen;
+ 	unsigned long ft_addr;
+ 	u64 rm_size;
++	unsigned long val;
+ 
+ 	console_ops.write = ps3_console_write;
+ 	platform_ops.exit = ps3_exit;
+@@ -151,6 +153,11 @@ void platform_init(void)
+ 
+ 	printf(" flat tree at 0x%lx\n\r", ft_addr);
+ 
++	val = *(unsigned long *)0;
++
++	if (val != null_check)
++		printf("null check failed: %lx != %lx\n\r", val, null_check);
++
+ 	((kernel_entry_t)0)(ft_addr, 0, NULL);
+ 
+ 	ps3_exit();
+--- a/arch/powerpc/boot/wrapper
++++ b/arch/powerpc/boot/wrapper
+@@ -298,15 +298,16 @@ treeboot*)
+     exit 0
+     ;;
+ ps3)
+-    # The ps3's loader supports loading gzipped binary images from flash
+-    # rom to addr zero. The loader enters the image at addr 0x100.  A
+-    # bootwrapper overlay is use to arrange for the kernel to be loaded
+-    # to addr zero and to have a suitable bootwrapper entry at 0x100.
+-    # To construct the rom image, 0x100 bytes from offset 0x100 in the
+-    # kernel is copied to the bootwrapper symbol __system_reset_kernel.
+-    # The 0x100 bytes at the bootwrapper symbol __system_reset_overlay is
+-    # then copied to offset 0x100.  At runtime the bootwrapper program
+-    # copies the 0x100 bytes at __system_reset_kernel to addr 0x100.
++    # The ps3's loader supports loading a gzipped binary image from flash
++    # rom to ram addr zero. The loader then enters the system reset
++    # vector at addr 0x100.  A bootwrapper overlay is used to arrange for
++    # a binary image of the kernel to be at addr zero, and yet have a
++    # suitable bootwrapper entry at 0x100.  To construct the final rom
++    # image 512 bytes from offset 0x100 is copied to the bootwrapper
++    # place holder at symbol __system_reset_kernel.  The 512 bytes of the
++    # bootwrapper entry code at symbol __system_reset_overlay is then
++    # copied to offset 0x100.  At runtime the bootwrapper program copies
++    # the data at __system_reset_kernel back to addr 0x100.
+ 
+     system_reset_overlay=0x`${CROSS}nm "$ofile" \
+         | grep ' __system_reset_overlay$'       \
+@@ -317,7 +318,7 @@ ps3)
+         | cut -d' ' -f1`
+     system_reset_kernel=`printf "%d" $system_reset_kernel`
+     overlay_dest="256"
+-    overlay_size="256"
++    overlay_size="512"
+ 
+     ${CROSS}objcopy -O binary "$ofile" "$ofile.bin"
+ 
+Subject: PS3: Split device setup for static vs. dynamic devices
+
+From: Geert Uytterhoeven <Geert.Uytterhoeven@sonycom.com>
+
+Split the device setup code in ps3_register_repository_device() in two
+routines:
+  1. ps3_setup_static_device(), to handle the setup of static devices in the
+     PS3 repository, which can be __init,
+  2. ps3_setup_dynamic_device(), to handle the setup of storage devices that
+     may appear later in the PS3 repository.
+
+This fixes a few section mismatch warnings.
+
+Signed-off-by: Geert Uytterhoeven <Geert.Uytterhoeven@sonycom.com>
+Signed-off-by: Geoff Levand <geoffrey.levand@am.sony.com>
+---
+ arch/powerpc/platforms/ps3/device-init.c |   78 ++++++++++++++++++-------------
+ 1 file changed, 46 insertions(+), 32 deletions(-)
+
+--- a/arch/powerpc/platforms/ps3/device-init.c
++++ b/arch/powerpc/platforms/ps3/device-init.c
+@@ -499,41 +499,14 @@ static int __init ps3_register_graphics_
+ }
+ 
+ /**
+- * ps3_register_repository_device - Register a device from the repositiory info.
+- *
++ * ps3_setup_dynamic_device - Setup a dynamic device from the repository
+  */
+ 
+-static int ps3_register_repository_device(
+-	const struct ps3_repository_device *repo)
++static int ps3_setup_dynamic_device(const struct ps3_repository_device *repo)
+ {
+ 	int result;
+ 
+ 	switch (repo->dev_type) {
+-	case PS3_DEV_TYPE_SB_GELIC:
+-		result = ps3_setup_gelic_device(repo);
+-		if (result) {
+-			pr_debug("%s:%d ps3_setup_gelic_device failed\n",
+-				__func__, __LINE__);
+-		}
+-		break;
+-	case PS3_DEV_TYPE_SB_USB:
+-
+-		/* Each USB device has both an EHCI and an OHCI HC */
+-
+-		result = ps3_setup_ehci_device(repo);
+-
+-		if (result) {
+-			pr_debug("%s:%d ps3_setup_ehci_device failed\n",
+-				__func__, __LINE__);
+-		}
+-
+-		result = ps3_setup_ohci_device(repo);
+-
+-		if (result) {
+-			pr_debug("%s:%d ps3_setup_ohci_device failed\n",
+-				__func__, __LINE__);
+-		}
+-		break;
+ 	case PS3_DEV_TYPE_STOR_DISK:
+ 		result = ps3_setup_storage_dev(repo, PS3_MATCH_ID_STOR_DISK);
+ 
+@@ -572,6 +545,48 @@ static int ps3_register_repository_devic
+ 	return result;
+ }
+ 
++/**
++ * ps3_setup_static_device - Setup a static device from the repository
++ */
++
++static int __init ps3_setup_static_device(const struct ps3_repository_device *repo)
++{
++	int result;
++
++	switch (repo->dev_type) {
++	case PS3_DEV_TYPE_SB_GELIC:
++		result = ps3_setup_gelic_device(repo);
++		if (result) {
++			pr_debug("%s:%d ps3_setup_gelic_device failed\n",
++				__func__, __LINE__);
++		}
++		break;
++	case PS3_DEV_TYPE_SB_USB:
++
++		/* Each USB device has both an EHCI and an OHCI HC */
++
++		result = ps3_setup_ehci_device(repo);
++
++		if (result) {
++			pr_debug("%s:%d ps3_setup_ehci_device failed\n",
++				__func__, __LINE__);
++		}
++
++		result = ps3_setup_ohci_device(repo);
++
++		if (result) {
++			pr_debug("%s:%d ps3_setup_ohci_device failed\n",
++				__func__, __LINE__);
++		}
++		break;
++
++	default:
++		return ps3_setup_dynamic_device(repo);
++	}
++
++	return result;
++}
++
+ static void ps3_find_and_add_device(u64 bus_id, u64 dev_id)
+ {
+ 	struct ps3_repository_device repo;
+@@ -601,7 +616,7 @@ found:
+ 		pr_debug("%s:%u: device %lu:%lu found after %u retries\n",
+ 			 __func__, __LINE__, bus_id, dev_id, retries);
+ 
+-	ps3_register_repository_device(&repo);
++	ps3_setup_dynamic_device(&repo);
+ 	return;
+ }
+ 
+@@ -905,8 +920,7 @@ static int __init ps3_register_devices(v
+ 
+ 	ps3_register_graphics_devices();
+ 
+-	ps3_repository_find_devices(PS3_BUS_TYPE_SB,
+-		ps3_register_repository_device);
++	ps3_repository_find_devices(PS3_BUS_TYPE_SB, ps3_setup_static_device);
+ 
+ 	ps3_register_sound_devices();
+ 
+Subject: ps3disk: Remove superfluous cast
+
+From: Geert Uytterhoeven <Geert.Uytterhoeven@sonycom.com>
+
+ps3disk: Remove a superfluous cast
+
+As ps3disk is a ppc64-only driver, sector_t equals to unsigned long, and the
+cast is not needed.
+
+Reuse in another (possibly 32-bit) driver is protected by the safety net called
+`compiler warning' (with the cast, it may silently truncate to 32-bit).
+If sector_t ever changes, we will get a compiler warning as well (with the
+cast, we won't).
+
+Signed-off-by: Geert Uytterhoeven <Geert.Uytterhoeven@sonycom.com>
+Acked-by: Christoph Hellwig <hch@lst.de>
+---
+ drivers/block/ps3disk.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+--- a/drivers/block/ps3disk.c
++++ b/drivers/block/ps3disk.c
+@@ -102,8 +102,7 @@ static void ps3disk_scatter_gather(struc
+ 		dev_dbg(&dev->sbd.core,
+ 			"%s:%u: bio %u: %u segs %u sectors from %lu\n",
+ 			__func__, __LINE__, i, bio_segments(iter.bio),
+-			bio_sectors(iter.bio),
+-			(unsigned long)iter.bio->bi_sector);
++			bio_sectors(iter.bio), iter.bio->bi_sector);
+ 
+ 		size = bvec->bv_len;
+ 		buf = bvec_kmap_irq(bvec, &flags);
+Subject: PS3: Fix unlikely typo in ps3_get_irq
+
+From: Roel Kluin <12o3l@tiscali.nl>
+
+Fix a typo bug 'unlikely(x) == y' and add an unlikely() call to
+an unlikely code path in the PS3 interrupt routine ps3_get_irq().
+
+Signed-off-by: Roel Kluin <12o3l@tiscali.nl>
+Signed-off-by: Geoff Levand <geoffrey.levand@am.sony.com>
+---
+ arch/powerpc/platforms/ps3/interrupt.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/arch/powerpc/platforms/ps3/interrupt.c
++++ b/arch/powerpc/platforms/ps3/interrupt.c
+@@ -709,7 +709,7 @@ static unsigned int ps3_get_irq(void)
+ 	asm volatile("cntlzd %0,%1" : "=r" (plug) : "r" (x));
+ 	plug &= 0x3f;
+ 
+-	if (unlikely(plug) == NO_IRQ) {
++	if (unlikely(plug == NO_IRQ)) {
+ 		pr_debug("%s:%d: no plug found: thread_id %lu\n", __func__,
+ 			__LINE__, pd->thread_id);
+ 		dump_bmp(&per_cpu(ps3_private, 0));
+Subject: PS3: Fix gelic net module dependencies
+
+The PS3 gelic network driver depends on the wake-on-lan support
+provided by the PS3 sys manager driver.  Add that dependency
+to the GELIC_NET Kconfig option.
+
+Prevents these build errors:
+
+  ps3_gelic_net.c:1277: undefined reference to `.ps3_sys_manager_get_wol'
+  ps3_gelic_net.c:1337: undefined reference to `.ps3_sys_manager_set_wol'
+
+CC: Masakazu Mokuno <mokuno@sm.sony.co.jp>
+CC: Jeff Garzik <jgarzik@pobox.com>
+Signed-off-by: Geoff Levand <geoffrey.levand@am.sony.com>
+---
+ drivers/net/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
+
+--- a/drivers/net/Kconfig
++++ b/drivers/net/Kconfig
+@@ -2358,6 +2358,7 @@ config TSI108_ETH
+ config GELIC_NET
+ 	tristate "PS3 Gigabit Ethernet driver"
+ 	depends on PPC_PS3
++	select PS3_SYS_MANAGER
+ 	help
+ 	  This driver supports the network device on the PS3 game
+ 	  console.  This driver has built-in support for Ethernet.
+From version 2.20 of the PS3 system software, the hypervisor allows the guest
+OSes to specify separate ciphers for group and pairwise.
+
+Signed-off-by: Masakazu Mokuno <mokuno@sm.sony.co.jp>
+---
+ drivers/net/ps3_gelic_wireless.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/drivers/net/ps3_gelic_wireless.c
++++ b/drivers/net/ps3_gelic_wireless.c
+@@ -87,7 +87,7 @@ static inline int wpa2_capable(void)
+ 
+ static inline int precise_ie(void)
+ {
+-	return 0; /* FIXME */
++	return (0 <= ps3_compare_firmware_version(2, 2, 0));
+ }
+ /*
+  * post_eurus_cmd helpers
+Subject: [PATCH] ps3rom: Simplify fill_from_dev_buffer()
+
+As we no longer need to calculate the data length of the whole scatterlist,
+we can abort the loop earlier and coalesce req_len and act_len into one
+variable, making fill_from_dev_buffer() more similar to fetch_to_dev_buffer().
+
+Signed-off-by: Geert Uytterhoeven <Geert.Uytterhoeven@sonycom.com>
+---
+ drivers/scsi/ps3rom.c |   30 ++++++++++++++----------------
+ 1 file changed, 14 insertions(+), 16 deletions(-)
+
+--- a/drivers/scsi/ps3rom.c
++++ b/drivers/scsi/ps3rom.c
+@@ -95,7 +95,7 @@ static int ps3rom_slave_configure(struct
+  */
+ static int fill_from_dev_buffer(struct scsi_cmnd *cmd, const void *buf)
+ {
+-	int k, req_len, act_len, len, active;
++	int k, req_len, len, fin;
+ 	void *kaddr;
+ 	struct scatterlist *sgpnt;
+ 	unsigned int buflen;
+@@ -107,24 +107,22 @@ static int fill_from_dev_buffer(struct s
+ 	if (!scsi_sglist(cmd))
+ 		return -1;
+ 
+-	active = 1;
+-	req_len = act_len = 0;
++	req_len = fin = 0;
+ 	scsi_for_each_sg(cmd, sgpnt, scsi_sg_count(cmd), k) {
+-		if (active) {
+-			kaddr = kmap_atomic(sg_page(sgpnt), KM_IRQ0);
+-			len = sgpnt->length;
+-			if ((req_len + len) > buflen) {
+-				active = 0;
+-				len = buflen - req_len;
+-			}
+-			memcpy(kaddr + sgpnt->offset, buf + req_len, len);
+-			flush_kernel_dcache_page(sg_page(sgpnt));
+-			kunmap_atomic(kaddr, KM_IRQ0);
+-			act_len += len;
++		kaddr = kmap_atomic(sg_page(sgpnt), KM_IRQ0);
++		len = sgpnt->length;
++		if ((req_len + len) > buflen) {
++			len = buflen - req_len;
++			fin = 1;
+ 		}
+-		req_len += sgpnt->length;
++		memcpy(kaddr + sgpnt->offset, buf + req_len, len);
++		flush_kernel_dcache_page(sg_page(sgpnt));
++		kunmap_atomic(kaddr, KM_IRQ0);
++		req_len += len;
++		if (fin)
++			break;
+ 	}
+-	scsi_set_resid(cmd, buflen - act_len);
++	scsi_set_resid(cmd, buflen - req_len);
+ 	return 0;
+ }
+ 
+Subject: PS3: Save power in busy loops on halt
+
+From: Geert Uytterhoeven <Geert.Uytterhoeven@sonycom.com>
+
+PS3 save power on halt:
+  - Replace infinite busy loops by smarter loops calling
+    lv1_pause() to save power.
+  - Add ps3_halt() and ps3_sys_manager_halt().
+  - Add __noreturn annotations.
+
+Signed-off-by: Geert Uytterhoeven <Geert.Uytterhoeven@sonycom.com>
+Signed-off-by: Geoff Levand <geoffrey.levand@am.sony.com>
+---
+ arch/powerpc/platforms/ps3/setup.c |   12 +++++++++++-
+ drivers/ps3/ps3-sys-manager.c      |   30 ++++++++++++++++++++----------
+ drivers/ps3/sys-manager-core.c     |   16 ++++++++++------
+ include/asm-powerpc/ps3.h          |    5 +++--
+ 4 files changed, 44 insertions(+), 19 deletions(-)
+
+--- a/arch/powerpc/platforms/ps3/setup.c
++++ b/arch/powerpc/platforms/ps3/setup.c
+@@ -95,6 +95,14 @@ static void ps3_power_off(void)
+ 	ps3_sys_manager_power_off(); /* never returns */
+ }
+ 
++static void ps3_halt(void)
++{
++	DBG("%s:%d\n", __func__, __LINE__);
++
++	smp_send_stop();
++	ps3_sys_manager_halt(); /* never returns */
++}
++
+ static void ps3_panic(char *str)
+ {
+ 	DBG("%s:%d %s\n", __func__, __LINE__, str);
+@@ -105,7 +113,8 @@ static void ps3_panic(char *str)
+ 	printk("   Please press POWER button.\n");
+ 	printk("\n");
+ 
+-	while(1);
++	while (1)
++		lv1_pause(1);
+ }
+ 
+ #if defined(CONFIG_FB_PS3) || defined(CONFIG_FB_PS3_MODULE) || \
+@@ -266,6 +275,7 @@ define_machine(ps3) {
+ 	.progress			= ps3_progress,
+ 	.restart			= ps3_restart,
+ 	.power_off			= ps3_power_off,
++	.halt				= ps3_halt,
+ #if defined(CONFIG_KEXEC)
+ 	.kexec_cpu_down			= ps3_kexec_cpu_down,
+ 	.machine_kexec			= default_machine_kexec,
+--- a/drivers/ps3/ps3-sys-manager.c
++++ b/drivers/ps3/ps3-sys-manager.c
+@@ -24,6 +24,7 @@
+ #include <linux/reboot.h>
+ 
+ #include <asm/firmware.h>
++#include <asm/lv1call.h>
+ #include <asm/ps3.h>
+ 
+ #include "vuart.h"
+@@ -581,6 +582,23 @@ fail_id:
+ 	return -EIO;
+ }
+ 
++static void ps3_sys_manager_fin(struct ps3_system_bus_device *dev)
++{
++	ps3_sys_manager_send_request_shutdown(dev);
++
++	pr_emerg("System Halted, OK to turn off power\n");
++
++	while (ps3_sys_manager_handle_msg(dev)) {
++		/* pause until next DEC interrupt */
++		lv1_pause(0);
++	}
++
++	while (1) {
++		/* pause, ignoring DEC interrupt */
++		lv1_pause(1);
++	}
++}
++
+ /**
+  * ps3_sys_manager_final_power_off - The final platform machine_power_off routine.
+  *
+@@ -602,12 +620,8 @@ static void ps3_sys_manager_final_power_
+ 
+ 	ps3_sys_manager_send_next_op(dev, PS3_SM_NEXT_OP_SYS_SHUTDOWN,
+ 		PS3_SM_WAKE_DEFAULT);
+-	ps3_sys_manager_send_request_shutdown(dev);
+-
+-	pr_emerg("System Halted, OK to turn off power\n");
+ 
+-	while (1)
+-		ps3_sys_manager_handle_msg(dev);
++	ps3_sys_manager_fin(dev);
+ }
+ 
+ /**
+@@ -639,12 +653,8 @@ static void ps3_sys_manager_final_restar
+ 	ps3_sys_manager_send_attr(dev, 0);
+ 	ps3_sys_manager_send_next_op(dev, PS3_SM_NEXT_OP_SYS_REBOOT,
+ 		PS3_SM_WAKE_DEFAULT);
+-	ps3_sys_manager_send_request_shutdown(dev);
+-
+-	pr_emerg("System Halted, OK to turn off power\n");
+ 
+-	while (1)
+-		ps3_sys_manager_handle_msg(dev);
++	ps3_sys_manager_fin(dev);
+ }
+ 
+ /**
+--- a/drivers/ps3/sys-manager-core.c
++++ b/drivers/ps3/sys-manager-core.c
+@@ -19,6 +19,7 @@
+  */
+ 
+ #include <linux/kernel.h>
++#include <asm/lv1call.h>
+ #include <asm/ps3.h>
+ 
+ /**
+@@ -50,10 +51,7 @@ void ps3_sys_manager_power_off(void)
+ 	if (ps3_sys_manager_ops.power_off)
+ 		ps3_sys_manager_ops.power_off(ps3_sys_manager_ops.dev);
+ 
+-	printk(KERN_EMERG "System Halted, OK to turn off power\n");
+-	local_irq_disable();
+-	while (1)
+-		(void)0;
++	ps3_sys_manager_halt();
+ }
+ 
+ void ps3_sys_manager_restart(void)
+@@ -61,8 +59,14 @@ void ps3_sys_manager_restart(void)
+ 	if (ps3_sys_manager_ops.restart)
+ 		ps3_sys_manager_ops.restart(ps3_sys_manager_ops.dev);
+ 
+-	printk(KERN_EMERG "System Halted, OK to turn off power\n");
++	ps3_sys_manager_halt();
++}
++
++void ps3_sys_manager_halt(void)
++{
++	pr_emerg("System Halted, OK to turn off power\n");
+ 	local_irq_disable();
+ 	while (1)
+-		(void)0;
++		lv1_pause(1);
+ }
++
+--- a/include/asm-powerpc/ps3.h
++++ b/include/asm-powerpc/ps3.h
+@@ -434,8 +434,9 @@ struct ps3_sys_manager_ops {
+ };
+ 
+ void ps3_sys_manager_register_ops(const struct ps3_sys_manager_ops *ops);
+-void ps3_sys_manager_power_off(void);
+-void ps3_sys_manager_restart(void);
++void __noreturn ps3_sys_manager_power_off(void);
++void __noreturn ps3_sys_manager_restart(void);
++void __noreturn ps3_sys_manager_halt(void);
+ 
+ struct ps3_prealloc {
+     const char *name;
+Subject: PS3: Gelic network driver Wake-on-LAN support
+
+Add Wake-on-LAN support to the PS3 Gelic network driver.
+Other OS WOL support was introduced in PS3 system firmware
+2.20.
+
+Signed-off-by: Masakazu Mokuno <mokuno@sm.sony.co.jp>
+Signed-off-by: Geoff Levand <geoffrey.levand@am.sony.com>
+Acked-by: Jeff Garzik <jgarzik@pobox.com>
+---
+ drivers/net/ps3_gelic_net.c |   81 ++++++++++++++++++++++++++++++++++++++++++++
+ drivers/net/ps3_gelic_net.h |   20 ++++++++++
+ 2 files changed, 101 insertions(+)
+
+--- a/drivers/net/ps3_gelic_net.c
++++ b/drivers/net/ps3_gelic_net.c
+@@ -1266,6 +1266,85 @@ int gelic_net_set_rx_csum(struct net_dev
+ 	return 0;
+ }
+ 
++static void gelic_net_get_wol(struct net_device *netdev,
++			      struct ethtool_wolinfo *wol)
++{
++	if (0 <= ps3_compare_firmware_version(2, 2, 0))
++		wol->supported = WAKE_MAGIC;
++	else
++		wol->supported = 0;
++
++	wol->wolopts = ps3_sys_manager_get_wol() ? wol->supported : 0;
++	memset(&wol->sopass, 0, sizeof(wol->sopass));
++}
++static int gelic_net_set_wol(struct net_device *netdev,
++			     struct ethtool_wolinfo *wol)
++{
++	int status;
++	struct gelic_card *card;
++	u64 v1, v2;
++
++	if (ps3_compare_firmware_version(2, 2, 0) < 0 ||
++	    !capable(CAP_NET_ADMIN))
++		return -EPERM;
++
++	if (wol->wolopts & ~WAKE_MAGIC)
++		return -EINVAL;
++
++	card = netdev_card(netdev);
++	if (wol->wolopts & WAKE_MAGIC) {
++		status = lv1_net_control(bus_id(card), dev_id(card),
++					 GELIC_LV1_SET_WOL,
++					 GELIC_LV1_WOL_MAGIC_PACKET,
++					 0, GELIC_LV1_WOL_MP_ENABLE,
++					 &v1, &v2);
++		if (status) {
++			pr_info("%s: enabling WOL failed %d\n", __func__,
++				status);
++			status = -EIO;
++			goto done;
++		}
++		status = lv1_net_control(bus_id(card), dev_id(card),
++					 GELIC_LV1_SET_WOL,
++					 GELIC_LV1_WOL_ADD_MATCH_ADDR,
++					 0, GELIC_LV1_WOL_MATCH_ALL,
++					 &v1, &v2);
++		if (!status)
++			ps3_sys_manager_set_wol(1);
++		else {
++			pr_info("%s: enabling WOL filter failed %d\n",
++				__func__, status);
++			status = -EIO;
++		}
++	} else {
++		status = lv1_net_control(bus_id(card), dev_id(card),
++					 GELIC_LV1_SET_WOL,
++					 GELIC_LV1_WOL_MAGIC_PACKET,
++					 0, GELIC_LV1_WOL_MP_DISABLE,
++					 &v1, &v2);
++		if (status) {
++			pr_info("%s: disabling WOL failed %d\n", __func__,
++				status);
++			status = -EIO;
++			goto done;
++		}
++		status = lv1_net_control(bus_id(card), dev_id(card),
++					 GELIC_LV1_SET_WOL,
++					 GELIC_LV1_WOL_DELETE_MATCH_ADDR,
++					 0, GELIC_LV1_WOL_MATCH_ALL,
++					 &v1, &v2);
++		if (!status)
++			ps3_sys_manager_set_wol(0);
++		else {
++			pr_info("%s: removing WOL filter failed %d\n",
++				__func__, status);
++			status = -EIO;
++		}
++	}
++done:
++	return status;
++}
++
+ static struct ethtool_ops gelic_ether_ethtool_ops = {
+ 	.get_drvinfo	= gelic_net_get_drvinfo,
+ 	.get_settings	= gelic_ether_get_settings,
+@@ -1274,6 +1353,8 @@ static struct ethtool_ops gelic_ether_et
+ 	.set_tx_csum	= ethtool_op_set_tx_csum,
+ 	.get_rx_csum	= gelic_net_get_rx_csum,
+ 	.set_rx_csum	= gelic_net_set_rx_csum,
++	.get_wol	= gelic_net_get_wol,
++	.set_wol	= gelic_net_set_wol,
+ };
+ 
+ /**
+--- a/drivers/net/ps3_gelic_net.h
++++ b/drivers/net/ps3_gelic_net.h
+@@ -182,12 +182,32 @@ enum gelic_lv1_net_control_code {
+ 	GELIC_LV1_GET_ETH_PORT_STATUS	= 2,
+ 	GELIC_LV1_SET_NEGOTIATION_MODE	= 3,
+ 	GELIC_LV1_GET_VLAN_ID		= 4,
++	GELIC_LV1_SET_WOL		= 5,
+ 	GELIC_LV1_GET_CHANNEL           = 6,
+ 	GELIC_LV1_POST_WLAN_CMD		= 9,
+ 	GELIC_LV1_GET_WLAN_CMD_RESULT	= 10,
+ 	GELIC_LV1_GET_WLAN_EVENT	= 11
+ };
+ 
++/* for GELIC_LV1_SET_WOL */
++enum gelic_lv1_wol_command {
++	GELIC_LV1_WOL_MAGIC_PACKET	= 1,
++	GELIC_LV1_WOL_ADD_MATCH_ADDR	= 6,
++	GELIC_LV1_WOL_DELETE_MATCH_ADDR	= 7,
++};
++
++/* for GELIC_LV1_WOL_MAGIC_PACKET */
++enum gelic_lv1_wol_mp_arg {
++	GELIC_LV1_WOL_MP_DISABLE	= 0,
++	GELIC_LV1_WOL_MP_ENABLE		= 1,
++};
++
++/* for GELIC_LV1_WOL_{ADD,DELETE}_MATCH_ADDR */
++enum gelic_lv1_wol_match_arg {
++	GELIC_LV1_WOL_MATCH_INDIVIDUAL	= 0,
++	GELIC_LV1_WOL_MATCH_ALL		= 1,
++};
++
+ /* status returened from GET_ETH_PORT_STATUS */
+ enum gelic_lv1_ether_port_status {
+ 	GELIC_LV1_ETHER_LINK_UP		= 0x0000000000000001L,
+Subject: PS3: Sys-manager Wake-on-LAN support
+
+Add Wake-on-LAN support to the PS3 system-manager.  Other OS WOL
+support was introduced in PS3 system firmware 2.20.
+
+Signed-off-by: Geoff Levand <geoffrey.levand@am.sony.com>
+---
+ drivers/ps3/ps3-sys-manager.c |   46 ++++++++++++++++++++++++++++++++++++++++--
+ include/asm-powerpc/ps3.h     |    2 +
+ 2 files changed, 46 insertions(+), 2 deletions(-)
+
+--- a/drivers/ps3/ps3-sys-manager.c
++++ b/drivers/ps3/ps3-sys-manager.c
+@@ -188,6 +188,7 @@ enum ps3_sys_manager_next_op {
+  * controller, and bluetooth controller.
+  * @PS3_SM_WAKE_RTC:
+  * @PS3_SM_WAKE_RTC_ERROR:
++ * @PS3_SM_WAKE_W_O_L: Ether or wireless LAN.
+  * @PS3_SM_WAKE_P_O_R: Power on reset.
+  *
+  * Additional wakeup sources when specifying PS3_SM_NEXT_OP_SYS_SHUTDOWN.
+@@ -201,10 +202,19 @@ enum ps3_sys_manager_wake_source {
+ 	PS3_SM_WAKE_DEFAULT   = 0,
+ 	PS3_SM_WAKE_RTC       = 0x00000040,
+ 	PS3_SM_WAKE_RTC_ERROR = 0x00000080,
++	PS3_SM_WAKE_W_O_L     = 0x00000400,
+ 	PS3_SM_WAKE_P_O_R     = 0x80000000,
+ };
+ 
+ /**
++ * user_wake_sources - User specified wakeup sources.
++ *
++ * Logical OR of enum ps3_sys_manager_wake_source types.
++ */
++
++static u32 user_wake_sources = PS3_SM_WAKE_DEFAULT;
++
++/**
+  * enum ps3_sys_manager_cmd - Command from system manager to guest.
+  *
+  * The guest completes the actions needed, then acks or naks the command via
+@@ -619,7 +629,7 @@ static void ps3_sys_manager_final_power_
+ 	ps3_vuart_cancel_async(dev);
+ 
+ 	ps3_sys_manager_send_next_op(dev, PS3_SM_NEXT_OP_SYS_SHUTDOWN,
+-		PS3_SM_WAKE_DEFAULT);
++		user_wake_sources);
+ 
+ 	ps3_sys_manager_fin(dev);
+ }
+@@ -652,12 +662,44 @@ static void ps3_sys_manager_final_restar
+ 
+ 	ps3_sys_manager_send_attr(dev, 0);
+ 	ps3_sys_manager_send_next_op(dev, PS3_SM_NEXT_OP_SYS_REBOOT,
+-		PS3_SM_WAKE_DEFAULT);
++		user_wake_sources);
+ 
+ 	ps3_sys_manager_fin(dev);
+ }
+ 
+ /**
++ * ps3_sys_manager_get_wol - Get wake-on-lan setting.
++ */
++
++int ps3_sys_manager_get_wol(void)
++{
++	pr_debug("%s:%d\n", __func__, __LINE__);
++
++	return (user_wake_sources & PS3_SM_WAKE_W_O_L) != 0;
++}
++EXPORT_SYMBOL_GPL(ps3_sys_manager_get_wol);
++
++/**
++ * ps3_sys_manager_set_wol - Set wake-on-lan setting.
++ */
++
++void ps3_sys_manager_set_wol(int state)
++{
++	static DEFINE_MUTEX(mutex);
++
++	mutex_lock(&mutex);
++
++	pr_debug("%s:%d: %d\n", __func__, __LINE__, state);
++
++	if (state)
++		user_wake_sources |= PS3_SM_WAKE_W_O_L;
++	else
++		user_wake_sources &= ~PS3_SM_WAKE_W_O_L;
++	mutex_unlock(&mutex);
++}
++EXPORT_SYMBOL_GPL(ps3_sys_manager_set_wol);
++
++/**
+  * ps3_sys_manager_work - Asynchronous read handler.
+  *
+  * Signaled when PS3_SM_RX_MSG_LEN_MIN bytes arrive at the vuart port.
+--- a/include/asm-powerpc/ps3.h
++++ b/include/asm-powerpc/ps3.h
+@@ -437,6 +437,8 @@ void ps3_sys_manager_register_ops(const 
+ void __noreturn ps3_sys_manager_power_off(void);
+ void __noreturn ps3_sys_manager_restart(void);
+ void __noreturn ps3_sys_manager_halt(void);
++int ps3_sys_manager_get_wol(void);
++void ps3_sys_manager_set_wol(int state);
+ 
+ struct ps3_prealloc {
+     const char *name;

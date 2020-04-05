@@ -1,0 +1,13 @@
+# Recipe for version 2.0.3 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Mar 23 10:10:51 CET 2007
+# Recipe (MakeRecipe) for Gnupg by Giovani Facchini, on Qui Abr 14 17:00:52 BRT 2005
+compile_version=1.8.2
+url="ftp://ftp.gnupg.org/gcrypt/gnupg/gnupg-2.0.3.tar.bz2"
+file_size=3965529
+file_md5=4e33a5d35583da439f1bd26aa7e7042a
+recipe_type=configure
+
+configure_options=(
+    --with-pinentry-pgm=$goboExecutables/pinentry
+    --with-dirmngr-pgm=$goboExecutables/dirmngr
+    --with-protect-tool-pgm=$goboExecutables/protect-tool
+)

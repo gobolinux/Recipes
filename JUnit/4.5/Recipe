@@ -1,0 +1,23 @@
+# Recipe for version 4.5 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Oct 24 22:12:48 CEST 2008
+# Recipe (MakeRecipe) for JUnit by Daniele Maccari <daniele.maccari@gmail.com>, on Mon May 12 17:46:42 CEST 2008
+compile_version=1.11.0
+url="$httpSourceforge/junit/junit4.5.zip"
+file_size=1179602
+file_md5=6d534ce2169e26cc3b6ac36072ce2f5f
+recipe_type=manifest
+dir='junit4.5'
+
+manifest=(
+  "junit-4.5.jar:lib"
+)
+
+docs=(
+  "doc/*"
+  "javadoc"
+  "cpl-v10.html"  
+  "junit-4.5-src.jar"
+)
+
+pre_link() {
+   ln -s junit-4.5.jar "${target}/lib/junit.jar"
+}

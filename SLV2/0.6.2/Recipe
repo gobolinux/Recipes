@@ -1,0 +1,19 @@
+# Recipe (MakeRecipe) for SLV2 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. febr. 14., szombat, 04.09.43 CET
+# Recipe for version 0.6.2 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. febr. 14., szombat, 04.09.43 CET
+compile_version=1.11.4
+url="http://download.drobilla.net/slv2-0.6.2.tar.bz2"
+file_size=153844
+file_md5=4e8bb5f5e96d0edea988018b6297cf99
+recipe_type=python
+build_script=waf
+override_default_options=yes
+python_options=(
+    configure
+    --prefix=$target
+    --build-docs
+)
+do_install=no
+pre_install() {
+    waf
+    waf install
+}

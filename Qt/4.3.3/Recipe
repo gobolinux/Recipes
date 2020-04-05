@@ -1,0 +1,13 @@
+# Recipe for version 4.3.3 by Isaac Dupree <id@isaac.cedarswampstudios.org>, on Sat Dec 22 13:10:49 EST 2007
+# by Andre Detsch
+
+compile_version=1.9.0
+
+url="ftp://ftp.tu-chemnitz.de/pub/Qt/qt/source/qt-x11-opensource-src-4.3.3.tar.gz"
+file_size=42341802
+file_md5=19678fe35170559cd6a6fa531c57799c
+recipe_type=configure
+
+configure_options=(
+    -release -prefix $target -nomake "examples demos" -qdbus -qt-gif
+)

@@ -1,0 +1,70 @@
+Do not scrollkeeper or try install non-existing french help files.
+
+ C/GNUmakefile  |    2 --
+ es/GNUmakefile |    2 --
+ fr/GNUmakefile |   11 +----------
+ 3 files changed, 1 insertion(+), 14 deletions(-)
+
+diff -ur meld-1.2-old/help/C/GNUmakefile meld-1.2/help/C/GNUmakefile
+--- meld-1.2-old/help/C/GNUmakefile	2007-02-17 19:40:05.000000000 +0100
++++ meld-1.2/help/C/GNUmakefile	2008-09-22 12:50:52.551337786 +0200
+@@ -19,7 +19,6 @@
+ 	install -m 644 meld.xml $(XML_DIR_)/meld.xml
+ 	install -m 644 figures/*.png $(XML_DIR_)/figures
+ 	-install -m 644 $< $(OMF_DIR_)/$(OMF_NAME)
+-	-scrollkeeper-update -p $(OMF_STATE) -o $(OMF_DIR_)
+ 
+ .PHONY : uninstall
+ uninstall :
+@@ -28,7 +27,6 @@
+ 		$(XML_DIR_)/figures/*.png
+ 	-rmdir $(XML_DIR_)/figures \
+ 		$(XML_DIR_)
+-	-scrollkeeper-update -p $(OMF_STATE) -o $(OMF_DIR_)
+ 
+ .PHONY : clean
+ clean :
+diff -ur meld-1.2-old/help/es/GNUmakefile meld-1.2/help/es/GNUmakefile
+--- meld-1.2-old/help/es/GNUmakefile	2007-02-17 19:40:05.000000000 +0100
++++ meld-1.2/help/es/GNUmakefile	2008-09-22 12:50:52.552338106 +0200
+@@ -19,7 +19,6 @@
+ 	install -m 644 meld.$(LANG).xml $(XML_DIR_)/meld.xml
+ 	install -m 644 figures/*.png $(XML_DIR_)/figures
+ 	-install -m 644 $< $(OMF_DIR_)/$(OMF_NAME)
+-	-scrollkeeper-update -p $(OMF_STATE) -o $(OMF_DIR_)
+ 
+ .PHONY : uninstall
+ uninstall :
+@@ -28,7 +27,6 @@
+ 		$(XML_DIR_)/figures/*.png
+ 	-rmdir $(XML_DIR_)/figures \
+ 		$(XML_DIR_)
+-	-scrollkeeper-update -p $(OMF_STATE) -o $(OMF_DIR_)
+ 
+ .PHONY : clean
+ clean :
+diff -ur meld-1.2-old/help/fr/GNUmakefile meld-1.2/help/fr/GNUmakefile
+--- meld-1.2-old/help/fr/GNUmakefile	2008-03-31 22:44:53.000000000 +0200
++++ meld-1.2/help/fr/GNUmakefile	2008-09-22 12:51:06.693339346 +0200
+@@ -15,20 +15,11 @@
+ 
+ .PHONY : install
+ install : $(OMF_NAME).install
+-	-mkdir -m 755 -p $(OMF_DIR_) $(XML_DIR_) $(XML_DIR_)/figures
+-	install -m 644 meld.$(LANG).xml $(XML_DIR_)/meld.xml
+-	install -m 644 figures/*.png $(XML_DIR_)/figures
+ 	-install -m 644 $< $(OMF_DIR_)/$(OMF_NAME)
+-	-scrollkeeper-update -p $(OMF_STATE) -o $(OMF_DIR_)
+ 
+ .PHONY : uninstall
+ uninstall :
+-	-rm -f $(OMF_DIR_)/$(OMF_NAME) \
+-		$(XML_DIR_)/meld.xml \
+-		$(XML_DIR_)/figures/*.png
+-	-rmdir $(XML_DIR_)/figures \
+-		$(XML_DIR_)
+-	-scrollkeeper-update -p $(OMF_STATE) -o $(OMF_DIR_)
++	-rm -f $(OMF_DIR_)/$(OMF_NAME)
+ 
+ .PHONY : clean
+ clean :

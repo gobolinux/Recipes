@@ -1,0 +1,15 @@
+#!/bin/bash
+
+source GoboPath
+pid=${goboVariable}/run/pdnsd.pid
+
+case "$1" in
+[Ss]tart)
+  /Programs/PDNSD/Current/sbin/pdnsd --status --daemon --tcp -p ${pid}
+  ;;
+[Ss]top)
+  if [ -f ${pid} ]; then
+     kill $(cat ${pid})
+  fi
+  ;;
+esac

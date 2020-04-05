@@ -1,0 +1,11 @@
+# Recipe for version 1.41.0 by Daed Lee, on Thu Jul 31 02:09:38 EDT 2008
+url="$httpSourceforge/e2fsprogs/e2fsprogs-1.41.0.tar.gz"
+file_size=4260246
+file_md5=83144fa7e0e63647f920b77650ea1836
+recipe_type=configure
+needs_safe_linking=yes
+compile_version=1.9.0
+configure_options=(
+   "--enable-elf-shlibs"
+)
+install_target="install install-libs"

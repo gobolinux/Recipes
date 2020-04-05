@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for KDE-PIM-Runtime by Michael Homer <michael@gobolinux.org>, on Wed Feb 10 19:47:32 NZDT 2010
+# Recipe for version 4.4.0 by Michael Homer <michael@gobolinux.org>, on Wed Feb 10 19:47:32 NZDT 2010
+compile_version=1.13.0
+url="http://kde.mirrors.tds.net/pub/kde/stable/4.4.0/src/kdepim-runtime-4.4.0.tar.bz2"
+file_size=629444
+file_md5=ff023837a749cceac1f83c291dbe2ff0
+recipe_type=cmake
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
+

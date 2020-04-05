@@ -1,0 +1,16 @@
+[Name] GMPC-Last.fm-radio
+[Summary] Plugin for GMPC that allows you to to listen to Last.FM radio stations 
+[Description] This plugin can generate a session with Last.FM radio
+server so mpd can play the stream. It can also tune the stream several
+different radios. 
+* My Recommendations 
+* My Radio Station 
+* My Neighbourhood 
+* My Loved Songs 
+
+It can create radio stations based on tag, artist, similar artist, user 
+group and neighbourhood.
+The plugin can also show what is currently playing, even though this
+information  is not included in the stream.
+[License] GNU General Public License version 2
+[Homepage] http://gmpcwiki.sarine.nl/index.php?title=GMPC_PLUGIN_LASTFMRADIO

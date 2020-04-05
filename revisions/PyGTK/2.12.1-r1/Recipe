@@ -1,9 +1,0 @@
-# Recipe for version 2.12.1 by Giambattista Bloisi <giamby@infinito.it>, on Wed Jan 30 20:07:00 CET 2008
-url="http://ftp.gnome.org/pub/GNOME/sources/pygtk/2.12/pygtk-2.12.1.tar.bz2"
-file_size=2175955
-file_md5=a816346d750d61e3fa67a200e4292694
-compile_version=1.8.5
-recipe_type=configure
-configure_options=(
-   "--enable-numpy"
-)

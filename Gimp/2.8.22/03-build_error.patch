@@ -1,0 +1,34 @@
+Both LibMNG and LibJPEG include definitions for 'boolean':
+
+    In file included from /usr/include/libmng.h:386:0,
+                     from file-mng.c:88:
+    /usr/include/libmng_types.h:205:13: error: conflicting types for 'boolean'
+     typedef int boolean;
+                 ^
+    In file included from /usr/include/jpeglib.h:27:0,
+                     from file-mng.c:59:
+    /usr/include/jmorecfg.h:265:38: note: previous declaration of 'boolean' was here
+     typedef enum { FALSE = 0, TRUE = 1 } boolean;
+                                          ^
+The easiest fix is to include jpeglib.h right after libmng.h.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- gimp-2.8.10/plug-ins/common/file-mng.c.orig	2014-01-10 17:39:30.000000000 +0000
++++ gimp-2.8.10/plug-ins/common/file-mng.c	2014-01-10 17:44:49.000000000 +0000
+@@ -56,7 +56,6 @@
+ /* libpng and jpeglib are currently used in this plug-in. */
+ 
+ #include <png.h>
+-#include <jpeglib.h>
+ 
+ 
+ /* Grrr. The grrr is because the following have to be defined
+@@ -85,6 +84,7 @@
+ #endif
+ 
+ #include <libmng.h>
++#include <jpeglib.h>
+ 
+ #include "libgimp/gimp.h"
+ #include "libgimp/gimpui.h"

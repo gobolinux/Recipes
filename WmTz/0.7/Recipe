@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for WmTz by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Jun 5 15:34:39 BRT 2013
+# Recipe for version 0.7 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Jun 5 15:34:39 BRT 2013
+compile_version=1.0.1
+url="http://dockapps.windowmaker.org/download.php/id/38/wmtz-0.7.tar.gz"
+file_size=26350
+file_md5=5e374e8bfcfc4fbf1b5f1cedf701e521
+recipe_type=makefile
+dir=wmtz-0.7/wmtz
+
+make_variables=(
+    DESTDIR=$target
+    SYSCONFDIR=$settings_target
+)

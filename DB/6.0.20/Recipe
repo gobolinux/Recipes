@@ -1,0 +1,21 @@
+# Recipe for version 6.0.20 by Hisham Muhammad <hisham@gobolinux.org>, on Tue Dec 24 13:08:33 BRST 2013
+# Recipe (MakeRecipe) for DB by roko, <ro.ko@mcnon.com>, on Wed Feb 2 15:29:24 CET 2005
+compile_version=1.12.4
+url="http://download.oracle.com/berkeley-db/db-6.0.20.tar.gz"
+file_size=36571533
+file_md5=f73afcb308aefde7e6ece4caa87b22a9
+recipe_type=configure
+dir=db-6.0.20/build_unix
+configure=../dist/configure
+environment=(
+   CC=gcc
+)
+configure_options=(
+   --enable-compat185
+   --enable-cxx        #     Build C++ API.
+#   --enable-java      #     Build Java API.
+#   --enable-rpc       #     Build RPC client/server.
+   --enable-tcl       #     Build Tcl API.
+   "--with-tcl=$tcl_path/lib"
+#   --enable-test      #     Configure to run the test suite.
+)

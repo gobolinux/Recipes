@@ -1,0 +1,38 @@
+# Recipe for version 65 by Daniele Maccari <daniele.maccari@gmail.com>, on Thu Apr 10 10:35:17 CEST 2008
+# on Fri Mar 28 20:59:47 CET 2008 Recipe (MakeRecipe) for KVM by Daniele 
+# Maccari <daniele.maccari@gmail.com>, on Tue Feb 5 20:32:11 CET 2008
+compile_version=1.10.1
+url="$httpSourceforge/kvm/kvm-65.tar.gz"
+file_size=3851445
+file_md5=4d623ffae0e0cdc52b20640dafce619e
+recipe_type=configure
+
+configure_options=(
+	"--kerneldir=${goboModules}/$(uname -r)/build"
+	"--enable-alsa"
+)
+
+unmanaged_files=(
+        "${goboModules}/$(uname -r)/extra/kvm.ko"
+	"${goboModules}/$(uname -r)/extra/kvm-amd.ko"
+	"${goboModules}/$(uname -r)/extra/kvm-intel.ko"
+)
+
+pre_install(){
+        # Backup original modules.
+        for module in ${goboModules}/$(uname -r)/kernel/drivers/kvm/*.ko; do
+          [ -f $module ] && mv $module $module.orig
+        done;
+}
+
+pre_link(){
+	# Copy udev rules to udev/rules.d
+
+	mkdir -p ${settings_target}/udev/rules.d
+	cp scripts/65-kvm.rules ${settings_target}/udev/rules.d
+
+	# Tell Compile to recompile this package when Linux is.
+
+	mkdir -p ${target}/share/Compile/Recompile/Linux
+	touch ${target}/share/Compile/Recompile/Linux/KVM
+}

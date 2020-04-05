@@ -1,0 +1,13 @@
+# Recipe for version 0.24 by Benjamin Bruheim, on Sat Feb 24 17:24:05 CET 2007
+# Recipe (MakeRecipe) for Quodlibet by Jonatan Liljedahl <lijon@kymatica.com>, on Wed Jan 11 18:23:42 BRST 2006
+compile_version=1.8.2
+url="http://www.sacredchao.net/~piman/software/quodlibet-0.24.tar.gz"
+recipe_type=makefile
+makefile='Makefile'
+do_build=no
+install_variables=(
+	PREFIX=$target
+)
+pre_install() {
+	make extensions
+}

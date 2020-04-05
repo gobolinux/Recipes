@@ -1,0 +1,25 @@
+# Recipe (MakeRecipe) for KDE-Utils by Giambattista Bloisi <giamby@infinito.it>, on Tue Jan 15 23:25:28 CET 2008
+# Recipe for version 4.0.0 by Giambattista Bloisi <giamby@infinito.it>, on Tue Jan 15 23:25:28 CET 2008
+compile_version=1.10.0
+url="http://download.kde.org/stable/4.0.0/src/kdeutils-4.0.0.tar.bz2"
+file="kdeutils-4.0.0.tar.bz2"
+file_size=2352487
+file_md5=5815625f215ff3be47a21074d2c047a0
+recipe_type=cmake
+
+cmake_options=(
+    "-DKDE4_KABC_LIBRARY=$goboLibraries/libkabc.so"
+)
+
+pre_build() {
+    pushd $goboShared/dbus-1/interfaces/
+    mkdir -p $target/share/dbus-1/interfaces
+    cp -f org.kde.KWallet.xml $target/share/dbus-1/interfaces
+    popd
+}
+
+pre_link() {
+    pushd $target/share/dbus-1/interfaces
+    rm -f org.kde.KWallet.xml
+    popd
+}

@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for PDMenu by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. febr. 14., vasárnap, 06.33.42 CET
+# Recipe for version 1.2.98 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. febr. 14., vasárnap, 06.33.42 CET
+compile_version=1.12.4
+url="http://ftp.hu.debian.org/debian/pool/main/p/pdmenu/pdmenu_1.2.98.tar.gz"
+file_size=155652
+file_md5=5439071374da6c9804d7eb3726a25b33
+dir='pdmenu'
+recipe_type=configure
+make_variables=(
+    "LOCALEDIR=$target/share/locale"
+)

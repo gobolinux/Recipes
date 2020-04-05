@@ -1,0 +1,81 @@
+--- /dev/null	2005-11-09 11:55:52.000000000 -0200
++++ skyeye-1.0.0/skyeye.conf.sample	2005-11-24 10:22:55.000000000 -0200
+@@ -0,0 +1,78 @@
++#--------------------------------------------------------------------------------
++# memmap.conf and skyeye.conf are all skyeye's hardware configure files.
++# memmap.conf is for skyeye-v0.2.5-
++# skyeye.conf is for skyeye-v0.2.5+
++# usually you needn't to chang them.
++# for example, a AT91's configure file is shown below:
++
++#--------------------------------------------------------------------------------
++# below is the cpu config info
++# cpu maybe arm7tdmi or arm720t
++cpu: arm7tdmi 
++
++#--------------------------------------------------------------------------------
++# below is the machine(develop board) config info
++# machine(develop board) maybe at91 or ep7312
++mach: at91 
++
++#-------------------------------------------------------------------------------
++#NOTICE: this parameter is useless for skyeye-V0.3.1+
++# have 7 memory bank (include RAM, ROM, mapped IO space)
++# below is the memory config info
++mem_num: 7 
++
++# map=M means ram/rom, map=I means mapped IO space, 
++# type=RW means can be read or written, 
++# type=R means read only, 
++# addr=0x..... means the mem bank's beginning address, 
++# size=0x..... means the mem bank's memory size,  
++# file=... is the filesystem image file, used for uclinux4skyeye or armlinux4skyeye 
++mem_bank: map=M, type=RW, addr=0x00000000, size=0x00004000 
++mem_bank: map=M, type=RW, addr=0x01000000, size=0x00400000 
++mem_bank: map=M, type=R, addr=0x01400000, size=0x00400000, file=./boot.rom 
++mem_bank: map=M, type=RW, addr=0x02000000, size=0x00400000 
++mem_bank: map=M, type=RW, addr=0x02400000, size=0x00008000 
++mem_bank: map=M, type=RW, addr=0x04000000, size=0x00400000 
++mem_bank: map=I, type=RW, addr=0xf0000000, size=0x10000000 
++
++#now, add more options on mem_bank: start binary program at 0x100000000
++mem_bank: map=M, type=RW, addr=0x10000000, size=0x00000800, file=./loader.bin,boot=yes
++
++#----------------------------------------------------------------------------------
++# below is the net config info
++# state=on/off means simulated NIC is wired or not, 
++# mac=.... means the mac addr in simulated NIC, 
++# ethmod=tuntap/vnet means the virtual driver used in host evnironment,
++# hostip=... means the ip address in host environment to interactive with skyeye.
++# format: state=on/off mac=xx:xx:xx:xx:xx:xx ethmod=tuntap/vnet hostip=dd.dd.dd.dd 
++# *********NOTICE**********
++#If you run two more skyeyes at the same time,
++# please use different skyeye.conf for each skyeye instance, and only one
++# skyeye run first and related skyeye.conf content has hostip value:
++#     ......
++#     net: ... ethmod=vnet, hostip=ddd.ddd.ddd.ddd
++#  other skyeye.conf should has content(hostip[0] should be 0):
++#     ......
++#     net: ... ethmod=vnet, hostip=0.ddd.ddd.ddd
++net: state=on, mac=0:4:3:2:1:f, ethmod=tuntap, hostip=10.0.0.1
++
++#------------------------------------------------------------------------------------
++#uart: use it to read/write characters in another terminal
++#now you can use them to connect real serial port.
++#you can add an option to skyeye.conf as below:
++uart: fd_in=/dev/ttyS0, fd_out=/dev/ttyS0
++#then use a terminal connect host's COM1, you can see the output in the terminal.
++
++#-----------------------------------------------------------------------------------
++#add log parameter which is used to recode the instr. flow and regs when
++#program are running.
++log: logon=0, logfile=/tmp/sk1.log, start=100000, end=200000
++#logon = 0 or 1 0:doesn't log, 1 do log
++#logfile: the filename which have the log info
++#start: the start point of instruction flow to log, should >=0
++#end:   the end   point of instructio flow to log
++
++#-----------------------------------------------------------------
++# below is the lcd config info
++# state=on/off means simulated LCD is wired or not
++lcd: state=on

@@ -1,0 +1,444 @@
+--- mozilla/gfx/idl/nsIFreeType2.idl.orig	Thu Apr 15 19:09:33 2004
++++ mozilla/gfx/idl/nsIFreeType2.idl	Sun Apr 24 00:51:09 2005
+@@ -76,11 +76,13 @@
+ native FT_Sfnt_Tag(FT_Sfnt_Tag);
+ native FT_Size(FT_Size);
+ 
+-[ptr] native FTC_Image_Desc_p(FTC_Image_Desc);
++native FTC_ImageType(FTC_ImageType);
+ native FTC_Face_Requester(FTC_Face_Requester);
+ native FTC_Font(FTC_Font);
+-native FTC_Image_Cache(FTC_Image_Cache);
++native FTC_ImageCache(FTC_ImageCache);
+ native FTC_Manager(FTC_Manager);
++native FTC_Node(FTC_Node);
++native FTC_Scaler(FTC_Scaler);
+ 
+ // #ifdef MOZ_SVG
+ [ptr] native FT_Matrix_p(FT_Matrix);
+@@ -99,7 +101,7 @@
+ 
+     readonly attribute FT_Library library;
+     readonly attribute FTC_Manager FTCacheManager;
+-    readonly attribute FTC_Image_Cache ImageCache;
++    readonly attribute FTC_ImageCache ImageCache;
+ 
+     void    doneFace(in FT_Face face);
+     void    doneFreeType(in FT_Library lib);
+@@ -115,16 +117,17 @@
+     void    outlineDecompose(in FT_Outline_p outline,
+                              in const_FT_Outline_Funcs_p funcs, in voidPtr p);
+     void    setCharmap(in FT_Face face, in FT_CharMap charmap);
+-    void    imageCacheLookup(in FTC_Image_Cache cache, in FTC_Image_Desc_p desc,
+-                             in FT_UInt gindex, out FT_Glyph glyph);
+-    void    managerLookupSize(in FTC_Manager manager, in FTC_Font font,
+-                              out FT_Face face, out FT_Size size);
++    void    imageCacheLookup(in FTC_ImageCache cache, in FTC_ImageType type,
++                             in FT_UInt gindex, out FT_Glyph glyph, 
++                             out FTC_Node node);
++    void    managerLookupSize(in FTC_Manager manager, in FTC_Scaler scaler,
++                              out FT_Size size);
+     void    managerDone(in FTC_Manager manager);
+     void    managerNew(in FT_Library lib, in FT_UInt max_faces,
+                        in FT_UInt max_sizes, in FT_ULong max_bytes,
+                        in FTC_Face_Requester requester, in FT_Pointer req_data,
+                        out FTC_Manager manager);
+-    void    imageCacheNew(in FTC_Manager manager, out FTC_Image_Cache cache);
++    void    imageCacheNew(in FTC_Manager manager, out FTC_ImageCache cache);
+ /* #ifdef MOZ_SVG */
+     void glyphTransform(in FT_Glyph glyph, in FT_Matrix_p matrix,
+                         in FT_Vector_p delta);
+--- mozilla/gfx/src/freetype/nsFreeType.cpp.orig	Sat Feb  7 09:22:30 2004
++++ mozilla/gfx/src/freetype/nsFreeType.cpp	Sat Apr 23 22:19:07 2005
+@@ -110,11 +110,11 @@
+   {"FT_New_Face",             NS_FT2_OFFSET(nsFT_New_Face),             PR_TRUE},
+   {"FT_Outline_Decompose",    NS_FT2_OFFSET(nsFT_Outline_Decompose),    PR_TRUE},
+   {"FT_Set_Charmap",          NS_FT2_OFFSET(nsFT_Set_Charmap),          PR_TRUE},
+-  {"FTC_Image_Cache_Lookup",  NS_FT2_OFFSET(nsFTC_Image_Cache_Lookup),  PR_TRUE},
+-  {"FTC_Manager_Lookup_Size", NS_FT2_OFFSET(nsFTC_Manager_Lookup_Size), PR_TRUE},
++  {"FTC_ImageCache_Lookup",   NS_FT2_OFFSET(nsFTC_ImageCache_Lookup),   PR_TRUE},
++  {"FTC_Manager_LookupSize",  NS_FT2_OFFSET(nsFTC_Manager_LookupSize),  PR_TRUE},
+   {"FTC_Manager_Done",        NS_FT2_OFFSET(nsFTC_Manager_Done),        PR_TRUE},
+   {"FTC_Manager_New",         NS_FT2_OFFSET(nsFTC_Manager_New),         PR_TRUE},
+-  {"FTC_Image_Cache_New",     NS_FT2_OFFSET(nsFTC_Image_Cache_New),     PR_TRUE},
++  {"FTC_ImageCache_New",      NS_FT2_OFFSET(nsFTC_ImageCache_New),      PR_TRUE},
+ // #ifdef MOZ_SVG
+   {"FT_Glyph_Transform",      NS_FT2_OFFSET(nsFT_Glyph_Transform),      PR_TRUE},
+   {"FT_Get_Kerning",          NS_FT2_OFFSET(nsFT_Get_Kerning),          PR_TRUE},
+@@ -282,20 +282,21 @@
+ } 
+  
+ NS_IMETHODIMP
+-nsFreeType2::ImageCacheLookup(FTC_Image_Cache cache, FTC_Image_Desc *desc,
+-                              FT_UInt glyphID, FT_Glyph *glyph)
++nsFreeType2::ImageCacheLookup(FTC_ImageCache cache, FTC_ImageType type,
++                              FT_UInt glyphID, FT_Glyph *glyph,
++                              FTC_Node *node)
+ { 
+   // call the FreeType2 function via the function pointer
+-  FT_Error error = nsFTC_Image_Cache_Lookup(cache, desc, glyphID, glyph);
++  FT_Error error = nsFTC_ImageCache_Lookup(cache, type, glyphID, glyph, node);
+   return error ? NS_ERROR_FAILURE : NS_OK;
+ } 
+  
+ NS_IMETHODIMP
+-nsFreeType2::ManagerLookupSize(FTC_Manager manager, FTC_Font font,
+-                               FT_Face *face, FT_Size *size)
++nsFreeType2::ManagerLookupSize(FTC_Manager manager, FTC_Scaler scaler,
++                               FT_Size *size)
+ { 
+   // call the FreeType2 function via the function pointer
+-  FT_Error error = nsFTC_Manager_Lookup_Size(manager, font, face, size);
++  FT_Error error = nsFTC_Manager_LookupSize(manager, scaler, size);
+   return error ? NS_ERROR_FAILURE : NS_OK;
+ } 
+  
+@@ -320,10 +321,10 @@
+ } 
+  
+ NS_IMETHODIMP
+-nsFreeType2::ImageCacheNew(FTC_Manager manager, FTC_Image_Cache *cache)
++nsFreeType2::ImageCacheNew(FTC_Manager manager, FTC_ImageCache *cache)
+ { 
+   // call the FreeType2 function via the function pointer
+-  FT_Error error = nsFTC_Image_Cache_New(manager, cache);
++  FT_Error error = nsFTC_ImageCache_New(manager, cache);
+   return error ? NS_ERROR_FAILURE : NS_OK;
+ } 
+ 
+@@ -389,7 +390,7 @@
+ } 
+  
+ NS_IMETHODIMP
+-nsFreeType2::GetImageCache(FTC_Image_Cache *aCache)
++nsFreeType2::GetImageCache(FTC_ImageCache *aCache)
+ {
+   *aCache = mImageCache;
+   return NS_OK;
+--- mozilla/gfx/src/freetype/nsFreeType.h.orig	Fri Apr 16 15:31:42 2004
++++ mozilla/gfx/src/freetype/nsFreeType.h	Sun Apr 24 22:21:23 2005
+@@ -103,14 +103,15 @@
+                       (FT_Outline*, const FT_Outline_Funcs*, void*);
+ typedef FT_Error (*FT_New_Face_t)(FT_Library, const char*, FT_Long, FT_Face*);
+ typedef FT_Error (*FT_Set_Charmap_t)(FT_Face face, FT_CharMap  charmap);
+-typedef FT_Error (*FTC_Image_Cache_Lookup_t)
+-                      (FTC_Image_Cache, FTC_Image_Desc*, FT_UInt, FT_Glyph*);
+-typedef FT_Error (*FTC_Manager_Lookup_Size_t)
+-                      (FTC_Manager, FTC_Font, FT_Face*, FT_Size*);
++typedef FT_Error (*FTC_ImageCache_Lookup_t)
++                      (FTC_ImageCache, FTC_ImageType, FT_UInt, FT_Glyph*, 
++                       FTC_Node*);
++typedef FT_Error (*FTC_Manager_LookupSize_t)
++                      (FTC_Manager, FTC_Scaler, FT_Size*);
+ typedef FT_Error (*FTC_Manager_Done_t)(FTC_Manager);
+ typedef FT_Error (*FTC_Manager_New_t)(FT_Library, FT_UInt, FT_UInt, FT_ULong,
+                        FTC_Face_Requester, FT_Pointer, FTC_Manager*);
+-typedef FT_Error (*FTC_Image_Cache_New_t)(FTC_Manager, FTC_Image_Cache*);
++typedef FT_Error (*FTC_ImageCache_New_t)(FTC_Manager, FTC_ImageCache*);
+ // #ifdef MOZ_SVG
+ typedef FT_Error (*FT_Glyph_Transform_t)(FT_Glyph, FT_Matrix*, FT_Vector*);
+ typedef FT_Error (*FT_Get_Kerning_t)
+@@ -164,11 +165,11 @@
+   FT_New_Face_t             nsFT_New_Face;
+   FT_Outline_Decompose_t    nsFT_Outline_Decompose;
+   FT_Set_Charmap_t          nsFT_Set_Charmap;
+-  FTC_Image_Cache_Lookup_t  nsFTC_Image_Cache_Lookup;
+-  FTC_Manager_Lookup_Size_t nsFTC_Manager_Lookup_Size;
++  FTC_ImageCache_Lookup_t   nsFTC_ImageCache_Lookup;
++  FTC_Manager_LookupSize_t  nsFTC_Manager_LookupSize;
+   FTC_Manager_Done_t        nsFTC_Manager_Done;
+   FTC_Manager_New_t         nsFTC_Manager_New;
+-  FTC_Image_Cache_New_t     nsFTC_Image_Cache_New;
++  FTC_ImageCache_New_t      nsFTC_ImageCache_New;
+ // #ifdef MOZ_SVG
+   FT_Glyph_Transform_t      nsFT_Glyph_Transform;
+   FT_Get_Kerning_t          nsFT_Get_Kerning;
+@@ -213,7 +214,7 @@
+   PRLibrary      *mSharedLib;
+   FT_Library      mFreeTypeLibrary;
+   FTC_Manager     mFTCacheManager;
+-  FTC_Image_Cache mImageCache;
++  FTC_ImageCache  mImageCache;
+ 
+   static nsHashtable   *sFontFamilies;
+   static nsHashtable   *sRange1CharSetNames;
+--- mozilla/gfx/src/ps/nsFontMetricsPS.cpp.orig	Wed Feb  4 19:57:05 2004
++++ mozilla/gfx/src/ps/nsFontMetricsPS.cpp	Mon Apr 25 00:07:18 2005
+@@ -1141,10 +1141,14 @@
+   
+   mPixelSize = NSToIntRound(app2dev * mFont->size);
+ 
+-  mImageDesc.font.face_id    = (void*)mEntry;
+-  mImageDesc.font.pix_width  = mPixelSize;
+-  mImageDesc.font.pix_height = mPixelSize;
+-  mImageDesc.image_type = 0;
++  mImageTypeRec.face_id    = (FTC_FaceID)(void*)mEntry;
++  mImageTypeRec.width      = mPixelSize;
++  mImageTypeRec.height     = mPixelSize;
++  mImageTypeRec.flags      = FT_LOAD_DEFAULT;
++  mScalerRec.face_id       = (FTC_FaceID)(void*)mEntry;
++  mScalerRec.width         = mPixelSize;
++  mScalerRec.height        = mPixelSize;
++  mScalerRec.pixel         = PR_TRUE;
+ 
+   nsresult rv;
+   mFt2 = do_GetService(NS_FREETYPE2_CONTRACTID, &rv);
+@@ -1190,7 +1194,7 @@
+   if (!face)
+     return 0;
+ 
+-  FTC_Image_Cache iCache;
++  FTC_ImageCache iCache;
+   nsresult rv = mFt2->GetImageCache(&iCache);
+   if (NS_FAILED(rv)) {
+     NS_ERROR("Failed to get Image Cache");
+@@ -1199,8 +1203,8 @@
+ 
+   for (PRUint32 i=0; i<aLength; i++) {
+     mFt2->GetCharIndex((FT_Face)face, aString[i], &glyph_index);
+-    nsresult rv = mFt2->ImageCacheLookup(iCache, &mImageDesc,
+-                                         glyph_index, &glyph);
++    nsresult rv = mFt2->ImageCacheLookup(iCache, &mImageTypeRec,
++                                         glyph_index, &glyph, nsnull);
+     if (NS_FAILED(rv)) {
+       origin_x += FT_REG_TO_16_16(face->size->metrics.x_ppem/2 + 2);
+       continue;
+@@ -1224,16 +1228,15 @@
+ FT_Face
+ nsFontPSFreeType::getFTFace()
+ {
+-  FT_Face face = nsnull;
++  FT_Size size = nsnull;
+   
+   FTC_Manager cManager;
+   mFt2->GetFTCacheManager(&cManager);
+-  nsresult rv = mFt2->ManagerLookupSize(cManager, &mImageDesc.font,
+-                                        &face, nsnull);
++  nsresult rv = mFt2->ManagerLookupSize(cManager, &mScalerRec, &size);
+   NS_ASSERTION(rv==0, "failed to get face/size");
+   if (rv)
+     return nsnull;
+-  return face;
++  return size->face;
+ }
+ 
+ nscoord
+@@ -1622,22 +1625,21 @@
+   mEntry->GetFamilyName(fontName);
+   mEntry->GetStyleName(styleName);
+   
+-  mImageDesc.font.face_id    = (void*)mEntry;
++  mScalerRec.face_id    = (FTC_FaceID)(void*)mEntry;
+   // TT glyph has no relation to size
+-  mImageDesc.font.pix_width  = 16;
+-  mImageDesc.font.pix_height = 16;
+-  mImageDesc.image_type = 0;
+-  FT_Face face = nsnull;
++  mScalerRec.width      = 16;
++  mScalerRec.height     = 16;
++  mScalerRec.pixel      = PR_TRUE;
++  FT_Size size = nsnull;
+   FTC_Manager cManager;
+   mFt2->GetFTCacheManager(&cManager);
+-  nsresult rv = mFt2->ManagerLookupSize(cManager, &mImageDesc.font,
+-                                        &face, nsnull);
++  nsresult rv = mFt2->ManagerLookupSize(cManager, &mScalerRec, &size);
+   if (NS_FAILED(rv))
+     return;
+  
+   int wmode = 0;
+   if (!mSubset.IsEmpty())
+-    FT2SubsetToType8(face, mSubset.get(), mSubset.Length(), wmode, aFile);
++    FT2SubsetToType8(size->face, mSubset.get(), mSubset.Length(), wmode, aFile);
+ }
+ #endif //MOZ_ENABLE_FREETYPE2
+ 
+--- mozilla/gfx/src/ps/nsFontMetricsPS.h.orig	Tue Apr 22 10:25:09 2003
++++ mozilla/gfx/src/ps/nsFontMetricsPS.h	Sun Apr 24 21:01:10 2005
+@@ -319,9 +319,9 @@
+ protected:
+   nsCOMPtr<nsITrueTypeFontCatalogEntry> mFaceID;
+   nsCOMPtr<nsIFreeType2> mFt2;
+-  PRUint16        mPixelSize;
+-  FTC_Image_Desc  mImageDesc;
+-
++  PRUint16           mPixelSize;
++  FTC_ImageTypeRec   mImageTypeRec;
++  FTC_ScalerRec      mScalerRec;
+ 
+   static PRBool AddUserPref(nsIAtom *aLang, const nsFont& aFont,
+                             fontPSInfo *aFpi);
+@@ -363,7 +363,7 @@
+ protected:
+   nsCOMPtr<nsITrueTypeFontCatalogEntry> mEntry;
+   nsCOMPtr<nsIFreeType2> mFt2;
+-  FTC_Image_Desc  mImageDesc;
++  FTC_ScalerRec mScalerRec;
+ };
+ #endif
+ 
+--- mozilla/gfx/src/x11shared/nsFontFreeType.cpp.orig	Thu Dec 25 02:24:52 2003
++++ mozilla/gfx/src/x11shared/nsFontFreeType.cpp	Mon Apr 25 00:25:06 2005
+@@ -173,15 +173,15 @@
+ FT_Face
+ nsFreeTypeFont::getFTFace()
+ {
+-  FT_Face face = nsnull;
++  FT_Size size = nsnull;
+   FTC_Manager mgr;
+   nsresult rv;
+   mFt2->GetFTCacheManager(&mgr);
+-  rv = mFt2->ManagerLookupSize(mgr, &mImageDesc.font, &face, nsnull);
++  rv = mFt2->ManagerLookupSize(mgr, &mScalerRec, &size);
+   NS_ASSERTION(NS_SUCCEEDED(rv), "failed to get face/size");
+   if (NS_FAILED(rv))
+     return nsnull;
+-  return face;
++  return size->face;
+ }
+ 
+ nsFreeTypeFont::nsFreeTypeFont(nsITrueTypeFontCatalogEntry *aFaceID,
+@@ -191,21 +191,25 @@
+   PRBool embedded_bimap = PR_FALSE;
+   mFaceID = aFaceID;
+   mPixelSize = aPixelSize;
+-  mImageDesc.font.face_id    = (void*)mFaceID;
+-  mImageDesc.font.pix_width  = aPixelSize;
+-  mImageDesc.font.pix_height = aPixelSize;
+-  mImageDesc.image_type = 0;
+-
++  mImageTypeRec.face_id    = (FTC_FaceID)(void*)mFaceID;
++  mImageTypeRec.width      = aPixelSize;
++  mImageTypeRec.height     = aPixelSize;
++  mImageTypeRec.flags      = FT_LOAD_DEFAULT | FT_LOAD_RENDER;
++  mScalerRec.face_id       = (FTC_FaceID)(void*)mFaceID;
++  mScalerRec.width         = aPixelSize;
++  mScalerRec.height        = aPixelSize;
++  mScalerRec.pixel         = PR_TRUE;
++  
+   if (aPixelSize < nsFreeType2::gAntiAliasMinimum) {
+-    mImageDesc.image_type |= ftc_image_mono;
++    mImageTypeRec.flags |= FT_LOAD_MONOCHROME;
+     anti_alias = PR_FALSE;
+   }
+ 
+   if (nsFreeType2::gFreeType2Autohinted)
+-    mImageDesc.image_type |= ftc_image_flag_autohinted;
++    mImageTypeRec.flags |= FT_LOAD_FORCE_AUTOHINT;
+ 
+   if (nsFreeType2::gFreeType2Unhinted)
+-    mImageDesc.image_type |= ftc_image_flag_unhinted;
++    mImageTypeRec.flags |= FT_LOAD_NO_HINTING;
+ 
+   PRUint32  num_embedded_bitmaps, i;
+   PRInt32*  embedded_bitmapheights;
+@@ -218,7 +222,7 @@
+         if (embedded_bitmapheights[i] == aPixelSize) {
+           embedded_bimap = PR_TRUE;
+           // unhinted must be set for embedded bitmaps to be used
+-          mImageDesc.image_type |= ftc_image_flag_unhinted;
++          mImageTypeRec.flags |= FT_LOAD_NO_HINTING;
+           break;
+         }
+       }
+@@ -312,7 +316,7 @@
+   if (!face)
+     return NS_ERROR_FAILURE;
+ 
+-  FTC_Image_Cache icache;
++  FTC_ImageCache icache;
+   mFt2->GetImageCache(&icache);
+   if (!icache)
+     return NS_ERROR_FAILURE;
+@@ -339,7 +343,8 @@
+ 
+     //NS_ASSERTION(glyph_index,"failed to get glyph");
+     if (glyph_index) {
+-      rv = mFt2->ImageCacheLookup(icache, &mImageDesc, glyph_index, &glyph);
++      rv = mFt2->ImageCacheLookup(icache, &mImageTypeRec, glyph_index,
++                                 &glyph, nsnull);
+       NS_ASSERTION(NS_SUCCEEDED(rv),"error loading glyph");
+     }
+     if ((glyph_index) && (NS_SUCCEEDED(rv))) {
+@@ -401,7 +406,7 @@
+   if (!face)
+     return 0;
+ 
+-  FTC_Image_Cache icache;
++  FTC_ImageCache icache;
+   mFt2->GetImageCache(&icache);
+   if (!icache)
+     return 0;
+@@ -420,7 +425,8 @@
+     }
+     mFt2->GetCharIndex((FT_Face)face, code_point, &glyph_index);
+     nsresult rv;
+-    rv = mFt2->ImageCacheLookup(icache, &mImageDesc, glyph_index, &glyph);
++    rv = mFt2->ImageCacheLookup(icache, &mImageTypeRec, glyph_index, &glyph,
++                                nsnull);
+     NS_ASSERTION(NS_SUCCEEDED(rv),"error loading glyph");
+     if (NS_FAILED(rv)) {
+       origin_x += face->size->metrics.x_ppem/2 + 2;
+@@ -723,7 +729,7 @@
+     if (y%4==0) (*blendPixelFunc)(sub_image, y, ascent-1, black, 255/2);
+ #endif
+ 
+-  FTC_Image_Cache icache;
++  FTC_ImageCache icache;
+   mFt2->GetImageCache(&icache);
+   if (!icache)
+     return 0;
+@@ -752,7 +758,8 @@
+ 
+     mFt2->GetCharIndex(face, code_point, &glyph_index);
+     if (glyph_index) {
+-      rv = mFt2->ImageCacheLookup(icache, &mImageDesc, glyph_index, &glyph);
++      rv = mFt2->ImageCacheLookup(icache, &mImageTypeRec, glyph_index,
++                                 &glyph, nsnull);
+     }
+     if ((glyph_index) && (NS_SUCCEEDED(rv))) {
+       mFt2->GlyphGetCBox(glyph, ft_glyph_bbox_pixels, &glyph_bbox);
+--- mozilla/gfx/src/x11shared/nsFontFreeType.h.orig	Tue Apr 22 10:25:13 2003
++++ mozilla/gfx/src/x11shared/nsFontFreeType.h	Mon Apr 25 00:38:53 2005
+@@ -109,8 +109,9 @@
+ protected:
+   XImage *GetXImage(PRUint32 width, PRUint32 height);
+   nsITrueTypeFontCatalogEntry *mFaceID;
+-  PRUint16        mPixelSize;
+-  FTC_Image_Desc  mImageDesc;
++  PRUint16          mPixelSize;
++  FTC_ImageTypeRec  mImageTypeRec;
++  FTC_ScalerRec     mScalerRec;
+   nsCOMPtr<nsIFreeType2> mFt2;
+ };
+ 
+--- mozilla/layout/svg/renderer/src/libart/nsSVGLibartGlyphMetricsFT.cpp.orig	Thu Mar 18 19:36:16 2004
++++ mozilla/layout/svg/renderer/src/libart/nsSVGLibartGlyphMetricsFT.cpp	Mon Apr 25 00:21:42 2005
+@@ -440,19 +440,21 @@
+     return;
+   }
+ 
+-  FTC_Image_Desc imageDesc;
+-  imageDesc.font.face_id=(void*)font_data.font_entry.get(); // XXX do we need to addref?
++  FTC_ScalerRec scalerRec;
++  scalerRec.face_id = (FTC_FaceID)(void*)font_data.font_entry.get(); // XXX do we need to addref?
+   float twipstopixel = GetTwipsToPixels();
+   float scale = GetPixelScale();
+-  imageDesc.font.pix_width = (int)((float)(font_data.font.size)*twipstopixel/scale);
+-  imageDesc.font.pix_height = (int)((float)(font_data.font.size)*twipstopixel/scale);
+-  imageDesc.image_type |= ftc_image_grays;
++  scalerRec.width = (int)((float)(font_data.font.size)*twipstopixel/scale);
++  scalerRec.height = (int)((float)(font_data.font.size)*twipstopixel/scale);
++  scalerRec.pixel = PR_TRUE;
+ 
+   // get the face
+   nsresult rv;
+   FTC_Manager mgr;
++  FT_Size size;
+   nsSVGLibartFreetype::ft2->GetFTCacheManager(&mgr);
+-  rv = nsSVGLibartFreetype::ft2->ManagerLookupSize(mgr, &imageDesc.font, &mFace, nsnull);
++  rv = nsSVGLibartFreetype::ft2->ManagerLookupSize(mgr, &scalerRec, &size);
++  mFace = (rv==0) ? size->face : nsnull;
+   NS_ASSERTION(mFace, "failed to get face/size");
+ }
+ 

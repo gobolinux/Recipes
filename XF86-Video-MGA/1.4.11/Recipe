@@ -1,0 +1,8 @@
+# Recipe for version 1.4.11 by Jonas Karlsson <jonas@gobolinux.org>, on Wed Jan 6 06:20:14 CET 2010
+# Recipe (MakeRecipe) for XF86-Video-MGA by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jan 9 17:17:07 BRST 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/driver/xf86-video-mga-1.4.11.tar.bz2"
+file_size=415829
+file_md5=9d1ca965cedb0856296b47442f3c739d
+recipe_type=configure
+part_of=Xorg-Driver

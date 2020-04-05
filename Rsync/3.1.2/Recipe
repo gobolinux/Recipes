@@ -1,0 +1,11 @@
+# by Andre Detsch
+# 2004.01.06 16:59
+compile_version=1.8.0
+url='http://rsync.samba.org/ftp/rsync/src/rsync-3.1.2.tar.gz'
+file_size=892724
+file_md5=0f758d7e000c0f7f7d3792610fad70cb
+recipe_type=configure
+
+configure_options=(
+  "--prefix=${target}"
+)

@@ -1,0 +1,36 @@
+# Recipe (MakeRecipe) for PostgreSQL by Maglan C. Diemer, maglan@univates.br, on Qui Dez 8 19:22:05 BRST 2005
+# Recipe for version 8.1.0 by Maglan C. Diemer, maglan@univates.br, on Qui Dez 8 19:22:05 BRST 2005
+compile_version=1.8.0
+url="ftp://ftp.us.postgresql.org/pub/mirrors/postgresql/source/v8.1.0/postgresql-8.1.0.tar.bz2"
+file_size=11546737
+file_md5=5e1f1a7c5f62170b56a3bf2512fdec2d
+recipe_type=configure
+
+configure_options=(
+   "--with-perl"
+   "--with-python"
+   "--with-tcl"
+   "--with-openssl"
+)
+
+pre_install() {
+   if ! grep -q postgres $goboSettings/group
+   then
+      Log_Normal "Adding group postgres"
+      groupadd postgres
+   fi
+
+   if ! grep -q "postgres:x:" $goboSettings/passwd
+   then
+      Log_Normal "Adding user postgres"
+      useradd postgres -g postgres -c 'Added by Compile for PostgreSQL' -d $goboPrograms/PostgreSQL -s $goboExecutables/false
+   fi
+}
+
+post_install() {
+    Log_Normal "Installing prepared tables"
+    PGDATA=$target/../Variable/PostgreSQL/data
+    mkdir -p $PGDATA
+    chown postgres:postgres $target/../Variable/PostgreSQL/data
+    sudo -u postgres $target/bin/initdb -D $PGDATA
+}

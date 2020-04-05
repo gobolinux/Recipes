@@ -1,0 +1,11 @@
+--- sash-3.7/Makefile.orig	2006-06-19 18:15:42.000000000 -0300
++++ sash-3.7/Makefile	2006-06-19 18:15:49.000000000 -0300
+@@ -8,7 +8,7 @@
+ # The MOUNT_TYPE definition sets the default file system type for -mount.
+ #
+ HAVE_GZIP		= 1
+-HAVE_LINUX_ATTR		= 1
++HAVE_LINUX_ATTR		= 0
+ HAVE_LINUX_MOUNT	= 1
+ HAVE_BSD_MOUNT		= 0
+ MOUNT_TYPE		= '"ext3"'

@@ -1,0 +1,11 @@
+--- antiword-0.37_orig/Makefile	2005-10-29 19:13:15.000000000 +0200
++++ antiword-0.37/Makefile	2007-02-20 10:29:22.000000000 +0100
+@@ -58,6 +58,8 @@
+ 	$(INSTALL_DATA) Resources/*.txt $(DESTDIR)$(GLOBAL_RESOURCES_DIR)
+ 	$(INSTALL_DATA) Resources/fontnames $(DESTDIR)$(GLOBAL_RESOURCES_DIR)
+ 	cd $(DESTDIR)$(GLOBAL_RESOURCES_DIR); chmod 644 *.txt fontnames
++	mkdir -p $(DESTDIR)$(GLOBAL_MAN_DIR)
++	$(INSTALL_DATA) Docs/antiword.1 $(DESTDIR)$(GLOBAL_MAN_DIR)
+ 
+ # NOTE: you might have to be root to do this
+ global_uninstall:

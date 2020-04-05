@@ -1,0 +1,18 @@
+Fix guile.init to put slibcat into /P/SLIB.
+
+ guile.init |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff -Nur slib-old/guile.init slib/guile.init
+--- slib-old/guile.init	2007-12-24 05:33:08.000000000 +0100
++++ slib/guile.init	2008-08-21 01:57:40.696916756 +0200
+@@ -53,7 +53,8 @@
+ (define implementation-vicinity
+   (cond ((and (defined? 'getenv) (getenv "GUILE_IMPLEMENTATION_PATH"))
+ 	 => (lambda (path) (lambda () path)))
+-	(else %site-dir)))
++	(else (lambda () "@%Compile_target%@/Shared/scheme"))))
++;; (else %site-dir)))
+ 
+ ;;; (library-vicinity) should be defined to be the pathname of the
+ ;;; directory where files of Scheme library functions reside.

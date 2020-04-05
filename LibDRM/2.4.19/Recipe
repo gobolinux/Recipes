@@ -1,0 +1,16 @@
+# Recipe for version 2.4.19 by Zbigniew Baniewski <zb@ispid.com.pl>, on Thu Apr 1 00:15:48 CEST 2010
+# Recipe (MakeRecipe) for LibDRM by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jan 9 17:56:36 BRST 2.4.196
+compile_version=1.12.0
+url="http://dri.freedesktop.org/libdrm/libdrm-2.4.19.tar.bz2"
+file_size=428262
+file_md5=c2699b5d8ebc9e47fb56da15f460107f
+recipe_type=configure
+symlink_options=(--conflict=overwrite)
+configure_options=(
+   --enable-intel
+   --enable-nouveau-experimental-api
+   --enable-radeon-experimental-api
+)
+with_udev=(
+   --enable-udev
+)

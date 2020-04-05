@@ -1,0 +1,10 @@
+# Recipe for version 1.2.2 by Lucas C. Villa Real, on Thu Mar 1 16:59:28 BRT 2007
+url="$httpSourceforge/cdrdao/cdrdao-1.2.2.tar.bz2"
+file_size=1408344
+file_md5=f0cbf36907406cb4f4c568f9e6669a34
+compile_version=1.8.2
+recipe_type=configure
+
+pre_link() {
+   chmod +s $target/bin/cdrdao
+}

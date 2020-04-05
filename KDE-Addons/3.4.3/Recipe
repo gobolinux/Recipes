@@ -1,0 +1,14 @@
+# Recipe for version 3.4.3 by Maglan C. Diemer, maglan@univates.br, on Qui Nov 17 07:45:20 BRST 2005
+# by Maglan C. Diemer
+
+url="ftp://ftp.kde.org/pub/kde/stable/3.4.3/src/kdeaddons-3.4.3.tar.bz2"
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+)
+
+pre_build() {
+  GrepReplace "kde_includes = @kde_includes@" "kde_includes = /System/Links/Headers" noatun-plugins/wavecapture/Makefile.in
+}

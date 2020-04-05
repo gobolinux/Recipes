@@ -1,0 +1,37 @@
+diff -urp xf86-video-nv-2.1.20.orig/src/g80_driver.c xf86-video-nv-2.1.20/src/g80_driver.c
+--- xf86-video-nv-2.1.20.orig/src/g80_driver.c	2014-01-05 17:19:15.000000000 -0200
++++ xf86-video-nv-2.1.20/src/g80_driver.c	2014-01-05 17:19:40.000000000 -0200
+@@ -34,7 +34,6 @@
+ #include <xf86Resources.h>
+ #endif
+ #include <mipointer.h>
+-#include <mibstore.h>
+ #include <micmap.h>
+ #include <xf86cmap.h>
+ #include <fb.h>
+diff -urp xf86-video-nv-2.1.20.orig/src/nv_include.h xf86-video-nv-2.1.20/src/nv_include.h
+--- xf86-video-nv-2.1.20.orig/src/nv_include.h	2014-01-05 17:19:15.000000000 -0200
++++ xf86-video-nv-2.1.20/src/nv_include.h	2014-01-05 17:19:47.000000000 -0200
+@@ -24,9 +24,6 @@
+ /* All drivers initialising the SW cursor need this */
+ #include "mipointer.h"
+ 
+-/* All drivers implementing backing store need this */
+-#include "mibstore.h"
+-
+ #include "micmap.h"
+ 
+ #include "xf86DDC.h"
+diff -urp xf86-video-nv-2.1.20.orig/src/riva_include.h xf86-video-nv-2.1.20/src/riva_include.h
+--- xf86-video-nv-2.1.20.orig/src/riva_include.h	2014-01-05 17:19:15.000000000 -0200
++++ xf86-video-nv-2.1.20/src/riva_include.h	2014-01-05 17:19:44.000000000 -0200
+@@ -22,9 +22,6 @@
+ /* All drivers initialising the SW cursor need this */
+ #include "mipointer.h"
+ 
+-/* All drivers implementing backing store need this */
+-#include "mibstore.h"
+-
+ #include "micmap.h"
+ 
+ #include "xf86DDC.h"

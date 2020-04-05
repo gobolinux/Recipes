@@ -1,0 +1,23 @@
+# Recipe for version 2.7.0 by Clement (TRONIQ89), on Tue Oct 18 12:22:41 UTC 2016
+# Recipe (MakeRecipe) for Nano by Laurent Pelecq (laurent.pelecq at soleil.org), on dim mar 26 15:32:24 CEST 2006
+compile_version=1.8.2
+url="http://mirror.ibcp.fr/pub/gnu/nano/nano-2.7.0.tar.gz"
+file_size=2019889
+file_md5=0805c5b8c75d4fde053e4b1431270f91
+recipe_type=configure
+
+docs=(
+  "doc/nanorc.sample"
+)
+
+configure_options=(
+#  "--with-slang"
+   "--enable-color"
+   "--enable-multibuffer"
+   "--enable-nanorc"
+#   "--enable-utf8"
+)
+
+pre_link() {
+   cp "$target/doc/nano-2.7.0/nanorc.sample" "${target}/Resources/Defaults/Settings/nanorc"
+}

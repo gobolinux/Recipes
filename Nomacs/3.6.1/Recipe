@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for Nomacs by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Apr 22 23:18:53 BRT 2017
+# Recipe for version 3.6.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Apr 22 23:18:53 BRT 2017
+compile_version=016
+url="https://github.com/nomacs/nomacs/archive/3.6.1.tar.gz"
+file="nomacs-3.6.1.tar.gz"
+file_size=28604636
+file_md5=67e2600b4a1c83e7b78d4d41f7c2f89f
+dir='nomacs-3.6.1/ImageLounge'
+recipe_type=cmake

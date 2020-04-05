@@ -1,5 +1,0 @@
-[Name] geda-gattrib
-[Summary] Attribute editor for gEDA schematic files
-[License] GNU General Public License (GPL) Version 2
-[Description] Gattrib is gEDA's attribute editor. It reads a set of gschem .sch files (schematic files), and creates a spreadsheet showing all components in rows, with the associated component attributes listed in the columns. It allows the user to add, modify, or delete component attributes outside of gschem, and then save the .sch files back out. When it is completed, it will allow the user to edit attributes attached to components, nets, and pins. (Currently, only component attribute editing is implemented; pin attributes are displayed only, and net attributes are TBD.)
-[Homepage] http://geda.seul.org/tools/gattrib/index.html

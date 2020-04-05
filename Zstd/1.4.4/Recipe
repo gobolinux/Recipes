@@ -1,0 +1,8 @@
+# Recipe for version 1.4.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Jan 28 07:51:04 -03 2020
+# Recipe (MakeRecipe) for Zstd by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Oct 7 17:34:13 BRT 2019
+compile_version=016
+url="https://github.com/facebook/zstd/releases/download/v1.4.4/zstd-1.4.4.tar.gz"
+file_size=1948426
+file_md5=487f7ee1562dee7c1c8adf85e2a63df9
+dir='zstd-1.4.4'
+recipe_type=makefile

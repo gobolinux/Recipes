@@ -1,0 +1,18 @@
+compile_version=1.8.5
+url="$ftpGnu/emacs/emacs-22.2.tar.gz"
+file_size=38694318
+file_md5=d6ee586b8752351334ebf072904c4d51
+recipe_type=configure
+
+# Comment out (or change) --with-x-toolkit=gtk if you don't want
+# gtk libraries pulled into your emacs compile.
+# Other valid options are "athena" and "motif"
+# See the file "INSTALL" in the source package for more configure options.
+configure_options=(
+   "--with-x-toolkit=gtk"
+)
+
+unmanaged_files=(
+   $goboVariable/games/emacs
+)
+

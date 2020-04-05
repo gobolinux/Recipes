@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for PrBoom by John Robert Beshir, on Fri Jan 25 19:32:50 GMT 2008
+# Recipe for version 2.4.7 by John Robert Beshir, on Fri Jan 25 19:32:50 GMT 2008
+compile_version=1.10.0
+url="$httpSourceforge/prboom/prboom-2.4.7.tar.gz"
+file="prboom-2.4.7.tar.gz"
+file_size=999524
+file_md5=9942f521764d7f89df2218a456da4f02
+dir='prboom-2.4.7'
+recipe_type=configure
+
+pre_link() {
+ ln -s $target/games $target/bin
+}

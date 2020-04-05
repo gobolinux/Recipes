@@ -1,9 +1,0 @@
-[Name] 915Resolution
-[Summary] 915resolution can be used to circumvent the restrictions of
-intel graphics drivers such that video modes in arbitrary resolution
-can be used.
-[License] public domain
-[Description] 915resolution is a tool to modify the video BIOS of the 800 and 900 
-series Intel graphics chipsets. This includes the 830, 845G, 855G, and 865G chipsets, as well as 915G, 915GM, 945G, 946GZ, G965, and Q965 chipsets. This modification is neccessary to allow the display of certain graphics resolutions for an Xorg or XFree86 graphics server. 915resolution's modifications of the BIOS are transient. There is no risk of permanent modification of the BIOS. This also means that 
-915resolution must be run every time the computer boots inorder for its changes to take effect.
-[Homepage] http://www.geocities.com/stomljen/

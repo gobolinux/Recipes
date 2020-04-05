@@ -1,0 +1,34 @@
+Add some more targets. 
+
+ Makefile |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+diff -Nur wpa_supplicant-0.6.4-old/wpa_supplicant/Makefile wpa_supplicant-0.6.4/wpa_supplicant/Makefile
+--- wpa_supplicant-0.6.4-old/wpa_supplicant/Makefile	2008-08-10 19:33:12.000000000 +0200
++++ wpa_supplicant-0.6.4/wpa_supplicant/Makefile	2008-09-09 13:04:09.062003915 +0200
+@@ -1,6 +1,7 @@
+ ifndef CC
+ CC=gcc
+ endif
++INSTALLDIR=/usr/local
+ 
+ ifndef CFLAGS
+ CFLAGS = -MMD -O2 -Wall -g
+@@ -33,10 +34,15 @@
+ 	echo CONFIG_DRIVER_HOSTAP=y >> .config
+ 	echo CONFIG_DRIVER_WEXT=y >> .config
+ 	echo CONFIG_WIRELESS_EXTENSION=y >> .config
++	echo CONFIG_DRIVER_NDISWRAPPER=y >> .config
++	echo CONFIG_EAP_PSK=y >> .config
++	echo CONFIG_EAP_TLS=y >> .config
++	echo CONFIG_EAP_MD5=y >> .config
++	echo CONFIG_CTRL_IFACE=y >> .config
+ 
+ install: all
+-	mkdir -p $(DESTDIR)/usr/local/sbin/
+-	for i in $(ALL); do cp $$i $(DESTDIR)/usr/local/sbin/$$i; done
++	mkdir -p $(DESTDIR)$(INSTALLDIR)/sbin/
++	for i in $(ALL); do cp $$i $(DESTDIR)$(INSTALLDIR)/sbin/$$i; done
+ 
+ OBJS = config.o
+ OBJS += ../src/utils/common.o

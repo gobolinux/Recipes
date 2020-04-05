@@ -1,0 +1,13 @@
+--- gpm-1.20.1/src/lib/liblow.c.orig	2006-03-07 12:06:59.000000000 -0300
++++ gpm-1.20.1/src/lib/liblow.c	2006-03-07 12:09:30.000000000 -0300
+@@ -217,6 +217,10 @@ int Gpm_Open(Gpm_Connect *conn, int flag
+    /* check whether we know what name the console is: what's with the lib??? */
+    if(checked_con == 0) {
+       option.consolename = Gpm_get_console();
++	  if (!option.consolename) {
++		  gpm_report(GPM_PR_ERR,"unable to open gpm console, check your /dev filesystem!\n");
++		  goto err;
++	  }
+       checked_con++;
+    }   
+ 

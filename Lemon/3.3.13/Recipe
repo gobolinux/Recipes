@@ -1,0 +1,12 @@
+# Recipe for version 3.3.13 by Lucas C. Villa Real, on Fri Feb 23 10:15:43 GMT 2007
+compile_version=1.8.2
+url="http://www.sqlite.org/sqlite-3.3.13.tar.gz"
+dir=sqlite-3.3.13/tool
+recipe_type=manifest
+
+pre_install() {
+    mkdir -p $target/src
+    cp lempar.c $target/src
+    GrepReplace "\"lempar.c\"" "\"$target/src/lempar.c\"" lemon.c
+    gcc -v lemon.c -o lemon && cp lemon $target/bin
+}

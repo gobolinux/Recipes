@@ -1,0 +1,10 @@
+--- busybox-1.1.2/modutils/modprobe.c.orig	2006-05-17 15:05:44.000000000 -0300
++++ busybox-1.1.2/modutils/modprobe.c	2006-05-17 15:12:09.000000000 -0300
+@@ -295,6 +295,7 @@ static struct dep_t *build_dep ( void )
+ 
+ 		/* Ok, that didn't work.  Fall back to looking in /lib/modules */
+ 		if (( fd = open ( "/lib/modules/modules.dep", O_RDONLY )) < 0 ) {
++			free(filename);
+ 			return 0;
+ 		}
+ 	}

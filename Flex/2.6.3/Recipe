@@ -1,0 +1,20 @@
+# Recipe for version 2.6.3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Feb 10 00:28:02 BRST 2017
+# Recipe (MakeRecipe) for Flex by Andreas Koehler, on Fri Aug 12 13:57:22 CEST 2005
+compile_version=1.8.2
+url="https://github.com/westes/flex/releases/download/v2.6.3/flex-2.6.3.tar.gz"
+file_size=1405560
+file_md5=a5f65570cd9107ec8a8ec88f17b31bb1
+recipe_type=configure
+
+pre_build() {
+   touch doc/flex.1
+}
+
+pre_link() {
+   cat > "${target}/bin/lex" << "EOF"
+#!/bin/sh
+exec "${goboExecutables}/flex" -l "$@"
+EOF
+   chmod -v 755 "${target}/bin/lex"
+   ln -fs flex "${target}/bin/flex++"
+}

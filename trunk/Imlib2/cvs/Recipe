@@ -1,9 +1,0 @@
-# Recipe for version 1.4.1.000 by C. Holzberger <ch@MOSAIK-Software.de>, on Tue Feb 12 14:06:57 CET 2008
-# Recipe (MakeRecipe) for Imlib2 by roko, <ro.ko@mcnon.com>, on Tue Oct 26 13:30:45 BRST 2004
-compile_version=1.8.0
-cvs=:pserver:anonymous@anoncvs.enlightenment.org:/var/cvs/e
-cvs_module=e17/libs/imlib2
-
-
-recipe_type=configure
-autogen_before_configure=yes

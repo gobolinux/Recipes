@@ -1,0 +1,11 @@
+# Recipe for version 8.5a5 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Mar 20 18:34:23 CET 2007
+compile_version=1.8.2
+url="$httpSourceforge/tcl/tcl8.5a5-src.tar.gz"
+file_size=3997622
+file_md5=fe9e399c1f186f8c605de8d2e262881e
+dir='tcl8.5a5/unix'
+recipe_type=configure
+pre_link(){
+    ln -nfs ${target}/bin/tclsh8.5 ${target}/bin/tclsh
+    ln -nfs ${goboLibraries}/tk8.5 ${target}/lib/tk8.5
+}

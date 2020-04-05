@@ -1,0 +1,15 @@
+# Recipe for version 1.4.1 by Andreas Köhler <andi5.py@gmx.net>, on So 19. Feb 15:02:34 CET 2012
+# Recipe (MakeRecipe) for APR-Util by Kosh <kosh.linux at gmail.com>, on Tue Feb 28 21:59:01 BRT 2006
+compile_version=1.8.2
+url="http://archive.apache.org/dist/apr/apr-util-1.4.1.tar.bz2"
+file_size=635000
+file_md5=52b31b33fb1aa16e65ddaefc76e41151
+recipe_type=configure
+configure_options=(
+   --enable-layout=GoboLinux
+   --with-apr="$apr_path"
+)
+with_mysql="--with-mysql"
+with_openldap="--with-ldap"
+with_sqlite="--with-sqlite3"
+with_db="--with-berkeley-db=$db_path"

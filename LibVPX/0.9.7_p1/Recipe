@@ -1,0 +1,11 @@
+# Recipe for version 0.9.7_p1 by Leandro Motta Barros <lmb@stackedboxes.org>, on Sun Oct 2 21:02:04 BRT 2011
+# Recipe (MakeRecipe) for LibVPX by Joshua Sako <jginsu@gmail.com>, on Sun Aug 22 23:13:50 EDT 2010
+compile_version=1.13.3
+url="http://webm.googlecode.com/files/libvpx-v0.9.7-p1.tar.bz2"
+file_size=1244783
+file_md5=bd888cffde8d9c3061c7fd719b0cd4ce
+recipe_type=configure
+
+configure_options=(
+	"--prefix=${target}"
+)

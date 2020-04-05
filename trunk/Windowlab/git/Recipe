@@ -1,9 +1,0 @@
-# Recipe (MakeRecipe) for Windowlab by Wilson Moura <wilsonmoura@tuta.io>, on sáb jun 17 12:42:58 BRT 2017
-# Recipe for version git by Wilson Moura <wilsonmoura@tuta.io>, on sáb jun 17 12:42:58 BRT 2017
-compile_version=20170606-GIT
-git="https://github.com/nickgravgaard/windowlab.git"
-recipe_type=makefile
-makefile='Makefile'
-make_variables=(
-   "PREFIX=$target"
-)

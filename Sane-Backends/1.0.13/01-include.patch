@@ -1,0 +1,11 @@
+--- sane-backends-1.0.13/frontend/saned.c.org	2004-02-14 12:22:22.000000000 -0600
++++ sane-backends-1.0.13/frontend/saned.c	2004-02-14 12:23:24.000000000 -0600
+@@ -30,7 +30,7 @@
+ 
+ #include "../include/sane/config.h"
+ #include "../include/lalloca.h"
+-#include "../include/sys/types.h"
++#include <sys/types.h>
+ 
+ #if defined(HAVE_GETADDRINFO) && defined (HAVE_GETNAMEINFO)
+ # define SANED_USES_AF_INDEP

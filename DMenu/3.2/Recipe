@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for DMenu by Aitor Perez Iturri, on mar sep 11 01:37:37 CEST 2007
+# Recipe for version 3.2 by Aitor Perez Iturri, on mar sep 11 01:37:37 CEST 2007
+compile_version=1.9.0
+url="http://www.suckless.org/download/dmenu-3.2.tar.gz"
+file_size=7901
+file_md5=f5ef7a2cbf226679711049179ef9b8f2
+recipe_type=makefile
+makefile='Makefile'
+install_variables=(
+	"PREFIX=$target"
+)

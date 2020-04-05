@@ -1,0 +1,48 @@
+diff -Naur dcron.old/Makefile dcron/Makefile
+--- dcron.old/Makefile	2006-09-29 12:26:42.000000000 +0200
++++ dcron/Makefile	2006-09-29 12:27:17.000000000 +0200
+@@ -32,10 +32,10 @@
+ 	rm -f *.o dcron.tgz ${PROTOS}
+ 
+ install:
+-	install -o root -g wheel -m 0755 crond ${DESTDIR}/sbin/crond
+-	install -o root -g wheel -m 4755 crontab ${DESTDIR}/bin/crontab
+-	install -o root -g wheel -m 0644 crontab.1 ${DESTDIR}/man/man1/crontab.1
+-	install -o root -g wheel -m 0644 crond.8 ${DESTDIR}/man/man8/crond.8
++	install -o 0 -g 0 -m 0755 crond ${DESTDIR}/sbin/crond
++	install -o 0 -g 0 -m 4755 crontab ${DESTDIR}/bin/crontab
++	install -o 0 -g 0 -m 0644 crontab.1 ${DESTDIR}/man/man1/crontab.1
++	install -o 0 -g 0 -m 0644 crond.8 ${DESTDIR}/man/man8/crond.8
+ 
+ # dillon-specific
+ #
+--- dcron/Makefile.old	2009-07-12 10:04:28.000000000 +0200
++++ dcron/Makefile	2009-07-12 10:03:33.000000000 +0200
+@@ -1,7 +1,11 @@
+ # Makefile for dillon's cron and crontab
+ #
+ 
+-DESTDIR ?= /usr/local
++PREFIX ?= /usr/local
++BINDIR ?= ${PREFIX}/bin
++SBINDIR ?= ${PREFIX}/sbin
++MANDIR ?= ${PREFIX}/share/man
++
+ CC  = gcc
+ CFLAGS = -O2 -Wall -Wstrict-prototypes
+ LIB = 
+@@ -32,10 +36,10 @@
+ 	rm -f *.o dcron.tgz ${PROTOS}
+ 
+ install:
+-	install -o 0 -g 0 -m 0755 crond ${DESTDIR}/sbin/crond
+-	install -o 0 -g 0 -m 4755 crontab ${DESTDIR}/bin/crontab
+-	install -o 0 -g 0 -m 0644 crontab.1 ${DESTDIR}/man/man1/crontab.1
+-	install -o 0 -g 0 -m 0644 crond.8 ${DESTDIR}/man/man8/crond.8
++	install -o 0 -g 0 -m 0755 crond ${DESTDIR}${SBINDIR}/crond
++	install -o 0 -g 0 -m 4755 crontab ${DESTDIR}${BINDIR}/crontab
++	install -o 0 -g 0 -m 0644 crontab.1 ${DESTDIR}${MANDIR}/man1/crontab.1
++	install -o 0 -g 0 -m 0644 crond.8 ${DESTDIR}${MANDIR}/man8/crond.8
+ 
+ # dillon-specific
+ #

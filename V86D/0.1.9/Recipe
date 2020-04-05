@@ -1,0 +1,24 @@
+# Recipe for version 0.1.9 by Laércio B. S. Sousa <lbsousajr@gmail.com>, on Thu Nov 27 16:27:05 BRST 2008
+compile_version=1.10.2
+url="http://dev.gentoo.org/~spock/projects/uvesafb/archive/v86d-0.1.9.tar.bz2"
+file_size=69752
+file_md5=ebbbc8e7013c9544b6ba6981add43831
+recipe_type=configure
+make_variables=( "DESTDIR=${target}" )
+configure_options=( "--with-klibc" )
+
+with_x86emu="--with-x86emu"
+
+pre_build() {
+   if [[ -z "$(grep V86D ${goboShared}/klibc/include/linux/connector.h)" ]]
+   then
+      Die "In order to 'Compile V86D', you need to 'Compile Klibc' against a kernel tree patched with uvesafb."
+   fi
+}
+
+pre_link() {
+   mkdir ${target}/Shared/v86d
+   cp misc/initramfs ${target}/Shared/v86d
+}
+
+post_install_message="If you wish to place V86D into an initramfs image, you might to want to use '${target}/Shared/v86d/initramfs' in your kernel's CONFIG_INITRAMFS_SOURCE."

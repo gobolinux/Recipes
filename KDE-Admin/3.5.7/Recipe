@@ -1,0 +1,16 @@
+# Recipe for version 3.5.7 by Jonas Karlsson <jonka750@student.liu.se>, on Fri Aug 17 11:11:23 CEST 2007
+
+# 3.5.7 by Kosh <kosh.linux at gmail.com>
+# by Maglan C. Diemer, 3.4.3 by roko
+
+url="http://download.kde.org/stable/3.5.7/src/kdeadmin-3.5.7.tar.bz2"
+file_size=2120666
+file_md5=fdf4e7e230d9b5688d72f0e1a8039e12
+compile_version=1.8.5
+recipe_type=configure
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+  "--disable-libsuffix"
+  #"DO_NOT_COMPILE=kcmlinuz kcron kdat kfile-plugins kpackage ksysv kuser lilo-config secpolicy"
+)

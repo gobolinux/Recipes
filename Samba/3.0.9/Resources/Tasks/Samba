@@ -1,0 +1,21 @@
+#!/bin/sh
+# by Maglan C. Diemer
+# modified by Otto Barnes
+
+case "$1" in
+[Ss]tart)
+  Samba Stop
+  /Programs/Samba/Current/sbin/smbd -D
+  /Programs/Samba/Current/sbin/nmbd -D
+  ;;
+[Ss]top)
+  {
+    killall smbd
+    killall nmbd
+  } &> /dev/null
+  ;;
+esac
+
+
+
+

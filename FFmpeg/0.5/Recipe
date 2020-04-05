@@ -1,0 +1,41 @@
+# Recipe for version 0.5 by Joshua Sako <jsako@gmail.com>, on Thu Nov 26 14:14:05 EST 2009
+# Recipe (MakeRecipe) for FFmpeg by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 16:03:06 BRT 20.5
+compile_version=1.12.1
+url="http://www.ffmpeg.org/releases/ffmpeg-0.5.tar.bz2"
+file_size=2744768
+file_md5=be8503f15c3b81ba00eb8379ca8dcf33
+recipe_type=configure
+
+configure_options=(
+    # Enabling this makes the package not redistributable 
+#    "--enable-nonfree"
+    "--enable-gpl"
+    "--enable-shared"
+    "--enable-postproc"
+    "--enable-swscale"
+    "--enable-pthreads"
+    "--enable-x11grab"
+#    "--disable-debug"
+#    "--cpu=k8"
+)
+
+with_libvorbis="--enable-libvorbis"
+with_theora="--enable-libtheora"
+with_speex="--enable-libspeex"
+with_faad2="--enable-libfaad"
+with_faac="--enable-libfaac"
+with_x264="--enable-libx264"
+with_lame="--enable-libmp3lame"
+with_dirac="--enable-libdirac"
+with_schroedinger="--enable-libschroedinger"
+with_openjpeg="--enable-libopenjpeg"
+with_xvid="--enable-libxvid"
+
+pre_link() {
+    pushd $target/include
+    ln -s libpostproc postproc 
+    mkdir -p ffmpeg
+    cd ffmpeg
+    find .. -type f -exec ln -s {} . \;
+    popd
+}

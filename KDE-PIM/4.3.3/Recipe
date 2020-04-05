@@ -1,0 +1,12 @@
+# Recipe for version 4.3.3 by Dominique Juergensen <brokolie@vollbio.de>, on Fri Nov 13 01:50:13 CET 2009
+# by Maglan C. Diemer && Andre Detsch
+compile_version=1.10.0
+url="http://download.kde.org/stable/4.3.3/src/kdepim-4.3.3.tar.bz2"
+file_size=11250414
+file_md5=3a3c01abd6571cc337fa22d1c3601fe7
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+-DWITH_Opensync=OFF # disabled as it causes compile errors
+)

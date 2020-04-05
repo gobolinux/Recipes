@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for Fasd by Dustin Morrill <dmorrill10@gmail.com>, on Sun Apr 27 18:48:16 UTC 2014
+# Recipe for version 1.0.1 by Dustin Morrill <dmorrill10@gmail.com>, on Sun Apr 27 18:48:16 UTC 2014
+compile_version=1.13.3
+url="https://github.com/clvv/fasd/tarball/1.0.1"
+file="clvv-fasd-1.0.1-0-g4822024.tar.gz"
+file_size=16014
+file_md5=5f1992f5e1eff96375ff50a1f82e92b4
+dir='clvv-fasd-4822024'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)

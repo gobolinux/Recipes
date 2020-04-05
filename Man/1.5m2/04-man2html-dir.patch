@@ -1,0 +1,12 @@
+diff -Naur man-1.5m2-old/man2html/Makefile.in man-1.5m2/man2html/Makefile.in
+--- man-1.5m2-old/man2html/Makefile.in	2003-09-05 06:48:13.000000000 -0300
++++ man-1.5m2/man2html/Makefile.in	2003-10-07 17:29:27.000000000 -0300
+@@ -1,7 +1,7 @@
+ CC = @CC@
+ CFLAGS = -Wall -Wstrict-prototypes -Wmissing-prototypes -O
+ OBJECTS = man2html.o cgibase.o abbrev.o strdefs.o
+-bindir = $(PREFIX)/usr/bin
++bindir = $(PREFIX)@bindir@
+ mandir = $(PREFIX)@mandir@
+ vardir = $(PREFIX)/var
+ httpdir = $(PREFIX)/home/httpd

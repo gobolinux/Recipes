@@ -1,0 +1,11 @@
+# Recipe for version 1.2.2 by Guilherme B. Bedin, on Wed Jan 24 11:41:13 BRST 2007
+# Recipe (MakeRecipe) for Audacious by Andre Detsch <detsch@gobolinux.org>, on Qua Nov 30 15:01:27 BRST 2005
+compile_version=1.8.0
+
+include=(
+   "Audacious-Itself--1.2.2"
+   "Audacious-Plugins--1.2.5"
+)
+
+recipe_type=meta
+      

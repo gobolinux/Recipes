@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for PAM-Fprint by Michael Homer <michael@gobolinux.org>, on Sun Oct 19 15:28:54 NZDT 2008
+# Recipe for version 0.2 by Michael Homer <michael@gobolinux.org>, on Sun Oct 19 15:28:54 NZDT 2008
+compile_version=1.11.2
+url="$httpSourceforge/fprint/pam_fprint-0.2.tar.bz2"
+file_size=72781
+file_md5=abfb041ed856aaac5c5c416973451226
+recipe_type=configure
+configure_options=(
+   "--with-pam-dir=$target/lib/security"
+)
+make_variables=(
+   "pammoddir=$target/lib/security"
+)

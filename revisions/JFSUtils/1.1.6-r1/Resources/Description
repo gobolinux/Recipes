@@ -1,6 +1,0 @@
-[Name]  jfsutils
-[Summary]  IBM JFS utility programs
-[Description]  This package contains utilities for managing IBM's Journaled File System (JFS) under Linux. The following utilities are available: o fsck.jfs - initiate replay of the JFS transaction log, and check and repair a JFS formatted device. o logdump - dump a JFS formatted device's journal log. o logredo - "replay" a JFS formatted device's journal log. o mkfs.jfs - create a JFS formatted partition. o xchkdmp - dump the contents of a JFS fsck log file created with xchklog. o xchklog - extract a log from the JFS fsck workspace into a file. o xpeek - shell-type JFS file system editor.
-[Suse Category]  System/Filesystems
-[License]  GPL
-[Homepage]  http://oss.software.ibm.com/developerworks/opensource/jfs/

@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for GEdit by Andreas Köhler <andi5.py@gmx.net>, on Fri Aug 22 01:18:52 CEST 2008
+# Recipe for version 2.22.3 by Andreas Köhler <andi5.py@gmx.net>, on Fri Aug 22 01:18:52 CEST 2008
+compile_version=1.11.2
+url="ftp://ftp.gnome.org/pub/gnome/sources/gedit/2.22/gedit-2.22.3.tar.bz2"
+file_size=3884436
+file_md5=9af45548bf8f2c335906c95877df4699
+recipe_type=configure
+configure_options=(
+   --disable-scrollkeeper
+)

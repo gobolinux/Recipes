@@ -1,0 +1,13 @@
+# Recipe for version 2.3 by kenneth marken <k-marken@online.no>, on ti. 06. juli 17:18:55 +0200 2.30
+# Recipe for Parted 1.8.6 by Andre Destch
+compile_version=1.10.0
+url="$ftpGnu/parted/parted-2.3.tar.gz"
+file_size=2974168
+file_md5=30ceb6df7e8681891e865e2fe5a7903d
+recipe_type=configure
+configure_options=(
+   --disable-device-mapper
+)
+with_device_mapper=(
+   --enable-device-mapper
+)

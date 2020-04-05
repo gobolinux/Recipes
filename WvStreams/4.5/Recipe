@@ -1,0 +1,10 @@
+# Recipe for version 4.5 by David Karell <mccoy@doctor.com>, on Sun Nov 2 20:13:59 CET 2008
+compile_version=1.8.0
+url="http://wvstreams.googlecode.com/files/wvstreams-4.5.tar.gz"
+file_size=1076353
+file_md5=8cc00e69d70fa0071595b7e919cbb1e0
+recipe_type=configure
+
+unmanaged_files=(
+  "$goboVariable/lib/uniconf"
+)

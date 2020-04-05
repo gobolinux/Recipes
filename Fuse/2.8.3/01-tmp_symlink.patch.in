@@ -1,0 +1,35 @@
+Fusermount fails when /tmp is a symlink, causing bad things with e.g. unionfs-fuse and UnionSandbox.
+This patch uses $goboTemp instead of /tmp, under the assumption that $goboTemp is not a symlink.
+
+Issue status: http://article.gmane.org/gmane.comp.file-systems.fuse.devel/8921
+
+--- a/util/fusermount.c
++++ b/util/fusermount.c
+@@ -217,6 +217,7 @@ static int check_is_mount_child(void *p)
+ 	const char *mnt = a[1];
+ 	int res;
+ 	const char *procmounts = "/proc/mounts";
++	const char *tmp = "@%Compile_goboTemp%@/";
+ 	int found;
+ 	FILE *fp;
+ 	struct mntent *entp;
+@@ -228,7 +229,7 @@ static int check_is_mount_child(void *p)
+ 		return 1;
+ 	}
+ 
+-	res = mount(".", "/tmp", "", MS_BIND | MS_REC, NULL);
++	res = mount(".", tmp, "", MS_BIND | MS_REC, NULL);
+ 	if (res == -1) {
+ 		fprintf(stderr, "%s: failed to bind parent to /tmp: %s\n",
+ 			progname, strerror(errno));
+@@ -244,8 +245,8 @@ static int check_is_mount_child(void *p)
+ 
+ 	found = 0;
+ 	while ((entp = getmntent(fp)) != NULL) {
+-		if (strncmp(entp->mnt_dir, "/tmp/", 5) == 0 &&
+-		    strcmp(entp->mnt_dir + 5, last) == 0) {
++		if (strncmp(entp->mnt_dir, tmp, strlen(tmp)) == 0 &&
++		    strcmp(entp->mnt_dir + strlen(tmp), last) == 0) {
+ 			found = 1;
+ 			break;
+ 		}

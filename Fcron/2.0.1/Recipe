@@ -1,0 +1,23 @@
+# Recipe by Bill Burdick, Mobile Reasoning, July 13 2004
+
+GOBO_VAR=/Programs/Fcron/Variable/spool/fcron
+compile_version=1.7.1
+url="ftp://ftp.seul.org/pub/fcron/fcron-2.0.1.src.tar.gz"
+dir=fcron-2.0.1
+file_size=145324
+file_md5=8a5652f025ee81627f289162270a5bd0
+recipe_type=configure
+
+configure_options=(
+	--mandir='${prefix}/man'
+	--with-docdir='${prefix}/share/doc'
+	--with-etcdir=${goboSettings}
+	--with-spooldir=$GOBO_VAR
+	--with-rootname=gobo
+	--with-rootgroup=gobo
+)
+post_install() {
+	settingsDir=$goboPrograms/$appname/Settings
+	chown -R 0:fcron $goboPrograms/$appname/Variable $settingsDir
+	chmod -R 640 $goboPrograms/$appname/Variable $settingsDir
+}

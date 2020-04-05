@@ -1,0 +1,98 @@
+# Recipe for version 2.6.17.11 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Sep 7 14:28:56 BRT 2006
+# Recipe for Linux 2.6.17.11 by Lucas Correia Villa Real
+# Recipe for Linux 2.6.15 by Lucas Correia Villa Real
+# Recipe for Linux 2.6.13.4 by Lucas Correia Villa Real
+# Recipe for Linux 2.6.12.2 by Lucas Correia Villa Real
+# Recipe for Linux 2.6.11.9 by Lucas Correia Villa Real
+# Recipe for Linux 2.6.11 by Lucas Correia Villa Real
+compile_version=1.7.1
+url="http://www.kernel.org/pub/linux/kernel/v2.6/linux-2.6.17.11.tar.bz2"
+recipe_type=makefile
+build_target="all"
+install_target="modules_install"
+
+sandbox_options=(
+   "--no-sandbox"
+)
+
+pre_build() {
+   if [ ! -f .config ]
+   then
+      if [ ! -f $goboStatus/config.gz ]
+      then
+         cp "$archsubdir"/dot-config .config
+      else
+         if Ask "Do you want to keep the current kernel configuration?"
+         then
+            cp $goboStatus/config.gz .
+            gzip -d config.gz && mv config .config
+            yes "" | make oldconfig
+         else
+            Log_Normal "Using the kernel configuration shipped with the recipe"
+            cp "$archsubdir"/dot-config .config
+         fi
+      fi
+   fi
+
+   suffix="-Gobo"
+
+   source GoboPath
+   GrepReplace "\$(INSTALL_MOD_PATH)/lib/modules/\$(KERNELRELEASE)" \
+               "$goboModules/\$(KERNELRELEASE)" \
+               Makefile
+   GrepReplace "CONFIG_LOCALVERSION=\"\"" \
+               "CONFIG_LOCALVERSION=\"$suffix\"" \
+               .config
+
+   # Sanity check to make sure patches are not trying to mess
+   # with the version id.
+   local v=`grep "^VERSION =" Makefile | awk '{print $3}'`
+   local p=`grep "^PATCHLEVEL" Makefile | awk '{print $3}'`
+   local s=`grep "^SUBLEVEL" Makefile | awk '{print $3}'`
+   local e=`grep "^EXTRAVERSION" Makefile | awk '{print $3}'`
+   local reported="$v.$p.$s$e"
+   if [ "$reported" != "$version" ]
+   then Die "Reported version ($reported) does not match version ($version). Please fix recipe."
+   fi
+
+#   make menuconfig
+   local fullversion=`private__calculate_full_version`
+   echo "fullversion=$fullversion"
+}
+
+private__calculate_full_version() {
+   if grep -q "^CONFIG_LOCALVERSION=" .config
+   then suffix=`grep "^CONFIG_LOCALVERSION=" .config | cut -d= -f2 | tr -d '"' | sed 's/-[0-9]*-//'`
+   fi
+   local newsuffix="$suffix"
+   local count=`ls $goboBoot/kernel-$version-* 2> /dev/null | sort -n | wc -l | awk '{print $1}'`
+   if [ "$count" -gt "0" ]
+   then
+      let count=$count+1
+      newsuffix="-$count$suffix"
+   fi
+   echo "$version$newsuffix"
+}
+
+private__link_at_system_kernel_boot() {
+   local fullversion="$1"
+   ln -sf kernel-$fullversion $goboBoot/kernel
+   ln -sf System.map-$fullversion $goboBoot/System.map
+   ln -nfs $goboModules/$fullversion $goboModules/Current
+   ln -nfs $goboModules/$fullversion /lib/modules
+}
+
+private__check_dependant_modules() {
+   local check_prefix="$1"
+   if [ -d $check_prefix ]
+   then
+      for i in $check_prefix/*
+      do
+         depapp=`basename $i`
+         if ! Boolean "batch"                                            
+         then Ask "$depapp depends on the Linux kernel. Would you like to compile it?" || continue
+         fi
+         Compile $batch $lazy $noweb $depapp
+      done
+   fi
+}

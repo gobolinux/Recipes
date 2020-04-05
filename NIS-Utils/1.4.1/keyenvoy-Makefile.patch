@@ -1,0 +1,11 @@
+--- nis-utils-1.4.1/src/keyenvoy/Makefile.in.orig	2005-04-26 11:10:11.000000000 -0300
++++ nis-utils-1.4.1/src/keyenvoy/Makefile.in	2005-04-26 11:10:40.000000000 -0300
+@@ -105,7 +105,7 @@
+ #
+ INSTALL_PROGRAM = @INSTALL_PROGRAM@ -s -m 555
+ 
+-usretcexecdir = /usr/etc
++usretcexecdir = @sysconfdir@
+ localedir = $(datadir)/locale
+ 
+ CFLAGS = @EXTRA_CFLAGS@ @CFLAGS@

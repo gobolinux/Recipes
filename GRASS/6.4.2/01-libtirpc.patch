@@ -1,0 +1,28 @@
+--- grass-6.4.2/configure.orig	2012-07-10 15:41:48.000000000 -0300
++++ grass-6.4.2/configure	2012-07-10 15:42:27.000000000 -0300
+@@ -6229,12 +6229,12 @@ if eval "test \"`echo '$ac_cv_lib_'$ac_l
+ else
+   echo "$ac_t""no" 1>&6
+ 
+-echo $ac_n "checking for xdrmem_create in -lrpclib""... $ac_c" 1>&6
+-echo "configure:6234: checking for xdrmem_create in -lrpclib" >&5
+-ac_lib_var=`echo rpclib'_'xdrmem_create | sed 'y%./+-%__p_%'`
++echo $ac_n "checking for xdrmem_create in -ltirpc""... $ac_c" 1>&6
++echo "configure:6234: checking for xdrmem_create in -ltirpc" >&5
++ac_lib_var=`echo tirpc'_'xdrmem_create | sed 'y%./+-%__p_%'`
+ 
+ ac_save_LIBS="$LIBS"
+-LIBS="-lrpclib  $LIBS"
++LIBS="-ltirpc  $LIBS"
+ cat > conftest.$ac_ext <<EOF
+ #line 6240 "configure"
+ #include "confdefs.h"
+@@ -6261,7 +6261,7 @@ LIBS="$ac_save_LIBS"
+ 
+ if eval "test \"`echo '$ac_cv_lib_'$ac_lib_var`\" = yes"; then
+   echo "$ac_t""yes" 1>&6
+-  XDRLIB=-lrpclib
++  XDRLIB=-ltirpc
+ else
+   echo "$ac_t""no" 1>&6
+ 

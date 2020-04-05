@@ -1,0 +1,11 @@
+--- yp-tools-2.8/etc/Makefile.am.orig	2005-04-26 12:19:16.000000000 -0300
++++ yp-tools-2.8/etc/Makefile.am	2005-04-26 12:19:53.000000000 -0300
+@@ -8,7 +8,7 @@
+ #
+ CLEANFILES = *~
+ 
+-varypdir = /var/yp
++varypdir = @localstatedir@/yp
+ 
+ EXTRA_DIST = nicknames nsswitch.conf
+ 

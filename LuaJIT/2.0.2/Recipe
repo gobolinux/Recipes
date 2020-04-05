@@ -1,0 +1,7 @@
+# Recipe for version 2.0.2 by Hisham Muhammad <hisham@gobolinux.org>, on Sun Dec 15 19:20:11 BRST 2013
+compile_version=1.8.2
+url="http://luajit.org/download/LuaJIT-2.0.2.tar.gz"
+recipe_type=makefile
+make_variables=(
+  INSTALL_TOP=$target
+)

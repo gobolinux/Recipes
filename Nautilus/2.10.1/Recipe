@@ -1,0 +1,14 @@
+# Recipe for version 2.10.1 by Matthias Wolf, on Tue Jul 26 14:12:46 CEST 2005
+compile_version=1.8.0
+url="http://ftp.gnome.org/pub/GNOME/desktop/2.10/2.10.2/sources/nautilus-2.10.1.tar.bz2"
+recipe_type=configure
+
+configure_options=(
+    "--with-gconf-source=xml::${target}/../Settings/gconf/gconf.xml.defaults"
+    "--with-gconf-source-file-dir=${target}/../Settings/gconf/schemas"
+)
+
+pre_install() {
+   mkdir -m 0755 -p "${target}/../Settings/gconf/gconf.xml.defaults"
+   mkdir -m 0755 -p "${target}/../Settings/gconf/schemas"
+}

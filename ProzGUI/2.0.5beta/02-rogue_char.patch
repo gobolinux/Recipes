@@ -1,0 +1,14 @@
+A hardcoded contributer's name contains a non-ascii "letter o with acute" 
+at we.cxx:4300 .  xgettext apparently requires the codepage be specified.
+
+diff -Naur prozgui-2.0.5beta/po/Makefile.in.in prozgui-2.0.5beta.fix/po/Makefile.in.in
+--- prozgui-2.0.5beta/po/Makefile.in.in	2001-09-22 21:11:59.000000000 -0300
++++ prozgui-2.0.5beta.fix/po/Makefile.in.in	2008-10-11 14:44:42.981414727 -0300
+@@ -85,6 +85,7 @@
+ $(srcdir)/$(PACKAGE).pot: $(POTFILES)
+ 	$(XGETTEXT) --default-domain=$(PACKAGE) --directory=$(top_srcdir) \
+ 	  --add-comments --keyword=_ --keyword=N_ \
++	  --from-code=iso-8859-1 \
+ 	  --files-from=$(srcdir)/POTFILES.in \
+ 	&& test ! -f $(PACKAGE).po \
+ 	   || ( rm -f $(srcdir)/$(PACKAGE).pot \

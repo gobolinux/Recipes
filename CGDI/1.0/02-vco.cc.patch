@@ -1,0 +1,11 @@
+--- cg.new/vco.cc	2003-05-26 12:12:22.000000000 -0300
++++ cg.new2/vco.cc	2006-05-29 21:41:59.000000000 -0300
+@@ -158,7 +158,7 @@
+   assert(exc.good()); 
+ 
+   exc >> ws;
+-  while (exc) {
++  while (!exc.eof()) {
+     exc >> a >> ws;  
+     assert(a>0);
+     assert(a<10000); // Further the  index is ignored

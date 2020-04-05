@@ -1,0 +1,22 @@
+# Recipe for version 3.7.11 by Michael Homer <michael@gobolinux.org>, on Tue Apr 24 21:59:13 NZST 2012
+compile_version=1.9.0
+url="https://www.sqlite.org/sqlite-autoconf-3071100.tar.gz"
+file_size=1807754
+file_md5=0552d71bda98ebdcaea305cd6058221b
+recipe_type=configure
+
+environment=(
+    CFLAGS="-DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_SECURE_DELETE=1 -DSQLITE_ENABLE_UNLOCK_NOTIFY=1"
+    TCLLIBDIR="$target/lib/tcl8.5"
+)
+
+configure_options=(
+    --enable-dynamic-extensions
+    --disable-readline
+)
+
+with_readline="--enable-readline"
+
+pre_link() {
+    ln -s $target/bin/sqlite3 $target/bin/sqlite
+}

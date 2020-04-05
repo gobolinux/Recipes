@@ -1,5 +1,0 @@
-pre_build() {
-	aclocal
-	autoconf
-	libtoolize -f
-}

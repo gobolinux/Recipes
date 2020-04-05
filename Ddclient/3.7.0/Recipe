@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for Ddclient by Aitor Pérez Iturri, on lun dic 4 10:06:56 CET 2006
+# Recipe for version 3.7.0 by Aitor Pérez Iturri, on lun dic 4 10:06:56 CET 2006
+compile_version=1.8.2
+url="$httpSourceforge/ddclient/ddclient-3.7.0.tar.bz2"
+file_size=36800
+file_md5=41a3307ca32cce0f67c0f3281c5f17f2
+recipe_type=manifest
+manifest=(
+	"ddclient:bin"
+	"sample-etc_cron.d_ddclient:doc"
+	"sample-etc_dhclient-exit-hooks:doc"
+	"sample-etc_dhcpc_dhcpcd-eth0.exe:doc"
+	"sample-etc_ppp_ip-up.local:doc"
+	"sample-etc_rc.d_init.d_ddclient:doc"
+)

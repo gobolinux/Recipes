@@ -1,0 +1,21 @@
+# Recipe for version 2.7 by Nick Matteo <kundor@kundor.org>, on Sun Mar 15 15:39:57 EDT 2009
+# Recipe (MakeRecipe) for FAAD2 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sat Nov 26 10:54:10 BRST 2005
+compile_version=1.8.2
+url="http://downloads.sourceforge.net/faac/faad2-2.7.tar.bz2"
+file_size=901043
+file_md5=4c332fa23febc0e4648064685a3d4332
+recipe_type=configure
+autogen_before_configure=yes
+autogen="/bin/sh bootstrap"
+
+configure_options=(
+    --without-bmp
+    --without-drm
+    --without-xmms
+    --without-mpeg4ip
+)
+
+pre_patch() {
+    # remove lines terminated with ^M
+    find "${sourcedir}" -type f -print0 | xargs -0 sed -i 's/\cM//'
+}

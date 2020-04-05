@@ -1,0 +1,23 @@
+# Recipe (MakeRecipe) for Cel by Filipe Vieira, on Tue Jan 15 03:29:01 WET 2008
+# Recipe for version 1.2 by Filipe Vieira, on Tue Jan 15 03:29:01 WET 2008
+compile_version=1.10.0
+url="http://www.crystalspace3d.org/downloads/release/cel-src-1.2.tar.gz"
+file="cel-src-1.2.tar.gz"
+file_size=6070205
+file_md5=83019039f963325e77ac0308ae72a06b
+recipe_type=configure
+do_build=no
+
+pre_install() {
+	jam
+}
+
+
+do_install=no
+
+pre_link() {
+	jam install
+}
+
+make=jam
+makefile="Jamfile"

@@ -1,0 +1,13 @@
+# Recipe for version 4.3.1 by Michael Homer <michael@gobolinux.org>, on Thu Sep 3 18:51:32 NZST 2009
+# Recipe (MakeRecipe) for KDE-Admin by Giambattista Bloisi <giamby@infinito.it>, on Mon Jan 14 21:59:29 CET 2008
+compile_version=1.10.0
+url="http://download.kde.org/stable/4.3.1/src/kdeadmin-4.3.1.tar.bz2"
+file_size=1876808
+file_md5=e946d243d0e6e1fdbb24c732acca9c1e
+file="kdeadmin-4.3.1.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)
+

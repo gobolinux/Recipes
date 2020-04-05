@@ -1,0 +1,42 @@
+#!/bin/sh
+
+# Task for at daemon
+######################
+
+AT_BIN="/Programs/At/Current/sbin/atd"
+
+function getPid () {
+	pid=`ps ax | awk '{if (match($5, ".*/atd$") || $5 == "atd") print $1}'`
+	echo $pid
+}
+
+case "$1" in 
+	[sS]tart | [rR]estart)
+		pid=`getPid`
+		if [ ! -z $pid ]; then
+			# kill current process
+			kill -HUP $pid
+		else
+			# launch daemon
+			${AT_BIN}
+			if [ $? != 0 ]; then
+				exit 1
+			fi
+		fi 
+		;;
+	[sS]top)
+		pid=`getPid`
+		if [ ! -z $pid ]; then
+			kill $pid
+		fi
+		;;
+	[sS]tatus)
+		pid=`getPid`
+		if [ ! -z $pid ]; then
+			echo $pid
+		else
+			echo "atd isn't running"
+		fi
+		;;
+	## Status case?¿
+esac

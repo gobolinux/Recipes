@@ -1,0 +1,50 @@
+# http://www.linuxfromscratch.org/blfs/downloads/svn/xpdf-3.00pl1-freetype_2.1.7_hack-2.patch
+#
+# Without this patch configure fails on freetype2 which leads to "WARNING:
+# Couldn't find X / Motif" and exclution of xpdf from compilation.
+#
+diff -Naur xpdf-3.00-orig/configure xpdf-3.00/configure
+--- xpdf-3.00-orig/configure    2004-01-22 01:26:44.000000000 +0000
++++ xpdf-3.00/configure 2004-12-18 17:42:34.787719704 +0000
+@@ -9007,6 +9007,9 @@
+
+
+
++  cat >>confdefs.h <<_ACEOF
++#include <ft2build.h>
++_ACEOF
+
+
+
+@@ -9817,7 +9820,7 @@
+    { (exit 1); exit 1; }; }
+     fi
+   else
+-    libpaper_CFLAGS=
++    libpaper_CFLAGS="-I/usr/include/freetype2"
+   fi
+
+         smr_test_CPPFLAGS="${CPPFLAGS+set}"
+ 
+diff -ur xpdf-3.00.orig/splash/SplashFTFontEngine.h xpdf-3.00/splash/SplashFTFontEngine.h
+--- xpdf-3.00.orig/splash/SplashFTFontEngine.h	2004-01-21 19:26:44.000000000 -0600
++++ xpdf-3.00/splash/SplashFTFontEngine.h	2004-03-20 10:23:32.000000000 -0600
+@@ -15,6 +15,7 @@
+ #pragma interface
+ #endif
+ 
++#include <ft2build.h>
+ #include <freetype/freetype.h>
+ #include "gtypes.h"
+ 
+diff -ur xpdf-3.00.orig/splash/SplashFTFontFile.h xpdf-3.00/splash/SplashFTFontFile.h
+--- xpdf-3.00.orig/splash/SplashFTFontFile.h	2004-01-21 19:26:44.000000000 -0600
++++ xpdf-3.00/splash/SplashFTFontFile.h	2004-03-20 10:22:58.000000000 -0600
+@@ -15,6 +15,7 @@
+ #pragma interface
+ #endif
+ 
++#include <ft2build.h>
+ #include <freetype/freetype.h>
+ #include "SplashFontFile.h"
+ 

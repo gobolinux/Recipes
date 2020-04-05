@@ -1,0 +1,10 @@
+# Recipe for version 0.6 by Hisham Muhammad <hisham@gobolinux.org>, on Sun Apr 5 17:14:20 -03 2020
+compile_version=2.0
+recipe_type=configure
+url=https://hisham.hm/dit/releases/0.6/dit-0.6.tar.gz
+file_size=563644
+file_md5=20618cc6f60d60e458c2bf6fdc33c950
+configure_options=(
+   --enable-unicode
+   --enable-bundled-lua
+)

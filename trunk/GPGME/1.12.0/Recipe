@@ -1,9 +1,0 @@
-# Recipe for version 1.12.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Mar 7 04:57:56 BRT 2019
-# Recipe (MakeRecipe) for GPGME by roko, <ro.ko@mcnon.com>, on Mon Mar 28 13:47:05 CEST 2005
-compile_version=1.8.0
-url="https://github.com/gpg/gpgme/archive/gpgme-1.12.0.tar.gz"
-file_size=1589375
-file_md5=5257c10337bf76faf1c63cd47cc61bfa
-dir=gpgme-gpgme-1.12.0
-recipe_type=configure
-autogen_before_configure=yes

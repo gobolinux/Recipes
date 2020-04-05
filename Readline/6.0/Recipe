@@ -1,0 +1,14 @@
+# Recipe for version 6.0 by Nick Matteo <kundor@kundor.org>, on Sun Feb 22 10:34:41 EST 2009
+# Recipe (MakeRecipe) for Readline by Peter Eriksen <s022018@student.dtu.dk>, on Thu Nov 4 19:52:54 CET 2004
+compile_version=1.8.2
+
+url="$ftpGnu/readline/readline-6.0.tar.gz"
+file_size=2270818
+file_md5=b7f65a48add447693be6e86f04a63019
+
+recipe_type=configure
+
+build_variables=(
+   "SHLIB_LIBS=-lncurses"
+)
+

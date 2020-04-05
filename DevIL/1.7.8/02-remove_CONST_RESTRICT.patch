@@ -1,0 +1,13 @@
+Doesn't build without, perhaps a typo?
+
+--- devil-1.7.8/src-IL/include/il_internal.h	2017-10-16 16:22:00.900140671 +0200
++++ devil-1.7.8/src-IL/include/internal.h	2017-10-16 16:22:32.174749685 +0200
+@@ -227,7 +227,7 @@
+ ILboolean ilLoadBlp(ILconst_string FileName);
+ ILboolean ilLoadBlpF(ILHANDLE File);
+ ILboolean ilLoadBlpL(const void *Lump, ILuint Size);
+-ILboolean ilIsValidBmp(ILconst_string CONST_RESTRICT FileName);
++ILboolean ilIsValidBmp(ILconst_string FileName);
+ ILboolean ilIsValidBmpF(ILHANDLE File);
+ ILboolean ilIsValidBmpL(const void *Lump, ILuint Size);
+ ILboolean ilLoadBmp(ILconst_string FileName);

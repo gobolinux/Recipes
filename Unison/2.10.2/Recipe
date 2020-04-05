@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for Unison by roko, <ro.ko@mcnon.com>, on Fri Mar 25 20:56:55 CET 2005
+# Recipe for version 2.10.2 by roko, <ro.ko@mcnon.com>, on Fri Mar 25 20:56:55 CET 2005
+compile_version=1.7.1
+url="http://www.cis.upenn.edu/~bcpierce/unison/download/stable/unison-2.10.2/unison-2.10.2.tar.gz"
+file_size=458032
+file_md5=a93cf03d4221ab6bab8b758b0325a9d5
+recipe_type=manifest
+pre_link () {
+echo "going"
+PrepareProgram Unison 2.10.2
+#make UISTYLE=gtk
+make UISTYLE=text
+cp -v unison $target/bin
+echo "stopping"
+}

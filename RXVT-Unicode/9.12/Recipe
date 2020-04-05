@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for RXVT-Unicode by Isaac Dupree <id@isaac.cedarswampstudios.org>, on Sun Jul 22 19.12:17 BRT 2007
+compile_version=1.9.0
+url="http://dist.schmorp.de/rxvt-unicode/rxvt-unicode-9.12.tar.bz2"
+file_size=886255
+file_md5=945af37d661c8c45a7cac292160e7c70
+mirror_url="http://dist.schmorp.de/rxvt-unicode/Attic/rxvt-unicode-9.12.tar.bz2"
+recipe_type=configure
+configure_options=(
+   --with-terminfo="$target/Shared/terminfo"
+)

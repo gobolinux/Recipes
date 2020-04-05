@@ -1,0 +1,202 @@
+From: Qball Cow <qball@sarine.nl>
+Date: Wed, 8 Oct 2008 10:13:10 +0000 (+0200)
+Subject: Fix icon mess
+X-Git-Url: http://repo.or.cz/w/gmpc.git?a=commitdiff_plain;h=198b4a82293f1554a123917adb4b116cec5768eb;hp=97a797f511f0c549be7e48236a315b0a67a442cc
+
+Fix icon mess
+---
+
+diff --git a/pixmaps/icons/16x16/apps/Makefile.am b/pixmaps/icons/16x16/apps/Makefile.am
+index f4bf312..6707769 100644
+--- a/pixmaps/icons/16x16/apps/Makefile.am
++++ b/pixmaps/icons/16x16/apps/Makefile.am
+@@ -1,9 +1,11 @@
+-themedir = $(datadir)/icons/hicolor
++globaldir = $(datadir)/icons/hicolor
++themedir = $(pkgdatadir)/icons/hicolor
+ size = 16x16
+ context = apps
+ 
+ iconsdir = $(themedir)/$(size)/$(context)
++iconsglobaldir = $(globaldir)/$(size)/$(context)
+ 
+ dist_icons_DATA = \
+ 		gmpc.png
+-
++dist_iconsglobal_DATA= $(dist_icons_DATA)
+diff --git a/pixmaps/icons/22x22/apps/Makefile.am b/pixmaps/icons/22x22/apps/Makefile.am
+index ab9767d..1054f2f 100644
+--- a/pixmaps/icons/22x22/apps/Makefile.am
++++ b/pixmaps/icons/22x22/apps/Makefile.am
+@@ -1,8 +1,12 @@
+-themedir = $(datadir)/icons/hicolor
++globaldir = $(datadir)/icons/hicolor
++themedir = $(pkgdatadir)/icons/hicolor
+ size = 22x22
+ context = apps
+ 
+ iconsdir = $(themedir)/$(size)/$(context)
++iconsglobaldir = $(globaldir)/$(size)/$(context)
+ 
+ dist_icons_DATA = \
+ 		gmpc.png
++
++dist_iconsglobal_DATA= $(dist_icons_DATA)
+diff --git a/pixmaps/icons/32x32/apps/Makefile.am b/pixmaps/icons/32x32/apps/Makefile.am
+index 781c445..d799a2c 100644
+--- a/pixmaps/icons/32x32/apps/Makefile.am
++++ b/pixmaps/icons/32x32/apps/Makefile.am
+@@ -1,8 +1,11 @@
+-themedir = $(datadir)/icons/hicolor
++globaldir = $(datadir)/icons/hicolor
++themedir = $(pkgdatadir)/icons/hicolor
+ size = 32x32
+ context = apps
+ 
+ iconsdir = $(themedir)/$(size)/$(context)
++iconsglobaldir = $(globaldir)/$(size)/$(context)
+ 
+ dist_icons_DATA = \
+ 		gmpc.png
++dist_iconsglobal_DATA= $(dist_icons_DATA)
+diff --git a/pixmaps/icons/48x48/apps/Makefile.am b/pixmaps/icons/48x48/apps/Makefile.am
+index 17adebc..0296c9c 100644
+--- a/pixmaps/icons/48x48/apps/Makefile.am
++++ b/pixmaps/icons/48x48/apps/Makefile.am
+@@ -1,8 +1,12 @@
+-themedir = $(datadir)/icons/hicolor
++globaldir = $(datadir)/icons/hicolor
++themedir = $(pkgdatadir)/icons/hicolor
+ size = 48x48
+ context = apps
+ 
+ iconsdir = $(themedir)/$(size)/$(context)
++iconsglobaldir = $(globaldir)/$(size)/$(context)
+ 
+ dist_icons_DATA = \
+ 		gmpc.png
++
++dist_iconsglobal_DATA= $(dist_icons_DATA)
+diff --git a/pixmaps/icons/scalable/apps/Makefile.am b/pixmaps/icons/scalable/apps/Makefile.am
+index 43ad58a..15dc5fe 100644
+--- a/pixmaps/icons/scalable/apps/Makefile.am
++++ b/pixmaps/icons/scalable/apps/Makefile.am
+@@ -1,8 +1,12 @@
+-themedir = $(datadir)/icons/hicolor
++globaldir = $(datadir)/icons/hicolor
++themedir = $(pkgdatadir)/icons/hicolor
+ size = scalable
+ context = apps
+ 
+ iconsdir = $(themedir)/$(size)/$(context)
++iconsglobaldir = $(globaldir)/$(size)/$(context)
+ 
+ dist_icons_DATA = \
+ 		gmpc.svg
++
++dist_iconsglobal_DATA= $(dist_icons_DATA)
+--- gmpc-0.16.1/pixmaps/icons/16x16/apps/Makefile.in	2008-09-24 21:11:50.000000000 +0200
++++ gmpc-0.16.1/pixmaps/icons/16x16/apps/Makefile.in.new	2008-10-11 20:22:12.000000000 +0200
+@@ -229,13 +229,17 @@
+ target_alias = @target_alias@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+-themedir = $(datadir)/icons/hicolor
++globaldir = $(datadir)/icons/hicolor
++themedir = $(pkgdatadir)/icons/hicolor
+ size = 16x16
+ context = apps
+ iconsdir = $(themedir)/$(size)/$(context)
++iconsglobaldir = $(globaldir)/$(size)/$(context)
+ dist_icons_DATA = \
+ 		gmpc.png
+ 
++dist_iconsglobal_DATA= $(dist_icons_DATA)
++
+ all: all-am
+ 
+ .SUFFIXES:
+--- gmpc-0.16.1/pixmaps/icons/22x22/apps/Makefile.in	2008-09-24 21:11:50.000000000 +0200
++++ gmpc-0.16.1/pixmaps/icons/22x22/apps/Makefile.in.new	2008-10-11 20:22:12.000000000 +0200
+@@ -229,13 +229,17 @@
+ target_alias = @target_alias@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+-themedir = $(datadir)/icons/hicolor
++globaldir = $(datadir)/icons/hicolor
++themedir = $(pkgdatadir)/icons/hicolor
+ size = 22x22
+ context = apps
+ iconsdir = $(themedir)/$(size)/$(context)
++iconsglobaldir = $(globaldir)/$(size)/$(context)
+ dist_icons_DATA = \
+ 		gmpc.png
+ 
++dist_iconsglobal_DATA= $(dist_icons_DATA)
++
+ all: all-am
+ 
+ .SUFFIXES:
+--- gmpc-0.16.1/pixmaps/icons/32x32/apps/Makefile.in	2008-09-24 21:11:50.000000000 +0200
++++ gmpc-0.16.1/pixmaps/icons/32x32/apps/Makefile.in.new	2008-10-11 20:22:12.000000000 +0200
+@@ -229,13 +229,17 @@
+ target_alias = @target_alias@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+-themedir = $(datadir)/icons/hicolor
++globaldir = $(datadir)/icons/hicolor
++themedir = $(pkgdatadir)/icons/hicolor
+ size = 32x32
+ context = apps
+ iconsdir = $(themedir)/$(size)/$(context)
++iconsglobaldir = $(globaldir)/$(size)/$(context)
+ dist_icons_DATA = \
+ 		gmpc.png
+ 
++dist_iconsglobal_DATA= $(dist_icons_DATA)
++
+ all: all-am
+ 
+ .SUFFIXES:
+--- gmpc-0.16.1/pixmaps/icons/48x48/apps/Makefile.in	2008-09-24 21:11:50.000000000 +0200
++++ gmpc-0.16.1/pixmaps/icons/48x48/apps/Makefile.in.new	2008-10-11 20:22:12.000000000 +0200
+@@ -229,13 +229,17 @@
+ target_alias = @target_alias@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+-themedir = $(datadir)/icons/hicolor
++globaldir = $(datadir)/icons/hicolor
++themedir = $(pkgdatadir)/icons/hicolor
+ size = 48x48
+ context = apps
+ iconsdir = $(themedir)/$(size)/$(context)
++iconsglobaldir = $(globaldir)/$(size)/$(context)
+ dist_icons_DATA = \
+ 		gmpc.png
+ 
++dist_iconsglobal_DATA= $(dist_icons_DATA)
++
+ all: all-am
+ 
+ .SUFFIXES:
+--- gmpc-0.16.1/pixmaps/icons/scalable/apps/Makefile.in	2008-09-24 21:11:50.000000000 +0200
++++ gmpc-0.16.1/pixmaps/icons/scalable/apps/Makefile.in.new	2008-10-11 20:22:12.000000000 +0200
+@@ -229,13 +229,17 @@
+ target_alias = @target_alias@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+-themedir = $(datadir)/icons/hicolor
++globaldir = $(datadir)/icons/hicolor
++themedir = $(pkgdatadir)/icons/hicolor
+ size = scalable
+ context = apps
+ iconsdir = $(themedir)/$(size)/$(context)
++iconsglobaldir = $(globaldir)/$(size)/$(context)
+ dist_icons_DATA = \
+ 		gmpc.svg
+ 
++dist_iconsglobal_DATA= $(dist_icons_DATA)
++
+ all: all-am
+ 
+ .SUFFIXES:

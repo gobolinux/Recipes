@@ -1,0 +1,14 @@
+# Recipe for version 0.92 by Michael Homer, on Sat Nov 17 18:37:10 NZDT 2007
+# Recipe (MakeRecipe) for Bazaar by Jeremy Visser, on Thu Jul 19 23:35:24 BRT 2007
+compile_version=1.9.0
+url="http://bazaar-vcs.org/releases/src/bzr-0.92.tar.gz"
+file_size=1879050
+file_md5=f91e760d646660f0f790066ff0526b38
+
+recipe_type=manifest
+
+manifest=(
+	"bzr:bin"
+	"bzrlib:lib/python2.4/site-packages/bzrlib"
+)
+

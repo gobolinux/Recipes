@@ -1,0 +1,39 @@
+# Recipe for version 3.12.6 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. máj. 30., vasárnap, 11.43.11 CEST
+# Recipe (MakeRecipe) for NSS by Jonas Karlsson <jonka750@student.liu.se>, on Wed May 31 09:34:32 CEST 2006
+compile_version=1.8.0
+url="http://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/NSS_3_12_6_RTM/src/nss-3.12.6.tar.gz"
+file_size=5947630
+file_md5=da42596665f226de5eb3ecfc1ec57cd1
+recipe_type=makefile
+do_install=no
+dir=nss-3.12.6/mozilla
+
+build_variables=(
+   BUILD_OPT=1
+   NSS_USE_SYSTEM_SQLITE=1
+   NSPR_INCLUDE_DIR="${goboHeaders}/nspr"
+)
+
+pre_link() {
+   export NSS_LINUXDIR=$(basename `ls -d $PWD/dist/Linux*`)
+   install -v -m755 security/nss/cmd/config/nss-config \
+                    ${target}/bin &&
+   install -v -m755 -d ${target}/lib/pkgconfig &&
+   install -v -m644 security/nss/lib/pkgconfig/nss.pc \
+                    ${target}/lib/pkgconfig &&
+
+   cd dist &&
+   install -v -m755 ${NSS_LINUXDIR}/lib/*.so ${target}/lib &&
+   pushd ${target}/lib &&
+   for i in *.so
+   do
+      mv ${i} ${i}.12
+      ln -s ${i}.12 ${i}
+   done &&
+   popd &&
+   install -v -m644 ${NSS_LINUXDIR}/lib/{*.chk,libcrmf.a} ${target}/lib
+   install -v -m755 -d ${target}/include/nss
+   install -v -m644 public/{dbm,nss}/*.h ${target}/include/nss
+   install -v -m644 private/nss/*.h ${target}/include/nss
+   rm -f ${target}/lib/pkgconfig/pkgconfig
+}

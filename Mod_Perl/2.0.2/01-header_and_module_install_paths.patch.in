@@ -1,0 +1,26 @@
+--- mod_perl-2.0.2/lib/Apache2/Build.pm	2005-10-21 02:04:43.000000000 +0200
++++ mod_perl-2.0.2.mod/lib/Apache2/Build.pm	2006-11-08 21:58:32.000000000 +0100
+@@ -1863,10 +1863,10 @@
+     print $fh $self->canon_make_attr('lib', "@libs");
+ 
+     print $fh $self->canon_make_attr('AP_INCLUDEDIR',
+-        $self->ap_destdir($self->install_headers_dir));
++        $self->ap_destdir('@%Compile_target%@/include'));
+ 
+     print $fh $self->canon_make_attr('AP_LIBEXECDIR',
+-        $self->ap_destdir($self->apxs(-q => 'LIBEXECDIR')));
++        $self->ap_destdir('@%Compile_target%@/lib/httpd/modules'));
+ 
+     my $xs_targ = $self->make_xs($fh);
+ 
+--- mod_perl-2.0.2/Makefile.PL.old	2006-11-08 22:52:24.000000000 +0100
++++ mod_perl-2.0.2/Makefile.PL	2006-11-08 22:53:41.000000000 +0100
+@@ -81,7 +81,7 @@
+         PERL                  => $build->perl_config('perlpath'),
+         MOD_INSTALL           => ModPerl::BuildMM::mod_install(),
+         MODPERL_AP_INCLUDEDIR =>
+-            $build->ap_destdir($build->install_headers_dir),
++            $build->ap_destdir('@%Compile_target%@/include'),
+         MODPERL_XS_H_FILES    => join(" \\\n\t", @xs_h_files),
+     },
+     clean     => {

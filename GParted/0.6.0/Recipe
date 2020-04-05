@@ -1,0 +1,12 @@
+# Recipe for version 0.6.0 by kenneth marken <k-marken@online.no>, on ti. 06. juli 17:37:43 +0200 2010
+# Recipe (MakeRecipe) for GParted by Andre Detsch <detsch@gobolinux.org>, on Mon Nov 20 21:56:41 BRST 2006
+compile_version=1.8.2
+url="$httpSourceforge/gparted/gparted-0.6.0.tar.bz2"
+file_size=1307904
+file_md5=8fe36e1d220b6f550df5e9221465eba1
+recipe_type=configure
+configure_options=(
+    --disable-doc
+    --disable-scrollkeeper
+)
+with_doc=( --enable-doc )

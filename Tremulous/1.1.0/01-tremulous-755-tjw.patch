@@ -1,0 +1,4484 @@
+This is the standard patch applied to Tremulous as recommended by upstream,
+because their exceptionally dysfunctional development team refuses to cut a
+1.1.1 release for reasons which are murky to all. Tiresomely, that means we
+have to include this monstrosity, which even fails RecipeLint deu to hard-
+coded references to MacOSX paths (/System).
+Taken from http://tremulous.tjw.org/backport/tremulous-svn755.patch
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/Makefile tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/Makefile
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/Makefile	2006-03-21 23:28:25.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/Makefile	2008-12-16 04:50:29.000000000 +0100
+@@ -101,6 +101,18 @@
+ USE_OPENAL_DLOPEN=0
+ endif
+ 
++ifndef USE_CURL
++USE_CURL=1
++endif
++
++ifndef USE_CURL_DLOPEN
++  ifeq ($(PLATFORM),mingw32)
++    USE_CURL_DLOPEN=0
++  else
++    USE_CURL_DLOPEN=1
++  endif
++endif
++
+ ifndef USE_CODEC_VORBIS
+ USE_CODEC_VORBIS=0
+ endif
+@@ -151,7 +163,7 @@
+ #############################################################################
+ 
+ ## Defaults
+-VM_PPC=
++VM_PPC=vm_ppc_new
+ 
+ LIB=lib
+ 
+@@ -186,6 +198,13 @@
+       BASE_CFLAGS += -DUSE_OPENAL_DLOPEN=1
+     endif
+   endif
++  
++  ifeq ($(USE_CURL),1)
++    BASE_CFLAGS += -DUSE_CURL=1
++    ifeq ($(USE_CURL_DLOPEN),1)
++      BASE_CFLAGS += -DUSE_CURL_DLOPEN=1
++    endif
++  endif
+ 
+   ifeq ($(USE_CODEC_VORBIS),1)
+     BASE_CFLAGS += -DUSE_CODEC_VORBIS=1
+@@ -248,6 +267,12 @@
+       CLIENT_LDFLAGS += -lopenal
+     endif
+   endif
++  
++  ifeq ($(USE_CURL),1)
++    ifneq ($(USE_CURL_DLOPEN),1)
++      CLIENT_LDFLAGS += -lcurl
++    endif
++  endif
+ 
+   ifeq ($(USE_CODEC_VORBIS),1)
+     CLIENT_LDFLAGS += -lvorbisfile -lvorbis -logg
+@@ -266,12 +291,68 @@
+ #############################################################################
+ 
+ ifeq ($(PLATFORM),darwin)
+-  CC=gcc
++  HAVE_VM_COMPILED=true
++  BASE_CFLAGS=
++  CLIENT_LDFLAGS=
++  LDFLAGS=
++  OPTIMIZE=
++  ifeq ($(BUILD_MACOSX_UB),ppc)
++    CC = gcc-3.3
++    BASE_CFLAGS += -arch ppc -DSMP \
++      -DMAC_OS_X_VERSION_MIN_REQUIRED=1020 -nostdinc \
++      -F/Developer/SDKs/MacOSX10.2.8.sdk/System/Library/Frameworks \
++      -I/Developer/SDKs/MacOSX10.2.8.sdk/usr/include/gcc/darwin/3.3 \
++      -isystem /Developer/SDKs/MacOSX10.2.8.sdk/usr/include
++    LDFLAGS += -arch ppc \
++      -L/Developer/SDKs/MacOSX10.2.8.sdk/usr/lib/gcc/darwin/3.3 \
++      -F/Developer/SDKs/MacOSX10.2.8.sdk/System/Library/Frameworks \
++      -Wl,-syslibroot,/Developer/SDKs/MacOSX10.2.8.sdk,-m 
++    ARCH=ppc
++    # OS X 10.2 sdk lacks dlopen() so tremded would need libSDL anyway...
++    BUILD_SERVER=0
++    USE_OPENAL_DLOPEN=1
++    USE_LOCAL_HEADERS=1
++  else
++  ifeq ($(BUILD_MACOSX_UB),x86)
++    CC=gcc-4.0
++    BASE_CFLAGS += -arch i386 -DSMP -isysroot /Developer/SDKs/MacOSX10.4u.sdk \
++      -mmacosx-version-min=10.4 \
++      -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -nostdinc \
++      -F/Developer/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks \
++      -I/Developer/SDKs/MacOSX10.4u.sdk/usr/lib/gcc/i686-apple-darwin8/4.0.1/include \
++      -isystem /Developer/SDKs/MacOSX10.4u.sdk/usr/include
++    LDFLAGS = -mmacosx-version-min=10.4 \
++      -L/Developer/SDKs/MacOSX10.4u.sdk/usr/lib/gcc/i686-apple-darwin8/4.0.1
++    ARCH=x86
++    CLIENT_LDFLAGS += -framework OpenAL
++    BUILD_SERVER=0
++  else
++    CC=gcc
++    # -framework OpenAL requires 10.4 or later...for builds shipping to the
++    #  public, you'll want to use USE_OPENAL_DLOPEN and ship your own OpenAL
++    #  library (http://openal.org/ or http://icculus.org/al_osx/)
++    ifeq ($(USE_OPENAL),1)
++      ifneq ($(USE_OPENAL_DLOPEN),1)
++        CLIENT_LDFLAGS += -framework OpenAL 
++      endif
++    endif
++  endif
++  endif
+ 
+-  # !!! FIXME: calling conventions are still broken! See Bugzilla #2519
+-  #VM_PPC=vm_ppc_new
++  ifeq ($(ARCH),ppc)
++    OPTIMIZE += -O3 -faltivec
++    # Carbon is required on PPC only to make a call to MakeDataExecutable
++    # in the PPC vm (should be a better non-Carbon way).
++    LDFLAGS += -framework Carbon
++  endif
++  ifeq ($(ARCH),x86)
++    OPTIMIZE += -march=prescott -mfpmath=sse
++    # x86 vm will crash without this since MMX instructions will be used
++    # on OS X no matter what and they corrupt the frame pointer in VM calls
++    BASE_CFLAGS += -mstackrealign
++  endif
+ 
+-  BASE_CFLAGS = -Wall -fno-strict-aliasing -Wimplicit -Wstrict-prototypes
++  BASE_CFLAGS += -Wall -fno-strict-aliasing -Wimplicit -Wstrict-prototypes
+   BASE_CFLAGS += -DMACOS_X -fno-common -pipe
+ 
+   # Always include debug symbols...you can strip the binary later...
+@@ -280,7 +361,16 @@
+   ifeq ($(USE_OPENAL),1)
+     BASE_CFLAGS += -DUSE_OPENAL=1
+     ifeq ($(USE_OPENAL_DLOPEN),1)
+-      BASE_CFLAGS += -DUSE_OPENAL_DLOPEN=1
++      BASE_CFLAGS += -DUSE_OPENAL_DLOPEN=1 
++    endif
++  endif
++  
++  ifeq ($(USE_CURL),1)
++    BASE_CFLAGS += -DUSE_CURL=1
++    ifeq ($(USE_CURL_DLOPEN),1)
++      BASE_CFLAGS += -DUSE_CURL_DLOPEN=1 
++    else
++      CLIENT_LDFLAGS += -lcurl
+     endif
+   endif
+ 
+@@ -293,18 +383,7 @@
+     GL_CFLAGS =
+   endif
+ 
+-  OPTIMIZE = -O3 -ffast-math -falign-loops=16
+-
+-  ifeq ($(ARCH),ppc)
+-  BASE_CFLAGS += -faltivec
+-    ifneq ($(VM_PPC),)
+-      HAVE_VM_COMPILED=true
+-    endif
+-  endif
+-
+-  ifeq ($(ARCH),x86)
+-    # !!! FIXME: x86-specific flags here...
+-  endif
++  OPTIMIZE += -ffast-math -falign-loops=16
+ 
+   ifneq ($(HAVE_VM_COMPILED),true)
+     BASE_CFLAGS += -DNO_VM_COMPILED
+@@ -322,26 +401,16 @@
+ 
+   #THREAD_LDFLAGS=-lpthread
+   #LDFLAGS=-ldl -lm
+-  LDFLAGS += -framework Carbon
+ 
+   ifeq ($(USE_SDL),1)
+     # We copy sdlmain before ranlib'ing it so that subversion doesn't think
+     #  the file has been modified by each build.
+     LIBSDLMAIN=$(B)/libSDLmain.a
+     LIBSDLMAINSRC=$(LIBSDIR)/macosx/libSDLmain.a
+-    CLIENT_LDFLAGS=-framework Cocoa -framework OpenGL $(LIBSDIR)/macosx/libSDL-1.2.0.dylib
++    CLIENT_LDFLAGS += -framework Cocoa -framework OpenGL $(LIBSDIR)/macosx/libSDL-1.2.0.dylib
+   else
+     # !!! FIXME: frameworks: OpenGL, Carbon, etc...
+-    #CLIENT_LDFLAGS=-L/usr/X11R6/$(LIB) -lX11 -lXext -lXxf86dga -lXxf86vm
+-  endif
+-
+-  # -framework OpenAL requires 10.4 or later...for builds shipping to the
+-  #  public, you'll want to use USE_OPENAL_DLOPEN and ship your own OpenAL
+-  #  library (http://openal.org/ or http://icculus.org/al_osx/)
+-  ifeq ($(USE_OPENAL),1)
+-    ifneq ($(USE_OPENAL_DLOPEN),1)
+-      CLIENT_LDFLAGS += -framework OpenAL
+-    endif
++    #CLIENT_LDFLAGS += -L/usr/X11R6/$(LIB) -lX11 -lXext -lXxf86dga -lXxf86vm
+   endif
+ 
+   ifeq ($(USE_CODEC_VORBIS),1)
+@@ -367,6 +436,15 @@
+   ifeq ($(USE_OPENAL),1)
+     BASE_CFLAGS += -DUSE_OPENAL=1 -DUSE_OPENAL_DLOPEN=1
+   endif
++  
++  ifeq ($(USE_CURL),1)
++    BASE_CFLAGS += -DUSE_CURL=1
++    ifeq ($(USE_CURL_DLOPEN),1)
++      BASE_CFLAGS += -DUSE_CURL_DLOPEN=1
++    else
++      BASE_CFLAGS += -DCURL_STATICLIB
++    endif
++  endif
+ 
+   ifeq ($(USE_CODEC_VORBIS),1)
+     BASE_CFLAGS += -DUSE_CODEC_VORBIS=1
+@@ -388,9 +466,15 @@
+ 
+   BINEXT=.exe
+ 
+-  LDFLAGS= -mwindows -lwsock32 -lgdi32 -lwinmm -lole32
++  LDFLAGS= -mwindows -lshfolder -lwsock32 -lgdi32 -lwinmm -lole32
+   CLIENT_LDFLAGS=
+ 
++  ifeq ($(USE_CURL),1)
++    ifneq ($(USE_CURL_DLOPEN),1)
++      CLIENT_LDFLAGS += -L$(LIBSDIR)/win32 -lcurl
++    endif
++  endif
++
+   ifeq ($(USE_CODEC_VORBIS),1)
+     CLIENT_LDFLAGS += -lvorbisfile -lvorbis -logg
+   endif
+@@ -431,6 +515,15 @@
+       BASE_CFLAGS += -DUSE_OPENAL_DLOPEN=1
+     endif
+   endif
++  
++  ifeq ($(USE_CURL),1)
++    BASE_CFLAGS += -DUSE_CURL=1
++    ifneq ($(USE_CURL_DLOPEN),1)
++      CLIENT_LDFLAGS += -lcurl
++    else
++      BASE_CFLAGS += -DUSE_CURL_DLOPEN=1
++    endif
++  endif
+ 
+   ifeq ($(USE_CODEC_VORBIS),1)
+     BASE_CFLAGS += -DUSE_CODEC_VORBIS=1
+@@ -482,6 +575,13 @@
+   ifeq ($(USE_CODEC_VORBIS),1)
+     CLIENT_LDFLAGS += -lvorbisfile -lvorbis -logg
+   endif
++  
++  ifeq ($(USE_CURL),1)
++    BASE_CFLAGS += -DUSE_CURL=1
++    ifneq ($(USE_CURL_DLOPEN),1)
++      BASE_CFLAGS += -DCURL_STATICLIB
++    endif
++  endif
+ 
+ 
+ else # ifeq freebsd
+@@ -778,6 +878,7 @@
+   $(B)/client/cvar.o \
+   $(B)/client/files.o \
+   $(B)/client/md4.o \
++  $(B)/client/md5.o \
+   $(B)/client/msg.o \
+   $(B)/client/net_chan.o \
+   $(B)/client/huffman.o \
+@@ -796,6 +897,8 @@
+   $(B)/client/qal.o \
+   $(B)/client/snd_openal.o \
+   \
++  $(B)/client/cl_curl.o \
++  \
+   $(B)/client/sv_bot.o \
+   $(B)/client/sv_ccmds.o \
+   $(B)/client/sv_client.o \
+@@ -909,6 +1012,14 @@
+     $(B)/client/ftola.o \
+     $(B)/client/snapvectora.o
+ endif
++ifeq ($(ARCH),i386)
++  Q3OBJ += $(B)/client/vm_x86.o
++  Q3OBJ += \
++    $(B)/client/snd_mixa.o \
++    $(B)/client/matha.o \
++    $(B)/client/ftola.o \
++    $(B)/client/snapvectora.o
++endif
+ 
+ ifeq ($(ARCH),x86_64)
+   Q3OBJ += $(B)/client/vm_x86_64.o
+@@ -1002,6 +1113,8 @@
+ $(B)/client/qal.o : $(CDIR)/qal.c; $(DO_CC)
+ $(B)/client/snd_openal.o : $(CDIR)/snd_openal.c; $(DO_CC)
+ 
++$(B)/client/cl_curl.o : $(CDIR)/cl_curl.c; $(DO_CC)
++
+ $(B)/client/sv_bot.o : $(SDIR)/sv_bot.c; $(DO_CC)
+ $(B)/client/sv_client.o : $(SDIR)/sv_client.c; $(DO_CC)
+ $(B)/client/sv_ccmds.o : $(SDIR)/sv_ccmds.c; $(DO_CC)
+@@ -1021,6 +1134,7 @@
+ $(B)/client/cvar.o : $(CMDIR)/cvar.c; $(DO_CC)
+ $(B)/client/files.o : $(CMDIR)/files.c; $(DO_CC)
+ $(B)/client/md4.o : $(CMDIR)/md4.c; $(DO_CC)
++$(B)/client/md5.o : $(CMDIR)/md5.c; $(DO_CC)
+ $(B)/client/msg.o : $(CMDIR)/msg.c; $(DO_CC)
+ $(B)/client/net_chan.o : $(CMDIR)/net_chan.c; $(DO_CC)
+ $(B)/client/huffman.o : $(CMDIR)/huffman.c; $(DO_CC)
+@@ -1243,6 +1357,11 @@
+       $(B)/ded/snapvectora.o $(B)/ded/matha.o
+ endif
+ 
++ifeq ($(ARCH),i386)
++  Q3DOBJ += $(B)/ded/vm_x86.o $(B)/ded/ftola.o \
++      $(B)/ded/snapvectora.o $(B)/ded/matha.o
++endif
++
+ ifeq ($(ARCH),x86_64)
+   Q3DOBJ += $(B)/ded/vm_x86_64.o
+ endif
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/make-macosx-ub.sh tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/make-macosx-ub.sh
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/make-macosx-ub.sh	1970-01-01 01:00:00.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/make-macosx-ub.sh	2008-12-16 04:50:29.000000000 +0100
+@@ -0,0 +1,50 @@
++#!/bin/sh
++
++DESTDIR=build/release-darwin-ub
++BASEDIR=base
++
++BIN_OBJ="
++	build/release-darwin-ppc/tremulous.ppc
++	build/release-darwin-x86/tremulous.x86
++"
++BASE_OBJ="
++	build/release-darwin-ppc/$BASEDIR/cgameppc.dylib
++	build/release-darwin-x86/$BASEDIR/cgamex86.dylib
++	build/release-darwin-ppc/$BASEDIR/uippc.dylib
++	build/release-darwin-x86/$BASEDIR/uix86.dylib
++	build/release-darwin-ppc/$BASEDIR/gameppc.dylib
++	build/release-darwin-x86/$BASEDIR/gamex86.dylib
++"
++if [ ! -f Makefile ]; then
++	echo "This script must be run from the ioquake3 build directory";
++fi
++
++if [ ! -d /Developer/SDKs/MacOSX10.2.8.sdk ]; then
++	echo "
++/Developer/SDKs/MacOSX10.2.8.sdk/ is missing, this doesn't install by default
++with newer XCode releases, but you should be able to fine the installer at
++/Applications/Installers/Xcode Tools/Packages/"
++	exit 1;
++fi
++
++if [ ! -d /Developer/SDKs/MacOSX10.4u.sdk ]; then
++	echo "
++/Developer/SDKs/MacOSX10.4u.sdk/ is missing.  You must install XCode 2.2 or 
++newer in order to build Universal Binaries"
++	exit 1;
++fi
++
++(BUILD_MACOSX_UB=ppc make && BUILD_MACOSX_UB=x86 make) || exit 1;
++
++if [ ! -d $DESTDIR ]; then 
++	mkdir $DESTDIR || exit 1;
++fi
++if [ ! -d $DESTDIR/$BASEDIR ]; then
++	mkdir $DESTDIR/$BASEDIR || exit 1;
++fi
++
++echo "Installing Universal Binaries in $DESTDIR"
++lipo -create -o $DESTDIR/Tremulous $BIN_OBJ
++cp $BASE_OBJ $DESTDIR/$BASEDIR/
++cp src/libs/macosx/*.dylib $DESTDIR/
++
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/cgame/cg_weapons.c tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/cgame/cg_weapons.c
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/cgame/cg_weapons.c	2006-01-12 18:05:09.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/cgame/cg_weapons.c	2008-12-16 04:50:29.000000000 +0100
+@@ -503,17 +503,17 @@
+         CG_Printf( S_COLOR_RED "ERROR: weapon model not found %s\n", token );
+ 
+       strcpy( path, token );
+-      COM_StripExtension( path, path );
++      COM_StripExtension( path, path, MAX_QPATH );
+       strcat( path, "_flash.md3" );
+       wi->flashModel = trap_R_RegisterModel( path );
+ 
+       strcpy( path, token );
+-      COM_StripExtension( path, path );
++      COM_StripExtension( path, path, MAX_QPATH );
+       strcat( path, "_barrel.md3" );
+       wi->barrelModel = trap_R_RegisterModel( path );
+ 
+       strcpy( path, token );
+-      COM_StripExtension( path, path );
++      COM_StripExtension( path, path, MAX_QPATH );
+       strcat( path, "_hand.md3" );
+       wi->handsModel = trap_R_RegisterModel( path );
+ 
+@@ -1175,7 +1175,7 @@
+     // first make sure that whatever it selected is actually selectable
+     if( cg.weaponSelect <= 32 && !CG_WeaponSelectable( cg.weaponSelect ) )
+       CG_NextWeapon_f( );
+-    else if( cg.weaponSelect > 32 && !CG_UpgradeSelectable( cg.weaponSelect ) )
++    else if( cg.weaponSelect > 32 && !CG_UpgradeSelectable( cg.weaponSelect - 32 ) )
+       CG_NextWeapon_f( );
+   }
+ 
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/client/cl_cin.c tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/client/cl_cin.c
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/client/cl_cin.c	2005-12-10 21:19:52.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/client/cl_cin.c	2008-12-16 04:50:29.000000000 +0100
+@@ -1001,10 +1001,6 @@
+ 			Com_Printf("HACK: approxmimating cinematic for Rage Pro or Voodoo\n");
+ 		}
+ 	}
+-#if defined(MACOS_X)
+-	cinTable[currentHandle].drawX = 256;
+-	cinTable[currentHandle].drawX = 256;
+-#endif
+ }
+ 
+ /******************************************************************************
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/client/cl_curl.c tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/client/cl_curl.c
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/client/cl_curl.c	1970-01-01 01:00:00.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/client/cl_curl.c	2008-12-16 04:50:29.000000000 +0100
+@@ -0,0 +1,348 @@
++/*
++===========================================================================
++Copyright (C) 2006 Tony J. White (tjw@tjw.org)
++
++This file is part of Quake III Arena source code.
++
++Quake III Arena source code is free software; you can redistribute it
++and/or modify it under the terms of the GNU General Public License as
++published by the Free Software Foundation; either version 2 of the License,
++or (at your option) any later version.
++
++Quake III Arena source code is distributed in the hope that it will be
++useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
++MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++GNU General Public License for more details.
++
++You should have received a copy of the GNU General Public License
++along with Quake III Arena source code; if not, write to the Free Software
++Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
++===========================================================================
++*/
++
++#if USE_CURL
++#include "client.h"
++#if USE_CURL_DLOPEN
++
++#if USE_SDL_VIDEO
++#include "SDL.h"
++#include "SDL_loadso.h"
++#define OBJTYPE void *
++#define OBJLOAD(x) SDL_LoadObject(x)
++#define SYMLOAD(x,y) SDL_LoadFunction(x,y)
++#define OBJFREE(x) SDL_UnloadObject(x)
++
++#elif defined _WIN32
++#include <windows.h>
++#define OBJTYPE HMODULE
++#define OBJLOAD(x) LoadLibrary(x)
++#define SYMLOAD(x,y) GetProcAddress(x,y)
++#define OBJFREE(x) FreeLibrary(x)
++
++#elif defined __linux__ || defined __FreeBSD__ || defined MACOS_X || defined __sun
++#include <dlfcn.h>
++#define OBJTYPE void *
++#define OBJLOAD(x) dlopen(x, RTLD_LAZY | RTLD_GLOBAL)
++#define SYMLOAD(x,y) dlsym(x,y)
++#define OBJFREE(x) dlclose(x)
++#else
++
++#error "Your platform has no lib loading code or it is disabled"
++#endif
++
++#if defined __linux__ || defined __FreeBSD__ || defined MACOS_X
++#include <unistd.h>
++#include <sys/types.h>
++#endif
++
++char* (*qcurl_version)(void);
++
++CURL* (*qcurl_easy_init)(void);
++CURLcode (*qcurl_easy_setopt)(CURL *curl, CURLoption option, ...);
++CURLcode (*qcurl_easy_perform)(CURL *curl);
++void (*qcurl_easy_cleanup)(CURL *curl);
++CURLcode (*qcurl_easy_getinfo)(CURL *curl, CURLINFO info, ...);
++CURL* (*qcurl_easy_duphandle)(CURL *curl);
++void (*qcurl_easy_reset)(CURL *curl);
++const char *(*qcurl_easy_strerror)(CURLcode);
++
++CURLM* (*qcurl_multi_init)(void);
++CURLMcode (*qcurl_multi_add_handle)(CURLM *multi_handle,
++                                                CURL *curl_handle);
++CURLMcode (*qcurl_multi_remove_handle)(CURLM *multi_handle,
++                                                CURL *curl_handle);
++CURLMcode (*qcurl_multi_fdset)(CURLM *multi_handle,
++                                                fd_set *read_fd_set,
++                                                fd_set *write_fd_set,
++                                                fd_set *exc_fd_set,
++                                                int *max_fd);
++CURLMcode (*qcurl_multi_perform)(CURLM *multi_handle,
++                                                int *running_handles);
++CURLMcode (*qcurl_multi_cleanup)(CURLM *multi_handle);
++CURLMsg *(*qcurl_multi_info_read)(CURLM *multi_handle,
++                                                int *msgs_in_queue);
++const char *(*qcurl_multi_strerror)(CURLMcode);
++
++static OBJTYPE cURLLib = NULL;
++
++/*
++=================
++GPA
++=================
++*/
++static void *GPA(char *str)
++{
++	void *rv;
++
++	rv = SYMLOAD(cURLLib, str);
++	if(!rv)
++	{
++		Com_Printf("Can't load symbol %s\n", str);
++		clc.cURLEnabled = qfalse;
++		return NULL;
++	}
++	else
++	{
++		Com_DPrintf("Loaded symbol %s (0x%08X)\n", str, rv);
++        return rv;
++	}
++}
++
++/*
++=================
++CL_cURL_Init
++=================
++*/
++qboolean CL_cURL_Init()
++{
++	if(cURLLib)
++		return qtrue;
++
++	Com_Printf("Loading \"%s\"...", cl_cURLLib->string);
++	if( (cURLLib = OBJLOAD(cl_cURLLib->string)) == 0 )
++	{
++#ifdef _WIN32
++		return qfalse;
++#else
++		char fn[1024];
++		getcwd(fn, sizeof(fn));
++		strncat(fn, "/", sizeof(fn));
++		strncat(fn, cl_cURLLib->string, sizeof(fn));
++
++		if( (cURLLib = OBJLOAD(fn)) == 0 )
++		{
++			return qfalse;
++		}
++#endif
++	}
++
++	clc.cURLEnabled = qtrue;
++
++	qcurl_version = GPA("curl_version");
++
++	qcurl_easy_init = GPA("curl_easy_init");
++	qcurl_easy_setopt = GPA("curl_easy_setopt");
++	qcurl_easy_perform = GPA("curl_easy_perform");
++	qcurl_easy_cleanup = GPA("curl_easy_cleanup");
++	qcurl_easy_getinfo = GPA("curl_easy_getinfo");
++	qcurl_easy_duphandle = GPA("curl_easy_duphandle");
++	qcurl_easy_reset = GPA("curl_easy_reset");
++	qcurl_easy_strerror = GPA("curl_easy_strerror");
++	
++	qcurl_multi_init = GPA("curl_multi_init");
++	qcurl_multi_add_handle = GPA("curl_multi_add_handle");
++	qcurl_multi_remove_handle = GPA("curl_multi_remove_handle");
++	qcurl_multi_fdset = GPA("curl_multi_fdset");
++	qcurl_multi_perform = GPA("curl_multi_perform");
++	qcurl_multi_cleanup = GPA("curl_multi_cleanup");
++	qcurl_multi_info_read = GPA("curl_multi_info_read");
++	qcurl_multi_strerror = GPA("curl_multi_strerror");
++
++	if(!clc.cURLEnabled)
++	{
++		CL_cURL_Shutdown();
++		Com_Printf("FAIL One or more symbols not found\n");
++		return qfalse;
++	}
++	Com_Printf("OK\n");
++
++	return qtrue;
++}
++
++/*
++=================
++CL_cURL_Shutdown
++=================
++*/
++void CL_cURL_Shutdown( void )
++{
++	if(cURLLib)
++	{
++		OBJFREE(cURLLib);
++		cURLLib = NULL;
++	}
++	qcurl_easy_init = NULL;
++	qcurl_easy_setopt = NULL;
++	qcurl_easy_perform = NULL;
++	qcurl_easy_cleanup = NULL;
++	qcurl_easy_getinfo = NULL;
++	qcurl_easy_duphandle = NULL;
++	qcurl_easy_reset = NULL;
++
++	qcurl_multi_init = NULL;
++	qcurl_multi_add_handle = NULL;
++	qcurl_multi_remove_handle = NULL;
++	qcurl_multi_fdset = NULL;
++	qcurl_multi_perform = NULL;
++	qcurl_multi_cleanup = NULL;
++	qcurl_multi_info_read = NULL;
++	qcurl_multi_strerror = NULL;
++}
++#else
++qboolean CL_cURL_Init()
++{
++	clc.cURLEnabled = qtrue;
++	return qtrue;
++}
++void CL_cURL_Shutdown( void )
++{
++}
++#endif /* USE_CURL_DLOPEN */
++
++static void CL_cURL_Cleanup(void)
++{
++	if(clc.downloadCURLM) {
++		if(clc.downloadCURL) {
++			qcurl_multi_remove_handle(clc.downloadCURLM,
++				clc.downloadCURL);
++		}
++		qcurl_multi_cleanup(clc.downloadCURLM);
++		clc.downloadCURLM = NULL;
++		clc.downloadCURL = NULL;
++	}
++	if(clc.downloadCURL) {
++		qcurl_easy_cleanup(clc.downloadCURL);
++		clc.downloadCURL = NULL;
++	}
++}
++
++static int CL_cURL_CallbackProgress( void *dummy, double dltotal, double dlnow,
++	double ultotal, double ulnow )
++{
++	clc.downloadSize = (int)dltotal;
++	Cvar_SetValue( "cl_downloadSize", clc.downloadSize );
++	clc.downloadCount = (int)dlnow;
++	Cvar_SetValue( "cl_downloadCount", clc.downloadCount );
++	return 0;
++}
++
++static int CL_cURL_CallbackWrite(void *buffer, size_t size, size_t nmemb,
++	void *stream)
++{
++	FS_Write( buffer, size*nmemb, ((fileHandle_t*)stream)[0] );
++	return size*nmemb;
++}
++
++void CL_cURL_BeginDownload( const char *localName, const char *remoteURL )
++{
++	Com_DPrintf("***** CL_cURL_BeginDownload *****\n"
++		"Localname: %s\n"
++		"RemoteURL: %s\n"
++		"****************************\n", localName, remoteURL);
++	CL_cURL_Cleanup();
++	Q_strncpyz(clc.downloadURL, remoteURL, sizeof(clc.downloadURL));
++	Q_strncpyz(clc.downloadName, localName, sizeof(clc.downloadName));
++	Com_sprintf(clc.downloadTempName, sizeof(clc.downloadTempName),
++		"%s.tmp", localName);
++
++	// Set so UI gets access to it
++	Cvar_Set("cl_downloadName", remoteURL);
++	Cvar_Set("cl_downloadSize", "0");
++	Cvar_Set("cl_downloadCount", "0");
++	Cvar_SetValue("cl_downloadTime", cls.realtime);
++
++	clc.downloadBlock = 0; // Starting new file
++	clc.downloadCount = 0;
++
++	clc.downloadCURL = qcurl_easy_init();
++	if(!clc.downloadCURL) {
++		Com_Error(ERR_DROP, "CL_cURL_BeginDownload: qcurl_easy_init() "
++			"failed\n");
++		return;
++	}
++	clc.download = FS_SV_FOpenFileWrite(clc.downloadTempName);
++	if(!clc.download) {
++		Com_Error(ERR_DROP, "CL_cURL_BeginDownload: failed to open "
++			"%s for writing\n", clc.downloadTempName);
++		return;
++	}
++	qcurl_easy_setopt(clc.downloadCURL, CURLOPT_WRITEDATA, clc.download);
++	if(com_developer->integer)
++		qcurl_easy_setopt(clc.downloadCURL, CURLOPT_VERBOSE, 1);
++	qcurl_easy_setopt(clc.downloadCURL, CURLOPT_URL, clc.downloadURL);
++	qcurl_easy_setopt(clc.downloadCURL, CURLOPT_TRANSFERTEXT, 0);
++	qcurl_easy_setopt(clc.downloadCURL, CURLOPT_REFERER, va("ioQ3://%s",
++		NET_AdrToString(clc.serverAddress)));
++	qcurl_easy_setopt(clc.downloadCURL, CURLOPT_USERAGENT, va("%s %s",
++		Q3_VERSION, qcurl_version()));
++	qcurl_easy_setopt(clc.downloadCURL, CURLOPT_WRITEFUNCTION,
++		CL_cURL_CallbackWrite);
++	qcurl_easy_setopt(clc.downloadCURL, CURLOPT_WRITEDATA, &clc.download);
++	qcurl_easy_setopt(clc.downloadCURL, CURLOPT_NOPROGRESS, 0);
++	qcurl_easy_setopt(clc.downloadCURL, CURLOPT_PROGRESSFUNCTION,
++		CL_cURL_CallbackProgress);
++	qcurl_easy_setopt(clc.downloadCURL, CURLOPT_PROGRESSDATA, NULL);
++	qcurl_easy_setopt(clc.downloadCURL, CURLOPT_FAILONERROR, 1);
++	clc.downloadCURLM = qcurl_multi_init();	
++	if(!clc.downloadCURLM) {
++		qcurl_easy_cleanup(clc.downloadCURL);
++		clc.downloadCURL = NULL;
++		Com_Error(ERR_DROP, "CL_cURL_BeginDownload: qcurl_multi_init() "
++			"failed\n");
++		return;
++	}
++	qcurl_multi_add_handle(clc.downloadCURLM, clc.downloadCURL);
++	CL_AddReliableCommand( "disconnect" );
++	CL_WritePacket();
++	CL_WritePacket();
++	CL_WritePacket();
++}
++
++void CL_cURL_PerformDownload(void)
++{
++	CURLMcode res;
++	CURLMsg *msg;
++	int c;
++	int i = 0;
++
++	res = qcurl_multi_perform(clc.downloadCURLM, &c);
++	while(res == CURLM_CALL_MULTI_PERFORM && i < 100) {
++		res = qcurl_multi_perform(clc.downloadCURLM, &c);
++		i++;
++	}
++	if(res == CURLM_CALL_MULTI_PERFORM)
++		return;
++	msg = qcurl_multi_info_read(clc.downloadCURLM, &c);
++	if(msg == NULL) {
++		return;
++	}
++	FS_FCloseFile(clc.download);
++	if(msg->msg == CURLMSG_DONE && msg->data.result == CURLE_OK) {
++		FS_SV_Rename(clc.downloadTempName, clc.downloadName);
++	}
++	else {
++		long code;
++
++		qcurl_easy_getinfo(msg->easy_handle, CURLINFO_RESPONSE_CODE,
++			&code);	
++		Com_Error(ERR_DROP, "Download Error: %s Code: %d",
++			qcurl_easy_strerror(msg->data.result),
++			code);
++	}
++	*clc.downloadTempName = *clc.downloadName = 0;
++	Cvar_Set( "cl_downloadName", "" );
++	CL_cURL_Cleanup();
++	FS_Restart(clc.checksumFeed);
++	CL_Reconnect_f();
++}
++#endif /* USE_CURL */
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/client/cl_curl.h tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/client/cl_curl.h
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/client/cl_curl.h	1970-01-01 01:00:00.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/client/cl_curl.h	2008-12-16 04:50:29.000000000 +0100
+@@ -0,0 +1,98 @@
++/*
++===========================================================================
++Copyright (C) 2006 Tony J. White (tjw@tjw.org)
++
++This file is part of Quake III Arena source code.
++
++Quake III Arena source code is free software; you can redistribute it
++and/or modify it under the terms of the GNU General Public License as
++published by the Free Software Foundation; either version 2 of the License,
++or (at your option) any later version.
++
++Quake III Arena source code is distributed in the hope that it will be
++useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
++MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++GNU General Public License for more details.
++
++You should have received a copy of the GNU General Public License
++along with Quake III Arena source code; if not, write to the Free Software
++Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
++===========================================================================
++*/
++
++
++#ifndef __QCURL_H__
++#define __QCURL_H__
++
++#include "../qcommon/q_shared.h"
++#include "../qcommon/qcommon.h"
++
++#ifdef WIN32
++#define DEFAULT_CURL_LIB "libcurl-3.dll"
++#elif defined(MACOS_X)
++#define DEFAULT_CURL_LIB "libcurl.dylib"
++#else
++#define DEFAULT_CURL_LIB "libcurl.so.3"
++#endif
++
++#if USE_LOCAL_HEADERS
++  #include "../libcurl/curl/curl.h"
++#else
++  #include <curl/curl.h>
++#endif
++
++
++#if USE_CURL_DLOPEN
++extern char* (*qcurl_version)(void);
++
++extern CURL* (*qcurl_easy_init)(void);
++extern CURLcode (*qcurl_easy_setopt)(CURL *curl, CURLoption option, ...);
++extern CURLcode (*qcurl_easy_perform)(CURL *curl);
++extern void (*qcurl_easy_cleanup)(CURL *curl);
++extern CURLcode (*qcurl_easy_getinfo)(CURL *curl, CURLINFO info, ...);
++extern void (*qcurl_easy_reset)(CURL *curl);
++extern const char *(*qcurl_easy_strerror)(CURLcode);
++
++extern CURLM* (*qcurl_multi_init)(void);
++extern CURLMcode (*qcurl_multi_add_handle)(CURLM *multi_handle,
++						CURL *curl_handle);
++extern CURLMcode (*qcurl_multi_remove_handle)(CURLM *multi_handle,
++						CURL *curl_handle);
++extern CURLMcode (*qcurl_multi_fdset)(CURLM *multi_handle,
++						fd_set *read_fd_set,
++						fd_set *write_fd_set,
++						fd_set *exc_fd_set,
++						int *max_fd);
++extern CURLMcode (*qcurl_multi_perform)(CURLM *multi_handle,
++						int *running_handles);
++extern CURLMcode (*qcurl_multi_cleanup)(CURLM *multi_handle);
++extern CURLMsg *(*qcurl_multi_info_read)(CURLM *multi_handle,
++						int *msgs_in_queue);
++extern const char *(*qcurl_multi_strerror)(CURLMcode);
++#else
++#define qcurl_version curl_version
++
++#define qcurl_easy_init curl_easy_init
++#define qcurl_easy_setopt curl_easy_setopt
++#define qcurl_easy_perform curl_easy_perform
++#define qcurl_easy_cleanup curl_easy_cleanup
++#define qcurl_easy_getinfo curl_easy_getinfo
++#define qcurl_easy_duphandle curl_easy_duphandle
++#define qcurl_easy_reset curl_easy_reset
++#define qcurl_easy_strerror curl_easy_strerror
++
++#define qcurl_multi_init curl_multi_init
++#define qcurl_multi_add_handle curl_multi_add_handle
++#define qcurl_multi_remove_handle curl_multi_remove_handle
++#define qcurl_multi_fdset curl_multi_fdset
++#define qcurl_multi_perform curl_multi_perform
++#define qcurl_multi_cleanup curl_multi_cleanup
++#define qcurl_multi_info_read curl_multi_info_read
++#define qcurl_multi_strerror curl_multi_strerror
++#endif
++
++qboolean CL_cURL_Init( void );
++void CL_cURL_Shutdown( void );
++void CL_cURL_BeginDownload( const char *localName, const char *remoteURL );
++void CL_cURL_PerformDownload( void );
++#endif	// __QCURL_H__
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/client/client.h tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/client/client.h
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/client/client.h	2006-01-24 06:04:21.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/client/client.h	2008-12-16 04:50:29.000000000 +0100
+@@ -30,6 +30,13 @@
+ #include "snd_public.h"
+ #include "../cgame/cg_public.h"
+ #include "../game/bg_public.h"
++#ifdef USE_CURL
++#include "cl_curl.h"
++#endif /* USE_CURL */
++
++// file full of random crap that gets used to create cl_guid
++#define QKEY_FILE "base/qkey"
++#define QKEY_SIZE 2048
+ 
+ #define	RETRANSMIT_TIMEOUT	3000	// time between connection packet retransmits
+ 
+@@ -184,6 +191,14 @@
+ 	fileHandle_t download;
+ 	char		downloadTempName[MAX_OSPATH];
+ 	char		downloadName[MAX_OSPATH];
++#ifdef USE_CURL
++	qboolean	cURLEnabled;
++	char		downloadURL[MAX_OSPATH];
++	CURL		*downloadCURL;
++	CURLM		*downloadCURLM;
++	int		wwwDownload;
++	char		wwwBaseURL[MAX_CVAR_VALUE_STRING];
++#endif /* USE_CURL */
+ 	int			downloadNumber;
+ 	int			downloadBlock;	// block we are waiting for
+ 	int			downloadCount;	// how many bytes we got
+@@ -349,6 +364,8 @@
+ extern	cvar_t	*cl_activeAction;
+ 
+ extern	cvar_t	*cl_allowDownload;
++extern  cvar_t  *cl_wwwDownload;
++extern  cvar_t  *cl_cURLLib;
+ extern	cvar_t	*cl_conXOffset;
+ extern	cvar_t	*cl_inGameVideo;
+ 
+@@ -366,6 +383,7 @@
+ void CL_StartHunkUsers( void );
+ 
+ void CL_Disconnect_f (void);
++void CL_Reconnect_f (void);
+ void CL_GetChallengePacket (void);
+ void CL_Vid_Restart_f( void );
+ void CL_Snd_Restart_f (void);
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/client/cl_keys.c tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/client/cl_keys.c
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/client/cl_keys.c	2006-02-13 23:17:54.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/client/cl_keys.c	2008-12-16 04:50:29.000000000 +0100
+@@ -1071,7 +1071,8 @@
+ 		if (!down) {
+ 			return;
+ 		}
+-    Con_ToggleConsole_f ();
++		Con_ToggleConsole_f ();
++		Key_ClearStates();
+ 		return;
+ 	}
+ 
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/client/cl_main.c tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/client/cl_main.c
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/client/cl_main.c	2006-03-01 00:11:58.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/client/cl_main.c	2008-12-16 04:50:29.000000000 +0100
+@@ -67,12 +67,16 @@
+ cvar_t	*cl_motdString;
+ 
+ cvar_t	*cl_allowDownload;
++cvar_t	*cl_wwwDownload;
++cvar_t	*cl_cURLLib;
+ cvar_t	*cl_conXOffset;
+ cvar_t	*cl_inGameVideo;
+ 
+ cvar_t	*cl_serverStatusResendTime;
+ cvar_t	*cl_trn;
+ 
++cvar_t	*cl_guidServerUniq;
++
+ clientActive_t		cl;
+ clientConnection_t	clc;
+ clientStatic_t		cls;
+@@ -759,6 +763,28 @@
+ 	Com_Memset( &cl, 0, sizeof( cl ) );
+ }
+ 
++/*
++====================
++CL_UpdateGUID
++
++update cl_guid using QKEY_FILE and optional prefix
++====================
++*/
++static void CL_UpdateGUID( char *prefix, int prefix_len )
++{
++	fileHandle_t f;
++	int len;
++
++	len = FS_SV_FOpenFileRead( QKEY_FILE, &f );
++	FS_FCloseFile( f );
++
++	if( len != QKEY_SIZE ) 
++		Cvar_Set( "cl_guid", "" );
++	else
++		Cvar_Set( "cl_guid", Com_MD5File( QKEY_FILE, QKEY_SIZE,
++			prefix, prefix_len ) );
++}
++
+ 
+ /*
+ =====================
+@@ -827,6 +853,7 @@
+ 	if( CL_VideoRecording( ) ) {
+ 		CL_CloseAVI( );
+ 	}
++	CL_UpdateGUID( NULL, 0 );
+ }
+ 
+ 
+@@ -997,6 +1024,7 @@
+ */
+ void CL_Connect_f( void ) {
+ 	char	*server;
++	char	serverString[ 22 ];
+ 
+ 	if ( Cmd_Argc() != 2 ) {
+ 		Com_Printf( "usage: connect [server]\n");
+@@ -1039,10 +1067,17 @@
+ 	if (clc.serverAddress.port == 0) {
+ 		clc.serverAddress.port = BigShort( PORT_SERVER );
+ 	}
+-	Com_Printf( "%s resolved to %i.%i.%i.%i:%i\n", cls.servername,
+-		clc.serverAddress.ip[0], clc.serverAddress.ip[1],
+-		clc.serverAddress.ip[2], clc.serverAddress.ip[3],
+-		BigShort( clc.serverAddress.port ) );
++	Com_sprintf( serverString, sizeof( serverString ), "%i.%i.%i.%i:%i",
++                clc.serverAddress.ip[0], clc.serverAddress.ip[1],
++                clc.serverAddress.ip[2], clc.serverAddress.ip[3],
++                BigShort( clc.serverAddress.port ) );
++ 
++	Com_Printf( "%s resolved to %s\n", cls.servername, serverString );
++
++	if( cl_guidServerUniq->integer )
++		CL_UpdateGUID( serverString, strlen( serverString ) );
++	else
++		CL_UpdateGUID( NULL, 0 );
+ 
+ 	// if we aren't playing on a lan, we need to authenticate
+ 	// with the cd key
+@@ -1379,9 +1414,11 @@
+ A download completed or failed
+ =================
+ */
+-void CL_NextDownload(void) {
++void CL_NextDownload() {
+ 	char *s;
+ 	char *remoteName, *localName;
++	char url[MAX_STRING_CHARS] = {""};
++	qboolean useCURL = qfalse;
+ 
+ 	// We are looking to start a download here
+ 	if (*clc.downloadList) {
+@@ -1405,9 +1442,32 @@
+ 			*s++ = 0;
+ 		else
+ 			s = localName + strlen(localName); // point at the nul byte
+-
+-		CL_BeginDownload( localName, remoteName );
+-
++#ifdef USE_CURL
++               if( cl_wwwDownload->integer ) {
++                       if(!clc.wwwDownload)
++                               Com_Printf("cl_wwwDownload: server does not "
++                                       "allow download redirection\n");
++                       else if(!*clc.wwwBaseURL)
++                               Com_Printf("cl_wwwDownload: server does not "
++                                       "have sv_wwwBaseURL set\n");
++                       else if(!CL_cURL_Init()) {
++                               Com_Printf("cl_wwwDownload: could not load "
++                                       "cURL library\n");
++                       }
++                       else {
++                               Q_strncpyz(url, clc.wwwBaseURL, sizeof(url));
++                               Q_strcat(url, sizeof(url), "/");
++                               Q_strcat(url, sizeof(url), remoteName);
++                               Com_Printf("Download URL: %s\n", url);
++                               CL_cURL_BeginDownload(localName, url);
++                               useCURL = qtrue;
++                       }
++               }
++#endif /* USE_CURL */
++               if(!useCURL) {
++                       CL_BeginDownload( localName, remoteName );
++                       Com_Printf("CL_NextDownload: UDP download\n");
++               }
+ 		clc.downloadRestart = qtrue;
+ 
+ 		// move over the rest
+@@ -1966,6 +2026,11 @@
+ 		return;
+ 	}
+ 
++#ifdef USE_CURL
++	if(clc.downloadCURLM)
++		CL_cURL_PerformDownload();
++#endif
++
+ 	if ( cls.state == CA_DISCONNECTED && !( cls.keyCatchers & KEYCATCH_UI )
+ 		&& !com_sv_running->integer ) {
+ 		// if disconnected, bring up the menu
+@@ -2014,7 +2079,7 @@
+ 			}
+ 
+ 			Q_strncpyz( mapName, COM_SkipPath( cl.mapname ), sizeof( cl.mapname ) );
+-			COM_StripExtension( mapName, mapName );
++			COM_StripExtension(mapName, mapName, sizeof(mapName));
+ 
+ 			Cbuf_ExecuteText( EXEC_NOW,
+ 					va( "record %s-%s-%s", nowString, serverName, mapName ) );
+@@ -2327,6 +2392,47 @@
+ }
+ 
+ /*
++===============
++CL_GenerateQKey
++
++test to see if a valid QKEY_FILE exists.  If one does not, try to generate
++it by filling it with 2048 bytes of random data.
++===============
++*/
++static void CL_GenerateQKey(void)
++{
++	int len = 0;
++	unsigned char buff[ QKEY_SIZE ];
++	fileHandle_t f;
++
++	len = FS_SV_FOpenFileRead( QKEY_FILE, &f );
++	FS_FCloseFile( f );
++	if( len == QKEY_SIZE ) {
++		Com_Printf( "QKEY found.\n" );
++		return;
++	}
++	else {
++		if( len > 0 ) {
++			Com_Printf( "QKEY file size != %d, regenerating\n",
++				QKEY_SIZE );
++		}
++
++		Com_Printf( "QKEY building random string\n" );
++		Com_RandomBytes( buff, sizeof(buff) );
++
++		f = FS_SV_FOpenFileWrite( QKEY_FILE );
++		if( !f ) {
++			Com_Printf( "QKEY could not open %s for write\n",
++				QKEY_FILE );
++			return;
++		}
++		FS_Write( buff, sizeof(buff), f );
++		FS_FCloseFile( f );
++		Com_Printf( "QKEY generated\n" );
++	}
++} 
++
++/*
+ ====================
+ CL_Init
+ ====================
+@@ -2385,6 +2491,17 @@
+ 
+ 	cl_allowDownload = Cvar_Get ("cl_allowDownload", "0", CVAR_ARCHIVE);
+ 
++#ifdef USE_CURL
++	cl_wwwDownload = Cvar_Get ("cl_wwwDownload", "1",
++		CVAR_USERINFO | CVAR_ARCHIVE);
++#else
++	// don't lose our archived value in config file when using a
++	// non-curl binary, but don't put it in USERINFO either
++	cl_wwwDownload = Cvar_Get ("cl_wwwDownload", "1", CVAR_ARCHIVE);
++#endif /* USE_CURL */
++
++	cl_cURLLib = Cvar_Get ("cl_cURLLib", DEFAULT_CURL_LIB, CVAR_ARCHIVE);
++
+ 	cl_conXOffset = Cvar_Get ("cl_conXOffset", "0", 0);
+ #ifdef MACOS_X
+         // In game video is REALLY slow in Mac OS X right now due to driver slowness
+@@ -2415,9 +2532,11 @@
+ 	Cvar_Get( "cl_maxPing", "800", CVAR_ARCHIVE );
+ 
+ 
++	cl_guidServerUniq = Cvar_Get ("cl_guidServerUniq", "0", CVAR_ARCHIVE);
++
+ 	// userinfo
+ 	Cvar_Get ("name", "UnnamedPlayer", CVAR_USERINFO | CVAR_ARCHIVE );
+-	Cvar_Get ("rate", "3000", CVAR_USERINFO | CVAR_ARCHIVE );
++	Cvar_Get ("rate", "25000", CVAR_USERINFO | CVAR_ARCHIVE );
+ 	Cvar_Get ("snaps", "20", CVAR_USERINFO | CVAR_ARCHIVE );
+ 	Cvar_Get ("model", "sarge", CVAR_USERINFO | CVAR_ARCHIVE );
+ 	Cvar_Get ("headmodel", "sarge", CVAR_USERINFO | CVAR_ARCHIVE );
+@@ -2474,6 +2593,10 @@
+ 
+ 	Cvar_Set( "cl_running", "1" );
+ 
++	CL_GenerateQKey();	
++	Cvar_Get( "cl_guid", "", CVAR_USERINFO | CVAR_ROM );
++	CL_UpdateGUID( NULL, 0 );
++
+ 	Com_Printf( "----- Client Initialization Complete -----\n" );
+ }
+ 
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/client/cl_parse.c tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/client/cl_parse.c
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/client/cl_parse.c	2005-12-10 21:19:52.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/client/cl_parse.c	2008-12-16 04:50:29.000000000 +0100
+@@ -256,6 +256,13 @@
+ 
+ 	// read areamask
+ 	len = MSG_ReadByte( msg );
++	
++	if(len > sizeof(newSnap.areamask))
++	{
++		Com_Error (ERR_DROP,"CL_ParseSnapshot: Invalid size %d for areamask.", len);
++		return;
++	}
++	
+ 	MSG_ReadData( msg, &newSnap.areamask, len);
+ 
+ 	// read playerinfo
+@@ -339,6 +346,13 @@
+ 	// in some cases, outdated cp commands might get sent with this news serverId
+ 	cl.serverId = atoi( Info_ValueForKey( systemInfo, "sv_serverid" ) );
+ 
++#ifdef USE_CURL
++	clc.wwwDownload = atoi(Info_ValueForKey(systemInfo, "sv_wwwDownload"));
++	Q_strncpyz(clc.wwwBaseURL,
++		Info_ValueForKey(systemInfo, "sv_wwwBaseURL"),
++		sizeof(clc.wwwBaseURL));
++#endif /* USE_CURL */
++
+ 	// don't set any vars when playing a demo
+ 	if ( clc.demoplaying ) {
+ 		return;
+@@ -366,6 +380,10 @@
+ 		if ( !key[0] ) {
+ 			break;
+ 		}
++		if(!Q_stricmp(key, "sv_wwwDownload")
++			|| !Q_stricmp(key, "sv_wwwBaseURL"))
++			continue;
++
+ 		// ehw!
+ 		if ( !Q_stricmp( key, "fs_game" ) ) {
+ 			gameSet = qtrue;
+@@ -476,6 +494,12 @@
+ 	unsigned char data[MAX_MSGLEN];
+ 	int block;
+ 
++	if (!*clc.downloadTempName) {
++		Com_Printf("Server sending download, but no download was requested\n");
++		CL_AddReliableCommand( "stopdl" );
++		return;
++	}
++
+ 	// read the data
+ 	block = MSG_ReadShort ( msg );
+ 
+@@ -494,8 +518,13 @@
+ 	}
+ 
+ 	size = MSG_ReadShort ( msg );
+-	if (size > 0)
+-		MSG_ReadData( msg, data, size );
++	if (size < 0 || size > sizeof(data))
++	{
++		Com_Error(ERR_DROP, "CL_ParseDownload: Invalid size %d for download chunk.", size);
++		return;
++	}
++	
++	MSG_ReadData(msg, data, size);
+ 
+ 	if (clc.downloadBlock != block) {
+ 		Com_DPrintf( "CL_ParseDownload: Expected block %d, got %d\n", clc.downloadBlock, block);
+@@ -505,12 +534,6 @@
+ 	// open the file if not opened yet
+ 	if (!clc.download)
+ 	{
+-		if (!*clc.downloadTempName) {
+-			Com_Printf("Server sending download, but no download was requested\n");
+-			CL_AddReliableCommand( "stopdl" );
+-			return;
+-		}
+-
+ 		clc.download = FS_SV_FOpenFileWrite( clc.downloadTempName );
+ 
+ 		if (!clc.download) {
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/client/cl_ui.c tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/client/cl_ui.c
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/client/cl_ui.c	2006-02-24 23:04:35.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/client/cl_ui.c	2008-12-16 04:50:29.000000000 +0100
+@@ -607,10 +607,10 @@
+ 
+ /*
+ ====================
+-GetClipboardData
++CL_GetClipboardData
+ ====================
+ */
+-static void GetClipboardData( char *buf, int buflen ) {
++static void CL_GetClipboardData( char *buf, int buflen ) {
+ 	char	*cbd;
+ 
+ 	cbd = Sys_GetClipboardData();
+@@ -840,7 +840,7 @@
+ 		return 0;
+ 
+ 	case UI_GETCLIPBOARDDATA:
+-		GetClipboardData( VMA(1), args[2] );
++		CL_GetClipboardData( VMA(1), args[2] );
+ 		return 0;
+ 
+ 	case UI_GETCLIENTSTATE:
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/client/snd_openal.c tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/client/snd_openal.c
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/client/snd_openal.c	2006-03-01 00:11:58.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/client/snd_openal.c	2008-12-16 04:50:29.000000000 +0100
+@@ -466,7 +466,11 @@
+ 	qboolean				local;			// Is this local (relative to the cam)
+ } src_t;
+ 
+-#define MAX_SRC 128
++#ifdef MACOS_X
++  #define MAX_SRC 64
++#else
++  #define MAX_SRC 128
++#endif
+ static src_t srcList[MAX_SRC];
+ static int srcCount = 0;
+ static qboolean alSourcesInitialised = qfalse;
+@@ -861,8 +865,6 @@
+ 	// Set up the effect
+ 	if( origin == NULL )
+ 	{
+-		srcList[ src ].isTracking = qtrue;
+-
+ 		if( S_AL_HearingThroughEntity( entnum ) )
+ 		{
+ 			// Where the entity is the local player, play a local sound
+@@ -874,6 +876,7 @@
+ 			S_AL_SrcSetup( src, sfx, SRCPRI_ONESHOT, entnum, entchannel, qfalse );
+ 			VectorCopy( entityList[ entnum ].origin, sorigin );
+ 		}
++		srcList[ src ].isTracking = qtrue;
+ 	}
+ 	else
+ 	{
+@@ -1370,6 +1373,9 @@
+ 	int l;
+ 	ALuint format;
+ 
++	if(!mus_stream)
++		return;
++
+ 	l = S_CodecReadStream(mus_stream, MUSIC_BUFFER_SIZE, decode_buffer);
+ 
+ 	// Run out data to read, start at the beginning again
+@@ -1401,8 +1407,10 @@
+ 	if( ( error = qalGetError( ) ) != AL_NO_ERROR )
+ 	{
+ 		S_AL_StopBackgroundTrack( );
+-		Com_Printf( S_COLOR_RED "ERROR: while buffering data for music stream - %s\n",
+-				S_AL_ErrorMsg( error ) );
++		Com_Printf( S_COLOR_RED
++			"ERROR: while buffering data for music stream."
++			" buffer: %d size: %d format: %d error: %s\n",
++			b, l, format, S_AL_ErrorMsg( error ) );
+ 		return;
+ 	}
+ }
+@@ -1444,6 +1452,13 @@
+ 	if(musicSourceHandle == -1)
+ 		return;
+ 
++	mus_stream = S_CodecOpenStream(s_backgroundLoop);
++	if(!mus_stream)
++	{
++		S_AL_MusicSourceFree();
++		return;
++	}
++
+ 	// Generate the musicBuffers
+ 	qalGenBuffers(NUM_MUSIC_BUFFERS, musicBuffers);
+ 	
+@@ -1451,19 +1466,6 @@
+ 	for(i = 0; i < NUM_MUSIC_BUFFERS; i++)
+ 	{
+ 		S_AL_MusicProcess(musicBuffers[i]);
+-
+-		// check whether our stream still exists.
+-		if(!mus_stream)
+-		{
+-			// there was an error in reading which resulted in a
+-			// closed stream. We must bail out or we'll crash.
+-
+-			// deallocate everything we allocated so far:
+-			qalDeleteBuffers(NUM_MUSIC_BUFFERS, musicBuffers);
+-			S_AL_MusicSourceFree();
+-
+-			return;
+-		}
+ 	}
+ 
+ 	qalSourceQueueBuffers(musicSource, NUM_MUSIC_BUFFERS, musicBuffers);
+@@ -1525,6 +1527,8 @@
+ 
+ #ifdef _WIN32
+ #define ALDRIVER_DEFAULT "OpenAL32.dll"
++#elif defined(MACOS_X)
++#define ALDRIVER_DEFAULT "/System/Library/Frameworks/OpenAL.framework/OpenAL"
+ #else
+ #define ALDRIVER_DEFAULT "libopenal.so.0"
+ #endif
+@@ -1539,6 +1543,7 @@
+ {
+ 	S_AL_SrcShutup();
+ 	S_AL_StopBackgroundTrack();
++	S_AL_StreamDie();
+ }
+ 
+ /*
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/libcurl/curl/curl.h tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/libcurl/curl/curl.h
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/libcurl/curl/curl.h	1970-01-01 01:00:00.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/libcurl/curl/curl.h	2008-12-16 04:50:29.000000000 +0100
+@@ -0,0 +1,1563 @@
++#ifndef __CURL_CURL_H
++#define __CURL_CURL_H
++/***************************************************************************
++ *                                  _   _ ____  _
++ *  Project                     ___| | | |  _ \| |
++ *                             / __| | | | |_) | |
++ *                            | (__| |_| |  _ <| |___
++ *                             \___|\___/|_| \_\_____|
++ *
++ * Copyright (C) 1998 - 2006, Daniel Stenberg, <daniel@haxx.se>, et al.
++ *
++ * This software is licensed as described in the file COPYING, which
++ * you should have received as part of this distribution. The terms
++ * are also available at http://curl.haxx.se/docs/copyright.html.
++ *
++ * You may opt to use, copy, modify, merge, publish, distribute and/or sell
++ * copies of the Software, and permit persons to whom the Software is
++ * furnished to do so, under the terms of the COPYING file.
++ *
++ * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY
++ * KIND, either express or implied.
++ *
++ * $Id: curl.h,v 1.304 2006-08-04 16:08:41 giva Exp $
++ ***************************************************************************/
++
++/* If you have problems, all libcurl docs and details are found here:
++   http://curl.haxx.se/libcurl/
++*/
++
++#include "curlver.h" /* the libcurl version defines */
++
++#include <stdio.h>
++#include <limits.h>
++
++/* The include stuff here below is mainly for time_t! */
++#ifdef vms
++# include <types.h>
++# include <time.h>
++#else
++# include <sys/types.h>
++# include <time.h>
++#endif /* defined (vms) */
++
++typedef void CURL;
++
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
++/*
++ * Decorate exportable functions for Win32 DLL linking.
++ * This avoids using a .def file for building libcurl.dll.
++ */
++#if (defined(WIN32) || defined(_WIN32)) && !defined(CURL_STATICLIB)
++#if defined(BUILDING_LIBCURL)
++#define CURL_EXTERN  __declspec(dllexport)
++#else
++#define CURL_EXTERN  __declspec(dllimport)
++#endif
++#else
++
++#ifdef CURL_HIDDEN_SYMBOLS
++/*
++ * This definition is used to make external definitions visibile in the
++ * shared library when symbols are hidden by default.  It makes no
++ * difference when compiling applications whether this is set or not,
++ * only when compiling the library.
++ */
++#define CURL_EXTERN CURL_EXTERN_SYMBOL
++#else
++#define CURL_EXTERN
++#endif
++#endif
++
++/*
++ * We want the typedef curl_off_t setup for large file support on all
++ * platforms. We also provide a CURL_FORMAT_OFF_T define to use in *printf
++ * format strings when outputting a variable of type curl_off_t.
++ *
++ * Note: "pocc -Ze" is MSVC compatibily mode and this sets _MSC_VER!
++ */
++
++#if (defined(_MSC_VER) && !defined(__POCC__)) || (defined(__LCC__) && defined(WIN32))
++/* MSVC */
++#ifdef _WIN32_WCE
++  typedef long curl_off_t;
++#define CURL_FORMAT_OFF_T "%ld"
++#else
++  typedef signed __int64 curl_off_t;
++#define CURL_FORMAT_OFF_T "%I64d"
++#endif
++#else /* (_MSC_VER && !__POCC__) || (__LCC__ && WIN32) */
++#if (defined(__GNUC__) && defined(WIN32)) || defined(__WATCOMC__)
++/* gcc on windows or Watcom */
++  typedef long long curl_off_t;
++#define CURL_FORMAT_OFF_T "%I64d"
++#else /* GCC or Watcom on Windows  */
++
++/* "normal" POSIX approach, do note that this does not necessarily mean that
++   the type is >32 bits, see the SIZEOF_CURL_OFF_T define for that! */
++  typedef off_t curl_off_t;
++
++/* Check a range of defines to detect large file support. On Linux it seems
++   none of these are set by default, so if you don't explicitly switches on
++   large file support, this define will be made for "small file" support. */
++#ifndef _FILE_OFFSET_BITS
++#define _FILE_OFFSET_BITS 0 /* to prevent warnings in the check below */
++#define UNDEF_FILE_OFFSET_BITS
++#endif
++#ifndef FILESIZEBITS
++#define FILESIZEBITS 0 /* to prevent warnings in the check below */
++#define UNDEF_FILESIZEBITS
++#endif
++
++#if defined(_LARGE_FILES) || (_FILE_OFFSET_BITS > 32) || (FILESIZEBITS > 32) \
++   || defined(_LARGEFILE_SOURCE) || defined(_LARGEFILE64_SOURCE)
++  /* For now, we assume at least one of these to be set for large files to
++     work! */
++#define CURL_FORMAT_OFF_T "%lld"
++#else /* LARGE_FILE support */
++#define CURL_FORMAT_OFF_T "%ld"
++#endif
++#endif /* GCC or Watcom on Windows */
++#endif /* (_MSC_VER && !__POCC__) || (__LCC__ && WIN32) */
++
++#ifdef UNDEF_FILE_OFFSET_BITS
++/* this was defined above for our checks, undefine it again */
++#undef _FILE_OFFSET_BITS
++#endif
++
++#ifdef UNDEF_FILESIZEBITS
++/* this was defined above for our checks, undefine it again */
++#undef FILESIZEBITS
++#endif
++
++struct curl_httppost {
++  struct curl_httppost *next;       /* next entry in the list */
++  char *name;                       /* pointer to allocated name */
++  long namelength;                  /* length of name length */
++  char *contents;                   /* pointer to allocated data contents */
++  long contentslength;              /* length of contents field */
++  char *buffer;                     /* pointer to allocated buffer contents */
++  long bufferlength;                /* length of buffer field */
++  char *contenttype;                /* Content-Type */
++  struct curl_slist* contentheader; /* list of extra headers for this form */
++  struct curl_httppost *more;       /* if one field name has more than one
++                                       file, this link should link to following
++                                       files */
++  long flags;                       /* as defined below */
++#define HTTPPOST_FILENAME (1<<0)    /* specified content is a file name */
++#define HTTPPOST_READFILE (1<<1)    /* specified content is a file name */
++#define HTTPPOST_PTRNAME (1<<2)     /* name is only stored pointer
++                                       do not free in formfree */
++#define HTTPPOST_PTRCONTENTS (1<<3) /* contents is only stored pointer
++                                       do not free in formfree */
++#define HTTPPOST_BUFFER (1<<4)      /* upload file from buffer */
++#define HTTPPOST_PTRBUFFER (1<<5)   /* upload file from pointer contents */
++
++  char *showfilename;               /* The file name to show. If not set, the
++                                       actual file name will be used (if this
++                                       is a file part) */
++};
++
++typedef int (*curl_progress_callback)(void *clientp,
++                                      double dltotal,
++                                      double dlnow,
++                                      double ultotal,
++                                      double ulnow);
++
++  /* Tests have proven that 20K is a very bad buffer size for uploads on
++     Windows, while 16K for some odd reason performed a lot better. */
++#define CURL_MAX_WRITE_SIZE 16384
++
++typedef size_t (*curl_write_callback)(char *buffer,
++                                      size_t size,
++                                      size_t nitems,
++                                      void *outstream);
++
++/* This is a return code for the read callback that, when returned, will
++   signal libcurl to immediately abort the current transfer. */
++#define CURL_READFUNC_ABORT 0x10000000
++typedef size_t (*curl_read_callback)(char *buffer,
++                                      size_t size,
++                                      size_t nitems,
++                                      void *instream);
++
++
++#ifndef CURL_NO_OLDIES
++  /* not used since 7.10.8, will be removed in a future release */
++typedef int (*curl_passwd_callback)(void *clientp,
++                                    const char *prompt,
++                                    char *buffer,
++                                    int buflen);
++#endif
++
++typedef enum {
++  CURLIOE_OK,            /* I/O operation successful */
++  CURLIOE_UNKNOWNCMD,    /* command was unknown to callback */
++  CURLIOE_FAILRESTART,   /* failed to restart the read */
++  CURLIOE_LAST           /* never use */
++} curlioerr;
++
++typedef enum  {
++  CURLIOCMD_NOP,         /* no operation */
++  CURLIOCMD_RESTARTREAD, /* restart the read stream from start */
++  CURLIOCMD_LAST         /* never use */
++} curliocmd;
++
++typedef curlioerr (*curl_ioctl_callback)(CURL *handle,
++                                         int cmd,
++                                         void *clientp);
++
++/*
++ * The following typedef's are signatures of malloc, free, realloc, strdup and
++ * calloc respectively.  Function pointers of these types can be passed to the
++ * curl_global_init_mem() function to set user defined memory management
++ * callback routines.
++ */
++typedef void *(*curl_malloc_callback)(size_t size);
++typedef void (*curl_free_callback)(void *ptr);
++typedef void *(*curl_realloc_callback)(void *ptr, size_t size);
++typedef char *(*curl_strdup_callback)(const char *str);
++typedef void *(*curl_calloc_callback)(size_t nmemb, size_t size);
++
++/* the kind of data that is passed to information_callback*/
++typedef enum {
++  CURLINFO_TEXT = 0,
++  CURLINFO_HEADER_IN,    /* 1 */
++  CURLINFO_HEADER_OUT,   /* 2 */
++  CURLINFO_DATA_IN,      /* 3 */
++  CURLINFO_DATA_OUT,     /* 4 */
++  CURLINFO_SSL_DATA_IN,  /* 5 */
++  CURLINFO_SSL_DATA_OUT, /* 6 */
++  CURLINFO_END
++} curl_infotype;
++
++typedef int (*curl_debug_callback)
++       (CURL *handle,      /* the handle/transfer this concerns */
++        curl_infotype type, /* what kind of data */
++        char *data,        /* points to the data */
++        size_t size,       /* size of the data pointed to */
++        void *userptr);    /* whatever the user please */
++
++/* All possible error codes from all sorts of curl functions. Future versions
++   may return other values, stay prepared.
++
++   Always add new return codes last. Never *EVER* remove any. The return
++   codes must remain the same!
++ */
++
++typedef enum {
++  CURLE_OK = 0,
++  CURLE_UNSUPPORTED_PROTOCOL,    /* 1 */
++  CURLE_FAILED_INIT,             /* 2 */
++  CURLE_URL_MALFORMAT,           /* 3 */
++  CURLE_URL_MALFORMAT_USER,      /* 4 - NOT USED */
++  CURLE_COULDNT_RESOLVE_PROXY,   /* 5 */
++  CURLE_COULDNT_RESOLVE_HOST,    /* 6 */
++  CURLE_COULDNT_CONNECT,         /* 7 */
++  CURLE_FTP_WEIRD_SERVER_REPLY,  /* 8 */
++  CURLE_FTP_ACCESS_DENIED,       /* 9 a service was denied by the FTP server
++                                    due to lack of access - when login fails
++                                    this is not returned. */
++  CURLE_FTP_USER_PASSWORD_INCORRECT, /* 10 - NOT USED */
++  CURLE_FTP_WEIRD_PASS_REPLY,    /* 11 */
++  CURLE_FTP_WEIRD_USER_REPLY,    /* 12 */
++  CURLE_FTP_WEIRD_PASV_REPLY,    /* 13 */
++  CURLE_FTP_WEIRD_227_FORMAT,    /* 14 */
++  CURLE_FTP_CANT_GET_HOST,       /* 15 */
++  CURLE_FTP_CANT_RECONNECT,      /* 16 */
++  CURLE_FTP_COULDNT_SET_BINARY,  /* 17 */
++  CURLE_PARTIAL_FILE,            /* 18 */
++  CURLE_FTP_COULDNT_RETR_FILE,   /* 19 */
++  CURLE_FTP_WRITE_ERROR,         /* 20 */
++  CURLE_FTP_QUOTE_ERROR,         /* 21 */
++  CURLE_HTTP_RETURNED_ERROR,     /* 22 */
++  CURLE_WRITE_ERROR,             /* 23 */
++  CURLE_MALFORMAT_USER,          /* 24 - NOT USED */
++  CURLE_FTP_COULDNT_STOR_FILE,   /* 25 - failed FTP upload */
++  CURLE_READ_ERROR,              /* 26 - could open/read from file */
++  CURLE_OUT_OF_MEMORY,           /* 27 */
++  /* Note: CURLE_OUT_OF_MEMORY may sometimes indicate a conversion error
++           instead of a memory allocation error if CURL_DOES_CONVERSIONS
++           is defined
++  */
++  CURLE_OPERATION_TIMEOUTED,     /* 28 - the timeout time was reached */
++  CURLE_FTP_COULDNT_SET_ASCII,   /* 29 - TYPE A failed */
++  CURLE_FTP_PORT_FAILED,         /* 30 - FTP PORT operation failed */
++  CURLE_FTP_COULDNT_USE_REST,    /* 31 - the REST command failed */
++  CURLE_FTP_COULDNT_GET_SIZE,    /* 32 - the SIZE command failed */
++  CURLE_HTTP_RANGE_ERROR,        /* 33 - RANGE "command" didn't work */
++  CURLE_HTTP_POST_ERROR,         /* 34 */
++  CURLE_SSL_CONNECT_ERROR,       /* 35 - wrong when connecting with SSL */
++  CURLE_BAD_DOWNLOAD_RESUME,     /* 36 - couldn't resume download */
++  CURLE_FILE_COULDNT_READ_FILE,  /* 37 */
++  CURLE_LDAP_CANNOT_BIND,        /* 38 */
++  CURLE_LDAP_SEARCH_FAILED,      /* 39 */
++  CURLE_LIBRARY_NOT_FOUND,       /* 40 */
++  CURLE_FUNCTION_NOT_FOUND,      /* 41 */
++  CURLE_ABORTED_BY_CALLBACK,     /* 42 */
++  CURLE_BAD_FUNCTION_ARGUMENT,   /* 43 */
++  CURLE_BAD_CALLING_ORDER,       /* 44 - NOT USED */
++  CURLE_INTERFACE_FAILED,        /* 45 - CURLOPT_INTERFACE failed */
++  CURLE_BAD_PASSWORD_ENTERED,    /* 46 - NOT USED */
++  CURLE_TOO_MANY_REDIRECTS ,     /* 47 - catch endless re-direct loops */
++  CURLE_UNKNOWN_TELNET_OPTION,   /* 48 - User specified an unknown option */
++  CURLE_TELNET_OPTION_SYNTAX ,   /* 49 - Malformed telnet option */
++  CURLE_OBSOLETE,                /* 50 - NOT USED */
++  CURLE_SSL_PEER_CERTIFICATE,    /* 51 - peer's certificate wasn't ok */
++  CURLE_GOT_NOTHING,             /* 52 - when this is a specific error */
++  CURLE_SSL_ENGINE_NOTFOUND,     /* 53 - SSL crypto engine not found */
++  CURLE_SSL_ENGINE_SETFAILED,    /* 54 - can not set SSL crypto engine as
++                                    default */
++  CURLE_SEND_ERROR,              /* 55 - failed sending network data */
++  CURLE_RECV_ERROR,              /* 56 - failure in receiving network data */
++  CURLE_SHARE_IN_USE,            /* 57 - share is in use */
++  CURLE_SSL_CERTPROBLEM,         /* 58 - problem with the local certificate */
++  CURLE_SSL_CIPHER,              /* 59 - couldn't use specified cipher */
++  CURLE_SSL_CACERT,              /* 60 - problem with the CA cert (path?) */
++  CURLE_BAD_CONTENT_ENCODING,    /* 61 - Unrecognized transfer encoding */
++  CURLE_LDAP_INVALID_URL,        /* 62 - Invalid LDAP URL */
++  CURLE_FILESIZE_EXCEEDED,       /* 63 - Maximum file size exceeded */
++  CURLE_FTP_SSL_FAILED,          /* 64 - Requested FTP SSL level failed */
++  CURLE_SEND_FAIL_REWIND,        /* 65 - Sending the data requires a rewind
++                                    that failed */
++  CURLE_SSL_ENGINE_INITFAILED,   /* 66 - failed to initialise ENGINE */
++  CURLE_LOGIN_DENIED,            /* 67 - user, password or similar was not
++                                    accepted and we failed to login */
++  CURLE_TFTP_NOTFOUND,           /* 68 - file not found on server */
++  CURLE_TFTP_PERM,               /* 69 - permission problem on server */
++  CURLE_TFTP_DISKFULL,           /* 70 - out of disk space on server */
++  CURLE_TFTP_ILLEGAL,            /* 71 - Illegal TFTP operation */
++  CURLE_TFTP_UNKNOWNID,          /* 72 - Unknown transfer ID */
++  CURLE_TFTP_EXISTS,             /* 73 - File already exists */
++  CURLE_TFTP_NOSUCHUSER,         /* 74 - No such user */
++  CURLE_CONV_FAILED,             /* 75 - conversion failed */
++  CURLE_CONV_REQD,               /* 76 - caller must register conversion
++                                    callbacks using curl_easy_setopt options
++                                    CURLOPT_CONV_FROM_NETWORK_FUNCTION,
++                                    CURLOPT_CONV_TO_NETWORK_FUNCTION, and
++                                    CURLOPT_CONV_FROM_UTF8_FUNCTION */
++  CURL_LAST /* never use! */
++} CURLcode;
++
++/* This prototype applies to all conversion callbacks */
++typedef CURLcode (*curl_conv_callback)(char *buffer, size_t length);
++
++typedef CURLcode (*curl_ssl_ctx_callback)(CURL *curl,    /* easy handle */
++                                          void *ssl_ctx, /* actually an
++                                                            OpenSSL SSL_CTX */
++                                          void *userptr);
++
++/* Make a spelling correction for the operation timed-out define */
++#define CURLE_OPERATION_TIMEDOUT CURLE_OPERATION_TIMEOUTED
++
++#ifndef CURL_NO_OLDIES /* define this to test if your app builds with all
++                          the obsolete stuff removed! */
++/* backwards compatibility with older names */
++#define CURLE_HTTP_NOT_FOUND CURLE_HTTP_RETURNED_ERROR
++#define CURLE_HTTP_PORT_FAILED CURLE_INTERFACE_FAILED
++#endif
++
++typedef enum {
++  CURLPROXY_HTTP = 0,
++  CURLPROXY_SOCKS4 = 4,
++  CURLPROXY_SOCKS5 = 5
++} curl_proxytype;
++
++#define CURLAUTH_NONE         0       /* nothing */
++#define CURLAUTH_BASIC        (1<<0)  /* Basic (default) */
++#define CURLAUTH_DIGEST       (1<<1)  /* Digest */
++#define CURLAUTH_GSSNEGOTIATE (1<<2)  /* GSS-Negotiate */
++#define CURLAUTH_NTLM         (1<<3)  /* NTLM */
++#define CURLAUTH_ANY ~0               /* all types set */
++#define CURLAUTH_ANYSAFE (~CURLAUTH_BASIC)
++
++#ifndef CURL_NO_OLDIES /* define this to test if your app builds with all
++                          the obsolete stuff removed! */
++/* this was the error code 50 in 7.7.3 and a few earlier versions, this
++   is no longer used by libcurl but is instead #defined here only to not
++   make programs break */
++#define CURLE_ALREADY_COMPLETE 99999
++
++/* These are just to make older programs not break: */
++#define CURLE_FTP_PARTIAL_FILE CURLE_PARTIAL_FILE
++#define CURLE_FTP_BAD_DOWNLOAD_RESUME CURLE_BAD_DOWNLOAD_RESUME
++#endif
++
++#define CURL_ERROR_SIZE 256
++
++/* parameter for the CURLOPT_FTP_SSL option */
++typedef enum {
++  CURLFTPSSL_NONE,    /* do not attempt to use SSL */
++  CURLFTPSSL_TRY,     /* try using SSL, proceed anyway otherwise */
++  CURLFTPSSL_CONTROL, /* SSL for the control connection or fail */
++  CURLFTPSSL_ALL,     /* SSL for all communication or fail */
++  CURLFTPSSL_LAST     /* not an option, never use */
++} curl_ftpssl;
++
++/* parameter for the CURLOPT_FTPSSLAUTH option */
++typedef enum {
++  CURLFTPAUTH_DEFAULT, /* let libcurl decide */
++  CURLFTPAUTH_SSL,     /* use "AUTH SSL" */
++  CURLFTPAUTH_TLS,     /* use "AUTH TLS" */
++  CURLFTPAUTH_LAST /* not an option, never use */
++} curl_ftpauth;
++
++/* parameter for the CURLOPT_FTP_FILEMETHOD option */
++typedef enum {
++  CURLFTPMETHOD_DEFAULT,   /* let libcurl pick */
++  CURLFTPMETHOD_MULTICWD,  /* single CWD operation for each path part */
++  CURLFTPMETHOD_NOCWD,     /* no CWD at all */
++  CURLFTPMETHOD_SINGLECWD, /* one CWD to full dir, then work on file */
++  CURLFTPMETHOD_LAST       /* not an option, never use */
++} curl_ftpmethod;
++
++/* long may be 32 or 64 bits, but we should never depend on anything else
++   but 32 */
++#define CURLOPTTYPE_LONG          0
++#define CURLOPTTYPE_OBJECTPOINT   10000
++#define CURLOPTTYPE_FUNCTIONPOINT 20000
++#define CURLOPTTYPE_OFF_T         30000
++
++/* name is uppercase CURLOPT_<name>,
++   type is one of the defined CURLOPTTYPE_<type>
++   number is unique identifier */
++#ifdef CINIT
++#undef CINIT
++#endif
++/*
++ * Figure out if we can use the ## operator, which is supported by ISO/ANSI C
++ * and C++. Some compilers support it without setting __STDC__ or __cplusplus
++ * so we need to carefully check for them too. We don't use configure-checks
++ * for these since we want these headers to remain generic and working for all
++ * platforms.
++ */
++#if defined(__STDC__) || defined(_MSC_VER) || defined(__cplusplus) || \
++  defined(__HP_aCC) || defined(__BORLANDC__) || defined(__LCC__) || \
++  defined(__POCC__) || defined(__SALFORDC__)
++  /* This compiler is believed to have an ISO compatible preprocessor */
++#define CURL_ISOCPP
++#else
++  /* This compiler is believed NOT to have an ISO compatible preprocessor */
++#undef CURL_ISOCPP
++#endif
++
++#ifdef CURL_ISOCPP
++#define CINIT(name,type,number) CURLOPT_ ## name = CURLOPTTYPE_ ## type + number
++#else
++/* The macro "##" is ISO C, we assume pre-ISO C doesn't support it. */
++#define LONG          CURLOPTTYPE_LONG
++#define OBJECTPOINT   CURLOPTTYPE_OBJECTPOINT
++#define FUNCTIONPOINT CURLOPTTYPE_FUNCTIONPOINT
++#define OFF_T         CURLOPTTYPE_OFF_T
++#define CINIT(name,type,number) CURLOPT_/**/name = type + number
++#endif
++
++/*
++ * This macro-mania below setups the CURLOPT_[what] enum, to be used with
++ * curl_easy_setopt(). The first argument in the CINIT() macro is the [what]
++ * word.
++ */
++
++typedef enum {
++  /* This is the FILE * or void * the regular output should be written to. */
++  CINIT(FILE, OBJECTPOINT, 1),
++
++  /* The full URL to get/put */
++  CINIT(URL,  OBJECTPOINT, 2),
++
++  /* Port number to connect to, if other than default. */
++  CINIT(PORT, LONG, 3),
++
++  /* Name of proxy to use. */
++  CINIT(PROXY, OBJECTPOINT, 4),
++
++  /* "name:password" to use when fetching. */
++  CINIT(USERPWD, OBJECTPOINT, 5),
++
++  /* "name:password" to use with proxy. */
++  CINIT(PROXYUSERPWD, OBJECTPOINT, 6),
++
++  /* Range to get, specified as an ASCII string. */
++  CINIT(RANGE, OBJECTPOINT, 7),
++
++  /* not used */
++
++  /* Specified file stream to upload from (use as input): */
++  CINIT(INFILE, OBJECTPOINT, 9),
++
++  /* Buffer to receive error messages in, must be at least CURL_ERROR_SIZE
++   * bytes big. If this is not used, error messages go to stderr instead: */
++  CINIT(ERRORBUFFER, OBJECTPOINT, 10),
++
++  /* Function that will be called to store the output (instead of fwrite). The
++   * parameters will use fwrite() syntax, make sure to follow them. */
++  CINIT(WRITEFUNCTION, FUNCTIONPOINT, 11),
++
++  /* Function that will be called to read the input (instead of fread). The
++   * parameters will use fread() syntax, make sure to follow them. */
++  CINIT(READFUNCTION, FUNCTIONPOINT, 12),
++
++  /* Time-out the read operation after this amount of seconds */
++  CINIT(TIMEOUT, LONG, 13),
++
++  /* If the CURLOPT_INFILE is used, this can be used to inform libcurl about
++   * how large the file being sent really is. That allows better error
++   * checking and better verifies that the upload was succcessful. -1 means
++   * unknown size.
++   *
++   * For large file support, there is also a _LARGE version of the key
++   * which takes an off_t type, allowing platforms with larger off_t
++   * sizes to handle larger files.  See below for INFILESIZE_LARGE.
++   */
++  CINIT(INFILESIZE, LONG, 14),
++
++  /* POST input fields. */
++  CINIT(POSTFIELDS, OBJECTPOINT, 15),
++
++  /* Set the referer page (needed by some CGIs) */
++  CINIT(REFERER, OBJECTPOINT, 16),
++
++  /* Set the FTP PORT string (interface name, named or numerical IP address)
++     Use i.e '-' to use default address. */
++  CINIT(FTPPORT, OBJECTPOINT, 17),
++
++  /* Set the User-Agent string (examined by some CGIs) */
++  CINIT(USERAGENT, OBJECTPOINT, 18),
++
++  /* If the download receives less than "low speed limit" bytes/second
++   * during "low speed time" seconds, the operations is aborted.
++   * You could i.e if you have a pretty high speed connection, abort if
++   * it is less than 2000 bytes/sec during 20 seconds.
++   */
++
++  /* Set the "low speed limit" */
++  CINIT(LOW_SPEED_LIMIT, LONG , 19),
++
++  /* Set the "low speed time" */
++  CINIT(LOW_SPEED_TIME, LONG, 20),
++
++  /* Set the continuation offset.
++   *
++   * Note there is also a _LARGE version of this key which uses
++   * off_t types, allowing for large file offsets on platforms which
++   * use larger-than-32-bit off_t's.  Look below for RESUME_FROM_LARGE.
++   */
++  CINIT(RESUME_FROM, LONG, 21),
++
++  /* Set cookie in request: */
++  CINIT(COOKIE, OBJECTPOINT, 22),
++
++  /* This points to a linked list of headers, struct curl_slist kind */
++  CINIT(HTTPHEADER, OBJECTPOINT, 23),
++
++  /* This points to a linked list of post entries, struct HttpPost */
++  CINIT(HTTPPOST, OBJECTPOINT, 24),
++
++  /* name of the file keeping your private SSL-certificate */
++  CINIT(SSLCERT, OBJECTPOINT, 25),
++
++  /* password for the SSL-private key, keep this for compatibility */
++  CINIT(SSLCERTPASSWD, OBJECTPOINT, 26),
++  /* password for the SSL private key */
++  CINIT(SSLKEYPASSWD, OBJECTPOINT, 26),
++
++  /* send TYPE parameter? */
++  CINIT(CRLF, LONG, 27),
++
++  /* send linked-list of QUOTE commands */
++  CINIT(QUOTE, OBJECTPOINT, 28),
++
++  /* send FILE * or void * to store headers to, if you use a callback it
++     is simply passed to the callback unmodified */
++  CINIT(WRITEHEADER, OBJECTPOINT, 29),
++
++  /* point to a file to read the initial cookies from, also enables
++     "cookie awareness" */
++  CINIT(COOKIEFILE, OBJECTPOINT, 31),
++
++  /* What version to specifly try to use.
++     See CURL_SSLVERSION defines below. */
++  CINIT(SSLVERSION, LONG, 32),
++
++  /* What kind of HTTP time condition to use, see defines */
++  CINIT(TIMECONDITION, LONG, 33),
++
++  /* Time to use with the above condition. Specified in number of seconds
++     since 1 Jan 1970 */
++  CINIT(TIMEVALUE, LONG, 34),
++
++  /* 35 = OBSOLETE */
++
++  /* Custom request, for customizing the get command like
++     HTTP: DELETE, TRACE and others
++     FTP: to use a different list command
++     */
++  CINIT(CUSTOMREQUEST, OBJECTPOINT, 36),
++
++  /* HTTP request, for odd commands like DELETE, TRACE and others */
++  CINIT(STDERR, OBJECTPOINT, 37),
++
++  /* 38 is not used */
++
++  /* send linked-list of post-transfer QUOTE commands */
++  CINIT(POSTQUOTE, OBJECTPOINT, 39),
++
++  /* Pass a pointer to string of the output using full variable-replacement
++     as described elsewhere. */
++  CINIT(WRITEINFO, OBJECTPOINT, 40),
++
++  CINIT(VERBOSE, LONG, 41),      /* talk a lot */
++  CINIT(HEADER, LONG, 42),       /* throw the header out too */
++  CINIT(NOPROGRESS, LONG, 43),   /* shut off the progress meter */
++  CINIT(NOBODY, LONG, 44),       /* use HEAD to get http document */
++  CINIT(FAILONERROR, LONG, 45),  /* no output on http error codes >= 300 */
++  CINIT(UPLOAD, LONG, 46),       /* this is an upload */
++  CINIT(POST, LONG, 47),         /* HTTP POST method */
++  CINIT(FTPLISTONLY, LONG, 48),  /* Use NLST when listing ftp dir */
++
++  CINIT(FTPAPPEND, LONG, 50),    /* Append instead of overwrite on upload! */
++
++  /* Specify whether to read the user+password from the .netrc or the URL.
++   * This must be one of the CURL_NETRC_* enums below. */
++  CINIT(NETRC, LONG, 51),
++
++  CINIT(FOLLOWLOCATION, LONG, 52),  /* use Location: Luke! */
++
++  CINIT(TRANSFERTEXT, LONG, 53), /* transfer data in text/ASCII format */
++  CINIT(PUT, LONG, 54),          /* HTTP PUT */
++
++  /* 55 = OBSOLETE */
++
++  /* Function that will be called instead of the internal progress display
++   * function. This function should be defined as the curl_progress_callback
++   * prototype defines. */
++  CINIT(PROGRESSFUNCTION, FUNCTIONPOINT, 56),
++
++  /* Data passed to the progress callback */
++  CINIT(PROGRESSDATA, OBJECTPOINT, 57),
++
++  /* We want the referer field set automatically when following locations */
++  CINIT(AUTOREFERER, LONG, 58),
++
++  /* Port of the proxy, can be set in the proxy string as well with:
++     "[host]:[port]" */
++  CINIT(PROXYPORT, LONG, 59),
++
++  /* size of the POST input data, if strlen() is not good to use */
++  CINIT(POSTFIELDSIZE, LONG, 60),
++
++  /* tunnel non-http operations through a HTTP proxy */
++  CINIT(HTTPPROXYTUNNEL, LONG, 61),
++
++  /* Set the interface string to use as outgoing network interface */
++  CINIT(INTERFACE, OBJECTPOINT, 62),
++
++  /* Set the krb4 security level, this also enables krb4 awareness.  This is a
++   * string, 'clear', 'safe', 'confidential' or 'private'.  If the string is
++   * set but doesn't match one of these, 'private' will be used.  */
++  CINIT(KRB4LEVEL, OBJECTPOINT, 63),
++
++  /* Set if we should verify the peer in ssl handshake, set 1 to verify. */
++  CINIT(SSL_VERIFYPEER, LONG, 64),
++
++  /* The CApath or CAfile used to validate the peer certificate
++     this option is used only if SSL_VERIFYPEER is true */
++  CINIT(CAINFO, OBJECTPOINT, 65),
++
++  /* 66 = OBSOLETE */
++  /* 67 = OBSOLETE */
++
++  /* Maximum number of http redirects to follow */
++  CINIT(MAXREDIRS, LONG, 68),
++
++  /* Pass a long set to 1 to get the date of the requested document (if
++     possible)! Pass a zero to shut it off. */
++  CINIT(FILETIME, LONG, 69),
++
++  /* This points to a linked list of telnet options */
++  CINIT(TELNETOPTIONS, OBJECTPOINT, 70),
++
++  /* Max amount of cached alive connections */
++  CINIT(MAXCONNECTS, LONG, 71),
++
++  /* What policy to use when closing connections when the cache is filled
++     up */
++  CINIT(CLOSEPOLICY, LONG, 72),
++
++  /* 73 = OBSOLETE */
++
++  /* Set to explicitly use a new connection for the upcoming transfer.
++     Do not use this unless you're absolutely sure of this, as it makes the
++     operation slower and is less friendly for the network. */
++  CINIT(FRESH_CONNECT, LONG, 74),
++
++  /* Set to explicitly forbid the upcoming transfer's connection to be re-used
++     when done. Do not use this unless you're absolutely sure of this, as it
++     makes the operation slower and is less friendly for the network. */
++  CINIT(FORBID_REUSE, LONG, 75),
++
++  /* Set to a file name that contains random data for libcurl to use to
++     seed the random engine when doing SSL connects. */
++  CINIT(RANDOM_FILE, OBJECTPOINT, 76),
++
++  /* Set to the Entropy Gathering Daemon socket pathname */
++  CINIT(EGDSOCKET, OBJECTPOINT, 77),
++
++  /* Time-out connect operations after this amount of seconds, if connects
++     are OK within this time, then fine... This only aborts the connect
++     phase. [Only works on unix-style/SIGALRM operating systems] */
++  CINIT(CONNECTTIMEOUT, LONG, 78),
++
++  /* Function that will be called to store headers (instead of fwrite). The
++   * parameters will use fwrite() syntax, make sure to follow them. */
++  CINIT(HEADERFUNCTION, FUNCTIONPOINT, 79),
++
++  /* Set this to force the HTTP request to get back to GET. Only really usable
++     if POST, PUT or a custom request have been used first.
++   */
++  CINIT(HTTPGET, LONG, 80),
++
++  /* Set if we should verify the Common name from the peer certificate in ssl
++   * handshake, set 1 to check existence, 2 to ensure that it matches the
++   * provided hostname. */
++  CINIT(SSL_VERIFYHOST, LONG, 81),
++
++  /* Specify which file name to write all known cookies in after completed
++     operation. Set file name to "-" (dash) to make it go to stdout. */
++  CINIT(COOKIEJAR, OBJECTPOINT, 82),
++
++  /* Specify which SSL ciphers to use */
++  CINIT(SSL_CIPHER_LIST, OBJECTPOINT, 83),
++
++  /* Specify which HTTP version to use! This must be set to one of the
++     CURL_HTTP_VERSION* enums set below. */
++  CINIT(HTTP_VERSION, LONG, 84),
++
++  /* Specificly switch on or off the FTP engine's use of the EPSV command. By
++     default, that one will always be attempted before the more traditional
++     PASV command. */
++  CINIT(FTP_USE_EPSV, LONG, 85),
++
++  /* type of the file keeping your SSL-certificate ("DER", "PEM", "ENG") */
++  CINIT(SSLCERTTYPE, OBJECTPOINT, 86),
++
++  /* name of the file keeping your private SSL-key */
++  CINIT(SSLKEY, OBJECTPOINT, 87),
++
++  /* type of the file keeping your private SSL-key ("DER", "PEM", "ENG") */
++  CINIT(SSLKEYTYPE, OBJECTPOINT, 88),
++
++  /* crypto engine for the SSL-sub system */
++  CINIT(SSLENGINE, OBJECTPOINT, 89),
++
++  /* set the crypto engine for the SSL-sub system as default
++     the param has no meaning...
++   */
++  CINIT(SSLENGINE_DEFAULT, LONG, 90),
++
++  /* Non-zero value means to use the global dns cache */
++  CINIT(DNS_USE_GLOBAL_CACHE, LONG, 91), /* To becomeO BSOLETE soon */
++
++  /* DNS cache timeout */
++  CINIT(DNS_CACHE_TIMEOUT, LONG, 92),
++
++  /* send linked-list of pre-transfer QUOTE commands (Wesley Laxton)*/
++  CINIT(PREQUOTE, OBJECTPOINT, 93),
++
++  /* set the debug function */
++  CINIT(DEBUGFUNCTION, FUNCTIONPOINT, 94),
++
++  /* set the data for the debug function */
++  CINIT(DEBUGDATA, OBJECTPOINT, 95),
++
++  /* mark this as start of a cookie session */
++  CINIT(COOKIESESSION, LONG, 96),
++
++  /* The CApath directory used to validate the peer certificate
++     this option is used only if SSL_VERIFYPEER is true */
++  CINIT(CAPATH, OBJECTPOINT, 97),
++
++  /* Instruct libcurl to use a smaller receive buffer */
++  CINIT(BUFFERSIZE, LONG, 98),
++
++  /* Instruct libcurl to not use any signal/alarm handlers, even when using
++     timeouts. This option is useful for multi-threaded applications.
++     See libcurl-the-guide for more background information. */
++  CINIT(NOSIGNAL, LONG, 99),
++
++  /* Provide a CURLShare for mutexing non-ts data */
++  CINIT(SHARE, OBJECTPOINT, 100),
++
++  /* indicates type of proxy. accepted values are CURLPROXY_HTTP (default),
++     CURLPROXY_SOCKS4 and CURLPROXY_SOCKS5. */
++  CINIT(PROXYTYPE, LONG, 101),
++
++  /* Set the Accept-Encoding string. Use this to tell a server you would like
++     the response to be compressed. */
++  CINIT(ENCODING, OBJECTPOINT, 102),
++
++  /* Set pointer to private data */
++  CINIT(PRIVATE, OBJECTPOINT, 103),
++
++  /* Set aliases for HTTP 200 in the HTTP Response header */
++  CINIT(HTTP200ALIASES, OBJECTPOINT, 104),
++
++  /* Continue to send authentication (user+password) when following locations,
++     even when hostname changed. This can potentionally send off the name
++     and password to whatever host the server decides. */
++  CINIT(UNRESTRICTED_AUTH, LONG, 105),
++
++  /* Specificly switch on or off the FTP engine's use of the EPRT command ( it
++     also disables the LPRT attempt). By default, those ones will always be
++     attempted before the good old traditional PORT command. */
++  CINIT(FTP_USE_EPRT, LONG, 106),
++
++  /* Set this to a bitmask value to enable the particular authentications
++     methods you like. Use this in combination with CURLOPT_USERPWD.
++     Note that setting multiple bits may cause extra network round-trips. */
++  CINIT(HTTPAUTH, LONG, 107),
++
++  /* Set the ssl context callback function, currently only for OpenSSL ssl_ctx
++     in second argument. The function must be matching the
++     curl_ssl_ctx_callback proto. */
++  CINIT(SSL_CTX_FUNCTION, FUNCTIONPOINT, 108),
++
++  /* Set the userdata for the ssl context callback function's third
++     argument */
++  CINIT(SSL_CTX_DATA, OBJECTPOINT, 109),
++
++  /* FTP Option that causes missing dirs to be created on the remote server */
++  CINIT(FTP_CREATE_MISSING_DIRS, LONG, 110),
++
++  /* Set this to a bitmask value to enable the particular authentications
++     methods you like. Use this in combination with CURLOPT_PROXYUSERPWD.
++     Note that setting multiple bits may cause extra network round-trips. */
++  CINIT(PROXYAUTH, LONG, 111),
++
++  /* FTP option that changes the timeout, in seconds, associated with
++     getting a response.  This is different from transfer timeout time and
++     essentially places a demand on the FTP server to acknowledge commands
++     in a timely manner. */
++  CINIT(FTP_RESPONSE_TIMEOUT, LONG , 112),
++
++  /* Set this option to one of the CURL_IPRESOLVE_* defines (see below) to
++     tell libcurl to resolve names to those IP versions only. This only has
++     affect on systems with support for more than one, i.e IPv4 _and_ IPv6. */
++  CINIT(IPRESOLVE, LONG, 113),
++
++  /* Set this option to limit the size of a file that will be downloaded from
++     an HTTP or FTP server.
++
++     Note there is also _LARGE version which adds large file support for
++     platforms which have larger off_t sizes.  See MAXFILESIZE_LARGE below. */
++  CINIT(MAXFILESIZE, LONG, 114),
++
++  /* See the comment for INFILESIZE above, but in short, specifies
++   * the size of the file being uploaded.  -1 means unknown.
++   */
++  CINIT(INFILESIZE_LARGE, OFF_T, 115),
++
++  /* Sets the continuation offset.  There is also a LONG version of this;
++   * look above for RESUME_FROM.
++   */
++  CINIT(RESUME_FROM_LARGE, OFF_T, 116),
++
++  /* Sets the maximum size of data that will be downloaded from
++   * an HTTP or FTP server.  See MAXFILESIZE above for the LONG version.
++   */
++  CINIT(MAXFILESIZE_LARGE, OFF_T, 117),
++
++  /* Set this option to the file name of your .netrc file you want libcurl
++     to parse (using the CURLOPT_NETRC option). If not set, libcurl will do
++     a poor attempt to find the user's home directory and check for a .netrc
++     file in there. */
++  CINIT(NETRC_FILE, OBJECTPOINT, 118),
++
++  /* Enable SSL/TLS for FTP, pick one of:
++     CURLFTPSSL_TRY     - try using SSL, proceed anyway otherwise
++     CURLFTPSSL_CONTROL - SSL for the control connection or fail
++     CURLFTPSSL_ALL     - SSL for all communication or fail
++  */
++  CINIT(FTP_SSL, LONG, 119),
++
++  /* The _LARGE version of the standard POSTFIELDSIZE option */
++  CINIT(POSTFIELDSIZE_LARGE, OFF_T, 120),
++
++  /* Enable/disable the TCP Nagle algorithm */
++  CINIT(TCP_NODELAY, LONG, 121),
++
++  /* 122 OBSOLETE, used in 7.12.3. Gone in 7.13.0 */
++
++  /* When doing 3rd party transfer, set the source user and password with
++     this */
++  CINIT(SOURCE_USERPWD, OBJECTPOINT, 123),
++
++  /* 124 OBSOLETE, used in 7.12.3. Gone in 7.13.0 */
++  /* 125 OBSOLETE, used in 7.12.3. Gone in 7.13.0 */
++  /* 126 OBSOLETE, used in 7.12.3. Gone in 7.13.0 */
++
++  /* When doing 3rd party transfer, set the source pre-quote linked list
++     of commands with this */
++  CINIT(SOURCE_PREQUOTE, OBJECTPOINT, 127),
++
++  /* When doing 3rd party transfer, set the source post-quote linked list
++     of commands with this */
++  CINIT(SOURCE_POSTQUOTE, OBJECTPOINT, 128),
++
++  /* When FTP over SSL/TLS is selected (with CURLOPT_FTP_SSL), this option
++     can be used to change libcurl's default action which is to first try
++     "AUTH SSL" and then "AUTH TLS" in this order, and proceed when a OK
++     response has been received.
++
++     Available parameters are:
++     CURLFTPAUTH_DEFAULT - let libcurl decide
++     CURLFTPAUTH_SSL     - try "AUTH SSL" first, then TLS
++     CURLFTPAUTH_TLS     - try "AUTH TLS" first, then SSL
++  */
++  CINIT(FTPSSLAUTH, LONG, 129),
++
++  CINIT(IOCTLFUNCTION, FUNCTIONPOINT, 130),
++  CINIT(IOCTLDATA, OBJECTPOINT, 131),
++
++  /* To make a 3rd party transfer, set the source URL with this */
++  CINIT(SOURCE_URL, OBJECTPOINT, 132),
++
++  /* When doing 3rd party transfer, set the source quote linked list of
++     commands with this */
++  CINIT(SOURCE_QUOTE, OBJECTPOINT, 133),
++
++  /* zero terminated string for pass on to the FTP server when asked for
++     "account" info */
++  CINIT(FTP_ACCOUNT, OBJECTPOINT, 134),
++
++  /* feed cookies into cookie engine */
++  CINIT(COOKIELIST, OBJECTPOINT, 135),
++
++  /* ignore Content-Length */
++  CINIT(IGNORE_CONTENT_LENGTH, LONG, 136),
++
++  /* Set to non-zero to skip the IP address received in a 227 PASV FTP server
++     response. Typically used for FTP-SSL purposes but is not restricted to
++     that. libcurl will then instead use the same IP address it used for the
++     control connection. */
++  CINIT(FTP_SKIP_PASV_IP, LONG, 137),
++
++  /* Select "file method" to use when doing FTP, see the curl_ftpmethod
++     above. */
++  CINIT(FTP_FILEMETHOD, LONG, 138),
++
++  /* Local port number to bind the socket to */
++  CINIT(LOCALPORT, LONG, 139),
++
++  /* Number of ports to try, including the first one set with LOCALPORT.
++     Thus, setting it to 1 will make no additional attempts but the first.
++  */
++  CINIT(LOCALPORTRANGE, LONG, 140),
++
++  /* no transfer, set up connection and let application use the socket by
++     extracting it with CURLINFO_LASTSOCKET */
++  CINIT(CONNECT_ONLY, LONG, 141),
++
++  /* Function that will be called to convert from the
++     network encoding (instead of using the iconv calls in libcurl) */
++  CINIT(CONV_FROM_NETWORK_FUNCTION, FUNCTIONPOINT, 142),
++
++  /* Function that will be called to convert to the
++     network encoding (instead of using the iconv calls in libcurl) */
++  CINIT(CONV_TO_NETWORK_FUNCTION, FUNCTIONPOINT, 143),
++
++  /* Function that will be called to convert from UTF8
++     (instead of using the iconv calls in libcurl)
++     Note that this is used only for SSL certificate processing */
++  CINIT(CONV_FROM_UTF8_FUNCTION, FUNCTIONPOINT, 144),
++
++  /* if the connection proceeds too quickly then need to slow it down */
++  /* limit-rate: maximum number of bytes per second to send or receive */
++  CINIT(MAX_SEND_SPEED_LARGE, OFF_T, 145),
++  CINIT(MAX_RECV_SPEED_LARGE, OFF_T, 146),
++
++  /* Pointer to command string to send if USER/PASS fails. */
++  CINIT(FTP_ALTERNATIVE_TO_USER, OBJECTPOINT, 147),
++
++  CURLOPT_LASTENTRY /* the last unused */
++} CURLoption;
++
++  /* Below here follows defines for the CURLOPT_IPRESOLVE option. If a host
++     name resolves addresses using more than one IP protocol version, this
++     option might be handy to force libcurl to use a specific IP version. */
++#define CURL_IPRESOLVE_WHATEVER 0 /* default, resolves addresses to all IP
++                                     versions that your system allows */
++#define CURL_IPRESOLVE_V4       1 /* resolve to ipv4 addresses */
++#define CURL_IPRESOLVE_V6       2 /* resolve to ipv6 addresses */
++
++  /* three convenient "aliases" that follow the name scheme better */
++#define CURLOPT_WRITEDATA CURLOPT_FILE
++#define CURLOPT_READDATA  CURLOPT_INFILE
++#define CURLOPT_HEADERDATA CURLOPT_WRITEHEADER
++
++#ifndef CURL_NO_OLDIES /* define this to test if your app builds with all
++                          the obsolete stuff removed! */
++#define CURLOPT_HTTPREQUEST    -1
++#define CURLOPT_FTPASCII       CURLOPT_TRANSFERTEXT
++#define CURLOPT_MUTE           -2
++#define CURLOPT_PASSWDFUNCTION -3
++#define CURLOPT_PASSWDDATA     -4
++#define CURLOPT_CLOSEFUNCTION  -5
++
++#define CURLOPT_SOURCE_HOST    -6
++#define CURLOPT_SOURCE_PATH    -7
++#define CURLOPT_SOURCE_PORT    -8
++#define CURLOPT_PASV_HOST      -9
++
++#else
++/* This is set if CURL_NO_OLDIES is defined at compile-time */
++#undef CURLOPT_DNS_USE_GLOBAL_CACHE /* soon obsolete */
++#endif
++
++
++  /* These enums are for use with the CURLOPT_HTTP_VERSION option. */
++enum {
++  CURL_HTTP_VERSION_NONE, /* setting this means we don't care, and that we'd
++                             like the library to choose the best possible
++                             for us! */
++  CURL_HTTP_VERSION_1_0,  /* please use HTTP 1.0 in the request */
++  CURL_HTTP_VERSION_1_1,  /* please use HTTP 1.1 in the request */
++
++  CURL_HTTP_VERSION_LAST /* *ILLEGAL* http version */
++};
++
++  /* These enums are for use with the CURLOPT_NETRC option. */
++enum CURL_NETRC_OPTION {
++  CURL_NETRC_IGNORED,     /* The .netrc will never be read.
++                           * This is the default. */
++  CURL_NETRC_OPTIONAL,    /* A user:password in the URL will be preferred
++                           * to one in the .netrc. */
++  CURL_NETRC_REQUIRED,    /* A user:password in the URL will be ignored.
++                           * Unless one is set programmatically, the .netrc
++                           * will be queried. */
++  CURL_NETRC_LAST
++};
++
++enum {
++  CURL_SSLVERSION_DEFAULT,
++  CURL_SSLVERSION_TLSv1,
++  CURL_SSLVERSION_SSLv2,
++  CURL_SSLVERSION_SSLv3,
++
++  CURL_SSLVERSION_LAST /* never use, keep last */
++};
++
++
++typedef enum {
++  CURL_TIMECOND_NONE,
++
++  CURL_TIMECOND_IFMODSINCE,
++  CURL_TIMECOND_IFUNMODSINCE,
++  CURL_TIMECOND_LASTMOD,
++
++  CURL_TIMECOND_LAST
++} curl_TimeCond;
++
++#ifdef __BEOS__
++#include <support/SupportDefs.h>
++#endif
++
++
++/* curl_strequal() and curl_strnequal() are subject for removal in a future
++   libcurl, see lib/README.curlx for details */
++CURL_EXTERN int (curl_strequal)(const char *s1, const char *s2);
++CURL_EXTERN int (curl_strnequal)(const char *s1, const char *s2, size_t n);
++
++/* name is uppercase CURLFORM_<name> */
++#ifdef CFINIT
++#undef CFINIT
++#endif
++
++#ifdef CURL_ISOCPP
++#define CFINIT(name) CURLFORM_ ## name
++#else
++/* The macro "##" is ISO C, we assume pre-ISO C doesn't support it. */
++#define CFINIT(name) CURLFORM_/**/name
++#endif
++
++typedef enum {
++  CFINIT(NOTHING),        /********* the first one is unused ************/
++
++  /*  */
++  CFINIT(COPYNAME),
++  CFINIT(PTRNAME),
++  CFINIT(NAMELENGTH),
++  CFINIT(COPYCONTENTS),
++  CFINIT(PTRCONTENTS),
++  CFINIT(CONTENTSLENGTH),
++  CFINIT(FILECONTENT),
++  CFINIT(ARRAY),
++  CFINIT(OBSOLETE),
++  CFINIT(FILE),
++
++  CFINIT(BUFFER),
++  CFINIT(BUFFERPTR),
++  CFINIT(BUFFERLENGTH),
++
++  CFINIT(CONTENTTYPE),
++  CFINIT(CONTENTHEADER),
++  CFINIT(FILENAME),
++  CFINIT(END),
++  CFINIT(OBSOLETE2),
++
++  CURLFORM_LASTENTRY /* the last unusued */
++} CURLformoption;
++
++#undef CFINIT /* done */
++
++/* structure to be used as parameter for CURLFORM_ARRAY */
++struct curl_forms {
++  CURLformoption option;
++  const char     *value;
++};
++
++/* use this for multipart formpost building */
++/* Returns code for curl_formadd()
++ *
++ * Returns:
++ * CURL_FORMADD_OK             on success
++ * CURL_FORMADD_MEMORY         if the FormInfo allocation fails
++ * CURL_FORMADD_OPTION_TWICE   if one option is given twice for one Form
++ * CURL_FORMADD_NULL           if a null pointer was given for a char
++ * CURL_FORMADD_MEMORY         if the allocation of a FormInfo struct failed
++ * CURL_FORMADD_UNKNOWN_OPTION if an unknown option was used
++ * CURL_FORMADD_INCOMPLETE     if the some FormInfo is not complete (or error)
++ * CURL_FORMADD_MEMORY         if a HttpPost struct cannot be allocated
++ * CURL_FORMADD_MEMORY         if some allocation for string copying failed.
++ * CURL_FORMADD_ILLEGAL_ARRAY  if an illegal option is used in an array
++ *
++ ***************************************************************************/
++typedef enum {
++  CURL_FORMADD_OK, /* first, no error */
++
++  CURL_FORMADD_MEMORY,
++  CURL_FORMADD_OPTION_TWICE,
++  CURL_FORMADD_NULL,
++  CURL_FORMADD_UNKNOWN_OPTION,
++  CURL_FORMADD_INCOMPLETE,
++  CURL_FORMADD_ILLEGAL_ARRAY,
++  CURL_FORMADD_DISABLED, /* libcurl was built with this disabled */
++
++  CURL_FORMADD_LAST /* last */
++} CURLFORMcode;
++
++/*
++ * NAME curl_formadd()
++ *
++ * DESCRIPTION
++ *
++ * Pretty advanved function for building multi-part formposts. Each invoke
++ * adds one part that together construct a full post. Then use
++ * CURLOPT_HTTPPOST to send it off to libcurl.
++ */
++CURL_EXTERN CURLFORMcode curl_formadd(struct curl_httppost **httppost,
++                                      struct curl_httppost **last_post,
++                                      ...);
++
++/*
++ * callback function for curl_formget()
++ * The void *arg pointer will be the one passed as second argument to curl_formget().
++ * The character buffer passed to it must not be freed.
++ * Should return the buffer length passed to it as the argument "len" on success.
++ */
++typedef size_t (*curl_formget_callback)(void *arg, const char *buf, size_t len);
++
++/*
++ * NAME curl_formget()
++ *
++ * DESCRIPTION
++ *
++ * Serialize a curl_httppost struct built with curl_formadd().
++ * Accepts a void pointer as second argument which will be passed to
++ * the curl_formget_callback function.
++ * Returns 0 on success.
++ */
++CURL_EXTERN int curl_formget(struct curl_httppost *form, void *arg,
++                             curl_formget_callback append);
++/*
++ * NAME curl_formfree()
++ *
++ * DESCRIPTION
++ *
++ * Free a multipart formpost previously built with curl_formadd().
++ */
++CURL_EXTERN void curl_formfree(struct curl_httppost *form);
++
++/*
++ * NAME curl_getenv()
++ *
++ * DESCRIPTION
++ *
++ * Returns a malloc()'ed string that MUST be curl_free()ed after usage is
++ * complete. DEPRECATED - see lib/README.curlx
++ */
++CURL_EXTERN char *curl_getenv(const char *variable);
++
++/*
++ * NAME curl_version()
++ *
++ * DESCRIPTION
++ *
++ * Returns a static ascii string of the libcurl version.
++ */
++CURL_EXTERN char *curl_version(void);
++
++/*
++ * NAME curl_easy_escape()
++ *
++ * DESCRIPTION
++ *
++ * Escapes URL strings (converts all letters consider illegal in URLs to their
++ * %XX versions). This function returns a new allocated string or NULL if an
++ * error occurred.
++ */
++CURL_EXTERN char *curl_easy_escape(CURL *handle,
++                                   const char *string,
++                                   int length);
++
++/* the previous version: */
++CURL_EXTERN char *curl_escape(const char *string,
++                              int length);
++
++
++/*
++ * NAME curl_easy_unescape()
++ *
++ * DESCRIPTION
++ *
++ * Unescapes URL encoding in strings (converts all %XX codes to their 8bit
++ * versions). This function returns a new allocated string or NULL if an error
++ * occurred.
++ * Conversion Note: On non-ASCII platforms the ASCII %XX codes are
++ * converted into the host encoding.
++ */
++CURL_EXTERN char *curl_easy_unescape(CURL *handle,
++                                     const char *string,
++                                     int length,
++                                     int *outlength);
++
++/* the previous version */
++CURL_EXTERN char *curl_unescape(const char *string,
++                                int length);
++
++/*
++ * NAME curl_free()
++ *
++ * DESCRIPTION
++ *
++ * Provided for de-allocation in the same translation unit that did the
++ * allocation. Added in libcurl 7.10
++ */
++CURL_EXTERN void curl_free(void *p);
++
++/*
++ * NAME curl_global_init()
++ *
++ * DESCRIPTION
++ *
++ * curl_global_init() should be invoked exactly once for each application that
++ * uses libcurl
++ */
++CURL_EXTERN CURLcode curl_global_init(long flags);
++
++/*
++ * NAME curl_global_init_mem()
++ *
++ * DESCRIPTION
++ *
++ * curl_global_init() or curl_global_init_mem() should be invoked exactly once
++ * for each application that uses libcurl.  This function can be used to
++ * initialize libcurl and set user defined memory management callback
++ * functions.  Users can implement memory management routines to check for
++ * memory leaks, check for mis-use of the curl library etc.  User registered
++ * callback routines with be invoked by this library instead of the system
++ * memory management routines like malloc, free etc.
++ */
++CURL_EXTERN CURLcode curl_global_init_mem(long flags,
++                                          curl_malloc_callback m,
++                                          curl_free_callback f,
++                                          curl_realloc_callback r,
++                                          curl_strdup_callback s,
++                                          curl_calloc_callback c);
++
++/*
++ * NAME curl_global_cleanup()
++ *
++ * DESCRIPTION
++ *
++ * curl_global_cleanup() should be invoked exactly once for each application
++ * that uses libcurl
++ */
++CURL_EXTERN void curl_global_cleanup(void);
++
++/* linked-list structure for the CURLOPT_QUOTE option (and other) */
++struct curl_slist {
++  char *data;
++  struct curl_slist *next;
++};
++
++/*
++ * NAME curl_slist_append()
++ *
++ * DESCRIPTION
++ *
++ * Appends a string to a linked list. If no list exists, it will be created
++ * first. Returns the new list, after appending.
++ */
++CURL_EXTERN struct curl_slist *curl_slist_append(struct curl_slist *,
++                                                 const char *);
++
++/*
++ * NAME curl_slist_free_all()
++ *
++ * DESCRIPTION
++ *
++ * free a previously built curl_slist.
++ */
++CURL_EXTERN void curl_slist_free_all(struct curl_slist *);
++
++/*
++ * NAME curl_getdate()
++ *
++ * DESCRIPTION
++ *
++ * Returns the time, in seconds since 1 Jan 1970 of the time string given in
++ * the first argument. The time argument in the second parameter is unused
++ * and should be set to NULL.
++ */
++CURL_EXTERN time_t curl_getdate(const char *p, const time_t *unused);
++
++#define CURLINFO_STRING   0x100000
++#define CURLINFO_LONG     0x200000
++#define CURLINFO_DOUBLE   0x300000
++#define CURLINFO_SLIST    0x400000
++#define CURLINFO_MASK     0x0fffff
++#define CURLINFO_TYPEMASK 0xf00000
++
++typedef enum {
++  CURLINFO_NONE, /* first, never use this */
++  CURLINFO_EFFECTIVE_URL    = CURLINFO_STRING + 1,
++  CURLINFO_RESPONSE_CODE    = CURLINFO_LONG   + 2,
++  CURLINFO_TOTAL_TIME       = CURLINFO_DOUBLE + 3,
++  CURLINFO_NAMELOOKUP_TIME  = CURLINFO_DOUBLE + 4,
++  CURLINFO_CONNECT_TIME     = CURLINFO_DOUBLE + 5,
++  CURLINFO_PRETRANSFER_TIME = CURLINFO_DOUBLE + 6,
++  CURLINFO_SIZE_UPLOAD      = CURLINFO_DOUBLE + 7,
++  CURLINFO_SIZE_DOWNLOAD    = CURLINFO_DOUBLE + 8,
++  CURLINFO_SPEED_DOWNLOAD   = CURLINFO_DOUBLE + 9,
++  CURLINFO_SPEED_UPLOAD     = CURLINFO_DOUBLE + 10,
++  CURLINFO_HEADER_SIZE      = CURLINFO_LONG   + 11,
++  CURLINFO_REQUEST_SIZE     = CURLINFO_LONG   + 12,
++  CURLINFO_SSL_VERIFYRESULT = CURLINFO_LONG   + 13,
++  CURLINFO_FILETIME         = CURLINFO_LONG   + 14,
++  CURLINFO_CONTENT_LENGTH_DOWNLOAD   = CURLINFO_DOUBLE + 15,
++  CURLINFO_CONTENT_LENGTH_UPLOAD     = CURLINFO_DOUBLE + 16,
++  CURLINFO_STARTTRANSFER_TIME = CURLINFO_DOUBLE + 17,
++  CURLINFO_CONTENT_TYPE     = CURLINFO_STRING + 18,
++  CURLINFO_REDIRECT_TIME    = CURLINFO_DOUBLE + 19,
++  CURLINFO_REDIRECT_COUNT   = CURLINFO_LONG   + 20,
++  CURLINFO_PRIVATE          = CURLINFO_STRING + 21,
++  CURLINFO_HTTP_CONNECTCODE = CURLINFO_LONG   + 22,
++  CURLINFO_HTTPAUTH_AVAIL   = CURLINFO_LONG   + 23,
++  CURLINFO_PROXYAUTH_AVAIL  = CURLINFO_LONG   + 24,
++  CURLINFO_OS_ERRNO         = CURLINFO_LONG   + 25,
++  CURLINFO_NUM_CONNECTS     = CURLINFO_LONG   + 26,
++  CURLINFO_SSL_ENGINES      = CURLINFO_SLIST  + 27,
++  CURLINFO_COOKIELIST       = CURLINFO_SLIST  + 28,
++  CURLINFO_LASTSOCKET       = CURLINFO_LONG   + 29,
++  CURLINFO_FTP_ENTRY_PATH   = CURLINFO_STRING + 30,
++  /* Fill in new entries below here! */
++
++  CURLINFO_LASTONE          = 30
++} CURLINFO;
++
++/* CURLINFO_RESPONSE_CODE is the new name for the option previously known as
++   CURLINFO_HTTP_CODE */
++#define CURLINFO_HTTP_CODE CURLINFO_RESPONSE_CODE
++
++typedef enum {
++  CURLCLOSEPOLICY_NONE, /* first, never use this */
++
++  CURLCLOSEPOLICY_OLDEST,
++  CURLCLOSEPOLICY_LEAST_RECENTLY_USED,
++  CURLCLOSEPOLICY_LEAST_TRAFFIC,
++  CURLCLOSEPOLICY_SLOWEST,
++  CURLCLOSEPOLICY_CALLBACK,
++
++  CURLCLOSEPOLICY_LAST /* last, never use this */
++} curl_closepolicy;
++
++#define CURL_GLOBAL_SSL (1<<0)
++#define CURL_GLOBAL_WIN32 (1<<1)
++#define CURL_GLOBAL_ALL (CURL_GLOBAL_SSL|CURL_GLOBAL_WIN32)
++#define CURL_GLOBAL_NOTHING 0
++#define CURL_GLOBAL_DEFAULT CURL_GLOBAL_ALL
++
++
++/*****************************************************************************
++ * Setup defines, protos etc for the sharing stuff.
++ */
++
++/* Different data locks for a single share */
++typedef enum {
++  CURL_LOCK_DATA_NONE = 0,
++  /*  CURL_LOCK_DATA_SHARE is used internaly to say that
++   *  the locking is just made to change the internal state of the share
++   *  itself.
++   */
++  CURL_LOCK_DATA_SHARE,
++  CURL_LOCK_DATA_COOKIE,
++  CURL_LOCK_DATA_DNS,
++  CURL_LOCK_DATA_SSL_SESSION,
++  CURL_LOCK_DATA_CONNECT,
++  CURL_LOCK_DATA_LAST
++} curl_lock_data;
++
++/* Different lock access types */
++typedef enum {
++  CURL_LOCK_ACCESS_NONE = 0,   /* unspecified action */
++  CURL_LOCK_ACCESS_SHARED = 1, /* for read perhaps */
++  CURL_LOCK_ACCESS_SINGLE = 2, /* for write perhaps */
++  CURL_LOCK_ACCESS_LAST        /* never use */
++} curl_lock_access;
++
++typedef void (*curl_lock_function)(CURL *handle,
++                                   curl_lock_data data,
++                                   curl_lock_access locktype,
++                                   void *userptr);
++typedef void (*curl_unlock_function)(CURL *handle,
++                                     curl_lock_data data,
++                                     void *userptr);
++
++typedef void CURLSH;
++
++typedef enum {
++  CURLSHE_OK,  /* all is fine */
++  CURLSHE_BAD_OPTION, /* 1 */
++  CURLSHE_IN_USE,     /* 2 */
++  CURLSHE_INVALID,    /* 3 */
++  CURLSHE_NOMEM,      /* out of memory */
++  CURLSHE_LAST /* never use */
++} CURLSHcode;
++
++typedef enum {
++  CURLSHOPT_NONE,  /* don't use */
++  CURLSHOPT_SHARE,   /* specify a data type to share */
++  CURLSHOPT_UNSHARE, /* specify shich data type to stop sharing */
++  CURLSHOPT_LOCKFUNC,   /* pass in a 'curl_lock_function' pointer */
++  CURLSHOPT_UNLOCKFUNC, /* pass in a 'curl_unlock_function' pointer */
++  CURLSHOPT_USERDATA,   /* pass in a user data pointer used in the lock/unlock
++                           callback functions */
++  CURLSHOPT_LAST  /* never use */
++} CURLSHoption;
++
++CURL_EXTERN CURLSH *curl_share_init(void);
++CURL_EXTERN CURLSHcode curl_share_setopt(CURLSH *, CURLSHoption option, ...);
++CURL_EXTERN CURLSHcode curl_share_cleanup(CURLSH *);
++
++/****************************************************************************
++ * Structures for querying information about the curl library at runtime.
++ */
++
++typedef enum {
++  CURLVERSION_FIRST,
++  CURLVERSION_SECOND,
++  CURLVERSION_THIRD,
++  CURLVERSION_LAST /* never actually use this */
++} CURLversion;
++
++/* The 'CURLVERSION_NOW' is the symbolic name meant to be used by
++   basicly all programs ever, that want to get version information. It is
++   meant to be a built-in version number for what kind of struct the caller
++   expects. If the struct ever changes, we redefine the NOW to another enum
++   from above. */
++#define CURLVERSION_NOW CURLVERSION_THIRD
++
++typedef struct {
++  CURLversion age;          /* age of the returned struct */
++  const char *version;      /* LIBCURL_VERSION */
++  unsigned int version_num; /* LIBCURL_VERSION_NUM */
++  const char *host;         /* OS/host/cpu/machine when configured */
++  int features;             /* bitmask, see defines below */
++  const char *ssl_version;  /* human readable string */
++  long ssl_version_num;     /* not used anymore, always 0 */
++  const char *libz_version; /* human readable string */
++  /* protocols is terminated by an entry with a NULL protoname */
++  const char * const *protocols;
++
++  /* The fields below this were added in CURLVERSION_SECOND */
++  const char *ares;
++  int ares_num;
++
++  /* This field was added in CURLVERSION_THIRD */
++  const char *libidn;
++
++  /* Same as '_libiconv_version' if built with HAVE_ICONV */
++  int iconv_ver_num;
++} curl_version_info_data;
++
++#define CURL_VERSION_IPV6      (1<<0)  /* IPv6-enabled */
++#define CURL_VERSION_KERBEROS4 (1<<1)  /* kerberos auth is supported */
++#define CURL_VERSION_SSL       (1<<2)  /* SSL options are present */
++#define CURL_VERSION_LIBZ      (1<<3)  /* libz features are present */
++#define CURL_VERSION_NTLM      (1<<4)  /* NTLM auth is supported */
++#define CURL_VERSION_GSSNEGOTIATE (1<<5) /* Negotiate auth support */
++#define CURL_VERSION_DEBUG     (1<<6)  /* built with debug capabilities */
++#define CURL_VERSION_ASYNCHDNS (1<<7)  /* asynchronous dns resolves */
++#define CURL_VERSION_SPNEGO    (1<<8)  /* SPNEGO auth */
++#define CURL_VERSION_LARGEFILE (1<<9)  /* supports files bigger than 2GB */
++#define CURL_VERSION_IDN       (1<<10) /* International Domain Names support */
++#define CURL_VERSION_SSPI      (1<<11) /* SSPI is supported */
++#define CURL_VERSION_CONV      (1<<12) /* character conversions are
++                                          supported */
++
++/*
++ * NAME curl_version_info()
++ *
++ * DESCRIPTION
++ *
++ * This function returns a pointer to a static copy of the version info
++ * struct. See above.
++ */
++CURL_EXTERN curl_version_info_data *curl_version_info(CURLversion);
++
++/*
++ * NAME curl_easy_strerror()
++ *
++ * DESCRIPTION
++ *
++ * The curl_easy_strerror function may be used to turn a CURLcode value
++ * into the equivalent human readable error string.  This is useful
++ * for printing meaningful error messages.
++ */
++CURL_EXTERN const char *curl_easy_strerror(CURLcode);
++
++/*
++ * NAME curl_share_strerror()
++ *
++ * DESCRIPTION
++ *
++ * The curl_share_strerror function may be used to turn a CURLSHcode value
++ * into the equivalent human readable error string.  This is useful
++ * for printing meaningful error messages.
++ */
++CURL_EXTERN const char *curl_share_strerror(CURLSHcode);
++
++#ifdef  __cplusplus
++}
++#endif
++
++/* unfortunately, the easy.h and multi.h include files need options and info
++  stuff before they can be included! */
++#include "easy.h" /* nothing in curl is fun without the easy stuff */
++#include "multi.h"
++
++#endif /* __CURL_CURL_H */
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/libcurl/curl/curlver.h tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/libcurl/curl/curlver.h
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/libcurl/curl/curlver.h	1970-01-01 01:00:00.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/libcurl/curl/curlver.h	2008-12-16 04:50:29.000000000 +0100
+@@ -0,0 +1,56 @@
++#ifndef __CURL_CURLVER_H
++#define __CURL_CURLVER_H
++/***************************************************************************
++ *                                  _   _ ____  _
++ *  Project                     ___| | | |  _ \| |
++ *                             / __| | | | |_) | |
++ *                            | (__| |_| |  _ <| |___
++ *                             \___|\___/|_| \_\_____|
++ *
++ * Copyright (C) 1998 - 2006, Daniel Stenberg, <daniel@haxx.se>, et al.
++ *
++ * This software is licensed as described in the file COPYING, which
++ * you should have received as part of this distribution. The terms
++ * are also available at http://curl.haxx.se/docs/copyright.html.
++ *
++ * You may opt to use, copy, modify, merge, publish, distribute and/or sell
++ * copies of the Software, and permit persons to whom the Software is
++ * furnished to do so, under the terms of the COPYING file.
++ *
++ * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY
++ * KIND, either express or implied.
++ *
++ * $Id: curlver.h,v 1.21 2006-06-12 07:24:14 bagder Exp $
++ ***************************************************************************/
++
++/* This header file contains nothing but libcurl version info, generated by
++   a script at release-time. This was made its own header file in 7.11.2 */
++
++/* This is the version number of the libcurl package from which this header
++   file origins: */
++#define LIBCURL_VERSION "7.15.5"
++
++/* The numeric version number is also available "in parts" by using these
++   defines: */
++#define LIBCURL_VERSION_MAJOR 7
++#define LIBCURL_VERSION_MINOR 15
++#define LIBCURL_VERSION_PATCH 5
++
++/* This is the numeric version of the libcurl version number, meant for easier
++   parsing and comparions by programs. The LIBCURL_VERSION_NUM define will
++   always follow this syntax:
++
++         0xXXYYZZ
++
++   Where XX, YY and ZZ are the main version, release and patch numbers in
++   hexadecimal (using 8 bits each). All three numbers are always represented
++   using two digits.  1.2 would appear as "0x010200" while version 9.11.7
++   appears as "0x090b07".
++
++   This 6-digit (24 bits) hexadecimal number does not show pre-release number,
++   and it is always a greater number in a more recent release. It makes
++   comparisons with greater than and less than work.
++*/
++#define LIBCURL_VERSION_NUM 0x070f05
++
++#endif /* __CURL_CURLVER_H */
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/libcurl/curl/easy.h tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/libcurl/curl/easy.h
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/libcurl/curl/easy.h	1970-01-01 01:00:00.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/libcurl/curl/easy.h	2008-12-16 04:50:29.000000000 +0100
+@@ -0,0 +1,81 @@
++#ifndef __CURL_EASY_H
++#define __CURL_EASY_H
++/***************************************************************************
++ *                                  _   _ ____  _
++ *  Project                     ___| | | |  _ \| |
++ *                             / __| | | | |_) | |
++ *                            | (__| |_| |  _ <| |___
++ *                             \___|\___/|_| \_\_____|
++ *
++ * Copyright (C) 1998 - 2004, Daniel Stenberg, <daniel@haxx.se>, et al.
++ *
++ * This software is licensed as described in the file COPYING, which
++ * you should have received as part of this distribution. The terms
++ * are also available at http://curl.haxx.se/docs/copyright.html.
++ *
++ * You may opt to use, copy, modify, merge, publish, distribute and/or sell
++ * copies of the Software, and permit persons to whom the Software is
++ * furnished to do so, under the terms of the COPYING file.
++ *
++ * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY
++ * KIND, either express or implied.
++ *
++ * $Id: easy.h,v 1.13 2004/11/09 14:02:58 giva Exp $
++ ***************************************************************************/
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
++CURL_EXTERN CURL *curl_easy_init(void);
++CURL_EXTERN CURLcode curl_easy_setopt(CURL *curl, CURLoption option, ...);
++CURL_EXTERN CURLcode curl_easy_perform(CURL *curl);
++CURL_EXTERN void curl_easy_cleanup(CURL *curl);
++
++/*
++ * NAME curl_easy_getinfo()
++ *
++ * DESCRIPTION
++ *
++ * Request internal information from the curl session with this function.  The
++ * third argument MUST be a pointer to a long, a pointer to a char * or a
++ * pointer to a double (as the documentation describes elsewhere).  The data
++ * pointed to will be filled in accordingly and can be relied upon only if the
++ * function returns CURLE_OK.  This function is intended to get used *AFTER* a
++ * performed transfer, all results from this function are undefined until the
++ * transfer is completed.
++ */
++CURL_EXTERN CURLcode curl_easy_getinfo(CURL *curl, CURLINFO info, ...);
++
++
++/*
++ * NAME curl_easy_duphandle()
++ *
++ * DESCRIPTION
++ *
++ * Creates a new curl session handle with the same options set for the handle
++ * passed in. Duplicating a handle could only be a matter of cloning data and
++ * options, internal state info and things like persistant connections cannot
++ * be transfered. It is useful in multithreaded applications when you can run
++ * curl_easy_duphandle() for each new thread to avoid a series of identical
++ * curl_easy_setopt() invokes in every thread.
++ */
++CURL_EXTERN CURL* curl_easy_duphandle(CURL *curl);
++
++/*
++ * NAME curl_easy_reset()
++ *
++ * DESCRIPTION
++ *
++ * Re-initializes a CURL handle to the default values. This puts back the
++ * handle to the same state as it was in when it was just created.
++ *
++ * It does keep: live connections, the Session ID cache, the DNS cache and the
++ * cookies.
++ */
++CURL_EXTERN void curl_easy_reset(CURL *curl);
++
++#ifdef  __cplusplus
++}
++#endif
++
++#endif
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/libcurl/curl/mprintf.h tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/libcurl/curl/mprintf.h
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/libcurl/curl/mprintf.h	1970-01-01 01:00:00.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/libcurl/curl/mprintf.h	2008-12-16 04:50:29.000000000 +0100
+@@ -0,0 +1,62 @@
++#ifndef __CURL_MPRINTF_H
++#define __CURL_MPRINTF_H
++/***************************************************************************
++ *                                  _   _ ____  _
++ *  Project                     ___| | | |  _ \| |
++ *                             / __| | | | |_) | |
++ *                            | (__| |_| |  _ <| |___
++ *                             \___|\___/|_| \_\_____|
++ *
++ * Copyright (C) 1998 - 2006, Daniel Stenberg, <daniel@haxx.se>, et al.
++ *
++ * This software is licensed as described in the file COPYING, which
++ * you should have received as part of this distribution. The terms
++ * are also available at http://curl.haxx.se/docs/copyright.html.
++ *
++ * You may opt to use, copy, modify, merge, publish, distribute and/or sell
++ * copies of the Software, and permit persons to whom the Software is
++ * furnished to do so, under the terms of the COPYING file.
++ *
++ * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY
++ * KIND, either express or implied.
++ *
++ * $Id: mprintf.h,v 1.13 2006-03-28 10:08:54 bagder Exp $
++ ***************************************************************************/
++
++#include <stdarg.h>
++#include <stdio.h> /* needed for FILE */
++
++#include "curl.h"
++
++CURL_EXTERN int curl_mprintf(const char *format, ...);
++CURL_EXTERN int curl_mfprintf(FILE *fd, const char *format, ...);
++CURL_EXTERN int curl_msprintf(char *buffer, const char *format, ...);
++CURL_EXTERN int curl_msnprintf(char *buffer, size_t maxlength, const char *format, ...);
++CURL_EXTERN int curl_mvprintf(const char *format, va_list args);
++CURL_EXTERN int curl_mvfprintf(FILE *fd, const char *format, va_list args);
++CURL_EXTERN int curl_mvsprintf(char *buffer, const char *format, va_list args);
++CURL_EXTERN int curl_mvsnprintf(char *buffer, size_t maxlength, const char *format, va_list args);
++CURL_EXTERN char *curl_maprintf(const char *format, ...);
++CURL_EXTERN char *curl_mvaprintf(const char *format, va_list args);
++
++#ifdef _MPRINTF_REPLACE
++# define printf curl_mprintf
++# define fprintf curl_mfprintf
++#ifdef CURLDEBUG
++/* When built with CURLDEBUG we define away the sprintf() functions since we
++   don't want internal code to be using them */
++# define sprintf sprintf_was_used
++# define vsprintf vsprintf_was_used
++#else
++# define sprintf curl_msprintf
++# define vsprintf curl_mvsprintf
++#endif
++# define snprintf curl_msnprintf
++# define vprintf curl_mvprintf
++# define vfprintf curl_mvfprintf
++# define vsnprintf curl_mvsnprintf
++# define aprintf curl_maprintf
++# define vaprintf curl_mvaprintf
++#endif
++
++#endif /* __CURL_MPRINTF_H */
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/libcurl/curl/multi.h tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/libcurl/curl/multi.h
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/libcurl/curl/multi.h	1970-01-01 01:00:00.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/libcurl/curl/multi.h	2008-12-16 04:50:29.000000000 +0100
+@@ -0,0 +1,344 @@
++#ifndef __CURL_MULTI_H
++#define __CURL_MULTI_H
++/***************************************************************************
++ *                                  _   _ ____  _
++ *  Project                     ___| | | |  _ \| |
++ *                             / __| | | | |_) | |
++ *                            | (__| |_| |  _ <| |___
++ *                             \___|\___/|_| \_\_____|
++ *
++ * Copyright (C) 1998 - 2006, Daniel Stenberg, <daniel@haxx.se>, et al.
++ *
++ * This software is licensed as described in the file COPYING, which
++ * you should have received as part of this distribution. The terms
++ * are also available at http://curl.haxx.se/docs/copyright.html.
++ *
++ * You may opt to use, copy, modify, merge, publish, distribute and/or sell
++ * copies of the Software, and permit persons to whom the Software is
++ * furnished to do so, under the terms of the COPYING file.
++ *
++ * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY
++ * KIND, either express or implied.
++ *
++ * $Id: multi.h,v 1.38 2006-08-04 18:53:48 danf Exp $
++ ***************************************************************************/
++/*
++  This is an "external" header file. Don't give away any internals here!
++
++  GOALS
++
++  o Enable a "pull" interface. The application that uses libcurl decides where
++    and when to ask libcurl to get/send data.
++
++  o Enable multiple simultaneous transfers in the same thread without making it
++    complicated for the application.
++
++  o Enable the application to select() on its own file descriptors and curl's
++    file descriptors simultaneous easily.
++
++*/
++#if defined(_WIN32) && !defined(WIN32)
++/* Chris Lewis mentioned that he doesn't get WIN32 defined, only _WIN32 so we
++   make this adjustment to catch this. */
++#define WIN32 1
++#endif
++
++#if defined(WIN32) && !defined(_WIN32_WCE) && !defined(__GNUC__) && \
++  !defined(__CYGWIN__) || defined(__MINGW32__)
++#if !(defined(_WINSOCKAPI_) || defined(_WINSOCK_H))
++/* The check above prevents the winsock2 inclusion if winsock.h already was
++   included, since they can't co-exist without problems */
++#include <winsock2.h>
++#endif
++#else
++
++/* HP-UX systems version 9, 10 and 11 lack sys/select.h and so does oldish
++   libc5-based Linux systems. Only include it on system that are known to
++   require it! */
++#if defined(_AIX) || defined(NETWARE) || defined(__NetBSD__) || defined(_MINIX)
++#include <sys/select.h>
++#endif
++
++#ifndef _WIN32_WCE
++#include <sys/socket.h>
++#endif
++#include <sys/time.h>
++#include <sys/types.h>
++#endif
++
++/*
++ * This header file should not really need to include "curl.h" since curl.h
++ * itself includes this file and we expect user applications to do #include
++ * <curl/curl.h> without the need for especially including multi.h.
++ *
++ * For some reason we added this include here at one point, and rather than to
++ * break existing (wrongly written) libcurl applications, we leave it as-is
++ * but with this warning attached.
++ */
++#include "curl.h"
++
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
++typedef void CURLM;
++
++#ifndef curl_socket_typedef
++/* Public socket typedef */
++#ifdef WIN32
++typedef SOCKET curl_socket_t;
++#define CURL_SOCKET_BAD INVALID_SOCKET
++#else
++typedef int curl_socket_t;
++#define CURL_SOCKET_BAD -1
++#endif
++#define curl_socket_typedef
++#endif /* curl_socket_typedef */
++
++typedef enum {
++  CURLM_CALL_MULTI_PERFORM = -1, /* please call curl_multi_perform() or
++                                    curl_multi_socket*() soon */
++  CURLM_OK,
++  CURLM_BAD_HANDLE,      /* the passed-in handle is not a valid CURLM handle */
++  CURLM_BAD_EASY_HANDLE, /* an easy handle was not good/valid */
++  CURLM_OUT_OF_MEMORY,   /* if you ever get this, you're in deep sh*t */
++  CURLM_INTERNAL_ERROR,  /* this is a libcurl bug */
++  CURLM_BAD_SOCKET,      /* the passed in socket argument did not match */
++  CURLM_UNKNOWN_OPTION,  /* curl_multi_setopt() with unsupported option */
++  CURLM_LAST
++} CURLMcode;
++
++/* just to make code nicer when using curl_multi_socket() you can now check
++   for CURLM_CALL_MULTI_SOCKET too in the same style it works for
++   curl_multi_perform() and CURLM_CALL_MULTI_PERFORM */
++#define CURLM_CALL_MULTI_SOCKET CURLM_CALL_MULTI_PERFORM
++
++typedef enum {
++  CURLMSG_NONE, /* first, not used */
++  CURLMSG_DONE, /* This easy handle has completed. 'result' contains
++                   the CURLcode of the transfer */
++  CURLMSG_LAST /* last, not used */
++} CURLMSG;
++
++struct CURLMsg {
++  CURLMSG msg;       /* what this message means */
++  CURL *easy_handle; /* the handle it concerns */
++  union {
++    void *whatever;    /* message-specific data */
++    CURLcode result;   /* return code for transfer */
++  } data;
++};
++typedef struct CURLMsg CURLMsg;
++
++/*
++ * Name:    curl_multi_init()
++ *
++ * Desc:    inititalize multi-style curl usage
++ *
++ * Returns: a new CURLM handle to use in all 'curl_multi' functions.
++ */
++CURL_EXTERN CURLM *curl_multi_init(void);
++
++/*
++ * Name:    curl_multi_add_handle()
++ *
++ * Desc:    add a standard curl handle to the multi stack
++ *
++ * Returns: CURLMcode type, general multi error code.
++ */
++CURL_EXTERN CURLMcode curl_multi_add_handle(CURLM *multi_handle,
++                                            CURL *curl_handle);
++
++ /*
++  * Name:    curl_multi_remove_handle()
++  *
++  * Desc:    removes a curl handle from the multi stack again
++  *
++  * Returns: CURLMcode type, general multi error code.
++  */
++CURL_EXTERN CURLMcode curl_multi_remove_handle(CURLM *multi_handle,
++                                               CURL *curl_handle);
++
++ /*
++  * Name:    curl_multi_fdset()
++  *
++  * Desc:    Ask curl for its fd_set sets. The app can use these to select() or
++  *          poll() on. We want curl_multi_perform() called as soon as one of
++  *          them are ready.
++  *
++  * Returns: CURLMcode type, general multi error code.
++  */
++CURL_EXTERN CURLMcode curl_multi_fdset(CURLM *multi_handle,
++                                       fd_set *read_fd_set,
++                                       fd_set *write_fd_set,
++                                       fd_set *exc_fd_set,
++                                       int *max_fd);
++
++ /*
++  * Name:    curl_multi_perform()
++  *
++  * Desc:    When the app thinks there's data available for curl it calls this
++  *          function to read/write whatever there is right now. This returns
++  *          as soon as the reads and writes are done. This function does not
++  *          require that there actually is data available for reading or that
++  *          data can be written, it can be called just in case. It returns
++  *          the number of handles that still transfer data in the second
++  *          argument's integer-pointer.
++  *
++  * Returns: CURLMcode type, general multi error code. *NOTE* that this only
++  *          returns errors etc regarding the whole multi stack. There might
++  *          still have occurred problems on invidual transfers even when this
++  *          returns OK.
++  */
++CURL_EXTERN CURLMcode curl_multi_perform(CURLM *multi_handle,
++                                         int *running_handles);
++
++ /*
++  * Name:    curl_multi_cleanup()
++  *
++  * Desc:    Cleans up and removes a whole multi stack. It does not free or
++  *          touch any individual easy handles in any way. We need to define
++  *          in what state those handles will be if this function is called
++  *          in the middle of a transfer.
++  *
++  * Returns: CURLMcode type, general multi error code.
++  */
++CURL_EXTERN CURLMcode curl_multi_cleanup(CURLM *multi_handle);
++
++/*
++ * Name:    curl_multi_info_read()
++ *
++ * Desc:    Ask the multi handle if there's any messages/informationals from
++ *          the individual transfers. Messages include informationals such as
++ *          error code from the transfer or just the fact that a transfer is
++ *          completed. More details on these should be written down as well.
++ *
++ *          Repeated calls to this function will return a new struct each
++ *          time, until a special "end of msgs" struct is returned as a signal
++ *          that there is no more to get at this point.
++ *
++ *          The data the returned pointer points to will not survive calling
++ *          curl_multi_cleanup().
++ *
++ *          The 'CURLMsg' struct is meant to be very simple and only contain
++ *          very basic informations. If more involved information is wanted,
++ *          we will provide the particular "transfer handle" in that struct
++ *          and that should/could/would be used in subsequent
++ *          curl_easy_getinfo() calls (or similar). The point being that we
++ *          must never expose complex structs to applications, as then we'll
++ *          undoubtably get backwards compatibility problems in the future.
++ *
++ * Returns: A pointer to a filled-in struct, or NULL if it failed or ran out
++ *          of structs. It also writes the number of messages left in the
++ *          queue (after this read) in the integer the second argument points
++ *          to.
++ */
++CURL_EXTERN CURLMsg *curl_multi_info_read(CURLM *multi_handle,
++                                          int *msgs_in_queue);
++
++/*
++ * Name:    curl_multi_strerror()
++ *
++ * Desc:    The curl_multi_strerror function may be used to turn a CURLMcode
++ *          value into the equivalent human readable error string.  This is
++ *          useful for printing meaningful error messages.
++ *
++ * Returns: A pointer to a zero-terminated error message.
++ */
++CURL_EXTERN const char *curl_multi_strerror(CURLMcode);
++
++/*
++ * Name:    curl_multi_socket() and
++ *          curl_multi_socket_all()
++ *
++ * Desc:    An alternative version of curl_multi_perform() that allows the
++ *          application to pass in one of the file descriptors that have been
++ *          detected to have "action" on them and let libcurl perform.
++ *          See man page for details.
++ */
++#define CURL_POLL_NONE   0
++#define CURL_POLL_IN     1
++#define CURL_POLL_OUT    2
++#define CURL_POLL_INOUT  3
++#define CURL_POLL_REMOVE 4
++
++#define CURL_SOCKET_TIMEOUT CURL_SOCKET_BAD
++
++typedef int (*curl_socket_callback)(CURL *easy,      /* easy handle */
++                                    curl_socket_t s, /* socket */
++                                    int what,        /* see above */
++                                    void *userp,     /* private callback
++                                                        pointer */
++                                    void *socketp);  /* private socket
++                                                        pointer */
++
++CURL_EXTERN CURLMcode curl_multi_socket(CURLM *multi_handle, curl_socket_t s,
++                                        int *running_handles);
++
++CURL_EXTERN CURLMcode curl_multi_socket_all(CURLM *multi_handle,
++                                            int *running_handles);
++
++/*
++ * Name:    curl_multi_timeout()
++ *
++ * Desc:    Returns the maximum number of milliseconds the app is allowed to
++ *          wait before curl_multi_socket() or curl_multi_perform() must be
++ *          called (to allow libcurl's timed events to take place).
++ *
++ * Returns: CURLM error code.
++ */
++CURL_EXTERN CURLMcode curl_multi_timeout(CURLM *multi_handle,
++                                         long *milliseconds);
++
++#undef CINIT /* re-using the same name as in curl.h */
++
++#ifdef CURL_ISOCPP
++#define CINIT(name,type,number) CURLMOPT_ ## name = CURLOPTTYPE_ ## type + number
++#else
++/* The macro "##" is ISO C, we assume pre-ISO C doesn't support it. */
++#define LONG          CURLOPTTYPE_LONG
++#define OBJECTPOINT   CURLOPTTYPE_OBJECTPOINT
++#define FUNCTIONPOINT CURLOPTTYPE_FUNCTIONPOINT
++#define OFF_T         CURLOPTTYPE_OFF_T
++#define CINIT(name,type,number) CURLMOPT_/**/name = type + number
++#endif
++
++typedef enum {
++  /* This is the socket callback function pointer */
++  CINIT(SOCKETFUNCTION, FUNCTIONPOINT, 1),
++
++  /* This is the argument passed to the socket callback */
++  CINIT(SOCKETDATA, OBJECTPOINT, 2),
++
++  CURLMOPT_LASTENTRY /* the last unused */
++} CURLMoption;
++
++
++/*
++ * Name:    curl_multi_setopt()
++ *
++ * Desc:    Sets options for the multi handle.
++ *
++ * Returns: CURLM error code.
++ */
++CURL_EXTERN CURLMcode curl_multi_setopt(CURLM *multi_handle,
++                                        CURLMoption option, ...);
++
++
++/*
++ * Name:    curl_multi_assign()
++ *
++ * Desc:    This function sets an association in the multi handle between the
++ *          given socket and a private pointer of the application. This is
++ *          (only) useful for curl_multi_socket uses.
++ *
++ * Returns: CURLM error code.
++ */
++CURL_EXTERN CURLMcode curl_multi_assign(CURLM *multi_handle,
++                                        curl_socket_t sockfd, void *sockp);
++
++#ifdef __cplusplus
++} /* end of extern "C" */
++#endif
++
++#endif
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/libcurl/curl/stdcheaders.h tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/libcurl/curl/stdcheaders.h
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/libcurl/curl/stdcheaders.h	1970-01-01 01:00:00.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/libcurl/curl/stdcheaders.h	2008-12-16 04:50:29.000000000 +0100
+@@ -0,0 +1,34 @@
++#ifndef __STDC_HEADERS_H
++#define __STDC_HEADERS_H
++/***************************************************************************
++ *                                  _   _ ____  _     
++ *  Project                     ___| | | |  _ \| |    
++ *                             / __| | | | |_) | |    
++ *                            | (__| |_| |  _ <| |___ 
++ *                             \___|\___/|_| \_\_____|
++ *
++ * Copyright (C) 1998 - 2004, Daniel Stenberg, <daniel@haxx.se>, et al.
++ *
++ * This software is licensed as described in the file COPYING, which
++ * you should have received as part of this distribution. The terms
++ * are also available at http://curl.haxx.se/docs/copyright.html.
++ * 
++ * You may opt to use, copy, modify, merge, publish, distribute and/or sell
++ * copies of the Software, and permit persons to whom the Software is
++ * furnished to do so, under the terms of the COPYING file.
++ *
++ * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY
++ * KIND, either express or implied.
++ *
++ * $Id: stdcheaders.h,v 1.8 2004/01/07 09:19:34 bagder Exp $
++ ***************************************************************************/
++
++#include <sys/types.h>
++
++size_t fread (void *, size_t, size_t, FILE *);
++size_t fwrite (const void *, size_t, size_t, FILE *);
++
++int strcasecmp(const char *, const char *);
++int strncasecmp(const char *, const char *, size_t);
++
++#endif
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/libcurl/curl/types.h tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/libcurl/curl/types.h
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/libcurl/curl/types.h	1970-01-01 01:00:00.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/libcurl/curl/types.h	2008-12-16 04:50:29.000000000 +0100
+@@ -0,0 +1 @@
++/* not used */
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/qcommon/common.c tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/qcommon/common.c
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/qcommon/common.c	2006-03-01 00:11:58.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/qcommon/common.c	2008-12-16 04:50:29.000000000 +0100
+@@ -3063,3 +3063,24 @@
+ 
+ 	Field_CompleteCommand( completionField->buffer, qtrue, qtrue );
+ }
++
++/*
++==================
++Com_RandomBytes
++
++fills string array with len radom bytes, peferably from the OS randomizer
++==================
++*/
++void Com_RandomBytes( byte *string, int len )
++{
++	int i;
++
++	if( Sys_RandomBytes( string, len ) )
++		return;
++
++	Com_Printf( "Com_RandomBytes: using weak randomization\n" );
++	srand( time( 0 ) );
++	for( i = 0; i < len; i++ )
++		string[i] = (unsigned char)( rand() % 255 );
++}
++
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/qcommon/files.c tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/qcommon/files.c
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/qcommon/files.c	2006-03-15 23:55:47.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/qcommon/files.c	2008-12-16 04:50:29.000000000 +0100
+@@ -2780,6 +2780,10 @@
+ 	if (fs_basepath->string[0]) {
+ 		FS_AddGameDirectory( fs_basepath->string, gameName );
+ 	}
++        #ifdef MACOS_X
++		// allow .app bundles to be placed along side base dir
++		FS_AddGameDirectory( "./", gameName );
++        #endif
+   // fs_homepath is somewhat particular to *nix systems, only add if relevant
+   // NOTE: same filtering below for mods and basegame
+ 	if (fs_basepath->string[0] && Q_stricmp(fs_homepath->string,fs_basepath->string)) {
+@@ -3377,7 +3381,7 @@
+ 		Q_strncpyz( filename, filenames[ i ], MAX_STRING_CHARS );
+ 
+ 		if( stripExt ) {
+-			COM_StripExtension( filename, filename );
++			COM_StripExtension(filename, filename, sizeof(filename));
+ 		}
+ 
+ 		callback( filename );
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/qcommon/md5.c tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/qcommon/md5.c
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/qcommon/md5.c	1970-01-01 01:00:00.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/qcommon/md5.c	2008-12-16 04:50:29.000000000 +0100
+@@ -0,0 +1,310 @@
++/*
++ * This code implements the MD5 message-digest algorithm.
++ * The algorithm is due to Ron Rivest.  This code was
++ * written by Colin Plumb in 1993, no copyright is claimed.
++ * This code is in the public domain; do with it what you wish.
++ *
++ * Equivalent code is available from RSA Data Security, Inc.
++ * This code has been tested against that, and is equivalent,
++ * except that you don't need to include two pages of legalese
++ * with every copy.
++ *
++ * To compute the message digest of a chunk of bytes, declare an
++ * MD5Context structure, pass it to MD5Init, call MD5Update as
++ * needed on buffers full of bytes, and then call MD5Final, which
++ * will fill a supplied 16-byte array with the digest.
++ */
++#include "q_shared.h"
++#include "qcommon.h"
++
++typedef struct MD5Context {
++	uint32_t buf[4];
++	uint32_t bits[2];
++	unsigned char in[64];
++} MD5_CTX;
++
++#ifndef Q3_BIG_ENDIAN
++	#define byteReverse(buf, len)	/* Nothing */
++#else
++	static void byteReverse(unsigned char *buf, unsigned longs);
++
++	/*
++	 * Note: this code is harmless on little-endian machines.
++	 */
++	static void byteReverse(unsigned char *buf, unsigned longs)
++	{
++	    uint32_t t;
++	    do {
++		t = (uint32_t)
++			((unsigned) buf[3] << 8 | buf[2]) << 16 |
++			((unsigned) buf[1] << 8 | buf[0]);
++		*(uint32_t *) buf = t;
++		buf += 4;
++	    } while (--longs);
++	}
++#endif // Q3_BIG_ENDIAN
++
++/*
++ * Start MD5 accumulation.  Set bit count to 0 and buffer to mysterious
++ * initialization constants.
++ */
++static void MD5Init(struct MD5Context *ctx)
++{
++    ctx->buf[0] = 0x67452301;
++    ctx->buf[1] = 0xefcdab89;
++    ctx->buf[2] = 0x98badcfe;
++    ctx->buf[3] = 0x10325476;
++
++    ctx->bits[0] = 0;
++    ctx->bits[1] = 0;
++}
++/* The four core functions - F1 is optimized somewhat */
++
++/* #define F1(x, y, z) (x & y | ~x & z) */
++#define F1(x, y, z) (z ^ (x & (y ^ z)))
++#define F2(x, y, z) F1(z, x, y)
++#define F3(x, y, z) (x ^ y ^ z)
++#define F4(x, y, z) (y ^ (x | ~z))
++
++/* This is the central step in the MD5 algorithm. */
++#define MD5STEP(f, w, x, y, z, data, s) \
++	( w += f(x, y, z) + data,  w = w<<s | w>>(32-s),  w += x )
++
++/*
++ * The core of the MD5 algorithm, this alters an existing MD5 hash to
++ * reflect the addition of 16 longwords of new data.  MD5Update blocks
++ * the data and converts bytes into longwords for this routine.
++ */
++static void MD5Transform(uint32_t buf[4],
++	uint32_t const in[16])
++{
++    register uint32_t a, b, c, d;
++
++    a = buf[0];
++    b = buf[1];
++    c = buf[2];
++    d = buf[3];
++
++    MD5STEP(F1, a, b, c, d, in[0] + 0xd76aa478, 7);
++    MD5STEP(F1, d, a, b, c, in[1] + 0xe8c7b756, 12);
++    MD5STEP(F1, c, d, a, b, in[2] + 0x242070db, 17);
++    MD5STEP(F1, b, c, d, a, in[3] + 0xc1bdceee, 22);
++    MD5STEP(F1, a, b, c, d, in[4] + 0xf57c0faf, 7);
++    MD5STEP(F1, d, a, b, c, in[5] + 0x4787c62a, 12);
++    MD5STEP(F1, c, d, a, b, in[6] + 0xa8304613, 17);
++    MD5STEP(F1, b, c, d, a, in[7] + 0xfd469501, 22);
++    MD5STEP(F1, a, b, c, d, in[8] + 0x698098d8, 7);
++    MD5STEP(F1, d, a, b, c, in[9] + 0x8b44f7af, 12);
++    MD5STEP(F1, c, d, a, b, in[10] + 0xffff5bb1, 17);
++    MD5STEP(F1, b, c, d, a, in[11] + 0x895cd7be, 22);
++    MD5STEP(F1, a, b, c, d, in[12] + 0x6b901122, 7);
++    MD5STEP(F1, d, a, b, c, in[13] + 0xfd987193, 12);
++    MD5STEP(F1, c, d, a, b, in[14] + 0xa679438e, 17);
++    MD5STEP(F1, b, c, d, a, in[15] + 0x49b40821, 22);
++
++    MD5STEP(F2, a, b, c, d, in[1] + 0xf61e2562, 5);
++    MD5STEP(F2, d, a, b, c, in[6] + 0xc040b340, 9);
++    MD5STEP(F2, c, d, a, b, in[11] + 0x265e5a51, 14);
++    MD5STEP(F2, b, c, d, a, in[0] + 0xe9b6c7aa, 20);
++    MD5STEP(F2, a, b, c, d, in[5] + 0xd62f105d, 5);
++    MD5STEP(F2, d, a, b, c, in[10] + 0x02441453, 9);
++    MD5STEP(F2, c, d, a, b, in[15] + 0xd8a1e681, 14);
++    MD5STEP(F2, b, c, d, a, in[4] + 0xe7d3fbc8, 20);
++    MD5STEP(F2, a, b, c, d, in[9] + 0x21e1cde6, 5);
++    MD5STEP(F2, d, a, b, c, in[14] + 0xc33707d6, 9);
++    MD5STEP(F2, c, d, a, b, in[3] + 0xf4d50d87, 14);
++    MD5STEP(F2, b, c, d, a, in[8] + 0x455a14ed, 20);
++    MD5STEP(F2, a, b, c, d, in[13] + 0xa9e3e905, 5);
++    MD5STEP(F2, d, a, b, c, in[2] + 0xfcefa3f8, 9);
++    MD5STEP(F2, c, d, a, b, in[7] + 0x676f02d9, 14);
++    MD5STEP(F2, b, c, d, a, in[12] + 0x8d2a4c8a, 20);
++
++    MD5STEP(F3, a, b, c, d, in[5] + 0xfffa3942, 4);
++    MD5STEP(F3, d, a, b, c, in[8] + 0x8771f681, 11);
++    MD5STEP(F3, c, d, a, b, in[11] + 0x6d9d6122, 16);
++    MD5STEP(F3, b, c, d, a, in[14] + 0xfde5380c, 23);
++    MD5STEP(F3, a, b, c, d, in[1] + 0xa4beea44, 4);
++    MD5STEP(F3, d, a, b, c, in[4] + 0x4bdecfa9, 11);
++    MD5STEP(F3, c, d, a, b, in[7] + 0xf6bb4b60, 16);
++    MD5STEP(F3, b, c, d, a, in[10] + 0xbebfbc70, 23);
++    MD5STEP(F3, a, b, c, d, in[13] + 0x289b7ec6, 4);
++    MD5STEP(F3, d, a, b, c, in[0] + 0xeaa127fa, 11);
++    MD5STEP(F3, c, d, a, b, in[3] + 0xd4ef3085, 16);
++    MD5STEP(F3, b, c, d, a, in[6] + 0x04881d05, 23);
++    MD5STEP(F3, a, b, c, d, in[9] + 0xd9d4d039, 4);
++    MD5STEP(F3, d, a, b, c, in[12] + 0xe6db99e5, 11);
++    MD5STEP(F3, c, d, a, b, in[15] + 0x1fa27cf8, 16);
++    MD5STEP(F3, b, c, d, a, in[2] + 0xc4ac5665, 23);
++
++    MD5STEP(F4, a, b, c, d, in[0] + 0xf4292244, 6);
++    MD5STEP(F4, d, a, b, c, in[7] + 0x432aff97, 10);
++    MD5STEP(F4, c, d, a, b, in[14] + 0xab9423a7, 15);
++    MD5STEP(F4, b, c, d, a, in[5] + 0xfc93a039, 21);
++    MD5STEP(F4, a, b, c, d, in[12] + 0x655b59c3, 6);
++    MD5STEP(F4, d, a, b, c, in[3] + 0x8f0ccc92, 10);
++    MD5STEP(F4, c, d, a, b, in[10] + 0xffeff47d, 15);
++    MD5STEP(F4, b, c, d, a, in[1] + 0x85845dd1, 21);
++    MD5STEP(F4, a, b, c, d, in[8] + 0x6fa87e4f, 6);
++    MD5STEP(F4, d, a, b, c, in[15] + 0xfe2ce6e0, 10);
++    MD5STEP(F4, c, d, a, b, in[6] + 0xa3014314, 15);
++    MD5STEP(F4, b, c, d, a, in[13] + 0x4e0811a1, 21);
++    MD5STEP(F4, a, b, c, d, in[4] + 0xf7537e82, 6);
++    MD5STEP(F4, d, a, b, c, in[11] + 0xbd3af235, 10);
++    MD5STEP(F4, c, d, a, b, in[2] + 0x2ad7d2bb, 15);
++    MD5STEP(F4, b, c, d, a, in[9] + 0xeb86d391, 21);
++
++    buf[0] += a;
++    buf[1] += b;
++    buf[2] += c;
++    buf[3] += d;
++}
++
++/*
++ * Update context to reflect the concatenation of another buffer full
++ * of bytes.
++ */
++static void MD5Update(struct MD5Context *ctx, unsigned char const *buf,
++	unsigned len)
++{
++    uint32_t t;
++
++    /* Update bitcount */
++
++    t = ctx->bits[0];
++    if ((ctx->bits[0] = t + ((uint32_t) len << 3)) < t)
++	ctx->bits[1]++;		/* Carry from low to high */
++    ctx->bits[1] += len >> 29;
++
++    t = (t >> 3) & 0x3f;	/* Bytes already in shsInfo->data */
++
++    /* Handle any leading odd-sized chunks */
++
++    if (t) {
++	unsigned char *p = (unsigned char *) ctx->in + t;
++
++	t = 64 - t;
++	if (len < t) {
++	    memcpy(p, buf, len);
++	    return;
++	}
++	memcpy(p, buf, t);
++	byteReverse(ctx->in, 16);
++	MD5Transform(ctx->buf, (uint32_t *) ctx->in);
++	buf += t;
++	len -= t;
++    }
++    /* Process data in 64-byte chunks */
++
++    while (len >= 64) {
++	memcpy(ctx->in, buf, 64);
++	byteReverse(ctx->in, 16);
++	MD5Transform(ctx->buf, (uint32_t *) ctx->in);
++	buf += 64;
++	len -= 64;
++    }
++
++    /* Handle any remaining bytes of data. */
++
++    memcpy(ctx->in, buf, len);
++}
++
++
++/*
++ * Final wrapup - pad to 64-byte boundary with the bit pattern 
++ * 1 0* (64-bit count of bits processed, MSB-first)
++ */
++static void MD5Final(struct MD5Context *ctx, unsigned char *digest)
++{
++    unsigned count;
++    unsigned char *p;
++
++    /* Compute number of bytes mod 64 */
++    count = (ctx->bits[0] >> 3) & 0x3F;
++
++    /* Set the first char of padding to 0x80.  This is safe since there is
++       always at least one byte free */
++    p = ctx->in + count;
++    *p++ = 0x80;
++
++    /* Bytes of padding needed to make 64 bytes */
++    count = 64 - 1 - count;
++
++    /* Pad out to 56 mod 64 */
++    if (count < 8) {
++	/* Two lots of padding:  Pad the first block to 64 bytes */
++	memset(p, 0, count);
++	byteReverse(ctx->in, 16);
++	MD5Transform(ctx->buf, (uint32_t *) ctx->in);
++
++	/* Now fill the next block with 56 bytes */
++	memset(ctx->in, 0, 56);
++    } else {
++	/* Pad block to 56 bytes */
++	memset(p, 0, count - 8);
++    }
++    byteReverse(ctx->in, 14);
++
++    /* Append length in bits and transform */
++    ((uint32_t *) ctx->in)[14] = ctx->bits[0];
++    ((uint32_t *) ctx->in)[15] = ctx->bits[1];
++
++    MD5Transform(ctx->buf, (uint32_t *) ctx->in);
++    byteReverse((unsigned char *) ctx->buf, 4);
++    
++    if (digest!=NULL)
++	    memcpy(digest, ctx->buf, 16);
++    memset(ctx, 0, sizeof(ctx));	/* In case it's sensitive */
++}
++
++
++char *Com_MD5File( const char *fn, int length, const char *prefix, int prefix_len )
++{
++	static char final[33] = {""};
++	unsigned char digest[16] = {""}; 
++	fileHandle_t f;
++	MD5_CTX md5;
++	byte buffer[2048];
++	int i;
++	int filelen = 0;
++	int r = 0;
++	int total = 0;
++
++	Q_strncpyz( final, "", sizeof( final ) );
++
++	filelen = FS_SV_FOpenFileRead( fn, &f );
++
++	if( !f ) {
++		return final;
++	}
++	if( filelen < 1 ) {
++		FS_FCloseFile( f );
++		return final;
++	}
++	if(filelen < length || !length) {
++		length = filelen;
++	}
++
++	MD5Init(&md5);
++
++	if( prefix_len && *prefix )
++		MD5Update(&md5 , (unsigned char *)prefix, prefix_len);
++
++	for(;;) {
++		r = FS_Read2(buffer, sizeof(buffer), f);
++		if(r < 1)
++			break;
++		if(r + total > length)
++			r = length - total;
++		total += r;
++		MD5Update(&md5 , buffer, r);
++		if(r < sizeof(buffer) || total >= length)
++			break;
++	}
++	FS_FCloseFile(f);
++	MD5Final(&md5, digest);
++	final[0] = '\0';
++	for(i = 0; i < 16; i++) {
++		Q_strcat(final, sizeof(final), va("%02X", digest[i]));
++	}
++	return final;
++}
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/qcommon/qcommon.h tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/qcommon/qcommon.h
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/qcommon/qcommon.h	2006-02-24 23:04:35.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/qcommon/qcommon.h	2008-12-16 04:50:29.000000000 +0100
+@@ -722,6 +722,7 @@
+ int			Com_EventLoop( void );
+ int			Com_Milliseconds( void );	// will be journaled properly
+ unsigned	Com_BlockChecksum( const void *buffer, int length );
++char		*Com_MD5File(const char *filename, int length, const char *prefix, int prefix_len);
+ int			Com_HashKey(char *string, int maxlen);
+ int			Com_Filter(char *filter, char *name, int casesensitive);
+ int			Com_FilterPath(char *filter, char *name, int casesensitive);
+@@ -986,6 +987,8 @@
+ 
+ void	Sys_SnapVector( float *v );
+ 
++qboolean Sys_RandomBytes( byte *string, int len );
++
+ // the system console is shown when a dedicated server is running
+ void	Sys_DisplaySystemConsole( qboolean show );
+ 
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/qcommon/q_shared.c tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/qcommon/q_shared.c
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/qcommon/q_shared.c	2006-01-24 06:04:21.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/qcommon/q_shared.c	2008-12-16 04:50:29.000000000 +0100
+@@ -59,10 +59,10 @@
+ COM_StripExtension
+ ============
+ */
+-void COM_StripExtension( const char *in, char *out ) {
++void COM_StripExtension( const char *in, char *out, int destsize ) {
+ 	int             length;
+ 
+-	strcpy( out, in );
++	Q_strncpyz(out, in, destsize);
+ 
+ 	length = strlen(out)-1;
+ 	while (length > 0 && out[length] != '.')
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/qcommon/q_shared.h tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/qcommon/q_shared.h
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/qcommon/q_shared.h	2006-02-26 22:27:02.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/qcommon/q_shared.h	2008-12-16 04:50:29.000000000 +0100
+@@ -627,7 +627,7 @@
+ float Com_Clamp( float min, float max, float value );
+ 
+ char	*COM_SkipPath( char *pathname );
+-void	COM_StripExtension( const char *in, char *out );
++void	COM_StripExtension(const char *in, char *out, int destsize);
+ void	COM_DefaultExtension( char *path, int maxSize, const char *extension );
+ 
+ void	COM_BeginParseSession( const char *name );
+@@ -675,6 +675,8 @@
+ char *Com_SkipTokens( char *s, int numTokens, char *sep );
+ char *Com_SkipCharset( char *s, char *sep );
+ 
++void Com_RandomBytes( byte *string, int len );
++
+ // mode parm for FS_FOpenFile
+ typedef enum {
+ 	FS_READ,
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/qcommon/vm.c tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/qcommon/vm.c
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/qcommon/vm.c	2006-03-04 20:04:50.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/qcommon/vm.c	2008-12-16 04:50:29.000000000 +0100
+@@ -231,7 +231,7 @@
+ 		return;
+ 	}
+ 
+-	COM_StripExtension( vm->name, name );
++	COM_StripExtension(vm->name, name, sizeof(name));
+ 	Com_sprintf( symbols, sizeof( symbols ), "vm/%s.map", name );
+ 	len = FS_ReadFile( symbols, (void **)&mapfile );
+ 	if ( !mapfile ) {
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/renderer/tr_bsp.c tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/renderer/tr_bsp.c
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/renderer/tr_bsp.c	2005-12-29 01:58:58.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/renderer/tr_bsp.c	2008-12-16 04:50:29.000000000 +0100
+@@ -1824,7 +1824,7 @@
+ 	Q_strncpyz( s_worldData.name, name, sizeof( s_worldData.name ) );
+ 
+ 	Q_strncpyz( s_worldData.baseName, COM_SkipPath( s_worldData.name ), sizeof( s_worldData.name ) );
+-	COM_StripExtension( s_worldData.baseName, s_worldData.baseName );
++	COM_StripExtension(s_worldData.baseName, s_worldData.baseName, sizeof(s_worldData.baseName));
+ 
+ 	startMarker = ri.Hunk_Alloc(0, h_low);
+ 	c_gridVerts = 0;
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/renderer/tr_main.c tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/renderer/tr_main.c
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/renderer/tr_main.c	2005-12-10 21:19:52.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/renderer/tr_main.c	2008-12-16 04:50:29.000000000 +0100
+@@ -1038,11 +1038,17 @@
+ static void R_RadixSort( drawSurf_t *source, int size )
+ {
+   static drawSurf_t scratch[ MAX_DRAWSURFS ];
+-
++#ifdef Q3_LITTLE_ENDIAN
+   R_Radix( 0, size, source, scratch );
+   R_Radix( 1, size, scratch, source );
+   R_Radix( 2, size, source, scratch );
+   R_Radix( 3, size, scratch, source );
++#else
++  R_Radix( 3, size, source, scratch );
++  R_Radix( 2, size, scratch, source );
++  R_Radix( 1, size, source, scratch );
++  R_Radix( 0, size, scratch, source );
++#endif //Q3_LITTLE_ENDIAN
+ }
+ 
+ //==========================================================================================
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/renderer/tr_shader.c tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/renderer/tr_shader.c
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/renderer/tr_shader.c	2005-12-23 15:58:08.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/renderer/tr_shader.c	2008-12-16 04:50:29.000000000 +0100
+@@ -96,7 +96,7 @@
+ 
+ 	// remap all the shaders with the given name
+ 	// even tho they might have different lightmaps
+-	COM_StripExtension( shaderName, strippedName );
++	COM_StripExtension(shaderName, strippedName, sizeof(strippedName));
+ 	hash = generateHashValue(strippedName, FILE_HASH_SIZE);
+ 	for (sh = hashTable[hash]; sh; sh = sh->next) {
+ 		if (Q_stricmp(sh->name, strippedName) == 0) {
+@@ -2366,7 +2366,7 @@
+ 		return tr.defaultShader;
+ 	}
+ 
+-	COM_StripExtension( name, strippedName );
++	COM_StripExtension(name, strippedName, sizeof(strippedName));
+ 
+ 	hash = generateHashValue(strippedName, FILE_HASH_SIZE);
+ 
+@@ -2434,7 +2434,7 @@
+ 		lightmapIndex = LIGHTMAP_BY_VERTEX;
+ 	}
+ 
+-	COM_StripExtension( name, strippedName );
++	COM_StripExtension(name, strippedName, sizeof(strippedName));
+ 
+ 	hash = generateHashValue(strippedName, FILE_HASH_SIZE);
+ 
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/server/server.h tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/server/server.h
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/server/server.h	2006-01-27 00:57:50.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/server/server.h	2008-12-16 04:50:29.000000000 +0100
+@@ -227,6 +227,8 @@
+ extern	cvar_t	*sv_rconPassword;
+ extern	cvar_t	*sv_privatePassword;
+ extern	cvar_t	*sv_allowDownload;
++extern	cvar_t	*sv_wwwDownload;
++extern	cvar_t	*sv_wwwBaseURL;
+ extern	cvar_t	*sv_maxclients;
+ 
+ extern	cvar_t	*sv_privateClients;
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/server/sv_init.c tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/server/sv_init.c
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/server/sv_init.c	2006-03-01 00:11:58.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/server/sv_init.c	2008-12-16 04:50:29.000000000 +0100
+@@ -599,6 +599,10 @@
+ 	Cvar_Get ("nextmap", "", CVAR_TEMP );
+ 
+ 	sv_allowDownload = Cvar_Get ("sv_allowDownload", "0", CVAR_SERVERINFO);
++	sv_wwwDownload = Cvar_Get ("sv_wwwDownload", "1",
++		CVAR_SYSTEMINFO|CVAR_ARCHIVE);
++	sv_wwwBaseURL = Cvar_Get ("sv_wwwBaseURL", "",
++		CVAR_SYSTEMINFO|CVAR_ARCHIVE);
+ 	sv_master[0] = Cvar_Get ("sv_master1", MASTER_SERVER_NAME, 0 );
+ 	sv_master[1] = Cvar_Get ("sv_master2", "", CVAR_ARCHIVE );
+ 	sv_master[2] = Cvar_Get ("sv_master3", "", CVAR_ARCHIVE );
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/server/sv_main.c tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/server/sv_main.c
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/server/sv_main.c	2006-03-01 00:11:58.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/server/sv_main.c	2008-12-16 04:50:29.000000000 +0100
+@@ -33,6 +33,8 @@
+ cvar_t	*sv_rconPassword;		// password for remote server commands
+ cvar_t	*sv_privatePassword;	// password for the privateClient slots
+ cvar_t	*sv_allowDownload;
++cvar_t	*sv_wwwBaseURL;
++cvar_t	*sv_wwwDownload;
+ cvar_t	*sv_maxclients;
+ 
+ cvar_t	*sv_privateClients;		// number of clients reserved for password
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/ui/ui_main.c tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/ui/ui_main.c
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/ui/ui_main.c	2006-02-24 23:04:35.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/ui/ui_main.c	2008-12-16 04:50:29.000000000 +0100
+@@ -5376,7 +5376,7 @@
+     {
+       filelen = strlen(fileptr);
+ 
+-      COM_StripExtension(fileptr,skinname);
++      COM_StripExtension(fileptr, skinname, sizeof(skinname));
+ 
+       // look for icon_????
+       if (Q_stricmpn(skinname, "icon_", 5) == 0 && !(Q_stricmp(skinname,"icon_blue") == 0 || Q_stricmp(skinname,"icon_red") == 0))
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/ui/ui_players.c tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/ui/ui_players.c
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/ui/ui_players.c	2005-12-10 21:19:52.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/ui/ui_players.c	2008-12-16 04:50:29.000000000 +0100
+@@ -84,13 +84,13 @@
+ 
+   if ( weaponNum == WP_MACHINEGUN ) {
+     strcpy( path, item->world_model[0] );
+-    COM_StripExtension( path, path );
++    COM_StripExtension( path, path, sizeof( path ) );
+     strcat( path, "_barrel.md3" );
+     pi->barrelModel = trap_R_RegisterModel( path );
+   }
+ 
+   strcpy( path, item->world_model[0] );
+-  COM_StripExtension( path, path );
++  COM_StripExtension( path, path, sizeof( path ) );
+   strcat( path, "_flash.md3" );
+   pi->flashModel = trap_R_RegisterModel( path );
+ 
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/unix/sdl_glimp.c tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/unix/sdl_glimp.c
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/unix/sdl_glimp.c	2006-03-04 00:59:01.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/unix/sdl_glimp.c	2008-12-16 04:50:29.000000000 +0100
+@@ -68,7 +68,12 @@
+ #include <stdarg.h>
+ #include <stdio.h>
+ #include <stdlib.h>
++#if USE_SDL_VIDEO
++#include "SDL.h"
++#include "SDL_loadso.h"
++#else
+ #include <dlfcn.h>
++#endif
+ 
+ #include "../renderer/tr_local.h"
+ #include "../client/client.h"
+@@ -266,7 +271,14 @@
+     //else if (ch >= 'A' && ch <= 'Z')
+     //  ch = ch - 'A' + 'a';
+ 
+-    buf[0] = ch;
++    // tjw: translate K_BACKSPACE to ctrl-h for MACOS_X (others?)
++    if (ch == K_BACKSPACE)
++    {
++      *key = 'h' - 'a' + 1;
++      buf[0] = *key;
++    }
++    else
++      buf[0] = ch;
+   }
+ 
+   return buf;
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/unix/unix_net.c tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/unix/unix_net.c
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/unix/unix_net.c	2005-12-10 21:19:52.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/unix/unix_net.c	2008-12-16 04:50:29.000000000 +0100
+@@ -26,6 +26,10 @@
+ #include "../qcommon/qcommon.h"
+ 
+ #include <unistd.h>
++#if MAC_OS_X_VERSION_MIN_REQUIRED == 1020
++  // needed for socket_t on OSX 10.2
++  #define _BSD_SOCKLEN_T_
++#endif
+ #include <sys/socket.h>
+ #include <sys/time.h>
+ #include <netinet/in.h>
+@@ -354,9 +358,17 @@
+ // Don't do a forward mapping from the hostname of the machine to the IP.  The reason is that we might have obtained an IP address from DHCP and there might not be any name registered for the machine.  On Mac OS X, the machine name defaults to 'localhost' and NetInfo has 127.0.0.1 listed for this name.  Instead, we want to get a list of all the IP network interfaces on the machine.
+ // This code adapted from OmniNetworking.
+ 
+-#define IFR_NEXT(ifr)	\
+-    ((struct ifreq *) ((char *) (ifr) + sizeof(*(ifr)) + \
+-      MAX(0, (int) (ifr)->ifr_addr.sa_len - (int) sizeof((ifr)->ifr_addr))))
++
++#ifdef _SIZEOF_ADDR_IFREQ
++	// tjw: OSX 10.4 does not have sa_len
++	#define IFR_NEXT(ifr)	\
++	((struct ifreq *) ((char *) ifr + _SIZEOF_ADDR_IFREQ(*ifr)))
++#else
++	// tjw: assume that once upon a time some version did have sa_len
++	#define IFR_NEXT(ifr)	\
++	((struct ifreq *) ((char *) (ifr) + sizeof(*(ifr)) + \
++	MAX(0, (int) (ifr)->ifr_addr.sa_len - (int) sizeof((ifr)->ifr_addr))))
++#endif
+ 
+ void NET_GetLocalAddress( void ) {
+         struct ifreq requestBuffer[MAX_IPS], *linkInterface, *inetInterface;
+@@ -366,7 +378,7 @@
+         int interfaceSocket;
+         int family;
+         
+-        //Com_Printf("NET_GetLocalAddress: Querying for network interfaces\n");
++        Com_Printf("NET_GetLocalAddress: Querying for network interfaces\n");
+         
+         // Set this early so we can just return if there is an error
+ 	numIP = 0;
+@@ -438,6 +450,7 @@
+             }
+             linkInterface = IFR_NEXT(linkInterface);
+         }
++        Com_Printf("NET_GetLocalAddress: DONE querying for network interfaces\n");
+ 
+         close(interfaceSocket);
+ }
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/unix/unix_shared.c tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/unix/unix_shared.c
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/unix/unix_shared.c	2005-12-10 21:19:52.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/unix/unix_shared.c	2008-12-16 04:50:29.000000000 +0100
+@@ -175,6 +175,22 @@
+   return s; // bk001204 - duh
+ }
+ 
++qboolean Sys_RandomBytes( byte *string, int len )
++{
++  FILE *fp;
++
++  fp = fopen( "/dev/urandom", "r" );
++  if( !fp )
++    return qfalse;
++
++  if( !fread( string, sizeof( byte ), len, fp ) ) {
++	fclose( fp );
++	return qfalse;
++  }
++  fclose( fp );
++  return qtrue; 
++}
++
+ //============================================
+ 
+ #define	MAX_FOUND_FILES	0x1000
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/win32/win_gamma.c tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/win32/win_gamma.c
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/win32/win_gamma.c	2005-12-10 21:19:52.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/win32/win_gamma.c	2008-12-16 04:50:29.000000000 +0100
+@@ -141,6 +141,9 @@
+ 		return;
+ 	}
+ 
++	if (!g_wv.activeApp)
++		return;
++
+ //mapGammaMax();
+ 
+ 	for ( i = 0; i < 256; i++ ) {
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/win32/win_glimp.c tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/win32/win_glimp.c
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/win32/win_glimp.c	2006-03-04 00:59:01.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/win32/win_glimp.c	2008-12-16 04:50:29.000000000 +0100
+@@ -79,6 +79,7 @@
+ // variable declarations
+ //
+ glwstate_t glw_state;
++static DEVMODE glw_fs_dm;
+ 
+ cvar_t	*r_allowSoftwareGL;		// don't abort out if the pixelformat claims software
+ cvar_t	*r_maskMinidriver;		// allow a different dll name to be treated as if it were opengl32.dll
+@@ -111,6 +112,23 @@
+ 	return qtrue;
+ }
+ 
++qboolean GLW_ResetFullScreenMode( void )
++{
++	if( !glw_fs_dm.dmSize )
++		return qfalse;
++
++	// restore the last working fullscreen DEVMODE 
++	ChangeDisplaySettings( &glw_fs_dm, CDS_FULLSCREEN );
++	GLimp_Init();
++	return qtrue;
++
++	// this will call GLW_SetMode() with the current fullscreen settings.
++	// It does not actually load the driver like the function name implies.
++	//glw_state.cdsFullscreen = qfalse;
++	//GLW_StartDriverAndSetMode( r_glDriver->string, r_mode->integer,
++	//		r_colorbits->integer, qtrue );
++}
++
+ /*
+ ** ChoosePFD
+ **
+@@ -583,6 +601,9 @@
+ 	int				x, y, w, h;
+ 	int				exstyle;
+ 
++	// initialize the cached fullscreen display mode
++	memset( &glw_fs_dm, 0, sizeof( glw_fs_dm ) );
++
+ 	//
+ 	// register the window class if necessary
+ 	//
+@@ -632,7 +653,7 @@
+ 		else
+ 		{
+ 			exstyle = 0;
+-			stylebits = WINDOW_STYLE|WS_SYSMENU;
++			stylebits = WINDOW_STYLE|WS_SYSMENU|WS_MINIMIZEBOX;
+ 			AdjustWindowRect (&r, stylebits, FALSE);
+ 		}
+ 
+@@ -925,6 +946,10 @@
+ 				}
+ 			}
+ 		}
++		if( glw_state.cdsFullscreen )
++			memcpy( &glw_fs_dm, &dm, sizeof( glw_fs_dm ) );
++		else
++			memset( &glw_fs_dm, 0, sizeof( glw_fs_dm ) );
+ 	}
+ 	else
+ 	{
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/win32/win_local.h tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/win32/win_local.h
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/win32/win_local.h	2005-12-10 21:19:52.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/win32/win_local.h	2008-12-16 04:50:29.000000000 +0100
+@@ -38,6 +38,7 @@
+ #include <dsound.h>
+ #include <winsock.h>
+ #include <wsipx.h>
++#include <shlobj.h>
+ 
+ void	IN_MouseEvent (int mstate);
+ 
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/win32/win_shared.c tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/win32/win_shared.c
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/win32/win_shared.c	2005-12-10 21:19:52.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/win32/win_shared.c	2008-12-16 04:50:29.000000000 +0100
+@@ -33,6 +33,7 @@
+ #include <direct.h>
+ #include <io.h>
+ #include <conio.h>
++#include <wincrypt.h>
+ 
+ /*
+ ================
+@@ -82,6 +83,24 @@
+ }
+ #endif
+ 
++qboolean Sys_RandomBytes( byte *string, int len )
++{
++	HCRYPTPROV  prov;
++
++	if( !CryptAcquireContext( &prov, NULL, NULL,
++		PROV_RSA_FULL, CRYPT_VERIFYCONTEXT ) )  {
++
++		return qfalse;
++	}
++
++	if( !CryptGenRandom( prov, len, (BYTE *)string ) )  {
++		CryptReleaseContext( prov, 0 );
++		return qfalse;
++	}
++	CryptReleaseContext( prov, 0 );
++	return qtrue;
++}
++
+ 
+ /*
+ **
+@@ -286,7 +305,26 @@
+ }
+ 
+ char	*Sys_DefaultHomePath(void) {
+-	return NULL;
++	TCHAR szPath[MAX_PATH];
++	static char path[MAX_OSPATH];
++
++	if( !SUCCEEDED( SHGetFolderPath( NULL, CSIDL_LOCAL_APPDATA,
++		NULL, 0, szPath ) ) )
++	{
++
++		return NULL;
++	}
++	Q_strncpyz( path, szPath, sizeof(path) );
++	Q_strcat( path, sizeof(path), "\\Tremulous" );
++	if( !CreateDirectory( path, NULL ) )
++	{
++		if( GetLastError() != ERROR_ALREADY_EXISTS )
++		{
++			Com_Printf("Unable to create directory \"%s\"\n", path);
++			return NULL;
++		}
++	}
++	return path;
+ }
+ 
+ char *Sys_DefaultInstallPath(void)
+diff -Naur tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/win32/win_wndproc.c tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/win32/win_wndproc.c
+--- tremulous-1.1.0-installer.x86.run/tremulous/tremulous-1.1.0-src/src/win32/win_wndproc.c	2005-12-10 21:19:52.000000000 +0100
++++ tremulous-1.1.0-installer.x86.run.new/tremulous/tremulous-1.1.0-src/src/win32/win_wndproc.c	2008-12-16 04:50:29.000000000 +0100
+@@ -36,6 +36,7 @@
+ cvar_t		*vid_xpos;			// X coordinate of window position
+ cvar_t		*vid_ypos;			// Y coordinate of window position
+ cvar_t		*r_fullscreen;
++cvar_t		*win_allowAltTab;
+ 
+ #define VID_NUM_MODES ( sizeof( vid_modes ) / sizeof( vid_modes[0] ) )
+ 
+@@ -48,6 +49,16 @@
+ 	if ( s_alttab_disabled )
+ 		return;
+ 
++	if ( win_allowAltTab->integer )
++	{
++		Com_Printf("Alt-Tab support enabled (win_allowAltTab = 1)\n" );
++		return;
++	}
++	else
++	{
++		Com_Printf("Alt-Tab support disabled (win_allowAltTab = 0)\n" );
++	}
++
+ 	if ( !Q_stricmp( Cvar_VariableString( "arch" ), "winnt" ) )
+ 	{
+ 		RegisterHotKey( 0, 0, MOD_ALT, VK_TAB );
+@@ -85,8 +96,14 @@
+ VID_AppActivate
+ ==================
+ */
++extern void R_SetColorMappings( void );
++extern void WG_RestoreGamma( void );
++extern qboolean GLW_ResetFullScreenMode( void );
++
+ static void VID_AppActivate(BOOL fActive, BOOL minimize)
+ {
++	BOOL wasMinimized = g_wv.isMinimized;
++
+ 	g_wv.isMinimized = minimize;
+ 
+ 	Com_DPrintf("VID_AppActivate: %i\n", fActive );
+@@ -107,10 +124,24 @@
+ 	if (!g_wv.activeApp )
+ 	{
+ 		IN_Activate (qfalse);
++		if ( r_fullscreen->integer )
++		{
++			WG_RestoreGamma ();
++			ShowWindow ( g_wv.hWnd, SW_MINIMIZE );
++			ChangeDisplaySettings ( 0, 0 );
++		}
+ 	}
+ 	else
+ 	{
+ 		IN_Activate (qtrue);
++		if ( r_fullscreen->integer && wasMinimized )
++		{
++			if( !GLW_ResetFullScreenMode () )
++				Cbuf_AddText( "vid_restart\n" );
++			R_SetColorMappings ();
++			Com_Printf( "Alt-Tab support can be disabled with "
++				"\\win_allowAltTab 0\n" );
++		}
+ 	}
+ }
+ 
+@@ -313,6 +344,8 @@
+ 		vid_xpos = Cvar_Get ("vid_xpos", "3", CVAR_ARCHIVE);
+ 		vid_ypos = Cvar_Get ("vid_ypos", "22", CVAR_ARCHIVE);
+ 		r_fullscreen = Cvar_Get ("r_fullscreen", "1", CVAR_ARCHIVE | CVAR_LATCH );
++		win_allowAltTab = Cvar_Get ("win_allowAltTab", "0",
++			CVAR_ARCHIVE | CVAR_LATCH);
+ 
+ 		MSH_MOUSEWHEEL = RegisterWindowMessage("MSWHEEL_ROLLMSG"); 
+ 		if ( r_fullscreen->integer )

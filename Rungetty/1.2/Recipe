@@ -1,0 +1,9 @@
+compile_version=1.11.4
+url="ftp://metalab.unc.edu/pub/linux/system/serial/getty/rungetty-1.2.tar.gz"
+file_size=15653
+file_md5=70c1ae39ae4f9c0cf0ac59372eb6e741
+recipe_type=makefile
+makefile='Makefile'
+environment=(
+    ROOT=$target
+)

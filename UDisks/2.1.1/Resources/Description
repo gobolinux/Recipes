@@ -1,0 +1,5 @@
+[Name] UDisks
+[Summary] udisks provides interfaces to enumerate and perform operations on storage devices
+[Description] udisks provides interfaces to enumerate and perform operations on storage devices. Any application (including unprivileged ones) can access the udisksd(8) daemon via the name org.freedesktop.UDisks2 on the system message bus. In addition to the D-Bus API, a library, libudisks2 is also provided. This library can be used from C/C++ and any high-level language with GObjectIntrospection support such as Javascript and Python.
+[License] GPLv2 (or above) and LGPLv2 (or above)
+[Homepage] http://udisks.freedesktop.org

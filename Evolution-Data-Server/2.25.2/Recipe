@@ -1,0 +1,12 @@
+# Recipe for version 2.25.2 by Andrew Stormont <andyjstormont@googlemail.com>, on Mon Dec 8 14:03:42 GMT+1 2008
+# Recipe for version 2.22.3 by Andreas Köhler <andi5.py@gmx.net>, on Sun Aug 17 12:43:42 CEST 2008
+# Recipe (MakeRecipe) for Evolution-Data-Server by demian florentin demianflorentin_at_gmail.com, on Tue Sep 18 09:58:41 PYT 2007
+compile_version=1.9.0
+url="http://ftp.gnome.org/pub/GNOME/desktop/2.25/2.25.2/sources/evolution-data-server-2.25.2.tar.bz2"
+file_size=7862343
+file_md5=202dd1127cc2e8a12cbc7dc6dab8e889
+recipe_type=configure
+configure_options=(
+   --enable-gnome-keyring
+   --with-openldap
+)

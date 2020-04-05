@@ -1,0 +1,19 @@
+# Recipe for version 2.28.6 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Jan 10 16:19:46 GMT 2014
+# Recipe (MakeRecipe) for Pygobject by Rafael Guterres Jeffman (rafasgj), on Thu Mar 2 10:28:59 BRT 2006
+compile_version=1.8.5
+url="http://ftp.gnome.org/pub/GNOME/sources/pygobject/2.28/pygobject-2.28.6.tar.xz"
+file_size=747248
+file_md5=9415cb7f2b3a847f2310ccea258b101e
+recipe_type=configure
+configure_options=(
+   --disable-docs
+)
+
+pre_link() {
+   pythonversion=$(python --version 2>&1 | awk {'print $2'} | cut -b1-3)
+   echo "$goboLibraries/python2.7/site-packages/gtk-2.0" > $target/lib/python${pythonversion}/site-packages/pygobject.pth
+   echo "$goboLibraries/python2.6/site-packages/gtk-2.0" >> $target/lib/python${pythonversion}/site-packages/pygobject.pth
+   echo "$goboLibraries/python2.5/site-packages/gtk-2.0" >> $target/lib/python${pythonversion}/site-packages/pygobject.pth
+   echo "$goboLibraries/python2.4/site-packages/gtk-2.0" >> $target/lib/python${pythonversion}/site-packages/pygobject.pth 
+   echo "$goboLibraries/python2.3/site-packages/gtk-2.0" >> $target/lib/python${pythonversion}/site-packages/pygobject.pth
+}

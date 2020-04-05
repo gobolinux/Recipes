@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Flex by Andreas Koehler, on Fri Aug 12 13:57:22 CEST 2005
+# Recipe for version 2.5.31 by Andreas Koehler, on Fri Aug 12 13:57:22 CEST 2005
+compile_version=1.7.1
+url="$httpSourceforge/flex/flex-2.5.31.tar.bz2"
+file_size=681792
+file_md5=363dcc4afc917dc51306eb9d3de0152f
+recipe_type=configure
+pre_build() {
+   touch doc/flex.1
+}

@@ -1,5 +1,0 @@
-[Name] libglade
-[Summary] XML-based runtime user interface loader for GNOME
-[License] GNU Lesser General Public License (LGPL)
-[Description] Libglade is a small library that allows a program to load its user interface from an XML description at runtime. The XML file format is that of the user interface builder GLADE, so libglade acts as an alternative to GLADE's code generation approach. Libglade also provides a simple interface for connecting handlers to the various signals in the interface (on platforms where the gmodule library works correctly, it is possible to connect all the handlers with a single function call). Once the interface has been instantiated, libglade gives no overhead, so other than the initial interface loading time (which is short), there is no performance tradeoff.
-[Homepage] http://developer.gnome.org/doc/API/libglade/libglade.html

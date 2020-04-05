@@ -1,0 +1,12 @@
+# Recipe for version 2.2.8 by Andre Detsch, on Fri Jul 22 16:37:11 BRT 2005
+# Recipe (MakeRecipe) for Gimp by roko, <ro.ko@mcnon.com>, on Fri Dec 31 19:34:35 BRST 2004
+compile_version=1.7.1
+url="ftp://ftp.gimp.org/pub/gimp/v2.2/gimp-2.2.8.tar.bz2"
+recipe_type=configure
+configure_options=(
+--disable-print
+)  
+#. GoboPath
+environment=(
+   "PKG_CONFIG_PATH=${goboLibraries}/pkgconfig"
+)

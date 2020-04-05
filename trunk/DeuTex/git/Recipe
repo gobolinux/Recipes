@@ -1,9 +1,0 @@
-# Recipe (MakeRecipe) for DeuTex by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Apr 16 12:18:28 BRT 2019
-# Recipe for version git by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Apr 16 12:18:28 BRT 2019
-compile_version=016
-git="https://github.com/Doom-Utils/deutex.git"
-recipe_type=configure
-
-pre_build() {
-    ./bootstrap
-}

@@ -1,0 +1,10 @@
+# Recipe for version 2.8.2 by JPaul Hatungimana <jhatungimana@netscape.net>, on Fri Aug 20 09:13:58 CEST 2010
+compile_version=1.7.1
+url="http://www.cmake.org/files/v2.8/cmake-2.8.2.tar.gz"
+file_size=5392016
+file_md5=8c967d5264657a798f22ee23976ff0d9
+recipe_type=configure
+
+configure_options=(
+   --prefix=$target
+)

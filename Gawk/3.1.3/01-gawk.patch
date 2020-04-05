@@ -1,0 +1,44 @@
+diff -Naur gawk-3.1.3-orig/Makefile.in gawk-3.1.3/Makefile.in
+--- gawk-3.1.3-orig/Makefile.in	2003-07-10 14:36:14.000000000 +0000
++++ gawk-3.1.3/Makefile.in	2003-07-10 14:37:50.000000000 +0000
+@@ -261,7 +261,7 @@
+ 
+ # Get extra libs as needed
+ LDADD = @LIBINTL@ @SOCKET_LIBS@
+-awkdatadir = @datadir@/awk
++awkdatadir = @datadir@/gawk-3.1.3
+ 
+ # stuff for compiling gawk/pgawk
+ DEFPATH = "\".$(PATH_SEPARATOR)$(awkdatadir)\""
+diff -Naur gawk-3.1.3-orig/awklib/Makefile.in gawk-3.1.3/awklib/Makefile.in
+--- gawk-3.1.3-orig/awklib/Makefile.in	2003-07-10 14:36:14.000000000 +0000
++++ gawk-3.1.3/awklib/Makefile.in	2003-07-10 14:39:16.000000000 +0000
+@@ -144,7 +144,7 @@
+ build_os = @build_os@
+ build_vendor = @build_vendor@
+ 
+-datadir = @datadir@/awk
++datadir = @datadir@/gawk-3.1.3
+ exec_prefix = @exec_prefix@
+ host = @host@
+ host_alias = @host_alias@
+@@ -155,7 +155,7 @@
+ infodir = @infodir@
+ install_sh = @install_sh@
+ libdir = @libdir@
+-libexecdir = @libexecdir@/awk
++libexecdir = @libexecdir@
+ localstatedir = @localstatedir@
+ mandir = @mandir@
+ oldincludedir = @oldincludedir@
+@@ -487,7 +487,9 @@
+ 
+ # libexecdir and datadir are removed in the top level Makefile's uninstall
+ uninstall-local:
+-	rm -fr $(DESTDIR)$(libexecdir)/* $(DESTDIR)$(datadir)/*
++	rm -f $(DESTDIR)$(libexecdir)/grcat
++	rm -f $(DESTDIR)$(libexecdir)/pwcat
++	rm -fr $(DESTDIR)$(datadir)
+ 	rm -f $(DESTDIR)$(bindir)/igawk
+ 
+ clean-local:

@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for Nagios by Harald Klimach, on Tue Mar 28 23:18:14 CEST 2006
+# Recipe for version 2.1 by Harald Klimach, on Tue Mar 28 23:18:14 CEST 2006
+compile_version=1.8.0
+url="$httpSourceforge/nagios/nagios-2.1.tar.gz"
+file_size=1734773
+file_md5=ec559a13dbf3a403e9325c90425076df
+recipe_type=configure
+build_target="all"

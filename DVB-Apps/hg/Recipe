@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for DVB-Apps by Joseph Wallace <JosephWallace@letu.edu>, on Wed Sep 1 01:51:09 CDT 2010
+# Recipe for version hg by Joseph Wallace <JosephWallace@letu.edu>, on Wed Sep 1 01:51:09 CDT 2010
+compile_version=1.13.3
+hg="http://linuxtv.org/hg/dvb-apps"
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+    "prefix=$target"
+)

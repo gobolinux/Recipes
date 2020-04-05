@@ -1,0 +1,29 @@
+# Recipe for version 1.4.13 by Aitor Perez Iturri, on vie oct 12 17:05:42 CEST 2007
+# Recipe (MakeRecipe) for Asterisk by Aitor Pérez Iturri, on vie feb 16 18:13:32 CET 2007
+compile_version=1.10.2
+url="http://downloads.digium.com/pub/asterisk/asterisk-1.4.13.tar.gz"
+file_size=11257579
+file_md5=49b73114831c21cc9784d3b3f4fb5bec
+recipe_type=configure
+make_variables=(
+	"INSTALL_PREFIX=$target"
+)
+configure_options=(
+	--sysconfdir=$settings_target
+	--libdir=$target/lib
+	--bindir=$target/bin
+	--sbindir=$target/sbin
+	--localstatedir=$variable_target
+	--mandir=$target/man
+)
+unmanaged_files=(
+	"$goboVariable"
+)
+
+do_build=no
+install_target="install samples"
+
+pre_install () {
+	make menuselect
+	make
+}

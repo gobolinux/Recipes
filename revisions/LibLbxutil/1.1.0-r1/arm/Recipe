@@ -1,6 +1,0 @@
-pre_build() {
-    pushd src
-    $HOSTCC -c image/mkg3states.c
-    $HOSTCC mkg3states.o -o mkg3states
-    popd
-}

@@ -1,0 +1,17 @@
+--- fuse-2.4.2/util/Makefile.in	2005-11-22 22:53:53.000000000 +0100
++++ fuse-2.4.2.new/util/Makefile.in	2005-11-24 10:28:15.000000000 +0100
+@@ -443,13 +443,8 @@
+ 
+ 
+ install-exec-hook:
+-	-chown root $(DESTDIR)$(bindir)/fusermount
++	-chown 0 $(DESTDIR)$(bindir)/fusermount
+ 	-chmod u+s $(DESTDIR)$(bindir)/fusermount
+-	@if test ! -e $(DESTDIR)/dev/fuse; then \
+-		$(mkdir_p) $(DESTDIR)/dev; \
+-		echo "mknod $(DESTDIR)/dev/fuse -m 0666 c 10 229"; \
+-		mknod $(DESTDIR)/dev/fuse -m 0666 c 10 229; \
+-	fi
+ 
+ install-exec-local:
+ 	$(mkdir_p) $(DESTDIR)$(MOUNT_FUSE_PATH)

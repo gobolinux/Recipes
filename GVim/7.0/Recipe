@@ -1,0 +1,16 @@
+# Recipe for version 7.0 by Harald Klimach, on Mon May 8 18:52:07 CEST 2006
+# Recipe (MakeRecipe) for Vim by Matthias Wolf, on Tue Sep 21 12:10:37 CEST 2004
+compile_version=1.8.2
+url="ftp://ftp.vim.org/pub/vim/unix/vim-7.0.tar.bz2"
+file_size=6575205
+file_md5=4ca69757678272f718b1041c810d82d8
+dir='vim70'
+recipe_type=configure
+
+configure_options=(
+	"--prefix=$target"
+)
+
+pre_link() {
+	ln -s vim $target/bin/vi
+}

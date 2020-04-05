@@ -1,0 +1,12 @@
+# Recipe for version 4.4.0 by Michael Homer <michael@gobolinux.org>, on Fri Apr 9 18:14:16 NZST 2010
+# Recipe (MakeRecipe) for Phonon by Paul Gideon Dann <pdgiddie+gobo@gmail.com>, on Fri Sep 19 13:16:45 BST 2008
+compile_version=1.11.2
+url="http://kde.mirrors.tds.net/pub/kde/stable/phonon/4.4.0/phonon-4.4.0.tgz"
+file_size=758649
+file_md5=80544b876cf0e0af05f2303b3f534351
+recipe_type=cmake
+dir=phonon-4.4
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)

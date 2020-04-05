@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Botan by Michael Homer <michael@gobolinux.org>, on Sun Aug 2 16:34:10 NZST 2009
+# Recipe for version 1.8.5 by Michael Homer <michael@gobolinux.org>, on Sun Aug 2 16:34:10 NZST 2009
+compile_version=1.12.0
+url="http://files.randombit.net/botan/Botan-1.8.5.tbz"
+# Necessary so archive code knows what to do
+file=Botan-1.8.5.tar.bz2
+file_size=3028090
+file_md5=6c0943fa4282bd57a23316c6d3c21279
+recipe_type=configure
+configure=configure.py

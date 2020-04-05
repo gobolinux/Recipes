@@ -1,0 +1,17 @@
+# Recipe for version 2.3.32 by Jonas Karlsson <jonka750@student.liu.se>, on Wed May 30 22:29:45 CEST 2007
+# Recipe for OpenLdap by Maglan C. Diemer, maglan@univates.br
+compile_version=1.8.4
+url="ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/openldap-2.3.32.tgz"
+file_size=3763696
+file_md5=154d674cf95a8f8acc496cc6cb0671e1
+recipe_type=configure
+configure_options=(
+   --localstatedir=${goboVariable}/openldap
+)
+pre_install() {
+   mkdir -p $goboVariable/openldap
+}
+
+unmanaged_files=(
+    $goboVariable/openldap
+)

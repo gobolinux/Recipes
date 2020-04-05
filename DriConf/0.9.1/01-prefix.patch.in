@@ -1,0 +1,8 @@
+--- driconf-0.9.1/setup.cfg	2005-08-11 21:07:12.000000000 +0200
++++ driconf-0.9.1/setup.cfg.new	2007-03-27 23:43:21.000000000 +0200
+@@ -1,3 +1,3 @@
+ [install]
+-prefix=/usr/local
+-install-purelib=/usr/local/lib/driconf
++prefix=@%Compile_target%@
++install-purelib=@%Compile_target%@/lib/driconf

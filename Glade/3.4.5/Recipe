@@ -1,0 +1,10 @@
+# Recipe for version 3.4.5 by Andreas Köhler <andi5.py@gmx.net>, on Sat Aug 23 17:55:27 BRT 2008
+# Recipe (MakeRecipe) for Glade by roko, <ro.ko@mcnon.com>, on Sat Nov 20 22:52:53 BRST 2004
+compile_version=1.8.0
+url="ftp://ftp.gnome.org/pub/gnome/sources/glade3/3.4/glade3-3.4.5.tar.bz2"
+file_size=1777173
+file_md5=39924af2e97f55f0a159f930ee4acb1c
+recipe_type=configure
+configure_options=(
+   --disable-scrollkeeper
+)

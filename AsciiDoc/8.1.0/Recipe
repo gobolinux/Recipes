@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for AsciiDoc by Aitor Pérez Iturri, on lun feb 19 10:54:16 CET 2007
+# Recipe for version 8.1.0 by Aitor Pérez Iturri, on lun feb 19 10:54:16 CET 2007
+compile_version=1.8.2
+url="http://www.methods.co.nz/asciidoc/asciidoc-8.1.0.tar.gz"
+file_size=761244
+file_md5=6d3e050b72a8b6df112c2f9aad7a4016
+recipe_type=makefile
+do_build=no
+do_install=no
+
+pre_link () {
+	./install.sh
+}

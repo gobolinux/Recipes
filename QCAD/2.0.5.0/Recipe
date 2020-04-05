@@ -1,0 +1,20 @@
+# Recipe (MakeRecipe) for QCAD by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Oct 23 14:50:11 BRST 2012
+# Recipe for version 2.0.5.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Oct 23 14:50:11 BRST 2012
+compile_version=1.0.1
+url="http://www.ribbonsoft.com/archives/qcad/qcad-2.0.5.0-1-community.src.tar.gz"
+file_size=4470033
+file_md5=96b6a56027782aec953c9c4e64c5998c
+recipe_type=manifest
+
+environment=(
+    QTDIR=$qt_path
+)
+
+pre_build() {
+    cd scripts
+    ./build_qcad.sh notrans || exit 1
+}
+
+manifest=(
+    "qcad/qcad:bin"
+)

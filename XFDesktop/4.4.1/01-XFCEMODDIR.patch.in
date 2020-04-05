@@ -1,0 +1,48 @@
+diff -Naur xfdesktop-4.4.1/common/Makefile.am xfdesktop-4.4.1.new/common/Makefile.am
+--- xfdesktop-4.4.1/common/Makefile.am	2007-01-25 21:53:35.000000000 +0100
++++ xfdesktop-4.4.1.new/common/Makefile.am	2007-04-17 09:13:36.000000000 +0200
+@@ -15,7 +15,7 @@
+   libxfdesktop_menu_la_CFLAGS = \
+ 	$(GMODULE_CFLAGS) \
+ 	$(GTK_CFLAGS) \
+-	-DXFCEMODDIR=\"$(libdir)/xfce4/modules\"
++	-DXFCEMODDIR=\"@%Compile_goboLibraries%@/xfce4/modules\"
+ endif
+ 
+ if HAVE_CYGWIN
+diff -Naur xfdesktop-4.4.1/common/Makefile.in xfdesktop-4.4.1.new/common/Makefile.in
+--- xfdesktop-4.4.1/common/Makefile.in	2007-04-09 17:56:42.000000000 +0200
++++ xfdesktop-4.4.1.new/common/Makefile.in	2007-04-17 09:14:06.000000000 +0200
+@@ -315,7 +315,7 @@
+ @BUILD_DESKTOP_MENU_TRUE@libxfdesktop_menu_la_CFLAGS = \
+ @BUILD_DESKTOP_MENU_TRUE@	$(GMODULE_CFLAGS) \
+ @BUILD_DESKTOP_MENU_TRUE@	$(GTK_CFLAGS) \
+-@BUILD_DESKTOP_MENU_TRUE@	-DXFCEMODDIR=\"$(libdir)/xfce4/modules\"
++@BUILD_DESKTOP_MENU_TRUE@	-DXFCEMODDIR=\"@%Compile_goboLibraries%@/xfce4/modules\"
+ 
+ @HAVE_CYGWIN_TRUE@libxfdesktop_menu_la_LDLAGS = -no-undefined
+ all: all-am
+diff -Naur xfdesktop-4.4.1/src/Makefile.am xfdesktop-4.4.1.new/src/Makefile.am
+--- xfdesktop-4.4.1/src/Makefile.am	2007-01-25 21:53:23.000000000 +0100
++++ xfdesktop-4.4.1.new/src/Makefile.am	2007-04-17 09:14:28.000000000 +0200
+@@ -55,7 +55,7 @@
+ 	-DLOCALEDIR=\"$(localedir)\" \
+ 	-DDATADIR=\"$(datadir)\" \
+ 	-DSYSCONFDIR=\"$(sysconfdir)\" \
+-	-DXFCEMODDIR=\"$(libdir)/xfce4/modules\" \
++	-DXFCEMODDIR=\"@%Compile_goboLibraries%@/xfce4/modules\" \
+ 	$(LIBX11_CFLAGS)	\
+ 	$(GMODULE_CFLAGS) \
+ 	$(LIBXFCEGUI4_CFLAGS) \
+diff -Naur xfdesktop-4.4.1/src/Makefile.in xfdesktop-4.4.1.new/src/Makefile.in
+--- xfdesktop-4.4.1/src/Makefile.in	2007-04-09 17:56:44.000000000 +0200
++++ xfdesktop-4.4.1.new/src/Makefile.in	2007-04-17 09:14:41.000000000 +0200
+@@ -407,7 +407,7 @@
+ xfdesktop_CFLAGS = -I$(top_srcdir) -I$(top_srcdir)/common \
+ 	-DBINDIR=\"$(bindir)\" -DLOCALEDIR=\"$(localedir)\" \
+ 	-DDATADIR=\"$(datadir)\" -DSYSCONFDIR=\"$(sysconfdir)\" \
+-	-DXFCEMODDIR=\"$(libdir)/xfce4/modules\" $(LIBX11_CFLAGS) \
++	-DXFCEMODDIR=\"@%Compile_goboLibraries%@/xfce4/modules\" $(LIBX11_CFLAGS) \
+ 	$(GMODULE_CFLAGS) $(LIBXFCEGUI4_CFLAGS) \
+ 	$(LIBXFCE4MCS_CLIENT_CFLAGS) $(am__append_3) $(am__append_6)
+ xfdesktop_LDFLAGS = \

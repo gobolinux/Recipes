@@ -1,0 +1,14 @@
+Fixes compilation error (undeclared symbol) when compiling with newer versions of
+PCSC-Lite. Patch from http://git.savannah.gnu.org/cgit/gnokii.git/commit?id=3dac96714fba1f06445c15e34af3a0c3ad7eb1ce.
+
+diff -aur gnokii-0.6.29-vanilla/common/phones/pcsc.c gnokii-0.6.29-fixed/common/phones/pcsc.c
+--- gnokii-0.6.29-vanilla/common/phones/pcsc.c	2010-02-22 20:05:36.000000000 -0300
++++ gnokii-0.6.29-fixed/common/phones/pcsc.c	2011-10-01 22:17:03.000000000 -0300
+@@ -199,7 +199,6 @@
+ 	case SCARD_W_UNPOWERED_CARD:
+ 	case SCARD_W_RESET_CARD:
+ 	case SCARD_W_REMOVED_CARD:
+-	case SCARD_W_INSERTED_CARD:
+ 	 	return GN_ERR_SIMPROBLEM;
+ 	case SCARD_E_NO_MEMORY:
+ 		return GN_ERR_MEMORYFULL;

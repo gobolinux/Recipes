@@ -1,0 +1,8 @@
+# Recipe for version 7.0.16 by Jonas Karlsson <jonas@gobolinux.org>, on Tue Jan 5 15:33:36 CET 2010
+# Recipe (MakeRecipe) for XProto by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 20:16:13 BRT 2005
+compile_version=1.8.5
+url="http://xorg.freedesktop.org/releases/individual/proto/xproto-7.0.16.tar.bz2"
+file_size=159876
+file_md5=75c9edff1f3823e5ab6bb9e66821a901
+recipe_type=configure
+part_of=Xorg-Proto

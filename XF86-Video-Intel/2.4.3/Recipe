@@ -1,0 +1,13 @@
+# Recipe for version 2.4.3 by Jonas Karlsson <jonas@gobolinux.org>, on Fri Feb 13 15:08:41 CET 2009
+# Recipe (MakeRecipe) for XF86-Video-Intel by Jonas Karlsson <jonka750@student.liu.se>, on Fri Apr 20 15:48:25 CEST 2007
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/driver/xf86-video-intel-2.4.3.tar.bz2"
+file_size=661105
+file_md5=a664819288b98a37f77ab6ae1e14c9d9
+recipe_type=configure
+part_of=Xorg-Driver
+pre_build() {
+    aclocal
+    libtoolize
+    autoconf
+}

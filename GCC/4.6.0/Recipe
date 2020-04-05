@@ -1,0 +1,38 @@
+# Recipe for version 4.6.0 by Joshua Sako <jginsu@gmail.com>, on Sat May 14 13:11:52 EST 2011
+# by Hisham Muhammad, Guilherme Bedin
+url="${ftpGnu}/gcc/gcc-4.6.0/gcc-4.6.0.tar.bz2"
+file_size=71579535
+file_md5=93d1c436bf991564524701259b6285a2
+compile_version=1.9.0
+recipe_type=configure
+needs_build_directory=yes
+
+configure_options=(
+   --libexecdir="${target}/lib"
+   --with-cpp-install-dir="lib"
+   --enable-shared
+   --enable-threads="posix"
+   --enable-__cxa_atexit
+   --enable-clocale="gnu"
+   --enable-languages="c,c++,objc"
+   --with-system-zlib
+   --disable-bootstrap
+)
+with_gcj=("--enable-languages=java")
+
+install_variables=(
+   itoolsdir="${target}/lib/install-tools"
+   itoolsdatadir="${target}/lib/install-tools"
+   libexecdir="${target}/lib"
+)
+
+pre_link() {
+   ln -s gcc "$target/bin"/cc
+   rm -f "$target/lib"/libiberty.a
+   ln -nsf "$target/bin/cc" "$goboExecutables"/cc
+   ln -nsf "$target/lib/cpp" "$goboLibraries"/cc
+   if [ "$(type -t private__add_arch_aliases)" = "function" ]
+   then
+      private__add_arch_aliases
+   fi
+}

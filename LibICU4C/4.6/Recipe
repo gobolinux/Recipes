@@ -1,0 +1,8 @@
+# Recipe for version 4.6 by Diogo Lima <diogo.urb@gmail.com>, on Tue Feb 1 15:12:44 BRST 2011
+# Recipe (MakeRecipe) for LibICU by Daniele Maccari <daniele.maccari@gmail.com>, on Wed Feb 13 11:50:18 CET 2008
+compile_version=1.10.1
+url="http://download.icu-project.org/files/icu4c/4.6/icu4c-4_6-src.tgz"
+file_size=15543712
+file_md5=43e56b71c407be5154de681eaa646a4a
+dir='icu/source'
+recipe_type=configure

@@ -1,0 +1,11 @@
+# Recipe for version 3.4.2 by Andre Detsch, on Thu Jul 28 11:25:48 BRT 2005
+# by Maglan C. Diemer, 3.4.2 by roko
+
+url="ftp://ftp.kde.org/pub/kde/stable/3.4.2/src/kdeadmin-3.4.2.tar.bz2"
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+  #"DO_NOT_COMPILE=kcmlinuz kcron kdat kfile-plugins kpackage ksysv kuser lilo-config secpolicy"
+)

@@ -1,7 +1,0 @@
-configure_options=(
-    ${configure_options[@]}
-    --enable-add-ons
-)
-environment=(
-   CFLAGS="-O2 -pipe -march=i686"
-)

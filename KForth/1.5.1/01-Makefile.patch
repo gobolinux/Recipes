@@ -1,0 +1,13 @@
+Common subdirectories: kforth-1.5.1/examples and kforth-1.5.1.modified/examples
+diff -Nu kforth-1.5.1/Makefile kforth-1.5.1.modified/Makefile
+--- kforth-1.5.1/Makefile	2010-05-01 22:29:28.000000000 +0200
++++ kforth-1.5.1.modified/Makefile	2010-05-13 18:44:09.458314483 +0200
+@@ -131,4 +131,7 @@
+ 
+ 
+ # end of makefile
+-
++INSTALL = /usr/bin/install -D
++install: all
++	$(INSTALL) kforth $(DESTDIR)/bin/kforth
++	$(INSTALL) kforth-fast $(DESTDIR)/bin/kforth-fast

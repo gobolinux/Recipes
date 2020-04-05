@@ -1,0 +1,14 @@
+# Recipe for version 6.4.1_8 by Giambattista Bloisi <giamby@infinito.it>, on Sun Jun 15 22:55:42 BRT 2008
+# Recipe (MakeRecipe) for ImageMagick by Seb Haezebrouck, on Wed Mar 19 14:19:20 CET 2008
+compile_version=1.10.2
+url="ftp://ftp.imagemagick.org/pub/ImageMagick/ImageMagick-6.4.1-8.tar.bz2"
+file_size=8839304
+file_md5=9cdd2ec825f651ff6b9b5cfa67088974
+dir='ImageMagick-6.4.1'
+recipe_type=configure
+configure_options=(
+    "--enable-shared"
+    "--with-x"
+    "--without-perl"
+)
+

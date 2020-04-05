@@ -1,0 +1,9 @@
+# Recipe for version 1.1.2 by Andre Detsch <detsch@gobolinux.org>, on Mon Nov 27 14:17:00 BRST 2006
+# Recipe (MakeRecipe) for XineLib by Michael Farrell <michael@xinomorph.org>, on Sun Oct 24 19:29:17 CST 2004
+url="$httpSourceforge/xine/xine-lib-1.1.2.tar.bz2"
+recipe_type=configure
+configure_options=(
+	"--with-xv-path=$goboLibraries"
+	"--with-xvmc-path=$goboLibraries"
+	"--enable-ipv6"
+)

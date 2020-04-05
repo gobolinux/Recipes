@@ -1,0 +1,25 @@
+# Recipe for version 0.9.1 by Leandro Motta Barros <lmb@stackedboxes.org>, on Sat Jun 18 19:59:19 BRT 2011
+# Recipe (MakeRecipe) for MyPaint by Leandro Motta Barros <lmb@stackedboxes.org>, on Sun Jul 26 08:50:28 BRT 2009
+compile_version=1.11.2
+url="http://download.gna.org/mypaint/mypaint-0.9.1.tar.bz2"
+file_size=5542866
+file_md5=6249a16359a438d6dc658f5765b35515
+recipe_type=scons
+
+do_install() {
+   scons_do_install "$@"
+
+   # The main script installed by default works only if ran from the right directory.
+   # So, create a wrapper that changes to that directory and runs MyPaint.
+
+   mv "$target/bin/mypaint" "$target/bin/mypaint_main"
+
+   cat << EOF > "$target/bin/mypaint"
+#!/bin/sh
+
+cd $target
+bin/mypaint_main
+EOF
+
+   chmod 755 "$target/bin/mypaint"
+}

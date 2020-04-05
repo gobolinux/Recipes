@@ -1,9 +1,0 @@
-# Recipe (MakeRecipe) for Neofetch by Wilson Moura <wilsonmoura@tuta.io>, on Mon May 8 22:59:43 CDT 2017
-# Recipe for version git by <lenticular@protonmail.com>, on Mon May 8 22:59:43 CDT 2017
-compile_version=016.01
-git="https://github.com/dylanaraps/neofetch.git"
-recipe_type=makefile
-makefile='Makefile'
-make_variables=(
-   "PREFIX=$target"
-)

@@ -1,0 +1,12 @@
+# Recipe for version 0.37 by Aitor Pérez Iturri, on mar feb 20 10:24:15 CET 2007
+compile_version=1.8.2
+url="http://www.winfield.demon.nl/linux/antiword-0.37.tar.gz"
+recipe_type=makefile
+makefile='Makefile'
+install_target='global_install'
+make_variables=(
+	DESTDIR="/"
+	GLOBAL_INSTALL_DIR="$target/bin"
+	GLOBAL_RESOURCES_DIR="$target/Shared/antiword"
+	GLOBAL_MAN_DIR="$target/man"
+)

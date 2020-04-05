@@ -1,0 +1,12 @@
+# Recipe for version 2.28.0 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. dec. 23., szerda, 22.42.29 CET
+# Recipe (MakeRecipe) for Gnome-Python by Jonas Karlsson <jonka750@student.liu.se>, on Sun Aug 27 02:29:06 CEST 2006
+compile_version=1.8.0
+url="http://ftp.gnome.org/pub/GNOME/sources/gnome-python/2.28/gnome-python-2.28.0.tar.bz2"
+file_size=560872
+file_md5=b627abbb0ed912e221cc072e3dd6f9d6
+recipe_type=configure
+configure_options=(
+   --disable-gnome
+   --disable-gnomeui
+   --disable-bonobo
+)

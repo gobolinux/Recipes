@@ -1,0 +1,11 @@
+# Recipe for version 0.8.18.1 by Hisham Muhammad <hisham@gobolinux.org>, on Thu Nov 3 18:23:08 BRST 2011
+# Recipe (MakeRecipe) for Leafpad by Matthias Wolf, on Thu May 12 18:43:20 CEST 2005
+compile_version=1.8.0
+url="http://savannah.nongnu.org/download/leafpad/leafpad-0.8.18.1.tar.gz"
+file_size=289117
+file_md5=254a72fc67505e3aa52884c729cd7b97
+recipe_type=configure
+
+configure_options=(
+	"--enable-chooser"
+)

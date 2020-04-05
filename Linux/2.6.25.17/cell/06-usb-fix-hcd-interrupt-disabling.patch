@@ -1,0 +1,63 @@
+Subject: USB: fix hcd interrupt disabling
+
+Commit de85422b94ddb23c021126815ea49414047c13dc, 'USB: fix interrupt
+disabling for HCDs with shared interrupt handlers' changed usb_add_hcd()
+to strip IRQF_DISABLED from irqflags prior to calling request_irq()
+with the justification that such a removal was necessary for shared
+interrupts to work properly.  Unfortunately, the change in that commit
+unconditionally removes the IRQF_DISABLED flag, causing problems on
+platforms that don't use a shared interrupt but require IRQF_DISABLED.
+This change adds a check for IRQF_SHARED prior to removing the
+IRQF_DISABLED flag.
+
+Fixes the PS3 system startup hang reported with recent Fedora and
+OpenSUSE kernels.
+
+Note that this problem is hidden when CONFIG_LOCKDEP=y (ps3_defconfig),
+as local_irq_enable_in_hardirq() is defined as a null statement for
+that config.
+
+CC: stable <stable@kernel.org>
+Signed-off-by: Geoff Levand <geoffrey.levand@am.sony.com>
+---
+
+> From: Stefan Becker <Stefan.Becker@nokia.com>
+> 
+> USB: fix interrupt disabling for HCDs with shared interrupt handlers
+> 
+> As has been discussed several times on LKML, IRQF_SHARED | IRQF_DISABLED
+> doesn't work reliably, i.e. a shared interrupt handler CAN'T be certain to
+> be called with interrupts disabled. Most USB HCD handlers use IRQF_DISABLED
+> and therefore havoc can break out if they share their interrupt with a
+> handler that doesn't use it.
+> 
+> On my test machine the yenta_socket interrupt handler (no IRQF_DISABLED)
+> was registered before ehci_hcd and one uhci_hcd instance. Therefore all
+> usb_hcd_irq() invocations for ehci_hcd and for one uhci_hcd instance
+> happened with interrupts enabled. That led to random lockups as USB core
+> HCD functions that acquire the same spinlock could be called twice
+> from interrupt handlers.
+> 
+> This patch updates usb_hcd_irq() to always disable/restore interrupts.
+> usb_add_hcd() will silently remove any IRQF_DISABLED requested from HCD code.
+
+ drivers/usb/core/hcd.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+--- a/drivers/usb/core/hcd.c
++++ b/drivers/usb/core/hcd.c
+@@ -1883,11 +1883,12 @@ int usb_add_hcd(struct usb_hcd *hcd,
+ 
+ 		/* IRQF_DISABLED doesn't work as advertised when used together
+ 		 * with IRQF_SHARED. As usb_hcd_irq() will always disable
+ 		 * interrupts we can remove it here.
+ 		 */
+-		irqflags &= ~IRQF_DISABLED;
++		if (irqflags & IRQF_SHARED)
++			irqflags &= ~IRQF_DISABLED;
+ 
+ 		snprintf(hcd->irq_descr, sizeof(hcd->irq_descr), "%s:usb%d",
+ 				hcd->driver->description, hcd->self.busnum);
+ 		if ((retval = request_irq(irqnum, &usb_hcd_irq, irqflags,
+ 				hcd->irq_descr, hcd)) != 0) {
+

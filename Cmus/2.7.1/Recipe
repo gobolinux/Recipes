@@ -1,0 +1,11 @@
+# Recipe for version 2.7.1 by Wilson Moura <wilsonmourati@gmail.com>, on sex mar 24 13:39:22 BRT 2017
+# Recipe (MakeRecipe) for Cmus by Jonas Karlsson <jonka750@student.liu.se>, on Mon Feb 11 17:29:04 GMT 2008
+compile_version=1.10.2
+url="https://github.com/cmus/cmus/archive/v2.7.1.tar.gz"
+file_size=296818
+file_md5=0588ab955db44a8e9deb03446d73b5df
+recipe_type=configure
+dir="cmus-2.7.1"
+configure_options=(
+   prefix=$target
+)

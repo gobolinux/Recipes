@@ -1,0 +1,11 @@
+# Recipe for version 2.0.85 by Demian Florentin <demianflorentin@gmail.com>, on Sat Nov 21 12:13:43 PYST 2009
+# Recipe (MakeRecipe) for LibSelinux by Demian Florentin <demianflorentin@gmail.com>, on Sat Nov 21 12:02:56 PYST 2009
+compile_version=1.12.3
+url="http://userspace.selinuxproject.org/releases/20090731/devel/libselinux-2.0.85.tar.gz"
+file_size=175396
+file_md5=683e5f63035c6dc1af42769e690558e9
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(PREFIX="$target")
+install_variables=(DESTDIR="$target")
+

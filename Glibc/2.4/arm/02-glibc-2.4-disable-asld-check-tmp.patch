@@ -1,0 +1,38 @@
+NOTE: Temporary patch until there is a version of binutils released that
+supports arm eABI.
+
+This is a temporary HACK!!
+
+Disable version checking for ld and as because a snapshot of binutils
+is currently being used: binutils-060410
+==============================================================================
+--- glibc-2.4/configure.orig	Mon Mar  6 11:18:56 2006
++++ glibc-2.4/configure	Tue Apr 11 10:39:52 2006
+@@ -4041,10 +4041,11 @@
+ echo $ECHO_N "checking version of $AS... $ECHO_C" >&6
+   ac_prog_version=`$AS --version 2>&1 | sed -n 's/^.*GNU assembler.* \([0-9]*\.[0-9.]*\).*$/\1/p'`
+   case $ac_prog_version in
+-    '') ac_prog_version="v. ?.??, bad"; ac_verc_fail=yes;;
++    '') ac_prog_version="v. ?.??, ok"; ac_verc_fail=no;;
+     2.1[3-9]*)
+        ac_prog_version="$ac_prog_version, ok"; ac_verc_fail=no;;
+-    *) ac_prog_version="$ac_prog_version, bad"; ac_verc_fail=yes;;
++    # Disable this for now as we're using a snapshot of binutils.
++    *) ac_prog_version="$ac_prog_version, ok"; ac_verc_fail=no;;
+ 
+   esac
+   echo "$as_me:$LINENO: result: $ac_prog_version" >&5
+@@ -4102,10 +4103,11 @@
+ echo $ECHO_N "checking version of $LD... $ECHO_C" >&6
+   ac_prog_version=`$LD --version 2>&1 | sed -n 's/^.*GNU ld.* \([0-9][0-9]*\.[0-9.]*\).*$/\1/p'`
+   case $ac_prog_version in
+-    '') ac_prog_version="v. ?.??, bad"; ac_verc_fail=yes;;
++    '') ac_prog_version="v. ?.??, ok"; ac_verc_fail=no;;
+     2.1[3-9]*)
+        ac_prog_version="$ac_prog_version, ok"; ac_verc_fail=no;;
+-    *) ac_prog_version="$ac_prog_version, bad"; ac_verc_fail=yes;;
++    # Disable this for now since we are using a snapshot of binutils.
++    *) ac_prog_version="$ac_prog_version, ok"; ac_verc_fail=no;;
+ 
+   esac
+   echo "$as_me:$LINENO: result: $ac_prog_version" >&5

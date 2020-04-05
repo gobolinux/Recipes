@@ -1,0 +1,11 @@
+configure_options=(
+    "--enable-debug=no"
+    "--with-threads=posix"
+    "--cache-file=sh4_cache.conf"
+)
+
+pre_build() {
+    cp $archsubdir/sh4_cache.conf $dir
+    GrepReplace host_cpu target_cpu configure.in
+    autoconf
+}

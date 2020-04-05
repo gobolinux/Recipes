@@ -1,0 +1,13 @@
+# Recipe for version 1.11.1.1 by Hugo Barrocas <barrocas75@gmail.com>, on Qua Mar 30 01:18:31 UTC 2016
+# Recipe (MakeRecipe) for LibXCB by Lucas C. Villa Real, on Mon Mar 5 16:06:23 BRT 2007
+compile_version=1.8.2
+url="https://xcb.freedesktop.org/dist/libxcb-1.11.1.tar.bz2"
+file_size=519517
+file_md5=f97a65e6158775de518ac391935634c2
+recipe_type=configure
+part_of=Xorg-Lib
+
+# Stop xcb_xlib assertions.
+build_variables=(
+ "CPPFLAGS=-DNDEBUG"
+)

@@ -1,0 +1,12 @@
+# Recipe for version 2.1 by Diogo Lima <diogo.urb@gmail.com>, on Fri Jan 28 22:11:08 BRST 2011
+# Recipe (MakeRecipe) for XKeyboard-Config by Giambattista Bloisi <giamby@infinito.it>, on Mon Jun 2 14:53:57 CEST 2008
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/releases/individual/data/xkeyboard-config/xkeyboard-config-2.1.tar.bz2"
+file_size=699368
+file_md5=57ecc78bacd8ecc398d8ed6588f4d04b
+recipe_type=configure
+part_of=Xorg-App
+
+configure_options=(
+    --with-xkb-rules-symlink=xorg
+)

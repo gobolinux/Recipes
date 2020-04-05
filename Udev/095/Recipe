@@ -1,0 +1,26 @@
+# Recipe for version 095 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Fri Jul 7 16:59:43 BRT 2006
+# Recipe for Udev 095 by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.7.1
+url="http://www.kernel.org/pub/linux/utils/kernel/hotplug/udev-095.tar.bz2"
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=(
+    prefix="$target"
+    etcdir="$settings_target"
+    udevdir="$goboDevices"
+    usrbindir="$target/bin"
+    usrsbindir="$target/sbin"
+    mandir="$target/man"
+    includedir="$target/include"
+    usrlibdir="$target/lib"
+)
+
+pre_link() {
+   pushd $target/bin
+   for i in ../lib/udev/*
+   do
+       [ -x $i ] && ln -s $i .
+   done
+   popd
+}

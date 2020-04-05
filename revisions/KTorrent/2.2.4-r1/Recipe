@@ -1,9 +1,0 @@
-# Recipe for version 2.2.4 by Daniele Maccari, on Sun Dec 30 11:52:41 CET 2007
-compile_version=1.9.0
-url="http://ktorrent.org/downloads/2.2.4/ktorrent-2.2.4.tar.gz"
-file_size=3843873
-file_md5=51baa9ad846290ae9ad492b6a664709a
-recipe_type=configure
-configure_options=(
-'--disable-libsuffix'
-)

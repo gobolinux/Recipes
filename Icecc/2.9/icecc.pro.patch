@@ -1,0 +1,11 @@
+--- icecc-2.9/icecc.pro	2005-05-09 13:12:55.000000000 +0200
++++ icecc-2.9/icecc.pro	2005-05-09 13:16:04.000000000 +0200
+@@ -2,7 +2,7 @@
+ HEADERS  += icecc.h iceccvector.h intl.h itool.h parsecfg.h qcentralwidget.h qthemebrowser.h tools.h
+ 
+ TEMPLATE  = app
+-PREFIX    = /usr/local
++PREFIX    = ${goboPrograms}/Icecc/2.9/
+ CONFIG   += release warn_on thread qt
+ DEFINES  += VERSION=\"2.9\"
+ DEFINES  += PREFIX=\"$$PREFIX\"

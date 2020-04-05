@@ -1,0 +1,24 @@
+url="$httpSourceforge/dvd-slideshow/dvd-slideshow_0.5.2.tar.gz"
+compile_version=1.8.0
+recipe_type=manifest
+manifest=(
+   "dvd-burn:bin"
+   "dvd-encode:bin"
+   "dvd-iso:bin"
+   "dvd-menu:bin"
+   "dvd-slideshow:bin"
+   "gallery2slideshow:bin"
+   "jigl2slideshow:bin"
+   "man/dvd-menu.1:man/man1"
+   "man/dvd-slideshow.1:man/man1"
+   "doc/changelog.html:doc"
+   "doc/dvd-encode.html:doc"
+   "doc/dvd-menu.html:doc"
+   "doc/dvd-slideshow.html:doc"
+   "doc/examples.html:doc"
+   "doc/gallery2slideshow.html:doc"
+   "doc/jigl2slideshow.html:doc"
+   "doc/README.html:doc"
+   "doc/test_with_background.html:doc"
+   "doc/test_with_background.txt:doc"
+)

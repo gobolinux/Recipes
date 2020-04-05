@@ -1,0 +1,186 @@
+This patch renames the libraries and adds "-gnutls" to the name, so
+that this package can be installed side by side with the normal Curl
+package.
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+
+Index: curl/lib/Makefile.am
+===================================================================
+--- curl.orig/lib/Makefile.am	2008-06-04 19:03:05.000000000 +0200
++++ curl/lib/Makefile.am	2008-06-04 19:03:05.000000000 +0200
+@@ -39,7 +39,7 @@
+ 
+ CLEANFILES = $(DSP) $(VCPROJ)
+ 
+-lib_LTLIBRARIES = libcurl.la
++lib_LTLIBRARIES = libcurl-gnutls.la
+ LIBCURL_LIBS = @LIBCURL_LIBS@
+ 
+ # we use srcdir/include for the static global include files
+@@ -95,12 +95,12 @@
+ VERSIONED_SYMBOLS = -Wl,--version-script=libcurl.vers
+ endif
+ 
+-libcurl_la_LDFLAGS = $(UNDEF) $(VERSIONINFO) $(MIMPURE) $(LIBCURL_LIBS) $(VERSIONED_SYMBOLS)
++libcurl_gnutls_la_LDFLAGS = $(UNDEF) $(VERSIONINFO) $(MIMPURE) $(LIBCURL_LIBS) $(VERSIONED_SYMBOLS)
+ 
+ # Makefile.inc provides the CSOURCES and HHEADERS defines
+ include Makefile.inc
+ 
+-libcurl_la_SOURCES = $(CSOURCES) $(HHEADERS)
++libcurl_gnutls_la_SOURCES = $(CSOURCES) $(HHEADERS)
+ 
+ WIN32SOURCES = $(CSOURCES)
+ WIN32HEADERS = $(HHEADERS) config-win32.h
+Index: curl/src/Makefile.am
+===================================================================
+--- curl.orig/src/Makefile.am	2008-06-04 19:03:00.000000000 +0200
++++ curl/src/Makefile.am	2008-06-04 19:03:05.000000000 +0200
+@@ -37,8 +37,8 @@
+ 
+ include Makefile.inc
+ 
+-curl_LDADD = ../lib/libcurl.la @CURL_LIBS@
+-curl_DEPENDENCIES = ../lib/libcurl.la
++curl_LDADD = ../lib/libcurl-gnutls.la @CURL_LIBS@
++curl_DEPENDENCIES = ../lib/libcurl-gnutls.la
+ BUILT_SOURCES = hugehelp.c
+ CLEANFILES = hugehelp.c
+ # Use the C locale to ensure that only ASCII characters appear in the
+Index: curl/tests/libtest/Makefile.am
+===================================================================
+--- curl.orig/tests/libtest/Makefile.am	2008-06-04 19:03:00.000000000 +0200
++++ curl/tests/libtest/Makefile.am	2008-06-04 19:03:05.000000000 +0200
+@@ -51,8 +51,8 @@
+   lib544 lib545 lib547 lib548 lib549 lib552 lib553 lib554 lib555 lib556
+ 
+ # Dependencies (may need to be overriden)
+-LDADD = $(LIBDIR)/libcurl.la
+-DEPENDENCIES = $(LIBDIR)/libcurl.la
++LDADD = $(LIBDIR)/libcurl-gnutls.la
++DEPENDENCIES = $(LIBDIR)/libcurl-gnutls.la
+ 
+ 
+ lib500_SOURCES = lib500.c $(SUPPORTFILES)
+Index: curl/docs/examples/Makefile.am
+===================================================================
+--- curl.orig/docs/examples/Makefile.am	2008-06-04 19:03:01.000000000 +0200
++++ curl/docs/examples/Makefile.am	2008-06-04 19:03:05.000000000 +0200
+@@ -19,7 +19,7 @@
+ CPPFLAGS = -DCURL_NO_OLDIES $(STATICCPPFLAGS)
+ 
+ # Dependencies
+-LDADD = $(LIBDIR)/libcurl.la
++LDADD = $(LIBDIR)/libcurl-gnutls.la
+ 
+ # Makefile.inc provides the check_PROGRAMS and COMPLICATED_EXAMPLES defines
+ include Makefile.inc
+
+--- curl-7.19.3/src/Makefile.in	2009-01-13 13:05:12.000000000 +0100
++++ curl-7.19.3/src/Makefile.in.new	2009-02-05 11:02:14.000000000 +0100
+@@ -306,8 +306,8 @@
+ 	writeout.h writeenv.h getpass.h homedir.h curlutil.h
+ 
+ curl_SOURCES = $(CURL_SOURCES) $(CURLX_ONES) $(CURL_HFILES)
+-curl_LDADD = ../lib/libcurl.la @CURL_LIBS@
+-curl_DEPENDENCIES = ../lib/libcurl.la
++curl_LDADD = ../lib/libcurl-gnutls.la @CURL_LIBS@
++curl_DEPENDENCIES = ../lib/libcurl-gnutls.la
+ BUILT_SOURCES = hugehelp.c
+ CLEANFILES = hugehelp.c
+ EXTRA_DIST = mkhelp.pl makefile.dj Makefile.vc6 Makefile.b32 Makefile.m32 \
+--- curl-7.19.3/tests/libtest/Makefile.in	2009-01-13 13:05:13.000000000 +0100
++++ curl-7.19.3/tests/libtest/Makefile.in.new	2009-02-05 11:04:01.000000000 +0100
+@@ -557,8 +557,8 @@
+ SUPPORTFILES = first.c test.h
+ 
+ # Dependencies (may need to be overriden)
+-LDADD = $(LIBDIR)/libcurl.la
+-DEPENDENCIES = $(LIBDIR)/libcurl.la
++LDADD = $(LIBDIR)/libcurl-gnutls.la
++DEPENDENCIES = $(LIBDIR)/libcurl-gnutls.la
+ lib500_SOURCES = lib500.c $(SUPPORTFILES)
+ lib501_SOURCES = lib501.c $(SUPPORTFILES)
+ lib502_SOURCES = lib502.c $(SUPPORTFILES) $(TESTUTIL)
+--- curl-7.19.3/docs/examples/Makefile.in	2009-01-13 13:05:11.000000000 +0100
++++ curl-7.19.3/docs/examples/Makefile.in.new	2009-02-05 11:05:28.000000000 +0100
+@@ -397,7 +397,7 @@
+ @STATICLIB_TRUE@STATICCPPFLAGS = -DCURL_STATICLIB
+ 
+ # Dependencies
+-LDADD = $(LIBDIR)/libcurl.la
++LDADD = $(LIBDIR)/libcurl-gnutls.la
+ 
+ # These examples require external dependencies that may not be commonly
+ # available on POSIX systems, so don't bother attempting to compile them here.
+--- curl-7.19.3/lib/Makefile.in	2009-02-05 13:59:27.000000000 +0100
++++ curl-7.19.3/lib/Makefile.in.new	2009-02-05 14:02:25.000000000 +0100
+@@ -66,7 +66,7 @@
+ am__installdirs = "$(DESTDIR)$(libdir)"
+ libLTLIBRARIES_INSTALL = $(INSTALL)
+ LTLIBRARIES = $(lib_LTLIBRARIES)
+-libcurl_la_LIBADD =
++libcurl_gnutls_la_LIBADD =
+ am__objects_1 = file.lo timeval.lo base64.lo hostip.lo progress.lo \
+ 	formdata.lo cookie.lo http.lo sendf.lo ftp.lo url.lo dict.lo \
+ 	if2ip.lo speedcheck.lo ldap.lo ssluse.lo version.lo getenv.lo \
+@@ -80,8 +80,8 @@
+ 	gtls.lo sslgen.lo tftp.lo splay.lo strdup.lo socks.lo ssh.lo \
+ 	nss.lo qssl.lo rawstr.lo curl_addrinfo.lo
+ am__objects_2 =
+-am_libcurl_la_OBJECTS = $(am__objects_1) $(am__objects_2)
+-libcurl_la_OBJECTS = $(am_libcurl_la_OBJECTS)
++am_libcurl_gnutls_la_OBJECTS = $(am__objects_1) $(am__objects_2)
++libcurl_gnutls_la_OBJECTS = $(am_libcurl_gnutls_la_OBJECTS)
+ DEFAULT_INCLUDES = 
+ depcomp = $(SHELL) $(top_srcdir)/depcomp
+ am__depfiles_maybe = depfiles
+@@ -93,8 +93,8 @@
+ CCLD = $(CC)
+ LINK = $(LIBTOOL) --tag=CC --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+ 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+-SOURCES = $(libcurl_la_SOURCES)
+-DIST_SOURCES = $(libcurl_la_SOURCES)
++SOURCES = $(libcurl_gnutls_la_SOURCES)
++DIST_SOURCES = $(libcurl_gnutls_la_SOURCES)
+ ETAGS = etags
+ CTAGS = ctags
+ DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
+@@ -300,7 +300,7 @@
+  firefox-db2pem.sh
+ 
+ CLEANFILES = $(DSP) $(VCPROJ)
+-lib_LTLIBRARIES = libcurl.la
++lib_LTLIBRARIES = libcurl-gnutls.la
+ 
+ # Specify our include paths here, and do it relative to $(top_srcdir) and
+ # $(top_builddir), to ensure that these paths which belong to the library
+@@ -350,7 +350,7 @@
+ @MIMPURE_TRUE@MIMPURE = -mimpure-text
+ @VERSIONED_SYMBOLS_TRUE@VERSIONED_SYMBOLS = -Wl,--version-script=libcurl.vers
+ 
+-libcurl_la_LDFLAGS = $(UNDEF) $(VERSIONINFO) $(MIMPURE) $(LIBCURL_LIBS) $(VERSIONED_SYMBOLS)
++libcurl_gnutls_la_LDFLAGS = $(UNDEF) $(VERSIONINFO) $(MIMPURE) $(LIBCURL_LIBS) $(VERSIONED_SYMBOLS)
+ CSOURCES = file.c timeval.c base64.c hostip.c progress.c formdata.c	\
+   cookie.c http.c sendf.c ftp.c url.c dict.c if2ip.c speedcheck.c	\
+   ldap.c ssluse.c version.c getenv.c escape.c mprintf.c telnet.c	\
+@@ -375,7 +375,7 @@
+ 
+ 
+ # Makefile.inc provides the CSOURCES and HHEADERS defines
+-libcurl_la_SOURCES = $(CSOURCES) $(HHEADERS)
++libcurl_gnutls_la_SOURCES = $(CSOURCES) $(HHEADERS)
+ WIN32SOURCES = $(CSOURCES)
+ WIN32HEADERS = $(HHEADERS) config-win32.h
+ DSPOUT = | awk '{printf("%s\r\n", $$0)}' >> $(DSP)
+@@ -458,8 +458,8 @@
+ 	  echo "rm -f \"$${dir}/so_locations\""; \
+ 	  rm -f "$${dir}/so_locations"; \
+ 	done
+-libcurl.la: $(libcurl_la_OBJECTS) $(libcurl_la_DEPENDENCIES) 
+-	$(LINK) -rpath $(libdir) $(libcurl_la_LDFLAGS) $(libcurl_la_OBJECTS) $(libcurl_la_LIBADD) $(LIBS)
++libcurl-gnutls.la: $(libcurl_gnutls_la_OBJECTS) $(libcurl_gnutls_la_DEPENDENCIES) 
++	$(LINK) -rpath $(libdir) $(libcurl_gnutls_la_LDFLAGS) $(libcurl_gnutls_la_OBJECTS) $(libcurl_gnutls_la_LIBADD) $(LIBS)
+ 
+ mostlyclean-compile:
+ 	-rm -f *.$(OBJEXT)

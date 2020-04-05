@@ -1,6 +1,0 @@
-[Name]  prelink
-[Summary]  An ELF Prelinking Utility
-[Description]  The prelink program is a utility that modifies shared libraries and executables in the ELF format so that far less relocations need to be resolved at run time. This decreases program start-up time. You can enable prelink support via the YaST sysconfig editor or in /etc/sysconfig/prelink. Be aware that prelink modifies all libraries and executables on your system. Applications which monitor changes in files will no longer work.
-[Suse Category]  System/Base
-[License]  GPL
-[Homepage]  ftp://people.redhat.com/jakub/prelink

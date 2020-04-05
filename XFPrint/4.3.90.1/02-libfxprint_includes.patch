@@ -1,0 +1,14 @@
+--- xfce-4.3.90.1/src/xfprint-4.3.90.1/libxfprint/Makefile.in	2006-04-16 17:43:06.000000000 +0200
++++ xfce-4.3.90.1/src/xfprint-4.3.90.1.new/libxfprint/Makefile.in	2006-06-01 21:48:20.000000000 +0200
+@@ -304,8 +304,9 @@
+ 	-I$(top_srcdir)							\
+ 	@GMODULE_CFLAGS@						\
+ 	@GTK_CFLAGS@							\
+-	@LIBXFCE4UTIL_CFLAGS@
+-
++	@LIBXFCE4UTIL_CFLAGS@						\
++	@LIBXFCEGUI4_CFLAGS@
++	
+ libxfprint_la_LIBADD = \
+ 	@GMODULE_LIBS@							\
+ 	@GTK_LIBS@							\

@@ -1,0 +1,12 @@
+# Recipe for version 2.1.3 by Hisham Muhammad <hisham@gobolinux.org>, on Wed Aug 23 18:04:32 BRT 2017
+# Recipe (MakeRecipe) for Audacity by Hisham Muhammad <hisham@gobolinux.org>, on Sun Jul 27 14:35:59 BRT 2014
+compile_version=2.0
+url="http://gobolinux.org/mirror_url/Audacity/2.1.3/audacity-minsrc-2.1.3.tar.xz"
+# we can't rely on upstream's URL because it takes you to an HTML page
+# which redirects, so it only works via a browser. In any case, here is
+# the original source for comparison:
+# https://www.fosshub.com/Audacity.html/audacity-minsrc-2.1.3.tar.xz
+# obtained from http://www.audacityteam.org/download/source/
+file_size=8073388
+file_md5=c8c8225739bc7eecec9fae68a0ced471
+recipe_type=configure

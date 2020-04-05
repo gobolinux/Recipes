@@ -1,0 +1,7 @@
+# Recipe for Tcl 8.3.5 by Peter Eriksen <s022018@student.dtu.dk>
+compile_version=1.7.1
+url="$httpSourceforge/tcl/tcl8.3.5-src.tar.gz"
+file_size=2863381
+file_md5=5cb79f8b90cf1322cb1286b9fe67f7a2
+dir='tcl8.3.5/unix'
+recipe_type=configure

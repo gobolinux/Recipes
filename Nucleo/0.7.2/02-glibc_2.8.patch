@@ -1,0 +1,12 @@
+diff -Naurx CVS nucleo/nucleo/utils/FileUtils.cxx nucleo-0.7.2/nucleo/utils/FileUtils.cxx
+--- nucleo/nucleo/utils/FileUtils.cxx   2008-06-18 10:26:00.000000000 +0000
++++ nucleo-0.7.2/nucleo/utils/FileUtils.cxx     2008-06-09 13:44:39.000000000 +0000
+@@ -176,7 +176,7 @@
+ 
+   int
+   createFile(const char *filename) {
++    int fd = open(filename, O_WRONLY|O_CREAT|O_TRUNC, S_IRUSR|S_IWUSR) ;
+-    int fd = open(filename, O_WRONLY|O_CREAT|O_TRUNC) ;
+     fchmod(fd, S_IWUSR|S_IRUSR|S_IRGRP|S_IROTH) ;
+     return fd ;
+   }

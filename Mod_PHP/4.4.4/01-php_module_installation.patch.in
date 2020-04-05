@@ -1,0 +1,44 @@
+--- php-4.4.4.old/configure	2006-09-14 14:23:54.000000000 +0200
++++ php-4.4.4/configure	2006-09-14 14:26:14.000000000 +0200
+@@ -4877,19 +4877,10 @@
+     { echo "configure: error: Please note that Apache version >= 2.0.40 is required." 1>&2; exit 1; }
+   fi
+ 
+-  APXS_LIBEXECDIR='$(INSTALL_ROOT)'`$APXS -q LIBEXECDIR`
+-  if test -z `$APXS -q SYSCONFDIR`; then
++  APXS_LIBEXECDIR='@%Compile_target%@/lib/httpd/modules'
+     INSTALL_IT="\$(mkinstalldirs) '$APXS_LIBEXECDIR' && \
+                  $APXS -S LIBEXECDIR='$APXS_LIBEXECDIR' \
+                        -i -n php4"
+-  else
+-    APXS_SYSCONFDIR='$(INSTALL_ROOT)'`$APXS -q SYSCONFDIR`
+-    INSTALL_IT="\$(mkinstalldirs) '$APXS_LIBEXECDIR' && \
+-                \$(mkinstalldirs) '$APXS_SYSCONFDIR' && \
+-                 $APXS -S LIBEXECDIR='$APXS_LIBEXECDIR' \
+-                       -S SYSCONFDIR='$APXS_SYSCONFDIR' \
+-                       -i -a -n php4"
+-  fi
+ 
+   case $host_alias in
+   *aix*)
+@@ -5699,19 +5690,10 @@
+     { echo "configure: error: Please note that Apache version >= 2.0.44 is required." 1>&2; exit 1; }
+   fi
+ 
+-  APXS_LIBEXECDIR='$(INSTALL_ROOT)'`$APXS -q LIBEXECDIR`
+-  if test -z `$APXS -q SYSCONFDIR`; then
++  APXS_LIBEXECDIR='@%Compile_target%@/lib/httpd/modules'
+     INSTALL_IT="\$(mkinstalldirs) '$APXS_LIBEXECDIR' && \
+                  $APXS -S LIBEXECDIR='$APXS_LIBEXECDIR' \
+                        -i -n php4"
+-  else
+-    APXS_SYSCONFDIR='$(INSTALL_ROOT)'`$APXS -q SYSCONFDIR`
+-    INSTALL_IT="\$(mkinstalldirs) '$APXS_LIBEXECDIR' && \
+-                \$(mkinstalldirs) '$APXS_SYSCONFDIR' && \
+-                 $APXS -S LIBEXECDIR='$APXS_LIBEXECDIR' \
+-                       -S SYSCONFDIR='$APXS_SYSCONFDIR' \
+-                       -i -a -n php4"
+-  fi
+ 
+   case $host_alias in
+   *aix*)

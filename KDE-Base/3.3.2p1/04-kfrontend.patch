@@ -1,0 +1,87 @@
+diff -Nur kdebase-3.3.2/kdm/kfrontend/genkdmconf.c kdebase-3.3.2-lucasvr/kdm/kfrontend/genkdmconf.c
+--- kdebase-3.3.2/kdm/kfrontend/genkdmconf.c	2004-08-30 23:59:43.000000000 -0300
++++ kdebase-3.3.2-lucasvr/kdm/kfrontend/genkdmconf.c	2004-08-30 23:59:55.000000000 -0300
+@@ -619,7 +619,7 @@
+ "# Reassign ownership of the console to root, this should disallow\n"
+ "# assignment of console output to any random users's xterm. See Xstartup.\n"
+ "#\n"
+-"#chown root /dev/console\n"
++"#chown 0 /dev/console\n"
+ "#chmod 622 /dev/console\n"
+ "\n"
+ #ifdef _AIX
+@@ -1716,15 +1716,27 @@
+     }
+ }
+ 
++const char *
++superuser_name()
++{
++    const char *root_str = "root";
++    struct passwd *entry = getpwuid (0);
++    if (! entry)
++       return root_str;
++    return entry->pw_name;
++}
++
+ static void
+ upd_facedir(Entry *ce, Section *cs ATTR_UNUSED)
+ {
+     char *oldpic, *newpic, *defpic, *rootpic;
++    const char *sys_user;
+     const char *dir;
+     struct passwd *pw;
+ 
+     if (use_destdir)
+ 	return;
++    sys_user = superuser_name ();
+     dir = ce->active ? ce->value : def_FaceDir;
+     if (mkdirp (dir, 0755, "user face", 0)) {
+ 	ASPrintf (&defpic, "%s/.default.face.icon", dir);
+@@ -1732,7 +1743,7 @@
+ 	if (oldkde) {
+ 	    setpwent ();
+ 	    while ((pw = getpwent()))
+-		if (strcmp (pw->pw_name, "root")) {
++		if (strcmp (pw->pw_name, sys_user)) {
+ 		    ASPrintf (&oldpic, "%s/../apps/kdm/pics/users/%s.png",
+ 					oldkde, pw->pw_name);
+ 		    ASPrintf (&newpic, "%s/%s.face.icon", dir, pw->pw_name);
+diff -Nur kdebase-3.3.2/kdm/kfrontend/kdmshutdown.cpp kdebase-3.3.2-lucasvr/kdm/kfrontend/kdmshutdown.cpp
+--- kdebase-3.3.2/kdm/kfrontend/kdmshutdown.cpp	2004-08-05 15:57:04.000000000 -0300
++++ kdebase-3.3.2-lucasvr/kdm/kfrontend/kdmshutdown.cpp	2004-08-31 00:00:50.000000000 -0300
+@@ -33,6 +33,9 @@
+ #include <kpushbutton.h>
+ #include <kstdguiitem.h>
+ 
++#include <pwd.h>
++#include <sys/types.h>
++
+ #include <qcombobox.h>
+ #include <qvbuttongroup.h>
+ #include <qstyle.h>
+@@ -43,6 +46,15 @@
+ int KDMShutdown::curPlugin = -1;
+ PluginList KDMShutdown::pluginList;
+ 
++const char *superuser_name()
++{
++    const char *root_str = "root";
++    struct passwd *entry = getpwuid(0);
++    if (! entry)
++       return root_str;
++    return entry->pw_name;
++}
++
+ KDMShutdown::KDMShutdown( QWidget *_parent )
+     : inherited( _parent )
+     , whenGroup( 0 )
+@@ -143,7 +155,7 @@
+ 	    pluginList = KGVerify::init( _pluginsShutdown );
+ 	}
+ 	verify = new KGVerify( this, winFrame,
+-			       whenGroup ? whenGroup : howGroup, "root",
++			       whenGroup ? whenGroup : howGroup, superuser_name(),
+ 			       pluginList, KGreeterPlugin::Authenticate,
+ 			       KGreeterPlugin::Shutdown );
+ 	verify->selectPlugin( curPlugin );

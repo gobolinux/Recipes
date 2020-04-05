@@ -1,0 +1,11 @@
+--- astyle/build/gcc/Makefile.old	2010-09-30 15:13:15.000000000 -0300
++++ astyle/build/gcc/Makefile	2010-09-30 15:13:21.000000000 -0300
+@@ -164,7 +164,7 @@
+ 	@$(INSTALL) -m 755 $(bindir)/astyle  $(ipath)
+ 
+ 	$(INSTALL) -m 755 -d $(SYSCONF_PATH)
+-	@for files in ../../doc/*.html  ../../doc/*.css; \
++	@for files in ../doc/*.html  ../doc/*.css; \
+ 	do \
+ 		$(INSTALL)  -m 644  $$files  $(SYSCONF_PATH); \
+ 	done

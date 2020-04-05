@@ -1,0 +1,8 @@
+# Recipe for version 2.2.2 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. jún. 20., vasárnap, 16.45.25 CEST
+url="ftp://space.mit.edu/pub/davis/slang/v2.2/slang-2.2.2.tar.bz2"
+file_size=1366850
+file_md5=974437602a781cfe92ab61433dd16d03
+compile_version=1.8.0
+recipe_type=configure
+
+install_target="install install-elf"

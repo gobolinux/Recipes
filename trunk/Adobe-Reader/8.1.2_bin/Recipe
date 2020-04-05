@@ -1,8 +1,0 @@
-# Recipe (MakeRecipe) for Adobe-Reader by Giambattista Bloisi <giamby@infinito.it>, on Sat Nov 24 23:19:15 CET 2007
-# Recipe for version 8.1.1.1_bin by Giambattista Bloisi <giamby@infinito.it>, on Sat Nov 24 23:19:15 CET 2007
-compile_version=1.9.0
-recipe_type=manifest
-
-pre_install() {
-    ./INSTALL --install_path=$target
-}

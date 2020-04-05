@@ -1,0 +1,19 @@
+make_variables=(
+    ${make_variables[@]}
+    KDIR=$cross_kernel_dir
+    MODDIR=$goboModules
+    ARCH=$cross_kernel_arch
+    CROSS_COMPILE=$cross_compiler
+    S_KERNELRELEASE=$cross_kernel_version
+    DEPMOD_FLAGS="-b $cross_prefix_dir"
+    NO_HELPER=y
+)
+
+pre_build() {
+    GrepReplace "DEMODIRS = demos threeDKit" "DEMODIRS = " Makefile
+    GrepReplace "lib3dkit-install$" "# lib3dkit-install" Makefile
+    
+    # needed in order to compile the kernel module
+    C_INCLUDE_PATH="/System/Links/Headers:$cross_sys_incdir:$cross_gcc_incdir" \
+                    make installmodule ${make_variables[@]} NO_HELPER=n
+}

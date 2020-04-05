@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for Smpeg by Giambattista Bloisi <giamby@infinito.it>, on Sun Mar 16 14:58:11 CET 2008
+# Recipe for version svn by Giambattista Bloisi <giamby@infinito.it>, on Sun Mar 16 14:58:11 CET 2008
+compile_version=1.10.2
+svn="svn://svn.icculus.org/smpeg/trunk"
+recipe_type=configure
+
+pre_build() {
+    touch ./NEWS ./AUTHORS ./ChangeLog
+    sed -i -e 's/AC_PROG_INSTALL/AC_PROG_INSTALL\nAM_PROG_AS/' configure.in
+    aclocal $ACLOCAL_FLAGS
+    autoconf
+    automake --foreign
+    autoconf
+}

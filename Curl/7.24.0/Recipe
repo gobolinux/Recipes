@@ -1,0 +1,36 @@
+# Recipe for version 7.24.0 by Andreas Köhler <andi5.py@gmx.net>, on So 19. Feb 14:45:46 CET 2012
+compile_version=1.11.3
+url="http://curl.haxx.se/download/curl-7.24.0.tar.bz2"
+file_size=2406936
+file_md5=f912221d75eb8d8fe08900eaf011b023
+recipe_type=configure
+
+configure_options=(
+   --disable-debug
+   --disable-verbose
+   --enable-http
+   --enable-ftp
+   --enable-file
+   --enable-proxy
+   --enable-dict
+   --enable-telnet
+   --enable-tftp
+   --enable-manual
+   --enable-ipv6
+   --enable-thread
+   --enable-crypto-auth
+   --enable-cookies
+   --without-gnutls
+   --without-ssl
+   --without-nss
+   --enable-nonblocking
+   --enable-largefile
+   --without-krb4
+)
+
+with_gnutls="--with-gnutls"
+with_openssl="--with-ssl"
+with_nss="--with-nss"
+with_kerberos="--with-gssapi"
+with_libssh2="--with-libssh2"
+with_openldap=(--enable-ldap --enable-ldaps)

@@ -1,0 +1,19 @@
+# Recipe (MakeRecipe) for Vim by Matthias Wolf, on Tue Sep 21 12:10:37 CEST 2004
+# Recipe for version 6.3 by Matthias Wolf, on Tue Sep 21 12:10:37 CEST 2004
+compile_version=1.7.1
+url="ftp://ftp.vim.org/pub/vim/unix/vim-6.3.tar.bz2"
+file_size=3699397
+file_md5=821fda8f14d674346b87e3ef9cb96389
+dir='vim63'
+recipe_type=configure
+
+configure_options=(
+	"--prefix=$target"
+	"--enable-xim"
+	"--with-x"
+	"--enable-gui=gtk2"
+)
+
+pre_link() {
+	ln -s vim $target/bin/vi
+}

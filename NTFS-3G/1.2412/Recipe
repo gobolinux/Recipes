@@ -1,0 +1,11 @@
+# Recipe for version 1.2412 by Giambattista Bloisi <giamby@infinito.it>, on Mon Apr 14 19:26:42 CEST 2008
+# Recipe (MakeRecipe) for NTFS-3G by Lucas C. Villa Real, on Thu Feb 22 02:10:40 BRT 2007
+compile_version=1.8.2
+url="http://www.ntfs-3g.org/ntfs-3g-1.2412.tgz"
+file_size=650099
+file_md5=e8762770b2be3b1d24da61571d79fc92
+recipe_type=configure
+
+make_variables=(
+    DESTDIR=$target
+)

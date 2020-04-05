@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for GnuCash by Andreas Köhler <andi5.py@gmx.net>, on Wed Aug 20 23:14:13 CEST 2008
+# Recipe for version 2.2.6 by Andreas Köhler <andi5.py@gmx.net>, on Wed Aug 20 23:14:13 CEST 2008
+compile_version=1.11.2
+url="$httpSourceforge/gnucash/gnucash-2.2.6.tar.bz2"
+file_size=7224677
+file_md5=1dea48e0705759a3e60a8c2e1018e27b
+recipe_type=configure
+configure_options=(
+  --enable-aqbanking
+  --enable-ofx
+  --enable-locale-specific-tax
+)

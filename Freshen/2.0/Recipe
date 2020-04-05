@@ -1,0 +1,21 @@
+# Recipe for version 2.0 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Wed Oct 19 01:25:53 BRST 2005
+url="http://gobo.wotfun.com/Freshen-2.0.tar.bz2"
+compile_version=1.8.0
+recipe_type=manifest
+description="Checks for updated software in the recipes system"
+
+pre_install() {
+ mv -f bin/Freshen bin/Freshen.old
+ sed -e 's:<INSTALLDIR>:'$target':' bin/Freshen.old > bin/Freshen
+ chmod 755 bin/Freshen
+}
+
+manifest=(
+"bin/Freshen:/bin/"
+"lib/merge.rb:/lib/"
+"lib/program.rb:/lib/"
+"lib/progressbar.rb:/lib/"
+"lib/recipes.rb:/lib/"
+"lib/version.rb:/lib/"
+"lib/screen.rb:/lib/"
+)

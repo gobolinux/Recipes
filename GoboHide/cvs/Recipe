@@ -1,0 +1,7 @@
+# Recipe for version 0.12 by Lucas C. Villa Real, on Sat Jan 6 03:36:07 BRST 2007
+# Recipe (MakeRecipe) for GoboHide by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Dec 20 00:20:22 BRST 2004
+compile_version=1.8.0
+cvs=:pserver:anonymous:@cvs.savannah.nongnu.org:/sources/goboscripts
+cvs_module=tools/GoboHide
+recipe_type=configure
+autogen_before_configure=yes

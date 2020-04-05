@@ -1,0 +1,24 @@
+--- dcron/database.c	2009-07-12 18:33:31.000000000 +0200
++++ dcron/database.c.new	2009-07-12 18:34:36.000000000 +0200
+@@ -165,6 +165,7 @@
+ {
+     CronFile **pfile;
+     CronFile *file;
++    struct passwd *pas;
+     int maxEntries;
+     int maxLines;
+     char buf[1024];
+@@ -174,9 +175,11 @@
+     /*
+      * Limit entries
+      */
+-    if (strcmp(userName, "root") == 0)
++    if (strcmp(userName, "root") == 0) {
+         maxEntries = 65535;
+-    else
++        pas = getpwuid(0);
++        userName = pas->pw_name;
++    } else
+ 	maxEntries = MAXLINES;
+     maxLines = maxEntries * 10;
+ 

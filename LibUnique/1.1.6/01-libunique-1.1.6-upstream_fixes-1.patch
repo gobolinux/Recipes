@@ -1,0 +1,1036 @@
+Submitted By:            Armin K. <krejzi at email dot com>
+Date:                    2013-03-16
+Initial Package Version: 1.1.6
+Upstream Status:         In Upstream VCS
+Origin:                  Upstream VCS
+Description:             Varius fixes from upstream including build system fixes, compilation
+                         fixes and new GDBus backend.
+
+--- a/build/autotools/introspection.m4	2009-09-21 14:31:14.000000000 +0200
++++ b/build/autotools/introspection.m4	2013-03-16 23:47:50.178671206 +0100
+@@ -59,12 +59,18 @@
+        INTROSPECTION_GENERATE=`$PKG_CONFIG --variable=g_ir_generate gobject-introspection-1.0`
+        INTROSPECTION_GIRDIR=`$PKG_CONFIG --variable=girdir gobject-introspection-1.0`
+        INTROSPECTION_TYPELIBDIR="$($PKG_CONFIG --variable=typelibdir gobject-introspection-1.0)"
++       INTROSPECTION_CFLAGS=`$PKG_CONFIG --cflags gobject-introspection-1.0`
++       INTROSPECTION_LIBS=`$PKG_CONFIG --libs gobject-introspection-1.0`
++       INTROSPECTION_MAKEFILE=`$PKG_CONFIG --variable=datadir gobject-introspection-1.0`/gobject-introspection-1.0/Makefile.introspection
+     fi
+     AC_SUBST(INTROSPECTION_SCANNER)
+     AC_SUBST(INTROSPECTION_COMPILER)
+     AC_SUBST(INTROSPECTION_GENERATE)
+     AC_SUBST(INTROSPECTION_GIRDIR)
+     AC_SUBST(INTROSPECTION_TYPELIBDIR)
++    AC_SUBST(INTROSPECTION_CFLAGS)
++    AC_SUBST(INTROSPECTION_LIBS)
++    AC_SUBST(INTROSPECTION_MAKEFILE)
+ 
+     AM_CONDITIONAL(HAVE_INTROSPECTION, test "x$found_introspection" = "xyes")
+ ])
+--- a/build/autotools/Makefile.am	2009-11-01 18:52:21.000000000 +0100
++++ b/build/autotools/Makefile.am	2013-03-16 23:47:50.178671206 +0100
+@@ -1,7 +1,4 @@
+ EXTRA_DIST = \
+-	shave-libtool.in 	\
+-	shave.in 		\
+-	shave.m4 		\
+ 	as-compiler-flag.m4	\
+ 	introspection.m4	\
+ 	Makefile.am.enums	\
+--- a/build/autotools/Makefile.am.silent	2009-11-01 19:00:57.000000000 +0100
++++ b/build/autotools/Makefile.am.silent	2013-03-16 23:47:50.178671206 +0100
+@@ -1,10 +1,5 @@
+ # custom rules for quiet builds
+ 
+-if USE_SHAVE
+-QUIET_GEN = $(Q:@=@echo '  GEN   '$@;)
+-QUIET_LN  = $(Q:@=@echo '  LN    '$@;)
+-QUIET_RM  = $(Q:@=@echo '  RM    '$@;)
+-else
+ QUIET_GEN = $(AM_V_GEN)
+ 
+ QUIET_LN   = $(QUIET_LN_$(V))
+@@ -14,4 +9,3 @@
+ QUIET_RM   = $(QUIET_RM_$(V))
+ QUIET_RM_  = $(QUIET_RM_$(AM_DEFAULT_VERBOSITY))
+ QUIET_RM_0 = @echo '  RM     '$@;
+-endif # USE_SHAVE
+--- a/build/autotools/shave.in	2009-09-21 14:31:14.000000000 +0200
++++ b/build/autotools/shave.in	1970-01-01 01:00:00.000000000 +0100
+@@ -1,79 +0,0 @@
+-#!/bin/sh
+-
+-# we need sed
+-SED=@SED@
+-if test -z "$SED" ; then
+-SED=sed
+-fi
+-
+-lt_unmangle ()
+-{
+-   last_result=`echo $1 | $SED -e 's#.libs/##' -e 's#[0-9a-zA-Z_\-\.]*_la-##'`
+-}
+-
+-# the tool to wrap (cc, cxx, ar, ranlib, ..)
+-tool="$1"
+-shift
+-
+-# the reel tool (to call)
+-REEL_TOOL="$1"
+-shift
+-
+-pass_through=0
+-preserved_args=
+-while test "$#" -gt 0; do
+-    opt="$1"
+-    shift
+-
+-    case $opt in
+-    --shave-mode=*)
+-        mode=`echo $opt | $SED -e 's/[-_a-zA-Z0-9]*=//'`
+-	;;
+-    -o)
+-        lt_output="$1"
+-        preserved_args="$preserved_args $opt"
+-	;;
+-    *)
+-        preserved_args="$preserved_args $opt"
+-        ;;
+-      esac
+-done
+-
+-# mode=link is handled in the libtool wrapper
+-case "$mode,$tool" in
+-link,*)
+-    pass_through=1
+-    ;;
+-*,cxx)
+-    Q="  CXX   "
+-    ;;
+-*,cc)
+-    Q="  CC    "
+-    ;;
+-*,fc)
+-    Q="  FC    "
+-    ;;
+-*,f77)
+-    Q="  F77   "
+-    ;;
+-*,objc)
+-    Q="  OBJC   "
+-    ;;
+-*,*)
+-    # should not happen
+-    Q="  CC    "
+-    ;;
+-esac
+-
+-lt_unmangle "$lt_output"
+-output=$last_result
+-
+-if test -z $V; then
+-    if test $pass_through -eq 0; then
+-        echo "$Q$output"
+-    fi
+-    $REEL_TOOL $preserved_args
+-else
+-    echo $REEL_TOOL $preserved_args
+-    $REEL_TOOL $preserved_args
+-fi
+--- a/build/autotools/shave-libtool.in	2009-09-21 14:31:14.000000000 +0200
++++ b/build/autotools/shave-libtool.in	1970-01-01 01:00:00.000000000 +0100
+@@ -1,69 +0,0 @@
+-#!/bin/sh
+-
+-# we need sed
+-SED=@SED@
+-if test -z "$SED" ; then
+-SED=sed
+-fi
+-
+-lt_unmangle ()
+-{
+-   last_result=`echo $1 | $SED -e 's#.libs/##' -e 's#[0-9a-zA-Z_\-\.]*_la-##'`
+-}
+-
+-# the real libtool to use
+-LIBTOOL="$1"
+-shift
+-
+-# if 1, don't print anything, the underlaying wrapper will do it
+-pass_though=0
+-
+-# scan the arguments, keep the right ones for libtool, and discover the mode
+-preserved_args=
+-while test "$#" -gt 0; do
+-    opt="$1"
+-    shift
+-
+-    case $opt in
+-    --mode=*)
+-        mode=`echo $opt | $SED -e 's/[-_a-zA-Z0-9]*=//'`
+-        preserved_args="$preserved_args $opt"
+-        ;;
+-    -o)
+-        lt_output="$1"
+-        preserved_args="$preserved_args $opt"
+-	;;
+-    *)
+-        preserved_args="$preserved_args $opt"
+-        ;;
+-      esac
+-done
+-
+-case "$mode" in
+-compile)
+-    # shave will be called and print the actual CC/CXX/LINK line
+-    preserved_args="$preserved_args --shave-mode=$mode"
+-    pass_though=1
+-    ;;
+-link)
+-    preserved_args="$preserved_args --shave-mode=$mode"
+-    Q="  LINK  "
+-    ;;
+-*)
+-    # let's u
+-    # echo "*** libtool: Unimplemented mode: $mode, fill a bug report"
+-    ;;
+-esac
+-
+-lt_unmangle "$lt_output"
+-output=$last_result
+-
+-if test -z $V; then
+-    if test $pass_though -eq 0; then
+-        echo "$Q$output"
+-    fi
+-    $LIBTOOL --silent $preserved_args
+-else
+-    echo $LIBTOOL $preserved_args
+-    $LIBTOOL $preserved_args
+-fi
+--- a/build/autotools/shave.m4	2009-09-21 14:31:14.000000000 +0200
++++ b/build/autotools/shave.m4	1970-01-01 01:00:00.000000000 +0100
+@@ -1,77 +0,0 @@
+-dnl Make automake/libtool output more friendly to humans
+-dnl  Damien Lespiau <damien.lespiau@gmail.com>
+-dnl
+-dnl SHAVE_INIT([shavedir],[default_mode])
+-dnl
+-dnl shavedir: the directory where the shave scripts are, it defaults to
+-dnl           $(top_builddir)
+-dnl default_mode: (enable|disable) default shave mode.  This parameter
+-dnl               controls shave's behaviour when no option has been
+-dnl               given to configure.  It defaults to disable.
+-dnl
+-dnl * SHAVE_INIT should be called late in your configure.(ac|in) file (just
+-dnl   before AC_CONFIG_FILE/AC_OUTPUT is perfect.  This macro rewrites CC and
+-dnl   LIBTOOL, you don't want the configure tests to have these variables
+-dnl   re-defined.
+-dnl * This macro requires GNU make's -s option.
+-
+-AC_DEFUN([_SHAVE_ARG_ENABLE],
+-[
+-  AC_ARG_ENABLE([shave],
+-    AS_HELP_STRING(
+-      [--enable-shave],
+-      [use shave to make the build pretty [[default=$1]]]),,
+-      [enable_shave=$1]
+-    )
+-])
+-
+-AC_DEFUN([SHAVE_INIT],
+-[
+-  dnl you can tweak the default value of enable_shave
+-  m4_if([$2], [enable], [_SHAVE_ARG_ENABLE(yes)], [_SHAVE_ARG_ENABLE(no)])
+-
+-  if test x"$enable_shave" = xyes; then
+-    dnl where can we find the shave scripts?
+-    m4_if([$1],,
+-      [shavedir="$ac_pwd"],
+-      [shavedir="$ac_pwd/$1"])
+-    AC_SUBST(shavedir)
+-
+-    dnl make is now quiet
+-    AC_SUBST([MAKEFLAGS], [-s])
+-    AC_SUBST([AM_MAKEFLAGS], ['`test -z $V && echo -s`'])
+-
+-    dnl we need sed
+-    AC_CHECK_PROG(SED,sed,sed,false)
+-
+-    dnl substitute libtool
+-    SHAVE_SAVED_LIBTOOL=$LIBTOOL
+-    LIBTOOL="${SHELL} ${shavedir}/shave-libtool '${SHAVE_SAVED_LIBTOOL}'"
+-    AC_SUBST(LIBTOOL)
+-
+-    dnl substitute cc/cxx
+-    SHAVE_SAVED_CC=$CC
+-    SHAVE_SAVED_CXX=$CXX
+-    SHAVE_SAVED_FC=$FC
+-    SHAVE_SAVED_F77=$F77
+-    SHAVE_SAVED_OBJC=$OBJC
+-    CC="${SHELL} ${shavedir}/shave cc ${SHAVE_SAVED_CC}"
+-    CXX="${SHELL} ${shavedir}/shave cxx ${SHAVE_SAVED_CXX}"
+-    FC="${SHELL} ${shavedir}/shave fc ${SHAVE_SAVED_FC}"
+-    F77="${SHELL} ${shavedir}/shave f77 ${SHAVE_SAVED_F77}"
+-    OBJC="${SHELL} ${shavedir}/shave objc ${SHAVE_SAVED_OBJC}"
+-    AC_SUBST(CC)
+-    AC_SUBST(CXX)
+-    AC_SUBST(FC)
+-    AC_SUBST(F77)
+-    AC_SUBST(OBJC)
+-
+-    V=@
+-  else
+-    V=1
+-  fi
+-  Q='$(V:1=)'
+-  AC_SUBST(V)
+-  AC_SUBST(Q)
+-])
+-
+--- a/configure.ac	2009-11-12 14:57:39.000000000 +0100
++++ b/configure.ac	2013-03-16 23:48:53.856423651 +0100
+@@ -14,7 +14,7 @@
+ # This is the X.Y used in the protocol negotiation
+ m4_define([unique_protocol_version], [1.0])
+ 
+-AC_PREREQ([2.59])
++AC_PREREQ([2.63])
+ 
+ AC_INIT([unique], [unique_version],
+         [http://bugzilla.gnome.org/enter_bug.cgi?product=libunique],
+@@ -23,8 +23,20 @@
+ AC_CONFIG_SRCDIR([unique/unique.h])
+ AC_CONFIG_MACRO_DIR([build/autotools])
+ 
+-AM_INIT_AUTOMAKE([1.10])
+-AM_CONFIG_HEADER([config.h])
++AM_INIT_AUTOMAKE([1.11 no-define -Wno-portability dist-bzip2])
++AC_CONFIG_HEADERS([config.h])
++
++AM_SILENT_RULES([yes])
++
++AC_PROG_CC_C_O
++
++AM_PATH_GLIB_2_0
++
++LT_PREREQ([2.2])
++LT_INIT([disable-static])
++
++# Honor aclocal flags
++ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
+ 
+ # version symbols
+ UNIQUE_MAJOR_VERSION=unique_major_version
+@@ -49,21 +61,6 @@
+ AC_SUBST(UNIQUE_LT_VERSION_INFO)
+ AC_SUBST(UNIQUE_LT_CURRENT_MINUS_AGE)
+ 
+-AC_ISC_POSIX
+-AC_PROG_CC
+-AC_PROG_INSTALL
+-AC_PROG_MAKE_SET
+-AC_C_CONST
+-AC_PROG_LIBTOOL
+-AC_PATH_PROG(GLIB_MKENUMS, [glib-mkenums])
+-AC_PATH_PROG(GLIB_GENMARSHAL, [glib-genmarshal])
+-
+-AM_SANITY_CHECK
+-AM_PROG_CC_STDC
+-
+-# Honor aclocal flags
+-ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
+-
+ m4_define([glib_required], [2.12.0])
+ m4_define([gtk_required],  [2.11.0])
+ m4_define([dbus_required], [0.70])
+@@ -119,10 +116,22 @@
+ 
+ AM_CONDITIONAL([HAVE_DBUS], [test "x$have_dbus" = "xyes"])
+ 
++dnl GDBus backend
++dnl This is the default backend if GIO is recent enough
++m4_define([gdbus_gio_required],[2.25.7])
++PKG_CHECK_MODULES([GDBUS],[gio-2.0 >= gdbus_gio_required],[have_gdbus=yes],[have_gdbus=no])
++
++AS_IF([test "x$have_gdbus" = "xyes"],
++  [
++    AC_DEFINE([HAVE_GDBUS],[1],[Define if GDBus backend is enabled])
++  ]
++  )
++
++AM_CONDITIONAL([HAVE_GDBUS],[test "$have_gdbus" = "yes"])
++
+ dnl Bacon backend
+ dnl This is the fallback backend, so we *need* these headers and functions
+ dnl even if we end up using D-Bus
+-dnl D-Bus backend dependencies
+ m4_define([have_bacon_default], [yes])
+ AC_ARG_ENABLE([bacon],
+               [AC_HELP_STRING([--enable-bacon=@<:@yes/no@:>@],
+@@ -150,7 +159,13 @@
+ 
+ dnl Choose the default backend
+ AC_MSG_CHECKING([for default IPC mechanism])
+-AS_IF([test "x$have_dbus" = "xyes"],
++AS_IF([test "x$have_gdbus" = "xyes"],
++      [
++        UNIQUE_DEFAULT_BACKEND=gdbus
++        AC_MSG_RESULT([GDBus])
++      ],
++
++      [test "x$have_dbus" = "xyes"],
+       [
+         UNIQUE_DEFAULT_BACKEND=dbus
+         AC_MSG_RESULT([D-Bus])
+@@ -178,9 +193,9 @@
+ AS_IF([test "x$enable_maintainer_flags" = "xyes" &&  test "x$GCC" = "xyes"],
+       [
+         AS_COMPILER_FLAGS([MAINTAINER_CFLAGS],
+-                          ["-Werror -Wall -Wshadow -Wcast-align
+-                            -Wno-uninitialized -Wempty-body -Wformat-security
+-                            -Winit-self"])
++                          ["-Wall -Wshadow -Wcast-align
++                            -Wno-uninitialized -Wempty-body
++                            -Wformat-security -Winit-self"])
+       ]
+ )
+ 
+@@ -230,27 +245,10 @@
+ AM_GLIB_DEFINE_LOCALEDIR(UNIQUE_LOCALEDIR)
+ 
+ # introspection
+-GOBJECT_INTROSPECTION_CHECK([0.6.3])
++GOBJECT_INTROSPECTION_CHECK([0.6.7])
+ 
+ # gtk-doc
+-GTK_DOC_CHECK([1.11])
+-
+-# nice builds
+-m4_ifdef([AM_SILENT_RULES],
+-         [
+-           AM_SILENT_RULES([yes])
+-           use_shave=no
+-         ],
+-         [
+-           SHAVE_INIT([build/autotools], [enable])
+-           AC_CONFIG_FILES([
+-                build/autotools/shave-libtool
+-                build/autotools/shave
+-           ])
+-           use_shave=yes
+-         ])
+-
+-AM_CONDITIONAL([USE_SHAVE], [test "x$use_shave" = "xyes"])
++GTK_DOC_CHECK([1.13])
+ 
+ AC_CONFIG_FILES([
+         Makefile
+@@ -264,6 +262,7 @@
+         unique/uniqueversion.h
+         unique/bacon/Makefile
+         unique/dbus/Makefile
++        unique/gdbus/Makefile
+         tests/Makefile
+         po/Makefile.in
+ ])
+@@ -282,6 +281,7 @@
+ Backends:
+           Unix Domain Socket: $have_bacon
+                        D-BUS: $have_dbus
++                       GDBus: $have_gdbus
+ 
+              Default backend: $UNIQUE_DEFAULT_BACKEND
+ "
+--- a/doc/reference/Makefile.am	2009-09-21 14:31:14.000000000 +0200
++++ b/doc/reference/Makefile.am	2013-03-16 23:48:20.572522852 +0100
+@@ -50,7 +50,8 @@
+ 	uniquemarshal.h \
+ 	stamp-uniquemarshal.h \
+ 	bacon \
+-	dbus 
++	dbus \
++	gdbus
+ 
+ EXTRA_HFILES =
+ 
+--- a/unique/dbus/uniquebackend-dbus.c	2009-11-01 20:15:26.000000000 +0100
++++ b/unique/dbus/uniquebackend-dbus.c	2013-03-16 23:48:03.088891381 +0100
+@@ -84,7 +84,6 @@
+ static gboolean
+ unique_backend_dbus_request_name (UniqueBackend *backend)
+ {
+-  UniqueBackendDBus *backend_dbus;
+   const gchar *name;
+   DBusGConnection *connection;
+   DBusGProxy *proxy;
+@@ -97,8 +96,6 @@
+   if (!connection)
+     return FALSE;
+ 
+-  backend_dbus = UNIQUE_BACKEND_DBUS (backend);
+-
+   retval = TRUE;
+   name = unique_backend_get_name (backend);
+   g_assert (name != NULL);
+@@ -207,10 +204,14 @@
+                                         cmd, data, time_,
+                                         &resp,
+                                         &error);
+-  if (error)
++  if (!res)
+     {
+-      g_warning ("Error while sending message: %s", error->message);
+-      g_error_free (error);
++      if (error)
++        {
++          g_warning ("Error while sending message: %s", error->message);
++          g_error_free (error);
++        }
++
+       g_free (cmd);
+       
+       return UNIQUE_RESPONSE_INVALID;
+--- a/unique/gdbus/.gitignore	1970-01-01 01:00:00.000000000 +0100
++++ b/unique/gdbus/.gitignore	2013-03-16 23:48:20.572522852 +0100
+@@ -0,0 +1,2 @@
++libunique_gdbus_la-uniquebackend-gdbus.lo
++libunique-gdbus.la
+--- a/unique/gdbus/Makefile.am	1970-01-01 01:00:00.000000000 +0100
++++ b/unique/gdbus/Makefile.am	2013-03-16 23:48:20.572522852 +0100
+@@ -0,0 +1,24 @@
++include $(top_srcdir)/build/autotools/Makefile.am.silent
++
++noinst_LTLIBRARIES = libunique-gdbus.la
++
++libunique_gdbus_la_SOURCES = 	\
++	uniquebackend-gdbus.h	\
++	uniquebackend-gdbus.c
++
++libunique_gdbus_la_PPCFLAGS = \
++	-DG_LOG_DOMAIN=\"Unique-GDBus\"	\
++	-DG_DISABLE_SINGLE_INCLUDES	\
++	-I$(top_srcdir)			\
++	$(AM_CPPFLAGS)
++
++libunique_gdbus_la_CFLAGS =	\
++	$(UNIQUE_CFLAGS)	\
++	$(UNIQUE_DEBUG_CFLAGS)	\
++	$(MAINTAINER_CFLAGS)	\
++	$(GDBUS_CFLAGS)		\
++	$(AM_CFLAGS)
++
++libunique_gdbus_la_LIBADD = \
++	$(UNIQUE_LIBS) 	\
++	$(GDBUS_LIBS)
+--- a/unique/gdbus/uniquebackend-gdbus.c	1970-01-01 01:00:00.000000000 +0100
++++ b/unique/gdbus/uniquebackend-gdbus.c	2013-03-16 23:48:20.575856242 +0100
+@@ -0,0 +1,303 @@
++/* Unique - Single Instance application library
++ * uniquebackend-gdbus.c: GDBus implementation of UniqueBackend
++ *
++ * Copyright (C) 2007  Emmanuele Bassi  <ebassi@o-hand.com>
++ * Copyright © 2010 Christian Persch
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation; either
++ * version 2.1 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
++ * 02110-1301 USA
++ */
++
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
++#include <gio/gio.h>
++#include <gdk/gdk.h>
++
++#include "../uniqueinternals.h"
++#include "uniquebackend-gdbus.h"
++
++struct _UniqueBackendGDBus
++{
++  UniqueBackend parent_instance;
++
++  GDBusConnection *connection;
++  guint registration_id;
++  guint owner_id;
++  gboolean owns_name;
++  GMainLoop *loop;
++};
++
++struct _UniqueBackendGDBusClass
++{
++  UniqueBackendClass parent_class;
++  GDBusNodeInfo *introspection_data;
++};
++
++G_DEFINE_TYPE (UniqueBackendGDBus, unique_backend_gdbus, UNIQUE_TYPE_BACKEND);
++
++static const char introspection_xml[] =
++  "<node name='/'>"
++    "<interface name='org.gtk.UniqueApp'>"
++      "<method name='SendMessage'>"
++        "<arg name='command' type='s' direction='in'/>"
++        "<arg name='message' type='(suuus)' direction='in'/>"
++        "<arg name='time' type='u' direction='in'/>"
++        "<arg name='response' type='s' direction='out'/>"
++      "</method>"
++    "</interface>"
++  "</node>";
++
++static void
++method_call_cb (GDBusConnection       *connection,
++                const gchar           *sender,
++                const gchar           *object_path,
++                const gchar           *interface_name,
++                const gchar           *method_name,
++                GVariant              *parameters,
++                GDBusMethodInvocation *invocation,
++                gpointer               user_data)
++{
++  if (g_strcmp0 (interface_name, "org.gtk.UniqueApp") != 0 ||
++      g_strcmp0 (object_path, "/Factory") != 0)
++    return;
++
++  if (g_strcmp0 (method_name, "SendMessage") == 0)
++    {
++      UniqueBackend *backend = UNIQUE_BACKEND (user_data);
++      const gchar *command_str, *data, *startup_id;
++      guint len, screen_num, workspace, time_;
++      UniqueMessageData message_data;
++      gint command;
++      UniqueResponse response;
++      GdkDisplay *display;
++
++      g_variant_get (parameters,
++                     "(&s(&suuu&s)u)",
++                     &command_str,
++                     &data, &len, &screen_num, &workspace, &startup_id,
++                     &time_);
++
++      command = unique_command_from_string (backend->parent, command_str);
++      if (command == 0)
++        {
++          g_dbus_method_invocation_return_error (invocation,
++                                                 G_DBUS_ERROR,
++                                                 G_DBUS_ERROR_INVALID_ARGS,
++                                                 "Invalid command `%s' received",
++                                                 command_str);
++          return;
++        }
++
++      display = gdk_display_get_default ();
++
++      message_data.data = len > 0 ? (guchar *) data : NULL;
++      message_data.length = (gint) len;
++      message_data.workspace = workspace;
++      message_data.startup_id = (char *) startup_id;
++      if (screen_num >= 0 && screen_num < gdk_display_get_n_screens (display))
++        message_data.screen = gdk_display_get_screen (display, screen_num);
++      else
++        message_data.screen = gdk_screen_get_default ();
++
++      response = unique_app_emit_message_received (backend->parent, command, &message_data, time_);
++
++      g_dbus_method_invocation_return_value (invocation,
++                                             g_variant_new ("(s)", unique_response_to_string (response)));
++      return;
++    }
++}
++
++static void
++name_acquired_cb (GDBusConnection *connection,
++                  const gchar     *name,
++                  gpointer         user_data)
++{
++  UniqueBackendGDBus *backend_gdbus = UNIQUE_BACKEND_GDBUS (user_data);
++
++  backend_gdbus->owns_name = TRUE;
++  if (backend_gdbus->loop && g_main_loop_is_running (backend_gdbus->loop))
++    g_main_loop_quit (backend_gdbus->loop);
++}
++
++static void
++name_lost_cb (GDBusConnection *connection,
++              const gchar     *name,
++              gpointer         user_data)
++{
++  UniqueBackendGDBus *backend_gdbus = UNIQUE_BACKEND_GDBUS (user_data);
++
++  backend_gdbus->owns_name = FALSE;
++  if (backend_gdbus->loop && g_main_loop_is_running (backend_gdbus->loop))
++    g_main_loop_quit (backend_gdbus->loop);
++}
++
++static const GDBusInterfaceVTable interface_vtable = {
++  method_call_cb,
++  NULL,
++  NULL
++};
++
++static gboolean
++unique_backend_gdbus_request_name (UniqueBackend *backend)
++{
++  UniqueBackendGDBus *backend_gdbus = UNIQUE_BACKEND_GDBUS (backend);
++  UniqueBackendGDBusClass *klass = UNIQUE_BACKEND_GDBUS_GET_CLASS (backend);
++  GError *error;
++
++  error = NULL;
++  backend_gdbus->connection = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, &error);
++  if (!backend_gdbus->connection)
++    {
++      g_warning ("Unable to open a connection to the session bus: %s",
++                 error->message);
++      g_error_free (error);
++
++      return FALSE;
++    }
++
++  backend_gdbus->registration_id =
++      g_dbus_connection_register_object (backend_gdbus->connection,
++                                         "/Factory",
++                                         klass->introspection_data->interfaces[0],
++                                         &interface_vtable,
++                                         backend, NULL,
++                                         &error);
++  if (backend_gdbus->registration_id == 0)
++    {
++      g_warning ("Unable to register object with the session bus: %s",
++                 error->message);
++      g_error_free (error);
++
++      return FALSE;
++    }
++
++  backend_gdbus->owns_name = FALSE;
++
++  backend_gdbus->owner_id =
++      g_bus_own_name_on_connection (backend_gdbus->connection,
++                                    unique_backend_get_name (backend),
++                                    G_BUS_NAME_OWNER_FLAGS_NONE,
++                                    name_acquired_cb,
++                                    name_lost_cb,
++                                    backend, NULL);
++
++  backend_gdbus->loop = g_main_loop_new (NULL, FALSE);
++  g_main_loop_run (backend_gdbus->loop);
++  g_main_loop_unref (backend_gdbus->loop);
++  backend_gdbus->loop = NULL;
++
++  return backend_gdbus->owns_name;
++}
++
++static UniqueResponse
++unique_backend_gdbus_send_message (UniqueBackend     *backend,
++                                   gint               command,
++                                   UniqueMessageData *message_data,
++                                   guint              time_)
++{
++  UniqueBackendGDBus *backend_gdbus = UNIQUE_BACKEND_GDBUS (backend);
++  GVariantBuilder builder;
++  GVariant *result;
++  const gchar *command_str, *resp;
++  UniqueResponse response;
++  GError *error;
++
++  command_str = unique_command_to_string (backend->parent, command);
++
++  g_variant_builder_init (&builder, G_VARIANT_TYPE ("(s(suuus)u)"));
++  g_variant_builder_add (&builder, "s", command_str ? command_str : "");
++  g_variant_builder_open (&builder, G_VARIANT_TYPE ("(suuus)"));
++  g_variant_builder_add (&builder, "s", message_data->data ? (char *) message_data->data : "");
++  g_variant_builder_add (&builder, "u", (guint) message_data->length);
++  g_variant_builder_add (&builder, "u", (guint) gdk_screen_get_number (message_data->screen));
++  g_variant_builder_add (&builder, "u", (guint) message_data->workspace);
++  g_variant_builder_add (&builder, "s", message_data->startup_id ? message_data->startup_id : "");
++  g_variant_builder_close (&builder);
++  g_variant_builder_add (&builder, "u", time_);
++
++  error = NULL;
++  result = g_dbus_connection_call_sync (backend_gdbus->connection,
++                                        unique_backend_get_name (backend),
++                                        "/Factory",
++                                        "org.gtk.UniqueApp",
++                                        "SendMessage",
++                                        g_variant_builder_end (&builder),
++                                        G_VARIANT_TYPE ("(s)"),
++                                        G_DBUS_CALL_FLAGS_NO_AUTO_START,
++                                        -1,
++                                        NULL,
++                                        &error);
++  if (error)
++    {
++      g_warning ("Error while sending message: %s", error->message);
++      g_error_free (error);
++      
++      return UNIQUE_RESPONSE_INVALID;
++    }
++
++  g_variant_get (result, "(&s)", &resp);
++  response = unique_response_from_string (resp);
++  g_variant_unref (result);
++
++  return response;
++}
++
++static void
++unique_backend_gdbus_dispose (GObject *gobject)
++{
++  UniqueBackendGDBus *backend_gdbus = UNIQUE_BACKEND_GDBUS (gobject);
++
++  if (backend_gdbus->owner_id != 0)
++    {
++      g_bus_unown_name (backend_gdbus->owner_id);
++      backend_gdbus->owner_id = 0;
++    }
++  if (backend_gdbus->registration_id != 0)
++    {
++      g_assert (backend_gdbus->connection != NULL);
++      g_dbus_connection_unregister_object (backend_gdbus->connection,
++                                           backend_gdbus->registration_id);
++      backend_gdbus->registration_id = 0;
++    }
++  if (backend_gdbus->connection)
++    {
++      g_object_unref (backend_gdbus->connection);
++      backend_gdbus->connection = NULL;
++    }
++
++  G_OBJECT_CLASS (unique_backend_gdbus_parent_class)->dispose (gobject);
++}
++
++static void
++unique_backend_gdbus_class_init (UniqueBackendGDBusClass *klass)
++{
++  GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
++  UniqueBackendClass *backend_class = UNIQUE_BACKEND_CLASS (klass);
++
++  gobject_class->dispose = unique_backend_gdbus_dispose;
++
++  backend_class->request_name = unique_backend_gdbus_request_name;
++  backend_class->send_message = unique_backend_gdbus_send_message;
++
++  klass->introspection_data = g_dbus_node_info_new_for_xml (introspection_xml, NULL);
++  g_assert (klass->introspection_data != NULL);
++}
++
++static void
++unique_backend_gdbus_init (UniqueBackendGDBus *backend)
++{
++}
+--- a/unique/gdbus/uniquebackend-gdbus.h	1970-01-01 01:00:00.000000000 +0100
++++ b/unique/gdbus/uniquebackend-gdbus.h	2013-03-16 23:48:20.575856242 +0100
+@@ -0,0 +1,43 @@
++/* Unique - Single Instance application library
++ * uniquebackend-gdbus.c: GDBus implementation of UniqueBackend
++ *
++ * Copyright (C) 2007  Emmanuele Bassi  <ebassi@o-hand.com>
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation; either
++ * version 2.1 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
++ * 02110-1301 USA
++ */
++
++#ifndef __UNIQUE_BACKEND_GDBUS_H__
++#define __UNIQUE_BACKEND_GDBUS_H__
++
++#include <unique/uniquebackend.h>
++
++G_BEGIN_DECLS
++
++#define UNIQUE_TYPE_BACKEND_GDBUS                (unique_backend_gdbus_get_type ())
++#define UNIQUE_BACKEND_GDBUS(obj)                (G_TYPE_CHECK_INSTANCE_CAST ((obj), UNIQUE_TYPE_BACKEND_GDBUS, UniqueBackendGDBus))
++#define UNIQUE_IS_BACKEND_GDBUS(obj)             (G_TYPE_CHECK_INSTANCE_TYPE ((obj), UNIQUE_TYPE_BACKEND_GDBUS))
++#define UNIQUE_BACKEND_GDBUS_CLASS(klass)        (G_TYPE_CHECK_CLASS_CAST ((klass), UNIQUE_TYPE_BACKEND_GDBUS, UniqueBackendGDBusClass))
++#define UNIQUE_IS_BACKEND_GDBUS_CLASS(klass)     (G_TYPE_CHECK_CLASS_TYPE ((klass), UNIQUE_TYPE_BACKEND_GDBUS))
++#define UNIQUE_BACKEND_GDBUS_GET_CLASS(obj)      (G_TYPE_INSTANCE_GET_CLASS ((obj), UNIQUE_TYPE_BACKEND_GDBUS, UniqueBackendGDBusClass))
++
++typedef struct _UniqueBackendGDBus       UniqueBackendGDBus;
++typedef struct _UniqueBackendGDBusClass  UniqueBackendGDBusClass;
++
++GType unique_backend_gdbus_get_type (void) G_GNUC_CONST;
++
++G_END_DECLS
++
++#endif /* __UNIQUE_BACKEND_GDBUS_H__ */
+--- a/unique/Makefile.am	2009-11-12 14:53:10.000000000 +0100
++++ b/unique/Makefile.am	2013-03-16 23:48:20.572522852 +0100
+@@ -12,7 +12,11 @@
+ SUBDIRS += dbus
+ endif
+ 
+-DIST_SUBDIRS = bacon dbus
++if HAVE_GDBUS
++SUBDIRS += gdbus
++endif
++
++DIST_SUBDIRS = bacon dbus gdbus
+ 
+ INCLUDES = -I$(top_srcdir)
+ 
+@@ -72,6 +76,10 @@
+ unique_backend_libs += $(top_builddir)/unique/dbus/libunique-dbus.la
+ endif
+ 
++if HAVE_GDBUS
++unique_backend_libs += $(top_builddir)/unique/gdbus/libunique-gdbus.la
++endif
++
+ uniquedir = $(includedir)/unique-1.0/unique
+ unique_HEADERS = \
+ 	$(unique_sources_h) 				\
+--- a/unique/uniqueapp.c	2009-11-01 19:33:13.000000000 +0100
++++ b/unique/uniqueapp.c	2013-03-16 23:49:05.236617643 +0100
+@@ -781,7 +781,7 @@
+ }
+ 
+ 
+-G_CONST_RETURN gchar *
++const gchar *
+ unique_command_to_string (UniqueApp *app,
+                           gint       command)
+ {
+@@ -863,7 +863,7 @@
+   return retval;
+ }
+ 
+-G_CONST_RETURN gchar *
++const gchar *
+ unique_response_to_string (UniqueResponse response)
+ {
+   GEnumClass *enum_class;
+--- a/unique/uniquebackend.c	2009-11-09 12:02:06.000000000 +0100
++++ b/unique/uniquebackend.c	2013-03-16 23:49:05.236617643 +0100
+@@ -111,7 +111,7 @@
+  *
+  * Return value: FIXME
+  */
+-G_CONST_RETURN gchar *
++const gchar *
+ unique_backend_get_name (UniqueBackend *backend)
+ {
+   g_return_val_if_fail (UNIQUE_IS_BACKEND (backend), NULL);
+@@ -154,7 +154,7 @@
+  *
+  * Return value: FIXME
+  */
+-G_CONST_RETURN gchar *
++const gchar *
+ unique_backend_get_startup_id (UniqueBackend *backend)
+ {
+   g_return_val_if_fail (UNIQUE_IS_BACKEND (backend), NULL);
+@@ -298,6 +298,9 @@
+ #ifdef HAVE_DBUS
+ #include "dbus/uniquebackend-dbus.h"
+ #endif
++#ifdef HAVE_GDBUS
++#include "gdbus/uniquebackend-gdbus.h"
++#endif
+ 
+ /**
+  * unique_backend_create:
+@@ -329,6 +332,10 @@
+       if (strcmp (backend_name, "dbus") == 0)
+         backend_gtype = unique_backend_dbus_get_type ();
+ #endif /* HAVE_DBUS */
++#ifdef HAVE_GDBUS
++      if (strcmp (backend_name, "gdbus") == 0)
++        backend_gtype = unique_backend_gdbus_get_type ();
++#endif /* HAVE_GDBUS */
+ #if !defined(HAVE_BACON) && !defined(HAVE_DBUS)
+ #error Need either bacon or dbus
+ #endif 
+--- a/unique/uniquebackend.h	2009-09-21 14:31:14.000000000 +0200
++++ b/unique/uniquebackend.h	2013-03-16 23:49:05.236617643 +0100
+@@ -94,10 +94,10 @@
+ 
+ UniqueBackend *       unique_backend_create         (void);
+ 
+-G_CONST_RETURN gchar *unique_backend_get_name       (UniqueBackend     *backend);
++const gchar *unique_backend_get_name       (UniqueBackend     *backend);
+ void                  unique_backend_set_name       (UniqueBackend     *backend,
+                                                      const gchar       *name);
+-G_CONST_RETURN gchar *unique_backend_get_startup_id (UniqueBackend     *backend);
++const gchar *unique_backend_get_startup_id (UniqueBackend     *backend);
+ void                  unique_backend_set_startup_id (UniqueBackend     *backend,
+                                                      const gchar       *startup_id);
+ GdkScreen *           unique_backend_get_screen     (UniqueBackend     *backend);
+--- a/unique/uniqueinternals.h	2009-09-21 14:31:14.000000000 +0200
++++ b/unique/uniqueinternals.h	2013-03-16 23:49:05.236617643 +0100
+@@ -44,11 +44,11 @@
+  * and then back into an id
+  */
+ UniqueResponse        unique_response_from_string  (const gchar    *response);
+-G_CONST_RETURN gchar *unique_response_to_string    (UniqueResponse  response);
++const gchar *unique_response_to_string    (UniqueResponse  response);
+ 
+ gint                  unique_command_from_string   (UniqueApp      *app,
+                                                     const gchar    *command);
+-G_CONST_RETURN gchar *unique_command_to_string     (UniqueApp      *app,
++const gchar *unique_command_to_string     (UniqueApp      *app,
+                                                     gint            command);
+ 
+ G_END_DECLS
+--- a/unique/uniquemessage.c	2009-11-09 12:02:06.000000000 +0100
++++ b/unique/uniquemessage.c	2013-03-16 23:49:05.236617643 +0100
+@@ -185,7 +185,7 @@
+  *
+  * Since: 1.0.2
+  */
+-G_CONST_RETURN guchar *
++const guchar *
+ unique_message_data_get (UniqueMessageData *message_data,
+                          gsize             *length)
+ {
+@@ -525,7 +525,7 @@
+  *   owned by the #UniqueMessageData structure and should not be
+  *   modified or freed
+  */
+-G_CONST_RETURN gchar *
++const gchar *
+ unique_message_data_get_startup_id (UniqueMessageData *message_data)
+ {
+   g_return_val_if_fail (message_data != NULL, NULL);
+--- a/unique/uniquemessage.h	2009-09-21 14:31:14.000000000 +0200
++++ b/unique/uniquemessage.h	2013-03-16 23:49:05.236617643 +0100
+@@ -48,7 +48,7 @@
+ void                   unique_message_data_set            (UniqueMessageData *message_data,
+                                                            const guchar      *data,
+                                                            gsize              length);
+-G_CONST_RETURN guchar *unique_message_data_get            (UniqueMessageData *message_data,
++const guchar *unique_message_data_get            (UniqueMessageData *message_data,
+                                                            gsize             *length);
+ 
+ gboolean               unique_message_data_set_text       (UniqueMessageData *message_data,
+@@ -63,7 +63,7 @@
+ gchar *                unique_message_data_get_filename   (UniqueMessageData *message_data);
+ 
+ GdkScreen *            unique_message_data_get_screen     (UniqueMessageData *message_data);
+-G_CONST_RETURN gchar * unique_message_data_get_startup_id (UniqueMessageData *message_data);
++const gchar * unique_message_data_get_startup_id (UniqueMessageData *message_data);
+ guint                  unique_message_data_get_workspace  (UniqueMessageData *message_data);
+ 
+ G_END_DECLS

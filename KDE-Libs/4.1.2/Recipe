@@ -1,0 +1,12 @@
+# Recipe for version 4.1.2 by Giambattista Bloisi <giamby@infinito.it>, on Thu Oct 23 22:50:17 CEST 2008
+# Recipe (MakeRecipe) for KDE-Libs by Giambattista Bloisi <giamby@infinito.it>, on Sat Jan 12 11:13:12 CET 2008
+compile_version=1.10.0
+url="http://download.kde.org/stable/4.1.2/src/kdelibs-4.1.2.tar.bz2"
+file_size=9112474
+file_md5=cb5f43d2b11669fb17b0a1ecf3736c17
+file="kdelibs-4.1.2.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)

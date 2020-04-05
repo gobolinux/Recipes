@@ -1,0 +1,58 @@
+--- linux-2.6.17.11/fs/unionfs/dirfops.c.orig	2006-09-09 15:44:15.000000000 -0300
++++ linux-2.6.17.11/fs/unionfs/dirfops.c	2006-09-10 15:36:08.000000000 -0300
+@@ -20,6 +20,7 @@
+  */
+ 
+ #include "unionfs.h"
++#include <linux/gobohide.h>
+ 
+ /* Make sure our rdstate is playing by the rules. */
+ static void verify_rdstate_offset(struct unionfs_dir_state *rdstate)
+@@ -36,6 +37,9 @@ struct unionfs_getdents_callback {
+ 	int filldir_error;
+ 	filldir_t filldir;
+ 	struct super_block *sb;
++#ifdef CONFIG_GOBOHIDE_FS
++	struct unionfs_dentry_info *udi;
++#endif
+ };
+ 
+ /* copied from generic filldir in fs/readir.c */
+@@ -49,7 +53,17 @@ static int unionfs_filldir(void *dirent,
+ 	int is_wh_entry = 0;
+ 
+ 	dprint(PRINT_DEBUG, "unionfs_filldir name=%*s\n", namelen, name);
+-
++#ifdef CONFIG_GOBOHIDE_FS
++	{
++		int i;
++		struct dentry **di = buf->udi->udi_dentry;
++		
++		for (i = buf->udi->udi_bstart; i < buf->udi->udi_bend; i++) {
++			if (di[i]->d_sb && gobolinux_hide(ino, di[i]->d_sb))
++				return 0;
++		}
++	}
++#endif
+ 	buf->filldir_called++;
+ 
+ 	if ((namelen > WHLEN) && !strncmp(name, WHPFX, WHLEN)) {
+@@ -142,7 +156,6 @@ static int unionfs_readdir(struct file *
+ 			uds->uds_dirpos = 0;
+ 			continue;
+ 		}
+-
+ 		/* prepare callback buffer */
+ 		buf.filldir_called = 0;
+ 		buf.filldir_error = 0;
+@@ -151,7 +164,9 @@ static int unionfs_readdir(struct file *
+ 		buf.filldir = filldir;
+ 		buf.rdstate = uds;
+ 		buf.sb = inode->i_sb;
+-
++#ifdef CONFIG_GOBOHIDE_FS
++		buf.udi = dtopd(file->f_dentry);
++#endif
+ 		/* Read starting from where we last left off. */
+ 		offset = vfs_llseek(hidden_file, uds->uds_dirpos, 0);
+ 		if (offset < 0) {

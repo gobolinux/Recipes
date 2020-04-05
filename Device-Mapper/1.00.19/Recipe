@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for DeviceMapper by Volker Wieban <buckoven@gobolinux.de>, on Son Sep 12 11:14:35 BRT 2004
+# Recipe for version 1.00.19 by Volker Wieban <buckoven@gobolinux.de>, on Son Sep 12 11:14:35 BRT 2004
+compile_version=1.7.1
+url="http://ftp.debian.org/debian/pool/main/d/devmapper/devmapper_1.00.19.orig.tar.gz"
+file_size=640411
+file_md5=a7a97c469f22e3ec2cdcb5aae5603f3f
+dir='device-mapper.1.00.19'
+recipe_type=configure

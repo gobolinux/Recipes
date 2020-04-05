@@ -1,0 +1,13 @@
+# Recipe for version 1.1 by Dominique Juergensen <brokolie@vollbio.de>, on Fri Dec 4 22:40:45 CET 2009
+# Recipe (MakeRecipe) for Libx86 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Sep 25 08:43:51 CEST 2007
+compile_version=1.8.0
+url="http://www.codon.org.uk/~mjg59/libx86/downloads/libx86-1.1.tar.gz"
+file_size=87428
+file_md5=41bee1f8e22b82d82b5f7d7ba51abc2a
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=(
+    "DESTDIR=$target"
+    "LIBDIR=/lib"
+)

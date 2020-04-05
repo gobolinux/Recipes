@@ -1,0 +1,4 @@
+rlocate is an implementation of the `locate'' command that is always
+up-to-date. The behavior of rlocate is the same as slocate, but it
+also maintains a diff database that gets updated whenever a new file
+is created.

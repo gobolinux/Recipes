@@ -1,0 +1,77 @@
+# Recipe for version 2.10.1 by Jonas Karlsson <jonas@gobolinux.org>, on Fri Sep 4 06:14:33 CEST 2009
+# by Guilherme Bedin
+# 02/12/2003
+compile_version=1.11.0
+urls=(
+   "$ftpGnu/glibc/glibc-2.11.tar.bz2"
+   "$ftpGnu/glibc/glibc-libidn-2.10.1.tar.bz2"
+)
+file_sizes=(
+   15684114
+   102248
+)
+file_md5s=(
+   2c990f97e9ff9fb1c3c85fe826e991b9
+   8ef88560ec608d5923ee05eb5f0e15ea
+)
+
+unpack_files=inside_first
+
+recipe_type=configure
+needs_build_directory=yes
+
+configure_options=(
+    --enable-kernel=2.6.18
+    --with-headers="${linux_headers_path}/include"
+    --disable-profile
+    --enable-add-ons
+    --with-tls
+    --with-__thread
+    --libexecdir="${target}/lib"
+)
+
+install_target="install localedata/install-locales"
+
+environment=(
+   CFLAGS=""
+   CXXFLAGS=""
+   LDFLAGS=""
+)
+
+pre_patch() {
+   # The ldd shell script contains Bash-specific syntax.
+   sed -i 's|@BASH@|/bin/bash|' "${sourcedir}/elf/ldd.bash.in"
+   
+   # Fix an error in one of the make check routines. Note that the
+   # escaped newline in the second sed is required
+   sed -i s/utf8/UTF-8/ "${sourcedir}/libio/tst-fgetwc.c"
+   sed -i '/tst-fgetws-ENV/ a\
+tst-fgetwc-ENV = LOCPATH=$(common-objpfx)localedata' \
+   "${sourcedir}/libio/Makefile"
+
+   # Fix an error in the constants that get passed to the futex system
+   # call in some cases, causing certain pthread_mutex operations to fail: 
+   sed -i \
+   -e 's/FUTEX_WAIT\( | FUTEX_CLOCK_REALTIME, reg\)/FUTEX_WAIT_BITSET\1/' \
+   "${sourcedir}/nptl/sysdeps/unix/sysv/linux/i386/i486/lowlevellock.S"
+
+   [ ! -d "${sourcedir}/glibc-libidn-2.10.1" ] || mv "${sourcedir}/glibc-libidn-2.10.1" "${sourcedir}/libidn"
+}
+
+pre_install() {
+   cp -R "${recipedir}/Resources/Defaults/Settings"/* "$target/Resources/Defaults/Settings"
+   ldconfig -C "$target/Resources/Defaults/Settings/ld.so.cache"
+   ldconfig
+   
+   # We don't want to run ldconfig from "make install"
+   sed -i 's,$(common-objpfx)elf/ldconfig,/bin/true,' \
+   "${sourcedir}/Makefile"
+}
+
+pre_link() {
+   echo ${target} >&2
+   for f in "${goboHeaders}"/gnu/stubs-*
+   do
+      [ -e "${target}"/include/gnu/$(basename "${f}") ] || cp -a $(readlink -f "${f}") "${target}"/include/gnu
+   done
+}

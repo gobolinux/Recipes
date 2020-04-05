@@ -1,0 +1,28 @@
+--- base64_orig/base64.lua	2003-12-19 02:30:01.000000000 +0100
++++ base64/base64.lua	2007-04-14 10:10:34.000000000 +0200
+@@ -1,10 +1,18 @@
+--- base64.lua
+--- support code for base64 library
+--- usage lua -lbase64 ...
++-- @%Compile_luamodule%@.lua
++-- support code for @%Compile_luamodule%@ library
++-- usage lua -l@%Compile_luamodule%@ ...
+ 
+-local function so(x)
+-	local SOPATH= os.getenv"LUA_SOPATH" or "./"
+-	assert(loadlib(SOPATH.."l"..x..".so","luaopen_"..x))()
++local SOPATH="@%Compile_target%@/lib/lua/@%Compile_luaversion%@/@%Compile_luamodule%@.so"
++local OPENFUNC="luaopen_@%Compile_luamodule%@"
++
++local function so()
++	local version=string.sub(_VERSION,5,5)..string.sub(_VERSION,7,7)
++	local loadlib
++	if version >= "51" then
++		loadlib=package.loadlib
++	end
++	return assert(loadlib(SOPATH,OPENFUNC))()
+ end
+ 
+-so"base64"
++so()
++module("@%Compile_luamodule%@")

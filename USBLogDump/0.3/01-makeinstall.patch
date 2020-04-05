@@ -1,0 +1,28 @@
+diff -Naur usblogdump-old/Makefile usblogdump/Makefile
+--- usblogdump-old/Makefile	2003-06-28 22:48:57.000000000 -0300
++++ usblogdump/Makefile	2003-12-10 15:07:03.000000000 -0200
+@@ -1,6 +1,10 @@
+-all:	usblog-dump
+ 
+-usblog-dump:	usblog-dump.o fileutil.o winlang.h md5.o
++DESTDIR=/usr
++BINDIR=$(DESTDIR)/bin
++
++all:	usblogdump
++
++usblogdump:	usblog-dump.o fileutil.o winlang.h md5.o
+ 	gcc -ggdb -o usblogdump usblog-dump.o fileutil.o md5.o
+ 
+ usblog-dump.o: usblog-dump.c
+@@ -12,5 +16,8 @@
+ md5.o: md5c.c md5.h md5-global.h
+ 	gcc -c -ggdb -o md5.o md5c.c
+ 
++install: usblogdump
++	cp usblogdump $(BINDIR)
++
+ clean:	
+-	rm -f *.o *~ core usblog-dump
+\ No newline at end of file
++	rm -f *.o *~ core usblogdump
+\ No newline at end of file

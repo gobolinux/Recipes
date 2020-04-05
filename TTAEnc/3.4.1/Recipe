@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for TTAEnc by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. febr. 13., péntek, 22.52.54 CET
+# Recipe for version 3.4.1 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. febr. 13., péntek, 22.52.54 CET
+compile_version=1.11.4
+url="$httpSourceforge/tta/ttaenc-3.4.1-src.tgz"
+file_size=20835
+file_md5=c9ab8194984b34e7f7bf55d579c97f39
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+    INSDIR=$target/bin
+)

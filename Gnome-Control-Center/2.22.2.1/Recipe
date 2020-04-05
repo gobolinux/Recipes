@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for Gnome-Control-Center by Andreas Köhler <andi5.py@gmx.net>, on Mon Aug 18 00:43:57 CEST 2008
+# Recipe for version 2.22.2.1 by Andreas Köhler <andi5.py@gmx.net>, on Mon Aug 18 00:43:57 CEST 2008
+compile_version=1.11.2
+url="ftp://ftp.gnome.org/pub/gnome/sources/gnome-control-center/2.22/gnome-control-center-2.22.2.1.tar.bz2"
+file_size=2110331
+file_md5=f708092437fff488656c01665cbe6ae9
+recipe_type=configure
+configure_options=(
+    --disable-update-mimedb
+    --disable-scrollkeeper
+)
+pre_build() {
+    sed -i 's,\(NAUTILUSDIR =\) .*,\1 ${prefix}/lib/nautilus/extensions-2.0,' vfs-methods/fontilus/Makefile.in
+    sed -i 's,\(NAUTILUSDIR =\) .*,\1 ${prefix}/lib/nautilus/extensions-2.0,' vfs-methods/themus/Makefile.in
+}

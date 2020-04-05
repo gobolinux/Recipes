@@ -1,0 +1,27 @@
+#!/bin/sh
+
+source GoboPath
+
+if [ -f $goboSettings/BootScripts/Options ]
+then
+	source $goboSettings/BootScripts/Options
+else
+	source $goboSettings/BootOptions
+fi
+
+#
+# Loads or unloads NFS, the network file system server.
+# Written by Otto Barnes, xx/xx/xxxx
+#
+case "$1" in
+[sS]tart) 
+   NFSclient Stop
+   portmap
+   rpc.statd
+   ;;
+[Ss]top)
+   {
+     killall rpc.statd
+   } &> /dev/null
+   ;;
+esac # esac is ridiculous.

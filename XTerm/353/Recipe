@@ -1,0 +1,26 @@
+# Recipe for version 353 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat 15 Feb 2020 07:15:19 PM -03
+# Recipe (MakeRecipe) for XTerm by Hisham Muhammad, on Thu Feb 23 14:45:58 BRT 2006
+compile_version=1.9.0
+url="https://invisible-island.net/datafiles/release/xterm.tar.gz"
+file_size=1407183
+file_md5=247c30ebfa44623f3a2d100e0cae5c7f
+recipe_type=configure
+dir="xterm-353"
+
+configure_options=(
+   # otherwise uxterm is broken!
+   --enable-wide-chars
+
+   # paths for icons and app defaults
+   --with-icondir=$target/share/pixmaps
+   --with-app-defaults=$target/lib/X11/app-defaults
+)
+
+install_variables=(
+   bindir=$target/bin
+   libdir=$target/lib
+   mandir=$target/share/man/man1
+   appsdir=$target/lib/X11/app-defaults
+   icondir=$target/share/pixmaps
+   pixmapdir=$target/share/pixmaps
+)

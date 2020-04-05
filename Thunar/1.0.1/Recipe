@@ -1,0 +1,13 @@
+# Recipe for version 1.0.1 by Jonas Karlsson <jonka750@student.liu.se>, on Mon Apr 20 14:20:32 CEST 2009
+# Recipe (MakeRecipe) for Thunar by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:15:56 CEST 2006
+compile_version=1.9.0
+url="http://mocha.xfce.org/archive/xfce-4.6.1/src/Thunar-1.0.1.tar.bz2"
+file_size=8802672
+file_md5=218373aa45d74b6ba8c69c4d5af3bb19
+recipe_type=configure
+configure_options=(
+   --enable-debug
+)
+with_doc=(
+   --enable-gtk-doc
+)

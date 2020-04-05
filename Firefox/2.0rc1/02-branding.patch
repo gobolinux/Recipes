@@ -1,0 +1,22 @@
+diff -Naur mozilla/browser/locales/en-US/chrome/branding/brand.dtd mozilla/browser/locales/en-US/chrome/branding/brand.dtd
+--- mozilla/browser/locales/en-US/chrome/branding/brand.dtd	2004-10-16 02:04:14.000000000 +0200
++++ mozilla/browser/locales/en-US/chrome/branding/brand.dtd	2005-09-17 10:52:42.000000000 +0200
+@@ -1,5 +1,5 @@
+-<!ENTITY  brandShortName        "Bon Echo">
+-<!ENTITY  brandFullName         "Bon Echo">            
+-<!ENTITY  vendorShortName       "Mozilla">
++<!ENTITY  brandShortName        "Firefox Community Edition">
++<!ENTITY  brandFullName         "Firefox Community Edition by GoboLinux">
++<!ENTITY  vendorShortName       "GoboLinux">
+ 
+ <!ENTITY  releaseURL            "http://www.mozilla.org/">
+diff -Naur mozilla/browser/locales/en-US/chrome/branding/brand.properties mozilla/browser/locales/en-US/chrome/branding/brand.properties
+--- mozilla/browser/locales/en-US/chrome/branding/brand.properties	2004-07-16 21:57:59.000000000 +0200
++++ mozilla/browser/locales/en-US/chrome/branding/brand.properties	2005-09-17 10:53:06.000000000 +0200
+@@ -1,3 +1,3 @@
+-brandShortName=Bon Echo
+-brandFullName=Bon Echo
+-vendorShortName=Mozilla
++brandShortName=Firefox Community Edition
++brandFullName=Firefox Community Edition by GoboLinux
++vendorShortName=GoboLinux

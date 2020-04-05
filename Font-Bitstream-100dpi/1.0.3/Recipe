@@ -1,0 +1,14 @@
+# Recipe for version 1.0.3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Mar 13 19:51:31 NZDT 2012
+# Recipe (MakeRecipe) for Font-Bitstream-100dpi by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jun 4 15:18:21 BRT 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/font/font-bitstream-100dpi-1.0.3.tar.bz2"
+file_size=200276
+file_md5=6b223a54b15ecbd5a1bc52312ad790d8
+recipe_type=configure
+part_of=Xorg-Font
+configure_options=(
+   --with-fontrootdir="${target}/share/fonts"
+)
+install_variables=(
+   FCCACHE=true
+)

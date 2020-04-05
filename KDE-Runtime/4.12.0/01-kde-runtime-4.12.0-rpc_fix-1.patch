@@ -1,0 +1,19 @@
+Submitted By:            Ragnar Thomsen <rthomsen_at_linuxfromscratch_dot_org>
+Date:                    2012-04-14
+Initial Package Version: 4.8.2
+Description:             Fixes linking to libtirpc
+
+diff -Naur a/kioslave/nfs/CMakeLists.txt b/kioslave/nfs/CMakeLists.txt
+--- a/kioslave/nfs/CMakeLists.txt	2011-07-27 20:36:16.000000000 +0200
++++ b/kioslave/nfs/CMakeLists.txt	2012-04-04 14:26:09.899031662 +0200
+@@ -3,8 +3,8 @@
+ 
+ kde4_add_plugin(kio_nfs ${kio_nfs_PART_SRCS})
+ 
+-
+-target_link_libraries(kio_nfs   ${KDE4_KIO_LIBS})
++include_directories(/usr/include/tirpc)
++target_link_libraries(kio_nfs   ${KDE4_KIO_LIBS} tirpc)
+ 
+ install(TARGETS kio_nfs  DESTINATION ${PLUGIN_INSTALL_DIR} )
+ 

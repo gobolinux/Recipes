@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for SimDock by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. márc. 11., szerda, 03.07.05 CET
+# Recipe for version 1.2 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. márc. 11., szerda, 03.07.05 CET
+compile_version=1.12.1
+url="$httpSourceforge/simdock/simdock_1.2.tar.gz"
+file_size=338679
+file_md5=557f4aff394fa66e329c56c3a5138b39
+dir='trunk'
+recipe_type=configure
+make_variables=(
+    simdockBGSdir="$target/share/simdock"
+    simdockDESKTOPdir="$target/share/applications"
+    simdockICONdir="$target/share/pixmaps"
+)

@@ -1,0 +1,10 @@
+# Recipe for version 1.6.4 by kenneth marken <k-marken@online.no>, on to. 01. juli 14:14:31 +0200 2010
+# Recipe (MakeRecipe) for Liferea by kenneth marken <k-marken@online.no>, on Wed Oct 8 20:11:35 CEST 2008
+compile_version=1.11.2
+url="http://prdownloads.sourceforge.net/liferea/liferea-1.6.4.tar.gz"
+file_size=1743075
+file_md5=921b5778f5cc67a60eec4669b6048844
+recipe_type=configure
+configure_options=(
+--disable-gecko
+)

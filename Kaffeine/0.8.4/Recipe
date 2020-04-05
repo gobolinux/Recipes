@@ -1,0 +1,14 @@
+# Recipe for version 0.8.4 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Apr 14 12:13:50 CEST 2007
+# Recipe (MakeRecipe) for Kaffeine by Maglan C. Diemer, maglan@univates.br, on Seg Ago 22 09:13:58 BRT 2005
+compile_version=1.8.2
+url="$httpSourceforge/kaffeine/kaffeine-0.8.4.tar.bz2"
+file_size=2903979
+file_md5=6f62ebb7a6f88ff49f452856a1660d95
+recipe_type=configure
+configure_options=(
+    "--without-gstreamer"
+    "--disable-libsuffix"
+    "--with-xcb"
+    "--with-lame"
+    "--with-oggvorbis"
+)

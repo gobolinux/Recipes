@@ -1,0 +1,11 @@
+post_install() {
+
+   local fullversion=`private__calculate_full_version`
+
+   # Copy and symlink the kernel image
+   cp vmlinux $goboBoot/kernel-$fullversion
+   cp System.map $goboBoot/System.map-$fullversion
+
+   private__link_at_system_kernel_boot $fullversion
+
+}

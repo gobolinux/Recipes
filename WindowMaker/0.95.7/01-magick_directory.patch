@@ -1,0 +1,26 @@
+This patch updates the directory where MagickWand header files are installed.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- WindowMaker-0.95.7/wrlib/load_magick.c.orig	2017-02-17 13:13:10.520248381 -0200
++++ WindowMaker-0.95.7/wrlib/load_magick.c	2017-02-17 13:13:55.359249222 -0200
+@@ -22,7 +22,7 @@
+ 
+ #include "config.h"
+ 
+-#include <wand/MagickWand.h>
++#include <MagickWand/MagickWand.h>
+ 
+ #include "wraster.h"
+ #include "imgformat.h"
+--- WindowMaker-0.95.7/m4/wm_imgfmt_check.m4.orig	2017-02-17 13:17:58.662253787 -0200
++++ WindowMaker-0.95.7/m4/wm_imgfmt_check.m4	2017-02-17 13:18:23.438254252 -0200
+@@ -312,7 +312,7 @@ AS_IF([test "x$enable_magick" = "xno"],
+               dnl
+               dnl The library was found, check if header is available and compiles
+               wm_save_CFLAGS="$CFLAGS"
+-              AS_IF([wm_fn_lib_try_compile "wand/magick_wand.h" "MagickWand *wand;" "wand = NewMagickWand()" "$wm_cv_libchk_magick_cflags"],
++              AS_IF([wm_fn_lib_try_compile "MagickWand/MagickWand.h" "MagickWand *wand;" "wand = NewMagickWand()" "$wm_cv_libchk_magick_cflags"],
+                   [wm_cv_libchk_magick="$wm_cv_libchk_magick_cflags % $wm_cv_libchk_magick_libs"],
+                   [AC_MSG_ERROR([found MagickWand library but could not compile its header])])
+               CFLAGS="$wm_save_CFLAGS"])dnl

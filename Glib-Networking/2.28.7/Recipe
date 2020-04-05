@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for Glib-Networking by Leandro Motta Barros <lmb@stackedboxes.org>, on Wed Sep 21 23:30:14 BRT 2011
+# Recipe for version 2.28.7 by Leandro Motta Barros <lmb@stackedboxes.org>, on Wed Sep 21 23:30:14 BRT 2011
+compile_version=1.13.3
+url="http://ftp.acc.umu.se/pub/GNOME/sources/glib-networking/2.28/glib-networking-2.28.7.tar.bz2"
+file_size=319260
+file_md5=c10e51571d03c10111a37bcd21fbf777
+recipe_type=configure
+
+configure_options=(
+   --with-ca-certificates="$goboLibraries/ssl/certs/"
+)
+
+make_variables=(
+   GIO_MODULE_DIR="$target/lib/gio/modules"
+)

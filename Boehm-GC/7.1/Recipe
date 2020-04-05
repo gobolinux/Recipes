@@ -1,0 +1,10 @@
+# Recipe for version 7.1 by Karim Belbachir <karim@eml.cc>, on Fri Mar 26 03:15:38 GMT 2010
+# Recipe (MakeRecipe) for Boehm-GC by Karim Belbachir <karim@eml.cc>, on Fri Mar 26 00:36:07 GMT 2010
+compile_version=1.13.2
+url="http://www.hpl.hp.com/personal/Hans_Boehm/gc/gc_source/gc-7.1.tar.gz"
+file_size=1077714
+file_md5=2ff9924c7249ef7f736ecfe6f08f3f9b
+recipe_type=configure
+configure_options=(
+   --enable-threads=pthreads
+)

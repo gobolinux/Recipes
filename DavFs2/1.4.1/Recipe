@@ -1,0 +1,10 @@
+# Recipe for version 1.4.1 by Michael Homer <michael@gobolinux.org>, on Sun Aug 23 18:11:52 NZST 2009
+# Recipe (MakeRecipe) for DavFs2 by Christian Holzberger <ch@mosaik-software.de>, on Mon Jul 21 18:27:53 CEST 2008
+compile_version=1.11.1
+url="http://mirror.dknss.com/nongnu/davfs2/davfs2-1.4.1.tar.gz"
+file_size=425963
+file_md5=d9ce95298fe57d6ff8b7a040064ab0fd
+recipe_type=configure
+environment=(
+	ssbindir=$target/sbin
+)

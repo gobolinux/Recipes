@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for FusePython by Lucas C. Villa Real, on Wed Sep 19 23:53:37 PDT 2007
+# Recipe for version cvs by Lucas C. Villa Real, on Wed Sep 19 23:53:37 PDT 2007
+compile_version=1.9.0
+cvs=:pserver:anonymous:@fuse.cvs.sourceforge.net:/cvsroot/fuse
+cvs_module=python
+recipe_type=python
+
+environment=(
+    CFLAGS="$CFLAGS -DFUSE_USE_VERSION=26"
+)

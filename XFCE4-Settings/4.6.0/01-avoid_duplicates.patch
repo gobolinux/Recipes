@@ -1,0 +1,52 @@
+--- xfce4-settings-4.6.0/xfce4-settings-manager/xfce-settings-manager-dialog.c.orig	2009-03-22 19:18:30.000000000 +0100
++++ xfce4-settings-4.6.0/xfce4-settings-manager/xfce-settings-manager-dialog.c	2009-03-23 21:52:55.000000000 +0100
+@@ -388,10 +388,17 @@
+ }
+ 
+ static void
++free_hash_table_entry(gpointer key, gpointer value, gpointer user_data)
++{
++    g_free(key);
++}
++
++static void
+ xfce_settings_manager_dialog_create_liststore(XfceSettingsManagerDialog *dialog)
+ {
+     gchar **dirs, buf[PATH_MAX];
+     gint i, icon_size;
++	GHashTable *table;
+ 
+     dialog->ls = gtk_list_store_new(N_COLS, 
+                                     G_TYPE_STRING, 
+@@ -411,6 +418,8 @@
+ 
+     gtk_icon_size_lookup(GTK_ICON_SIZE_DIALOG, &icon_size, &icon_size);
+ 
++	table = g_hash_table_new(g_str_hash, g_str_equal);
++
+     for(i = 0; dirs[i]; ++i) {
+         GDir *d = g_dir_open(dirs[i], 0, 0);
+         const gchar *file;
+@@ -494,6 +503,12 @@
+                 continue;
+             }
+ 
++			/* don't insert multiple times the same file */
++			if(g_hash_table_lookup(table, file)) {
++				continue;
++			}
++			g_hash_table_insert(table, g_strdup(file), 1);
++			 
+             dialog_name = g_strndup(file, g_strrstr(file, ".desktop") - file);
+ 
+             gtk_list_store_append(dialog->ls, &iter);
+@@ -518,6 +533,9 @@
+         g_dir_close(d);
+     }
+ 
++	g_hash_table_foreach(table, free_hash_table_entry, NULL);
++	g_hash_table_destroy(table);
++				    
+     g_strfreev(dirs);
+ 
+     gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(dialog->ls), COL_NAME,

@@ -1,0 +1,12 @@
+compile_version=1.9.0
+url="http://downloads.sourceforge.net/smplayer/smplayer-0.5.21.tar.gz"
+file_size=1026424
+file_md5=e68ecce456c20b0ff6a6bbae56d96e47
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=${target}"
+   "CONF_PATH=\\\"${settings_target}/smplayer\\\""
+   "KDE_INCLUDE_PATH=${goboHeaders}"
+   "KDE_LIB_PATH=${goboLibraries}"
+)

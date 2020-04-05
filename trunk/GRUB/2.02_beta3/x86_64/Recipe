@@ -1,7 +1,0 @@
-# arch=x86_64
-
-configure_options=(
-    ${configure_options[@]}
-    --enable-efiemu
-    --target="i386" # this is not wrong, it's indeed i386
-)    

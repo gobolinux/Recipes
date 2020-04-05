@@ -1,0 +1,12 @@
+# Recipe for version 8.02 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. jún. 15., kedd, 23.01.03 CEST
+# by Jeremy Vernon
+compile_version=1.12.0
+url="ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.02.tar.bz2"
+file_size=956462
+file_md5=27948c1b5f5c1eabc23cba1ebe4c316f
+recipe_type=configure
+
+configure_options=(
+   "--enable-utf8"
+   #utf-8 support here needed for at least Goffice 0.5.2
+)

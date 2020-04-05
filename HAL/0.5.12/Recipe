@@ -1,0 +1,35 @@
+# Recipe for version 0.5.12 by Hoppar Tamas <htraki@indamail.hu>, on 2009. máj. 13., szerda, 13.25.41 CEST
+# Recipe (MakeRecipe) for HAL by Michael Homer <michael@e.geek.nz>, on Tue Mar 20 15:33 NZST 2007
+compile_version=1.10.2
+url="http://hal.freedesktop.org/releases/hal-0.5.12.tar.gz"
+file_size=1197445
+file_md5=bb7c36e142437f7363f9a80ae8391926
+recipe_type=configure
+environment=(
+    "LDFLAGS=-lz"
+)
+configure_options=(
+   --libexecdir="${target}/lib"
+   --disable-policy-kit
+   --disable-docbook-docs
+   --with-pid-file="${goboVariable}/run/hald/pid"
+   --with-socket-dir="${goboVariable}/run/hald"
+   --with-dbus-sys="${settings_target}/dbus-1/system.d"
+   --with-hwdata="${goboShared}/hwdata"
+   --with-eject="${goboExecutables}/eject"
+   --enable-parted
+   --sysconfdir="$goboSettings"
+   --enable-console-kit
+)
+# Dont forget to disable libblkid in e2fsprogs
+install_variables=(
+   sysconfdir="$settings_target"
+)
+
+unmanaged_files=(
+    "${goboVariable}/run/hald"
+    "${goboVariable}/run/hald/hald-local"
+    "${goboVariable}/run/hald/hald-runner"
+    "${goboVariable}/cache/"
+    "${goboVariable}/lib/hal"
+)

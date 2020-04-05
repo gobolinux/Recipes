@@ -1,0 +1,10 @@
+# Recipe for version 1.4.2 by Andre Detsch, on Fri Apr 22 13:43:30 BRT 2005
+# Recipe (MakeRecipe) for Doxygen by roko, <ro.ko@mcnon.com>, on Mon Dec 6 00:03:33 BRST 2004
+compile_version=1.7.1
+url="ftp://ftp.stack.nl/pub/users/dimitri/doxygen-1.4.2.src.tar.gz"
+dir='doxygen-1.4.2'
+recipe_type=makefile
+pre_build () {
+configure --prefix $target 
+#--with-doxywizard
+ }

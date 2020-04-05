@@ -1,5 +1,0 @@
-configure_options=(
-   ${configure_options[@]}
-   "--with-cpu-64=generic"
-   "--disable-multilib"
-)

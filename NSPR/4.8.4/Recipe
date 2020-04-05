@@ -1,0 +1,23 @@
+# Recipe for version 4.8.4.4 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. máj. 30., vasárnap, 11.46.16 CEST
+# Recipe (MakeRecipe) for NSPR by Jonas Karlsson <jonka750@student.liu.se>, on Sun Sep 24 11:30:09 CEST 2006
+compile_version=1.8.2
+url="http://ftp.mozilla.org/pub/mozilla.org/nspr/releases/v4.8.4/src/nspr-4.8.4.tar.gz"
+file_size=1196103
+file_md5=a85bdbe1eb646aa32c785a37d8e3a2f5
+recipe_type=configure
+dir="nspr-4.8.4/mozilla/nsprpub"
+
+configure_options=(
+   --enable-optimize
+   --disable-debug
+)
+
+pre_link() {
+   pushd ${target}/lib &&
+   for lib in *.so
+   do
+      mv ${lib} ${lib}.7
+      ln -s ${lib}.7 ${lib}
+   done &&
+   popd
+}

@@ -1,0 +1,8 @@
+compile_version=1.11.2
+url="http://www1.tcnet.ne.jp/fmurata/linux/down/gamix-1.99.p14.tar.gz"
+file_size=484433
+file_md5=a57b7954aa8e95b0a1c69a6fb06bc64b
+recipe_type=configure
+configure_options=(
+  "--with-gtk-target=-2.0"
+)

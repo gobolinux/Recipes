@@ -1,0 +1,11 @@
+# Recipe for version 1.0.20 by Dominique Juergensen <brokolie@vollbio.de>, on Mon Nov 16 04:54:32 CET 2009
+# Recipe (MakeRecipe) for ALSA-Utils by Peter Eriksen <s022018@student.dtu.dk>, on Sat Jan 15 15:34:38 CET 2005
+compile_version=1.9.0
+url="ftp://ftp.alsa-project.org/pub/utils/alsa-utils-1.0.20.tar.bz2"
+file_size=1044483
+file_md5=6837e673ef19da96d8bd2f9e18cd9574
+recipe_type=configure
+
+configure_options=(
+    --disable-xmlto
+)

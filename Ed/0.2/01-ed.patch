@@ -1,0 +1,20 @@
+diff -Naur ed-0.2/buf.c ed-0.2-2/buf.c
+--- ed-0.2/buf.c	Sat Nov 19 04:37:59 1994
++++ ed-0.2-2/buf.c	Tue May 28 18:38:23 2002
+@@ -200,13 +200,13 @@
+ int
+ open_sbuf ()
+ {
+-  char *mktemp ();
+-  int u;
++  int u, sfd;
+ 
+   isbinary = newline_added = 0;
+   u = umask(077);
+   strcpy (sfn, "/tmp/ed.XXXXXX");
+-  if (mktemp (sfn) == NULL || (sfp = fopen (sfn, "w+")) == NULL)
++  sfd = mkstemp(sfn);
++    if ((sfd == -1) || (sfp = fopen (sfn, "w+")) == NULL)
+     {
+       fprintf (stderr, "%s: %s\n", sfn, strerror (errno));
+       sprintf (errmsg, "Cannot open temp file");

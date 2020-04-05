@@ -1,0 +1,15 @@
+[Name] LightMediaScanner
+[Summary] Lightweight media scanner
+[Description] Lightweight media scanner meant to be used in not-so-powerful devices,
+like embedded systems or old machines.
+
+Provides an optimized way to recursively scan directories, handling
+the parser in a child process, avoiding breaks of the main process
+when parsers break (quite common with such bad libs and tags). One can
+opt to use the single process version, but be aware that if something
+bad happens during parsing, your application will suffer.
+
+Parsers are plugins in the form of shared objects, so it's easy to add
+new without having to recompile the scanner.
+[License] GNU LGPL version 2.1
+[Homepage] https://github.com/profusion/lightmediascanner

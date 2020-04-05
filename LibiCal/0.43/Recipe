@@ -1,0 +1,10 @@
+# Recipe for version 0.43 by Michael Homer <michael@gobolinux.org>, on Fri Jan 30 18:31:08 NZDT 2009
+# Recipe (MakeRecipe) for LibiCal by Jonas Karlsson <jonka750@student.liu.se>, on Fri Sep 5 23:49:20 CEST 2008
+compile_version=1.8.0
+url="http://easyinstall.citadel.org/libical-0.43.tar.gz"
+file_size=1145724
+file_md5=5f0a1feb60894d0be537aefea5647474
+recipe_type=configure
+configure_options=(
+   --sharedstatedir=${target}/Shared
+)

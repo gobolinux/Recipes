@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for LibVA-VDPAU-Driver by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jun 29 13:11:20 BRT 2013
+# Recipe for version 0.7.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jun 29 13:11:20 BRT 2013
+compile_version=1.0.1
+url="http://www.freedesktop.org/software/vaapi/releases/libva-vdpau-driver/libva-vdpau-driver-0.7.4.tar.bz2"
+file_size=316729
+file_md5=5ec6d452d2dd307434ea3d32da49c3e5
+recipe_type=configure
+
+pre_build() {
+    autoreconf
+}
+
+environment=(
+    LIBVA_DRIVERS_PATH=$target/lib/dri
+)

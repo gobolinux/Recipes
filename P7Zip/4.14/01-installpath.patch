@@ -1,0 +1,32 @@
+diff -Naur p7zip_4.14-orig/install.sh p7zip_4.14/install.sh
+--- p7zip_4.14-orig/install.sh	2004-12-15 17:17:31.000000000 -0200
++++ p7zip_4.14/install.sh	2005-01-15 19:06:34.000000000 -0200
+@@ -7,6 +7,8 @@
+ # global install
+ DEST_BIN=/usr/local/bin
+ DEST_SHARE=/usr/local/lib/p7zip
++[ "$1" ] && DEST_BIN=$1
++[ "$2" ] && DEST_SHARE=$2
+ 
+ use_share="n"
+ 
+diff -Naur p7zip_4.14-orig/makefile p7zip_4.14/makefile
+--- p7zip_4.14-orig/makefile	2004-12-16 15:55:48.000000000 -0200
++++ p7zip_4.14/makefile	2005-01-15 19:07:58.000000000 -0200
+@@ -1,4 +1,7 @@
+ 
++DEST_BIN=/usr/local/bin
++DEST_SHARE=/usr/local/lib/p7zip
++
+ .PHONY: all 7za sfx 7z common clean tar_src tar_bin
+ 
+ all::7za
+@@ -75,7 +78,7 @@
+ 	rm -fr bin
+ 
+ install:
+-	./install.sh
++	./install.sh $(DEST_BIN) $(DEST_SHARE)
+ 
+ REP=$(shell pwd)
+ ARCHIVE=$(shell basename $(REP))

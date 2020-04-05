@@ -1,0 +1,56 @@
+--- kdebase-3.3.2/kcontrol/kfontinst/kio/KioFonts.cpp.orig	2004-08-30 23:00:31.000000000 -0300
++++ kdebase-3.3.2/kcontrol/kfontinst/kio/KioFonts.cpp	2004-08-30 23:03:14.000000000 -0300
+@@ -1974,18 +1974,27 @@
+     KFI_DBUG << "finished ModifiedDirs" << endl;
+ }
+ 
+-#define SYS_USER "root"
++const char *superuser_name()
++{
++    const char *root_str = "root";
++    struct passwd *entry = getpwuid(0);
++    if (! entry)
++       return root_str;
++    return entry->pw_name;
++}
++
+ QString CKioFonts::getRootPasswd(bool askPasswd)
+ {
+     KFI_DBUG << "getRootPasswd" << endl;
+     KIO::AuthInfo authInfo;
+-    SuProcess     proc(SYS_USER);
++    const char *  sys_user = superuser_name();
++    SuProcess     proc(sys_user);
+     bool          error=false;
+     int           attempts=0;
+     QString       errorMsg;
+ 
+     authInfo.url=KURL(KIO_FONTS_PROTOCOL ":///");
+-    authInfo.username=SYS_USER;
++    authInfo.username=sys_user;
+     authInfo.keepPassword=true;
+ 
+     if(!checkCachedAuthentication(authInfo) && !askPasswd)
+@@ -1997,7 +2006,7 @@
+             KFI_DBUG << "ATTEMPT : " << attempts << endl;
+             if(1==attempts)
+                 errorMsg=i18n("Incorrect password.\n");
+-            if((!openPassDlg(authInfo, errorMsg) && attempts) || ++attempts>4 || SYS_USER!=authInfo.username)
++            if((!openPassDlg(authInfo, errorMsg) && attempts) || ++attempts>4 || sys_user!=authInfo.username)
+                 error=true;
+         }
+     else
+@@ -2007,11 +2016,12 @@
+ 
+ bool CKioFonts::doRootCmd(const char *cmd, const QString &passwd)
+ {
++    const char *sys_user = superuser_name();
+     KFI_DBUG << "doRootCmd " << cmd << endl;
+ 
+     if(QString::null!=passwd)
+     {
+-        SuProcess proc(SYS_USER);
++        SuProcess proc(sys_user);
+ 
+         if(itsCanStorePasswd)
+             itsPasswd=passwd;

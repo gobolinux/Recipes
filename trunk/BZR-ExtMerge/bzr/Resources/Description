@@ -1,7 +1,0 @@
-[Name] BZR-ExtMerge
-[Summary] bzr plugin to use an external merge helper
-[Description] ExtMerge is bzr plugin to call an external merge helper tool to resolve conflicts.
-
-This plugin calls a user defined tool, if that exists. Otherwise, it tries kdiff3, xxdiff and opendiff in that order. 
-[License] GNU General Public License version 2
-[Homepage] http://erik.bagfors.nu/bzr-plugins/extmerge/

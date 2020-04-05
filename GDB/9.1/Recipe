@@ -1,0 +1,14 @@
+# Recipe for version 9.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat 22 Feb 2020 02:02:20 AM BRT
+# Recipe (MakeRecipe) for GDB by roko, <ro.ko@mcnon.com>, on Sun Dec 5 18:49.15 BRST 2004
+compile_version=1.9.0
+url="http://ftp.gnu.org/gnu/gdb/gdb-9.1.tar.xz"
+file_size=20980824
+file_md5=f7e9f6236c425097d9e5f18a6ac40655
+recipe_type=configure
+dir=gdb-9.1
+needs_build_directory=yes
+
+configure_options=(
+    --disable-werror
+    --with-system-readline
+)

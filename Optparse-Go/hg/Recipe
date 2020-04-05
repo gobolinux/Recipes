@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for Optparse-Go by Kevin Quick <quick@sparq.org>, on Sun Nov 29 09:35:47 MST 2009
+# Recipe for version hg by Kevin Quick <quick@sparq.org>, on Sun Nov 29 09:35:47 MST 2009
+compile_version=1.12.3
+hg="https://optparse-go.googlecode.com/hg/"
+recipe_type=makefile
+makefile='Makefile'
+environment=(
+	"GOARCH=386"
+	"GOOS=linux"
+	"GOBIN=$golang_path/bin"
+	"GOROOT=$goboLibraries/go"
+)
+install_variables=(
+    "target=$target"
+)

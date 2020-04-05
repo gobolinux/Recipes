@@ -1,0 +1,55 @@
+--- kdeaccessibility-4.0.1/kttsd/kttsjobmgr/CMakeLists.txt.orig	2008-02-08 22:49:20.000000000 +0100
++++ kdeaccessibility-4.0.1/kttsd/kttsjobmgr/CMakeLists.txt	2008-02-08 22:50:17.000000000 +0100
+@@ -8,7 +8,7 @@
+     jobinfolistmodel.cpp
+     kttsjobmgr.cpp )
+ 
+-qt4_add_dbus_interfaces(kttsjobmgrpart_PART_SRCS ${DBUS_INTERFACES_INSTALL_DIR}/org.kde.KSpeech.xml )
++qt4_add_dbus_interfaces(kttsjobmgrpart_PART_SRCS ${KDE4_DBUS_INTERFACES_DIR}/org.kde.KSpeech.xml )
+ 
+ kde4_add_plugin(kttsjobmgrpart WITH_PREFIX ${kttsjobmgrpart_PART_SRCS})
+ 
+--- kdeaccessibility-4.0.1/kttsd/kcmkttsmgr/CMakeLists.txt.orig	2008-02-08 22:52:58.000000000 +0100
++++ kdeaccessibility-4.0.1/kttsd/kcmkttsmgr/CMakeLists.txt	2008-02-08 22:53:31.000000000 +0100
+@@ -9,7 +9,7 @@
+    addtalker.cpp )
+ 
+ 
+-qt4_add_dbus_interfaces(kcm_kttsd_PART_SRCS ${DBUS_INTERFACES_INSTALL_DIR}/org.kde.KSpeech.xml )
++qt4_add_dbus_interfaces(kcm_kttsd_PART_SRCS ${KDE4_DBUS_INTERFACES_DIR}/org.kde.KSpeech.xml )
+ 
+ kde4_add_ui_files(kcm_kttsd_PART_SRCS kcmkttsmgrwidget.ui addtalkerwidget.ui )
+ 
+--- kdeaccessibility-4.0.1/kttsd/kttsmgr/CMakeLists.txt.orig	2008-02-08 23:21:59.000000000 +0100
++++ kdeaccessibility-4.0.1/kttsd/kttsmgr/CMakeLists.txt	2008-02-08 23:22:31.000000000 +0100
+@@ -7,7 +7,7 @@
+ set(kttsmgr_SRCS 
+     kttsmgr.cpp )
+ 
+-qt4_add_dbus_interfaces(kttsmgr_SRCS ${DBUS_INTERFACES_INSTALL_DIR}/org.kde.KSpeech.xml )
++qt4_add_dbus_interfaces(kttsmgr_SRCS ${KDE4_DBUS_INTERFACES_DIR}/org.kde.KSpeech.xml )
+ 
+ 
+ kde4_add_executable(kttsmgr ${kttsmgr_SRCS})
+--- kdeaccessibility-4.0.1/kttsd/kspeak/CMakeLists.txt.orig	2008-02-08 23:26:13.000000000 +0100
++++ kdeaccessibility-4.0.1/kttsd/kspeak/CMakeLists.txt	2008-02-08 23:26:48.000000000 +0100
+@@ -2,7 +2,7 @@
+     kspeak.cpp
+     main.cpp )
+ 
+-qt4_add_dbus_interfaces(kspeak_SRCS ${DBUS_INTERFACES_INSTALL_DIR}/org.kde.KSpeech.xml )
++qt4_add_dbus_interfaces(kspeak_SRCS ${KDE4_DBUS_INTERFACES_DIR}/org.kde.KSpeech.xml )
+ 
+ kde4_add_executable(kspeak ${kspeak_SRCS})
+ 
+--- kdeaccessibility-4.0.1/kmouth/CMakeLists.txt.orig	2008-02-08 23:29:41.000000000 +0100
++++ kdeaccessibility-4.0.1/kmouth/CMakeLists.txt	2008-02-08 23:30:12.000000000 +0100
+@@ -45,7 +45,7 @@
+    kmouth.cpp 
+    main.cpp )
+ 
+-set(kspeech_xml  ${DBUS_INTERFACES_INSTALL_DIR}/org.kde.KSpeech.xml)
++set(kspeech_xml  ${KDE4_DBUS_INTERFACES_DIR}/org.kde.KSpeech.xml)
+ qt4_add_dbus_interface(kmouth_SRCS ${kspeech_xml} kspeech_interface)
+ 
+ kde4_add_ui_files(kmouth_SRCS preferencesui.ui texttospeechconfigurationui.ui )

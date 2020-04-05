@@ -1,0 +1,28 @@
+# Recipe for version 070 by Carlo J. Calica <ccalica@gmail.com>, on Sat Oct 1 23:09:05 PDT 2005
+# Recipe for Udev 070 by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.7.1
+url="http://www.kernel.org/pub/linux/utils/kernel/hotplug/udev-070.tar.bz2"
+recipe_type=makefile
+makefile='Makefile'
+
+build_target="all etc/udev/udev.conf"
+
+make_variables=(
+   "EXTRAS=extras/cdrom_id extras/run_directory extras/volume_id extras/scsi_id extras/usb_id extras/firmware"
+)
+
+build_variables=(
+   "prefix=$target"
+   "etcdir=$goboSettings"
+   "udevdir=$goboDevices"
+#   "USE_KLIBC=true"
+)
+
+install_variables=(
+#   "prefix=$target"
+#   "etcdir=$target/Resources/Defaults/Settings"
+   "DESTDIR=$target"
+)
+pre_build() {
+   sed -i "s:\@configdir@:$goboSettings\/udev:" etc/udev/udev.conf.in
+}

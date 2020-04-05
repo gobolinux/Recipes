@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for LuaSQL by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. nov. 20., csütörtök, 23.42.58 CET
+# Recipe for version 2.1.1 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. nov. 20., csütörtök, 23.42.58 CET
+compile_version=1.11.4
+url="http://luaforge.net/frs/download.php/2686/luasql-2.1.1.tar.gz"
+file_size=69466
+file_md5=63bdd57de4b9d1be336ba112d8cb69eb
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+PREFIX=$target
+)

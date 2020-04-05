@@ -1,0 +1,11 @@
+--- openexr-1.6.1/configure.old	2008-08-31 21:30:15.000000000 +0200
++++ openexr-1.6.1/configure	2008-08-31 21:27:10.000000000 +0200
+@@ -19528,7 +19528,7 @@
+    done
+    TEST_LDFLAGS="-L$test_prefix/lib"
+    TEST_LDFLAGS="$TEST_LDFLAGS $LIB64_IF_EXISTS -L/usr/local/lib"
+-   TEST_LIBS="-lImath -lHalf -lIex -lIlmThread"
++   TEST_LIBS="-lImath -lHalf -lIex -lIlmThread -pthread"
+ else
+                            if test x$PKG_CONFIG != xno ; then
+       echo "using pkg-config to set ILMBASE_CXXFLAGS and ILMBASE_LDFLAGS:"

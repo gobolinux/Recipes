@@ -1,0 +1,10 @@
+# Recipe for version 1.2.8 by Lucas C. Villa Real, on Wed Feb 28 02:22:43 BRT 2007
+# Recipe (MakeRecipe) for APR-Util by Kosh <kosh.linux at gmail.com>, on Tue Feb 28 21:59:01 BRT 2006
+compile_version=1.8.2
+url="http://mirrors.dedipower.com/ftp.apache.org/apr/apr-util-1.2.8.tar.gz"
+file_size=646379
+file_md5=a2e2e54d65e9eae961f7171335cf2550
+recipe_type=configure
+configure_options=(
+    "--with-apr=$goboPrograms/APR/Current"
+)

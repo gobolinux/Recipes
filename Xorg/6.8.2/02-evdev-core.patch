@@ -1,0 +1,1769 @@
+--- xc/programs/Xserver/hw/xfree86/os-support/linux/Imakefile	2004-06-16 10:39:15.000000000 +0100
++++ xc/programs/Xserver/hw/xfree86/os-support/linux/Imakefile	2005-01-10 14:25:48.046684841 +0000
+@@ -50,16 +50,17 @@
+ SRCS = lnx_init.c lnx_video.c lnx_io.c libc_wrapper.c bios_mmap.c \
+        VTsw_usl.c std_kbdEv.c posix_tty.c $(MOUSESRC) \
+        lnx_pci.c vidmem.c lnx_apm.c $(JOYSTICK_SRC) $(DRI_SRC) $(RES_SRCS) \
+-       $(PLATFORM_SRC) lnx_kmod.c lnx_agp.c $(KBDSRC) /*wcHelper.c*/
++       $(PLATFORM_SRC) lnx_kmod.c lnx_agp.c $(KBDSRC) /*wcHelper.c*/ lnx_evdev.c
+ 
+ OBJS = lnx_init.o lnx_video.o lnx_io.o libc_wrapper.o bios_mmap.o \
+        VTsw_usl.o std_kbdEv.o posix_tty.o $(MOUSEOBJ) \
+        lnx_pci.o vidmem.o lnx_apm.o $(JOYSTICK_OBJ) $(DRI_OBJ) $(RES_OBJS) \
+-       $(PLATFORM_OBJ) lnx_kmod.o lnx_agp.o $(KBDOBJ) /*wcHelper.o*/
++       $(PLATFORM_OBJ) lnx_kmod.o lnx_agp.o $(KBDOBJ) /*wcHelper.o*/ lnx_evdev.o
++  
+ 
+ INCLUDES = -I$(XF86COMSRC) -I$(XF86OSSRC) -I. -I$(SERVERSRC)/include \
+            -I$(XINCLUDESRC) -I$(EXTINCSRC) -I$(XF86OSSRC)/shared \
+-	   -I$(XF86OSSRC)/bus -I$(DRMSRCDIR)/shared
++	   -I$(XF86OSSRC)/bus -I$(DRMSRCDIR)/shared -I$(SERVERSRC)/mi
+ 
+ RESDEFINES = -DUSESTDRES
+ 
+diff -u -r -N build-tree/xc/programs/Xserver/hw/xfree86/os-support/linux/lnx_evdev.c xc/programs/Xserver/hw/xfree86/os-support/linux/lnx_evdev.c
+--- xc/programs/Xserver/hw/xfree86/os-support/linux/lnx_evdev.c	1970-01-01 01:00:00.000000000 +0100
++++ xc/programs/Xserver/hw/xfree86/os-support/linux/lnx_evdev.c	2005-01-10 14:23:02.372702031 +0000
+@@ -0,0 +1,278 @@
++/* $XFree86: xc/programs/Xserver/hw/xfree86/os-support/linux/lnx_mouse.c,v 1.1 1999/05/17 13:17:18 dawes Exp $ */
++
++/*
++ * Copyright 2003 by Zephaniah E. Hull.
++ */
++
++#include "X.h"
++#include "xf86.h"
++#include "xf86Priv.h"
++#include "xf86_OSlib.h"
++#include "xf86Xinput.h"
++#include "xf86OSmouse.h"
++#include "lnx_evdev.h"
++#include "mipointer.h"
++
++static Bool evdev_alive = FALSE;
++static evdevDriverPtr evdev_drivers = NULL;
++static char *evdev_buf;
++static char evdev_device[23];
++
++static int
++glob_match(const char *pattern, const char *matchp)
++{
++    int i, j = 0, ret = 0;
++    if (!(pattern && matchp))
++	return (strlen(pattern) == strlen(matchp));
++
++    for (i = 0; matchp[i]; i++) {
++	if (pattern[j] == '\\')
++	    j++;
++	else if (pattern[j] == '*') {
++	    if (pattern[j + 1]) {
++		if (!glob_match(pattern+j+1,matchp+i))
++		    return 0;
++	    } else
++		return 0;
++	    continue;
++	} else if (pattern[j] == '?') {
++	    j++;
++	    continue;
++	}
++
++	if ((ret = (pattern[j] - matchp[i])))
++	    return ret;
++
++	j++;
++    }
++    if (!pattern[j] || ((pattern[j] == '*') && !pattern[j + 1]))
++	return 0;
++    else
++	return 1;
++}
++
++
++int
++evdevGetFDForDriver (evdevDriverPtr driver)
++{
++    char dev[20];
++    char tmp[256] = "";
++    int fd, i;
++
++    if (!driver)
++	return -1;
++
++    for (i = 0; i < 32; i++) {
++	snprintf(dev, sizeof(dev), "/dev/input/event%d", i); 
++	SYSCALL(fd = open (dev, O_RDWR | O_NONBLOCK));
++	if (fd == -1)
++	    continue;
++
++#define check(name,get)							\
++    	if (name) {							\
++	    if (ioctl(fd, get, tmp) == -1)				\
++		tmp[0] = '\0';						\
++	    if (glob_match(name, tmp)) {				\
++		close(fd);						\
++		continue;						\
++	    }								\
++	}
++
++	check(driver->name, EVIOCGNAME(sizeof(tmp)));
++	check(driver->phys, EVIOCGPHYS(sizeof(tmp)));
++#undef check
++	return fd;
++    }
++    return -1;
++}
++
++static void
++evdevReadInput(InputInfoPtr pInfo)
++{
++    int			n;
++    evdevDriverPtr	driver;
++    char		*cur, *end;
++    char		*id, *value, *name, *phys, *action;
++    Bool		up;
++
++    do {
++	SYSCALL(n = read(pInfo->fd, evdev_buf, 1022));
++	evdev_buf[n] = '\n';	/* Just to be extra safe. */
++	evdev_buf[n + 1] = '\0';/* Just to be extra safe. */
++
++	cur = evdev_buf;
++	while (cur[0] && (end = strchr(cur, '\n')) && (end != cur)) {
++	    name = phys = action = NULL;
++	    if (!strncmp("2.1", cur, 3)) {
++#define next_sep(sep,end,clr)	while (1) {	\
++	if ((*cur == '\n') || (*cur == '\0')) {	\
++	    if (end) {				\
++		goto evdevReadInput__finished;	\
++	    } else if (clr)			\
++		*cur = '\0';			\
++	    cur++;				\
++	    break;				\
++	} else if (*cur == sep) {		\
++	    if (clr)				\
++		*cur = '\0';			\
++	    cur++;				\
++	    break;				\
++	}					\
++	cur++;					\
++    }
++	
++		next_sep('\002', 1, 0);
++loop_start__21:
++		id = cur;
++		next_sep('\003', 1, 1);
++		value = cur;
++		next_sep('\002', 0, 1);
++		if (!strcmp(id, "ACTION"))
++		    action = value;
++		else if (!strcmp(id, "NAME"))
++		    name = value;
++		else if (!strcmp(id, "PHYS"))
++		    phys = value;
++		if (*cur != '\n')
++		    goto loop_start__21;
++#undef next_sep
++	    }
++evdevReadInput__finished:
++
++	    if (!(action && name && phys)) {
++		xf86Msg(X_ERROR,"%s: Incomplete command! -%s-%s-%s-\n",
++			pInfo->name, action, name, phys);
++	    } else {
++		if (!strcmp(action, "add"))
++		    up = TRUE;
++		else
++		    up = FALSE;
++
++		for (driver = evdev_drivers; driver; driver = driver->next) {
++		    if (driver->name && glob_match(name, driver->name))
++			continue;
++		    if (driver->phys && glob_match(phys, driver->phys))
++			continue;
++		    if (up)
++			driver->callback(driver->cb_data, DEVICE_ON);
++		    else
++			driver->callback(driver->cb_data, DEVICE_OFF);
++		}
++	    }
++	    cur = end + 1;
++	}
++    } while (xf86WaitForInput(pInfo->fd, 0));
++    return;
++}
++
++static void
++evdevSigioReadInput (int fd, void *closure)
++{
++    evdevReadInput ((InputInfoPtr) closure);
++}
++
++static int
++evdevGetControlFD (void)
++{
++    int i, ret;
++
++    for (i = 0; i < 100; i++) {
++	snprintf(evdev_device,sizeof(evdev_device),"/tmp/.X11-unix/evdev%d", i);
++	SYSCALL(ret = mkfifo (evdev_device, 0666));
++	if (ret == -1) {
++	    if (errno != EEXIST)
++		return -1;
++	    continue;
++	}
++	SYSCALL(ret = open (evdev_device, O_RDWR | O_NONBLOCK));
++	return ret;
++    }
++
++    return -1;
++}
++
++static void
++evdevReleaseControlFD (int fd)
++{
++    SYSCALL(close(fd));
++    SYSCALL(unlink(evdev_device));
++}
++
++static int
++evdevControl(DeviceIntPtr pPointer, int what)
++{
++    InputInfoPtr pInfo;
++
++    pInfo = pPointer->public.devicePrivate;
++
++    switch (what) {
++    case DEVICE_INIT: 
++	pPointer->public.on = FALSE;
++	break;
++
++    case DEVICE_ON:
++	pInfo->fd = evdevGetControlFD ();
++	if (pInfo->fd == -1) {
++	    xf86Msg(X_ERROR, "%s: cannot open control FIFO.\n", pInfo->name);
++	    return BadRequest;
++	}
++	xf86FlushInput(pInfo->fd);
++	if (!xf86InstallSIGIOHandler (pInfo->fd, evdevSigioReadInput, pInfo))
++	    AddEnabledDevice(pInfo->fd);
++	pPointer->public.on = TRUE;
++	break;
++
++    case DEVICE_OFF:
++    case DEVICE_CLOSE:
++	if (pInfo->fd != -1) {
++	    RemoveEnabledDevice(pInfo->fd);
++	    xf86RemoveSIGIOHandler(pInfo->fd);
++	    evdevReleaseControlFD (pInfo->fd);
++	    pInfo->fd = -1;
++	}
++	pPointer->public.on = FALSE;
++	usleep(300000);
++	break;
++    }
++    return Success;
++}
++
++Bool
++evdevStart (InputDriverPtr drv)
++{
++    InputInfoPtr pInfo;
++
++    if (evdev_alive)
++	return TRUE;
++
++    if (!(evdev_buf = xcalloc(1024, 1)))
++	return FALSE;
++
++    if (!(pInfo = xf86AllocateInput(drv, 0)))
++	return FALSE;
++
++
++    pInfo->name = "evdev brain";
++    pInfo->type_name = "evdev brain";
++    pInfo->device_control = evdevControl;
++    pInfo->read_input = evdevReadInput;
++    pInfo->fd = -1;
++    evdev_alive = TRUE;
++    pInfo->flags = XI86_CONFIGURED | XI86_OPEN_ON_INIT;
++    return TRUE;
++}
++
++Bool
++evdevNewDriver (evdevDriverPtr driver)
++{
++    if (!evdev_alive)
++	return FALSE;
++    if (!(driver->name || driver->phys))
++	return FALSE;
++    if (!driver->callback)
++	return FALSE;
++
++    driver->next = evdev_drivers;
++    evdev_drivers = driver;
++    return TRUE;
++}
+diff -u -r -N build-tree/xc/programs/Xserver/hw/xfree86/os-support/linux/lnx_evdev.h xc/programs/Xserver/hw/xfree86/os-support/linux/lnx_evdev.h
+--- xc/programs/Xserver/hw/xfree86/os-support/linux/lnx_evdev.h	1970-01-01 01:00:00.000000000 +0100
++++ xc/programs/Xserver/hw/xfree86/os-support/linux/lnx_evdev.h	2005-01-10 14:23:02.373701874 +0000
+@@ -0,0 +1,752 @@
++/* $XFree86: xc/programs/Xserver/hw/xfree86/os-support/linux/lnx.h,v 3.2 2000/02/15 02:00:14 eich Exp $ */
++
++#ifndef LNX_EVDEV_H_
++#define LNX_EVDEV_H_
++
++
++/* Stuff taken from the linux header. (With some minor changes.) */
++
++#include <sys/time.h>
++#include <sys/ioctl.h>
++#include <asm/types.h>
++
++/*
++ * The event structure itself
++ */
++
++struct input_event {
++	struct timeval time;
++	__u16 type;
++	__u16 code;
++	__s32 value;
++};
++
++/*
++ * Protocol version.
++ */
++
++#define EV_VERSION		0x010000
++
++/*
++ * IOCTLs (0x00 - 0x7f)
++ */
++
++struct input_id {
++	__u16 bustype;
++	__u16 vendor;
++	__u16 product;
++	__u16 version;
++};
++
++struct input_absinfo {
++	__s32 value;
++	__s32 minimum;
++	__s32 maximum;
++	__s32 fuzz;
++	__s32 flat;
++};
++
++#define EVIOCGVERSION		_IOR('E', 0x01, int)			/* get driver version */
++#define EVIOCGID		_IOR('E', 0x02, struct input_id)	/* get device ID */
++#define EVIOCGREP		_IOR('E', 0x03, int[2])			/* get repeat settings */
++#define EVIOCSREP		_IOW('E', 0x03, int[2])			/* get repeat settings */
++#define EVIOCGKEYCODE		_IOR('E', 0x04, int[2])			/* get keycode */
++#define EVIOCSKEYCODE		_IOW('E', 0x04, int[2])			/* set keycode */
++
++#define EVIOCGNAME(len)		_IOC(_IOC_READ, 'E', 0x06, len)		/* get device name */
++#define EVIOCGPHYS(len)		_IOC(_IOC_READ, 'E', 0x07, len)		/* get physical location */
++#define EVIOCGUNIQ(len)		_IOC(_IOC_READ, 'E', 0x08, len)		/* get unique identifier */
++
++#define EVIOCGKEY(len)		_IOC(_IOC_READ, 'E', 0x18, len)		/* get global keystate */
++#define EVIOCGLED(len)		_IOC(_IOC_READ, 'E', 0x19, len)		/* get all LEDs */
++#define EVIOCGSND(len)		_IOC(_IOC_READ, 'E', 0x1a, len)		/* get all sounds status */
++
++#define EVIOCGBIT(ev,len)	_IOC(_IOC_READ, 'E', 0x20 + ev, len)	/* get event bits */
++#define EVIOCGABS(abs)		_IOR('E', 0x40 + abs, struct input_absinfo)		/* get abs value/limits */
++#define EVIOCSABS(abs)		_IOW('E', 0xc0 + abs, struct input_absinfo)		/* set abs value/limits */
++
++#define EVIOCSFF		_IOC(_IOC_WRITE, 'E', 0x80, sizeof(struct ff_effect))	/* send a force effect to a force feedback device */
++#define EVIOCRMFF		_IOW('E', 0x81, int)			/* Erase a force effect */
++#define EVIOCGEFFECTS		_IOR('E', 0x84, int)			/* Report number of effects playable at the same time */
++
++#define EVIOCGRAB		_IOW('E', 0x90, int)			/* Grab/Release device */
++#define EVIOCGMASK		_IOR('E', 0x91, unsigned long *)	/* Get our input mask */
++#define EVIOCSMASK		_IOW('E', 0x92, unsigned long)		/* Set our input mask */
++#define EVIOCGDMASK		_IOR('E', 0x93, unsigned long *)	/* Get device input mask */
++#define EVIOCSDMASK		_IOW('E', 0x94, unsigned long)		/* Set device input mask */
++
++
++
++#define BITS_PER_LONG		(sizeof(long) * 8)
++#define NBITS(x)		((((x)-1)/BITS_PER_LONG)+1)
++#define OFF(x) 			((x)%BITS_PER_LONG)
++#define LONG(x)			((x)/BITS_PER_LONG)
++#define BIT(x)			(1UL<<((x)%BITS_PER_LONG))
++#define test_bit(bit, array)    ((array[LONG(bit)] >> OFF(bit)) & 1)
++
++/*
++ * Event types
++ */
++
++#define EV_SYN			0x00
++#define EV_KEY			0x01
++#define EV_REL			0x02
++#define EV_ABS			0x03
++#define EV_MSC			0x04
++#define EV_LED			0x11
++#define EV_SND			0x12
++#define EV_REP			0x14
++#define EV_FF			0x15
++#define EV_PWR			0x16
++#define EV_FF_STATUS		0x17
++#define EV_MAX			0x1f
++
++/*
++ * Synchronization events.
++ */
++
++#define EV_SYN_REPORT		0
++#define EV_SYN_CONFIG		1
++
++/*
++ * Keys and buttons
++ */
++
++#define EV_KEY_RESERVED		0
++#define EV_KEY_ESC		1
++#define EV_KEY_1		2
++#define EV_KEY_2		3
++#define EV_KEY_3		4
++#define EV_KEY_4		5
++#define EV_KEY_5		6
++#define EV_KEY_6		7
++#define EV_KEY_7		8
++#define EV_KEY_8		9
++#define EV_KEY_9		10
++#define EV_KEY_0		11
++#define EV_KEY_MINUS		12
++#define EV_KEY_EQUAL		13
++#define EV_KEY_BACKSPACE	14
++#define EV_KEY_TAB		15
++#define EV_KEY_Q		16
++#define EV_KEY_W		17
++#define EV_KEY_E		18
++#define EV_KEY_R		19
++#define EV_KEY_T		20
++#define EV_KEY_Y		21
++#define EV_KEY_U		22
++#define EV_KEY_I		23
++#define EV_KEY_O		24
++#define EV_KEY_P		25
++#define EV_KEY_LEFTBRACE	26
++#define EV_KEY_RIGHTBRACE	27
++#define EV_KEY_ENTER		28
++#define EV_KEY_LEFTCTRL		29
++#define EV_KEY_A		30
++#define EV_KEY_S		31
++#define EV_KEY_D		32
++#define EV_KEY_F		33
++#define EV_KEY_G		34
++#define EV_KEY_H		35
++#define EV_KEY_J		36
++#define EV_KEY_K		37
++#define EV_KEY_L		38
++#define EV_KEY_SEMICOLON	39
++#define EV_KEY_APOSTROPHE	40
++#define EV_KEY_GRAVE		41
++#define EV_KEY_LEFTSHIFT	42
++#define EV_KEY_BACKSLASH	43
++#define EV_KEY_Z		44
++#define EV_KEY_X		45
++#define EV_KEY_C		46
++#define EV_KEY_V		47
++#define EV_KEY_B		48
++#define EV_KEY_N		49
++#define EV_KEY_M		50
++#define EV_KEY_COMMA		51
++#define EV_KEY_DOT		52
++#define EV_KEY_SLASH		53
++#define EV_KEY_RIGHTSHIFT	54
++#define EV_KEY_KPASTERISK	55
++#define EV_KEY_LEFTALT		56
++#define EV_KEY_SPACE		57
++#define EV_KEY_CAPSLOCK		58
++#define EV_KEY_F1		59
++#define EV_KEY_F2		60
++#define EV_KEY_F3		61
++#define EV_KEY_F4		62
++#define EV_KEY_F5		63
++#define EV_KEY_F6		64
++#define EV_KEY_F7		65
++#define EV_KEY_F8		66
++#define EV_KEY_F9		67
++#define EV_KEY_F10		68
++#define EV_KEY_NUMLOCK		69
++#define EV_KEY_SCROLLLOCK	70
++#define EV_KEY_KP7		71
++#define EV_KEY_KP8		72
++#define EV_KEY_KP9		73
++#define EV_KEY_KPMINUS		74
++#define EV_KEY_KP4		75
++#define EV_KEY_KP5		76
++#define EV_KEY_KP6		77
++#define EV_KEY_KPPLUS		78
++#define EV_KEY_KP1		79
++#define EV_KEY_KP2		80
++#define EV_KEY_KP3		81
++#define EV_KEY_KP0		82
++#define EV_KEY_KPDOT		83
++#define EV_KEY_103RD		84
++#define EV_KEY_F13		85
++#define EV_KEY_102ND		86
++#define EV_KEY_F11		87
++#define EV_KEY_F12		88
++#define EV_KEY_F14		89
++#define EV_KEY_F15		90
++#define EV_KEY_F16		91
++#define EV_KEY_F17		92
++#define EV_KEY_F18		93
++#define EV_KEY_F19		94
++#define EV_KEY_F20		95
++#define EV_KEY_KPENTER		96
++#define EV_KEY_RIGHTCTRL	97
++#define EV_KEY_KPSLASH		98
++#define EV_KEY_SYSRQ		99
++#define EV_KEY_RIGHTALT		100
++#define EV_KEY_LINEFEED		101
++#define EV_KEY_HOME		102
++#define EV_KEY_UP		103
++#define EV_KEY_PAGEUP		104
++#define EV_KEY_LEFT		105
++#define EV_KEY_RIGHT		106
++#define EV_KEY_END		107
++#define EV_KEY_DOWN		108
++#define EV_KEY_PAGEDOWN		109
++#define EV_KEY_INSERT		110
++#define EV_KEY_DELETE		111
++#define EV_KEY_MACRO		112
++#define EV_KEY_MUTE		113
++#define EV_KEY_VOLUMEDOWN	114
++#define EV_KEY_VOLUMEUP		115
++#define EV_KEY_POWER		116
++#define EV_KEY_KPEQUAL		117
++#define EV_KEY_KPPLUSMINUS	118
++#define EV_KEY_PAUSE		119
++#define EV_KEY_F21		120
++#define EV_KEY_F22		121
++#define EV_KEY_F23		122
++#define EV_KEY_F24		123
++#define EV_KEY_KPCOMMA		124
++#define EV_KEY_LEFTMETA		125
++#define EV_KEY_RIGHTMETA	126
++#define EV_KEY_COMPOSE		127
++
++#define EV_KEY_STOP		128
++#define EV_KEY_AGAIN		129
++#define EV_KEY_PROPS		130
++#define EV_KEY_UNDO		131
++#define EV_KEY_FRONT		132
++#define EV_KEY_COPY		133
++#define EV_KEY_OPEN		134
++#define EV_KEY_PASTE		135
++#define EV_KEY_FIND		136
++#define EV_KEY_CUT		137
++#define EV_KEY_HELP		138
++#define EV_KEY_MENU		139
++#define EV_KEY_CALC		140
++#define EV_KEY_SETUP		141
++#define EV_KEY_SLEEP		142
++#define EV_KEY_WAKEUP		143
++#define EV_KEY_FILE		144
++#define EV_KEY_SENDFILE		145
++#define EV_KEY_DELETEFILE	146
++#define EV_KEY_XFER		147
++#define EV_KEY_PROG1		148
++#define EV_KEY_PROG2		149
++#define EV_KEY_WWW		150
++#define EV_KEY_MSDOS		151
++#define EV_KEY_COFFEE		152
++#define EV_KEY_DIRECTION	153
++#define EV_KEY_CYCLEWINDOWS	154
++#define EV_KEY_MAIL		155
++#define EV_KEY_BOOKMARKS	156
++#define EV_KEY_COMPUTER		157
++#define EV_KEY_BACK		158
++#define EV_KEY_FORWARD		159
++#define EV_KEY_CLOSECD		160
++#define EV_KEY_EJECTCD		161
++#define EV_KEY_EJECTCLOSECD	162
++#define EV_KEY_NEXTSONG		163
++#define EV_KEY_PLAYPAUSE	164
++#define EV_KEY_PREVIOUSSONG	165
++#define EV_KEY_STOPCD		166
++#define EV_KEY_RECORD		167
++#define EV_KEY_REWIND		168
++#define EV_KEY_PHONE		169
++#define EV_KEY_ISO		170
++#define EV_KEY_CONFIG		171
++#define EV_KEY_HOMEPAGE		172
++#define EV_KEY_REFRESH		173
++#define EV_KEY_EXIT		174
++#define EV_KEY_MOVE		175
++#define EV_KEY_EDIT		176
++#define EV_KEY_SCROLLUP		177
++#define EV_KEY_SCROLLDOWN	178
++#define EV_KEY_KPLEFTPAREN	179
++#define EV_KEY_KPRIGHTPAREN	180
++
++#define EV_KEY_INTL1		181
++#define EV_KEY_INTL2		182
++#define EV_KEY_INTL3		183
++#define EV_KEY_INTL4		184
++#define EV_KEY_INTL5		185
++#define EV_KEY_INTL6		186
++#define EV_KEY_INTL7		187
++#define EV_KEY_INTL8		188
++#define EV_KEY_INTL9		189
++#define EV_KEY_LANG1		190
++#define EV_KEY_LANG2		191
++#define EV_KEY_LANG3		192
++#define EV_KEY_LANG4		193
++#define EV_KEY_LANG5		194
++#define EV_KEY_LANG6		195
++#define EV_KEY_LANG7		196
++#define EV_KEY_LANG8		197
++#define EV_KEY_LANG9		198
++
++#define EV_KEY_PLAYCD		200
++#define EV_KEY_PAUSECD		201
++#define EV_KEY_PROG3		202
++#define EV_KEY_PROG4		203
++#define EV_KEY_SUSPEND		205
++#define EV_KEY_CLOSE		206
++#define EV_KEY_PLAY		207
++#define EV_KEY_FASTFORWARD	208
++#define EV_KEY_BASSBOOST	209
++#define EV_KEY_PRINT		210
++#define EV_KEY_HP		211
++#define EV_KEY_CAMERA		212
++#define EV_KEY_SOUND		213
++#define EV_KEY_QUESTION		214
++#define EV_KEY_EMAIL		215
++#define EV_KEY_CHAT		216
++#define EV_KEY_SEARCH		217
++#define EV_KEY_CONNECT		218
++#define EV_KEY_FINANCE		219
++#define EV_KEY_SPORT		220
++#define EV_KEY_SHOP		221
++#define EV_KEY_ALTERASE		222
++#define EV_KEY_CANCEL		223
++#define EV_KEY_BRIGHTNESSDOWN	224
++#define EV_KEY_BRIGHTNESSUP	225
++#define EV_KEY_MEDIA		226
++
++#define EV_KEY_UNKNOWN		240
++
++#define EV_BTN_MISC		0x100
++#define EV_BTN_0		0x100
++#define EV_BTN_1		0x101
++#define EV_BTN_2		0x102
++#define EV_BTN_3		0x103
++#define EV_BTN_4		0x104
++#define EV_BTN_5		0x105
++#define EV_BTN_6		0x106
++#define EV_BTN_7		0x107
++#define EV_BTN_8		0x108
++#define EV_BTN_9		0x109
++
++#define EV_BTN_MOUSE		0x110
++#define EV_BTN_LEFT		0x110
++#define EV_BTN_RIGHT		0x111
++#define EV_BTN_MIDDLE		0x112
++#define EV_BTN_SIDE		0x113
++#define EV_BTN_EXTRA		0x114
++#define EV_BTN_FORWARD		0x115
++#define EV_BTN_BACK		0x116
++
++#define EV_BTN_JOYSTICK		0x120
++#define EV_BTN_TRIGGER		0x120
++#define EV_BTN_THUMB		0x121
++#define EV_BTN_THUMB2		0x122
++#define EV_BTN_TOP		0x123
++#define EV_BTN_TOP2		0x124
++#define EV_BTN_PINKIE		0x125
++#define EV_BTN_BASE		0x126
++#define EV_BTN_BASE2		0x127
++#define EV_BTN_BASE3		0x128
++#define EV_BTN_BASE4		0x129
++#define EV_BTN_BASE5		0x12a
++#define EV_BTN_BASE6		0x12b
++#define EV_BTN_DEAD		0x12f
++
++#define EV_BTN_GAMEPAD		0x130
++#define EV_BTN_A		0x130
++#define EV_BTN_B		0x131
++#define EV_BTN_C		0x132
++#define EV_BTN_X		0x133
++#define EV_BTN_Y		0x134
++#define EV_BTN_Z		0x135
++#define EV_BTN_TL		0x136
++#define EV_BTN_TR		0x137
++#define EV_BTN_TL2		0x138
++#define EV_BTN_TR2		0x139
++#define EV_BTN_SELECT		0x13a
++#define EV_BTN_START		0x13b
++#define EV_BTN_MODE		0x13c
++#define EV_BTN_THUMBL		0x13d
++#define EV_BTN_THUMBR		0x13e
++
++#define EV_BTN_DIGI		0x140
++#define EV_BTN_TOOL_PEN		0x140
++#define EV_BTN_TOOL_RUBBER	0x141
++#define EV_BTN_TOOL_BRUSH	0x142
++#define EV_BTN_TOOL_PENCIL	0x143
++#define EV_BTN_TOOL_AIRBRUSH	0x144
++#define EV_BTN_TOOL_FINGER	0x145
++#define EV_BTN_TOOL_MOUSE	0x146
++#define EV_BTN_TOOL_LENS	0x147
++#define EV_BTN_TOUCH		0x14a
++#define EV_BTN_STYLUS		0x14b
++#define EV_BTN_STYLUS2		0x14c
++
++#define EV_BTN_WHEEL		0x150
++#define EV_BTN_GEAR_DOWN	0x150
++#define EV_BTN_GEAR_UP		0x151
++
++#define EV_KEY_OK		0x160
++#define EV_KEY_SELECT 		0x161
++#define EV_KEY_GOTO		0x162
++#define EV_KEY_CLEAR		0x163
++#define EV_KEY_POWER2		0x164
++#define EV_KEY_OPTION		0x165
++#define EV_KEY_INFO		0x166
++#define EV_KEY_TIME		0x167
++#define EV_KEY_VENDOR		0x168
++#define EV_KEY_ARCHIVE		0x169
++#define EV_KEY_PROGRAM		0x16a
++#define EV_KEY_CHANNEL		0x16b
++#define EV_KEY_FAVORITES	0x16c
++#define EV_KEY_EPG		0x16d
++#define EV_KEY_PVR		0x16e
++#define EV_KEY_MHP		0x16f
++#define EV_KEY_LANGUAGE		0x170
++#define EV_KEY_TITLE		0x171
++#define EV_KEY_SUBTITLE		0x172
++#define EV_KEY_ANGLE		0x173
++#define EV_KEY_ZOOM		0x174
++#define EV_KEY_MODE		0x175
++#define EV_KEY_KEYBOARD		0x176
++#define EV_KEY_SCREEN		0x177
++#define EV_KEY_PC		0x178
++#define EV_KEY_TV		0x179
++#define EV_KEY_TV2		0x17a
++#define EV_KEY_VCR		0x17b
++#define EV_KEY_VCR2		0x17c
++#define EV_KEY_SAT		0x17d
++#define EV_KEY_SAT2		0x17e
++#define EV_KEY_CD		0x17f
++#define EV_KEY_TAPE		0x180
++#define EV_KEY_RADIO		0x181
++#define EV_KEY_TUNER		0x182
++#define EV_KEY_PLAYER		0x183
++#define EV_KEY_TEXT		0x184
++#define EV_KEY_DVD		0x185
++#define EV_KEY_AUX		0x186
++#define EV_KEY_MP3		0x187
++#define EV_KEY_AUDIO		0x188
++#define EV_KEY_VIDEO		0x189
++#define EV_KEY_DIRECTORY	0x18a
++#define EV_KEY_LIST		0x18b
++#define EV_KEY_MEMO		0x18c
++#define EV_KEY_CALENDAR		0x18d
++#define EV_KEY_RED		0x18e
++#define EV_KEY_GREEN		0x18f
++#define EV_KEY_YELLOW		0x190
++#define EV_KEY_BLUE		0x191
++#define EV_KEY_CHANNELUP	0x192
++#define EV_KEY_CHANNELDOWN	0x193
++#define EV_KEY_FIRST		0x194
++#define EV_KEY_LAST		0x195
++#define EV_KEY_AB		0x196
++#define EV_KEY_NEXT		0x197
++#define EV_KEY_RESTART		0x198
++#define EV_KEY_SLOW		0x199
++#define EV_KEY_SHUFFLE		0x19a
++#define EV_KEY_BREAK		0x19b
++#define EV_KEY_PREVIOUS		0x19c
++#define EV_KEY_DIGITS		0x19d
++#define EV_KEY_TEEN		0x19e
++#define EV_KEY_TWEN		0x19f
++
++#define EV_KEY_MAX		0x1ff
++
++/*
++ * Relative axes
++ */
++
++#define EV_REL_X		0x00
++#define EV_REL_Y		0x01
++#define EV_REL_Z		0x02
++#define EV_REL_HWHEEL		0x06
++#define EV_REL_DIAL		0x07
++#define EV_REL_WHEEL		0x08
++#define EV_REL_MISC		0x09
++#define EV_REL_MAX		0x0f
++
++/*
++ * Absolute axes
++ */
++
++#define EV_ABS_X		0x00
++#define EV_ABS_Y		0x01
++#define EV_ABS_Z		0x02
++#define EV_ABS_RX		0x03
++#define EV_ABS_RY		0x04
++#define EV_ABS_RZ		0x05
++#define EV_ABS_THROTTLE		0x06
++#define EV_ABS_RUDDER		0x07
++#define EV_ABS_WHEEL		0x08
++#define EV_ABS_GAS		0x09
++#define EV_ABS_BRAKE		0x0a
++#define EV_ABS_HAT0X		0x10
++#define EV_ABS_HAT0Y		0x11
++#define EV_ABS_HAT1X		0x12
++#define EV_ABS_HAT1Y		0x13
++#define EV_ABS_HAT2X		0x14
++#define EV_ABS_HAT2Y		0x15
++#define EV_ABS_HAT3X		0x16
++#define EV_ABS_HAT3Y		0x17
++#define EV_ABS_PRESSURE		0x18
++#define EV_ABS_DISTANCE		0x19
++#define EV_ABS_TILT_X		0x1a
++#define EV_ABS_TILT_Y		0x1b
++#define EV_ABS_VOLUME		0x20
++#define EV_ABS_MISC		0x28
++#define EV_ABS_MAX		0x3f
++
++/*
++ * Misc events
++ */
++
++#define EV_MSG_SERIAL		0x00
++#define EV_MSG_PULSELED		0x01
++#define EV_MSG_MAX		0x07
++
++/*
++ * LEDs
++ */
++
++#define EV_LED_NUML		0x00
++#define EV_LED_CAPSL		0x01
++#define EV_LED_SCROLLL		0x02
++#define EV_LED_COMPOSE		0x03
++#define EV_LED_KANA		0x04
++#define EV_LED_SLEEP		0x05
++#define EV_LED_SUSPEND		0x06
++#define EV_LED_MUTE		0x07
++#define EV_LED_MISC		0x08
++#define EV_LED_MAX		0x0f
++
++/*
++ * Autorepeat values
++ */
++
++#define EV_REP_DELAY		0x00
++#define EV_REP_PERIOD		0x01
++#define EV_REP_MAX		0x01
++
++/*
++ * Sounds
++ */
++
++#define EV_SND_CLICK		0x00
++#define EV_SND_BELL		0x01
++#define EV_SND_TONE		0x02
++#define EV_SND_MAX		0x07
++
++/*
++ * IDs.
++ */
++
++#define EV_ID_BUS		0
++#define EV_ID_VENDOR		1
++#define EV_ID_PRODUCT		2
++#define EV_ID_VERSION		3
++
++#define EV_BUS_PCI		0x01
++#define EV_BUS_ISAPNP		0x02
++#define EV_BUS_USB		0x03
++#define EV_BUS_HIL		0x04
++
++#define EV_BUS_ISA		0x10
++#define EV_BUS_I8042		0x11
++#define EV_BUS_XTKBD		0x12
++#define EV_BUS_RS232		0x13
++#define EV_BUS_GAMEPORT		0x14
++#define EV_BUS_PARPORT		0x15
++#define EV_BUS_AMIGA		0x16
++#define EV_BUS_ADB		0x17
++#define EV_BUS_I2C		0x18
++#define EV_BUS_HOST		0x19
++
++/*
++ * Values describing the status of an effect
++ */
++#define EV_FF_STATUS_STOPPED	0x00
++#define EV_FF_STATUS_PLAYING	0x01
++#define EV_FF_STATUS_MAX	0x01
++
++/*
++ * Structures used in ioctls to upload effects to a device
++ * The first structures are not passed directly by using ioctls.
++ * They are sub-structures of the actually sent structure (called ff_effect)
++ */
++
++struct ff_replay {
++	__u16 length; /* Duration of an effect in ms. All other times are also expressed in ms */
++	__u16 delay;  /* Time to wait before to start playing an effect */
++};
++
++struct ff_trigger {
++	__u16 button;   /* Number of button triggering an effect */
++	__u16 interval; /* Time to wait before an effect can be re-triggered (ms) */
++};
++
++struct ff_envelope {
++	__u16 attack_length;	/* Duration of attack (ms) */
++	__u16 attack_level;	/* Level at beginning of attack */
++	__u16 fade_length;	/* Duration of fade (ms) */
++	__u16 fade_level;	/* Level at end of fade */
++};
++
++/* EV_FF_CONSTANT */
++struct ff_constant_effect {
++	__s16 level;	    /* Strength of effect. Negative values are OK */
++	struct ff_envelope envelope;
++};
++
++/* EV_FF_RAMP */
++struct ff_ramp_effect {
++	__s16 start_level;
++	__s16 end_level;
++	struct ff_envelope envelope;
++};
++
++/* EV_FF_SPRING of FF_FRICTION */
++struct ff_condition_effect {
++	__u16 right_saturation; /* Max level when joystick is on the right */
++	__u16 left_saturation;  /* Max level when joystick in on the left */
++
++	__s16 right_coeff;	/* Indicates how fast the force grows when the
++				   joystick moves to the right */
++	__s16 left_coeff;	/* Same for left side */
++
++	__u16 deadband;	/* Size of area where no force is produced */
++	__s16 center;	/* Position of dead zone */
++
++};
++
++/* EV_FF_PERIODIC */
++struct ff_periodic_effect {
++	__u16 waveform;	/* Kind of wave (sine, square...) */
++	__u16 period;	/* in ms */
++	__s16 magnitude;	/* Peak value */
++	__s16 offset;	/* Mean value of wave (roughly) */
++	__u16 phase;		/* 'Horizontal' shift */
++
++	struct ff_envelope envelope;
++
++/* Only used if waveform == EV_FF_CUSTOM */
++	__u32 custom_len;	/* Number of samples  */	
++	__s16 *custom_data;	/* Buffer of samples */
++/* Note: the data pointed by custom_data is copied by the driver. You can
++ * therefore dispose of the memory after the upload/update */
++};
++
++/* EV_FF_RUMBLE */
++/* Some rumble pads have two motors of different weight.
++   strong_magnitude represents the magnitude of the vibration generated
++   by the heavy motor.
++*/
++struct ff_rumble_effect {
++	__u16 strong_magnitude;  /* Magnitude of the heavy motor */
++	__u16 weak_magnitude;    /* Magnitude of the light one */
++};
++
++/*
++ * Structure sent through ioctl from the application to the driver
++ */
++struct ff_effect {
++	__u16 type;
++/* Following field denotes the unique id assigned to an effect.
++ * If user sets if to -1, a new effect is created, and its id is returned in the same field
++ * Else, the user sets it to the effect id it wants to update.
++ */
++	__s16 id;
++
++	__u16 direction;	/* Direction. 0 deg -> 0x0000 (down)
++					     90 deg -> 0x4000 (left)
++					    180 deg -> 0x8000 (up)
++					    270 deg -> 0xC000 (right)
++				*/
++
++	struct ff_trigger trigger;
++	struct ff_replay replay;
++
++	union {
++		struct ff_constant_effect constant;
++		struct ff_ramp_effect ramp;
++		struct ff_periodic_effect periodic;
++		struct ff_condition_effect condition[2]; /* One for each axis */
++		struct ff_rumble_effect rumble;
++	} u;
++};
++
++/*
++ * Force feedback effect types
++ */
++
++#define EV_FF_RUMBLE	0x50
++#define EV_FF_PERIODIC	0x51
++#define EV_FF_CONSTANT	0x52
++#define EV_FF_SPRING	0x53
++#define EV_FF_FRICTION	0x54
++#define EV_FF_DAMPER	0x55
++#define EV_FF_INERTIA	0x56
++#define EV_FF_RAMP	0x57
++
++/*
++ * Force feedback periodic effect types
++ */
++
++#define EV_FF_SQUARE	0x58
++#define EV_FF_TRIANGLE	0x59
++#define EV_FF_SINE	0x5a
++#define EV_FF_SAW_UP	0x5b
++#define EV_FF_SAW_DOWN	0x5c
++#define EV_FF_CUSTOM	0x5d
++
++/*
++ * Set ff device properties
++ */
++
++#define EV_FF_GAIN		0x60
++#define EV_FF_AUTOCENTER	0x61
++
++#define EV_FF_MAX		0x7f
++
++
++
++typedef struct _evdevDriver {
++    const char	*name;
++    const char	*phys;
++    void	*cb_data;
++    int		(*callback)(void *cb_data, int what);
++    struct _evdevDriver	*next;
++} evdevDriver, *evdevDriverPtr;
++
++int evdevGetFDForDriver (evdevDriverPtr driver);
++Bool evdevStart (InputDriverPtr drv);
++Bool evdevNewDriver (evdevDriverPtr driver);
++
++#endif	/* LNX_EVDEV_H_ */
+diff -u -r -N build-tree/xc/programs/Xserver/hw/xfree86/os-support/linux/lnx_kbd.c xc/programs/Xserver/hw/xfree86/os-support/linux/lnx_kbd.c
+--- xc/programs/Xserver/hw/xfree86/os-support/linux/lnx_kbd.c	2004-04-23 20:54:08.000000000 +0100
++++ xc/programs/Xserver/hw/xfree86/os-support/linux/lnx_kbd.c	2005-01-10 14:23:10.036494770 +0000
+@@ -22,6 +22,7 @@
+ #include "xf86OSKbd.h"
+ #include "atKeynames.h"
+ #include "lnx_kbd.h"
++#include "lnx_evdev.h"
+ 
+ #define KBC_TIMEOUT 250        /* Timeout in ms for sending to keyboard controller */
+ 
+@@ -492,8 +493,8 @@
+     return TRUE;
+ }
+ 
+-Bool
+-xf86OSKbdPreInit(InputInfoPtr pInfo)
++static Bool
++stdKbdPreInit(InputInfoPtr pInfo, char *protocol)
+ {
+     KbdDevPtr pKbd = pInfo->private;
+ 
+@@ -532,3 +533,377 @@
+ #endif
+     return TRUE;
+ }
++
++typedef struct _evdevKbdRec {
++    int packetSize;
++    char *buffer;
++    evdevDriver evdev;
++} evdevKbdRec, *evdevKbdPtr;
++
++static void
++evdevKbdReadInput(InputInfoPtr pInfo)
++{
++    KbdDevPtr pKbd;
++    evdevKbdPtr evdevKbd;
++    struct input_event *ev;
++    int n;
++    int code;
++
++    pKbd = (KbdDevPtr) pInfo->private;
++    evdevKbd = pKbd->private;
++    ev = (struct input_event *) evdevKbd->buffer;
++
++    if (pInfo->fd == -1)
++	return;
++
++    do {
++	n = read(pInfo->fd, ev, sizeof(struct input_event));
++	if (n == -1) {
++	    xf86Msg(X_ERROR, "%s: Error in reading! (%s) Disabiling.\n",
++		    pInfo->name, strerror(errno));
++	    RemoveEnabledDevice(pInfo->fd);
++	    close (pInfo->fd);
++	    pInfo->dev->public.on = FALSE;
++	    pInfo->fd = -1;
++	    return;
++	}
++	if (n != sizeof(struct input_event)) {
++	    xf86Msg(X_WARNING, "%s: incomplete packet, size %d\n", pInfo->name, n);
++	    return;
++	}
++
++	switch (ev->type) {
++	    case EV_KEY:
++		if ((ev->code <= EV_KEY_RESERVED)||(ev->code >= EV_KEY_UNKNOWN))
++		    break;
++		switch (ev->code) {
++		    case EV_KEY_103RD:
++		    case EV_KEY_102ND:
++		    case EV_KEY_LINEFEED:
++		    case EV_KEY_MACRO:
++		    case EV_KEY_MUTE:
++		    case EV_KEY_VOLUMEDOWN:
++		    case EV_KEY_VOLUMEUP:
++		    case EV_KEY_POWER:
++		    case EV_KEY_KPPLUSMINUS:
++		    case EV_KEY_F18:
++		    case EV_KEY_F19:
++		    case EV_KEY_F20:
++		    case EV_KEY_F21:
++		    case EV_KEY_F22:
++		    case EV_KEY_F23:
++		    case EV_KEY_F24:
++		    case EV_KEY_KPCOMMA:
++		    case EV_KEY_COMPOSE:
++			code = KEY_UNKNOWN;
++			break;
++		    case EV_KEY_F13:
++			code = KEY_F13;
++			break;
++		    case EV_KEY_F14:
++			code = KEY_F14;
++			break;
++		    case EV_KEY_F15:
++			code = KEY_F15;
++			break;
++		    case EV_KEY_F16:
++			code = KEY_F16;
++			break;
++		    case EV_KEY_F17:
++			code = KEY_F17;
++			break;
++		    case EV_KEY_KPENTER:
++			code = KEY_KP_Enter;
++			break;
++		    case EV_KEY_RIGHTCTRL:
++			code = KEY_RCtrl;
++			break;
++		    case EV_KEY_KPSLASH:
++			code = KEY_KP_Divide;
++			break;
++		    case EV_KEY_SYSRQ:
++			code = KEY_SysReqest;
++			break;
++		    case EV_KEY_RIGHTALT:
++			code = KEY_AltLang;
++			break;
++		    case EV_KEY_HOME:
++			code = KEY_Home;
++			break;
++		    case EV_KEY_UP:
++			code = KEY_Up;
++			break;
++		    case EV_KEY_PAGEUP:
++			code = KEY_PgUp;
++			break;
++		    case EV_KEY_LEFT:
++			code = KEY_Left;
++			break;
++		    case EV_KEY_RIGHT:
++			code = KEY_Right;
++			break;
++		    case EV_KEY_END:
++			code = KEY_End;
++			break;
++		    case EV_KEY_DOWN:
++			code = KEY_Down;
++			break;
++		    case EV_KEY_PAGEDOWN:
++			code = KEY_PgDown;
++			break;
++		    case EV_KEY_INSERT:
++			code = KEY_Insert;
++			break;
++		    case EV_KEY_DELETE:
++			code = KEY_Delete;
++			break;
++		    case EV_KEY_KPEQUAL:
++			code = KEY_KP_Equal;
++			break;
++		    case EV_KEY_PAUSE:
++			code = KEY_Pause;
++			break;
++		    case EV_KEY_LEFTMETA:
++			code = KEY_LMeta;
++			break;
++		    case EV_KEY_RIGHTMETA:
++			code = KEY_RMeta;
++			break;
++		    default:
++			code = ev->code;
++			break;
++		}
++		if (code >= 127)
++		    code = KEY_UNKNOWN;
++
++		if (ev->value)
++		    pKbd->PostEvent(pInfo, code, TRUE);
++		else
++		    pKbd->PostEvent(pInfo, code, FALSE);
++		break;
++	}
++    } while (xf86WaitForInput(pInfo->fd, 0));
++
++    return;
++}
++
++static int
++evdevKbdInit(InputInfoPtr pInfo, int what)
++{
++    KbdDevPtr pKbd = (KbdDevPtr) pInfo->private;
++    evdevKbdPtr evdevKbd = (evdevKbdPtr) pKbd->private;
++
++    evdevKbd->evdev.name = xf86SetStrOption(pInfo->options,"Dev Name",NULL);
++    evdevKbd->evdev.phys = xf86SetStrOption(pInfo->options,"Dev Phys",NULL);
++    evdevKbd->evdev.cb_data = pInfo->dev;
++    evdevKbd->evdev.callback = pInfo->device_control;
++    if (!evdevNewDriver (&evdevKbd->evdev)) {
++	xf86Msg(X_ERROR, "%s: cannot register with evdev brain\n", pInfo->name);
++	return BadRequest;
++    }
++    if ((pInfo->fd = evdevGetFDForDriver (&evdevKbd->evdev)) == -1) {
++	xf86Msg(X_ERROR, "%s: cannot open input device\n", pInfo->name);
++	return BadRequest;
++    }
++
++    close(pInfo->fd);
++    pInfo->fd = -1;
++
++    return Success;
++}
++
++static int
++evdevKbdOn(InputInfoPtr pInfo, int what)
++{
++    KbdDevPtr pKbd = (KbdDevPtr) pInfo->private;
++    evdevKbdPtr evdevKbd = (evdevKbdPtr) pKbd->private;
++    unsigned long mask;
++
++    if ((pInfo->fd = evdevGetFDForDriver (&evdevKbd->evdev)) == -1) {
++	xf86Msg(X_ERROR, "%s: cannot open input device (name: '%s', phys: '%s')\n", pInfo->name, evdevKbd->evdev.name, evdevKbd->evdev.phys);
++	return BadRequest;
++    }
++    /*
++     * Grab the keyboard for ourselves.
++     */
++    if (ioctl(pInfo->fd, EVIOCGMASK, &mask) < 0) {
++	xf86Msg(X_INFO, "%s: unable to use input device masking '%s', trying grabbing.\n", pInfo->name, strerror(errno));
++	if (ioctl(pInfo->fd, EVIOCGRAB, 1) < 0) {
++	    xf86Msg(X_ERROR, "%s: unable to grab device '%s', you may have problems.\n", pInfo->name, strerror(errno));
++	}
++	return Success;
++    }
++
++    mask |= BIT(2);
++    ioctl(pInfo->fd, EVIOCSMASK, mask);
++
++    ioctl(pInfo->fd, EVIOCGDMASK, &mask);
++    mask &= ~BIT(0);
++    mask |= BIT(2);
++    ioctl(pInfo->fd, EVIOCSDMASK, mask);
++    xf86Msg(X_INFO, "%s: Using input device masking.\n", pInfo->name);
++
++    return Success;
++}
++
++static int
++evdevKbdOff(InputInfoPtr pInfo, int what)
++{
++    if (pInfo->fd != -1) {
++	unsigned long mask;
++
++	if (ioctl(pInfo->fd, EVIOCGDMASK, &mask) >= 0) {
++	    mask |= BIT(0);
++	    ioctl(pInfo->fd, EVIOCSDMASK, mask);
++	}
++
++	close (pInfo->fd);
++	pInfo->fd = -1;
++    }
++    return Success;
++}
++
++static void
++evdevSoundBell(InputInfoPtr pInfo, int loudness, int pitch, int duration)
++{
++}
++
++static void
++evdevSetKbdLeds(InputInfoPtr pInfo, int leds)
++{
++    struct input_event event;
++
++    memset(&event, 0, sizeof(event));
++    event.type = EV_LED;
++    event.code = EV_LED_CAPSL;
++    event.value = (leds & XLED1) ? 1 : 0;
++    write(pInfo->fd, (char *) &event, sizeof(event));
++
++    event.type = EV_LED;
++    event.code = EV_LED_NUML;
++    event.value = (leds & XLED2) ? 1 : 0;
++    write(pInfo->fd, (char *) &event, sizeof(event));
++
++    event.type = EV_LED;
++    event.code = EV_LED_SCROLLL;
++    event.value = (leds & XLED3) ? 1 : 0;
++    write(pInfo->fd, (char *) &event, sizeof(event));
++
++    event.type = EV_LED;
++    event.code = EV_LED_COMPOSE;
++    event.value = (leds & XLED4) ? 1 : 0;
++    write(pInfo->fd, (char *) &event, sizeof(event));
++}
++
++static int
++evdevGetKbdLeds(InputInfoPtr pInfo)
++{
++    unsigned long evleds[NBITS(EV_LED_MAX)];
++    int leds = 0;
++
++    ioctl(pInfo->fd, EVIOCGLED(sizeof(evleds)), &evleds);
++    if (test_bit(EV_LED_CAPSL, evleds))
++	leds |= XLED1;
++
++    if (test_bit(EV_LED_NUML, evleds))
++	leds |= XLED2;
++
++    if (test_bit(EV_LED_SCROLLL, evleds))
++	leds |= XLED3;
++
++    if (test_bit(EV_LED_COMPOSE, evleds))
++	leds |= XLED4;
++
++    return leds;
++}
++
++static void
++evdevSetKbdRepeat(InputInfoPtr pInfo, char rad)
++{
++    KbdDevPtr pKbd = (KbdDevPtr) pInfo->private;
++    int	rep_info[2];
++    
++    rep_info[0] = pKbd->delay;
++    rep_info[1] = pKbd->rate * 10;
++    ioctl(pInfo->fd, EVIOCSREP, rep_info);
++}
++
++static int
++evdevGetSpecialKey(InputInfoPtr pInfo, int scanCode)
++{
++    return scanCode;
++}
++
++static Bool
++evdevOpenKeyboard(InputInfoPtr pInfo)
++{
++    return TRUE;
++}
++
++static Bool
++evdevKbdPreInit(InputInfoPtr pInfo, char *protocol)
++{
++    KbdDevPtr pKbd = pInfo->private;
++    evdevKbdPtr evdevKbd;
++    xf86Msg(X_CONFIG, "%s: Protocol: %s\n", pInfo->name, protocol);
++
++    pKbd->private = evdevKbd = xcalloc(sizeof(evdevKbdRec), 1);
++
++    xf86Msg(X_ERROR, "%s: pInfo->dev: %p\n", pInfo->name, pInfo->dev);
++
++    if (pKbd->private == NULL) {
++	xf86Msg(X_ERROR, "%s: cannot allocate buffer\n", pInfo->name);
++	return FALSE;
++    }
++
++    evdevKbd->buffer = xcalloc(sizeof(struct input_event),1);
++
++    if (evdevKbd->buffer == NULL) {
++	xf86Msg(X_ERROR, "%s: cannot allocate buffer\n", pInfo->name);
++	xfree(evdevKbd);
++	return FALSE;
++    }
++
++    if (!evdevStart (pInfo->drv)) {
++	xf86Msg(X_ERROR, "%s: cannot start evdev brain\n", pInfo->name);
++	xfree(evdevKbd);
++	xfree(evdevKbd->buffer);
++	return FALSE;
++    }
++
++    pKbd->KbdInit       = evdevKbdInit;
++    pKbd->KbdOn         = evdevKbdOn;
++    pKbd->KbdOff        = evdevKbdOff;
++    pKbd->Bell          = evdevSoundBell;
++    pKbd->SetLeds       = evdevSetKbdLeds;
++    pKbd->GetLeds       = evdevGetKbdLeds;
++    pKbd->SetKbdRepeat  = evdevSetKbdRepeat;
++    pKbd->KbdGetMapping = KbdGetMapping;
++    pKbd->SpecialKey    = SpecialKey;
++
++    pKbd->RemapScanCode = NULL;
++    pKbd->GetSpecialKey = evdevGetSpecialKey;
++
++    pKbd->OpenKeyboard = evdevOpenKeyboard;
++    pKbd->vtSwitchSupported = FALSE;
++    pInfo->read_input = evdevKbdReadInput;
++
++    return TRUE;
++}
++
++Bool
++xf86OSKbdPreInit(InputInfoPtr pInfo)
++{
++    char *protocol;
++    Bool ret;
++
++    protocol = xf86SetStrOption(pInfo->options, "Protocol", NULL);
++
++    if (xf86NameCmp(protocol, "evdev") == 0)
++	ret = evdevKbdPreInit(pInfo, protocol);
++    else
++	ret = stdKbdPreInit(pInfo, protocol);
++
++    xfree(protocol);
++    return ret;
++}
+diff -u -r -N build-tree/xc/programs/Xserver/hw/xfree86/os-support/linux/lnx_mouse.c xc/programs/Xserver/hw/xfree86/os-support/linux/lnx_mouse.c
+--- xc/programs/Xserver/hw/xfree86/os-support/linux/lnx_mouse.c	2003-11-25 19:28:50.000000000 +0000
++++ xc/programs/Xserver/hw/xfree86/os-support/linux/lnx_mouse.c	2005-01-10 14:23:19.510002438 +0000
+@@ -6,12 +6,21 @@
+ 
+ #include "X.h"
+ #include "xf86.h"
++#include "xf86Priv.h"
+ #include "xf86Xinput.h"
+ #include "xf86OSmouse.h"
+ #include "xf86_OSlib.h"
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ #include <unistd.h>
++#include "mipointer.h"
++#include "lnx_evdev.h"
++
++/* Names of protocols that are handled internally here. */
++static const char *internalNames[] = {
++	"evdev",
++	NULL
++};
+ 
+ static int
+ SupportedInterfaces(void)
+@@ -185,6 +194,272 @@
+     return NULL;
+ }
+ 
++static const char **
++BuiltinNames(void)
++{
++    return internalNames;
++}
++
++static Bool
++CheckProtocol(const char *protocol)
++{
++    int i;
++
++    for (i = 0; internalNames[i]; i++)
++	if (xf86NameCmp(protocol, internalNames[i]) == 0)
++	    return TRUE;
++    return FALSE;
++}
++
++typedef struct _evdevMseRec {
++    int packetSize;
++    int buttons;
++    Bool sync;
++    evdevDriver evdev;
++} evdevMseRec, *evdevMsePtr;
++
++static void
++evdevMouseReadInput(InputInfoPtr pInfo)
++{
++    MouseDevPtr pMse;
++    evdevMsePtr evdevMse;
++    struct input_event *ev;
++    int n, bit; 
++    int dx = 0, dy = 0, dz = 0, dw = 0;
++
++    pMse = pInfo->private;
++    ev = (struct input_event *) pMse->buffer;
++    evdevMse = pMse->mousePriv;
++
++    if (pInfo->fd == -1)
++	return;
++
++    do {
++	n = read(pInfo->fd, pMse->buffer, sizeof(struct input_event));
++	if (n == -1) {
++	    xf86Msg(X_ERROR, "%s: Error in reading! (%s) Disabiling.\n",
++		    pInfo->name, strerror(errno));
++	    RemoveEnabledDevice(pInfo->fd);
++	    xf86RemoveSIGIOHandler(pInfo->fd);
++	    close (pInfo->fd);
++	    pMse->device->public.on = FALSE;
++	    pInfo->fd = -1;
++	    pMse->PostEvent(pInfo, evdevMse->buttons, dx, dy, dz, dw);
++	    return;
++	}
++	if (n != sizeof(struct input_event)) {
++	    xf86Msg(X_WARNING, "%s: incomplete packet, size %d\n", pInfo->name, n);
++	    pMse->PostEvent(pInfo, evdevMse->buttons, dx, dy, dz, dw);
++	    return;
++	}
++
++	switch (ev->type) {
++	    case EV_REL:
++		switch (ev->code) {
++		    case EV_REL_X:
++			dx += ev->value;
++			break;
++		    case EV_REL_Y:
++			dy += ev->value;
++			break;
++		    case EV_REL_Z:
++		    case EV_REL_WHEEL:
++			dz -= ev->value;
++			break;
++		    case EV_REL_HWHEEL:
++			dw -= ev->value;
++			break;
++		}
++		break;
++	    case EV_KEY:
++		if ((ev->code < EV_BTN_MOUSE) || (ev->code >= EV_BTN_JOYSTICK))
++		    break;
++		switch (ev->code) {
++		    case EV_BTN_RIGHT: bit = 1 << 0; break;	/* 1 */
++		    case EV_BTN_MIDDLE: bit = 1 << 1; break;	/* 2 */
++		    case EV_BTN_LEFT: bit = 1 << 2; break;	/* 3 */
++		    default: bit = 1 << (ev->code - EV_BTN_MOUSE); break;
++		}
++		evdevMse->buttons &= ~bit;
++		if (ev->value)
++		    evdevMse->buttons |= bit;
++		break;
++	    case EV_SYN:
++		switch (ev->code) {
++		    case EV_SYN_REPORT:
++			pMse->PostEvent(pInfo,evdevMse->buttons,dx, dy, dz, dw);
++			dx = dy = dz = dw = 0;
++			break;
++		}
++		break;
++	}
++	if (!evdevMse->sync) {
++	    pMse->PostEvent(pInfo,evdevMse->buttons,dx, dy, dz, dw);
++	    dx = dy = dz = dw = 0;
++	}
++    } while (xf86WaitForInput(pInfo->fd, 0));
++
++    pMse->PostEvent(pInfo, evdevMse->buttons, dx, dy, dz, dw);
++
++    return;
++}
++
++static void
++evdevMouseSigioReadInput (int fd, void *closure)
++{
++    evdevMouseReadInput ((InputInfoPtr) closure);
++}
++
++static int
++evdevMouseProc(DeviceIntPtr pPointer, int what)
++{
++    InputInfoPtr pInfo;
++    MouseDevPtr pMse;
++    evdevMsePtr evdevMse;
++    unsigned char map[MSE_MAXBUTTONS + 1];
++    int i, j, blocked;
++    unsigned long evtype_bits[NBITS(EV_MAX)];
++    unsigned long evkey_bits[NBITS(EV_KEY_MAX)];
++
++    pInfo = pPointer->public.devicePrivate;
++    pMse = pInfo->private;
++    pMse->device = pPointer;
++    evdevMse = pMse->mousePriv;
++
++    switch (what) {
++    case DEVICE_INIT: 
++	pPointer->public.on = FALSE;
++
++	evdevMse->evdev.name = xf86SetStrOption(pInfo->options,"Dev Name",NULL);
++	evdevMse->evdev.phys = xf86SetStrOption(pInfo->options,"Dev Phys",NULL);
++	evdevMse->evdev.cb_data = pInfo->dev;
++	evdevMse->evdev.callback = evdevMouseProc;
++	if (!evdevNewDriver (&evdevMse->evdev)) {
++	    xf86Msg(X_ERROR, "%s: cannot register with evdev brain\n", pInfo->name);
++	    return BadRequest;
++	}
++	if ((pInfo->fd = evdevGetFDForDriver (&evdevMse->evdev)) == -1) {
++	    xf86Msg(X_ERROR, "%s: cannot open input device\n", pInfo->name);
++	    return BadRequest;
++	}
++
++	ioctl(pInfo->fd, EVIOCGBIT(0, EV_MAX), evtype_bits);
++	if (test_bit(EV_SYN, evtype_bits))
++	    evdevMse->sync = TRUE;
++	else 
++	    evdevMse->sync = FALSE;
++
++	if (test_bit(EV_KEY, evtype_bits)) {
++	    ioctl(pInfo->fd, EVIOCGBIT(EV_KEY, EV_KEY_MAX), evkey_bits);
++	    i = EV_BTN_LEFT;
++	    for (i = EV_BTN_LEFT, j = 0; i <= EV_BTN_BACK; i++)
++		if (test_bit(i, evkey_bits))
++		    j = i - EV_BTN_LEFT;
++	    if (++j > pMse->buttons) pMse->buttons = j;
++	}
++
++	close(pInfo->fd);
++	pInfo->fd = -1;
++
++	for (i = 0; i < MSE_MAXBUTTONS; ++i)
++	    map[i + 1] = i + 1;
++
++	InitPointerDeviceStruct((DevicePtr)pPointer, map, 
++				min(pMse->buttons, MSE_MAXBUTTONS),
++				miPointerGetMotionEvents, pMse->Ctrl,
++				miPointerGetMotionBufferSize());
++
++	/* X valuator */
++	xf86InitValuatorAxisStruct(pPointer, 0, 0, -1, 1, 0, 1);
++	xf86InitValuatorDefaults(pPointer, 0);
++	/* Y valuator */
++	xf86InitValuatorAxisStruct(pPointer, 1, 0, -1, 1, 0, 1);
++	xf86InitValuatorDefaults(pPointer, 1);
++	xf86MotionHistoryAllocate(pInfo);
++	break;
++
++    case DEVICE_ON:
++	if (pPointer->public.on)
++	    break;
++	if ((pInfo->fd = evdevGetFDForDriver (&evdevMse->evdev)) == -1) {
++	    xf86Msg(X_ERROR, "%s: cannot open input device (name: '%s', phys: '%s')\n", pInfo->name, evdevMse->evdev.name, evdevMse->evdev.phys);
++	    return BadRequest;
++	}
++
++	xf86FlushInput(pInfo->fd);
++	if (!xf86InstallSIGIOHandler (pInfo->fd, evdevMouseSigioReadInput, pInfo))
++	    AddEnabledDevice(pInfo->fd);
++	pMse->lastButtons = 0;
++	pMse->emulateState = 0;
++	evdevMse->buttons = 0;
++	pPointer->public.on = TRUE;
++	/*
++	 * send button up events for sanity. If no button down is pending
++	 * xf86PostButtonEvent() will discard them. So we are on the safe side.
++	 */
++	blocked = xf86BlockSIGIO ();
++	for (i = 1; i <= 5; i++)
++	    xf86PostButtonEvent(pPointer,0,i,0,0,0);
++	xf86UnblockSIGIO (blocked);
++	break;
++
++    case DEVICE_OFF:
++    case DEVICE_CLOSE:
++	if (pInfo->fd != -1) {
++	    RemoveEnabledDevice(pInfo->fd);
++	    xf86RemoveSIGIOHandler(pInfo->fd);
++	    close (pInfo->fd);
++	    pInfo->fd = -1;
++	}
++	pPointer->public.on = FALSE;
++	usleep(300000);
++	break;
++    }
++    return Success;
++}
++
++
++/* This function is called when the protocol is "evdev". */
++static Bool
++evdevMousePreInit(InputInfoPtr pInfo, const char *protocol, int flags)
++{
++    MouseDevPtr pMse = pInfo->private;
++    evdevMsePtr evdevMse;
++
++    pMse->protocol = protocol;
++    xf86Msg(X_CONFIG, "%s: Protocol: %s\n", pInfo->name, protocol);
++
++    /* Collect the options, and process the common options. */
++    xf86CollectInputOptions(pInfo, NULL, NULL);
++    xf86ProcessCommonOptions(pInfo, pInfo->options);
++
++    if (sizeof(struct input_event) <= sizeof(pMse->protoBuf))
++	pMse->buffer = pMse->protoBuf;
++    else
++	pMse->buffer = xcalloc(sizeof(struct input_event),1);
++    pMse->mousePriv = evdevMse = xcalloc(sizeof(evdevMseRec), 1);
++    if ((pMse->buffer == NULL) || (pMse->mousePriv == NULL)) {
++	xf86Msg(X_ERROR, "%s: cannot allocate buffer\n", pInfo->name);
++	xfree(pMse);
++	return FALSE;
++    }
++
++    if (!evdevStart (pInfo->drv)) {
++	xf86Msg(X_ERROR, "%s: cannot start evdev brain\n", pInfo->name);
++	return FALSE;
++    }
++
++    pMse->CommonOptions(pInfo);
++
++    /* Setup the local procs. */
++    pInfo->device_control = evdevMouseProc;
++    pInfo->read_input = evdevMouseReadInput;
++
++    pInfo->flags |= XI86_CONFIGURED;
++
++    return TRUE;
++}
++
+ OSMouseInfoPtr
+ xf86OSMouseInit(int flags)
+ {
+@@ -197,6 +472,8 @@
+     p->DefaultProtocol = DefaultProtocol;
+     p->FindDevice = FindDevice;
+     p->GuessProtocol = GuessProtocol;
++    p->CheckProtocol = CheckProtocol;
++    p->BuiltinNames = BuiltinNames;
++    p->PreInit = evdevMousePreInit;
+     return p;
+ }
+-

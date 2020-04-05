@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for Umbrello by Mike Hughes in Oct 2007
+compile_version=1.9.0
+url="$httpSourceforge/uml/umbrello-1.5.71.tar.bz2"
+file_size=2199306
+file_md5=8bb50464d0bfdd62cf5a7ff8b8c1343c
+recipe_type=configure
+
+configure_options=( "--disable-libsuffix" )

@@ -1,0 +1,16 @@
+Patch to preserve the current user as the owner of the installed files 
+while inside the sandbox.  FiboSandbox likes to have fibo own 
+everything, and then chown 0 it all when finished.
+
+diff -Naur xfsprogs-2.10.1.old/include/buildmacros xfsprogs-2.10.1/include/buildmacros
+--- xfsprogs-2.10.1.old/include/buildmacros	2007-09-10 23:01:15.000000000 -0300
++++ xfsprogs-2.10.1/include/buildmacros	2008-10-15 10:05:07.750862049 -0300
+@@ -27,7 +27,7 @@
+ 	  $(LFILES:.l=.o) \
+ 	  $(YFILES:%.y=%.tab.o)
+ 
+-INSTALL	= $(TOPDIR)/install-sh -o $(PKG_USER) -g $(PKG_GROUP)
++INSTALL	= $(TOPDIR)/install-sh
+ 
+ SHELL = /bin/sh
+ IMAGES_DIR = $(TOPDIR)/all-images

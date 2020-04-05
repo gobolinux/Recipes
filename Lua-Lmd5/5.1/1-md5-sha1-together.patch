@@ -1,0 +1,72 @@
+Compile both libraries (md5 and sha1)
+--- /Depot/Resources/RecipeSources//Lua-Lmd5_orig/5.1/md5//Makefile	2007-09-12 02:13:16.000000000 +0200
++++ md5//Makefile	2007-09-12 12:26:52.000000000 +0200
+@@ -1,10 +1,13 @@
+ # makefile for md5/sha1 library for Lua
+ 
+ # change these to reflect your Lua installation
+-LUA= /tmp/lhf/lua-5.1.2
+-LUAINC= $(LUA)/src
+-LUALIB= $(LUA)/src
+-LUABIN= $(LUA)/src
++#LUA= /tmp/lhf/lua-5.1.2
++#LUAINC= $(LUA)/src
++#LUALIB= $(LUA)/src
++#LUABIN= $(LUA)/src
++LUAINC=`pkg-config --variable INSTALL_INC lua`
++LUALIB=`pkg-config --variable INSTALL_LIB lua`
++LUABIN=`pkg-config --variable INSTALL_BIN lua`
+ 
+ # these will probably work if Lua has been installed globally
+ #LUA= /usr/local
+@@ -16,13 +19,13 @@
+ MYNAME= md5
+ #
+ # MD5 library available in libmd5 -- assumes md5global.h
+-MD5LIB= -lmd5
++#MD5LIB= -lmd5
+ MD5INC= .
+ #
+ # MD5 library available in libcrypto (openssl)
+ #	make DEFS=-DUSE_MD5_OPENSSL MD5LIB=-lcrypto
+-#DEFS= -DUSE_MD5_OPENSSL
+-#MD5LIB= -lcrypto
++DEFS= -DUSE_MD5_OPENSSL
++MD5LIB= -lcrypto
+ #
+ # Rivest's MD5 library from source -- rename or link global.h as md5global.h
+ #	make DEFS=-DUSE_MD5_RIVEST MD5LIB=md5c.o
+@@ -47,8 +50,8 @@
+ #
+ # SHA1 library available in libcrypto (openssl)
+ #	make DEFS=-DUSE_SHA1_OPENSSL MD5LIB=-lcrypto MYNAME=sha1
+-#DEFS= -DUSE_SHA1_OPENSSL
+-#MD5LIB= -lcrypto
++SHA1DEFS= -DUSE_SHA1_OPENSSL
++SHA1LIB= -lcrypto
+ #
+ # rfc3174 SHA1 library from source
+ #	make DEFS=-DUSE_SHA1_RFC MD5LIB=sha1.o MYNAME=sha1
+@@ -73,7 +76,7 @@
+ OBJS= $(MYLIB).o
+ TEST= test.lua
+ 
+-all:	test
++all: $T sha1
+ 
+ test:	$T
+ 	$(LUABIN)/lua -l$(MYNAME) $(TEST)
+@@ -83,7 +86,12 @@
+ so:	$T
+ 
+ $T:	$(OBJS) $(MD5OBJ)
+-	$(CC) -o $@ -shared $(OBJS) $(MD5LIB)
++	$(CC) -o md5.so -shared $(OBJS) $(MD5LIB)
++
++sha1: lsha1.o
++	cc -I`pkg-config --variable=INSTALL_INC lua` -I. $(SHA1DEFS)  -O2  -c -o lsha1.o lsha1.c
++	$(CC) -o sha1.so -shared lsha1.o $(SHA1LIB)
++
+ 
+ clean:
+ 	rm -f $(OBJS) $T core core.* $(MD5OBJ)

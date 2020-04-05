@@ -1,0 +1,21 @@
+From 352dbee6489dd768893493f144dff2c85edc1f0c Mon Sep 17 00:00:00 2001
+From: Olivier Blin <blino@mandriva.com>
+Date: Tue, 19 Jun 2007 22:23:47 +0000
+Subject: fixes a segfault at startup when no gconf value is set
+
+---
+diff --git a/src/grandr.c b/src/grandr.c
+index e3e619e..8f0980b 100644
+--- a/src/grandr.c
++++ b/src/grandr.c
+@@ -1381,7 +1381,7 @@ set_hotkeys_view (GtkListStore *hotkey_store)
+ 											NULL);
+ 	command = gconf_client_get_string(client, GCONF_KEY2,
+ 											NULL);
+-	if (strcmp(key, HOTKEY) == 0 && strcmp(command, APP_NAME) == 0) {
++	if (key && strcmp(key, HOTKEY) == 0 && command && strcmp(command, APP_NAME) == 0) {
+ 		gtk_toggle_button_set_active (hotkey_cbtn, TRUE);
+ 	} else {
+ 		gtk_toggle_button_set_active (hotkey_cbtn, FALSE);
+--
+cgit v0.8.3-6-g21f6

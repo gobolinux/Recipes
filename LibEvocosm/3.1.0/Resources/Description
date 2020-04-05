@@ -1,0 +1,7 @@
+[Name] LibEvocosm
+[Summary] C++ framework library for evolutionary algorithms
+[Description] Evocosm is a C++ framework for programming a wide variety of evolutionary algorithms, ranging from genetic algorithms to agent simulations. Evocosm is the foundation for Acovea. 
+
+Evolutionary algorithms come in a variety of shapes and flavors, but at their core, they share certain characteristics: populations that reproduce and mutate through a series of generations, producing future generations based on some measure of fitness. An amazing variety of algorithms can be built on that general framework, which leads me to construct a set of core classes as the basis for future applications. As of version 3.3.0, Evocosm supports OpenMP to take advantage of multicore systems.
+[License] GNU General Public License version 2
+[Homepage] http://www.coyotegulch.com/products/libevocosm/index.html

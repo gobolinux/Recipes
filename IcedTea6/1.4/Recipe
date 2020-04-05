@@ -1,0 +1,109 @@
+# Recipe for version 1.4 by Giambattista Bloisi <giamby@infinito.it>, on Tue Feb 3 22:53:41 CET 2009
+# Recipe (MakeRecipe) for IcedTea6 by Giambattista Bloisi <giamby@infinito.it>, on Sun Oct 19 17:20:06 CEST 2008
+compile_version=1.11.2
+urls=(
+    "http://icedtea.classpath.org/download/source/icedtea6-1.4.tar.gz"
+    "http://download.java.net/openjdk/jdk6/promoted/b14/openjdk-6-src-b14-25_nov_2008.tar.gz"
+    "http://hg.openjdk.java.net/jdk7/hotspot/hotspot/archive/f9d938ede196.tar.gz"
+    "http://www.complang.tuwien.ac.at/cacaojvm/download/cacao-0.99.3/cacao-0.99.3.tar.bz2"
+)
+file_sizes=(
+     5368982
+    49045778
+     7887258
+     3032508
+)
+file_md5s=(
+    6428ca1b0c38111cca230f5b69460b03
+    9f9773a822156dd3d576d83d794364ce
+    c8f78d48ac83987bc2adebeebcd354e9
+    db93ab31c6d1b7f1e213771bb81bde58
+)
+uncompress=no
+needs_safe_linking=yes
+recipe_type=configure
+autogen_before_configure=yes
+
+pre_patch() {
+    pushd $compileSourcesDir
+    tar -xzf $compileArchivesDir/icedtea6-1.4.tar.gz
+    popd
+}
+
+configure_options=(
+    --with-ant-home="$apache_ant_path"
+    --with-xalan2-jar="$xalan_java_path/lib/xalan.jar"
+    --with-xalan2-serializer-jar="$xalan_java_path/lib/serializer.jar"
+    --with-xerces2-jar="$xalan_java_path/lib/xercesImpl.jar"
+    --with-openjdk-src-zip="$compileArchivesDir/openjdk-6-src-b14-25_nov_2008.tar.gz"
+    --with-hotspot-src-zip="$compileArchivesDir/f9d938ede196.tar.gz"
+    --with-parallel-jobs=4
+    --without-rhino
+    --disable-docs # Disable generation of documentation
+    --disable-liveconnect # Disable compilation of browser plugin
+    --disable-xrender       # Disable inclusion of xrender pipeline
+)
+
+using_gcj_pre_build() {
+    # Creates a local copy of gcj that looks like a jdk
+    local gcj_version=$(gcj -dumpversion)
+    local gcj_arch=`private__get_jdk_arch`
+
+    mkdir -p gcj-jdk/jre/lib/${gcj_arch}/client
+    mkdir -p gcj-jdk/jre/lib/${gcj_arch}/server
+    mkdir -p gcj-jdk/lib
+
+    ln -nsf $gcc_path/lib/gcj-${gcj_version}*/libjvm.so gcj-jdk/jre/lib/${gcj_arch}/client/libjvm.so
+    ln -nsf $gcc_path/lib/gcj-${gcj_version}*/libjvm.so gcj-jdk/jre/lib/${gcj_arch}/server/libjvm.so
+
+    ln -nsf $gcc_path/Shared/java/libgcj-${gcj_version}.jar gcj-jdk/jre/lib/rt.jar
+    ln -nsf $gcc_path/Shared/java/libgcj-tools-${gcj_version}.jar gcj-jdk/lib/tools.jar
+
+    MergeTree $gcc_path $(pwd)/gcj-jdk
+}
+
+with_gcj=(
+    --with-gcj
+    --with-ecj-jar="$eclipse_ecj_path/lib/ecj.jar"
+    --with-gcj-home="$compileSourcesDir/icedtea6-1.4/gcj-jdk"
+)
+with_icedtea6=(
+    --with-icedtea
+    --with-icedtea-home="$goboPrograms/IcedTea6/Current"  # "$icedtea6_path" seems not to work here
+)
+with_zero=(
+    --enable-zero # use zero-assembler port on non-zero platforms
+)
+with_pulseaudio=(
+    --enable-pulse-java #Enable pulse-java - an audio mixer spi that uses PulseAudio
+)
+with_sun_jdk=(
+    --with-openjdk
+    --with-openjdk-home="$sun_jdk_path"
+)
+with_cacaovm=(
+    --enable-cacao # Use CACAO VM instead of HotSpot virtual machine
+    --with-cacao-src-zip="$compileArchivesDir/cacao-0.99.3.tar.bz2"
+)
+with_docs=(
+    --enable-docs # Disable generation of documentation
+)
+with_nsplugin=(
+    --enable-liveconnect # Disable compilation of browser plugin
+)
+with_xrender=(
+    --enable-xrender       # Disable inclusion of xrender pipeline
+)
+with_javascript=(
+    --with-rhino="$rhino_path/lib/js.jar"
+)
+
+pre_link() {
+    local icedtea_arch=`private__get_icedtea_arch`
+    cp -a openjdk/control/build/linux-${icedtea_arch}/j2sdk-image/* $target
+}
+using_nsplugin_pre_link() {
+    local jdk_arch=`private__get_jdk_arch`
+    mkdir -p ${target}/lib/browser-plugins
+    ln -nsf ${target}/jre/lib/${jdk_arch}/IcedTeaPlugin.so ${target}/lib/browser-plugins
+}

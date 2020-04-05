@@ -1,0 +1,11 @@
+-- x/src/qt_theme_draw.c.orig	2008-03-16 16:40:55.000000000 +0000
++++ x/src/qt_theme_draw.c	2008-03-16 16:41:15.000000000 +0000
+@@ -19,6 +19,7 @@
+  ***************************************************************************/
+ 
+ #include <math.h>
++#include <stdlib.h>
+ #include <string.h>
+ #include <gtk/gtkprogressbar.h>
+ #include <gdk/gdk.h>
+

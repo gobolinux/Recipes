@@ -1,0 +1,15 @@
+# Recipe for version 0.95.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Mar 19 18:44:22 NZDT 2012
+compile_version=1.8.2
+url="http://windowmaker.info/pub/source/release/WindowMaker-0.95.2.tar.bz2"
+file_size=2190825
+file_md5=4c2c67ff82be9d247ade6bc6539768de
+recipe_type=configure
+
+# GCC 4 fix
+environment=(
+    ac_cv_c_inline_asm=no
+)
+
+configure_options=(
+    --with-gnustepdir=$target/GNUstep
+)

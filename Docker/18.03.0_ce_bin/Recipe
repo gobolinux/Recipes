@@ -1,0 +1,18 @@
+# Recipe (MakeRecipe) for Docker by Hisham Muhammad <hisham@gobolinux.org>, on Tue Mar 27 11:52:14 BRT 2018
+# Recipe for version 18.03.0_ce_bin by Hisham Muhammad <hisham@gobolinux.org>, on Tue Mar 27 11:52:14 BRT 2018
+compile_version=016.01
+url="https://mirrors.aliyun.com/docker-ce/linux/static/stable/x86_64/docker-18.03.0-ce.tgz"
+file_size=38752537
+file_md5=cd317cba1bdc886e3163445f8edc5cca
+dir='docker'
+recipe_type=manifest
+manifest=(
+   "docker-proxy:bin/"
+   "docker-containerd:bin/"
+   "dockerd:bin/"
+   "docker-runc:bin/"
+   "docker-containerd-shim:bin/"
+   "docker:bin/"
+   "docker-init:bin/"
+   "docker-containerd-ctr:bin/"
+)

@@ -1,0 +1,10 @@
+# Recipe for version 3.4.1 by Mike Hughes, on Mon May 21 22:05:31 PDT 2007
+# Recipe (MakeRecipe) for KDevelop by Rui Andrada <shingonoide at gmail>, on Sat Nov 26 07:54:48 BRST 2005
+compile_version=1.8.2
+url="http://download.kde.org/stable/3.5.7/src/kdevelop-3.4.1.tar.bz2"
+file_size=9368912
+file_md5=abc6cc2831ad4c0f4da9fba9e38edce1
+recipe_type=configure
+configure_options=(
+   "--disable-libsuffix"
+)

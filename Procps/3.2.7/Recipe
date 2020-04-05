@@ -1,0 +1,20 @@
+# Recipe for version 3.2.7 by Andre Detsch <detsch@gobolinux.org>, on Sat Dec 16 23:15:25 BRST 2006
+url="http://procps.sourceforge.net/procps-3.2.7.tar.gz"
+compile_version=1.8.0
+file_size=281965
+file_md5=f490bca772b16472962c7b9f23b1e97d
+recipe_type=makefile
+install_variables=(
+   "DESTDIR=$target/"
+   "usr/bin=$target/bin/"
+   "usr/proc/bin=$target/bin/"
+   "man1=$target/man/man1/"
+   "man5=$target/man/man5/"
+   "man8=$target/man/man8/"
+   "etc/X11/applnk/Utilities=$settings_target/X11/applnk/Utilities/"
+   "usr/X11R6/bin=$target/bin/"
+   "usr/lib=$target/lib/"
+   "usr/include=$target/include/"
+   "install=install"
+   "ldconfig=true"
+)

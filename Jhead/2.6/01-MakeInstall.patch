@@ -1,0 +1,13 @@
+diff -aur jhead-2.6-vanilla/makefile jhead-2.6-lmb/makefile
+--- jhead-2.6-vanilla/makefile	2006-04-29 20:14:59.000000000 -0300
++++ jhead-2.6-lmb/makefile	2006-05-21 18:18:25.000000000 -0300
+@@ -13,3 +13,9 @@
+ 
+ jhead: $(objs) jhead.h
+ 	${CC} -o jhead $(objs) -lm
++
++DESTDIR=@%Compile_target%@
++install:
++	cp jhead $(DESTDIR)/bin
++	cp jhead.1.gz $(DESTDIR)/man/man1
++	cp readme.txt usage.html changes.txt $(DESTDIR)/doc

@@ -1,0 +1,208 @@
+--- gtk.orig/configure.in.orig	2005-08-29 10:47:13.000000000 -0500
++++ gtk.new/configure.in	2005-10-04 06:56:15.000000000 -0500
+@@ -224,13 +224,13 @@
+   gdktarget=x11
+ fi
+ 
+-AC_ARG_WITH(gdktarget, [  --with-gdktarget=[[x11/linux-fb/win32]] select non-default GDK target],
++AC_ARG_WITH(gdktarget, [  --with-gdktarget=[[x11/linux-fb/directfb/win32]] select non-default GDK target],
+ 	gdktarget=$with_gdktarget)
+ 
+ AC_SUBST(gdktarget)
+ case $gdktarget in
+-  x11|linux-fb|win32) ;;
+-  *) AC_MSG_ERROR([Invalid target for GDK: use x11, linux-fb or win32.]);;
++  x11|linux-fb|directfb|win32) ;;
++  *) AC_MSG_ERROR([Invalid target for GDK: use x11, linux-fb, directfb or win32.]);;
+ esac
+ 
+ gdktargetlib=libgdk-$gdktarget-$GTK_API_VERSION.la
+@@ -1351,6 +1351,27 @@
+   AM_CONDITIONAL(ENABLE_FB_MANAGER, false)
+ fi
+ 
++if test "x$gdktarget" = "xdirectfb"; then
++  DIRECTFB_REQUIRED_VERSION=0.9.21
++  AC_MSG_CHECKING(for DirectFB)
++
++  if $PKG_CONFIG --atleast-version $DIRECTFB_REQUIRED_VERSION directfb ; then
++      AC_MSG_RESULT(found)
++      GDK_EXTRA_CFLAGS="`$PKG_CONFIG --cflags directfb` $GDK_EXTRA_CFLAGS"
++      GDK_EXTRA_LIBS="`$PKG_CONFIG --libs directfb` $GDK_EXTRA_LIBS"
++  else
++      AC_MSG_ERROR([
++*** DirectFB $DIRECTFB_REQUIRED_VERSION or newer is required. The latest
++*** version of DirectFB is always available from http://www.directfb.org/.
++  ])
++  fi
++
++  AM_CONDITIONAL(USE_DIRECTFB, true)
++else
++  AM_CONDITIONAL(USE_DIRECTFB, false)
++fi
++
++
+ # Check for Pango flags
+ 
+ if test "x$gdktarget" = "xwin32"; then
+@@ -1565,6 +1586,9 @@
+   gdk_windowing='
+ #define GDK_WINDOWING_FB
+ #define GDK_NATIVE_WINDOW_POINTER'
++elif test "x$gdktarget" = "xdirectfb" ; then
++  gdk_windowing='
++#define GDK_WINDOWING_DIRECTFB'
+ fi
+ 
+ if test x$gdk_wchar_h = xyes; then
+@@ -1621,6 +1645,7 @@
+ gdk/win32/rc/Makefile
+ gdk/win32/rc/gdk.rc
+ gdk/linux-fb/Makefile
++gdk/directfb/Makefile
+ gtk/Makefile
+ gtk/makefile.msc
+ gtk/gtkversion.h
+===================================================================
+--- gtk.orig/gtk/Makefile.am.orig	2005-08-01 14:21:00.000000000 -0500
++++ gtk.new/gtk/Makefile.am	2005-10-04 06:56:15.000000000 -0500
+@@ -666,20 +666,23 @@
+ libgtk_x11_2_0_la_SOURCES = $(gtk_c_sources)
+ libgtk_linux_fb_2_0_la_SOURCES = $(gtk_c_sources)
+ libgtk_win32_2_0_la_SOURCES = $(gtk_c_sources)
++libgtk_directfb_2_0_la_SOURCES = $(gtk_c_sources)
+ 
+ libgtk_x11_2_0_la_LDFLAGS = $(libtool_opts)
+ libgtk_linux_fb_2_0_la_LDFLAGS = $(libtool_opts)
+ libgtk_win32_2_0_la_LDFLAGS = $(libtool_opts)
++libgtk_directfb_2_0_la_LDFLAGS = $(libtool_opts)
+ 
+ libgtk_x11_2_0_la_LIBADD = $(libadd)
+ libgtk_linux_fb_2_0_la_LIBADD = $(libadd)
+ libgtk_win32_2_0_la_LIBADD = $(libadd) -lole32 -lgdi32
+ libgtk_win32_2_0_la_DEPENDENCIES = $(gtk_def) $(gtk_win32_res)
++libgtk_directfb_2_0_la_LIBADD = $(libadd)
+ 
+ if USE_WIN32
+ libgtk_target_ldflags = $(gtk_win32_res_ldflag) $(gtk_win32_symbols)
+ endif
+-EXTRA_LTLIBRARIES = libgtk-x11-2.0.la libgtk-linux-fb-2.0.la libgtk-win32-2.0.la
++EXTRA_LTLIBRARIES = libgtk-x11-2.0.la libgtk-linux-fb-2.0.la libgtk-win32-2.0.la libgtk-directfb-2.0.la
+ 
+ install-exec-hook: 
+ if DISABLE_EXPLICIT_DEPS
+===================================================================
+--- gtk.orig/gdk/gdk.symbols.orig	2005-08-23 22:29:05.000000000 -0500
++++ gtk.new/gdk/gdk.symbols	2005-10-04 06:56:15.000000000 -0500
+@@ -326,10 +326,10 @@
+ #if IN_FILE(__GDK_COLOR_X11_C__)
+ gdk_colormap_new
+ gdk_colormap_get_type G_GNUC_CONST
++#ifndef GDK_DISABLE_DEPRECATED
+ gdk_colormap_change
+ gdk_colors_alloc
+ gdk_colors_free
+-#ifndef GDK_DISABLE_DEPRECATED
+ gdk_colormap_get_system_size
+ gdk_color_change
+ #endif
+@@ -530,6 +530,8 @@
+ gdk_drawable_ref
+ gdk_drawable_unref
+ gdk_draw_string
++gdk_draw_text
++gdk_draw_text_wc
+ #endif
+ gdk_drawable_get_depth
+ gdk_drawable_get_display
+@@ -553,8 +555,6 @@
+ gdk_draw_polygon
+ gdk_draw_rectangle
+ gdk_draw_segments
+-gdk_draw_text
+-gdk_draw_text_wc
+ gdk_draw_trapezoids
+ #endif
+ #endif
+@@ -806,12 +806,15 @@
+ gdk_keymap_get_for_display
+ gdk_keymap_lookup_key
+ gdk_keymap_translate_keyboard_state
++#ifndef GDK_WINDOWING_DIRECTFB
+ gdk_keyval_convert_case
++#endif
+ gdk_keyval_from_name
+ gdk_keyval_name G_GNUC_CONST
+ #endif
+ #endif
+ 
++
+ #if IN_HEADER(__GDK_VISUAL_H__)
+ #if IN_FILE(__GDK_VISUAL_C__)
+ gdk_list_visuals
+===================================================================
+--- gtk.orig/gdk/Makefile.am.orig	2005-07-08 19:10:11.000000000 -0500
++++ gtk.new/gdk/Makefile.am	2005-10-04 06:56:15.000000000 -0500
+@@ -1,7 +1,7 @@
+ ## Makefile.am for gtk+/gdk
+ 
+ SUBDIRS = $(gdktarget)
+-DIST_SUBDIRS = linux-fb win32 x11
++DIST_SUBDIRS = directfb linux-fb win32 x11
+ 
+ EXTRA_DIST =			\
+ 	keynames.txt		\
+@@ -134,6 +134,11 @@
+ 	gdkenumtypes.c		\
+ 	gdkmarshalers.h
+ 
++libgdk_directfb_2_0_la_SOURCES = $(common_sources) 
++libgdk_directfb_2_0_la_LIBADD = directfb/libgdk-directfb.la $(GDK_DEP_LIBS) \
++  $(top_builddir)/gdk-pixbuf/libgdk_pixbuf-$(GTK_API_VERSION).la
++libgdk_directfb_2_0_la_LDFLAGS = $(LDADD)
++
+ libgdk_x11_2_0_la_SOURCES = $(common_sources)
+ libgdk_x11_2_0_la_LIBADD = x11/libgdk-x11.la $(GDK_DEP_LIBS) \
+   $(top_builddir)/gdk-pixbuf/libgdk_pixbuf-$(GTK_API_VERSION).la
+@@ -198,7 +203,7 @@
+ 
+ lib_LTLIBRARIES = $(gdktargetlib)
+ 
+-EXTRA_LTLIBRARIES = libgdk-x11-2.0.la libgdk-linux-fb-2.0.la libgdk-win32-2.0.la
++EXTRA_LTLIBRARIES = libgdk-x11-2.0.la libgdk-directfb-2.0.la libgdk-linux-fb-2.0.la libgdk-win32-2.0.la
+ 
+ MAINTAINERCLEANFILES = gdkenumtypes.h stamp-gdkenumtypes.h gdkenumtypes.c \
+   gdkmarshalers.h gdkmarshalers.c
+===================================================================
+--- gtk.orig/docs/tools/Makefile.am.orig	2005-08-22 09:44:39.000000000 -0500
++++ gtk.new/docs/tools/Makefile.am	2005-10-04 06:56:15.000000000 -0500
+@@ -17,7 +17,7 @@
+ 	$(top_builddir)/gtk/$(gtktargetlib)				\
+ 	$(GTK_DEP_LIBS)
+ 
+-if OS_UNIX
++if USE_X11 
+ noinst_PROGRAMS = 		\
+ 	doc-shooter
+ endif
+--- gtk.orig/gtk/gtkplug-stub.c.orig	2005-07-21 08:26:27.000000000 -0500
++++ gtk.new/gtk/gtkplug-stub.c	2005-10-04 06:56:15.000000000 -0500
+@@ -24,7 +24,7 @@
+  * files for a list of changes.  These files are distributed with
+  * GTK+ at ftp://ftp.gtk.org/pub/gtk/. 
+  */
+-
++#include <gtk.h>
+ #include "gtkplugprivate.h"
+ 
+ GdkNativeWindow
+--- gtk.orig/gtk/gtksocket-stub.c.orig	2005-07-21 08:26:27.000000000 -0500
++++ gtk.new/gtk/gtksocket-stub.c	2005-10-04 06:56:15.000000000 -0500
+@@ -25,6 +25,7 @@
+  * GTK+ at ftp://ftp.gtk.org/pub/gtk/. 
+  */
+ 
++#include <gtk.h>
+ #include "gtksocketprivate.h"
+ 
+ GdkNativeWindow

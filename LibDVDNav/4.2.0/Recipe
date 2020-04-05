@@ -1,0 +1,8 @@
+# Recipe for version 4.2.0 by Michael Homer <michael@gobolinux.org>, on Tue Mar 27 18:15:36 NZDT 2012
+# Recipe (MakeRecipe) for LibDvdnav by Jonas Karlsson <jonka750@student.liu.se>, on Wed May 11 11:18:24 CEST 2005
+compile_version=1.7.1
+url="http://dvdnav.mplayerhq.hu/releases/libdvdnav-4.2.0.tar.bz2"
+file_size=111575
+file_md5=53be8903f9802e101929a3451203bbf6
+recipe_type=configure
+autogen_before_configure=yes

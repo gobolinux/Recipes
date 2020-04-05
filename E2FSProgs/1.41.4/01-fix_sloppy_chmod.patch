@@ -1,0 +1,29 @@
+diff -Naur e2fsprogs-1.40.8/lib/et/compile_et.sh.in e2fsprogs-1.40.8.new/lib/et/compile_et.sh.in
+--- e2fsprogs-1.40.8/lib/et/compile_et.sh.in	2007-06-30 12:58:34.000000000 +0000
++++ e2fsprogs-1.40.8.new/lib/et/compile_et.sh.in	2008-05-07 10:36:45.000000000 +0000
+@@ -51,12 +51,12 @@
+     rm -f ${BASE}.h.$$
+ else
+     mv -f ${BASE}.h.$$ ${BASE}.h
+-    chmod -w ${BASE}.h
++    chmod a-w ${BASE}.h
+ fi
+ $AWK -f "${DIR}/et_c.awk" "outfile=${BASE}.c.$$" "outfn=${BASE}.c" "$ROOT.et"
+ if test -f ${BASE}.c && cmp -s ${BASE}.c.$$ ${BASE}.c ; then
+     rm -f ${BASE}.c.$$
+ else
+     mv -f ${BASE}.c.$$ ${BASE}.c
+-    chmod -w ${BASE}.c
++    chmod a-w ${BASE}.c
+ fi
+diff -Naur e2fsprogs-1.40.8/lib/ss/mk_cmds.sh.in e2fsprogs-1.40.8.new/lib/ss/mk_cmds.sh.in
+--- e2fsprogs-1.40.8/lib/ss/mk_cmds.sh.in	2007-07-08 03:16:39.000000000 +0000
++++ e2fsprogs-1.40.8.new/lib/ss/mk_cmds.sh.in	2008-05-07 10:37:14.000000000 +0000
+@@ -57,6 +57,6 @@
+ else
+ 	rm -f "${BASE}.c"
+ 	mv -f "${TMP}" "${BASE}.c"
+-	chmod -w "${BASE}.c"
++	chmod a-w "${BASE}.c"
+ 	exit 0
+ fi

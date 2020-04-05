@@ -1,0 +1,26 @@
+# Recipe for version 105 by Andre Detsch <detsch@gobolinux.org>, on Wed Feb 21 18:49:10 BRT 2007
+# Recipe for Udev 105 by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.8.2
+url="http://www.kernel.org/pub/linux/utils/kernel/hotplug/udev-105.tar.bz2"
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=(
+    prefix="$target"
+    etcdir="$settings_target"
+    udevdir="$goboDevices"
+    usrbindir="$target/bin"
+    usrsbindir="$target/sbin"
+    mandir="$target/man"
+    includedir="$target/include"
+    usrlibdir="$target/lib"
+)
+
+pre_link() {
+   pushd $target/bin
+   for i in ../lib/udev/*
+   do
+       [ -x $i ] && ln -s $i .
+   done
+   popd
+}

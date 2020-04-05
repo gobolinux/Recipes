@@ -1,0 +1,11 @@
+# Recipe for version 0.8.0 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Sep 3 23:39:00 BRT 2012
+# Recipe (MakeRecipe) for EXO by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:16:44 CEST 2006
+compile_version=1.9.0
+url="http://archive.xfce.org/xfce/4.10/src/exo-0.8.0.tar.bz2"
+file_size=1120701
+file_md5=189bd19210e1d7d8601be1cdf27bf259
+recipe_type=configure
+configure_options=(
+    --enable-debug=no
+)
+with_pygtk="--enable-python"

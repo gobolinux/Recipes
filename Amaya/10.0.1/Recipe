@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for Amaya by Kevin Quick <quick@sparq.org>, on Tue Oct 14 22:52:04 MST 2008
+# Recipe for version 10.0.1 by Kevin Quick <quick@sparq.org>, on Tue Oct 14 22:52:04 MST 2008
+compile_version=1.11.2
+url="http://www.w3.org/Amaya/Distribution/amaya-sources-10.0.1.tgz"
+file_size=28620304
+file_md5=0a32af56cf81c13b6efc5c65c2137859
+dir=Amaya10.0/Amaya
+recipe_type=configure
+needs_build_directory=yes

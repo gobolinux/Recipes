@@ -1,0 +1,11 @@
+# Recipe for version 1.1.11 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Mar 14 18:48:02 NZDT 2012
+# Recipe (MakeRecipe) for XDM by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 18:44:33 BRT 2005
+compile_version=1.8.5
+url="http://xorg.freedesktop.org/archive/individual/app/xdm-1.1.11.tar.bz2"
+file_size=446612
+file_md5=64a1af1f7eb69feae12e75d4cc3aaf19
+recipe_type=configure
+part_of=Xorg-App
+install_variables=(
+   appdefaultdir=${target}/Shared/X11/app-defaults
+)

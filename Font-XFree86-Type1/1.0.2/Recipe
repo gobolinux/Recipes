@@ -1,0 +1,11 @@
+# Recipe for version 1.0.2 by Jonas Karlsson <jonas@gobolinux.org>, on Tue Jan 12 02:02:38 CET 2010
+# Recipe (MakeRecipe) for Font-XFree86-Type1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jun 4 15:33:12 BRT 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/font/font-xfree86-type1-1.0.2.tar.bz2"
+file_size=117361
+file_md5=a966f5a8aade9e63af86d8a6bf3e8586
+recipe_type=configure
+part_of=Xorg-Font
+configure_options=(
+   --with-fontrootdir="${target}/share/fonts"
+)

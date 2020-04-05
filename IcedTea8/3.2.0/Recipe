@@ -1,0 +1,22 @@
+# Recipe (MakeRecipe) for IcedTea8 by Hisham Muhammad <hisham@gobolinux.org>, on Sun Dec 18 23:32:19 BRST 2016
+# Recipe for version 3.2.0 by Hisham Muhammad <hisham@gobolinux.org>, on Sun Dec 18 23:32:19 BRST 2016
+compile_version=git
+url="http://icedtea.classpath.org/hg/icedtea8/archive/dfda71d19359.tar.bz2"
+file="icedtea8-dfda71d19359.tar.bz2"
+file_size=3041347
+file_md5=88a6ca2789d4e50d5fd6cf0a6517554d
+dir='icedtea8-dfda71d19359'
+recipe_type=configure
+autogen_before_configure=yes
+
+configure_options=(
+   --with-jdk-home="$([ -e "$icedtea8_path" ] && echo "$icedtea8_path" || echo "$oracle_jdk_path")"
+   --disable-system-sctp 
+)
+
+pre_link() {
+   pushd "$target"
+   rm -rf sample demo
+   find . -name "*.so" | xargs -n1 strip --strip-unneeded
+   popd
+}

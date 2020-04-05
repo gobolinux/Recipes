@@ -1,0 +1,12 @@
+# Recipe for version 1.4.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Aug 25 16:28:14 BRT 2014
+compile_version=1.10.2
+url="ftp://ftp.remotesensing.org/pub/geotiff/libgeotiff/libgeotiff-1.4.0.tar.gz"
+file_size=1517881
+file_md5=efa7b418bc00228fcda4da63557e40c2
+dir='libgeotiff-1.4.0'
+recipe_type=configure
+
+pre_link()
+{
+	cp -f -v geo_config.h $target/include
+}

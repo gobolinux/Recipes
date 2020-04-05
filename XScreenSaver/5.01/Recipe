@@ -1,0 +1,12 @@
+# Recipe for version 5.01 by Rafael Guterres Jeffman, on Fri Dec 22 15:16:36 BRST 2006
+# By Leandro Motta Barros, 02005-07-02
+compile_version=1.8.0
+url="http://www.jwz.org/xscreensaver/xscreensaver-5.01.tar.gz"
+recipe_type=configure
+
+make_variables=(
+   "GTK_DATADIR=$target/share"
+   "KDEDIR=$target"
+   "datadir=$target/share"
+   "gnulocaledir=$target/share/locale"
+)

@@ -1,0 +1,25 @@
+# Recipe for version 2.0.3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jan 13 12:39:45 GMT 2014
+compile_version=1.10.0
+url="http://delta.affinix.com/download/qca/2.0/qca-2.0.3.tar.bz2"
+file_size=4530731
+file_md5=fc15bd4da22b8096c51fcfe52d2fa309
+file="qca-2.0.3.tar.bz2"
+recipe_type=configure
+
+configure_options=(
+    --certstore-path=$settings_target/ssl/ca-bundle.crt
+    --no-separate-debug-info
+)
+
+install_variables=(
+    QMAKE=echo
+)
+
+pre_build() {
+    sed -i '217s@set@this->set@' src/botantools/botan/botan/secmem.h
+}
+
+pre_install() {
+    GrepReplace -B "(INSTALL_ROOT)/usr" "(INSTALL_ROOT)$target" src/Makefile Makefile
+    GrepReplace -B "$qt_path/mkspecs/features" "$target/mkspecs/features" Makefile
+}

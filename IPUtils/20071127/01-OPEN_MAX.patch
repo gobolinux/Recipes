@@ -1,0 +1,12 @@
+OPEN_MAX has been removed in recent versions, so get dynamically.
+diff -Naur iputils-s20071127/rdisc.c iputils-s20071127.tpg/rdisc.c
+--- iputils-s20071127/rdisc.c	2007-11-27 00:57:27.000000000 +0000
++++ iputils-s20071127.tpg/rdisc.c	2008-01-26 14:41:25.000000000 +0000
+@@ -247,7 +247,7 @@
+ 	if ((pid=fork()) != 0)
+ 		exit(0);
+ 
+-	for (t = 0; t < OPEN_MAX; t++)
++	for (t = 0; t < sysconf(_SC_OPEN_MAX); t++)
+ 		if (t != s)
+ 			close(t);

@@ -1,0 +1,14 @@
+# Recipe for version 8.5a5 by Jonas Karlsson <jonka750@student.liu.se>, on Tue Mar 20 18:38:47 CET 2007
+compile_version=1.8.2
+url="$httpSourceforge/tcl/tk8.5a5-src.tar.gz"
+file_size=3262112
+file_md5=c46f923384b18c2b5ff9dc931df9a47c
+dir='tk8.5a5/unix'
+recipe_type=configure
+configure_options=(
+   --with-tcl=$tcl_path/lib
+   --enable-xft
+)
+pre_link() {
+   ln -nfs ${target}/bin/wish8.5 ${target}/bin/wish
+}

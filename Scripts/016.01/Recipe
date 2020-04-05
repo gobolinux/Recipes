@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Scripts by Hisham Muhammad
+compile_version=016.01
+git=https://github.com/gobolinux/Scripts
+tag=016.01
+recipe_type=makefile
+
+make_variables=(
+   VERSION=$version
+   DESTDIR=$target
+)

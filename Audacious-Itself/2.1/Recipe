@@ -1,0 +1,12 @@
+# Recipe for version 2.1 by Dominique Juergensen <brokolie@vollbio.de>, on Sun Jul 19 23:01:06 CEST 2009
+# Recipe (MakeRecipe) for Audacious-Itself by Guilherme B. Bedin, on Wed Jan 24 13:54:19 BRST 2007
+compile_version=1.8.2
+url="http://distfiles.atheme.org/audacious-2.1.tgz"
+file_size=1852176
+file_md5=03ab6a062e5909214841f90f767f1147
+recipe_type=configure
+part_of=Audacious
+
+configure_options=(
+    --disable-rpath
+)

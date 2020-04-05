@@ -1,0 +1,11 @@
+# Recipe for version 1.1120 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Dec 15 14:42:57 CET 2007
+# Recipe (MakeRecipe) for NTFS-3G by Lucas C. Villa Real, on Thu Feb 22 02:10:40 BRT 2007
+compile_version=1.8.2
+url="http://www.ntfs-3g.org/ntfs-3g-1.1120.tgz"
+file_size=577005
+file_md5=9561f07a6a5faa0fb6615727c0003b26
+recipe_type=configure
+
+make_variables=(
+    DESTDIR=$target
+)

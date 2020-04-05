@@ -1,0 +1,42 @@
+# Recipe (MakeRecipe) for DKMS by Rehan Khan, on Sun Jun 21 10:59:35 BST 2009
+# Recipe for version 2.022.0 by Rehan Khan, on Sun Jun 21 10:59:35 BST 2009
+compile_version=1.12.3
+url="http://linux.dell.com/dkms/permalink/dkms-2.0.22.0.tar.gz"
+file_size=72626
+file_md5=1ceecc828a5014cf1ce4656649f77ad6
+recipe_type=makefile
+makefile='Makefile'
+
+build_target="clean doc-perms install-doc"
+
+install_target="install"
+
+make_variables=(
+"PREFIX=$target"
+"DESTDIR=$target"
+"SBIN=$target/sbin"
+"ETC=$settings_target/dkms"
+"VAR=$variable_target/lib/dkms"
+"MAN=$target/share/man/man8"
+"INITD=$target/Resources/Tasks"
+"LIBDIR=$target/lib"
+"BASHDIR=$settings_target/completion"
+"DOCDIR=$target/doc/$RELEASE_STRING"
+"KCONF=$settings_target/kernel"
+)
+
+do_install() {
+makefile_do_install "$@"
+mv "$target/Resources/Tasks/dkms_autoinstaller" "$target/Resources/Tasks/DKMS"
+}
+
+docs=(
+	'sample.conf'
+	'sample.spec'
+	'sample-suse-10-mkkmp.spec'
+	'sample-suse-9-mkkmp.spec'
+	'template-dkms-mkrpm.spec'
+	'dkms.spec'
+)
+
+unmanaged_files=("$variable_target/lib/dkms")

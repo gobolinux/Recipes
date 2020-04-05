@@ -1,3 +1,0 @@
-pre_build() {
-    cp $cross_cache_file ./gettext-tools
-}

@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for XFsdump by ro.ko@mcnon.com, on Tue Oct 12 00:33:09 BRST 2004
+# Recipe for version 2.2.24.src by ro.ko@mcnon.com, on Tue Oct 12 00:33:09 BRST 2004
+compile_version=1.7.1
+url="ftp://oss.sgi.com/projects/xfs/download/cmd_tars/xfsdump-2.2.24.src.tar.gz"
+file_size=589786
+file_md5=4933f0a2c9c32ae97070b0e48b855df6
+recipe_type=configure
+dir="xfsdump-2.2.24"
+configure_options=(
+	"--enable-shared=yes"
+)
+install_target="install install-dev"

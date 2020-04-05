@@ -1,0 +1,19 @@
+# Recipe (MakeRecipe) for Ninja by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Sep 26 15:02:49 BRT 2017
+# Recipe for version 1.8.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Sep 26 15:02:49 BRT 2017
+compile_version=016
+url="https://github.com/ninja-build/ninja/archive/v1.8.2.tar.gz"
+file="ninja-1.8.2.tar.gz"
+file_size=185226
+file_md5=5fdb04461cc7f5d02536b3bfc0300166
+dir='ninja-1.8.2'
+recipe_type=manifest
+
+pre_build() {
+    if [ ! -e ninja ]
+    then ./configure.py --bootstrap
+    fi
+}
+
+manifest=(
+    ninja:bin
+)

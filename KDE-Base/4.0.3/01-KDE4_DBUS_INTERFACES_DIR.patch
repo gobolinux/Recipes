@@ -1,0 +1,11 @@
+--- kdebase-4.0.3/apps/konqueror/kttsplugin/CMakeLists.txt.orig	2008-05-08 23:23:02.000000000 -0300
++++ kdebase-4.0.3/apps/konqueror/kttsplugin/CMakeLists.txt	2008-05-08 23:23:38.000000000 -0300
+@@ -5,7 +5,7 @@
+ 
+ set(khtmlkttsdplugin_PART_SRCS khtmlkttsd.cpp )
+ 
+-qt4_add_dbus_interfaces(khtmlkttsdplugin_PART_SRCS ${DBUS_INTERFACES_INSTALL_DIR}/org.kde.KSpeech.xml)
++qt4_add_dbus_interfaces(khtmlkttsdplugin_PART_SRCS ${KDE4_DBUS_INTERFACES_DIR}/org.kde.KSpeech.xml)
+ 
+ kde4_add_plugin(khtmlkttsdplugin WITH_PREFIX ${khtmlkttsdplugin_PART_SRCS})
+ 

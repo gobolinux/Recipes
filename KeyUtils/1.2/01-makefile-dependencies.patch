@@ -1,0 +1,19 @@
+The makefile has incorrect dependencies, and so tends to fail with -jN. Add
+libkeyutils as a dependency where needed.
+
+Signed-off-by: Michael Homer <michael@gobolinux.org>
+--- keyutils-1.2/Makefile	2006-08-23 04:40:00.000000000 +1200
++++ keyutils-1.2/Makefile	2010-02-06 19:54:13.000000000 +1300
+@@ -72,10 +72,10 @@
+ 	$(CC) $(CFLAGS) -fPIC -o $@ -c $<
+ 
+ 
+-keyctl: keyctl.c keyutils.h Makefile
++keyctl: keyctl.c keyutils.h Makefile libkeyutils.so
+ 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $< -L. -lkeyutils -Wl,-rpath,$(LIB)
+ 
+-request-key: request-key.c keyutils.h Makefile
++request-key: request-key.c keyutils.h Makefile libkeyutils.so
+ 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $< -L. -lkeyutils -Wl,-rpath,$(LIB)
+ 
+ 

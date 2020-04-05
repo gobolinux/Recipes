@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for SAGA by Lucas C. Villa Real, on Thu Feb 17 11:47:17 BRST 2011
+# Recipe for version 2.0.6 by Lucas C. Villa Real, on Thu Feb 17 11:47:17 BRST 2011
+compile_version=1.12.3
+url="$httpSourceforge/project/saga-gis/SAGA%20-%202.0/SAGA%202.0.6/saga_2.0.6.tar.gz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fsaga-gis%2Ffiles%2FSAGA%2520-%25202.0%2FSAGA%25202.0.6%2F&ts=1297950379&use_mirror=softlayer"
+file="saga_2.0.6.tar.gz"
+file_size=3327054
+file_md5=43b14bb671a59661d94f56b7bd38190f
+dir='saga-2.0.6'
+recipe_type=configure
+
+configure_options=(
+    --enable-python
+    --enable-unicode
+)

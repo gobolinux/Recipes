@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for LibV4L by Michael Homer <michael@gobolinux.org>, on Wed Feb 10 15:28:52 NZDT 2010
+# Recipe for version 0.1 by Michael Homer <michael@gobolinux.org>, on Wed Feb 10 15:28:52 NZDT 2010
+compile_version=1.13.0
+url="http://people.atrpms.net/~hdegoede/libv4l-0.1.tar.gz"
+file_size=50733
+file_md5=3965a3bd8568e9c349e6ae89521db84d
+recipe_type=makefile
+makefile='Makefile'
+do_install() {
+   $sudo_exec cp -a lib/*.* "$target"/lib
+   $sudo_exec cp -a include/* "$target"/include
+}

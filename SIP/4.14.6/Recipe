@@ -1,0 +1,14 @@
+# Recipe for version 4.14.6 by Leandro Motta Barros <lmb@stackedboxes.org>, on Tue Jun 4 15:23:50 BRT 2013
+# on Sat Apr 16 13:31:22 CEST 2005
+
+compile_version=1.8.2
+url="http://downloads.sourceforge.net/project/pyqt/sip/sip-4.14.6/sip-4.14.6.tar.gz"
+file_size=749965
+file_md5=d6493b9f0a7911566545f694327314c4
+
+recipe_type=makefile
+pre_build() {
+   pythonversion=`python --version 2>&1 | awk {'print $2'} | cut -b1-3`
+   sitepackages="$target/lib/python${pythonversion}/site-packages"
+   python configure.py -b $target/bin -e $target/include -d $sitepackages -v $target/share/sip
+}

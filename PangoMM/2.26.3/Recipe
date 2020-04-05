@@ -1,0 +1,12 @@
+# Recipe for version 2.26.3 by Michael Homer <michael@gobolinux.org>, on Wed Mar 16 16:31:12 NZDT 2011
+# Recipe (MakeRecipe) for PangoMM by Giambattista Bloisi <giamby@infinito.it>, on Fri Oct 17 20:38:37 CEST 2008
+compile_version=1.11.2
+url="http://ftp.gnome.org/pub/gnome/sources/pangomm/2.26/pangomm-2.26.3.tar.bz2"
+file_size=1038428
+file_md5=1f2712d53918cfb4745c291a67b86156
+recipe_type=configure
+
+configure_options=(
+    --disable-documentation
+)
+with_docs="--enable-documentation"

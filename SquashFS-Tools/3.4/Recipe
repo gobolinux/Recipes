@@ -1,0 +1,17 @@
+# Recipe for version 3.4 by Laszlo Horvath <soma-sk8@freemail.hu>, on Fri Feb 6 08:24:26 CET 2009
+# Recipe for Squashfs-Tools by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.8.2
+url="http://downloads.sourceforge.net/squashfs/squashfs3.4.tar.gz"
+file_size=352660
+file_md5=2a4d2995ad5aa6840c95a95ffa6b1da6
+recipe_type=makefile
+dir="squashfs3.4/squashfs-tools"
+do_install=no
+
+environment=(
+    PREFIX="$target"
+)
+
+pre_link() {
+    cp mksquashfs unsquashfs $target/bin/
+}

@@ -1,0 +1,8 @@
+# Recipe for version 2.3.2 by Jonas Karlsson <jonas@gobolinux.org>, on Wed Jan 6 06:00:07 CET 2010
+# Recipe (MakeRecipe) for XF86-Input-Evdev by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jan 9 17:13:31 BRST 2006
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/driver/xf86-input-evdev-2.3.2.tar.bz2"
+file_size=303130
+file_md5=b2bfe368022eedf2671ee28daba31efc
+recipe_type=configure
+part_of=Xorg-Driver

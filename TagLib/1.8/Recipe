@@ -1,0 +1,12 @@
+# Recipe for version 1.8 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jun 29 11:21:19 BRT 2013
+# Recipe (MakeRecipe) for TagLib by Leandro Motta Barros <lmb@stackedboxes.org>, on Wed Sep 21 23:20:55 BRT 2011
+compile_version=1.13.3
+url="http://taglib.github.io/releases/taglib-1.8.tar.gz"
+file_size=595937
+file_md5=dcb8bd1b756f2843e18b1fdf3aaeee15
+recipe_type=cmake
+
+cmake_options=(
+    -DWITH_ASF=ON
+    -DWITH_MP4=ON
+)

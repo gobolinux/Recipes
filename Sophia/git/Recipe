@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Sophia by Hisham Muhammad <hisham@gobolinux.org>, on Tue Oct 1 17:49:11 BRT 2013
+# Recipe for version git by Hisham Muhammad <hisham@gobolinux.org>, on Tue Oct 1 17:49:11 BRT 2013
+compile_version=1.9.0
+git="git://github.com/pmwkaa/sophia"
+recipe_type=makefile
+makefile='makefile'
+do_install=no
+pre_install() {
+   cp db/libsophia.* "$target/lib"
+   cp db/sophia.h "$target/include"
+}

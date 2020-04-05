@@ -1,0 +1,11 @@
+# Recipe for version 1.1.1 by Viola Zoli, Hungary, violazoli@gmail.com, on 2008. jan. 10., csütörtök, 09.19.28 CET
+# Recipe (MakeRecipe) for DirectFB by roko, <ro.ko@mcnon.com>, on Wed Oct 27 01:25:07 BRST 2004
+compile_version=1.8.2
+url="http://www.directfb.org/downloads/Core/DirectFB-1.1.1.tar.gz"
+file_size=2614203
+file_md5=c75255049ca8d5c69afe4db58f603028
+recipe_type=configure
+configure_options=(
+    "--with-gfxdrivers=all"
+    "--enable-multi"
+)

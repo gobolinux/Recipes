@@ -1,0 +1,10 @@
+# Recipe for version 2.2.3 by Aitor P. Iturri <atuin@tuta.io>, on vie ene 20 21:37:38 CET 2017
+# Recipe (MakeRecipe) for Wireshark by demian <demianflorentin_æt_gmail.com>, on mar sep 4 15:16:18 PYT 2007
+compile_version=1.8.5
+url="https://1.na.dl.wireshark.org/src/wireshark-2.2.3.tar.bz2"
+file_size=32315857
+file_md5=68e201e06873c67cb7544d27991e79bf
+recipe_type=configure
+configure_options=(
+   "--enable-threads"
+)

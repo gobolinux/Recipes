@@ -1,0 +1,37 @@
+fetchmail-SA-2007-02: Crash when a local warning message is rejected
+
+Topics:		Crash when a fetchmail-generated warning message is rejected
+
+Author:		Matthias Andree
+Version:	1.1
+Announced:	2007-08-28
+Type:		NULL pointer dereference trigged by outside circumstances
+Impact:		denial of service possible
+Danger:		low
+CVSS V2 vector: (AV:N/AC:M/Au:N/C:N/I:N/A:C/E:?/RL:O/RC:C)
+	
+Credits:	Earl Chew
+CVE Name:	CVE-2007-4565
+URL:		http://www.fetchmail.info/fetchmail-SA-2007-02.txt
+Project URL:	http://www.fetchmail.info/
+
+Affects:	fetchmail release < 6.3.9 exclusively
+
+Not affected:	fetchmail release 6.3.9 and newer
+		fetchmail releases < 4.6.8 exclusively
+	
+	Corrected:	2007-07-29 fetchmail SVN (rev 5119)
+
+Index: sink.c
+===========================================================================	
+--- sink.c	(revision 5118)
++++ sink.c	(revision 5119)
+@@ -262,7 +262,7 @@
+     const char *md1 = "MAILER-DAEMON", *md2 = "MAILER-DAEMON@";
+ 
+     /* don't bounce in reply to undeliverable bounces */
+-    if (!msg->return_path[0] ||
++    if (!msg || !msg->return_path[0] ||
+ 	strcmp(msg->return_path, "<>") == 0 ||
+ 	strcasecmp(msg->return_path, md1) == 0 ||
+ 	strncasecmp(msg->return_path, md2, strlen(md2)) == 0)

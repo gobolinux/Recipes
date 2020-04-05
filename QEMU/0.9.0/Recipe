@@ -1,0 +1,14 @@
+# Recipe for version 0.9.0 by Lucas C. Villa Real, on Wed Feb 21 20:50:23 BRT 2007
+# Recipe (MakeRecipe) for QEMU by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Sun Oct 17 23:20:23 BRST 2004
+compile_version=1.8.2
+url="http://fabrice.bellard.free.fr/qemu/qemu-0.9.0.tar.gz"
+recipe_type=configure
+
+environment=(
+    CFLAGS=
+    CXXFLAGS=
+)
+
+configure_options=(
+    --enable-alsa
+)

@@ -1,0 +1,23 @@
+# Recipe for version 1.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jan 13 11:02:56 GMT 2014
+# Recipe (MakeRecipe) for Shared-Mime-Info by roko, <ro.ko@mcnon.com>, on Sat Nov 13 23:45:25 BRST 2004
+compile_version=1.8.5
+url="http://freedesktop.org/~hadess/shared-mime-info-1.2.tar.xz"
+file_size=514612
+file_md5=8f90f3f2b8478fa47e70678d34013f99
+recipe_type=configure
+
+configure_options=(
+   "--disable-update-mimedb"
+)
+pre_build() {
+   sed -i 's,pkgconfigdir = .*,pkgconfigdir = $(libdir)/pkgconfig,' Makefile*
+}
+
+unmanaged_files=(
+   "${goboVariable}/xdg/mime"
+)
+
+pre_link() {
+   mkdir -p ${target}/Resources/Unmanaged/${goboVariable}/xdg/mime
+   ln -s ${goboShared}/mime/packages ${target}/Resources/Unmanaged/${goboVariable}/xdg/mime
+}

@@ -1,0 +1,17 @@
+# Recipe for version 1.0.2.2 by Kevin Quick <quick@sparq.org>, on Mon Oct 13 17:30:15 MST 2008
+# Recipe for mercurial by Frederico Recsky frederico at gmail.com
+compile_version=1.3.0
+url="http://www.selenic.com/mercurial/release/mercurial-1.0.2.tar.gz"
+file_size=815530
+file_md5=32432616f517107e6582721c257cd1f4
+build_script="setup.py"
+recipe_type=python
+environment=(
+  "PYTHONPATH=$target/lib/python"   
+)
+
+pre_link() {
+  install contrib/hg-relink $target/bin/
+  install contrib/hgk $target/bin/
+  install contrib/hgdiff $target/bin/
+}

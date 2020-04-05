@@ -1,0 +1,79 @@
+applesmc: Do not create accelerometer input device if it cannot be calibrated.
+
+From: Nicolas Boichat <nicolas@boichat.ch>
+
+It should fix kernel bug #10998.
+
+Needs testing.
+---
+
+ drivers/hwmon/applesmc.c |   30 +++++++++++++++++++++++-------
+ 1 files changed, 23 insertions(+), 7 deletions(-)
+
+
+diff --git a/drivers/hwmon/applesmc.c b/drivers/hwmon/applesmc.c
+index aacc0c4..f3aa9e0 100644
+--- a/drivers/hwmon/applesmc.c
++++ b/drivers/hwmon/applesmc.c
+@@ -456,11 +456,20 @@ static struct platform_driver applesmc_driver = {
+  * applesmc_calibrate - Set our "resting" values.  Callers must
+  * hold applesmc_lock.
+  */
+-static void applesmc_calibrate(void)
++static int applesmc_calibrate(void)
+ {
+-	applesmc_read_motion_sensor(SENSOR_X, &rest_x);
+-	applesmc_read_motion_sensor(SENSOR_Y, &rest_y);
++	int ret;
++
++	ret = applesmc_read_motion_sensor(SENSOR_X, &rest_x);
++	if (ret)
++		return ret;
++
++	ret = applesmc_read_motion_sensor(SENSOR_Y, &rest_y);
++	if (ret)
++		return ret;
++
+ 	rest_x = -rest_x;
++	return 0;
+ }
+ 
+ static void applesmc_idev_poll(struct input_polled_dev *dev)
+@@ -1159,6 +1168,13 @@ static int applesmc_create_accelerometer(void)
+ 	struct input_dev *idev;
+ 	int ret;
+ 
++	/* initial calibrate for the input device */
++	ret = applesmc_calibrate();
++	if (ret) {
++		printk(KERN_ERR "applesmc: Cannot calibrate the accelerometer.\n");
++		return ret;
++	}
++
+ 	ret = sysfs_create_group(&pdev->dev.kobj,
+ 					&accelerometer_attributes_group);
+ 	if (ret)
+@@ -1173,9 +1189,6 @@ static int applesmc_create_accelerometer(void)
+ 	applesmc_idev->poll = applesmc_idev_poll;
+ 	applesmc_idev->poll_interval = APPLESMC_POLL_INTERVAL;
+ 
+-	/* initial calibrate for the input device */
+-	applesmc_calibrate();
+-
+ 	/* initialize the input device */
+ 	idev = applesmc_idev->input;
+ 	idev->name = "applesmc";
+@@ -1344,9 +1357,12 @@ static int __init applesmc_init(void)
+ 	}
+ 
+ 	if (applesmc_accelerometer) {
++		/* Try to initialize the accelerometer, not being able to do so
++		 * is not a fatal error. */
++
+ 		ret = applesmc_create_accelerometer();
+ 		if (ret)
+-			goto out_temperature;
++			applesmc_accelerometer = 0;
+ 	}
+ 
+ 	if (applesmc_light) {

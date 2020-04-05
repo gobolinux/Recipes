@@ -1,0 +1,12 @@
+# Recipe for version 3.5.1 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Sep 8 13:44:32 BRT 2014
+# Recipe (MakeRecipe) for Audacious-Itself by Guilherme B. Bedin, on Wed Jan 24 13:54:19 BRST 2007
+compile_version=1.13.3
+url="http://distfiles.audacious-media-player.org/audacious-3.5.1.tar.bz2"
+file_size=446632
+file_md5=728df3e3f133782d2bb92e23fbbc6f55
+recipe_type=configure
+part_of=Audacious
+
+configure_options=(
+    --disable-rpath
+)

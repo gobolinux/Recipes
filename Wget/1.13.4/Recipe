@@ -1,0 +1,12 @@
+# Recipe for version 1.13.4 by Andreas Köhler <andi5.py@gmx.net>, on So 19. Feb 14:48:36 CET 2012
+# by Jeremy Vernon
+# 2004.01.06 16:54
+
+url="ftp://Ftp.gnu.org/pub/gnu/wget/wget-1.13.4.tar.bz2"
+file_size=1931885
+file_md5=12115c3750a4d92f9c6ac62bac372e85
+compile_version=1.8.0
+recipe_type=configure
+configure_options=(
+   "--with-ssl=openssl"
+)

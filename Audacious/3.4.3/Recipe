@@ -1,0 +1,9 @@
+# Recipe for version 3.4.3 by Hisham Muhammad <hisham@gobolinux.org>, on Sat Apr 19 15:28:34 BRT 2014
+# Recipe (MakeRecipe) for Audacious by Dominique Juergensen <brokolie@vollbio.de>, on Qua Jul 19 22:57:23 CEST 2009
+compile_version=1.12.3
+recipe_type=meta
+
+include=(
+   "Audacious-Itself--3.4.3"
+   "Audacious-Plugins--3.4.3"
+)

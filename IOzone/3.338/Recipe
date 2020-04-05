@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for IOzone by Lucas C. Villa Real, on Wed Feb 24 17:15:23 BRT 2010
+# Recipe for version 3.338 by Lucas C. Villa Real, on Wed Feb 24 17:15:23 BRT 2010
+compile_version=1.10.1
+url="http://www.iozone.org/src/current/iozone3_338.tar"
+file_size=1597440
+file_md5=e9731ed7e84bf7d687f746a697af103c
+dir='iozone3_338/src/current'
+recipe_type=makefile
+makefile=makefile
+build_target=linux
+
+install_variables=(
+	PREFIX=$target
+)

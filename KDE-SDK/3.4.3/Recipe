@@ -1,0 +1,13 @@
+# Recipe for version 3.4.3 by Andre Detsch, on Fri Oct 14 00:45:58 BRST 2005
+# by Maglan C. Diemer , 3.4.3. by roko
+
+url="ftp://ftp.kde.org/pub/kde/stable/3.4.3/src/kdesdk-3.4.3.tar.bz2"
+compile_version=1.7.1
+recipe_type=configure
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+  "--enable-pcm"
+  #"DO_NOT_COMPILE=cervisia" 
+ # doc kapptemplate kbabel kbugbuster kcachegrind kdeaccounts-plugin kdepalettes kfile.plugins kmtrace kompare kprofilemethod kspy kstartperf kuiviewer poxml scheck scripts umbrello
+)

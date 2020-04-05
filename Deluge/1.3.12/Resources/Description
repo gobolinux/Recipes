@@ -1,0 +1,37 @@
+[Name]
+Deluge
+
+[Summary]
+Deluge is a bittorrent client for Linux and other Unix-Like operating systems.
+
+[Description]
+Deluge is a bittorrent client for Linux and other Unix-Like operating systems. 
+Deluge was created because of the lack of a good, native, GTK based torrent 
+solution for Linux. Deluge is among the most feature-rich clients in development
+second only to Azureus, but without the bloat, and ahead of µTorrent. Deluge was
+created with the intention of being lightweight and unobtrusive.
+
+Deluge supports the following network features: Mainline DHT, FAST protocol
+extension, uTorrent Peer Exchange, BitTorrent Protocol Encryption, UPnP and NAT-
+PMP, Proxy support for Peers, Tracker, DHT, and Web-Seed, and Private Torrents.
+
+In addition, Deluge has the following features available: Able to download multi-
+ple files in a single window, Full preallocation and compact allocation, Global 
+and per-torrent speed limits, Ability to select files from a torrent before 
+beginning the download, Option to prioritize the first and last pieces of a file,
+in order to allow for media previews, Ability to specify global download 
+directory, and a completed download directory, Queuing system to better manage 
+bandwidth between downloads, Ability to stop uploading a torrent once it has 
+reached a specified ratio, Ability to minimize to the system tray, and optionally
+password protect the tray.
+
+Deluge supports a rich plugin system, and several plugins are included with 
+Deluge, including: Blocklist Importer, Desired Ratio, Network Activity Graph, 
+Network Health Monitor, RSS Broadcatcher, Torrent Creator, Torrent Notification, 
+Torrent Search.
+
+[License]
+GNU General Public License v2
+
+[Homepage] 
+http://www.deluge-torrent.org/

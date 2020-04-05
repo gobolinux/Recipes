@@ -1,0 +1,22 @@
+# Recipe (MakeRecipe) for RT73 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Jan 19 16:58:55 CET 2008
+# Recipe for version cvs by Jonas Karlsson <jonka750@student.liu.se>, on Sat Jan 19 16:58:55 CET 2008
+compile_version=1.8.0
+cvs=":pserver:anonymous:@rt2400.cvs.sourceforge.net:/cvsroot/rt2400"
+cvs_module=source/rt73
+dir='RT73-cvs/Module'
+recipe_type=makefile
+
+pre_install() {
+   mkdir -p $target/Resources/Defaults/Settings/modprobe.d
+}
+
+install_variables=(
+   MODDIR=$target/Resources/Unmanaged/$goboModules/$(readlink $goboModules/Current)/extra
+   FIRM_DIR=$target/lib/firmware
+   CONFIG_DIR=$settings_target/Wireless/RT73STA
+   MODULE_CONF=$settings_target/modprobe.d/ralink
+)
+
+unmanaged_files=(
+   "$goboModules/$(readlink $goboModules/Current)/extra/rt73.ko"
+)

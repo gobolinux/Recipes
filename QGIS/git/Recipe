@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for QGIS by Lucas C. Villa Real, on Wed Feb 1 16:20:39 BRST 2012
+# Recipe for version git by Lucas C. Villa Real, on Wed Feb 1 16:20:39 BRST 2012
+compile_version=1.12.1
+git="git://github.com/qgis/Quantum-GIS.git"
+recipe_type=cmake
+
+cmake_options=(
+    -DSPATIALINDEX_INCLUDE_DIR=$libspatialindex_path/include/libspatialindex
+    #-DSPATIALITE_INCLUDE_DIR=$spatialite_path/include/spatialite
+    -DWITH_INTERNAL_SPATIALITE=TRUE
+    -DWITH_PYSPATIALITE=TRUE
+)

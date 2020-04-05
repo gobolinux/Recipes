@@ -1,0 +1,11 @@
+--- admin/daemontools-0.76/src/rts.tests.orig	2001-07-12 09:49:49.000000000 -0700
++++ admin/daemontools-0.76/src/rts.tests	2007-05-17 14:37:13.000000000 -0700
+@@ -41,7 +41,7 @@
+ # softlimit -t
+ 
+ 
+-PATH=`pwd`:/command:/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R6/bin
++PATH=`pwd`:@%Compile_goboExecutables%@:/command:/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R6/bin
+ export PATH
+ 
+ umask 022

@@ -1,0 +1,35 @@
+# on Mon Apr 18 10:05:55 CEST 2005
+compile_version=1.7.1
+url="http://sunsite.informatik.rwth-aachen.de/mysql/Downloads/MySQL-4.1/mysql-4.1.12.tar.gz"
+recipe_type=configure
+
+pre_install() {
+   if ! grep -q mysql $goboSettings/group
+   then
+      Log_Normal "Adding group mysql"
+      groupadd mysql
+   fi
+
+   if ! grep -q "mysql:x:" $goboSettings/passwd
+   then
+      Log_Normal "Adding user mysql"
+      useradd mysql -g mysql -c 'added by Compile for MySQL' -d $goboPrograms/MySQL -s $goboExecutables/false
+   fi
+}
+
+pre_link() {
+    mkdir -p $target/../Settings
+    cp support_files/my-*.cnf $goboPrograms/MySQL/Settings
+    ln -s my-medium.cnf $goboPrograms/MySQL/Settings/my.cnf
+}
+
+post_install() {
+    Log_Normal "Installing prepared tables"
+    $target/bin/mysql_install_db
+    Log_Normal "Changing ownership of Variable to mysql:mysql"
+    chown -R mysql:mysql $goboPrograms/MySQL/Variable
+    
+    pushd $target
+    ln -s ../Variable var
+    popd
+}

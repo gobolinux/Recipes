@@ -1,0 +1,20 @@
+--- linux-2.6.8.1/Makefile.orig	2004-08-15 21:14:21.000000000 -0300
++++ linux-2.6.8.1/Makefile	2004-08-15 21:15:43.000000000 -0300
+@@ -1,7 +1,7 @@
+ VERSION = 2
+ PATCHLEVEL = 6
+ SUBLEVEL = 8
+-EXTRAVERSION = .1
++EXTRAVERSION = .1-Gobo
+ NAME=Zonked Quokka
+ 
+ # *DOCUMENTATION*
+@@ -473,7 +473,7 @@
+ # makefile but the arguement can be passed to make if needed.
+ #
+ 
+-MODLIB	:= $(INSTALL_MOD_PATH)/lib/modules/$(KERNELRELEASE)
++MODLIB	:= /System/Kernel/Modules/$(KERNELRELEASE)
+ export MODLIB
+ 
+ 

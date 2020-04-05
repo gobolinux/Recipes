@@ -1,0 +1,15 @@
+# by Carlo Calica
+# 2004.01.28 02:44
+
+url="http://smarden.org/runit/runit-0.12.1.tar.gz"
+dir='admin/runit-0.12.1'
+compile_version=1.8.0
+recipe_type=manifest
+pre_install() {
+   package/compile
+}
+manifest=(
+   "command/*:/sbin/"
+   "man/*.8:/man/man8/"
+   "doc/*:/doc/"
+)

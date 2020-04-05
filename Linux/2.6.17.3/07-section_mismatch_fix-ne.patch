@@ -1,0 +1,33 @@
+From: Randy Dunlap <rdunlap@xenotime.net>
+
+Fix section mismatch warnings:
+WARNING: drivers/net/ne.o - Section mismatch: reference to .init.text: from .text between 'init_module' (at offset 0x396) and 'cleanup_card'
+WARNING: drivers/net/ne2.o - Section mismatch: reference to .init.text: from .text between 'init_module' (at offset 0x483) and 'cleanup_card'
+
+Signed-off-by: Randy Dunlap <rdunlap@xenotime.net>
+---
+ drivers/net/ne.c  |    2 +-
+ drivers/net/ne2.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+--- linux-2617-rc6.orig/drivers/net/ne.c
++++ linux-2617-rc6/drivers/net/ne.c
+@@ -829,7 +829,7 @@ that the ne2k probe is the last 8390 bas
+ is at boot) and so the probe will get confused by any other 8390 cards.
+ ISA device autoprobes on a running machine are not recommended anyway. */
+ 
+-int init_module(void)
++int __init init_module(void)
+ {
+    int this_dev, found = 0;
+ 
+--- linux-2617-rc6.orig/drivers/net/ne2.c
++++ linux-2617-rc6/drivers/net/ne2.c
+@@ -780,7 +780,7 @@ MODULE_PARM_DESC(bad, "(ignored)");
+ 
+ /* Module code fixed by David Weinehall */
+ 
+-int init_module(void)
++int __init init_module(void)
+ {
+    struct net_device *dev;
+    int this_dev, found = 0;

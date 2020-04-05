@@ -1,0 +1,146 @@
+# Recipe for version 2.6.22.1 by Lucas C. Villa Real, on Tue Jul 31 16:50:57 EDT 2007
+compile_version=1.8.5
+url="http://www.us.kernel.org/pub/linux/kernel/v2.6/linux-2.6.22.1.tar.bz2"
+file_size=45106835
+file_md5=50249e822a2a112d9221129a4a3af374
+recipe_type=makefile
+build_target="all"
+install_target="modules_install"
+
+make_variables=(
+   INSTALL_MOD_PATH=$target/Resources/Unmanaged
+)
+
+unmanaged_files=(
+   $goboModules/${version}-Gobo
+   $goboBoot
+   $goboLibraries/modules
+   /Files/Compile/Sources/linux-2.6.22.1
+)
+
+sandbox_options=(
+   "--no-sandbox"
+)
+
+pre_build() {
+   if [ ! -f .config ]
+   then
+      if [ ! -f $goboStatus/config.gz ]
+      then
+         cp "$archsubdir"/dot-config .config
+      else
+         if Ask "Do you want to keep the current kernel configuration?"
+         then
+            cp $goboStatus/config.gz .
+            gzip -d config.gz && mv config .config
+            yes "" | make oldconfig
+         else
+            Log_Normal "Using the kernel configuration shipped with the recipe"
+            cp "$archsubdir"/dot-config .config
+         fi
+      fi
+   fi
+
+   suffix="-Gobo"
+
+   source GoboPath
+   GrepReplace "\$(INSTALL_MOD_PATH)/lib/modules/\$(KERNELRELEASE)" \
+               "$target/Resources/Unmanaged/$goboModules/\$(KERNELRELEASE)" \
+               Makefile >& /dev/null
+   GrepReplace "CONFIG_LOCALVERSION=\"\"" \
+               "CONFIG_LOCALVERSION=\"$suffix\"" \
+               .config >& /dev/null
+
+   # Sanity check to make sure patches are not trying to mess
+   # with the version id.
+   local v=`grep "^VERSION =" Makefile | awk '{print $3}'`
+   local p=`grep "^PATCHLEVEL" Makefile | awk '{print $3}'`
+   local s=`grep "^SUBLEVEL" Makefile | awk '{print $3}'`
+   local e=`grep "^EXTRAVERSION" Makefile | awk '{print $3}'`
+   local reported="$v.$p.$s$e"
+   if [ "$reported" != "$version" ]
+   then Die "Reported version ($reported) does not match version ($version). Please fix recipe."
+   fi
+
+   make menuconfig
+}
+
+pre_link() {
+   local fullversion=`private__calculate_full_version`
+
+   # Copy and symlink the bzImage and System.map
+   dest=$target/Resources/Unmanaged/$goboBoot
+   mkdir -p $dest
+   cp arch/i386/boot/bzImage $dest/kernel-$fullversion
+   cp System.map $dest/System.map-$fullversion
+
+   # Copy sanitized sources to Resources/Unmanaged/Files/Compile/Sources/linux-<version>
+   dest=$target/Resources/Unmanaged/$dir
+   mkdir -p $dest
+
+   Log_Normal "Creating a working copy of the kernel sources tree..."
+   Quiet pushd $dir
+   cp .version .config System.map Module.symvers Makefile Kbuild $dest/
+   for i in *; do [ -d "$i" ] && cp -a $i $dest/; done
+   Quiet popd
+   
+   Log_Normal "Processing the kernel tree..."
+   Quiet pushd $dest
+   find . -name "*.o"  | xargs rm -f
+   find . -name "*.ko" | xargs rm -f
+   for i in *
+   do
+      if [ -d $i -a $i != "scripts" ]
+      then
+         find $i -type f | grep -v ".h$\|.conf\|Makefile\|Kconfig\|Kbuild\|asm-offsets.c" | xargs rm -f
+         find $i -type d | sort -r | xargs rmdir 2> /dev/null
+      fi
+   done
+   make prepare
+   Quiet popd
+}
+
+private__calculate_version() {
+   if grep -q "^CONFIG_LOCALVERSION=" .config
+   then suffix=`grep "^CONFIG_LOCALVERSION=" .config | cut -d= -f2 | tr -d '"' | sed 's/-[0-9]*-//'`
+   fi
+   echo "$version$suffix"
+}
+
+private__calculate_full_version() {
+   local simpleversion=`private__calculate_version`
+   local newsuffix=""
+   local count=`ls $goboBoot/kernel-$version-* 2> /dev/null | sort -n | wc -l | awk '{print $1}'`
+   if [ "$count" -gt "0" ]
+   then
+      let count=$count+1
+      newsuffix="-$count"
+   fi
+   echo "$simpleversion$newsuffix"
+}
+
+private__link_at_system_kernel_boot() {
+   local simpleversion="$1"
+   local fullversion="$2"
+   mkdir -p $target/Resources/Unmanaged/$goboLibraries/modules
+   dest=$target/Resources/Unmanaged/$goboBoot
+   ln -sf kernel-$fullversion $dest/kernel
+   ln -sf System.map-$fullversion $dest/System.map
+   ln -nfs $simpleversion $target/Resources/Unmanaged/$goboModules/Current
+   ln -nfs $goboModules/$fullversion $target/Resources/Unmanaged/$goboLibraries/modules
+}
+
+private__check_dependant_modules() {
+   local check_prefix="$1"
+   if [ -d $check_prefix ]
+   then
+      for i in $check_prefix/*
+      do
+         depapp=`basename $i`
+         if ! Boolean "batch"                                            
+         then Ask "$depapp depends on the Linux kernel. Would you like to compile it?" || continue
+         fi
+         Compile $batch $lazy $noweb $depapp
+      done
+   fi
+}

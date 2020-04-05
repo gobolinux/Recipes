@@ -1,0 +1,10 @@
+# Recipe for version 1.5.0 by Hisham Muhammad <lode@gobolinux.org>, on Wed Jul 12 19:05:23 BRT 2006
+# Recipe (MakeRecipe) for TLS by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Fri May 20 12:25:22 BRT 2005
+compile_version=1.8.0
+url="$httpSourceforge/amsn/tls1.5.0-src.tar.gz"
+dir='tls1.50'
+recipe_type=configure
+configure_options=(
+	"--enable-threads"
+	"--with-ssl-dir=$openssl_path"
+)

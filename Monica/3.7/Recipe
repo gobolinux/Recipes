@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Monica by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. dec. 28., vasárnap, 04.40.03 CET
+# Recipe for version 3.7 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. dec. 28., vasárnap, 04.40.03 CET
+compile_version=1.11.4
+url="http://www.pcbypaul.com/software/dl/monica-3.7.tar.bz2"
+file_size=18330
+file_md5=490aabc35b830e4a3dc32a2f893ba805
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+    DESTINATION=$target/bin
+)

@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for YPbind-MT by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Apr 26 12:44:23 BRT 2005
+# Recipe for version 1.18 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Apr 26 12:44:23 BRT 2005
+compile_version=1.8.0
+url="ftp://ftp.kernel.org/pub/linux/utils/net/NIS/ypbind-mt-1.18.tar.bz2"
+file_size=159222
+file_md5=a4648c5a28b93f0e3d40f767e3147639
+recipe_type=configure
+
+pre_link() {
+	mkdir -p $target/../Settings
+	cp etc/yp.conf $target/../Settings
+}

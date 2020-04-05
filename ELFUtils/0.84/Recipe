@@ -1,0 +1,12 @@
+# Recipe for ELFUtils 0.84 by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.8.0
+url="http://upx.sourceforge.net/download/tools/elfutils-0.84.tar.bz2"
+file_size=654104
+file_md5=102ec5764db75475035b3232d3b05ef2
+recipe_type=configure
+
+pre_build() {
+	for i in `find . -name Makefile`; do 
+		sed 's/-Werror//g' $i > $i.tmp && mv $i.tmp $i; 
+	done
+}

@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for GTK-Doc by Andreas Köhler <andi5.py@gmx.net>, on Sun Oct 26 15:46:55 CET 2008
+# Recipe for version 1.10 by Andreas Köhler <andi5.py@gmx.net>, on Sun Oct 26 15:46:55 CET 2008
+compile_version=1.11.3rc1
+url="ftp://ftp.gnome.org/pub/gnome/sources/gtk-doc/1.10/gtk-doc-1.10.tar.bz2"
+file_size=404379
+file_md5=cbd4be396b0cf8b8ce1fc9b927cdf451
+recipe_type=configure
+configure_options=(
+   "--with-xml-catalog=$goboVariable/lib/xml/catalog"
+)

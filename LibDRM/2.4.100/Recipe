@@ -1,0 +1,14 @@
+# Recipe for version 2.4.100 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun 09 Feb 2020 06:24:48 AM BRST
+# Recipe (MakeRecipe) for LibDRM by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jan 9 17:56:36 BRST 2.4.1006
+compile_version=2.0
+url="https://dri.freedesktop.org/libdrm/libdrm-2.4.100.tar.bz2"
+file_size=855793
+file_md5=f47bc87e28198ba527e6b44ffdd62f65
+recipe_type=configure
+symlink_options=(--conflict=overwrite)
+configure_options=(
+   --enable-intel
+)
+with_udev=(
+   --enable-udev
+)

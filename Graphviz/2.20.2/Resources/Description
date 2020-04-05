@@ -1,0 +1,5 @@
+[Name] graphviz
+[Summary] Graph drawing utilities with web and graphical interfaces.
+[License] Freely Distributable
+[Description] graphviz is a set of graph drawing tools and libraries. It supports hierarchical and mass-spring drawings; although the tools are scalable, their emphasis is on making very good drawings of reasonably-sized graphs. Package components include batch layout filters and interactive editors for X11, Java, and a TCL/tk extension. The batch filters can be configured as a web visualization service (using GIF and click-maps). A generic ActiveX client-server component is a recent addition to this package. Typical applications include display of finite state machines, software diagrams, database schemas, and communication networks.  This package contains the layout commands dot, neato, and twopi, the interactive tools lefty, dotty, lneato, tcldot, and gpr, and the graph stream processors gpr, ccomps, colorize, gc, nop, prune, sccmap, tred, and unflatten. The Java graph display client is named Grappa and is available as a separate package.
+[Homepage] http://www.research.att.com/sw/tools/graphviz/

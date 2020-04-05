@@ -1,0 +1,19 @@
+# Recipe (MakeRecipe) for CBLAS by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Apr 10 15:28:47 BRT 2013
+# Recipe for version 20110319 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Apr 10 15:28:47 BRT 2013
+compile_version=1.0.1
+url="http://netlib.org/blas/blast-forum/cblas.tgz"
+file_size=197468
+file_md5=1e8830f622d2112239a4a8a83b84209a
+dir='CBLAS'
+recipe_type=makefile
+makefile='Makefile'
+build_target="alllib"
+do_install=no
+
+pre_install() {
+    gcc lib/*.a -o lib/libcblas.so -shared
+    cp lib/*.a lib/*.so $target/lib
+    Quiet pushd $target/lib
+    ln -s cblas_LINUX.a libcblas.a
+    Quiet popd
+}

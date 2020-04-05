@@ -1,0 +1,9 @@
+compile_version=1.8.0
+url="http://icculus.org/openbox/2/docker/docker-1.5.tar.gz"
+file_size=14863
+file_md5=349320bebd43babb8b43e11c7aae0293
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)

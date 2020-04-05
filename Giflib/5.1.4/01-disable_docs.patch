@@ -1,0 +1,19 @@
+--- giflib-5.1.4/Makefile.in.orig	2016-04-02 15:36:45.000000000 +0000
++++ giflib-5.1.4/Makefile.in	2016-09-15 00:02:26.857972197 +0000
+@@ -89,7 +89,6 @@ build_triplet = @build@
+ host_triplet = @host@
+ 
+ # Avoid trouble if your system doesn't have xmlto.
+-@BUILD_DOC_TRUE@am__append_1 = doc
+ subdir = .
+ ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
+ am__aclocal_m4_deps = $(top_srcdir)/m4/libtool.m4 \
+@@ -365,7 +364,7 @@ TEST_LOGS = $(am__test_logs2:.test.log=.
+ TEST_LOG_DRIVER = $(SHELL) $(top_srcdir)/test-driver
+ TEST_LOG_COMPILE = $(TEST_LOG_COMPILER) $(AM_TEST_LOG_FLAGS) \
+ 	$(TEST_LOG_FLAGS)
+-DIST_SUBDIRS = lib util pic doc
++DIST_SUBDIRS = lib util pic 
+ am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/config.h.in AUTHORS \
+ 	COPYING ChangeLog INSTALL NEWS README TODO ar-lib compile \
+ 	config.guess config.sub depcomp install-sh ltmain.sh missing \

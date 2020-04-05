@@ -1,0 +1,12 @@
+diff -Naurdp a/drivers/char/vt.c b/drivers/char/vt.c
+--- a/drivers/char/vt.c	2005-09-20 05:00:41.000000000 +0200
++++ b/drivers/char/vt.c	2005-09-22 15:38:23.314916693 +0200
+@@ -1474,7 +1474,7 @@ static void reset_terminal(struct vc_dat
+ 	vc->vc_charset		= 0;
+ 	vc->vc_need_wrap	= 0;
+ 	vc->vc_report_mouse	= 0;
+-	vc->vc_utf		= 0;
++	vc->vc_utf		= 1;
+ 	vc->vc_utf_count	= 0;
+ 
+ 	vc->vc_disp_ctrl	= 0;

@@ -1,8 +1,0 @@
-configure_options=(
-    "--without-curses"
-)
-
-pre_build() {
-    # the shipped configure doesn't recognize environment variables such as CC
-    echo "Running autoconf..." && autoconf
-}

@@ -1,9 +1,0 @@
-# Recipe (MakeRecipe) for OIS by Filipe Vieira, on Wed Jan 16 04:11:04 WET 2008
-# Recipe for version cvs by Filipe Vieira, on Wed Jan 16 04:11:04 WET 2008
-compile_version=1.10.0
-cvs=:pserver:anonymous:@wgois.cvs.sourceforge.net:/cvsroot/wgois
-cvs_module=ois
-recipe_type=configure
-pre_build(){
-	./bootstrap
-}

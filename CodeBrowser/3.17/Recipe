@@ -1,0 +1,12 @@
+# Recipe for version 3.17 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. márc. 4., csütörtök, 06.00.17 CET
+# Recipe (MakeRecipe) for CodeBrowser by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. ápr. 29., kedd, 20.42.22 CEST
+compile_version=1.10.2
+url="http://tibleiz.net/download/code-browser-3.17-src.tar.gz"
+file_size=739682
+file_md5=502d164977fddc54e9faf845d6371a64
+dir='code-browser-3.17'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+)

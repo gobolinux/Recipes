@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for Compile by Hisham Muhammad
+# Recipe for version 1.11.3 by Jonas Karlsson <jonas(at)gobolinux.org>
+compile_version=1.8.2
+svn="http://svn.gobolinux.org/tools/tags/COMPILE_1_12_1/"
+recipe_type=makefile
+make_variables=(
+   VERSION=$version
+   DESTDIR=$target
+)

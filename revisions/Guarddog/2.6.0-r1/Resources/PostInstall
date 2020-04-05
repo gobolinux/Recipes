@@ -1,6 +1,0 @@
-#!/bin/sh
-
-[ -z "${target}" ] && target=${goboPrefix}/Programs/Guarddog/Current
-
-#Change the superuser in the .desktop file to match the actual one
-sed -i 's,X-KDE-Username=.*,X-KDE-Username=,' $target/Shared/applnk/System/guarddog.desktop

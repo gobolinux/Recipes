@@ -1,0 +1,10 @@
+# Recipe for version 1.4.11 by Giambattista Bloisi <giamby@infinito.it>, on Thu Apr 10 20:47:51 CEST 2008
+compile_version=1.10.2
+url="$ftpGnu/m4/m4-1.4.11.tar.lzma"
+file_size=699721
+file_md5=084c6f5e3e091f71100541debc5c95d8
+recipe_type=configure
+configure_options=(
+   "--mandir=${target}/man"
+   "--enable-changeword"
+)

@@ -1,0 +1,11 @@
+# Recipe for version 4.2.1 by Giambattista Bloisi <giamby@infinito.it>, on Sat Mar 14 17:45:53 CET 2009
+# Recipe (MakeRecipe) for KDE-SDK by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri May 23 03:15:02 BRT 2008
+compile_version=1.10.1
+url="http://download.kde.org/stable/4.2.1/src/kdesdk-4.2.1.tar.bz2"
+file_size=5436749
+file_md5=e1c95a5ab0e34d2d084677199af0b093
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+)

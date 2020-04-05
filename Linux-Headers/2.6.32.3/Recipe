@@ -1,0 +1,11 @@
+# Recipe for version 2.6.32.3 by Jonas Karlsson <jonas@gobolinux.org>, on Thu Jan 14 22:59:27 CET 2010
+compile_version=1.12.0
+url="http://www.kernel.org/pub/linux/kernel/v2.6/linux-2.6.32.3.tar.bz2"
+file_size=64385048
+file_md5=730045c2c7f7e6618db3c4d4d7094853
+recipe_type=makefile
+do_build=no
+install_target="headers_install"
+install_variables=(
+    "INSTALL_HDR_PATH=$target"
+)

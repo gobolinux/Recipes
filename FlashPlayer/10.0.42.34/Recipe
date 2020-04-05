@@ -1,0 +1,11 @@
+# Recipe for version 10.0.42.34 by Michael Homer <michael@gobolinux.org>, on Sun Jan 24 11:05:56 NZDT 2010
+compile_version=1.10.2
+url="http://fpdownload.macromedia.com/get/flashplayer/current/install_flash_player_10_linux.tar.gz"
+file_size=4050308
+file_md5=aa694c7392d4519e4ef7812fd2922730
+unpack_files=files_in_root
+
+recipe_type=manifest
+manifest=(
+ 'libflashplayer.so:lib/browser-plugins/libflashplayer.so'
+)

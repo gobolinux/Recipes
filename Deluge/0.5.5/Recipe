@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Deluge by Nathan Middleton, on Mon Oct 22 19:19:22 CDT 2007
+# Recipe for version 0.5.5 by Nathan Middleton, on Mon Oct 22 19:19:22 CDT 2007
+compile_version=1.9.0
+url="http://download.deluge-torrent.org/tarball/0.5.5/deluge-0.5.5.tar.gz"
+file_size=1606255
+file_md5=76c1f8110aef4131d2bc83a7da957c6a
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "DESTDIR=$target"
+   "PREFIX=$target"
+)

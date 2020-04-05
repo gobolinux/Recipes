@@ -1,9 +1,0 @@
-# Recipe for version 1.4.5 by Hisham Muhammad, on Wed Jan 23 01:28:21 BRST 2008
-# Recipe (MakeRecipe) for Audacious by Andre Detsch <detsch@gobolinux.org>, on Qua Nov 30 15:01:27 BRST 2005
-compile_version=1.8.2
-recipe_type=meta
-
-include=(
-   "Audacious-Itself--1.4.5"
-   "Audacious-Plugins--1.4.4"
-)

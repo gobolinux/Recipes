@@ -1,0 +1,10 @@
+# Recipe for version 3.2.1.1 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. márc. 22., vasárnap, 04.17.38 CET
+# Recipe (MakeRecipe) for FFTW by Roko <ro.ko@mcnon.com>, on Thu Sep 30 21:46:16 BRT 2004
+compile_version=1.8.2
+url="http://www.fftw.org/fftw-3.2.1.tar.gz"
+file_size=3476044
+file_md5=712d3f33625a0a76f5758648d4b925f7
+recipe_type=configure
+configure_options=(
+    --enable-float
+)

@@ -1,0 +1,19 @@
+# Recipe for version 2.6.8 by Jonas Karlsson <jonas@gobolinux.org>, on Wed Apr 29 01:40:13 CEST 2009
+compile_version=1.11.4
+url="http://www.abisource.com/downloads/abiword/2.6.8/source/abiword-2.6.8.tar.gz"
+file_size=9516443
+file_md5=fab04d8ef999c303f720197adf261310
+recipe_type=configure
+makefile="GNUmakefile"
+configure_options=(
+   --enable-libabiword 
+   --enable-extra-optimization
+)
+
+with_printing="--enable-printing"
+with_imagemagick="--with-ImageMagick"
+with_gnomevfs="--enable-gnomevfs"
+with_libgnomeui="--enable-gnomeui"
+make_variables=(
+   ABIWORD_PLUGINSDIR="${goboLibraries}/abiword-2.6/plugins"
+)

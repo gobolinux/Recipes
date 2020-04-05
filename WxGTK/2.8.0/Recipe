@@ -1,0 +1,16 @@
+# Recipe for version 2.8.0 by Lucas C. Villa Real, on Wed Feb 14 15:04:21 GMT 2007
+# Recipe (MakeRecipe) for WxGTK by Guilherme Balestieri Bedin [gbedin], on Fri Aug 26 23:52:45 BRT 2005
+compile_version=1.8.2
+url="$httpSourceforge/wxwindows/wxGTK-2.8.0.tar.bz2"
+recipe_type=configure
+
+pre_link() {
+    Quiet pushd $target/include
+    ln -s wx-2.8/* .
+    Quiet popd
+    
+    Quiet pushd $target/bin
+    rm -f wx-config
+    cp ../lib/wx/config/gtk2-ansi-release-2.8 wx-config
+    Quiet popd
+}

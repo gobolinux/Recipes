@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Ngrep by Andreas Köhler <andi5.py@gmx.net>, on Tue Sep 2 07:30:24 CEST 2008
+# Recipe for version 1.45 by Andreas Köhler <andi5.py@gmx.net>, on Tue Sep 2 07:30:24 CEST 2008
+compile_version=1.11.2
+url="$httpSourceforge/ngrep/ngrep-1.45.tar.bz2"
+file_size=463361
+file_md5=bc8150331601f3b869549c94866b4f1c
+recipe_type=configure
+pre_build() {
+   sed -i '/pcap_dir="$dir"/abreak' configure.in
+   aclocal
+   autoconf
+}

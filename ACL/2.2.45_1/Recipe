@@ -1,0 +1,18 @@
+# Recipe for version 2.2.45_1 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Oct 20 16:41:19 CEST 2007
+# Recipe (MakeRecipe) for ACL by ro.ko@mcnon.com, on Tue Oct 12 00:32:04 BRST 2004
+compile_version=1.8.5
+url="ftp://oss.sgi.com/projects/xfs/cmd_tars/acl_2.2.45-1.tar.gz"
+file_size=152771
+file_md5=6c33d0ff98c6294eccfd737da8ef2501
+mirror_url="ftp://oss.sgi.com/projects/xfs/previous/cmd_tars/acl_2.2.45-1.tar.gz"
+recipe_type=configure
+dir="acl-2.2.45"
+configure_options=(
+--libexecdir=$target/lib
+)
+
+install_target="install install-lib install-dev" 
+
+pre_link() {
+   ln -snf $target/lib/libacl.so.1.1.0 $target/lib/libacl.so
+}

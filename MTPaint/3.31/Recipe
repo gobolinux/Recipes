@@ -1,0 +1,15 @@
+# Recipe for version 3.31 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. máj. 7., csütörtök, 02.49.55 CEST
+# Recipe (MakeRecipe) for MTPaint by Ősi Róber, Hungary (7szunyu .at. nordtelekom d0t hu), on 2008. m�j. 8., cs�t�rt�k, 01.50.14 CEST
+compile_version=1.10.2
+url="http://downloads.sourceforge.net/mtpaint/mtpaint-3.31.tar.bz2"
+file_size=501744
+file_md5=fbe34eb25f96b6092403115f1f6ab387
+recipe_type=configure
+configure_options=(
+    gtk2 
+    gtkfilesel 
+#    gtkcolsel 
+    imagick 
+    cflags 
+    man
+)

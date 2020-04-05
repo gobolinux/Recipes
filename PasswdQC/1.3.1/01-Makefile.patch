@@ -1,0 +1,28 @@
+Avoid installation under /usr
+--- passwdqc-1.3.1.orig/Makefile	2016-12-30 20:04:38.680757229 +0100
++++ passwdqc-1.3.1/Makefile	2016-12-30 20:20:19.938799920 +0100
+@@ -20,19 +20,19 @@
+ MAN5 = passwdqc.conf.5
+ MAN8 = $(TITLE).8
+ MANMODE = 644
+-BINDIR = /usr/bin
++BINDIR = /bin
+ BINMODE = 755
+ CONFDIR = /etc
+ CONFMODE = 644
+ SHARED_LIBDIR = /lib
+ SHARED_LIBDIR_SUN = /usr/lib
+-SHARED_LIBDIR_REL = ../..$(SHARED_LIBDIR)
+-DEVEL_LIBDIR = /usr/lib
++SHARED_LIBDIR_REL = .
++DEVEL_LIBDIR = /lib
+ SECUREDIR = /lib/security
+ SECUREDIR_SUN = /usr/lib/security
+ SECUREDIR_DARWIN = /usr/lib/pam
+-INCLUDEDIR = /usr/include
+-MANDIR = /usr/share/man
++INCLUDEDIR = /include
++MANDIR = /share/man
+ DESTDIR =
+ 
+ CC = gcc

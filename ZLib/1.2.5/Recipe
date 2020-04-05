@@ -1,0 +1,14 @@
+# Recipe for version 1.2.5 by Lucas C. Villa Real, on Sat Jan 21 20:37:10 BRST 2012
+# Recipe (MakeRecipe) for ZLib by roko, <ro.ko@mcnon.com>, , on Fri Oct 22 21:07:02 BRST 2004
+compile_version=1.8.2
+url="http://zlib.net/zlib-1.2.5.tar.bz2"
+file_size=486374
+file_md5=be1e89810e66150f5b0327984d8625a0
+recipe_type=configure
+configure_options=(
+   --shared
+)
+
+make_variables=(
+   LIBS="libz.a libz.so.1.2.5"
+)

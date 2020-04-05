@@ -1,0 +1,36 @@
+# Recipe for version 7.19.7 by Jonas Karlsson <jonas@gobolinux.org>, on Wed Jan 6 06:46:55 CET 2010
+compile_version=1.11.3
+url="http://curl.haxx.se/download/curl-7.19.7.tar.bz2"
+file_size=2355121
+file_md5=79a8fbb2eed5464b97bdf94bee109380
+recipe_type=configure
+
+configure_options=(
+   --disable-debug
+   --disable-verbose
+   --enable-http
+   --enable-ftp
+   --enable-file
+   --enable-proxy
+   --enable-dict
+   --enable-telnet
+   --enable-tftp
+   --enable-manual
+   --enable-ipv6
+   --enable-thread
+   --enable-crypto-auth
+   --enable-cookies
+   --without-gnutls
+   --without-ssl
+   --without-nss
+   --enable-nonblocking
+   --enable-largefile
+   --without-krb4
+)
+
+with_gnutls="--with-gnutls"
+with_openssl="--with-ssl"
+with_nss="--with-nss"
+with_kerberos="--with-gssapi"
+with_libssh2="--with-libssh2"
+with_openldap=(--enable-ldap --enable-ldaps)

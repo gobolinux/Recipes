@@ -1,0 +1,11 @@
+# Recipe for version 9.05 by Christian Holzberger <ch@mosaik-software.de>, on Sun Jul 27 19:27:07 CEST 2008
+# Recipe (MakeRecipe) for RXVT-Unicode by Isaac Dupree <id@isaac.cedarswampstudios.org>, on Sun Jul 22 19:06:17 BRT 2007
+compile_version=1.9.0
+url="http://dist.schmorp.de/rxvt-unicode/rxvt-unicode-9.05.tar.bz2"
+file_size=865815
+file_md5=bf7cbc6440346425c9e9773d213c304f
+mirror_url="http://dist.schmorp.de/rxvt-unicode/Attic/rxvt-unicode-9.05.tar.bz2"
+recipe_type=configure
+configure_options=(
+   --with-terminfo="$target/Shared/terminfo"
+)

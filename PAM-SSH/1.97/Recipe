@@ -1,0 +1,11 @@
+# Recipe for version 1.97 by Michael Homer <michael@gobolinux.org>, on Sun Aug 28 19:39:20 NZST 2011
+# Recipe (MakeRecipe) for PAM-SSH by Michael Homer <michael@gobolinux.org>, on Sat Jun 7 21:41:37 NZST 2008
+compile_version=1.11.0
+url="$httpSourceforge/pam-ssh/pam_ssh-1.97.tar.bz2"
+file_size=200184
+file_md5=ef114d67b4951c88a62893437f850784
+recipe_type=configure
+
+configure_options=(
+   "--with-pam-dir=$target/lib/security"
+)

@@ -1,0 +1,14 @@
+Link with libtirp.
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- portmap_5beta/Makefile.orig	2012-03-26 19:34:53.398126382 +1300
++++ portmap_5beta/Makefile	2012-03-26 19:35:45.328128009 +1300
+@@ -96,7 +96,7 @@ AUX	= daemon.o strerror.o
+ 
+ # Auxiliary libraries that you may have to specify
+ #
+-# LIBS	= -lrpc
++LIBS	= -ltirpc
+ 
+ # Comment out if your compiler talks ANSI and understands const
+ #

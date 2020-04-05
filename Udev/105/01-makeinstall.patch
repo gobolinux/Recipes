@@ -1,0 +1,33 @@
+--- udev-095/Makefile.orig	2006-07-10 02:07:54.000000000 -0300
++++ udev-095/Makefile	2006-07-10 02:09:13.000000000 -0300
+@@ -283,7 +283,6 @@ uninstall-man:
+ .PHONY: uninstall-man
+ 
+ install-bin:
+-	$(INSTALL) -d $(DESTDIR)$(udevdir)
+ 	$(INSTALL_PROGRAM) -D udevd $(DESTDIR)$(sbindir)/udevd
+ 	$(INSTALL_PROGRAM) -D udevtrigger $(DESTDIR)$(sbindir)/udevtrigger
+ 	$(INSTALL_PROGRAM) -D udevsettle $(DESTDIR)$(sbindir)/udevsettle
+@@ -294,11 +293,6 @@ install-bin:
+ 	@extras="$(EXTRAS)"; for target in $$extras; do \
+ 		$(MAKE) -C $$target $@ || exit 1; \
+ 	done;
+-ifndef DESTDIR
+-	- killall udevd
+-	- rm -rf /dev/.udev
+-	- $(sbindir)/udevd --daemon
+-endif
+ .PHONY: install-bin
+ 
+ uninstall-bin:
+@@ -309,10 +303,6 @@ uninstall-bin:
+ 	- rm -f $(DESTDIR)$(usrsbindir)/udevmonitor
+ 	- rm -f $(DESTDIR)$(usrbindir)/udevinfo
+ 	- rm -f $(DESTDIR)$(usrbindir)/udevtest
+-ifndef DESTDIR
+-	- killall udevd
+-	- rm -rf /dev/.udev
+-endif
+ 	@extras="$(EXTRAS)"; for target in $$extras; do \
+ 		$(MAKE) -C $$target $@ || exit 1; \
+ 	done;

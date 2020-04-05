@@ -1,0 +1,5 @@
+url='http://www.sleepycat.com/update/snapshot/db-4.2.52.tar.gz'
+compile_version=1.7.1
+recipe_type=configure
+dir=db-4.2.52/build_unix
+configure=../dist/configure

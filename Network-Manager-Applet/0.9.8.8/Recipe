@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Network-Manager-Applet by Hisham Muhammad <hisham@gobolinux.org>, on Tue Mar 25 00:00:29 BRT 2014
+# Recipe for version 0.9.8.8 by Hisham Muhammad <hisham@gobolinux.org>, on Tue Mar 25 00:00:29 BRT 2014
+url="http://ftp.gnome.org/pub/gnome/sources/network-manager-applet/0.9/network-manager-applet-0.9.8.8.tar.xz"
+file_size=1223116
+file_md5=cceb4530e438926b66dfa5e9db17f20a
+recipe_type=configure
+configure_options=(
+   --disable-migration
+   --disable-static
+   --enable-introspection=no
+)

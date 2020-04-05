@@ -1,0 +1,11 @@
+# Recipe for version 017 by Hugo Barrocas <hugobarrocas@iol.pt>, on Ter Mai 25 22:12:37 WEST 2010
+# Recipe (MakeRecipe) for PCMCIAUtils by Jonas Karlsson <jonka750@student.liu.se>, on Sat Apr 7 17:27:42 CEST 2007
+compile_version=1.8.2
+url="http://kernel.org/pub/linux/utils/kernel/pcmcia/pcmciautils-017.tar.bz2"
+file_size=43721
+file_md5=5245af28eeba57ec0606a874d44d10f7
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+)

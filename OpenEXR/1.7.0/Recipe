@@ -1,0 +1,12 @@
+# Recipe for version 1.7.0 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. szept. 17., péntek, 15.53.26 CEST
+# Recipe (MakeRecipe) for OpenEXR by roko, <ro.ko@mcnon.com>, on Sun Dec 5 22:40:14 BRST 2004
+compile_version=1.9.0
+url="http://download.savannah.nongnu.org/releases/openexr/openexr-1.7.0.tar.gz"
+file_size=13542910
+file_md5=27113284f7d26a58f853c346e0851d7a
+recipe_type=configure
+dir='openexr-1.7.0'
+
+configure_options=(
+    --with-ilmbase-prefix=$ilmbase_path
+)

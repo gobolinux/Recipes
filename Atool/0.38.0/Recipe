@@ -1,0 +1,9 @@
+# Recipe for version 0.38.0 by Andreas Köhler, on So 19. Feb 13:24:22 CET 2012
+compile_version=1.9.0
+url="http://savannah.nongnu.org/download/atool/atool-0.38.0.tar.gz"
+file_size=118335
+file_md5=bf05a07f7b35415d146b2e21edc1ebbf
+recipe_type=configure
+pre_install() {
+   GrepReplace ".*$goboExecutables/perl -w" "#! /usr/bin/env perl" atool
+}

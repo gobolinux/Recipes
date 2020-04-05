@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for OpenNX by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jul 3 12:12:35 BRT 2014
+# Recipe for version 0.16.0.729 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jul 3 12:12:35 BRT 2014
+compile_version=2.0
+url="https://downloads.sourceforge.net/project/opennx/opennx/CI-source/opennx-0.16.0.729.tar.gz"
+file_size=5345822
+file_md5=5271a2430693858803f2e1ca860e5a6c
+dir='opennx-0.16'
+recipe_type=configure
+
+pre_link() {
+    Quiet pushd $target
+    ln -s $goboExecutables/nxssh .
+    Quiet popd
+}

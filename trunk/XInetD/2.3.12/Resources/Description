@@ -1,5 +1,0 @@
-[Name] xinetd
-[Summary] Powerful inetd replacement
-[License] BSD License (original)
-[Description] xinetd is a replacement for inetd, the internet services daemon. Anybody can use it to start servers that don't require privileged ports because xinetd does not require that the services in its configuration file be listed in /etc/services. It can do access control on all services based on the address of the remote host, time of access, connection attempts, or process limits. Access control works on all services, whether multi-threaded or single-threaded and for both the TCP and UDP protocols. xinetd supports both internal access control, and the use of the libwrap library. IPv6 with access control is also supported. It can redirect service requests to other machines, and has the standard built in services, including tcpmux.
-[Homepage] http://www.xinetd.org/

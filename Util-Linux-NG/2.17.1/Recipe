@@ -1,0 +1,14 @@
+# Recipe for version 2.17.1 by Nick Matteo <kundor@kundor.org>, on Wed Feb 24 14:02:58 EST 2010
+# Recipe (MakeRecipe) for Util-Linux-NG by Giambattista Bloisi <giamby@infinito.it>, on Thu Jan 17 09:41:27 CET 2008
+compile_version=1.12.0
+url="ftp://ftp.kernel.org/pub/linux/utils/util-linux-ng/v2.17/util-linux-ng-2.17.1.tar.bz2"
+file_size=3801027
+file_md5=1771802e8f4c795f72f06efb1fc61587
+recipe_type=configure
+
+configure_options=(
+   --enable-arch
+   --enable-partx
+   --enable-write
+   --disable-makeinstall-chown
+)

@@ -1,0 +1,11 @@
+# Recipe for version 1.15.1 by Michael Homer <michael@gobolinux.org>, on Wed Aug 31 11:39:11 NZST 2011
+# Recipe (MakeRecipe) for Feh by  Ozgur Ulukir, on Mon Dec 20 03:19:56 EET 2004
+compile_version=1.15.1
+url="http://feh.finalrewind.org/feh-1.15.1.tar.bz2"
+file_size=2195886
+file_md5=0684ff2dad34ee328ab2b6b717281787
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)

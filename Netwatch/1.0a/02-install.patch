@@ -1,0 +1,18 @@
+diff -Nur netwatch-1.0a/Makefile.in netwatch-1.0a-fabio.m/Makefile.in
+--- netwatch-1.0a/Makefile.in	2006-07-23 16:20:33.000000000 -0300
++++ netwatch-1.0a-fabio.m/Makefile.in	2006-07-23 16:25:09.000000000 -0300
+@@ -22,11 +22,12 @@
+ 	$(CC) -o netwatch $(XCFLAGS) $(OBJECTS) $(XLIBS)
+ 
+ install:	$(EXEC)
+-	chown gobo.gobo $(EXEC)
+-	chmod 700 $(EXEC)
+ 	cp netwatch $(INSTALLDIR)/netwatch
+ 	cp netresolv $(INSTALLDIR)/netresolv
+ 	cp netwatch.1 /Programs/Netwatch/1.0a/man/man1
++	cd $(INSTALLDIR)
++	chown 0.0 $(EXEC)
++	chmod 700 $(EXEC)
+ 
+ tar:
+ 	tar -C .. -czf ../netwatch-1.0a.src.tgz netwatch-1.0a

@@ -1,0 +1,16 @@
+# Recipe for version 2.4.56 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Aug 29 09:15:28 BRT 2014
+# Recipe (MakeRecipe) for LibDRM by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jan 9 17:56:36 BRST 2.4.566
+compile_version=1.12.0
+url="http://dri.freedesktop.org/libdrm/libdrm-2.4.56.tar.bz2"
+file_size=590856
+file_md5=93fdb76d392ce27b23561afb8f70db81
+recipe_type=configure
+symlink_options=(--conflict=overwrite)
+configure_options=(
+   --enable-intel
+   --enable-nouveau-experimental-api
+   --enable-radeon-experimental-api
+)
+with_udev=(
+   --enable-udev
+)

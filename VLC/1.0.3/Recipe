@@ -1,0 +1,11 @@
+# Recipe for version 1.0.3 by Michael Homer <michael@gobolinux.org>, on Sun Nov 1 13:20:30 NZDT 2009
+# Recipe (MakeRecipe) for VLC by keisangi, on Sun Feb 17 01:23:41 JST 2008
+compile_version=1.10.2
+url="http://download.videolan.org/pub/videolan/vlc/1.0.3/vlc-1.0.3.tar.bz2"
+file_size=21115820
+file_md5=d0945c2489551c102a3f0f15e4591555
+recipe_type=configure
+configure_options=(
+    "--enable-dvdread"
+    "--disable-swscale"
+)

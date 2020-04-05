@@ -1,0 +1,12 @@
+diff -Naur qtparted-0.4.5.old/src/qp_fswrap.cpp qtparted-0.4.5/src/qp_fswrap.cpp
+--- qtparted-0.4.5.old/src/qp_fswrap.cpp	2005-07-06 18:29:54.000000000 -0300
++++ qtparted-0.4.5/src/qp_fswrap.cpp	2006-07-29 13:48:43.000000000 -0300
+@@ -24,7 +24,7 @@
+ #include <unistd.h>
+ #include <stdarg.h>
+ #include <qapplication.h>
+-
++#define PED_SECTOR_SIZE   512LL
+ #include "qp_fswrap.h"
+ #include "qp_actlist.h"
+ #include "qp_common.h"

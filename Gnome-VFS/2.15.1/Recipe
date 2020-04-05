@@ -1,0 +1,9 @@
+# Recipe for version 2.15.1 by Jonas Karlsson <jonka750@student.liu.se>, on Tue May 30 22:03:10 CEST 2006
+# Recipe (MakeRecipe) for Gnome-VFS by Jonas Karlsson <jonka750@student.liu.se>, on Tue May 10 21:38:57 CEST 2005
+# updated deps By Rotem Zach
+compile_version=1.8.0
+url="ftp://ftp.gnome.org/pub/gnome/sources/gnome-vfs/2.15/gnome-vfs-2.15.1.tar.bz2"
+recipe_type=configure
+sandbox_options=(
+    --add-allowed ${gconf_settings_path}/gconf/gconf.xml.defaults
+)

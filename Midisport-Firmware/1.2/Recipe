@@ -1,0 +1,13 @@
+compile_version=1.8.0
+url="$httpSourceforge/usb-midi-fw/midisport-firmware-1.2.tar.gz"
+file_size=62948
+file_md5=b1e4976b68f396a50e92491caa6f36bc
+recipe_type=configure
+pre_build() {
+	mkdir -p $target/../Settings/udev/rules.d
+}
+configure_options=(
+	"--with-udev=$target/../Settings/udev"
+)
+
+

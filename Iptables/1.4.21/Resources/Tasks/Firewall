@@ -1,0 +1,51 @@
+#!/bin/sh
+
+source GoboPath
+
+saveFile="${goboVariable}/lib/iptables.save"
+
+start(){
+    iptables-restore "$saveFile"
+}
+
+stop(){
+    iptables-save > "$saveFile"
+    iptables -F
+    iptables -X
+    iptables -Z
+    iptables -t nat -F
+    iptables -t nat -X
+    iptables -t nat -Z    
+}
+
+save(){
+    iptables-save > "$saveFile"
+}
+status(){
+    iptables -nL
+    iptables -nL -t nat
+}
+
+
+case "$1" in
+[Ss]tart)    
+    start
+    ;;
+[Ss]top)            
+    stop
+     ;;
+[Rr]estart)
+    stop
+    start
+    ;;
+[Ss]ave)
+    save
+    ;;
+[Ss]tatus)
+    status
+    ;;
+
+esac #it's ridiculous
+
+##functions
+

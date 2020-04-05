@@ -1,0 +1,13 @@
+compile_version=1.8.0
+url="http://easynews.dl.sourceforge.net/sourceforge/synergy2/synergy-1.3.1.tar.gz"
+recipe_type=configure
+
+post_install() {
+  Log_Normal "========================================================="
+  Log_Normal "The default configuration provided in this recipe will not"
+  Log_Normal "work unless your hostname is 'THISHOST.' To act as a server,"
+  Log_Normal "edit /etc/synergy.conf according to the instructions at"
+  Log_Normal "http://synergy2.sourceforge.net/running.html before using"
+  Log_Normal "the synergys executable."
+  Log_Normal "========================================================="
+}

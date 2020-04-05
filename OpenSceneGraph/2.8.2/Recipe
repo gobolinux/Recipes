@@ -1,0 +1,12 @@
+# Recipe for version 2.8.2 by Zbigniew Baniewski <zb@ispid.com.pl>, on Wed Mar 31 02:41:51 CEST 2010
+# Recipe (MakeRecipe) for OpenSceneGraph by Fabio Mierlo <geromao@gmail.com>, on Fri Aug 1 05:24:57 BRT 2008
+compile_version=1.11.1
+url="http://www.openscenegraph.org/downloads/stable_releases/OpenSceneGraph-2.8.2/source/OpenSceneGraph-2.8.2.zip"
+file_size=6472487
+file_md5=99d0b37f403b85b4559514b6b9849d9e
+recipe_type=cmake
+
+cmake_options=(
+  "-D BUILD_OSG_EXAMPLES:BOOL=ON"
+  "-D SDL_INCLUDE_DIR=$goboHeaders/SDL"
+)

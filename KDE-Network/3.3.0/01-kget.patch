@@ -1,0 +1,31 @@
+--- kdenetwork-3.3.0.old/kget/kmainwidget.cpp	2004-05-23 03:50:10.000000000 +0300
++++ kdenetwork-3.3.0/kget/kmainwidget.cpp	2004-08-20 04:26:27.000000000 +0300
+@@ -130,6 +130,7 @@
+ 
+     myTransferList = 0L;
+     kmain = this;
++    kdock = NULL;
+ 
+     // Set log time, needed for the name of log file
+     QDate date = QDateTime::currentDateTime().date();
+@@ -2056,12 +2057,14 @@
+     statusBar()->changeItem(i18n(" Size: %1 ").arg(KIO::convertSize(totalSize)), ID_TOTAL_SIZE);
+     statusBar()->changeItem(i18n(" Time: %1 ").arg(remTime.toString()), ID_TOTAL_TIME);
+     statusBar()->changeItem(i18n(" %1/s ").arg(KIO::convertSize(totalSpeed)), ID_TOTAL_SPEED);
+-
+-    tmpstr = i18n(" Transfers: %1 ").arg(myTransferList->childCount()) +
+-    i18n(" Files: %1 ").arg(totalFiles)+
+-    i18n(" Size: %1 ").arg(KIO::convertSize(totalSize))+
+-    i18n(" Time: %1 %2/s").arg(remTime.toString()).arg(KIO::convertSize(totalSpeed));
+-    kdock->updateToolTip( tmpstr );
++    
++    if (kdock) {
++	tmpstr = i18n(" Transfers: %1 ").arg(myTransferList->childCount()) +
++	i18n(" Files: %1 ").arg(totalFiles)+
++	i18n(" Size: %1 ").arg(KIO::convertSize(totalSize))+
++	i18n(" Time: %1 %2/s").arg(remTime.toString()).arg(KIO::convertSize(totalSpeed));
++	kdock->updateToolTip( tmpstr );
++    }
+ 
+ #ifdef _DEBUG
+     //sDebugOut << endl;

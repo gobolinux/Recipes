@@ -1,0 +1,8 @@
+[Name] Lemon
+[Summary] The Lemon program is an LALR(1) parser generator.
+[Description] The Lemon program is an LALR(1) parser generator. It takes a 
+context free grammar and converts it into a subroutine that will parse a 
+file using that grammar. Lemon is similar to the much more famous programs 
+"YACC" and "BISON". But lemon is not compatible with either yacc or bison.
+[License] Public Domain
+[Homepage] http://www.hwaci.com/sw/lemon

@@ -1,0 +1,49 @@
+			     BASH PATCH REPORT
+			     =================
+
+Bash-Release: 4.0
+Patch-ID: bash40-008
+
+Bug-Reported-by:	Mike Frysinger <vapier@gentoo.org>
+Bug-Reference-ID:	<200902261030.54062.vapier@gentoo.org>
+Bug-Reference-URL:	http://lists.gnu.org/archive/html/bug-bash/2009-02/msg00230.html
+
+Bug-Description:
+
+Patch:
+
+*** ../bash-4.0/parse.y	2009-01-08 08:29:12.000000000 -0500
+--- bash/parse.y	2009-02-26 17:22:15.000000000 -0500
+***************
+*** 3443,3448 ****
+  	      else
+  		shell_ungetc (peekc);
+! 	      tflags |= LEX_HEREDELIM;
+! 	      lex_firstind = -1;
+  	      continue;
+  	    }
+--- 3443,3451 ----
+  	      else
+  		shell_ungetc (peekc);
+! 	      if (peekc != '<')
+! 		{
+! 		  tflags |= LEX_HEREDELIM;
+! 		  lex_firstind = -1;
+! 		}
+  	      continue;
+  	    }
+*** ../bash-4.0/patchlevel.h	2009-01-04 14:32:40.000000000 -0500
+--- bash/patchlevel.h	2009-02-22 16:11:31.000000000 -0500
+***************
+*** 26,30 ****
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 7
+  
+  #endif /* _PATCHLEVEL_H_ */
+--- 26,30 ----
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 8
+  
+  #endif /* _PATCHLEVEL_H_ */

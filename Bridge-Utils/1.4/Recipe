@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for Bridge-Utils by Fabio Mierlo, on Wed Aug 13 02:32:21 BRT 2008
+# Recipe for version 1.4 by Fabio Mierlo, on Wed Aug 13 02:32:21 BRT 2008
+compile_version=1.10.2
+url="$httpSourceforge/bridge/bridge-utils-1.4.tar.gz"
+file_size=32657
+file_md5=0182fcac3a2b307113bbec34e5f1c673
+recipe_type=configure
+autogen_before_configure=yes
+autogen=autoconf

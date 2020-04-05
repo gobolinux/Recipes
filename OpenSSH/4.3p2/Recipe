@@ -1,0 +1,22 @@
+# Recipe for version 4.3p2 by Jonas Karlsson <jonka750@student.liu.se>, on Sat Feb 11 12:13:46 CET 2006
+# Recipe for OpenSSH 4.3p2 by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.7.1
+url="ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-4.3p2.tar.gz"
+recipe_type=configure
+
+configure_options=(
+   "--sysconfdir=$target/../Settings/ssh"
+)
+
+pre_build() {
+   if ! [ -d $goboVariable/empty ]
+   then 
+   	mkdir $goboVariable/empty
+   	chmod 755 $goboVariable/empty
+   fi
+
+   chown 0:sys $goboVariable/empty
+
+   # launch the arch-specific pre_build() functions
+   private__pre_build
+}

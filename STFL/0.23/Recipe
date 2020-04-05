@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for STFL by Aitor P. Iturri <atuin@tuta.io>, on mar jul 11 19:12:06 CEST 2017
+# Recipe for version 0.23 by Aitor P. Iturri <atuin@tuta.io>, on mar jul 11 19:12:06 CEST 2017
+compile_version=git
+url="http://www.clifford.at/stfl/stfl-0.23.tar.gz"
+file_size=43941
+file_sha=e75ed8427905ad50faf43ed5fefd0cf7b16ee0c1ca87e15d33e360bb92aedfde
+dir='stfl-0.23'
+recipe_type=makefile
+make_variables=(
+    "DESTDIR=$target"
+    "prefix=/"
+)

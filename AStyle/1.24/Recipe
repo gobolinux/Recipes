@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for AStyle by Hisham Muhammad <hisham@gobolinux.org>, on Thu Sep 30 15:07:32 BRT 2010
+# Recipe for version 1.24 by Hisham Muhammad <hisham@gobolinux.org>, on Thu Sep 30 15:07:32 BRT 2010
+compile_version=1.9.0
+url="$httpSourceforge/project/astyle/astyle/astyle%201.24/astyle_1.24_linux.tar.gz"
+file_size=126791
+file_md5=51b138d551d9b2fff5de726f7db85be8
+dir='astyle/src'
+recipe_type=makefile
+makefile=../build/gcc/Makefile
+make_variables=(
+   "prefix=$target"
+)

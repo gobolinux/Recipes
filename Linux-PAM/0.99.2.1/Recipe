@@ -1,0 +1,12 @@
+# Recipe for version 0.99.2.1 by Jonas Karlsson <jonka750@student.liu.se>, on Wed Dec 21 14:59:35 CET 2005
+# Recipe (MakeRecipe) for Linux-PAM by Jonas Karlsson <jonka750@student.liu.se>, on Thu Nov 24 13:47:01 CET 2005
+compile_version=1.8.0
+url="http://www.kernel.org/pub/linux/libs/pam/pre/library/Linux-PAM-0.99.2.1.tar.bz2"
+recipe_type=configure
+
+configure_options=(
+	"--includedir=$target/include/security"
+	"--enable-docdir=$target/doc/pam"
+	"--enable-read-both-confs"
+)
+

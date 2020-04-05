@@ -1,0 +1,15 @@
+# Recipe for version 1.5.0 by Michael Homer <michael@gobolinux.org>, on Sun Jun 22 17:27:24 NZST 2008
+# Recipe (MakeRecipe) for Subversion by Jonas Karlsson <jonka750@student.liu.se>, on Wed May 11 07:50:33 CEST 2005
+compile_version=1.9.0
+url="http://subversion.tigris.org/downloads/subversion-1.5.0.tar.bz2"
+file_size=4852793
+file_md5=004b57643406dd10957ec87955702189
+recipe_type=configure
+configure_options=(
+   --with-apr=${apr_path}
+   --with-apr-util=${apr_util_path}
+   --disable-mod-activation
+)
+
+build_target="all"
+install_target="install"

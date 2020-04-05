@@ -1,0 +1,18 @@
+Includes LibTIRPC as an optional provider for XDR functions.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@br.ibm.com>
+
+--- grass-6.4.1RC1/configure.in.orig	2012-07-10 14:49:56.000000000 -0300
++++ grass-6.4.1RC1/configure.in	2012-07-10 14:50:48.000000000 -0300
+@@ -556,9 +556,10 @@ AC_CHECK_FUNC(xdrmem_create, XDRLIB=, [
+ AC_CHECK_LIB(sun, xdrmem_create, XDRLIB=-lsun, [
+ AC_CHECK_LIB(nsl, xdrmem_create, XDRLIB=-lnsl, [
+ AC_CHECK_LIB(rpclib, xdrmem_create, XDRLIB=-lrpclib, [
++AC_CHECK_LIB(tirpc, xdrmem_create, XDRLIB=-ltirpc, [
+ AC_CHECK_LIB(xdr, xdrmem_create, XDRLIB="-lxdr -liberty -lws2_32" , 
+    [ AC_MSG_ERROR([*** Unable to locate XDR functions.]) ], -liberty -lws2_32 )
+-])])])])
++])])])])])
+ AC_SUBST(XDRLIB)
+ 
+ AC_CHECK_FUNCS(asprintf)

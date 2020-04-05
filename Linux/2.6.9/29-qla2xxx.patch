@@ -1,0 +1,303 @@
+diff -X dontdiff-2.6 -u 2.6.9-vanilla/drivers/scsi/qla2xxx/qla_os.c 2.6.9-Gobo/drivers/scsi/qla2xxx/qla_os.c
+--- 2.6.9-vanilla/drivers/scsi/qla2xxx/qla_os.c	2004-10-18 19:55:29.000000000 -0200
++++ 2.6.9-Gobo/drivers/scsi/qla2xxx/qla_os.c	2004-11-22 12:41:48.000000000 -0200
+@@ -229,73 +229,11 @@
+ 
+ void qla2x00_cmd_timeout(srb_t *);
+ 
+-static __inline__ void qla2x00_callback(scsi_qla_host_t *, struct scsi_cmnd *);
+ static __inline__ void sp_put(struct scsi_qla_host * ha, srb_t *sp);
+ static __inline__ void sp_get(struct scsi_qla_host * ha, srb_t *sp);
+ static __inline__ void
+ qla2x00_delete_from_done_queue(scsi_qla_host_t *, srb_t *); 
+ 
+-/**************************************************************************
+-* sp_put
+-*
+-* Description:
+-*   Decrement reference count and call the callback if we're the last
+-*   owner of the specified sp. Will get the host_lock before calling
+-*   the callback.
+-*
+-* Input:
+-*   ha - pointer to the scsi_qla_host_t where the callback is to occur.
+-*   sp - pointer to srb_t structure to use.
+-*
+-* Returns:
+-*
+-**************************************************************************/
+-static inline void
+-sp_put(struct scsi_qla_host * ha, srb_t *sp)
+-{
+-        if (atomic_read(&sp->ref_count) == 0) {
+-		qla_printk(KERN_INFO, ha,
+-			"%s(): **** SP->ref_count not zero\n",
+-			__func__);
+-                DEBUG2(BUG();)
+-
+-                return;
+-	}
+-
+-        if (!atomic_dec_and_test(&sp->ref_count)) {
+-                return;
+-        }
+-
+-        qla2x00_callback(ha, sp->cmd);
+-}
+-
+-/**************************************************************************
+-* sp_get
+-*
+-* Description:
+-*   Increment reference count of the specified sp.
+-*
+-* Input:
+-*   sp - pointer to srb_t structure to use.
+-*
+-* Returns:
+-*
+-**************************************************************************/
+-static inline void
+-sp_get(struct scsi_qla_host * ha, srb_t *sp)
+-{
+-        atomic_inc(&sp->ref_count);
+-
+-        if (atomic_read(&sp->ref_count) > 2) {
+-		qla_printk(KERN_INFO, ha,
+-			"%s(): **** SP->ref_count greater than two\n",
+-			__func__);
+-                DEBUG2(BUG();)
+-
+-		return;
+-	}
+-}
+-
+ /*
+ * qla2x00_callback
+ *      Returns the completed SCSI command to LINUX.
+@@ -366,6 +304,67 @@
+ 	(*(cmd)->scsi_done)(cmd);
+ }
+ 
++/**************************************************************************
++* sp_put
++*
++* Description:
++*   Decrement reference count and call the callback if we're the last
++*   owner of the specified sp. Will get the host_lock before calling
++*   the callback.
++*
++* Input:
++*   ha - pointer to the scsi_qla_host_t where the callback is to occur.
++*   sp - pointer to srb_t structure to use.
++*
++* Returns:
++*
++**************************************************************************/
++static inline void
++sp_put(struct scsi_qla_host * ha, srb_t *sp)
++{
++        if (atomic_read(&sp->ref_count) == 0) {
++		qla_printk(KERN_INFO, ha,
++			"%s(): **** SP->ref_count not zero\n",
++			__func__);
++                DEBUG2(BUG();)
++
++                return;
++	}
++
++        if (!atomic_dec_and_test(&sp->ref_count)) {
++                return;
++        }
++
++        qla2x00_callback(ha, sp->cmd);
++}
++
++/**************************************************************************
++* sp_get
++*
++* Description:
++*   Increment reference count of the specified sp.
++*
++* Input:
++*   sp - pointer to srb_t structure to use.
++*
++* Returns:
++*
++**************************************************************************/
++static inline void
++sp_get(struct scsi_qla_host * ha, srb_t *sp)
++{
++        atomic_inc(&sp->ref_count);
++
++        if (atomic_read(&sp->ref_count) > 2) {
++		qla_printk(KERN_INFO, ha,
++			"%s(): **** SP->ref_count greater than two\n",
++			__func__);
++                DEBUG2(BUG();)
++
++		return;
++	}
++}
++
+ static inline void 
+ qla2x00_delete_from_done_queue(scsi_qla_host_t *dest_ha, srb_t *sp) 
+ {
+diff -X dontdiff-2.6 -u 2.6.9-vanilla/drivers/scsi/qla2xxx/qla_rscn.c 2.6.9-Gobo/drivers/scsi/qla2xxx/qla_rscn.c
+--- 2.6.9-vanilla/drivers/scsi/qla2xxx/qla_rscn.c	2004-10-18 19:53:50.000000000 -0200
++++ 2.6.9-Gobo/drivers/scsi/qla2xxx/qla_rscn.c	2004-11-22 12:49:45.000000000 -0200
+@@ -54,7 +54,7 @@
+     uint32_t);
+ 
+ static inline struct io_descriptor *qla2x00_alloc_iodesc(scsi_qla_host_t *);
+-static inline void qla2x00_free_iodesc(struct io_descriptor *);
++static void qla2x00_free_iodesc(struct io_descriptor *);
+ static inline void qla2x00_init_io_descriptors(scsi_qla_host_t *);
+ 
+ static void qla2x00_iodesc_timeout(unsigned long);
+@@ -194,72 +194,6 @@
+ 	return (iodesc);
+ }
+ 
+-
+-/** 
+- * IO descriptor allocation routines.
+- **/
+-
+-/**
+- * qla2x00_alloc_iodesc() - Allocate an IO descriptor from the pool.
+- * @ha: HA context
+- *
+- * Returns a pointer to the allocated io descriptor, or NULL, if none available.
+- */
+-static inline struct io_descriptor *
+-qla2x00_alloc_iodesc(scsi_qla_host_t *ha)
+-{
+-	uint16_t iter;
+-	struct io_descriptor *iodesc;
+-
+-	iodesc = NULL;
+-	for (iter = 0; iter < MAX_IO_DESCRIPTORS; iter++) {
+-		if (ha->io_descriptors[iter].used)
+-			continue;
+-
+-		iodesc = &ha->io_descriptors[iter];
+-		iodesc->used = 1;
+-		iodesc->idx = iter;
+-		init_timer(&iodesc->timer);
+-		iodesc->ha = ha;
+-		iodesc->signature = qla2x00_iodesc_to_handle(iodesc);
+-		break;
+-	}
+-
+-	return (iodesc);
+-}
+-
+-/**
+- * qla2x00_free_iodesc() - Free an IO descriptor.
+- * @iodesc: io descriptor
+- *
+- * NOTE: The io descriptors timer *must* be stopped before it can be free'd.
+- */
+-static inline void
+-qla2x00_free_iodesc(struct io_descriptor *iodesc)
+-{
+-	iodesc->used = 0;
+-	iodesc->signature = 0;
+-}
+-
+-/**
+- * qla2x00_init_io_descriptors() - Initialize the pool of IO descriptors.
+- * @ha: HA context
+- */
+-static inline void
+-qla2x00_init_io_descriptors(scsi_qla_host_t *ha)
+-{
+-	uint16_t iter;
+-
+-	for (iter = 0; iter < MAX_IO_DESCRIPTORS; iter++) {
+-		if (!ha->io_descriptors[iter].used)
+-			continue;
+-
+-		qla2x00_remove_iodesc_timer(&ha->io_descriptors[iter]);
+-		qla2x00_free_iodesc(&ha->io_descriptors[iter]);
+-	}
+-}
+-
+-
+ /** 
+  * IO descriptor timer routines.
+  **/
+@@ -325,6 +259,72 @@
+ 	}
+ }
+ 
++
++/** 
++ * IO descriptor allocation routines.
++ **/
++
++/**
++ * qla2x00_alloc_iodesc() - Allocate an IO descriptor from the pool.
++ * @ha: HA context
++ *
++ * Returns a pointer to the allocated io descriptor, or NULL, if none available.
++ */
++static inline struct io_descriptor *
++qla2x00_alloc_iodesc(scsi_qla_host_t *ha)
++{
++	uint16_t iter;
++	struct io_descriptor *iodesc;
++
++	iodesc = NULL;
++	for (iter = 0; iter < MAX_IO_DESCRIPTORS; iter++) {
++		if (ha->io_descriptors[iter].used)
++			continue;
++
++		iodesc = &ha->io_descriptors[iter];
++		iodesc->used = 1;
++		iodesc->idx = iter;
++		init_timer(&iodesc->timer);
++		iodesc->ha = ha;
++		iodesc->signature = qla2x00_iodesc_to_handle(iodesc);
++		break;
++	}
++
++	return (iodesc);
++}
++
++/**
++ * qla2x00_free_iodesc() - Free an IO descriptor.
++ * @iodesc: io descriptor
++ *
++ * NOTE: The io descriptors timer *must* be stopped before it can be free'd.
++ */
++static void
++qla2x00_free_iodesc(struct io_descriptor *iodesc)
++{
++	iodesc->used = 0;
++	iodesc->signature = 0;
++}
++
++/**
++ * qla2x00_init_io_descriptors() - Initialize the pool of IO descriptors.
++ * @ha: HA context
++ */
++static inline void
++qla2x00_init_io_descriptors(scsi_qla_host_t *ha)
++{
++	uint16_t iter;
++
++	for (iter = 0; iter < MAX_IO_DESCRIPTORS; iter++) {
++		if (!ha->io_descriptors[iter].used)
++			continue;
++
++		qla2x00_remove_iodesc_timer(&ha->io_descriptors[iter]);
++		qla2x00_free_iodesc(&ha->io_descriptors[iter]);
++	}
++}
++
++
+ /** 
+  * IO descriptor support routines.
+  **/

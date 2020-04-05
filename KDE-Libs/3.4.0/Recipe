@@ -1,0 +1,11 @@
+# KDE-Libs meta-recipe 
+# by Andre Detsch
+
+# ARTS and Libs compilation don't support different prefixes yet...
+
+include=(
+   "ARTS--1.4.0"
+   "KDE-Libs-Itself--3.4.0"
+)
+compile_version=1.7.1
+recipe_type=meta

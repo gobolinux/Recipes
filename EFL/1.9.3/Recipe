@@ -1,0 +1,20 @@
+# Recipe for version 1.9.3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Apr 17 15:19:51 GMT 2014
+# Recipe (MakeRecipe) for EFL by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Apr 12 15:50:52 GMT 2014
+compile_version=1.13.1
+url="http://download.enlightenment.org/rel/libs/efl/efl-1.9.3.tar.gz"
+file_size=29842733
+file_md5=102acebaf453346d745b0974f736a5e6
+recipe_type=configure
+
+environment=(
+	CFLAGS="-I$goboHeaders/luajit-2.0"
+	CXXFLAGS="-I$goboHeaders/luajit-2.0"
+)
+
+configure_options=(
+	--enable-drm
+	--enable-v4l2
+	--enable-image-loader-webp
+	--with-id="GoboLinux"
+	--with-profile="release"
+)

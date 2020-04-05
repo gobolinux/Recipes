@@ -1,0 +1,11 @@
+# Recipe for version 1.0.21 by Hugo Barrocas <barrocas@iol.pt>, on Dom Jul 11 18:20:34 WEST 2010
+compile_version=1.8.0
+url="ftp://ftp2.sane-project.org/pub/sane/sane-backends-1.0.21/sane-backends-1.0.21.tar.gz"
+file_size=5050344
+file_md5=be586a23633949cf2ecf0c9c6d769130
+mirror_url="ftp://ftp.sane-project.org/pub/sane/old-versions/sane-backends-1.0.21/sane-backends-1.0.21.tar.gz"
+recipe_type=configure
+
+unmanaged_files=(
+    $goboVariable/lock/sane
+)

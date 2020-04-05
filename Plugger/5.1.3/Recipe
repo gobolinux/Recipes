@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Plugger by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Oct 11 15:59:46 BRST 2004
+# Recipe for version 5.1.3 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Oct 11 15:59:46 BRST 2004
+compile_version=1.8.0
+url="http://fredrik.hubbe.net/plugger/plugger-5.1.3.tar.gz"
+file_size=90660
+file_md5=576e32a13955330ee3f7dca3583fcd62
+recipe_type=configure
+
+pre_link() {
+	cp plugger.so $target/lib
+}

@@ -1,0 +1,74 @@
+Fixes to the FAM man page stolen from Debian
+
+Signed-off-by: Jonas Karlsson <jonas@gobolinux.org>
+diff -r 3be87d55e7f3 man/fam.3
+--- a/man/fam.3	Wed Apr 12 13:50:14 2006 -0700
++++ b/man/fam.3	Wed Apr 12 16:02:21 2006 -0700
+@@ -6,6 +6,9 @@
+ .B #include <fam.h>
+ .P
+ .B "extern int FAMOpen(FAMConnection* fc);"
++.PP
++.B "extern int FAMOpen2(FAMConnection* fc,"
++.B "                    const char* appName);"
+ .PP
+ .B "extern int FAMClose(FAMConnection* fc);"
+ .PP
+@@ -201,7 +204,7 @@
+ The application opens a connection to \fBfamd\fR by calling
+ FAMOpen.  FAMOpen initializes the FAMConnection structure
+ passed in to it and returns 0 if successful, otherwise -1.
+-The variable char* appName should be set to the name of your
++The parameter appName of FAMOpen2 should be set to the name of your
+ application. The FAMConnection structure is passed to all
+ subsequent \fBFAM\fR procedure calls.
+ 
+@@ -295,7 +298,7 @@
+ 
+ .SH SEE ALSO
+ famd(8),
+-fstat(1),
++fstat(2),
+ poll(2),
+ select(2)
+ 
+diff -r 3be87d55e7f3 man/famd.8
+--- a/man/famd.8	Wed Apr 12 13:50:14 2006 -0700
++++ b/man/famd.8	Wed Apr 12 16:02:21 2006 -0700
+@@ -21,7 +21,7 @@
+ run at a time.
+ .P
+ \fBfamd\fR can be configured by editing the famd configuration
+-file (see \fIfamd.conf(5)\fR for further details) or by
++file (see \fIfam.conf(5)\fR for further details) or by
+ providing the following command line options:
+ .SH OPTIONS
+ .TP
+@@ -66,8 +66,8 @@
+ files that the client can \fBstat\fR.
+ .SH FILES
+ .TP
+-\fI/usr/local/etc/famd.conf\fR
++\fI/etc/fam.conf\fR
+ Default \fBfamd\fR configuration file.
+ .SH "SEE ALSO"
+-fam(3), famd.conf(5), inetd(8), portmap(8), stat(1), xinetd(8)
++fam(3), fam.conf(5), inetd(8), portmap(8), stat(1), xinetd(8)
+ .SH BUGS
+diff -r 3be87d55e7f3 man/famd.conf.5
+--- a/man/famd.conf.5	Wed Apr 12 13:50:14 2006 -0700
++++ b/man/famd.conf.5	Wed Apr 12 16:02:21 2006 -0700
+@@ -1,10 +1,10 @@
+-.TH FAMD.CONF "5" "January 19, 2003" "famd.conf (fam 2.6.10)" "SGI"
++.TH FAM.CONF "5" "January 19, 2003" "fam.conf (fam 2.6.10)" "SGI"
+ .SH NAME
+-famd.conf \- The File Alteration Monitor (FAM) configuration file
++fam.conf \- The File Alteration Monitor (FAM) configuration file
+ .SH SYNOPSIS
+ In addition to its command line options, \fBfamd\fR's behavior
+ can also be controlled through its configuration file.  By
+-default, this is \fI/usr/local/etc/fam.conf\fR.  The \fB\-c\fR
++default, this is \fI/etc/fam.conf\fR.  The \fB\-c\fR
+ command line option can be used to specify an alternate file.
+ .SH "FILE FORMAT"
+ Configuration lines are in the format \fBoption=value\fR.

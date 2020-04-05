@@ -1,0 +1,11 @@
+# Recipe for version 0.8.0.pl00 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2010. máj. 28., péntek, 18.31.43 CEST
+# Recipe (MakeRecipe) for LibBurn by Jonas Karlsson <jonka750@student.liu.se>, on Mon Mar 5 01:29:26 CET 2007
+compile_version=1.8.2
+url="http://files.libburnia-project.org/releases/libburn-0.8.0.pl00.tar.gz"
+file_size=784005
+file_md5=5dc47d0c089dc1310f03dc99edcfeaf0
+dir='libburn-0.8.0'
+recipe_type=configure
+configure_options=(
+    --disable-debug
+)

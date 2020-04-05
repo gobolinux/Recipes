@@ -1,0 +1,15 @@
+# Recipe for version 1.4.6 by Hisham Muhammad <hisham@gobolinux.org>, on Thu Mar 13 02:00:20 BRT 2014
+# Recipe (MakeRecipe) for Imlib2 by roko, <ro.ko@mcnon.com>, on Tue Oct 26 13:30:45 BRST 2004
+compile_version=1.8.0
+url="$httpSourceforge/enlightenment/imlib2-1.4.6.tar.bz2"
+file_size=872717
+file_md5=5c7104121ec6db652b37f74a6d7048e2
+recipe_type=configure
+build_variables=(
+   libdir="${goboLibraries}"
+)
+
+pre_install() {
+   # Here we go again, libtool...
+   find . -name "*.la" | xargs sed -i "s,^libdir='${goboLibraries},libdir='${target}/lib,"
+}

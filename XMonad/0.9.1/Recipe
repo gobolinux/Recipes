@@ -1,0 +1,16 @@
+# Recipe for version 0.9.1.1 by Kevin Quick <quick@sparq.org>, on Fri Jan 15 13:17:05 MST 2010
+# Recipe (MakeRecipe) for XMonad by Kevin Quick <quick@sparq.org>, on Wed Apr 9 23:23:16 MST 20.9.1
+compile_version=1.13.1
+url="http://hackage.haskell.org/packages/archive/xmonad/0.9.1/xmonad-0.9.1.tar.gz"
+file_size=56974
+file_md5=3d0dd5cf77768b10e1b7f3a47e32b09e
+recipe_type=cabal
+
+pre_link() {
+   cp man/xmonad.1 $target/man/man1
+}
+docs=(
+  CONFIG
+  man/xmonad.hs
+  man/xmonad.html
+)

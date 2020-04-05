@@ -1,0 +1,12 @@
+diff -Nur bc-1.06-old/configure bc-1.06/configure
+--- bc-1.06-old/configure	2000-10-03 20:34:24.000000000 +0200
++++ bc-1.06/configure	2005-08-12 22:26:04.000000000 +0200
+@@ -2245,7 +2245,7 @@
+ 
+ 
+ if test "$LEX" = "flex" ; then
+- LEX="flex -I8"
++ LEX="flex -I -8"
+ else
+  if test "$bcrl" = "y" ; then
+   echo "configure: warning: readline works only with flex." 1>&2

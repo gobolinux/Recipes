@@ -1,0 +1,36 @@
+Build fixes from http://www.linuxfromscratch.org/blfs/view/7.4/pst/xsane.html
+
+diff -Nur xsane-0.998.old/src/xsane.h xsane-0.998/src/xsane.h
+--- xsane-0.998.old/src/xsane.h	2010-11-16 19:00:33.000000000 -0200
++++ xsane-0.998/src/xsane.h	2015-08-04 08:37:32.854957004 -0300
+@@ -251,7 +251,7 @@
+ # elif defined(HAVE_OS2_H)
+ #  define DEFAULT_BROWSER "netscape"
+ # else
+-#  define DEFAULT_BROWSER "netscape"
++#  define DEFAULT_BROWSER "xdg-open"
+ # endif
+ #endif
+ 
+Binary files xsane-0.998.old/src/xsane.h.gch and xsane-0.998/src/xsane.h.gch differ
+diff -Nur xsane-0.998.old/src/xsane-save.c xsane-0.998/src/xsane-save.c
+--- xsane-0.998.old/src/xsane-save.c	2010-11-16 19:06:00.000000000 -0200
++++ xsane-0.998/src/xsane-save.c	2015-08-04 08:38:05.344956080 -0300
+@@ -4910,7 +4910,7 @@
+     return -1; /* error */
+   }
+ 
+-  if (setjmp(png_ptr->jmpbuf))
++  if (setjmp(png_jmpbuf(png_ptr)))
+   {
+     snprintf(buf, sizeof(buf), "%s %s", ERR_DURING_SAVE, ERR_LIBPNG);
+     xsane_back_gtk_error(buf, TRUE);
+@@ -5100,7 +5100,7 @@
+     return -1; /* error */
+   }
+ 
+-  if (setjmp(png_ptr->jmpbuf))
++  if (setjmp(png_jmpbuf(png_ptr)))
+   {
+     snprintf(buf, sizeof(buf), "%s %s", ERR_DURING_SAVE, ERR_LIBPNG);
+     xsane_back_gtk_error(buf, TRUE);

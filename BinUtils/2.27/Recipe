@@ -1,0 +1,23 @@
+# Recipe for version 2.27 by Lucas C. Villa Real, on Tue Dec 27 00:35:16 BRST 2016
+url="$ftpGnu/binutils/binutils-2.27.tar.bz2"
+file_size=26099568
+file_md5=2869c9bf3e60ee97c74ac2a6bf4e9d68
+compile_version=1.8.0
+needs_build_directory=yes
+needs_safe_linking=yes
+recipe_type=configure
+configure_options=(
+   "--enable-shared"
+   "--enable-gold=default"
+   "--enable-plugins"
+)
+make_variables=(
+   "tooldir=$target"
+)
+install_variables=(
+   target_header_dir="${target}/include"
+)
+
+pre_install() {
+   cp ../include/libiberty.h $target/include
+}

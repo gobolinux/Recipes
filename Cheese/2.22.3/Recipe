@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Cheese by Andreas Köhler <andi5.py@gmx.net>, on Fri Aug 29 01:05:04 CEST 2008
+# Recipe for version 2.22.3 by Andreas Köhler <andi5.py@gmx.net>, on Fri Aug 29 01:05:04 CEST 2008
+compile_version=1.11.2
+url="ftp://ftp.gnome.org/pub/gnome/sources/cheese/2.22/cheese-2.22.3.tar.bz2"
+file_size=1527967
+file_md5=21c23e289b1c8a1ae014704d615a9540
+recipe_type=configure
+configure_options=(
+   --disable-scrollkeeper
+)

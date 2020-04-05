@@ -1,0 +1,16 @@
+Re-enabled deprecated constructs, because gbdfed is an old package and uses GTK+ features which are now deprecated. This was suggested by the package author in its website.
+
+diff -ur gbdfed-1.6.old/Makefile.in gbdfed-1.6/Makefile.in
+--- gbdfed-1.6.old/Makefile.in	2010-04-16 11:38:59.000000000 -0300
++++ gbdfed-1.6/Makefile.in	2014-04-10 14:01:35.000000000 -0300
+@@ -27,9 +27,7 @@
+ CC = @CC@
+ CFLAGS = @XX_CFLAGS@ @CFLAGS@
+ 
+-DEFINES = @DEFINES@ -DG_DISABLE_DEPRECATED \
+-	-DGDK_DISABLE_DEPRECATED -DGDK_PIXBUF_DISABLE_DEPRECATED \
+-	-DGTK_DISABLE_DEPRECATED
++DEFINES = @DEFINES@
+ 
+ SRCS = bdf.c \
+        bdfcons.c \

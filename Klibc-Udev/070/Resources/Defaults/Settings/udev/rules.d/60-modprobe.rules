@@ -1,0 +1,31 @@
+# Perhaps this should just be for all subsystems?
+
+ACTION=="add", SUBSYSTEM=="pci", MODALIAS=="*", \
+        RUN+="/sbin/modprobe $modalias"
+ACTION=="add", SUBSYSTEM=="usb", MODALIAS=="*", \
+        RUN+="/sbin/modprobe $modalias"
+ACTION=="add", SUBSYSTEM=="pcmcia", MODALIAS=="*", \
+        RUN+="/sbin/modprobe $modalias"
+ACTION=="add", SUBSYSTEM=="pcmcia", MODALIAS=="*", \
+        RUN+="/bin/sh -c 'echo 1 > /sys/$DEVPATH/allow_func_id_match'"
+
+ACTION=="add", SUBSYSTEM=="ieee1394", MODALIAS=="*", \
+        RUN+="/sbin/modprobe $modalias"
+
+ACTION=="add", SUBSYSTEM=="scsi", SYSFS{type}=="[07]", \
+        RUN+="/sbin/modprobe sd_mod"
+ACTION=="add", SUBSYSTEM=="scsi", SYSFS{type}=="14", \
+        RUN+="/sbin/modprobe sd_mod"
+ACTION=="add", SUBSYSTEM=="scsi", SYSFS{type}=="[45]", \
+        RUN+="/sbin/modprobe sr_mod"
+ACTION=="add", SUBSYSTEM=="scsi", SYSFS{type}=="1", SYSFS{vendor}=="Onstream", \
+        SYSFS{model}!="ADR*", RUN+="/sbin/modprobe osst"
+ACTION=="add", SUBSYSTEM=="scsi", SYSFS{type}=="1", SYSFS{vendor}=="Onstream", \
+        SYSFS{model}=="ADR*", RUN+="/sbin/modprobe st"
+ACTION=="add", SUBSYSTEM=="scsi", SYSFS{type}=="1", SYSFS{vendor}!="Onstream", \
+        RUN+="/sbin/modprobe st"
+ACTION=="add", SUBSYSTEM=="scsi", SYSFS{type}=="[23689]", \
+        RUN+="/sbin/modprobe sg"
+
+ACTION=="add", SUBSYSTEM=="firmware", ENV{FIRMWARE}="*", \
+        RUN+="/sbin/firmware_helper"

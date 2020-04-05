@@ -1,7 +1,0 @@
-pre_build() {
-    LDFLAGS="$LDFLAGS -lm"
-}
-
-configure_options=(
-    "--without-curses"
-)

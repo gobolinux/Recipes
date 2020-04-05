@@ -1,0 +1,10 @@
+# Recipe for version 1.1.2 by roko, <ro.ko@mcnon.com>, on Sat Mar 26 00:47:19 CET 2005
+# Recipe for Flac 1.1.2 by Maglan C. Diemer, maglan@univates.br
+compile_version=1.8.0
+url="$httpSourceforge/flac/flac-1.1.2.tar.gz"
+recipe_type=configure
+
+configure_options=(
+	"--with-xmms-prefix=$target"
+	"--with-id3lib=$target"
+)

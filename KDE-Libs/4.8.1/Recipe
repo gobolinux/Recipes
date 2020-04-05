@@ -1,0 +1,29 @@
+# Recipe for version 4.8.1 by Lucas C. Villa Real, on Mon Mar 26 00:16:04 BRT 2012
+# Recipe (MakeRecipe) for KDE-Libs by Giambattista Bloisi <giamby@infinito.it>, on Sat Jan 12 11:13:12 CET 2008
+compile_version=1.10.0
+url="ftp://ftp.kde.org/pub/kde/stable/4.8.1/src/kdelibs-4.8.1.tar.xz"
+file_size=11664084
+file_md5=0488ec7d753c3455876d9e3f76406292
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+-DKDE4_DBUS_INTERFACES_DIR="$goboShared/dbus-1/interfaces/"
+-DSYSCONF_INSTALL_DIR="$settings_target"
+-DLIB_INSTALL_DIR="$goboLibraries"
+-DLIBEXEC_INSTALL_DIR="$goboLibraries/kde4/libexec"
+-DPLUGIN_INSTALL_DIR="$goboLibraries/lib/kde4"
+-DKDE4_LIB_DIR="$goboLibraries"
+)
+
+pre_install() {
+cmake_options=(
+-DCMAKE_BUILD_TYPE=Release
+-DKDE4_DBUS_INTERFACES_DIR="$goboShared/dbus-1/interfaces/"
+-DSYSCONF_INSTALL_DIR="$settings_target"
+-DLIB_INSTALL_DIR="$target/lib"
+-DLIBEXEC_INSTALL_DIR="$target/lib/kde4/libexec"
+-DPLUGIN_INSTALL_DIR="$target/lib/kde4"
+-DKDE4_LIB_DIR="$target/lib"
+)
+}

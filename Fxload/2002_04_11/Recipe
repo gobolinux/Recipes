@@ -1,0 +1,9 @@
+compile_version=1.8.0
+url="$httpSourceforge/linux-hotplug/fxload-2002_04_11.tar.gz"
+file_size=22866
+file_md5=cafd71a5bff0c57bcd248273b2541c05
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+)

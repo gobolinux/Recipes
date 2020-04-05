@@ -1,8 +1,0 @@
-url="$ftpGnu/patch/patch-2.5.4.tar.gz"
-compile_version=1.8.0
-recipe_type=configure
-file_size=186879
-file_md5=ee5ae84d115f051d87fcaaef3b4ae782
-pre_build() {
-   export CPPFLAGS="$CPPFLAGS -D_GNU_SOURCE"
-}

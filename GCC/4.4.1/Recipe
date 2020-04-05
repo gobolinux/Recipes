@@ -1,0 +1,33 @@
+# Recipe for version 4.4.1 by Jonas Karlsson <jonas@gobolinux.org>, on Fri Sep 4 11:25:08 CEST 2009
+# by Hisham Muhammad, Guilherme Bedin
+url="ftp://gcc.gnu.org/pub/gcc/releases/gcc-4.4.1/gcc-4.4.1.tar.bz2"
+file_size=62869928
+file_md5=927eaac3d44b22f31f9c83df82f26436
+compile_version=1.9.0
+recipe_type=configure
+needs_build_directory=yes
+
+configure_options=(
+   --with-local-prefix="${target}"
+   --libexecdir="${target}/lib"
+   --with-cpp-install-dir="lib"
+   --enable-shared
+   --enable-threads="posix"
+   --enable-__cxa_atexit
+   --enable-clocale="gnu"
+   --enable-languages="c,c++,objc"
+   --with-system-zlib
+   --disable-bootstrap
+)
+with_gcj=("--enable-languages=java")
+
+pre_link() {
+   ln -s gcc "$target/bin"/cc
+   rm -f "$target/lib"/libiberty.a
+   ln -nsf "$target/bin/cc" "$goboExecutables"/cc
+   ln -nsf "$target/lib/cpp" "$goboLibraries"/cc
+   if [ "$(type -t private__add_arch_aliases)" = "function" ]
+   then
+      private__add_arch_aliases
+   fi
+}

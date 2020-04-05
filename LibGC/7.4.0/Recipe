@@ -1,0 +1,10 @@
+# Recipe for version 7.4.0 by Hisham Muhammad <hisham@gobolinux.org>, on Thu Apr 17 22:47:20 BRT 2014
+# Recipe (MakeRecipe) for LibGC by Felix Breuer, on Sun Sep 5 17.4.01:57 BRT 2004
+compile_version=1.8.2
+url="http://www.hboehm.info/gc/gc_source/gc-7.4.0.tar.gz"
+file_size=1060884
+file_md5=f40d9a47c90d60791eeecb484f8df5ee
+recipe_type=configure
+configure_options=(
+	"--enable-cplusplus"
+)

@@ -1,0 +1,25 @@
+# Recipe for WxGTK 2.5.2 by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.7.1
+url="$httpSourceforge/wxwindows/wxGTK-2.5.2.tar.bz2"
+file_size=6579255
+file_md5=b45874428b0164bfa5bd1a5a11b3eb4a
+recipe_type=configure
+
+configure_options=(
+	"--enable-calendar"
+	"--enable-controls"
+	"--enable-gtk2"
+	"--enable-intl"
+	"--enable-log"
+	"--enable-loggui"
+	"--enable-logwin"
+	"--enable-logdialog"
+	"--enable-plugins"
+	"--enable-stattext"
+	"--enable-sysoptions"
+	"--enable-stl"
+	"--enable-textdlg"
+	"--enable-unicode"
+	"--with-opengl"
+	"--with-sdl"
+)

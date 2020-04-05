@@ -1,0 +1,35 @@
+# Recipe for version 4.4.0 by Michael Homer <michael@gobolinux.org>, on Tue Feb 9 22:12:01 NZDT 2010
+# (MakeRecipe) for KDE-Base-Workspace by Giambattista Bloisi <giamby@infinito.it>, on Sat Jan 
+# 12 19:19:58 CET 2008
+compile_version=1.10.0
+url="http://download.kde.org/stable/4.4.0/src/kdebase-workspace-4.4.0.tar.bz2"
+file_size=76893149
+file_md5=08179cba422038d4bb6537d63186bb23
+file="kdebase-workspace-4.4.0.tar.bz2"
+recipe_type=cmake
+
+cmake_options=(
+-DCMAKE_LIBRARY_PATH="$goboLibraries"
+-DCMAKE_BUILD_TYPE=Release
+-DKDE4_COMMON_PAM_SERVICE=kde
+-DKDE4_KDM_PAM_SERVICE=kdm
+-DKDE4_KSCREENSAVER_PAM_SERVICE=kscreensaver
+-DKDE4WORKSPACE_SYSCONF_DIR="$settings_target"
+-DPYTHON_SITE_PACKAGES_DIR="${target}/lib/python$(python --version 2>&1|cut -d' ' -f2 | cut -d. -f1-2)/site-packages"
+)
+
+pre_link() {
+   sed -i 's!#Plugins\(Login\|Shutdown\).*!Plugins\1='"${goboLibraries}"'/kde4/kgreet_classic.so!ig' "$target/share/config/kdm/kdmrc"
+}
+
+do_install() {
+   # This install destination is non-configurable.
+   pythonver=$(python --version 2>&1|cut -d' ' -f2)
+   pythonxy=$(echo $pythonver|cut -d. -f1-2)
+   sed '/.PHONY : install/,$ d' Makefile > Makefile.new
+   echo "	mkdir -p '$target'/lib/python$pythonxy/site-packages/PyKDE4" >> Makefile.new
+   echo "	mv $goboPrograms/Python/$pythonver/lib/python$pythonxy/site-packages/PyKDE4/plasmascript.py $target/lib/python$pythonxy/site-packages/PyKDE4 || true" >> Makefile.new
+   sed -n '/.PHONY : install/,$ p' Makefile >> Makefile.new
+   mv Makefile.new Makefile
+   cmake_do_install "$@"
+}

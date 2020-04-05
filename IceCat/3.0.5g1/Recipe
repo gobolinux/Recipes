@@ -1,0 +1,73 @@
+# Recipe (MakeRecipe) for IceCat by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. dec. 31., szerda, 22.45.53 CET
+# Recipe for version 3.0.5g1 by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2008. dec. 31., szerda, 22.45.53 CET
+compile_version=1.11.4
+url="http://ftp.gnu.org/gnu/gnuzilla/3.0.5-g1/icecat-3.0.5-g1.tar.lzma"
+file_size=28419033
+file_md5=1c58c7981da38db435061fce5f9f5f13
+recipe_type=configure
+dir=icecat-3.0.5-g1
+
+pre_patch() {
+    rm -f $goboSources/icecat-3.0.5-g1/.mozconfig
+}
+
+configure_options=(
+  --with-default-mozilla-five-home=$goboLibraries
+  --with-distribution-id=GoboLinux
+  --with-branding=browser/branding/unofficial
+  --disable-official-branding
+  --enable-application=browser
+  --enable-crypto
+  --disable-debug
+  --enable-toolkit-cairo-gtk2
+  --enable-default-toolkit=cairo-gtk2
+  --disable-tests
+  --disable-mochitest 
+  --enable-strip
+  --with-system-zlib
+  --with-system-jpeg
+  --enable-composer
+  --disable-crashreporter
+  --disable-calendar
+  --disable-mailnews
+  --disable-chatzilla
+  --enable-javaxpcom
+  --enable-system-cairo
+  --disable-toolkit-qt
+  --with-user-appdir=.gnuzilla
+  --disable-installer
+  --disable-updater
+  --disable-jsd
+  --enable-elf-dynstr-gc
+  --enable-system-sqlite
+  --disable-parental-controls
+  --enable-startup-notification
+  --with-system-nspr
+  --with-system-bz2
+  --enable-native-uconv
+  --disable-url-classifier
+  --disable-xinerama
+  --disable-ldap
+  --disable-logging
+  --enable-system-lcms
+  --enable-xprint
+  --enable-postscript
+)
+
+environment=(
+    JAVA_HOME=$Sun-JDK_path
+    MOZ_SPELLCHECK=0
+    MOZ_CO_PROJECT=browser
+)
+
+make_variables=(
+    MOZ_MAKE_FLAGS=-j4
+    MOZ_SPELLCHECK=0
+    MOZ_CO_PROJECT=browser
+)
+
+pre_link() {
+    ln -snf $target/lib/icecat-3.0.5-g1/libmozjs.so $target/lib/icecat-devel-3.0.5-g1/sdk/lib/libmozjs.so
+    ln -snf $target/lib/icecat-3.0.5-g1/libxpcom.so $target/lib/icecat-devel-3.0.5-g1/sdk/lib/libxpcom.so
+    ln -snf $target/lib/icecat-3.0.5-g1/libxul.so $target/lib/icecat-devel-3.0.5-g1/sdk/lib/libxul.so
+}

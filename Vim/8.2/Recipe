@@ -1,0 +1,32 @@
+# Recipe (MakeRecipe) for Vim by Matthias Wolf, on Tue Sep 21 12:10:37 CEST 2004
+compile_version=1.8.2
+url="ftp://ftp.vim.org/pub/vim/unix/vim-8.2.tar.bz2"
+file_size=12097045
+file_md5=2f3e6ab74d20eea2dc00cedc3f0ee4e8
+dir='vim82/src'
+recipe_type=configure
+
+configure_options=(
+   --prefix="$target"
+   --exec-prefix="$target"
+   --enable-gui=yes
+   --enable-multibyte
+   --disable-selinux
+   --enable-fontset
+   --enable-luainterp=yes
+   --datadir="$target/share"
+   --mandir="$target/share/man"
+)
+with_perl=(
+   --enable-perlinterp
+)
+with_python=(
+   --enable-pythoninterp
+)
+
+with_gtk2="--enable-gui=gtk2"
+with_gtk3="--enable-gui=gtk3"
+
+pre_link() {
+   ln -s vim $target/bin/vi
+}

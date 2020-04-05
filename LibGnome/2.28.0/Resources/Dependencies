@@ -1,0 +1,8 @@
+Audiofile >= 0.2.3 [audiofile] # Optional
+Esound >= 0.2.26 [esound] # Optional
+GConf >= 1.1.11
+GLib >= 2.8.0
+Glibc 2.3.2
+Gnome-VFS >= 2.5.3
+LibBonobo >= 2.24.0 # 2.13.0 required by configure, but fails at compilation
+Popt >= 1.5

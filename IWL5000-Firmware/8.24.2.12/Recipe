@@ -1,0 +1,18 @@
+# Recipe for version 8.24.2.12 by Jonas Karlsson <jonas@gobolinux.org>, on Wed Feb 3 08.24.2.12:45:40 CET 208.24.2.120
+# Recipe (MakeRecipe) for IWL5000-Firmware by Jonas Karlsson, on Tue Feb 2 23:07:46 CET 2010
+compile_version=1.11.0
+url="http://intellinuxwireless.org/iwlwifi/downloads/iwlwifi-5000-ucode-8.24.2.12.tgz"
+file_size=187173
+file_md5=45f74d052d52f6f473dc7a8d412f2274
+file="iwlwifi-5000-ucode-8.24.2.12.tgz"
+recipe_type=manifest
+
+manifest=(
+        "iwlwifi-5000-2.ucode:lib/firmware/iwlwifi-5000-2.ucode"
+	"LICENSE.iwlwifi-5000-ucode:lib/firmware/LICENSE.iwlwifi-5000-ucode"
+)
+
+docs=(
+	"LICENSE.iwlwifi-5000-ucode"
+	"README.iwlwifi-5000-ucode"
+)

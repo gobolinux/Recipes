@@ -1,0 +1,30 @@
+diff -Naur rlocate-0.5.3/src/rlocate-daemon/Makefile.am rlocate-0.5.3.new/src/rlocate-daemon/Makefile.am
+--- rlocate-0.5.3/src/rlocate-daemon/Makefile.am	2006-09-26 10:44:48.000000000 +0200
++++ rlocate-0.5.3.new/src/rlocate-daemon/Makefile.am	2006-11-12 01:39:06.000000000 +0100
+@@ -6,10 +6,12 @@
+ RLOCATE_DB_DIR = $(DESTDIR)$(localstatedir)/$(rlocate)
+ RLOCATE_DB = $(RLOCATE_DB_DIR)/$(rlocate).db
+ MODULE_CFG = $(RLOCATE_DB_DIR)/module.cfg
++DEVDIR = $(devdir)
+ 
+ AM_CPPFLAGS = -DRLOCATE_DB=\"$(RLOCATE_DB)\" \
+               -DMODULE_CFG=\"$(MODULE_CFG)\" \
+-	      -DRLOCATE_GRP=\"$(rlocate_group)\"
++	      -DRLOCATE_GRP=\"$(rlocate_group)\" \
++           -DDEVDIR=\"$(DEVDIR)\"
+ 
+ sbin_PROGRAMS = rlocated
+ rlocated_SOURCES = ../pidfile.h ../pidfile.c rlocated.c
+diff -Naur rlocate-0.5.3/src/rlocate-daemon/rlocated.c rlocate-0.5.3.new/src/rlocate-daemon/rlocated.c
+--- rlocate-0.5.3/src/rlocate-daemon/rlocated.c	2006-09-26 10:44:48.000000000 +0200
++++ rlocate-0.5.3.new/src/rlocate-daemon/rlocated.c	2006-11-12 01:34:41.000000000 +0100
+@@ -68,8 +68,8 @@
+ static char **EXCLUDE_DIR    = NULL; // is set in parse_proc
+ static char *STARTING_PATH   = NULL; // is set in parse_proc
+ static int  COUNTDOWN        = 0; // used for testing, always set it to 0
+-static char *RLOCATEDEV      = "/dev/rlocate";
++static char *RLOCATEDEV      = DEVDIR"/rlocate";
+ static char *RLOCATEPROC     = "/proc/rlocate";
+ static char *RLOCATE_DIFF_DB = NULL;
+ 
+ 

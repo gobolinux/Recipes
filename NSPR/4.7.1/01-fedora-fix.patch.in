@@ -1,0 +1,17 @@
+This patch add a basic pkgconfig file.
+
+diff -Naur nss-3.11-orig/mozilla/nsprpub/lib/pkgconfig/nspr.pc nss-3.11/mozilla/nsprpub/lib/pkgconfig/nspr.pc
+--- nss-3.11-orig/mozilla/nsprpub/lib/pkgconfig/nspr.pc	1970-01-01 00:00:00.000000000 +0000
++++ nss-3.11/mozilla/nsprpub/lib/pkgconfig/nspr.pc	2006-01-20 03:27:43.000000000 +0000
+@@ -0,0 +1,11 @@
++prefix=@%Compile_target%@
++exec_prefix=@%Compile_target%@
++libdir=${prefix}/lib
++includedir=${prefix}/include
++
++Name: NSPR
++Description: The Netscape Portable Runtime
++Version: 4.6.7
++Libs: -L${libdir} -lplds4 -lplc4 -lnspr4 -lpthread -ldl
++Cflags: -I${includedir}/nspr
++

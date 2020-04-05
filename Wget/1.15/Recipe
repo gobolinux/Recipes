@@ -1,0 +1,12 @@
+# Recipe for version 1.15 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Sep 29 16:20:56 BRT 2014
+# by Jeremy Vernon
+# 2004.01.06 16:54
+
+url="http://ftp.gnu.org/gnu/wget/wget-1.15.tar.xz"
+file_size=1679908
+file_md5=7a279d5ac5594919124d5526e7143e28
+compile_version=1.8.0
+recipe_type=configure
+configure_options=(
+   "--with-ssl=openssl"
+)

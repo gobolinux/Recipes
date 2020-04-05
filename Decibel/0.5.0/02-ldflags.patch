@@ -1,0 +1,10 @@
+--- decibel-0.5.0/src/server/CMakeLists.txt.orig	2008-05-13 01:47:49.000000000 -0300
++++ decibel-0.5.0/src/server/CMakeLists.txt	2008-05-13 01:48:34.000000000 -0300
+@@ -86,6 +86,7 @@ endif (APPLE)
+ 
+ ADD_EXECUTABLE(decibel main.cpp)
+ TARGET_LINK_LIBRARIES(decibel
++                      QtDBus
+                       ${QT_LIBRARIES}
+                       ${QTTAPIOCA_LIBRARIES}
+                       decibelstatic)

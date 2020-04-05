@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for OBEXFtp by Henrique <teique at gmail>, on Sun Jan 14 17:46:56 BRST 2007
+# Recipe for version 0.20 by Henrique <teique at gmail>, on Sun Jan 14 17:46:56 BRST 2007
+compile_version=1.8.0
+url="$httpSourceforge/openobex/obexftp-0.20.tar.bz2"
+configure_options=(
+  --disable-python
+  --disable-perl
+)
+file_size=351641
+file_md5=86224a7a1880c25e9ba0b8997a97d299
+recipe_type=configure

@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Pidgin-LibNotify by Michael Homer <michael@gobolinux.org>, on Mon Nov 22 18:08:02 NZDT 2010
+# Recipe for version 0.14 by Michael Homer <michael@gobolinux.org>, on Mon Nov 22 18:08:02 NZDT 2010
+compile_version=1.13.0
+url="$httpSourceforge/project/gaim-libnotify/pidgin-libnotify/pidgin-libnotify-0.14/pidgin-libnotify-0.14.tar.gz"
+file_size=316365
+file_md5=bfb5368b69c02d429b2b17c00a6673c0
+recipe_type=configure
+make_variables=(
+   LIBPURPLE_LIBDIR="$target/lib"
+)

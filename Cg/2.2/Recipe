@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for Cg by Filipe Vieira, on Wed Jan 16 01:40:13 WET 2008
+# Recipe for version 2.2 by Zbigniew Baniewski, on Wed, 31 Mar 2010 16:27:32 +0200
+compile_version=1.13.2
+url="http://developer.download.nvidia.com/cg/Cg_2.2/Cg-2.2_February2010_x86.tgz"
+file_size=17359397
+file_md5=d386561f4dcf4734d5b8b29c8b2b7f09
+unpack_files=files_in_root
+recipe_type=manifest
+
+manifest=(
+ "usr/bin:bin"
+ "usr/include:include"
+ "usr/lib:lib"
+ "usr/local:local"
+ "usr/share/man:Shared/man"
+)

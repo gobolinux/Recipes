@@ -1,0 +1,12 @@
+# Recipe for version 1.0.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 2 14:54:11 GMT 2014
+# Recipe (MakeRecipe) for XLogo by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 18:58:50 BRT 2005
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/app/xlogo-1.0.4.tar.bz2"
+file_size=125967
+file_md5=4ce21861f7b9398805beba8b62d8ff8e
+recipe_type=configure
+part_of=Xorg-App
+
+make_variables=(
+    "appdefaultdir=$target/Shared/X11/app-defaults"
+)

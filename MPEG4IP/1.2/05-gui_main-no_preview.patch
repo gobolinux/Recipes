@@ -1,0 +1,23 @@
+--- mpeg4ip-1.2/server/mp4live/gui/gui_main.cpp.orig	2006-01-06 11:57:43.000000000 -0200
++++ mpeg4ip-1.2/server/mp4live/gui/gui_main.cpp	2006-01-06 12:00:50.000000000 -0200
+@@ -27,7 +27,6 @@
+ #include "mp4live.h"
+ #include "mp4live_gui.h"
+ #include "preview_flow.h"
+-#include "gdk/gdkx.h"
+ 
+ CLiveConfig* MyConfig;
+ CPreviewAVMediaFlow* AVFlow;
+@@ -157,10 +156,12 @@ void NewVideoWindow()
+ 	// Let video source know which window to draw into
+ 	gtk_widget_realize(video_preview);	// so XCreateWindow() is called
+ 
++#if 0
+ 	if (video_preview->window) {
+ 		MyConfig->m_videoPreviewWindowId = 
+ 			GDK_WINDOW_XWINDOW(video_preview->window);
+ 	}
++#endif
+ }
+ 
+ void DisplayVideoSettings(void)

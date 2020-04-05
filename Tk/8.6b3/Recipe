@@ -1,0 +1,17 @@
+# Recipe for version 8.6b2 by Zbigniew Baniewski <zb@ispid.com.pl>, on Mon, 24 Sep 2012 19:19:43 +0200
+compile_version=1.13.3
+url="$httpSourceforge/tcl/tk8.6b3-src.tar.gz"
+file_size=4650558
+file_md5=ff9332dd0d9cdcb10354bd6445477513
+dir='tk8.6b3/unix'
+recipe_type=configure
+configure_options=(
+  --with-tcl=$tcl_path/lib
+  --enable-xft
+  --enable-shared
+  --enable-threads
+  --enable-man-symlinks
+)
+pre_link() {
+   $sudo_exec ln -nfs ${target}/bin/wish8.6 ${target}/bin/wish
+}

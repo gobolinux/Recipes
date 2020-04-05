@@ -1,0 +1,12 @@
+# Recipe for version 7.7 by Hisham Muhammad <hisham@gobolinux.org>, on Sat Mar 15 18:43:54 BRT 2014
+# Recipe (MakeRecipe) for GDB by roko, <ro.ko@mcnon.com>, on Sun Dec 5 18:47.75 BRST 2004
+compile_version=1.9.0
+url="http://ftp.gnu.org/gnu/gdb/gdb-7.7.tar.bz2"
+file_size=24846320
+file_md5=271a18f41858a7e98b28ae4eb91287c9
+recipe_type=configure
+dir=gdb-7.7
+configure_options=(
+    --disable-werror
+    --with-system-readline
+)

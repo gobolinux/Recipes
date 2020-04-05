@@ -1,0 +1,21 @@
+# Recipe for version 4.2 by Guilherme B. Bedin <gbedin@gobolinux.org>, on Sat Nov 13 18:13:38 BRST 2010
+# Recipe (MakeRecipe) for DocBook-XML-DTD by Andreas Köhler <andi5.py@gmx.net>, on Fri Aug 15 07:54:42 CEST 2008
+compile_version=1.11.2
+url="http://www.docbook.org/xml/4.2/docbook-xml-4.2.zip"
+file_size=78428
+file_md5=73fe50dfe74ca631c1602f558ed8961f
+unpack_files=files_in_root
+recipe_type=manifest
+manifest=(
+    docbook.cat:share/xml/docbook/xml-dtd-4.2/.
+    calstblx.dtd:share/xml/docbook/xml-dtd-4.2/.
+    docbookx.dtd:share/xml/docbook/xml-dtd-4.2/.
+    soextblx.dtd:share/xml/docbook/xml-dtd-4.2/.
+    dbcentx.mod:share/xml/docbook/xml-dtd-4.2/.
+    dbgenent.mod:share/xml/docbook/xml-dtd-4.2/.
+    dbhierx.mod:share/xml/docbook/xml-dtd-4.2/.
+    dbnotnx.mod:share/xml/docbook/xml-dtd-4.2/.
+    dbpoolx.mod:share/xml/docbook/xml-dtd-4.2/.
+    htmltblx.mod:share/xml/docbook/xml-dtd-4.2/.
+    ent:share/xml/docbook/xml-dtd-4.2/ent
+)

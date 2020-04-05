@@ -1,0 +1,45 @@
+# Recipe for version 0.6 by Leandro Motta Barros <lmb@stackedboxes.org>, on Mon Aug 30 16:44:23 BRT 2010
+# Recipe (MakeRecipe) for FFmpeg by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 16:03:06 BRT 20.6
+compile_version=1.12.1
+url="http://www.ffmpeg.org/releases/ffmpeg-0.6.tar.bz2"
+file_size=3720372
+file_md5=d6142a9a5821d6a6262a6edb903faa24
+recipe_type=configure
+
+configure_options=(
+    # Enabling this makes the package not redistributable
+#    "--enable-nonfree"
+    "--enable-gpl"
+    "--enable-shared"
+    "--enable-postproc"
+    "--enable-swscale"
+    "--enable-pthreads"
+    "--enable-x11grab"
+    "--disable-debug"
+#    "--cpu=k8"
+)
+
+make_variables=(
+   "MANDIR=$target/man"
+)
+
+with_libvorbis="--enable-libvorbis"
+with_theora="--enable-libtheora"
+with_speex="--enable-libspeex"
+with_faad2="--enable-libfaad"
+with_faac="--enable-libfaac"
+with_x264="--enable-libx264"
+with_lame="--enable-libmp3lame"
+with_dirac="--enable-libdirac"
+with_schroedinger="--enable-libschroedinger"
+with_openjpeg="--enable-libopenjpeg"
+with_xvid="--enable-libxvid"
+
+pre_link() {
+    pushd $target/include
+    ln -s libpostproc postproc
+    mkdir -p ffmpeg
+    cd ffmpeg
+    find .. -type f -exec ln -s {} . \;
+    popd
+}

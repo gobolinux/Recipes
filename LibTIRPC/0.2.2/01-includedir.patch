@@ -1,0 +1,11 @@
+--- libtirpc-0.2.2/src/Makefile.am.orig	2012-03-26 19:18:43.565100544 +1300
++++ libtirpc-0.2.2/src/Makefile.am	2012-03-26 19:19:00.326099615 +1300
+@@ -6,7 +6,7 @@
+ ## anything like that.
+ 
+ 
+-INCLUDES = -I$(top_srcdir)/tirpc -DPORTMAP -DINET6 -DVERSION="\"$(VERSION)\"" \
++INCLUDES = -I$(top_srcdir)/tirpc -I$(top_srcdir)/include -DPORTMAP -DINET6 -DVERSION="\"$(VERSION)\"" \
+ 		-D_GNU_SOURCE -Wall -pipe  
+ 
+ lib_LTLIBRARIES = libtirpc.la

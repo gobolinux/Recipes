@@ -1,0 +1,45 @@
+#!/bin/sh
+
+# create a dummy queue entry
+mkdir -p $goboDevices/.udev/queue
+
+# create list of uevents
+list="$(echo $goboObjects/bus/*/devices/*/uevent)"
+list="$list $(echo $goboObjects/class/*/*/uevent)"
+list="$list $(echo $goboObjects/block/*/uevent)"
+list="$list $(echo $goboObjects/block/*/*/uevent)"
+
+# Sort list
+for i in $list; do
+     case "$i" in
+         */device/uevent)
+             continue
+             ;;
+         */class/mem/*|*/class/tty/*)
+             first="$first $i"
+             ;;
+         */block/md*)
+             last="$last $i"
+             ;;
+         */*)
+             default="$default $i"
+             ;;
+     esac
+done
+
+# trigger the sorted events
+for i in $first $default $last; do
+     echo "add" > "$i"
+done
+
+# wait for events to finish
+udevd_timeout=10
+while [ -d "$goboDevices/.udev/queue/" ]; do
+         /usr/bin/sleep 1
+         udevd_timeout=$(($udevd_timeout - 1))
+         if [ $udevd_timeout -eq 0 ]; then
+                 echo "!! coldplug timeout"
+		 exit 1
+         fi
+done
+

@@ -1,0 +1,53 @@
+# new revision uses $(readlink $goboModules/Current) 
+# instead `uname -r`. This will allow for installation 
+# during a kernel upgrade
+
+make=kBuild/bin/linux.x86/kmk
+# architechture specific build tool
+
+
+
+pre_install() {
+    source env.sh
+
+    # compile kernel module
+    Quiet pushd out/linux.x86/release/bin/src
+    make
+    Quiet popd
+}
+
+pre_link() {
+    Quiet pushd out/linux.x86/release/bin
+    
+    # install kernel module
+    if [ -f src/vboxdrv.ko ]
+    then
+        dest=$target/Resources/Unmanaged/$goboModules/$(readlink $goboModules/Current)/misc
+        mkdir -p $dest
+        cp src/vboxdrv.ko $dest
+    fi
+
+    # install executables, libraries and data
+    mkdir $target/data
+    cp -a * $target/data
+
+    # cleanup...
+    find $target/data -name src -type d | xargs rm -rf
+    rm -f $target/data/*.ko
+    chown -R root:root $target/data
+    chown -R root:root $target/doc
+      # Files will probably be owned by the sysadmin, not root
+      # Hence we need to change ownership to root.
+    chmod u+s $target/data/{VirtualBox,VBoxHeadless,VBoxSDL}
+      # Hardened Virtualbox needs setuid root
+
+    # prepare a wrapper
+    echo -e "#!/bin/sh\ncd $target/data\nLD_LIBRARY_PATH=. ./VirtualBox" > $target/bin/VirtualBox
+    chmod +x $target/bin/VirtualBox
+
+    Quiet popd
+}
+
+unmanaged_files=(
+    $goboModules/$(readlink $goboModules/Current)/misc/vboxdrv.ko
+)

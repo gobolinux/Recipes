@@ -1,0 +1,41 @@
+The compiler must link to libQtCLucene when building the tools otherwise the build fails.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- qt-everywhere-opensource-src-4.8.7/tools/assistant/tools/qhelpgenerator/*.pro.orig	2016-09-29 19:17:50.410584349 +0000
++++ qt-everywhere-opensource-src-4.8.7/tools/assistant/tools/qhelpgenerator/qhelpgenerator.pro	2016-09-29 19:17:55.826584243 +0000
+@@ -3,6 +3,7 @@ TARGET = qhelpgenerator
+ DESTDIR = ../../../../bin
+ CONFIG += qt warn_on help console
+ CONFIG -= app_bundle
++QMAKE_LFLAGS += -lQtCLucene
+ QT += network
+ 
+ build_all:!build_pass {
+--- qt-everywhere-opensource-src-4.8.7/tools/assistant/tools/qhelpconverter/*.pro.orig	2016-09-29 19:19:03.218582921 +0000
++++ qt-everywhere-opensource-src-4.8.7/tools/assistant/tools/qhelpconverter/qhelpconverter.pro	2016-09-29 19:19:06.678582853 +0000
+@@ -1,4 +1,5 @@
+ QT += xml
++QMAKE_LFLAGS += -lQtCLucene
+ TEMPLATE = app
+ TARGET = qhelpconverter
+ DESTDIR = ../../../../bin
+--- qt-everywhere-opensource-src-4.8.7/tools/assistant/tools/assistant/assistant.pro.orig	2016-09-29 19:16:31.246585901 +0000
++++ qt-everywhere-opensource-src-4.8.7/tools/assistant/tools/assistant/assistant.pro	2016-09-29 19:17:00.486585328 +0000
+@@ -10,6 +10,7 @@ build_all:!build_pass {
+     CONFIG -= build_all
+     CONFIG += release
+ }
++QMAKE_LFLAGS += -lQtCLucene
+ QT += network
+ PROJECTNAME = Assistant
+ DESTDIR = ../../../../bin
+--- qt-everywhere-opensource-src-4.8.7/tools/assistant/tools/qcollectiongenerator/*.pro.orig	2016-09-29 19:18:18.850583791 +0000
++++ qt-everywhere-opensource-src-4.8.7/tools/assistant/tools/qcollectiongenerator/qcollectiongenerator.pro	2016-09-29 19:18:25.682583657 +0000
+@@ -1,5 +1,6 @@
+ QT += xml \
+     network
++QMAKE_LFLAGS += -lQtCLucene
+ TEMPLATE = app
+ DESTDIR = ../../../../bin
+ TARGET = qcollectiongenerator

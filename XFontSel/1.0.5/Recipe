@@ -1,0 +1,11 @@
+# Recipe for version 1.0.5 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 2 14:58:53 GMT 2014
+# Recipe (MakeRecipe) for XFontSel by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 18:51:55 BRT 2005
+compile_version=1.11.0
+url="http://xorg.freedesktop.org/archive/individual/app/xfontsel-1.0.5.tar.bz2"
+file_size=139801
+file_md5=a40302b88c599b63e3d3d412e02871e6
+recipe_type=configure
+part_of=Xorg-App
+install_variables=(
+   appdefaultdir=${target}/Shared/X11/app-defaults
+)

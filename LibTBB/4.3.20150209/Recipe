@@ -1,0 +1,21 @@
+# Recipe (MakeRecipe) for LibTBB by Hisham Muhammad <hisham@gobolinux.org>, on Fri Feb 20 02:00:41 BRST 2015
+# Recipe for version 4.3.20150209 by Hisham Muhammad <hisham@gobolinux.org>, on Fri Feb 20 02:00:41 BRST 2015
+compile_version=2.0
+url="https://www.threadingbuildingblocks.org/sites/default/files/software_releases/source/tbb43_20150209oss_src.tgz"
+file_size=2700507
+file_md5=f09c9abe8ec74e6558c1f89cebbe2893
+dir='tbb43_20150209oss'
+recipe_type=makefile
+makefile='Makefile'
+do_install=no
+pre_install() {
+        cp -a build/linux*release/*.so* $target/lib
+        (
+           cd $target/lib
+           for i in *.so.*
+           do
+              ln -nfs $i ${i%.*}
+           done
+        )
+        cp -a include/tbb $target/include
+}

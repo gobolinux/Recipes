@@ -1,0 +1,14 @@
+proxy_type is declared as a typedef but improperly referenced as an enum, which halts compile
+
+diff -Naur prozgui-2.0.5beta/src/options.cpp prozgui-2.0.5beta.fix/src/options.cpp
+--- prozgui-2.0.5beta/src/options.cpp	2003-02-11 22:56:33.000000000 -0200
++++ prozgui-2.0.5beta.fix/src/options.cpp	2008-10-11 14:52:45.101033950 -0300
+@@ -191,7 +191,7 @@
+   rt.ftp_proxy->username = strdup(in_ftp_proxy_user->value());
+   free(rt.ftp_proxy->passwd);
+   rt.ftp_proxy->passwd = strdup(in_ftp_proxy_passwd->value());
+-  rt.ftp_proxy->type = (enum proxy_type) in_ftp_proxy_type->value();
++  rt.ftp_proxy->type = (proxy_type) in_ftp_proxy_type->value();
+   rt.use_ftp_proxy = in_use_ftp_proxy->value() == 1 ? TRUE : FALSE;
+ 
+ 

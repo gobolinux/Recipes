@@ -1,0 +1,13 @@
+# Recipe for version 1.4.0 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Sep 3 23:39:44 BRT 2012
+# Recipe (MakeRecipe) for Thunar by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:15:56 CEST 2006
+compile_version=1.9.0
+url="http://archive.xfce.org/xfce/4.10/src/Thunar-1.4.0.tar.bz2"
+file_size=1915160
+file_md5=737ad2c36ed36b10fef82e860b9e990a
+recipe_type=configure
+configure_options=(
+   --enable-debug
+)
+with_doc=(
+   --enable-gtk-doc
+)

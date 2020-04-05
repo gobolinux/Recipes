@@ -1,9 +1,0 @@
-# Recipe (MakeRecipe) for URxvt-Font-Size by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Nov 26 12:23:21 BRST 2016
-# Recipe for version git by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Nov 26 12:23:21 BRST 2016
-compile_version=2.0
-git="https://github.com/majutsushi/urxvt-font-size.git"
-recipe_type=manifest
-
-manifest=(
-    font-size:lib/urxvt/perl/
-)

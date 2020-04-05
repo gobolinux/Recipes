@@ -1,0 +1,23 @@
+# Recipe for version 3.8 by Jonas Karlsson <jonas@gobolinux.org>, on Tue May 12 15:24:01 CEST 2009
+# Recipe for Module-Init-Tools 3.2-pre9 by Lucas Correia Villa Real
+compile_version=1.8.2
+url="http://www.kernel.org/pub/linux/utils/kernel/module-init-tools/module-init-tools-3.8.tar.bz2"
+file_size=802725
+file_md5=470d7830fd263d29a92149da6ae9f122
+recipe_type=configure
+
+configure_options=(
+   --with-moddir="$goboModules"
+   --enable-zlib
+)
+build_variables=(
+   "DOCBOOKTOMAN=''"
+)
+
+install_variables=(
+   INSTALL=install
+)
+
+pre_build(){
+   touch modprobe.conf.5
+}

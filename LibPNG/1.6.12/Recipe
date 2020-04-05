@@ -1,0 +1,11 @@
+# Recipe for version 1.6.12 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Aug 25 13:59:57 BRT 2014
+compile_version=1.8.5
+url="http://downloads.sourceforge.net/project/libpng/libpng16/1.6.12/libpng-1.6.12.tar.xz"
+file_size=902368
+file_md5=ee752da8aa75076500e4cf31318e636e
+recipe_type=configure
+
+pre_link() {
+    ln -sf libpng16 $target/include/libpng
+    ln -sf libpng.so $target/lib/libpng.so.0
+}

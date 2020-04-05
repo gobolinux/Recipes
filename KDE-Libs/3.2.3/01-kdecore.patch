@@ -1,0 +1,24 @@
+--- kdelibs-3.2.3/kdecore/Makefile.am.orig	2004-08-29 21:37:01.000000000 -0300
++++ kdelibs-3.2.3/kdecore/Makefile.am	2004-08-29 21:40:57.000000000 -0300
+@@ -162,8 +162,8 @@
+ kgrantpty_LDADD = ./libkdefakes.la
+ 
+ # kgrantpty needs to be installed setuid root
+-install-exec-hook: 
+-	@(chown root $(DESTDIR)$(bindir)/kgrantpty && chmod 4755 $(DESTDIR)$(bindir)/kgrantpty) || echo "Please make kgrantpty setuid root" >&2
++install-exec-hook:
++	@(chown 0 $(DESTDIR)$(bindir)/kgrantpty && chmod 4755 $(DESTDIR)$(bindir)/kgrantpty) || echo "Please make kgrantpty setuid root" >&2
+ 	@echo ""
+ 	@echo "kgrantpty is by default installed with a set SETUID root bit!"
+ 	@echo "This is needed for konsole, etc. to ensure that they can't be eavesdroped."
+--- kdelibs-3.2.3/kdecore/Makefile.in.orig	2004-08-29 21:41:02.000000000 -0300
++++ kdelibs-3.2.3/kdecore/Makefile.in	2004-08-29 21:41:17.000000000 -0300
+@@ -1687,7 +1687,7 @@
+ 
+ # kgrantpty needs to be installed setuid root
+ install-exec-hook: 
+-	@(chown root $(DESTDIR)$(bindir)/kgrantpty && chmod 4755 $(DESTDIR)$(bindir)/kgrantpty) || echo "Please make kgrantpty setuid root" >&2
++	@(chown 0 $(DESTDIR)$(bindir)/kgrantpty && chmod 4755 $(DESTDIR)$(bindir)/kgrantpty) || echo "Please make kgrantpty setuid root" >&2
+ 	@echo ""
+ 	@echo "kgrantpty is by default installed with a set SETUID root bit!"
+ 	@echo "This is needed for konsole, etc. to ensure that they can't be eavesdroped."

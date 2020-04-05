@@ -1,0 +1,19 @@
+--- parted-1.8.8/m4/extensions.m4.old	2008-07-12 13:18:48.000000000 +0000
++++ parted-1.8.8/m4/extensions.m4	2008-07-12 13:16:23.000000000 +0000
+@@ -16,6 +16,7 @@
+ # ------------------------
+ # Enable extensions on systems that normally disable them,
+ # typically due to standards-conformance issues.
++m4_ifndef([AC_USE_SYSTEM_EXTENSIONS],[
+ AC_DEFUN([AC_USE_SYSTEM_EXTENSIONS],
+ [
+   AC_BEFORE([$0], [AC_COMPILE_IFELSE])
+@@ -49,7 +50,7 @@
+   AC_DEFINE([_POSIX_PTHREAD_SEMANTICS])
+   AC_DEFINE([_TANDEM_SOURCE])
+ ])
+-
++])
+ # gl_USE_SYSTEM_EXTENSIONS
+ # ------------------------
+ # Enable extensions on systems that normally disable them,

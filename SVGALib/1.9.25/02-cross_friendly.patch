@@ -1,0 +1,51 @@
+--- svgalib-1.9.25/kernel/svgalib_helper/Makefile.orig	2006-08-02 15:23:10.000000000 -0300
++++ svgalib-1.9.25/kernel/svgalib_helper/Makefile	2006-08-02 15:42:08.000000000 -0300
+@@ -4,10 +4,13 @@ SVGALIB_HELPER_MAJOR=209
+ svgalib_helper-objs := main.o i810.o interrupt.o virtual.o displaystart.o
+ obj-m		:= svgalib_helper.o
+ 
+-ifneq ($(KERNELRELEASE),)
++ifneq ($(S_KERNELRELEASE),)
+ 
+-   VER    ?= $(KERNELRELEASE)
+-   KDIR	:= /lib/modules/$(VER)/build
++   VER    ?= $(S_KERNELRELEASE)
++   KDIR	?= /lib/modules/$(VER)/build
++   MODDIR ?= /lib/modules
++   CROSS_COMPILE ?=
++   DEPMOD_FLAGS ?=
+    PWD	:= $(shell pwd)
+    TARGET  := svgalib_helper
+ 
+@@ -18,7 +21,10 @@ ifneq ($(KERNELRELEASE),)
+ else
+ 
+    VER    ?= $(shell uname -r)
+-   KDIR	:= /lib/modules/$(VER)/build
++   KDIR	?= /lib/modules/$(VER)/build
++   MODDIR ?= /lib/modules
++   CROSS_COMPILE ?=
++   DEPMOD_FLAGS ?=
+    PWD	:= $(shell pwd)
+    TARGET  := svgalib_helper
+ 
+@@ -35,7 +41,7 @@ EXTRA_CFLAGS := -DSVGALIB_HELPER_MAJOR=$
+ 
+ 
+ default:
+-	$(MAKE) -C $(KDIR) SUBDIRS=$(PWD) CLASS_CFLAGS=$(CLASS_CFLAGS) modules
++	$(MAKE) -C $(KDIR) SUBDIRS=$(PWD) CLASS_CFLAGS=$(CLASS_CFLAGS) CROSS_COMPILE=$(CROSS_COMPILE) modules
+ 
+ depend:
+ 	$(MAKE) -C $(KDIR) SUBDIRS=$(PWD) depend
+@@ -60,7 +66,7 @@ device:
+ install: device modules_install
+ 
+ modules_install: $(MODNAME)
+-	mkdir -p /lib/modules/$(VER)/kernel/misc
+-	install -m 0644 -c $(TARGET).ko /lib/modules/$(VER)/kernel/misc ||	install -m 0644 -c $(TARGET).o /lib/modules/$(VER)/kernel/misc
+-	depmod -a $(VER)
++	mkdir -p $(MODDIR)/$(VER)/kernel/misc
++	install -m 0644 -c $(TARGET).ko $(MODDIR)/$(VER)/kernel/misc ||	install -m 0644 -c $(TARGET).o $(MODDIR)/$(VER)/kernel/misc
++	depmod -a $(VER) $(DEPMOD_FLAGS)
+ 

@@ -1,0 +1,11 @@
+# Recipe for version 2.12.9 by Andre Detsch <detsch@gobolinux.org>, on Wed Feb 21 18:43:43 BRT 2007
+# Recipe (MakeRecipe) for GLib by  Ozgur Ulukir, on Mon Dec 20 01:48:37 EET 2004
+compile_version=1.8.2
+url="http://ftp.gnome.org/pub/GNOME/sources/glib/2.12/glib-2.12.9.tar.bz2"
+recipe_type=configure
+
+pre_link() {
+    Quiet pushd $target/lib/pkgconfig
+    for i in *; do ln -s $i `echo $i | sed 's/-2.0//g'`; done
+    Quiet popd
+}

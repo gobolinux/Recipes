@@ -1,0 +1,18 @@
+# Recipe for version 2.0.10 by Giambattista Bloisi <giamby@infinito.it>, on Sat Jan 31 17:42:42 CET 2009
+# Recipe (MakeRecipe) for Gnupg by Giovani Facchini, on Qui Abr 14 17:00:52 BRT 2005
+compile_version=1.8.5
+url="ftp://ftp.gnupg.org/gcrypt/gnupg/gnupg-2.0.10.tar.bz2"
+file_size=3825638
+file_md5=1cb778dd555f87685a8fde2f7113725e
+recipe_type=configure
+
+configure_options=(
+    --with-pinentry-pgm=$goboExecutables/pinentry
+    --with-dirmngr-pgm=$goboExecutables/dirmngr
+    --with-protect-tool-pgm=$goboExecutables/protect-tool
+)
+
+pre_link(){
+	#Create a symlink to gpg2 named gpg for backward compatibility
+	ln -s -n -f $target/bin/gpg2 $target/bin/gpg
+}

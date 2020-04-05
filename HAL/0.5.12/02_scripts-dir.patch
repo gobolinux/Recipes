@@ -1,0 +1,142 @@
+diff -Naur hal-0.5.12.orig/hald/Makefile.am hal-0.5.12/hald/Makefile.am
+--- hal-0.5.12.orig/hald/Makefile.am	2009-05-13 13:33:16.000000000 +0200
++++ hal-0.5.12/hald/Makefile.am	2009-05-13 13:33:56.000000000 +0200
+@@ -9,7 +9,7 @@
+ 	-DPACKAGE_BIN_DIR=\""$(bindir)"\" \
+ 	-DPACKAGE_LOCALE_DIR=\""$(localedir)"\" \
+ 	-DPACKAGE_LOCALSTATEDIR=\""$(localstatedir)"\" \
+-	-DPACKAGE_SCRIPT_DIR=\""$(libdir)/hal/scripts"\" \
++	-DPACKAGE_SCRIPT_DIR=\""$(datadir)/hal/scripts"\" \
+ 	-DHALD_SOCKET_DIR=\""$(HALD_SOCKET_DIR)"\" \
+ 	-DHALD_PID_FILE=\""$(HALD_PID_FILE)"\" \
+ 	-DPCI_IDS_DIR=\""$(PCI_IDS_DIR)"\" \
+diff -Naur hal-0.5.12.orig/hald/Makefile.in hal-0.5.12/hald/Makefile.in
+--- hal-0.5.12.orig/hald/Makefile.in	2009-05-13 13:33:16.000000000 +0200
++++ hal-0.5.12/hald/Makefile.in	2009-05-13 13:35:00.000000000 +0200
+@@ -274,7 +274,7 @@
+ 	-DPACKAGE_BIN_DIR=\""$(bindir)"\" \
+ 	-DPACKAGE_LOCALE_DIR=\""$(localedir)"\" \
+ 	-DPACKAGE_LOCALSTATEDIR=\""$(localstatedir)"\" \
+-	-DPACKAGE_SCRIPT_DIR=\""$(libdir)/hal/scripts"\" \
++	-DPACKAGE_SCRIPT_DIR=\""$(datadir)/hal/scripts"\" \
+ 	-DHALD_SOCKET_DIR=\""$(HALD_SOCKET_DIR)"\" \
+ 	-DHALD_PID_FILE=\""$(HALD_PID_FILE)"\" \
+ 	-DPCI_IDS_DIR=\""$(PCI_IDS_DIR)"\" \
+diff -Naur hal-0.5.12.orig/hald-runner/Makefile.am hal-0.5.12/hald-runner/Makefile.am
+--- hal-0.5.12.orig/hald-runner/Makefile.am	2009-05-13 13:33:16.000000000 +0200
++++ hal-0.5.12/hald-runner/Makefile.am	2009-05-13 13:35:57.000000000 +0200
+@@ -6,7 +6,7 @@
+ 	-DPACKAGE_BIN_DIR=\""$(bindir)"\" \
+ 	-DPACKAGE_LOCALE_DIR=\""$(localedir)"\" \
+ 	-DPACKAGE_LOCALSTATEDIR=\""$(localstatedir)"\" \
+-	-DPACKAGE_SCRIPT_DIR=\""$(libdir)/hal/scripts"\" \
++	-DPACKAGE_SCRIPT_DIR=\""$(datadir)/hal/scripts"\" \
+ 	-DHALD_SOCKET_DIR=\""$(HALD_SOCKET_DIR)"\" \
+ 	-I$(top_srcdir) \
+ 	@DBUS_CFLAGS@ @GLIB_CFLAGS@
+diff -Naur hal-0.5.12.orig/hald-runner/Makefile.in hal-0.5.12/hald-runner/Makefile.in
+--- hal-0.5.12.orig/hald-runner/Makefile.in	2009-05-13 13:33:16.000000000 +0200
++++ hal-0.5.12/hald-runner/Makefile.in	2009-05-13 13:37:12.000000000 +0200
+@@ -232,7 +232,7 @@
+ 	-DPACKAGE_BIN_DIR=\""$(bindir)"\" \
+ 	-DPACKAGE_LOCALE_DIR=\""$(localedir)"\" \
+ 	-DPACKAGE_LOCALSTATEDIR=\""$(localstatedir)"\" \
+-	-DPACKAGE_SCRIPT_DIR=\""$(libdir)/hal/scripts"\" \
++	-DPACKAGE_SCRIPT_DIR=\""$(datadir)/hal/scripts"\" \
+ 	-DHALD_SOCKET_DIR=\""$(HALD_SOCKET_DIR)"\" \
+ 	-I$(top_srcdir) \
+ 	@DBUS_CFLAGS@ @GLIB_CFLAGS@
+diff -Naur hal-0.5.12.orig/tools/freebsd/Makefile.am hal-0.5.12/tools/freebsd/Makefile.am
+--- hal-0.5.12.orig/tools/freebsd/Makefile.am	2009-05-13 13:33:16.000000000 +0200
++++ hal-0.5.12/tools/freebsd/Makefile.am	2009-05-13 13:38:16.000000000 +0200
+@@ -1,6 +1,6 @@
+ ## Process this file with automake to produce Makefile.in
+ 
+-scriptdir = $(libdir)/hal/scripts/freebsd
++scriptdir = $(datadir)/hal/scripts/freebsd
+ 
+ script_SCRIPTS =					\
+ 	hal-system-power-suspend-freebsd		\
+diff -Naur hal-0.5.12.orig/tools/freebsd/Makefile.in hal-0.5.12/tools/freebsd/Makefile.in
+--- hal-0.5.12.orig/tools/freebsd/Makefile.in	2009-05-13 13:33:16.000000000 +0200
++++ hal-0.5.12/tools/freebsd/Makefile.in	2009-05-13 13:39:12.000000000 +0200
+@@ -206,7 +206,7 @@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+ udev_prefix = @udev_prefix@
+-scriptdir = $(libdir)/hal/scripts/freebsd
++scriptdir = $(datadir)/hal/scripts/freebsd
+ script_SCRIPTS = \
+ 	hal-system-power-suspend-freebsd		\
+ 	hal-system-power-shutdown-freebsd		\
+diff -Naur hal-0.5.12.orig/tools/linux/Makefile.am hal-0.5.12/tools/linux/Makefile.am
+--- hal-0.5.12.orig/tools/linux/Makefile.am	2009-05-13 13:33:16.000000000 +0200
++++ hal-0.5.12/tools/linux/Makefile.am	2009-05-13 13:42:05.000000000 +0200
+@@ -10,14 +10,14 @@
+ 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
+ 	-DPACKAGE_BIN_DIR=\""$(bindir)"\" \
+ 	-DPACKAGE_LOCALSTATEDIR=\""$(localstatedir)"\" \
+-	-DPACKAGE_SCRIPT_DIR=\""$(libdir)/hal/scripts"\" \
++	-DPACKAGE_SCRIPT_DIR=\""$(datadir)/hal/scripts"\" \
+ 	-DPACKAGE_LOCALE_DIR=\""$(localedir)"\" \
+ 	-I$(top_srcdir) -I$(top_srcdir)/libhal -I$(top_srcdir)/libhal-storage \
+ 	@DBUS_CFLAGS@ @GLIB_CFLAGS@ @POLKIT_CFLAGS@
+ 
+ libexec_PROGRAMS =  
+ 
+-scriptdir = $(libdir)/hal/scripts/linux
++scriptdir = $(datadir)/hal/scripts/linux
+ 
+ script_SCRIPTS =					\
+ 	hal-luks-setup-linux                          	\
+diff -Naur hal-0.5.12.orig/tools/linux/Makefile.in hal-0.5.12/tools/linux/Makefile.in
+--- hal-0.5.12.orig/tools/linux/Makefile.in	2009-05-13 13:33:16.000000000 +0200
++++ hal-0.5.12/tools/linux/Makefile.in	2009-05-13 13:44:00.000000000 +0200
+@@ -228,12 +228,12 @@
+ 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
+ 	-DPACKAGE_BIN_DIR=\""$(bindir)"\" \
+ 	-DPACKAGE_LOCALSTATEDIR=\""$(localstatedir)"\" \
+-	-DPACKAGE_SCRIPT_DIR=\""$(libdir)/hal/scripts"\" \
++	-DPACKAGE_SCRIPT_DIR=\""$(datadir)/hal/scripts"\" \
+ 	-DPACKAGE_LOCALE_DIR=\""$(localedir)"\" \
+ 	-I$(top_srcdir) -I$(top_srcdir)/libhal -I$(top_srcdir)/libhal-storage \
+ 	@DBUS_CFLAGS@ @GLIB_CFLAGS@ @POLKIT_CFLAGS@
+ 
+-scriptdir = $(libdir)/hal/scripts/linux
++scriptdir = $(datadir)/hal/scripts/linux
+ script_SCRIPTS = \
+ 	hal-luks-setup-linux                          	\
+ 	hal-luks-teardown-linux                       	\
+diff -Naur hal-0.5.12.orig/tools/Makefile.am hal-0.5.12/tools/Makefile.am
+--- hal-0.5.12.orig/tools/Makefile.am	2009-05-13 13:33:16.000000000 +0200
++++ hal-0.5.12/tools/Makefile.am	2009-05-13 13:46:05.000000000 +0200
+@@ -17,7 +17,7 @@
+ 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
+ 	-DPACKAGE_BIN_DIR=\""$(bindir)"\" \
+ 	-DPACKAGE_LOCALSTATEDIR=\""$(localstatedir)"\" \
+-	-DPACKAGE_SCRIPT_DIR=\""$(libdir)/hal/scripts"\" \
++	-DPACKAGE_SCRIPT_DIR=\""$(datadir)/hal/scripts"\" \
+ 	-DPACKAGE_LOCALE_DIR=\""$(localedir)"\" \
+ 	-I$(top_srcdir) -I$(top_srcdir)/libhal -I$(top_srcdir)/libhal-storage \
+ 	@DBUS_CFLAGS@ @GLIB_CFLAGS@ @POLKIT_CFLAGS@
+@@ -156,7 +156,7 @@
+ hal_system_sonypic_LDADD = @GLIB_LIBS@ @DBUS_LIBS@ $(top_builddir)/libhal/libhal.la
+ endif
+ 
+-scriptdir = $(libdir)/hal/scripts
++scriptdir = $(datadir)/hal/scripts
+ 
+ script_SCRIPTS =				\
+ 	hal-luks-setup                          \
+diff -Naur hal-0.5.12.orig/tools/Makefile.in hal-0.5.12/tools/Makefile.in
+--- hal-0.5.12.orig/tools/Makefile.in	2009-05-13 13:33:16.000000000 +0200
++++ hal-0.5.12/tools/Makefile.in	2009-05-13 13:49:03.000000000 +0200
+@@ -481,7 +481,7 @@
+ @HAVE_PMU_TRUE@hal_system_power_pmu_LDADD = @DBUS_LIBS@ $(top_builddir)/libhal/libhal.la
+ @HAVE_SONYPIC_TRUE@hal_system_sonypic_SOURCES = hal-system-sonypic.c
+ @HAVE_SONYPIC_TRUE@hal_system_sonypic_LDADD = @GLIB_LIBS@ @DBUS_LIBS@ $(top_builddir)/libhal/libhal.la
+-scriptdir = $(libdir)/hal/scripts
++scriptdir = $(datadir)/hal/scripts
+ script_SCRIPTS = \
+ 	hal-luks-setup                          \
+ 	hal-luks-teardown                       \

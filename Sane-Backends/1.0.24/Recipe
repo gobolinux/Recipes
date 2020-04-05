@@ -1,0 +1,13 @@
+# Recipe for version 1.0.24 by Hisham Muhammad <hisham@gobolinux.org>, on Tue Aug 4 08:18:12 BRT 2015
+compile_version=1.8.0
+url="https://alioth.debian.org/frs/download.php/file/3958/sane-backends-1.0.24.tar.gz"
+file_size=5778749
+file_md5=1ca68e536cd7c1852322822f5f6ac3a4
+mirror_url="ftp://ftp.sane-project.org/pub/sane/old-versions/sane-backends-1.0.24/sane-backends-1.0.24.tar.gz"
+recipe_type=configure
+configure_options=(
+    --disable-latex
+)
+unmanaged_files=(
+    $goboVariable/lock/sane
+)

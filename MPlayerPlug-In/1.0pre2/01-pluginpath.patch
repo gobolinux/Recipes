@@ -1,0 +1,12 @@
+diff -Naur mplayerplug-in/Makefile.in mplayerplug-in-new/Makefile.in
+--- mplayerplug-in/Makefile.in	2003-10-27 21:11:54.000000000 -0200
++++ mplayerplug-in-new/Makefile.in	2003-11-21 03:37:52.000000000 -0200
+@@ -41,7 +41,7 @@
+ 	$(RM) $(OBJ) $(SHAREDTARGET)
+ 
+ install: $(SHAREDTARGET)
+-	$(INSTALL) $(SHAREDTARGET) $(HOME)/.mozilla/plugins
++	$(INSTALL) $(SHAREDTARGET) /Programs/MPlayerPlug-In/Current/
+ #	$(INSTALL) mplayerplug-in.conf $(HOME)/.mplayer
+ #	$(INSTALL) mplayerplug-in.types $(HOME)/.mplayer
+ 

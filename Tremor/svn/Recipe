@@ -1,0 +1,6 @@
+# Recipe (MakeRecipe) for Tremor by Lucas C. Villa Real, on Sun Dec 17 12:51:53 BRST 2006
+# Recipe for version svn by Lucas C. Villa Real, on Sun Dec 17 12:51:53 BRST 2006
+compile_version=1.8.0
+svn="http://svn.xiph.org/trunk/Tremor"
+recipe_type=configure
+autogen_before_configure=yes

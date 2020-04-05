@@ -1,0 +1,24 @@
+[Name] Squirrel
+[Summary] A lightweight OO scripting language with C/C++-like syntax.
+[Description] Squirrel is a high level imperative/OO programming
+language, designed to be a powerful scripting tool that fits in the
+size, memory bandwidth, and real-time requirements of applications like
+games. Although Squirrel offers a wide range of features like:
+* Open Source zlib/libpng license
+* dynamic typing
+* delegation
+* classes & inheritance
+* higher order functions
+* generators
+* cooperative threads(coroutines) 
+* tail recursion
+* exception handling
+* automatic memory management (CPU bursts free; mixed approach ref counting/GC)
+* weak references
+* both compiler and virtual machine fit together in about 6k lines of C++ code.
+* optional 16bits characters strings
+* compiles on both 32 and 64 bits architectures 
+Squirrel is inspired by languages like Python,Javascript and especially
+Lua(The API is very similar and the table code is based on the Lua one)
+[License] ZLIB/LIBPNG
+[Homepage] http://squirrel-lang.org/

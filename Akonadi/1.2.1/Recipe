@@ -1,0 +1,9 @@
+# Recipe for version 1.2.1 by Dominique Juergensen <brokolie@vollbio.de>, on Sat Nov 14 01:47:33 CET 2009
+# Recipe (MakeRecipe) for Akonadi by Giambattista Bloisi <giamby@infinito.it>, on Sat Oct 25 22:20:43 CEST 2008
+compile_version=1.11.2
+url="http://download.akonadi-project.org/akonadi-1.2.1.tar.bz2"
+file_size=177290
+file_md5=f9c1d000844f31c67360078ddf60bec2
+recipe_type=cmake
+
+with_mysql=( "-DMYSQLD_EXECUTABLE=${mysql_path}/libexec/mysqld" )

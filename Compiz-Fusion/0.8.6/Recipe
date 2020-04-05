@@ -1,0 +1,21 @@
+# Recipe for version 0.8.6 by Joseph Wallace <JosephWallace@letu.edu>, on Sun Aug 15 22:55:35 CDT 2010
+# Recipe (MakeRecipe) for Compiz-Fusion by Giambattista Bloisi <giamby@infinito.it>, on Mon Nov 5 23:43:27 CET 2007
+recipe_type=meta
+compile_version=1.9.0
+
+include=(
+	Compiz--0.8.6
+	Compiz-BCOP--0.8.4
+	LibCompizConfig--0.8.4
+	CompizConfig-Python--0.8.4
+	CCSM--0.8.4
+	Compiz-Fusion-Plugins-Main--0.8.6
+	Compiz-Fusion-Plugins-Extra--0.8.6
+	Compiz-Fusion-Plugins-Unsupported--0.8.4
+	Emerald--0.8.4
+#	Emerald-Themes--0.5.2 # doesn't appear to exist anymore
+
+#	No Recipes for these yet:
+#	CompizConfig-Backend-KConfig--0.8.4
+#	CompizConfig-Backend-GConf--0.8.4
+)

@@ -1,0 +1,19 @@
+# Recipe for version 8.15.3 by Lucas C. Villa Real, on Tue Feb 27 11:17:19 GMT 2007
+url="ftp://ftp3.easysw.com/pub/ghostscript/8.15.3/espgs-8.15.3-source.tar.bz2"
+file_size=8785418
+file_md5=4ec87a3da20c1b433ffbe0ffe3675fcd
+dir='espgs-8.15.3'
+compile_version=1.8.2
+recipe_type=configure
+
+install_variables=(
+    sysconfdir="$settings_target"
+)
+
+configure_options=(
+	"--enable-cups"
+	"--with-drivers=ALL"
+	"--with-fontpath=/Files/Fonts/Ghostscript"
+	"--with-gimp-print"
+	"--with-omni"
+)

@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for QGit by Michael Homer <michael@gobolinux.org>, on Tue Nov 25 13:33:20 NZDT 2008
+# Recipe for version 2.2 by Michael Homer <michael@gobolinux.org>, on Tue Nov 25 13:33:20 NZDT 2008
+compile_version=1.11.5
+url="$httpSourceforge/qgit/qgit-2.2.tar.bz2"
+file_size=159928
+file_md5=f863efa000aa1549f803c6ad743decd6
+dir='qgit'
+recipe_type=makefile
+do_install=no
+pre_build() {
+   qmake -spec linux-g++ qgit.pro
+}
+pre_link() {
+   cp bin/qgit $target/bin
+}

@@ -1,0 +1,11 @@
+# Recipe for version 1.4.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 2 14:51:56 GMT 2014
+# Recipe (MakeRecipe) for RandRProto by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 20:14:50 BRT 2005
+compile_version=1.8.2
+url="http://xorg.freedesktop.org/archive/individual/proto/randrproto-1.4.0.tar.bz2"
+file_size=133300
+file_md5=ce4d0b05675968e4c83e003cc809660d
+part_of=Xorg-Proto
+recipe_type=configure
+configure_options=(
+	--without-fop
+)

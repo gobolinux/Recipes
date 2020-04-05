@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [ ! -e /sys/class/misc/uinput ]
+then
+	modprobe uinput
+fi
+
+case "$1" in
+	[sS]tart)
+		pommed ;;
+	[sS]top)
+		killall -9 pommed ;;
+	*)
+		echo "Syntax: $0 <start|stop>" ;;
+esac
+

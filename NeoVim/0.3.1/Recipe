@@ -1,0 +1,15 @@
+# Recipe for version 0.3.1 by stratact <stratact1@gmail.com>, on Fri Aug 31 06:52:47 UTC 2018
+# Recipe (MakeRecipe) for Neovim by Aitor ATuin <atuin@tuto.io>, on Sat Jul 9 10:45:02 CEST 2016
+compile_version=2.0
+url="https://github.com/neovim/neovim/archive/v0.3.1.tar.gz"
+file_size=8937900
+file_md5=5405bced1c929ebc245c75409cd6c7ef
+file="neovim-0.3.1.tar.gz"
+dir='neovim-0.3.1'
+recipe_type=makefile
+do_build() {
+    unset LUA_PATH
+    unset LUA_CPATH
+    mkdir build && cmake -DCMAKE_BUILD_TYPE=MinSizeRel -DCMAKE_INSTALL_PREFIX=$target ..
+    make
+}

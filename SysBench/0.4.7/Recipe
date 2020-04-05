@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for SysBench by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Jul 11 17:43:36 BRT 2006
+# Recipe for version 0.4.7 by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Jul 11 17:43:36 BRT 2006
+compile_version=1.8.0
+url="$httpSourceforge/sysbench/sysbench-0.4.7.tar.gz"
+file_size=483272
+file_md5=f15f48caf5d013e6d15dac7d55c034d5
+recipe_type=configure
+
+configure_options=(
+    --without-mysql
+)

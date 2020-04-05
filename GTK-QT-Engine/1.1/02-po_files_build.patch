@@ -1,0 +1,24 @@
+Small issue with cmake where it gets paths wrong for custom commands. This
+patch adds the full paths to the source and the resulting files.
+
+signed-off-by; Jonas Karlsson <jonas@gobolinux.org>
+
+--- gtk-qt-engine/po/CMakeLists.txt	2008-03-29 06:01:32.000000000 +0000
++++ gtk-qt-engine/po/CMakeLists.txt.new	2008-03-29 06:04:13.000000000 +0000
+@@ -3,13 +3,12 @@
+ 
+ FOREACH(_file ${_pofiles})
+ 	GET_FILENAME_COMPONENT(_file_we ${_file} NAME_WE)
+-	SET(_out "${_file_we}.gmo")
+-	SET(_in "${_file_we}.po")
++	SET(_out "${CMAKE_CURRENT_BINARY_DIR}/${_file_we}.gmo")
+ 	
+ 	ADD_CUSTOM_COMMAND(
+ 		OUTPUT ${_out}
+-		COMMAND ${MSGFMT_EXECUTABLE} -o ${_out} ${_in}
+-		DEPENDS ${_in}
++		COMMAND ${MSGFMT_EXECUTABLE} -o ${_out} ${_file}
++		DEPENDS ${_file}
+ 	)
+ 	
+ 	INSTALL(

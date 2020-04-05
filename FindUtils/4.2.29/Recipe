@@ -1,0 +1,8 @@
+# Recipe for version 4.2.29 by Andre Detsch <detsch@gobolinux.org>, on Sat Dec 16 23:14:09 BRST 2006
+# Recipe (MakeRecipe) for FindUtils by roko, <ro.ko@mcnon.com>, , on Fri Oct 22 20:28:10 BRST 2004
+compile_version=1.8.0
+url="ftp://ftp.gnu.org/gnu/findutils/findutils-4.2.29.tar.gz"
+recipe_type=configure
+pre_link() {
+    mkdir $variable_target
+}

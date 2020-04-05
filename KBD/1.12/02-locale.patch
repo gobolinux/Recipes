@@ -1,0 +1,408 @@
+diff -u kbd-1.12/src/chvt.c kbd-1.12-lucasvr/src/chvt.c
+--- kbd-1.12/src/chvt.c	2004-01-16 17:45:31.000000000 -0200
++++ kbd-1.12-lucasvr/src/chvt.c	2004-12-11 17:32:15.000000000 -0200
+@@ -16,11 +16,11 @@
+     int fd, num;
+ 
+     set_progname(argv[0]);
+-
++#ifdef HAVE_libintl_h
+     setlocale(LC_ALL, "");
+     bindtextdomain(PACKAGE, LOCALEDIR);
+     textdomain(PACKAGE);
+-
++#endif
+     if (argc == 2 && !strcmp(argv[1], "-V"))
+ 	print_version_and_exit();
+ 
+diff -u kbd-1.12/src/clrunimap.c kbd-1.12-lucasvr/src/clrunimap.c
+--- kbd-1.12/src/clrunimap.c	2004-01-16 17:45:31.000000000 -0200
++++ kbd-1.12-lucasvr/src/clrunimap.c	2004-12-11 17:32:21.000000000 -0200
+@@ -18,10 +18,11 @@
+ 	int fd;
+ 	char *console = NULL;
+ 
++#ifdef HAVE_libintl_h
+ 	setlocale(LC_ALL, "");
+ 	bindtextdomain(PACKAGE, LOCALEDIR);
+ 	textdomain(PACKAGE);
+-
++#endif
+ 	if (argc >= 3 && !strcmp(argv[1], "-C"))
+ 		console = argv[2];
+ 
+diff -u kbd-1.12/src/deallocvt.c kbd-1.12-lucasvr/src/deallocvt.c
+--- kbd-1.12/src/deallocvt.c	2004-01-16 17:45:31.000000000 -0200
++++ kbd-1.12-lucasvr/src/deallocvt.c	2004-12-11 17:32:28.000000000 -0200
+@@ -21,10 +21,11 @@
+ 		exit(1);
+ 	set_progname(argv[0]);
+ 
++#ifdef HAVE_libintl_h
+ 	setlocale(LC_ALL, "");
+ 	bindtextdomain(PACKAGE, LOCALEDIR);
+ 	textdomain(PACKAGE);
+-
++#endif
+ 	if (argc == 2 && !strcmp(argv[1], "-V"))
+ 		print_version_and_exit();
+ 
+diff -u kbd-1.12/src/dumpkeys.c kbd-1.12-lucasvr/src/dumpkeys.c
+--- kbd-1.12/src/dumpkeys.c	2004-01-16 17:45:31.000000000 -0200
++++ kbd-1.12-lucasvr/src/dumpkeys.c	2004-12-11 17:30:24.000000000 -0200
+@@ -571,11 +571,11 @@
+ 	char diac_only = 0;
+ 
+ 	set_progname(argv[0]);
+-
++#ifdef HAVE_libintl_h
+ 	setlocale(LC_ALL, "");
+ 	bindtextdomain(PACKAGE, LOCALEDIR);
+ 	textdomain(PACKAGE);
+-
++#endif
+ 	while ((c = getopt_long(argc, argv,
+ 		short_opts, long_opts, NULL)) != -1) {
+ 		switch (c) {
+diff -u kbd-1.12/src/fgconsole.c kbd-1.12-lucasvr/src/fgconsole.c
+--- kbd-1.12/src/fgconsole.c	2004-01-16 17:45:31.000000000 -0200
++++ kbd-1.12-lucasvr/src/fgconsole.c	2004-12-11 17:32:42.000000000 -0200
+@@ -13,10 +13,11 @@
+ 	int fd;
+ 	struct vt_stat vtstat;
+ 
++#ifdef HAVE_libintl_h
+ 	setlocale(LC_ALL, "");
+ 	bindtextdomain(PACKAGE, LOCALEDIR);
+ 	textdomain(PACKAGE);
+-
++#endif
+ 	fd = getfd(NULL);
+ 	if (ioctl(fd, VT_GETSTATE, &vtstat)) {
+ 		perror("fgconsole: VT_GETSTATE");
+diff -u kbd-1.12/src/getkeycodes.c kbd-1.12-lucasvr/src/getkeycodes.c
+--- kbd-1.12/src/getkeycodes.c	2004-01-16 19:21:06.000000000 -0200
++++ kbd-1.12-lucasvr/src/getkeycodes.c	2004-12-11 17:32:51.000000000 -0200
+@@ -27,10 +27,11 @@
+ 
+ 	set_progname(argv[0]);
+ 
++#ifdef HAVE_libintl_h
+ 	setlocale(LC_ALL, "");
+ 	bindtextdomain(PACKAGE, LOCALEDIR);
+ 	textdomain(PACKAGE);
+-
++#endif
+ 	if (argc == 2 && !strcmp(argv[1], "-V"))
+ 		print_version_and_exit();
+ 
+diff -u kbd-1.12/src/getunimap.c kbd-1.12-lucasvr/src/getunimap.c
+--- kbd-1.12/src/getunimap.c	2004-01-16 17:45:31.000000000 -0200
++++ kbd-1.12-lucasvr/src/getunimap.c	2004-12-11 17:32:57.000000000 -0200
+@@ -41,10 +41,11 @@
+ 
+ 	set_progname(argv[0]);
+ 
++#ifdef HAVE_libintl_h
+ 	setlocale(LC_ALL, "");
+ 	bindtextdomain(PACKAGE, LOCALEDIR);
+ 	textdomain(PACKAGE);
+-
++#endif
+ 	if (argc == 2 &&
+ 	    (!strcmp(argv[1], "-V") || !strcmp(argv[1], "--version")))
+ 		print_version_and_exit();
+diff -u kbd-1.12/src/kbd_mode.c kbd-1.12-lucasvr/src/kbd_mode.c
+--- kbd-1.12/src/kbd_mode.c	2004-01-16 17:45:31.000000000 -0200
++++ kbd-1.12-lucasvr/src/kbd_mode.c	2004-12-11 17:33:02.000000000 -0200
+@@ -25,10 +25,11 @@
+ 
+ 	set_progname(argv[0]);
+ 
++#ifdef HAVE_libintl_h
+ 	setlocale(LC_ALL, "");
+ 	bindtextdomain(PACKAGE, LOCALEDIR);
+ 	textdomain(PACKAGE);
+-
++#endif
+ 	if (argc == 2 && !strcmp(argv[1], "-V"))
+ 	    print_version_and_exit();
+ 
+diff -u kbd-1.12/src/kbdrate.c kbd-1.12-lucasvr/src/kbdrate.c
+--- kbd-1.12/src/kbdrate.c	2004-01-16 17:45:31.000000000 -0200
++++ kbd-1.12-lucasvr/src/kbdrate.c	2004-12-11 17:33:08.000000000 -0200
+@@ -205,9 +205,11 @@
+ 
+ 	set_progname(argv[0]);
+ 
++#ifdef HAVE_libintl_h
+ 	setlocale(LC_ALL, "");
+ 	bindtextdomain(PACKAGE, LOCALEDIR);
+ 	textdomain(PACKAGE);
++#endif
+ 
+ 	if (argc == 2 &&
+ 	    (!strcmp(argv[1], "-V") || !strcmp(argv[1], "--version")))
+diff -u kbd-1.12/src/loadunimap.c kbd-1.12-lucasvr/src/loadunimap.c
+--- kbd-1.12/src/loadunimap.c	2004-01-16 17:45:31.000000000 -0200
++++ kbd-1.12-lucasvr/src/loadunimap.c	2004-12-11 17:33:19.000000000 -0200
+@@ -52,10 +52,11 @@
+ 
+ 	set_progname(argv[0]);
+ 
++#ifdef HAVE_libintl_h
+ 	setlocale(LC_ALL, "");
+ 	bindtextdomain(PACKAGE, LOCALEDIR);
+ 	textdomain(PACKAGE);
+-
++#endif
+ 	if (argc == 2 &&
+ 	    (!strcmp(argv[1], "-V") || !strcmp(argv[1], "--version")))
+ 		print_version_and_exit();
+diff -u kbd-1.12/src/Makefile.in kbd-1.12-lucasvr/src/Makefile.in
+--- kbd-1.12/src/Makefile.in	2004-01-03 15:53:54.000000000 -0200
++++ kbd-1.12-lucasvr/src/Makefile.in	2004-12-11 17:48:29.000000000 -0200
+@@ -54,10 +54,16 @@
+ 
+ WARN	= -Wall -Wmissing-prototypes -Wstrict-prototypes
+ DEFS	= -DDATADIR=\"$(DATA_DIR)\"
+-CFLAGS  = -O2
++ifeq ($(LDFLAGS), )
+ LDFLAGS = -s
++endif
++ifeq ($(CFLAGS), )
++CFLAGS  = -O2
++endif
+ 
++ifeq ($(CC), )
+ CC	= gcc
++endif
+ YACC	= bison -y
+ LEX	= flex -8
+ 
+diff -u kbd-1.12/src/mapscrn.c kbd-1.12-lucasvr/src/mapscrn.c
+--- kbd-1.12/src/mapscrn.c	2004-01-16 17:45:31.000000000 -0200
++++ kbd-1.12-lucasvr/src/mapscrn.c	2004-12-11 17:33:24.000000000 -0200
+@@ -39,10 +39,11 @@
+ 
+ 	set_progname(argv[0]);
+ 
++#ifdef HAVE_libintl_h
+ 	setlocale(LC_ALL, "");
+ 	bindtextdomain(PACKAGE, LOCALEDIR);
+ 	textdomain(PACKAGE);
+-
++#endif
+ 	if (argc == 2 && !strcmp(argv[1], "-V"))
+ 	    print_version_and_exit();
+ 
+diff -u kbd-1.12/src/psfxtable.c kbd-1.12-lucasvr/src/psfxtable.c
+--- kbd-1.12/src/psfxtable.c	2004-01-16 17:45:31.000000000 -0200
++++ kbd-1.12-lucasvr/src/psfxtable.c	2004-12-11 17:33:32.000000000 -0200
+@@ -237,9 +237,11 @@
+ 
+ 	set_progname(argv[0]);
+ 
++#ifdef HAVE_libintl_h
+ 	setlocale(LC_ALL, "");
+ 	bindtextdomain(PACKAGE, LOCALEDIR);
+ 	textdomain(PACKAGE);
++#endif
+ 
+ 	if (argc == 2 && !strcmp(argv[1], "-V"))
+ 		print_version_and_exit();
+diff -u kbd-1.12/src/resizecons.c kbd-1.12-lucasvr/src/resizecons.c
+--- kbd-1.12/src/resizecons.c	2004-01-16 17:45:31.000000000 -0200
++++ kbd-1.12-lucasvr/src/resizecons.c	2004-12-11 17:45:47.000000000 -0200
+@@ -77,19 +77,20 @@
+ #include <errno.h>
+ #include <signal.h>
+ #include <sys/ioctl.h>
+-#if (__GNU_LIBRARY__ >= 6)
+-#include <sys/perm.h>
+-#else
+-#include <linux/types.h>
+-#include <linux/termios.h>
+-#endif
+-#include <linux/vt.h>
++
+ #include "paths.h"
+ #include "getfd.h"
+ #include "findfile.h"
+ #include "nls.h"
+ #include "version.h"
+ 
++#if (__GNU_LIBRARY__ >= 6) && defined(HAVE_sys_perm)
++#include <sys/perm.h>
++#else
++#include <linux/types.h>
++#endif
++#include <linux/vt.h>
++
+ #define MODE_RESTORETEXTMODE	0
+ #define MODE_VGALINES		1
+ 
+@@ -120,9 +121,11 @@
+ 
+     set_progname(argv[0]);
+ 
++#ifdef HAVE_libintl_h
+     setlocale(LC_ALL, "");
+     bindtextdomain(PACKAGE, LOCALEDIR);
+     textdomain(PACKAGE);
++#endif
+ 
+     if (argc < 2)
+       usage();
+diff -u kbd-1.12/src/screendump.c kbd-1.12-lucasvr/src/screendump.c
+--- kbd-1.12/src/screendump.c	2004-01-16 17:45:31.000000000 -0200
++++ kbd-1.12-lucasvr/src/screendump.c	2004-12-11 17:33:43.000000000 -0200
+@@ -37,9 +37,11 @@
+ 
+     set_progname(argv[0]);
+ 
++#ifdef HAVE_libintl_h
+     setlocale(LC_ALL, "");
+     bindtextdomain(PACKAGE, LOCALEDIR);
+     textdomain(PACKAGE);
++#endif
+ 
+     if (argc == 2 && !strcmp(argv[1], "-V"))
+ 	print_version_and_exit();
+diff -u kbd-1.12/src/setfont.c kbd-1.12-lucasvr/src/setfont.c
+--- kbd-1.12/src/setfont.c	2004-01-16 17:45:31.000000000 -0200
++++ kbd-1.12-lucasvr/src/setfont.c	2004-12-11 17:33:47.000000000 -0200
+@@ -108,9 +108,11 @@
+ 
+ 	set_progname(argv[0]);
+ 
++#ifdef HAVE_libintl_h
+ 	setlocale(LC_ALL, "");
+ 	bindtextdomain(PACKAGE, LOCALEDIR);
+ 	textdomain(PACKAGE);
++#endif
+ 
+ 	ifiles[0] = mfil = ufil = Ofil = ofil = omfil = oufil = NULL;
+ 	iunit = hwunit = 0;
+diff -u kbd-1.12/src/setkeycodes.c kbd-1.12-lucasvr/src/setkeycodes.c
+--- kbd-1.12/src/setkeycodes.c	2004-01-16 18:51:18.000000000 -0200
++++ kbd-1.12-lucasvr/src/setkeycodes.c	2004-12-11 17:33:52.000000000 -0200
+@@ -32,9 +32,11 @@
+ 
+ 	set_progname(argv[0]);
+ 
++#ifdef HAVE_libintl_h
+ 	setlocale(LC_ALL, "");
+ 	bindtextdomain(PACKAGE, LOCALEDIR);
+ 	textdomain(PACKAGE);
++#endif
+ 
+ 	if (argc == 2 && !strcmp(argv[1], "-V"))
+ 		print_version_and_exit();
+diff -u kbd-1.12/src/setleds.c kbd-1.12-lucasvr/src/setleds.c
+--- kbd-1.12/src/setleds.c	2004-01-16 17:45:31.000000000 -0200
++++ kbd-1.12-lucasvr/src/setleds.c	2004-12-11 17:33:59.000000000 -0200
+@@ -155,9 +155,11 @@
+ 
+     set_progname(argv[0]);
+ 
++#ifdef HAVE_libintl_h
+     setlocale(LC_ALL, "");
+     bindtextdomain(PACKAGE, LOCALEDIR);
+     textdomain(PACKAGE);
++#endif
+ 
+     if (argc == 2 && (!strcmp("-V", argv[1]) || !strcmp("--version", argv[1])))
+ 	print_version_and_exit();
+diff -u kbd-1.12/src/setlogcons.c kbd-1.12-lucasvr/src/setlogcons.c
+--- kbd-1.12/src/setlogcons.c	2004-01-16 17:45:31.000000000 -0200
++++ kbd-1.12-lucasvr/src/setlogcons.c	2004-12-11 17:34:04.000000000 -0200
+@@ -17,9 +17,11 @@
+ 	int fd, cons;
+ 	struct { char fn, subarg; } arg;
+ 
++#ifdef HAVE_libintl_h
+ 	setlocale(LC_ALL, "");
+ 	bindtextdomain(PACKAGE, LOCALEDIR);
+ 	textdomain(PACKAGE);
++#endif
+ 
+ 	if (argc == 2)
+ 		cons = atoi(argv[1]);
+diff -u kbd-1.12/src/setmetamode.c kbd-1.12-lucasvr/src/setmetamode.c
+--- kbd-1.12/src/setmetamode.c	2004-01-16 17:45:31.000000000 -0200
++++ kbd-1.12-lucasvr/src/setmetamode.c	2004-12-11 17:34:10.000000000 -0200
+@@ -65,9 +65,11 @@
+ 
+     set_progname(argv[0]);
+ 
++#ifdef HAVE_libintl_h
+     setlocale(LC_ALL, "");
+     bindtextdomain(PACKAGE, LOCALEDIR);
+     textdomain(PACKAGE);
++#endif
+ 
+     if (argc == 2 && !strcmp(argv[1], "-V"))
+ 	print_version_and_exit();
+diff -u kbd-1.12/src/setvesablank.c kbd-1.12-lucasvr/src/setvesablank.c
+--- kbd-1.12/src/setvesablank.c	2004-01-16 17:45:31.000000000 -0200
++++ kbd-1.12-lucasvr/src/setvesablank.c	2004-12-11 17:34:15.000000000 -0200
+@@ -15,9 +15,11 @@
+ 	int fd;
+ 	struct { char ten, onoff; } arg;
+ 
++#ifdef HAVE_libintl_h
+ 	setlocale(LC_ALL, "");
+ 	bindtextdomain(PACKAGE, LOCALEDIR);
+ 	textdomain(PACKAGE);
++#endif
+ 
+ 	if (argc != 2) {
+ 		fprintf(stderr, _("usage: %s\n"), "setvesablank ON|on|off");
+diff -u kbd-1.12/src/showconsolefont.c kbd-1.12-lucasvr/src/showconsolefont.c
+--- kbd-1.12/src/showconsolefont.c	2004-01-16 17:45:31.000000000 -0200
++++ kbd-1.12-lucasvr/src/showconsolefont.c	2004-12-11 17:34:21.000000000 -0200
+@@ -114,9 +114,11 @@
+ 
+ 	set_progname(argv[0]);
+ 
++#ifdef HAVE_libintl_h
+ 	setlocale(LC_ALL, "");
+ 	bindtextdomain(PACKAGE, LOCALEDIR);
+ 	textdomain(PACKAGE);
++#endif
+ 
+ 	if (argc == 2 &&
+ 	    (!strcmp(argv[1], "-V") || !strcmp(argv[1], "--version")))
+diff -u kbd-1.12/src/showkey.c kbd-1.12-lucasvr/src/showkey.c
+--- kbd-1.12/src/showkey.c	2004-01-16 17:45:31.000000000 -0200
++++ kbd-1.12-lucasvr/src/showkey.c	2004-12-11 17:31:29.000000000 -0200
+@@ -109,11 +109,11 @@
+ 	int i, n;
+ 
+ 	set_progname(argv[0]);
+-
++#ifdef HAVE_libintl_h
+ 	setlocale(LC_ALL, "");
+ 	bindtextdomain(PACKAGE, LOCALEDIR);
+ 	textdomain(PACKAGE);
+-
++#endif
+ 	while ((c = getopt_long(argc, argv,
+ 				short_opts, long_opts, NULL)) != -1) {
+ 		switch (c) {
+diff -u kbd-1.12/src/totextmode.c kbd-1.12-lucasvr/src/totextmode.c
+--- kbd-1.12/src/totextmode.c	2004-01-16 17:45:31.000000000 -0200
++++ kbd-1.12-lucasvr/src/totextmode.c	2004-12-11 17:34:32.000000000 -0200
+@@ -18,10 +18,11 @@
+ 
+ 	set_progname(argv[0]);
+ 
++#ifdef HAVE_libintl_h
+ 	setlocale(LC_ALL, "");
+ 	bindtextdomain(PACKAGE, LOCALEDIR);
+ 	textdomain(PACKAGE);
+-
++#endif
+ 	if (argc == 2 && !strcmp(argv[1], "-V"))
+ 		print_version_and_exit();

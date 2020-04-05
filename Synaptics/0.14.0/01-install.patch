@@ -1,0 +1,17 @@
+diff -Naur synaptics-0.14.0/Makefile synaptics-0.14.0-mod/Makefile.old
+--- synaptics-0.14.0/Makefile	2005-01-09 12:25:48.000000000 +0100
++++ synaptics-0.14.0-mod/Makefile.old	2005-01-09 12:15:12.000000000 +0100
+@@ -3,10 +3,10 @@
+ # Define the TOP variable to build using include files from a local source tree.
+ #TOP = /usr/src/redhat/BUILD/XFree86-4.3.0/xc
+ 
+-INSTALLED_X = $(DESTDIR)/usr/X11R6
++INSTALLED_X = $(DESTDIR)
+ LOCAL_X = Xincludes/usr/X11R6
+-BINDIR = $(DESTDIR)/usr/local/bin
+-MANDIR = $(DESTDIR)/usr/local/man/man1
++BINDIR = $(DESTDIR)/bin
++MANDIR = $(DESTDIR)/man/man1
+ 
+ ifeq ($(ARCH),)
+   ARCH = $(shell /bin/arch)

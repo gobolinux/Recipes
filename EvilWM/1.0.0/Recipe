@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for EvilWM by Charles Southerland <csoutherland@censara.org>, on Tue May 13 16:46:48 CDT 2008
+# Recipe for version 1.0.0 by Charles Southerland <csoutherland@censara.org>, on Tue May 13 16:46:48 CDT 2008
+compile_version=1.11.0
+url="http://www.6809.org.uk/evilwm/evilwm-1.0.0.tar.gz"
+file_size=30048
+file_md5=aa66a68f54dda48ff3bcef23ea852e59
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+   "XROOT=$xorg_path"
+)

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+source "${goboSettings}/WPATasks"
+
+case "$1" in
+   [Ss]tart)
+      wpa_supplicant -g "$wpaGlobalControl" -BW && rm -rf "$wpaControlPath"
+      ;;
+   [Ss]top)
+      wpa_cli -g "$wpaGlobalControl" terminate
+      ;;
+esac
+

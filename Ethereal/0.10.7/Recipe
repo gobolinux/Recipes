@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Ethereal by roko, <ro.ko@mcnon.com>, , on Fri Oct 22 20:48:01 BRST 2004
+# Recipe for version 0.10.7 by roko, <ro.ko@mcnon.com>, , on Fri Oct 22 20:48:01 BRST 2004
+compile_version=1.7.1
+url="http://netmirror.org/mirror/ftp.ethereal.com/ethereal-0.10.7.tar.bz2"
+file_size=5185153
+file_md5=eebd6cc45a45d68332b2c053aac0c484
+recipe_type=configure
+configure_options=(
+"--with-ssl=/Programs/OpenSSL/Current"
+)

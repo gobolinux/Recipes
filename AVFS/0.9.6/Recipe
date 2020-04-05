@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for AVFS by Aitor Pérez Iturri, on sáb abr 1 09:36:09 CEST 2006
+# Recipe for version 0.9.6 by Aitor Pérez Iturri, on sáb abr 1 09:36:09 CEST 2006
+compile_version=1.8.0
+url="$httpSourceforge/avf/avfs-0.9.6.tar.gz"
+file_size=694831
+file_md5=59829701fb2d7593ed7c1de9e0a5ac63
+recipe_type=configure
+docs=(
+	"./doc/api-overview"
+	"./doc/FORMAT"
+	"./doc/background"
+)

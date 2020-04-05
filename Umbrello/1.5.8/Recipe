@@ -1,0 +1,9 @@
+# Recipe for version 1.5.8 by Demian Florentin <demianflorentin_at_gmail.com>, on Tue Dec 4 02:34:22 PYST 2007
+# Recipe (MakeRecipe) for Umbrello by Mike Hughes in Oct 2007
+compile_version=1.9.0
+url="$httpSourceforge/uml/umbrello-1.5.8.tar.bz2"
+file_size=2464750
+file_md5=250784d0062ceefa39cf24046a9cbc22
+recipe_type=configure
+
+configure_options=( "--disable-libsuffix" )

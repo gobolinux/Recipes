@@ -1,0 +1,10 @@
+# Recipe for version 6.1.7 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Jan 13 10:26:48 GMT 2014
+# Recipe (MakeRecipe) for Virtuoso by Michael Homer <michael@gobolinux.org>, on Wed Feb 10 11:47:33 NZDT 2010
+compile_version=1.13.0
+url="http://downloads.sourceforge.net/project/virtuoso/virtuoso/6.1.7/virtuoso-opensource-6.1.7.tar.gz"
+file_size=116643533
+file_md5=88885e84e8f7b61e59516f696b1d3be5
+recipe_type=configure
+unmanaged_files=(
+   "$goboVariable/lib/virtuoso"
+)

@@ -1,0 +1,8 @@
+compile_version=1.9.0
+url="http://ktorrent.org/downloads/2.2.2/ktorrent-2.2.2.tar.gz"
+file_size=3820959
+file_md5=f3bd4cdcb45cefcd85599907781c6e21
+recipe_type=configure
+configure_options=(
+'--disable-libsuffix'
+)

@@ -1,0 +1,32 @@
+--- bind-9.3.1/lib/isc/unix/socket.c	2004-11-18 22:31:16.000000000 +0100
++++ bind-9.3.1.new/lib/isc/unix/socket.c	2005-10-29 16:38:18.000000000 +0200
+@@ -1344,7 +1344,7 @@
+ {
+ 	isc_socket_t *sock = NULL;
+ 	isc_result_t ret;
+-#if defined(USE_CMSG) || defined(SO_BSDCOMPAT)
++#if defined(USE_CMSG)
+ 	int on = 1;
+ #endif
+ 	char strbuf[ISC_STRERRORSIZE];
+@@ -1429,6 +1429,7 @@
+ 		return (ISC_R_UNEXPECTED);
+ 	}
+ 
++/* Obsolete in later kernels
+ #ifdef SO_BSDCOMPAT
+ 	if (setsockopt(sock->fd, SOL_SOCKET, SO_BSDCOMPAT,
+ 		       (void *)&on, sizeof(on)) < 0) {
+@@ -1439,10 +1440,10 @@
+ 				 isc_msgcat_get(isc_msgcat, ISC_MSGSET_GENERAL,
+ 						ISC_MSG_FAILED, "failed"),
+ 				 strbuf);
+-		/* Press on... */
++		*//* Press on... *//*
+ 	}
+ #endif
+-
++*/
+ #if defined(USE_CMSG)
+ 	if (type == isc_sockettype_udp) {
+ 

@@ -1,0 +1,7 @@
+# Recipe for version 4.0beta6 by Jonas Karlsson <jonas@gobolinux.org>, on Thu Jul 2 20:35:10 CEST 2009
+# Recipe (MakeRecipe) for LibMSN by Michael Homer <michael@gobolinux.org>, on Fri Jan 30 20:18:43 NZDT 2009
+compile_version=1.11.4
+url="$httpSourceforge/libmsn/libmsn-4.0-beta6.tar.bz2"
+file_size=275815
+file_md5=b2f9d8fc63921f4f66b91873f9f3f662
+recipe_type=cmake

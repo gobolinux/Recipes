@@ -1,0 +1,14 @@
+--- orig/vlc-0.8.4a/configure.ac	2005-12-11 22:36:29.000000000 +0100
++++ vlc-0.8.4a/configure.ac	2006-05-23 22:31:17.000000000 +0200
+@@ -2224,6 +2224,11 @@
+      VLC_ADD_CFLAGS([ffmpeg stream_out_switcher],[${FFMPEG_CFLAGS}])
+      VLC_ADD_LDFLAGS([ffmpeg],[${FFMPEG_LIBS}])
+ 
++     dnl newer ffmpeg have a separate libpostproc
++     PKG_CHECK_MODULES(POSTPROC, libpostproc,[
++     VLC_ADD_LDFLAGS([ffmpeg],[${POSTPROC_LIBS}])
++     ],[ true ])
++
+     ],[
+      
+     dnl

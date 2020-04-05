@@ -1,0 +1,6 @@
+# Recipe (MakeRecipe) for Cava by Wilson Moura <wilsonmoura@tuta.io>, on sex jun 9 21:24:33 BRT 2017
+# Recipe for version git by Wilson Moura <wilsonmoura@tuta.io>, on sex jun 9 21:24:33 BRT 2017
+compile_version=20170606-GIT
+git="https://github.com/karlstav/cava.git"
+recipe_type=configure
+autogen_before_configure=yes

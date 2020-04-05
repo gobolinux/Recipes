@@ -1,0 +1,24 @@
+--- /dev/null	2006-07-16 09:39:44.000000000 -0300
++++ tftpserver/Makefile	2006-07-19 23:53:47.000000000 -0300
+@@ -0,0 +1,21 @@
++CPP = g++
++CFLAGS = -Wall
++LDFLAGS = -lpthread
++PREFIX = /usr
++SYSCONFDIR = /etc
++
++all: tftpserver
++
++clean:
++	rm -f *~ *.o tftpserver
++
++install: tftpserver
++	install -d $(PREFIX)/sbin
++	install -o 0 -g 0 tftpserver $(PREFIX)/sbin
++	install -o 0 -g 0 -m 0644 tftpserver.ini $(SYSCONFDIR)
++
++tftpserver: tftpserver.o
++	$(CPP) tftpserver.o -o tftpserver $(LDFLAGS)
++
++tftpserver.o: tftpserver.cpp
++	$(CPP) -c tftpserver.cpp $(CFLAGS)

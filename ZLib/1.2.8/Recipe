@@ -1,0 +1,14 @@
+# Recipe for version 1.2.8 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Aug 25 14:02:19 BRT 2014
+# Recipe (MakeRecipe) for ZLib by roko, <ro.ko@mcnon.com>, , on Fri Oct 22 21:07:02 BRST 2004
+compile_version=1.8.2
+url="http://zlib.net/zlib-1.2.8.tar.gz"
+file_size=571091
+file_md5=44d667c142d7cda120332623eab69f40
+recipe_type=configure
+configure_options=(
+   --shared
+)
+
+make_variables=(
+   LIBS="libz.a libz.so.1.2.8"
+)

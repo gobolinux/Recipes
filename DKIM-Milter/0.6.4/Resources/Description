@@ -1,0 +1,12 @@
+[Name] DKIM-Milter
+[Summary] DomainKeys Identified Mail (DKIM) milter program and library.
+[License] "Sendmail License"
+[Homepage] http://sourceforge.net/projects/dkim-milter/
+
+[Description] dkim-milter includes: 
+
+1) A milter-based application (dkim-filter) which plugs in to Sendmail
+   (or Postfix) to provide DomainKeys Identified Mail service.
+
+2) A C-language library (libdkim) which can be used to build
+   DKIM-compliant applications or MTAs.

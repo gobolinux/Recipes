@@ -1,0 +1,11 @@
+# Recipe for version 2.12.8 by Giambattista Bloisi <giamby@infinito.it>, on Wed Feb 13 08:37:23 CET 2008
+# Recipe (MakeRecipe) for GTK+ by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 11:55:54 BRT 2005
+compile_version=1.9.0
+url="ftp://ftp.gnome.org/pub/GNOME/sources/gtk+/2.12/gtk+-2.12.8.tar.bz2"
+file_size=16101527
+file_md5=1e0d7db0bfa210881743e1d42ee91a24
+recipe_type=configure
+
+configure_options=(
+   --with-xinput=yes
+)

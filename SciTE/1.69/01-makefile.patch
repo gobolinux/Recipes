@@ -1,0 +1,11 @@
+--- scite.old/gtk/makefile	2006-04-16 19:46:42.000000000 +0200
++++ scite/gtk/makefile	2006-04-16 19:47:35.000000000 +0200
+@@ -45,7 +45,7 @@
+ bindir=$(prefix)/bin
+ SYSCONF_PATH=$(prefix)/share/scite
+ 
+-INSTALL=install -o root -g root
++INSTALL=install -o 0 -g 0
+ 
+ PROG	= ../bin/SciTE
+ 

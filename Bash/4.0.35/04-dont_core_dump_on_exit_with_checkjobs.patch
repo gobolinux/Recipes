@@ -1,0 +1,47 @@
+			     BASH PATCH REPORT
+			     =================
+
+Bash-Release: 4.0
+Patch-ID: bash40-004
+
+Bug-Reported-by:	Mike Frysinger <vapier@gentoo.org>
+Bug-Reference-ID:	<200902231720.30519.vapier@gentoo.org>
+Bug-Reference-URL:	http://lists.gnu.org/archive/html/bug-bash/2009-02/msg00176.html
+
+Bug-Description:
+
+In some cases, enabling the `checkjobs' shell option will cause the shell
+to core dump when executing the `exit' builtin.
+
+Patch:
+
+*** ../bash-4.0/builtins/exit.def	2009-01-04 14:32:22.000000000 -0500
+--- bash/builtins/exit.def	2009-02-23 22:56:58.000000000 -0500
+***************
+*** 114,118 ****
+  	if (jobs[i] && STOPPED (i))
+  	  stopmsg = JSTOPPED;
+! 	else if (check_jobs_at_exit && stopmsg == 0 && RUNNING (i))
+  	  stopmsg = JRUNNING;
+  
+--- 114,118 ----
+  	if (jobs[i] && STOPPED (i))
+  	  stopmsg = JSTOPPED;
+! 	else if (check_jobs_at_exit && stopmsg == 0 && jobs[i] && RUNNING (i))
+  	  stopmsg = JRUNNING;
+  
+*** ../bash-4.0/patchlevel.h	2009-01-04 14:32:40.000000000 -0500
+--- bash/patchlevel.h	2009-02-22 16:11:31.000000000 -0500
+***************
+*** 26,30 ****
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 3
+  
+  #endif /* _PATCHLEVEL_H_ */
+--- 26,30 ----
+     looks for to find the patch level (for the sccs version string). */
+  
+! #define PATCHLEVEL 4
+  
+  #endif /* _PATCHLEVEL_H_ */

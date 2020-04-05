@@ -1,0 +1,35 @@
+#!/bin/sh
+
+# distcc's behaviour is controlled by a number of environment variables. For most cases nothing need be set if the host list is stored in a file.
+
+# This file can be sourced in your ~/.zshrc
+
+# Space-separated list of volunteer host specifications.
+export DISTCC_HOSTS=localhost
+
+# If set to 1, distcc produces explanatory messages on the standard error stream or in the log file. This can be helpful in debugging problems. Bug reports should include verbose output.
+#export DISTCC_VERBOSE=
+
+# Log file to receive messages from distcc itself, rather than stderr.
+#export DISTCC_LOG=
+
+# By default distcc will compile locally if it fails to distribute a job to the intended machine, or if no host list can be found. If this variable is set to 0 then fallbacks are disabled and those compilations will simply fail. Note that this does not affect jobs which must always be local such as linking.
+#export DISTCC_FALLBACK=
+
+# If set to 1, temporary files are not deleted after use. Good for debugging, or if your disks are too empty.
+#export DISTCC_SAVE_TEMPS=
+
+# If set to 0, disable use of "TCP corks", even if they're present on this system. Using corks normally helps pack requests into fewer packets and aids performance. This should normally be left enabled.
+#export DISTCC_TCP_CORK=
+
+# Specifies the command used for opening SSH connections. Defaults to "ssh" but may be set to a different connection command such as "lsh" or "tsocks-ssh" that accepts a similar command line. The command is not split into words and is not executed through the shell.
+#export DISTCC_SSH=
+
+# Per-user configuration directory to store lock files and state files. By default ~/.distcc/ is used.
+#export DISTCC_DIR=
+
+# Directory for temporary files such as preprocessor output. By default /tmp/ is used.
+#export TMPDIR=/System/Variable/tmp
+
+# If set and if DISTCC_LOG is not set, distcc errors are written to the file descriptor identified by this variable. This variable is intended mainly for automatic use by ccache, which sets it to avoid caching transient errors such as network problems.
+#export UNCACHED_ERR_FD=

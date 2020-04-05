@@ -1,0 +1,14 @@
+# Recipe for version 1.4 by Michael Homer <michael@gobolinux.org>, on Fri May 2 17:17:26 NZST 2008
+# Recipe (MakeRecipe) for Bazaar by Jeremy Visser, on Thu Jul 19 23:35:24 BRT 2007
+compile_version=1.9.0
+url="http://bazaar-vcs.org/releases/src/bzr-1.4.tar.gz"
+file_size=3506804
+file_md5=8b43daf42fbe18f22c83df5b72d9d7e0
+
+recipe_type=manifest
+
+manifest=(
+	"bzr:bin"
+	"bzrlib:lib/python2.4/site-packages/bzrlib"
+)
+

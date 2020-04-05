@@ -1,0 +1,7 @@
+[Name] Check
+[Summary] A unit testing framework for C
+[Description] Check is a unit testing framework for C. It features a simple interface for defining unit tests, putting little in the way of the developer. Tests are run in a separate address space, so Check can catch both assertion failures and code errors that cause segmentation faults or other signals. The output from unit tests can be used within source code editors and IDEs..
+
+Check was inspired by similar frameworks that currently exist for most programming languages; the most famous example being JUnit for Java.
+[License] GNU Lesser General Public License 2.1
+[Homepage] http://check.sourceforge.net/

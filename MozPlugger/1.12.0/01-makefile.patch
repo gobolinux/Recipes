@@ -1,0 +1,39 @@
+Correcting the Makefile's install section.
+Replaced the cp with install.
+
+diff -Naur mozplugger-1.12.0/Makefile mozplugger-1.12.0-new/Makefile
+--- mozplugger-1.12.0/Makefile	2008-11-13 20:47:23.000000000 +0100
++++ mozplugger-1.12.0-new/Makefile	2009-01-01 22:04:11.000000000 +0100
+@@ -8,6 +8,7 @@
+ #
+ # For installing
+ prefix=/usr
++sysconfdir=/etc
+ 
+ #
+ #
+@@ -184,16 +185,14 @@
+ 	make localinstall BROWSERDIR=.opera
+ 
+ install:
+-	-@mkdir -p $(root)$(prefix)/bin
+-	-@mkdir -p $(root)$(prefix)/lib/mozilla/plugins
+-	-@mkdir -p $(root)$(prefix)/share/man/man7
+-	-@mkdir -p $(root)/etc
+-	cp mozplugger-helper $(root)$(prefix)/bin/
+-	cp mozplugger-controller $(root)$(prefix)/bin/
+-	cp mozplugger-linker $(root)$(prefix)/bin/
+-	cp mozplugger.so $(root)$(prefix)/lib/mozilla/plugins/
+-	cp mozpluggerrc $(root)/etc/
+-	cp mozplugger.7 $(root)$(prefix)/share/man/man7/
++	install -D -m 755 mozplugger-helper $(prefix)/bin/mozplugger-helper
++	install -D -m 755 mozplugger-controller $(root)$(prefix)/bin/mozplugger-controller
++	install -D -m 755 mozplugger-linker $(root)$(prefix)/bin/mozplugger-linker
++	install -D -m 755 mozplugger.so $(prefix)/lib/mozplugger.so
++	mkdir -p $(prefix)/lib/browser-plugins
++	ln -snf $(prefix)/lib/mozplugger.so $(prefix)/lib/browser-plugins/mozplugger.so
++	install -D -m 644 mozpluggerrc $(sysconfdir)/mozpluggerrc
++	install -D -m 644 mozplugger.7 $(prefix)/man/man7/
+ 
+ mozplugger.tar.gz: $(BASE_FILES) $(SOURCE_FILES)
+ 	@( DIR=`pwd`;\

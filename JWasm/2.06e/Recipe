@@ -1,0 +1,18 @@
+# Recipe (MakeRecipe) for JWasm by Baffo32 <baffo32@gmail.com>, on Thu Jul 28 03:58:54 PDT 2011
+# Recipe for version 2.06e by Baffo32 <baffo32@gmail.com>, on Thu Jul 28 03:58:54 PDT 2011
+compile_version=1.13.3
+url="http://www.japheth.de/Download/JWasm/JWasm206s.zip"
+file_size=763604
+file_md5=eec208aca51298adb7cd56098f2a0c6b
+unpack_files=files_in_root
+recipe_type=makefile
+
+makefile=GccUnix.mak
+
+do_install() {
+   manifest=(
+      "GccUnixR/jwasm:bin"
+      "*.txt:doc"
+   )
+   manifest_do_install "$@"
+}

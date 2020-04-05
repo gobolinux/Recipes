@@ -1,0 +1,19 @@
+# by Maglan C. Diemer && Andre Detsch, 3.3.2 by roko
+
+url="ftp://ftp.kde.org/pub/kde/Attic/3.3.2/src/kdelibs-3.3.2.tar.bz2"
+compile_version=1.8.2
+recipe_type=configure
+configure_options=(
+  "--disable-debug"
+  "--disable-dependency-tracking"
+  "--with-alsa"
+  "--enable-fast-malloc=full"
+#  "DO_NOT_COMPILE="
+#  dcop libltdl kdefx  kdecore  kdeui  kdesu  kjs  kwallet  kio arts kab  kconf_update  kdoctools  kimgio  kioslave  knewstuff
+# kparts  kresources   ksmartcard  kstyles  kutils  libkmid  libscreensaver  licenses  mimetypes  pics  doc  kcert  interfaces  kinit # kdeprint  kac  kspell2  kmdi  khtml  kate  kdewidgets
+)
+post_install() {
+  chmod 4755 $target/bin/fileshareset
+  chmod 4755 $target/bin/kpac_dhcp_helper
+  chmod 4755 $target/bin/kgrantpty
+}
