@@ -1,0 +1,10 @@
+# Recipe for version 1.35 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon 06 Apr 2020 08:43:24 PM BRT
+# by Maglan C. Diemer
+compile_version=1.8.2
+url="$ftpGnu/libidn/libidn-1.35.tar.gz"
+file_size=4169217
+file_md5=bef634141fe39326cb354b75e891fead
+recipe_type=configure
+configure_options=(
+   "--mandir=${target}/man"
+)
