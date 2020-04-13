@@ -1,0 +1,16 @@
+# Recipe for version 5.54 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Apr 13 18:28:16 -03 2020
+compile_version=1.13.2
+url="http://www.kernel.org/pub/linux/bluetooth/bluez-5.54.tar.xz"
+file_size=2003760
+file_md5=e637feb2dbb7582bbbff1708367a847c
+mirror_url="ftp://linux-kernel.uio.no/pub/linux/bluetooth/bluez-5.54-r1.tar.bz2"
+recipe_type=configure
+
+configure_options=(
+   --disable-systemd
+   --enable-threads
+   --enable-library
+)
+make_variables=(
+   rulesdir="$target/lib/udev/rules.d"
+)
