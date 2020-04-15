@@ -1,0 +1,12 @@
+# Recipe for version 1.7.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon 13 Apr 2020 09:28:05 PM -03
+# Recipe (MakeRecipe) for Libconfig by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Apr 25 14:14:56 BRT 2015
+compile_version=2.0
+url="https://github.com/hyperrealm/libconfig/archive/v1.7.2.tar.gz"
+file_size=3017891
+file_md5=d666f0ca093906d34d6e1e4890053e62
+dir='libconfig-1.7.2'
+recipe_type=configure
+
+pre_build() {
+    autoreconf -i
+}
