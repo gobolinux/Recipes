@@ -1,0 +1,15 @@
+# Recipe for version 2.7.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri 10 Apr 2020 11:18:05 PM -03
+# Recipe (MakeRecipe) for LibVA by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Apr 30 17:24:56 BRT 2010
+compile_version=2.0
+url="https://github.com/01org/libva/releases/download/2.7.0/libva-2.7.0.tar.bz2"
+file_size=477326
+file_md5=bd5052569520e734eb8aeb0f503cfcae
+recipe_type=configure
+
+configure_options=(
+    --with-drivers-path=$goboLibraries/dri
+)
+
+install_variables=(
+    LIBVA_DRIVERS_PATH=$target/lib/dri
+)
