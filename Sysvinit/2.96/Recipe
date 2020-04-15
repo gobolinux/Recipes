@@ -1,0 +1,31 @@
+# Recipe for version 2.96 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat 11 Apr 2020 01:40:40 AM -03
+url="http://download.savannah.nongnu.org/releases/sysvinit/sysvinit-2.96.tar.xz"
+file_size=122164
+file_md5=48cebffebf2a96ab09bec14bf9976016
+compile_version=1.8.0
+recipe_type=makefile
+build_target="-C src"
+install_target="-C src install"
+
+make_variables=(
+   "ROOT=$target"
+   "BIN_OWNER=0"
+   "BIN_GROUP=0"
+   "INSTALL=install"
+   "MANDIR=/share/man"
+)
+
+symlink_options=(
+    "--conflict overwrite"
+)
+
+pre_build() {
+   # don't install wall
+   sed -i -e 's/utmpdump wall/utmpdump/' \
+   -e 's/mountpoint.1 wall.1/mountpoint.1/' src/Makefile
+}
+
+pre_link() {
+   cp -a $target/usr/* $target/
+   rm -rf $target/usr
+}
