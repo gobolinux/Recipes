@@ -6,6 +6,10 @@ file_size=754838
 file_md5=9d36882998449daceec267c68a21ff0d
 recipe_type=configure
 
+configure_options=(
+    --disable-libsystemd
+)
+
 install_variables=(
 	confdir=$settings_target
 )
