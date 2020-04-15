@@ -1,0 +1,12 @@
+# Recipe for version 0.10.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat 11 Apr 2020 02:02:04 AM -03
+# Recipe (MakeRecipe) for XKBcommon by Hugo Barrocas <barrocas75@gmail.com>, on Sex Jun 13 19:14:39 UTC 2014
+compile_version=2.0
+url="http://xkbcommon.org/download/libxkbcommon-0.10.0.tar.xz"
+file_size=383788
+file_md5=2d9ad3a46b317138b5e72a91cf105451
+recipe_type=meson
+
+meson_variables=(
+    -Denable-wayland=false
+    -Denable-docs=false
+)
