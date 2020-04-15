@@ -1,0 +1,42 @@
+# Recipe for version 4.2.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun 12 Apr 2020 11:58:55 PM -03
+# Recipe (MakeRecipe) for FFmpeg by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 16:03:06 BRT 24.2.3
+compile_version=1.12.1
+url="https://ffmpeg.org/releases/ffmpeg-4.2.2.tar.bz2"
+file_size=10953320
+file_md5=829d56f158832dbf669b5b417af48060
+recipe_type=configure
+
+configure_options=(
+    # Enabling this makes the package not redistributable
+    "--enable-gpl"
+    "--enable-shared"
+    "--enable-postproc"
+    "--enable-swscale"
+    "--enable-pthreads"
+    "--enable-shared"
+    "--disable-debug"
+    "--disable-static"
+)
+
+make_variables=(
+   "MANDIR=$target/man"
+)
+
+with_sdl="--enable-sdl2"
+with_libass="--enable-libass"
+with_libvorbis="--enable-libvorbis"
+with_theora="--enable-libtheora"
+with_x264="--enable-libx264"
+with_lame="--enable-libmp3lame"
+with_openjpeg="--enable-libopenjpeg"
+with_xvid="--enable-libxvid"
+with_webp="--enable-libwebp"
+
+pre_link() {
+    pushd $target/include
+    ln -s libpostproc postproc
+    mkdir -p ffmpeg
+    cd ffmpeg
+    find .. -type f -exec ln -s {} . \;
+    popd
+}
