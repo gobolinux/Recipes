@@ -6,11 +6,8 @@ file_size=467702
 file_md5=3829315cb0a1e9cedc05ffe6def7a2c6
 recipe_type=configure
 
-using_qt3() {
-   install_variables=(${install_variables:+"${install_variables[@]}"} PINENTRY_DEFAULT=pinentry-qt)
-}
+configure_options=(
+    --enable-pinentry-qt
+)
 
-using_qt3_pre_build() {
-   GrepReplace "\$dir/moc" "\$dir/moc-qt3" configure
-   GrepReplace "dummy\ moc" "dummy\ moc-qt3" configure
-}
+install_variables=(${install_variables:+"${install_variables[@]}"} PINENTRY_DEFAULT=pinentry-qt)
