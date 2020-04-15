@@ -1,0 +1,18 @@
+# Recipe for version 1.0.3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon 13 Apr 2020 12:00:18 AM -03
+# Recipe (MakeRecipe) for LibWebP by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Apr 17 16:13:43 GMT 2014
+compile_version=1.13.1
+url="https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-1.0.3.tar.gz"
+file_size=4029909
+file_md5=906ad85daaaa2eac97c8aa2dec9e8b77
+recipe_type=configure
+dir="libwebp-1.0.3"
+
+configure_options=(
+    --enable-libwebpdecoder
+    --enable-libwebpmux
+    --enable-libwebpextras
+)
+
+pre_build(){
+	./autogen.sh
+}
