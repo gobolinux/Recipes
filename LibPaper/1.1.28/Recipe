@@ -1,0 +1,12 @@
+# Recipe for version 1.1.28 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri 10 Apr 2020 11:39:20 PM -03
+## 20040623 Dave Dodge
+compile_version=1.8.2
+url="http://deb.debian.org/debian/pool/main/libp/libpaper/libpaper_1.1.28.tar.gz"
+file_size=42356
+file_md5=58dcdb3e1074f571b86d0ee937ed0072
+dir=libpaper-1.1.28
+recipe_type=configure
+
+pre_build() {
+    autoreconf -i
+}
