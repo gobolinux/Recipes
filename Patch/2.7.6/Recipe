@@ -1,0 +1,9 @@
+# Recipe for version 2.7.6 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu 09 Apr 2020 12:17:24 PM BRT
+url="http://ftp.gnu.org/gnu/patch/patch-2.7.6.tar.bz2"
+file_size=922385
+file_md5=5ef471eb1bfeec7f0c8afc7da46e3dfb
+compile_version=1.8.0
+recipe_type=configure
+pre_build() {
+   export CPPFLAGS="$CPPFLAGS -D_GNU_SOURCE"
+}
