@@ -1,0 +1,9 @@
+# Recipe for version 2.9.0_dev5 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue 21 Apr 2020 10:23:59 AM -03
+# Recipe for Lynx 2.9.8_rel2 by Andre Detsch
+compile_version=1.9.0
+url="https://github.com/ThomasDickey/lynx-snapshots/archive/v2-9-0dev_5.tar.gz"
+file_size=3708350
+file_md5=6acf46a36ea4aca9798dc513e239b28b
+recipe_type=configure
+makefile=makefile
+dir='lynx-snapshots-2-9-0dev_5'
