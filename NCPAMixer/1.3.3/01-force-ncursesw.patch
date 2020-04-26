@@ -1,0 +1,17 @@
+Make it use ncursesw for Unicode characters.
+
+diff -Nur ncpamixer-1.3.3.old/src/CMakeLists.txt ncpamixer-1.3.3/src/CMakeLists.txt
+--- ncpamixer-1.3.3.old/src/CMakeLists.txt	2019-01-26 17:22:20.000000000 -0300
++++ ncpamixer-1.3.3/src/CMakeLists.txt	2020-04-26 03:33:31.485639232 -0300
+@@ -13,7 +13,10 @@
+ endif()
+ 
+ set(CURSES_NEED_NCURSES TRUE)
+-find_package(Curses REQUIRED)
++
++set(CURSES_LIBRARIES "/usr/lib/libncursesw.so")
++set(CURSES_INCLUDE_DIR "/usr/include")
++
+ # See https://gitlab.kitware.com/cmake/cmake/issues/18517
+ find_library(MENU_LIBRARY menu)
+ 
