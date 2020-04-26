@@ -1,0 +1,8 @@
+# Recipe for version 1.2.0 by Hisham Muhammad <hisham@gobolinux.org>, on Sun Apr 26 01:21:10 -03 2020
+# Recipe (MakeRecipe) for SpeexDSP by Hisham Muhammad <hisham@gobolinux.org>, on Wed Jun 14 11:37:03 BRT 2017
+compile_version=git
+url="http://downloads.xiph.org/releases/speex/speexdsp-1.2.0.tar.gz"
+file_size=919621
+file_md5=b722df341576dc185d897131321008fc
+dir='speexdsp-1.2.0'
+recipe_type=configure
