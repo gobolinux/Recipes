@@ -1,0 +1,10 @@
+# Recipe for version 0.13 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Apr 27 11:46:58 -03 2020
+# Recipe (MakeRecipe) for XClip by Jonas Karlsson <jonka750@student.liu.se>, on Fri Apr 6 21:38:03 CEST 2007
+compile_version=1.9.0
+url="https://github.com/astrand/xclip/archive/0.13.tar.gz"
+file_size=30461
+file_md5=81e49f56288f299e3389a019f2550ad2
+dir=xclip-0.13
+recipe_type=configure
+autogen_before_configure=yes
+autogen=autoconf
