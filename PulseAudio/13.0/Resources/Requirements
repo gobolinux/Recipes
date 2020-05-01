@@ -1,2 +1,2 @@
-required_users=("pulse")
+required_users=("pulse home=/Data/Variable/run/pulse")
 required_groups=( "pulse-rt" "pulse-access" )
