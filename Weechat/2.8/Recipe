@@ -1,0 +1,13 @@
+# Recipe for version 2.8 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed 29 Apr 2020 12:38:45 AM -03
+# Recipe (MakeRecipe) for Weechat by Aitor ATuin <atuin@tuta.io>, on Sun Dec 25 19:55:46 CET 2016
+compile_version=016
+url="https://weechat.org/files/src/weechat-2.8.tar.xz"
+file_size=2248868
+file_md5=9e776d6c19ec1ae261ab822601f78719
+dir='weechat-2.8'
+recipe_type=configure
+
+configure_options=(
+    --disable-javascript
+    --disable-php
+)
