@@ -9,7 +9,7 @@ diff -Nur ncpamixer-1.3.3.old/src/CMakeLists.txt ncpamixer-1.3.3/src/CMakeLists.
  set(CURSES_NEED_NCURSES TRUE)
 -find_package(Curses REQUIRED)
 +
-+set(CURSES_LIBRARIES "/usr/lib/libncursesw.so")
++set(CURSES_LIBRARIES "/usr/lib/libncursesw6.so")
 +set(CURSES_INCLUDE_DIR "/usr/include")
 +
  # See https://gitlab.kitware.com/cmake/cmake/issues/18517
