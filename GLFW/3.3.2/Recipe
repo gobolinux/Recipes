@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for GLFW by Hisham Muhammad <hisham@gobolinux.org>, on Fri May 1 20:34:45 -03 2020
+# Recipe for version 3.3.2 by Hisham Muhammad <hisham@gobolinux.org>, on Fri May 1 20:34:45 -03 2020
+compile_version=git
+url="https://github.com/glfw/glfw/releases/download/3.3.2/glfw-3.3.2.zip"
+file_size=1434297
+file_md5=f794d9ad899a64894782884be79d644b
+dir='glfw-3.3.2'
+recipe_type=cmake
