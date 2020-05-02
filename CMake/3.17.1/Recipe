@@ -1,0 +1,17 @@
+# Recipe for version 3.17.1 by Hisham Muhammad <hisham@gobolinux.org>, on Sun Apr 26 03:28:50 -03 2020
+compile_version=2.0
+url="https://cmake.org/files/v3.17/cmake-3.17.1.tar.gz"
+file_size=9467298
+file_md5=958959aa5e0338144eed7320e9b48561
+recipe_type=configure
+
+configure_options=(
+   --prefix=$target
+)
+
+pre_install() {
+    if [ ! -z "$goboIndex" -a -d "$goboIndex" ]
+    then
+        GrepReplace "$goboIndex" "$target" cmake_install.cmake
+    fi
+}
