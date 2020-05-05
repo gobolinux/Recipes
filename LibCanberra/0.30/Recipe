@@ -5,3 +5,7 @@ url="http://0pointer.de/lennart/projects/libcanberra/libcanberra-0.30.tar.xz"
 file_size=318960
 file_md5=34cb7e4430afaf6f447c4ebdb9b42072
 recipe_type=configure
+
+configure_options=(
+    --disable-oss
+)
