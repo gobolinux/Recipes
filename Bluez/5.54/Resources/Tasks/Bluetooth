@@ -2,9 +2,8 @@
 
 case "$1" in
 [Ss]tart)
-   killall bluetoothd
-   rfkill unblock 0
-   rfkill unblock 1
+   killall bluetoothd 2> /dev/null
+   rfkill -rn | grep bluetooth | awk {'print $1'} | xargs rfkill unblock
    sleep 0.3
    BackgroundExec /usr/lib/bluez/bluetooth/bluetoothd
    sleep 0.3
