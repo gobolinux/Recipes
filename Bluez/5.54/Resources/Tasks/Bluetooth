@@ -1,0 +1,45 @@
+#!/bin/sh
+
+case "$1" in
+[Ss]tart)
+   killall bluetoothd
+   rfkill unblock 0
+   rfkill unblock 1
+   sleep 0.3
+   BackgroundExec /usr/lib/bluez/bluetooth/bluetoothd
+   sleep 0.3
+   echo 'power on' | bluetoothctl --timeout 5 &> /dev/null
+   (
+     status=()
+     i=0
+     while true
+     do
+        disconnected=0
+        for id in "${BluetoothConnect[@]}"
+        do
+           i=$[i + 1]
+           if [ "${status[$i]}" ~= "connected" ]
+           then
+              disconnected=$[disconnected + 1]
+              if echo "info $id" | bluetoothctl | grep -q "Connected: yes"
+              then
+                 status[$i]=connected
+              else
+                 echo "connect $id" | bluetoothctl --timeout 3
+              fi
+           fi
+        done
+        if [ "$disconnected" = 0 ]
+        then
+           break
+        else
+           sleep 0.5
+        fi
+     done
+   ) &
+
+   ;;
+[Ss]top)
+   killall bluetoothd
+   ;;
+esac
