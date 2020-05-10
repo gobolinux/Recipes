@@ -12,3 +12,18 @@ configure_options=(
    --disable-makeinstall-chown
    --enable-libmount-force-mountinfo
 )
+
+pre_link() {
+    # Fix broken links
+    cd $target/lib
+    for i in \
+    libblkid.so \
+    libfdisk.so \
+    libmount.so \
+    libsmartcols.so \
+    libuuid.so
+    do
+       # Point to the same target as ${i}.1
+       ln -sf $(readlink ${i}.1) $i
+    done
+}
