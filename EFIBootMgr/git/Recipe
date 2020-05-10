@@ -1,0 +1,14 @@
+# Recipe for version git by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri 01 May 2020 10:30:15 PM -03
+# Recipe (MakeRecipe) for EFIBootMgr by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Mar 15 19:git:53 NZDT 2012
+compile_version=1.13.3
+git="https://github.com/rhboot/efibootmgr.git"
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=(
+    EFIDIR=boot
+)
+
+install_variables=(
+	BINDIR=$target/bin
+)
