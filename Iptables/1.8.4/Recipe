@@ -7,5 +7,7 @@ file_md5=9b201107957fbf62709c3d8226239b0d
 recipe_type=configure
 
 configure_options=(
---disable-nftables
+    --disable-nftables
+    --enable-libipq
+    --enable-bpf-compiler
 )
