@@ -1,0 +1,12 @@
+# Recipe for version git by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri 01 May 2020 10:28:07 PM -03
+# Recipe (MakeRecipe) for EFIVar by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Oct 23 18:24:17 BRST 2016
+compile_version=2.0
+git="https://github.com/rhboot/efivar.git"
+dir='efivar-git'
+recipe_type=makefile
+makefile='Makefile'
+
+environment=(
+    # Workaround for build errors with the gold linker
+    LDFLAGS="-fuse-ld=bfd"
+)
