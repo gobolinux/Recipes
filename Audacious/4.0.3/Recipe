@@ -1,0 +1,9 @@
+# Recipe for version 4.0.3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue 05 May 2020 10:22:05 PM -03
+# Recipe (MakeRecipe) for Audacious by Dominique Juergensen <brokolie@vollbio.de>, on Qua Jul 19 22:57:23 CEST 2009
+compile_version=1.12.3
+recipe_type=meta
+
+include=(
+   "Audacious-Itself--4.0.3"
+   "Audacious-Plugins--4.0.3"
+)
