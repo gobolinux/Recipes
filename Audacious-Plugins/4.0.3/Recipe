@@ -1,0 +1,11 @@
+# Recipe for version 4.0.3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed 06 May 2020 09:26:52 AM -03
+# Recipe (MakeRecipe) for Audacious-Plugins by Guilherme B. Bedin, on Wed Jan 24 13:55:32 BRST 2007
+compile_version=1.13.3
+url="http://distfiles.audacious-media-player.org/audacious-plugins-4.0.3.tar.bz2"
+file_size=1759123
+file_md5=480862cbd876d30a806260ebdf1ba4b4
+recipe_type=configure
+
+make_variables=(
+    "pluginlibdir=$target/lib/audacious"
+)
