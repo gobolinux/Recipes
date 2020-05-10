@@ -1,0 +1,79 @@
+#!/bin/bash
+
+# Generates the GRUB UEFI application to boot GoboLinux.
+# Written by Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+source GoboPath
+source ScriptFunctions
+Import Log
+
+mount_esp_partition() {
+   local esp=$(partinfo --flags | grep boot | grep esp | cut -d: -f1 | head -n 1)
+   if [ ! -d $goboBoot/efi ]
+   then mkdir -p $goboBoot/efi
+   fi
+   mountpoint -q $goboBoot/efi && return 0
+   mount -v "$esp" $goboBoot/efi && return 1
+   return 2
+}
+
+umount_esp_partition() {
+   umount $goboBoot/efi
+}
+
+gen_uefi_app() {
+   local grub_cfg="$1"
+   Quiet pushd "$goboBoot"
+
+   Log_Normal "Generating a config file"
+   if [ -z "$grub_cfg" ]
+   then
+      GenGrubConf "$goboBoot" || { Log_Error "Failed to update UEFI application" && return; }
+      grub_cfg="grub.cfg"
+   fi
+
+   Log_Normal "Generating an updated UEFI application"
+   grub-mkstandalone-efi \
+       -d /Programs/GRUB-EFI/Current/lib/grub/x86_64-efi \
+       -O x86_64-efi \
+       --modules="part_gpt part_msdos iso9660 all_video efi_gop efi_uga video_bochs video_cirrus gfxterm gettext font" \
+       --fonts="unicode" \
+       --themes="" \
+       -o BOOTX64.EFI \
+       --compress=gz \
+       "boot/grub/grub.cfg=$grub_cfg"
+
+   if [ -e "$goboBoot/efi/EFI/BOOT/BOOTX64.EFI" ]
+   then
+       Log_Normal "Updating UEFI application"
+       mv -v "efi/EFI/BOOT/BOOTX64.EFI" "efi/EFI/BOOT/BOOTX64.OLD"
+       cp -v "$grub_cfg" "efi/EFI/BOOT/grub.cfg"
+       mv -v "BOOTX64.EFI" "efi/EFI/BOOT"
+   else
+       Log_Normal "A new UEFI application has been created. You can now activate your kernel by mounting your"
+       Log_Normal "EFI System Partition and moving $goboBoot/BOOTX64.EFI into your ESP's /EFI/BOOT directory."
+   fi
+   Quiet popd
+}
+
+#################
+# Main operation
+#################
+
+if [ "$#" = 2 ] && echo "$1" | grep -q grub.cfg
+then grub_cfg="$(readlink -f "$1")"
+else grub_cfg=
+fi
+
+if [ "$(uname -m)" = "x86_64" ]
+then
+    mount_esp_partition
+    mounted_esp=$?
+
+    gen_uefi_app "$grub_cfg"
+
+    if [ $mounted_esp = 1 ]
+    then umount_esp_partition
+    else exit 0
+    fi
+fi
