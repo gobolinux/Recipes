@@ -1,0 +1,12 @@
+# Recipe for version 012 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue 05 May 2020 11:31:13 AM -03
+# Recipe (MakeRecipe) for USBUtils by Demian Florentin <demianflorentin@gmail.com>, on Fri Feb 17 15:29:06 PYST 2017
+compile_version=016
+url="https://mirrors.edge.kernel.org/pub/linux/utils/usb/usbutils/usbutils-012.tar.xz"
+file_size=98388
+file_md5=0da98eb80159071fdbb00905390509d9
+dir='usbutils-012'
+recipe_type=configure
+
+pre_build() {
+    autogen.sh
+}
