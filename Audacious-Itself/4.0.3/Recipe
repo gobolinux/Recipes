@@ -1,0 +1,12 @@
+# Recipe for version 4.0.3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed 06 May 2020 01:06:37 AM -03
+# Recipe (MakeRecipe) for Audacious-Itself by Guilherme B. Bedin, on Wed Jan 24 13:54:19 BRST 2007
+compile_version=1.13.3
+url="http://distfiles.audacious-media-player.org/audacious-4.0.3.tar.bz2"
+file_size=577512
+file_md5=f4f319ba354083909490636dc1dded1f
+recipe_type=configure
+part_of=Audacious
+
+configure_options=(
+    --disable-rpath
+)
