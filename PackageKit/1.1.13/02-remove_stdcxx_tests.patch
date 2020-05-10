@@ -1,0 +1,30 @@
+--- PackageKit-PACKAGEKIT_1_1_13/configure.ac.orig	2020-03-17 13:47:42.027767353 -0300
++++ PackageKit-PACKAGEKIT_1_1_13/configure.ac	2020-03-17 13:49:51.174435441 -0300
+@@ -442,9 +442,6 @@ if test x$enable_aptcc = xyes; then
+ 	dnl Use C++
+ 	AC_LANG([C++])
+ 
+-	# Require C++11 support
+-	AX_CXX_COMPILE_STDCXX_11([ext], [mandatory])
+-
+ 	# check we have apt and gstreamer headers
+ 	save_CPPFLAGS="$CPPFLAGS"
+ 	save_LDFLAGS="$LDFLAGS"
+@@ -515,7 +512,6 @@ fi
+ 
+ if test x$enable_slack = xyes; then
+ 	AC_LANG([C++])
+-	AX_CXX_COMPILE_STDCXX_14([ext], [mandatory])
+ 
+ 	AC_CHECK_LIB(curl, curl_version, [
+ 	    CURL_CFLAGS="`curl-config --cflags`"
+@@ -541,9 +537,6 @@ if test x$enable_nix = xyes; then
+ 	dnl Use C++
+ 	AC_LANG([C++])
+ 
+-	# Require C++11 support
+-	AX_CXX_COMPILE_STDCXX_11([ext], [mandatory])
+-
+ 	PKG_CHECK_MODULES(NIX, nix-expr >= 1.12)
+ 	PKG_CHECK_MODULES(NIX, nix-main >= 1.12)
+ 	PKG_CHECK_MODULES(NIX, nix-store >= 1.12)

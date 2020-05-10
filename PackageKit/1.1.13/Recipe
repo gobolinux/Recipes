@@ -1,0 +1,27 @@
+# Recipe (MakeRecipe) for PackageKit by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue 17 Mar 2020 11:40:48 AM BRT
+# Recipe for version 1.1.13 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue 17 Mar 2020 11:40:48 AM BRT
+compile_version=016-GIT
+url="https://github.com/hughsie/PackageKit/archive/PACKAGEKIT_1_1_13.tar.gz"
+file="PackageKit-PACKAGEKIT_1_1_13.tar.gz"
+file_size=3613028
+file_md5=683a6a9f9f4008c80172af37d52c879a
+dir='PackageKit-PACKAGEKIT_1_1_13'
+recipe_type=configure
+autogen_before_configure=yes
+
+configure_options=(
+    --disable-systemd
+    --disable-elongind
+    --disable-static
+    --disable-bash-completion
+    --disable-gtk-module
+    --disable-gstreamer-plugin
+    --disable-aptcc
+    --disable-nix
+    --disable-slack
+    --enable-python3
+)
+
+unmanaged_files=(
+    $goboVariable/lib/PackageKit/transactions.db
+)
