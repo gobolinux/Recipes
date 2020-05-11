@@ -1,3 +1,7 @@
 recipe_type=configure
 git=https://github.com/hishamhm/dit.git
 autogen_before_configure=yes
+configure_options=(
+   --enable-unicode
+   --enable-bundled-lua
+)
