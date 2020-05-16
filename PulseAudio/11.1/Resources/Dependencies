@@ -6,7 +6,6 @@ DBus >= 1.3.0 [dbus]
 GConf >= 2.4.0 [gconf]
 GDBM 1.8.3
 Glib >= 2.4.0 [glib2]
-Glibc >= 2.8			# Linking with earlier Glibc-2.5 fails
 Jack >= 0.117 [jack]
 Json-C >= 0.9
 LibSndfile >= 1.0.20

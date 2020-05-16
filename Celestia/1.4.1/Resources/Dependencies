@@ -5,7 +5,6 @@ Fontconfig 2.4.2
 FreeType 2.1.10
 GCC >= 3.0.0 < 4.0.0
 #GLib 2.12.13 #optional, it depends on the gui chosen
-Glibc 2.5
 #GTK+ >= 2.6 #optional, it depends on the gui chosen
 #GtkGLExt >= 1.0 #optional, it depends on the gui chosen
 JPEG 6b
@@ -18,5 +17,4 @@ Mesa 6.5.2
 #Pango 1.16.0 #optional, it depends on the gui chosen
 #Optional, same as KDE-Libs
 Qt 3.3.7
-Xorg 7.2
 ZLib 1.2.3

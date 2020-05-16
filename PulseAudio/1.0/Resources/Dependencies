@@ -6,7 +6,6 @@ DBus >= 1.0.0 [dbus]
 GConf >= 2.4.0 [gconf]
 GDBM 1.8.3
 Glib >= 2.4.0 [glib2]
-Glibc >= 2.8			# Linking with earlier Glibc-2.5 fails
 HAL >= 0.5.7 [hal]
 Jack >= 0.100 [jack]
 LibOIL >= 0.3.14 		# Earlier LibOIL makes PulseAudio server segfault
