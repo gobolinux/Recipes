@@ -1,0 +1,10 @@
+# Recipe for version 0.7 by Hisham Muhammad <hisham@gobolinux.org>, on Sat May 16 02:09:13 -03 2020
+compile_version=2.0
+recipe_type=configure
+url=https://hisham.hm/dit/releases/0.7/dit-0.7.tar.gz
+file_size=577711
+file_md5=f63a7bf67bb901d26a3751cd97253e0d
+configure_options=(
+   --enable-unicode
+   --enable-bundled-lua
+)
