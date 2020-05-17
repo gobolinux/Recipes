@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for UThash by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat 16 May 2020 01:37:19 AM -03
+# Recipe for version 2.1.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat 16 May 2020 01:37:19 AM -03
+compile_version=017-GIT
+url="https://github.com/troydhanson/uthash/archive/v2.1.0.tar.gz"
+file="uthash-2.1.0.tar.gz"
+file_size=191782
+file_md5=4d0a33f6393260926032f1fad4bad39a
+dir='uthash-2.1.0'
+recipe_type=manifest
+
+manifest=(
+    "src/*.h:include"
+)
