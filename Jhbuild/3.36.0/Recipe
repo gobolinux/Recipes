@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for Jhbuild by Aleksei Romanenko <aleksei.romanenko@pm.me>, on Fri 22 May 2020 07:38:03 AM EEST
+# Recipe for version 3.36.0 by Aleksei Romanenko <aleksei.romanenko@pm.me>, on Fri 22 May 2020 07:38:03 AM EEST
+compile_version=017-GIT
+url="https://github.com/GNOME/jhbuild/archive/3.36.0.tar.gz"
+file="jhbuild-3.36.0.tar.gz"
+file_size=1535933
+file_md5=72e93a7c61a63934e11b43acb15791f2
+dir='jhbuild-3.36.0'
+recipe_type=configure
+autogen_before_configure=yes
+environment=(
+    "NOCONFIGURE=0"
+)
