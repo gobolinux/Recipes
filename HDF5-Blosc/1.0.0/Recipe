@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for HDF5-Blosc by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue 02 Jun 2020 06:29:33 PM -03
+# Recipe for version 1.0.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue 02 Jun 2020 06:29:33 PM -03
+compile_version=017-GIT
+url="https://github.com/Blosc/hdf5-blosc/archive/v1.0.0.tar.gz"
+file="hdf5-blosc-1.0.0.tar.gz"
+file_size=10662
+file_md5=dce104729d699968699268eb67353ca9
+dir='hdf5-blosc-1.0.0'
+recipe_type=cmake
