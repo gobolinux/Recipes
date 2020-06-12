@@ -1,0 +1,28 @@
+cmake: set rpath to the configure time CMAKE_INSTALL_PREFIX
+
+It can't be deferred until install time, as otherwise CMake won't
+know how much to pad the RPATH by.
+
+See https://github.com/jtanx/fontforge/commit/297ee9b5d6db5970ca17ebe5305189e79a1520a1
+for details.
+
+diff --git a/cmake/BuildUtils.cmake b/cmake/BuildUtils.cmake
+index 11f9c5a6d6..4f0a51f5d2 100644
+--- a/cmake/BuildUtils.cmake
++++ b/cmake/BuildUtils.cmake
+@@ -100,9 +100,12 @@ function(set_default_build_type default_build_type)
+ endfunction()
+ 
+ function(set_default_rpath)
+-  list(FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/lib" _is_system_dir)
+-  if(_is_system_dir LESS 0)
+-    list(APPEND CMAKE_INSTALL_RPATH "\${CMAKE_INSTALL_PREFIX}/lib")
++  list(FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/lib" _present)
++  if(_present LESS 0)
++    list(FIND CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib" _present)
++    if(_present LESS 0)
++      list(APPEND CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
++    endif()
+   endif()
+   if(APPLE)
+     list(APPEND CMAKE_INSTALL_RPATH "@loader_path/../lib")
