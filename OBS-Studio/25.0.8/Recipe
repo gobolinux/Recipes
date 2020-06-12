@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for OBS-Studio by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon 01 Jun 2020 12:38:24 PM -03
+# Recipe for version 25.0.8 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon 01 Jun 2020 12:38:24 PM -03
+compile_version=017-GIT
+url="https://github.com/obsproject/obs-studio/archive/25.0.8.tar.gz"
+file="obs-studio-25.0.8.tar.gz"
+file_size=9531713
+file_md5=269e7a31b9b59f0eaf06f1c90a2e4573
+dir='obs-studio-25.0.8'
+recipe_type=cmake
