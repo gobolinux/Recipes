@@ -1,0 +1,22 @@
+# Recipe for version 3320200 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu 11 Jun 2020 06:05:57 PM -03
+compile_version=1.9.0
+url="https://sqlite.org/2020/sqlite-autoconf-3320200.tar.gz"
+file_size=2903050
+file_md5=eb498918a33159cdf8104997aad29e83
+recipe_type=configure
+
+environment=(
+    CFLAGS="-DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_SECURE_DELETE=1 -DSQLITE_ENABLE_UNLOCK_NOTIFY=1"
+    TCLLIBDIR="$target/lib/tcl8.5"
+)
+
+configure_options=(
+    --enable-dynamic-extensions
+    --disable-readline
+)
+
+with_readline="--enable-readline"
+
+pre_link() {
+    ln -s $target/bin/sqlite3 $target/bin/sqlite
+}
