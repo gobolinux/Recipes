@@ -1,0 +1,14 @@
+Fixes compilation when using LibPNG 1.5 (and should not harm anyone
+using LibPNG 1.4).
+
+diff -Naur openjpeg_v1_4_sources_r697-vanilla/codec/convert.c openjpeg_v1_4_sources_r697-fixed/codec/convert.c
+--- openjpeg_v1_4_sources_r697-vanilla/codec/convert.c	2011-01-02 16:14:52.000000000 -0200
++++ openjpeg_v1_4_sources_r697-fixed/codec/convert.c	2011-09-22 18:11:22.000000000 -0300
+@@ -48,6 +48,7 @@
+ #include "../libs/png/png.h"
+ #else
+ #include <png.h>
++#include <zlib.h>
+ #endif /* _WIN32 */
+ #endif /* HAVE_LIBPNG */
+ 
