@@ -1,0 +1,6 @@
+[Name] Blosc
+[Summary] A blocking, shuffling and loss-less compression library
+[Description]
+Blosc is a high performance compressor optimized for binary data. It has been designed to transmit data to the processor cache faster than the traditional, non-compressed, direct memory fetch approach via a memcpy() OS call.
+[License] 3-clause BSD
+[Homepage] http://blosc.org

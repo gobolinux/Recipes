@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for Blosc by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue 02 Jun 2020 06:24:23 PM -03
+# Recipe for version 1.18.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue 02 Jun 2020 06:24:23 PM -03
+compile_version=017-GIT
+url="https://github.com/Blosc/c-blosc/archive/v1.18.1.tar.gz"
+file="c-blosc-1.18.1.tar.gz"
+file_size=889666
+file_md5=bc1614f9a80142c3748ac0a3cc356b75
+dir='c-blosc-1.18.1'
+recipe_type=cmake
