@@ -1,0 +1,8 @@
+[Name] LibUring
+[Summary] Helpers to setup and teardown io_uring instances.
+[Description] This is the liburing library. liburing provides helpers to setup and
+teardown io_uring instances, and also a simplified interface for
+applications that don't need (or want) to deal with the full kernel
+side implementation.
+[License] LGPL 2.1 and MIT
+[Homepage] https://github.com/axboe/liburing/
