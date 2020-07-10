@@ -1,0 +1,12 @@
+# Recipe for version 9.0.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu 18 Jun 2020 03:02:26 PM -03
+# Recipe (MakeRecipe) for Clang by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Oct 30 01:00:53 -03 2019
+compile_version=016
+url="https://github.com/llvm/llvm-project/releases/download/llvmorg-9.0.1/clang-9.0.1.src.tar.xz"
+file_size=13452780
+file_md5=13468e4a44940efef1b75e8641752f90
+dir="clang-9.0.1.src"
+recipe_type=cmake
+
+cmake_options=(
+    -DCLANG_PYTHON_BINDINGS_VERSIONS=$(python3 --version | awk {'print $2'} | cut -d. -f1-2)
+)
