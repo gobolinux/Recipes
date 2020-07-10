@@ -1,0 +1,8 @@
+# Recipe for version 10.0.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu 18 Jun 2020 03:01:44 PM -03
+# Recipe (MakeRecipe) for Clang by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Oct 30 01:00:53 -03 2019
+compile_version=016
+url="https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/clang-10.0.0.src.tar.xz"
+file_size=14190012
+file_md5=717ef92318fed4dbe1ee058368cfb552
+dir='cfe-10.0.0.src'
+recipe_type=cmake
