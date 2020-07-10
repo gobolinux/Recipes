@@ -1,0 +1,8 @@
+# Recipe for version 1.2.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri 10 Jul 2020 02:21:01 AM -03
+# Recipe (MakeRecipe) for Musl by Wilson Moura <wilsonmourati@gmail.com>, on qua mai 3 18:56:09 BRT 2017
+compile_version=20170424-GIT
+url="http://musl.libc.org/releases/musl-1.2.0.tar.gz"
+file_size=1035265
+file_md5=5f13b13501d6ab7c2e06c69484e5a7fc
+dir='musl-1.2.0'
+recipe_type=configure
