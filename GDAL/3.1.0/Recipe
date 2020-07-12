@@ -1,0 +1,45 @@
+# Recipe for version 3.1.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu 11 Jun 2020 03:34:19 PM -03
+# Recipe (MakeRecipe) for GDAL by Leandro Motta Barros <lmb@stackedboxes.org>, on Thu May 28 16:31:24 BRT 2009
+compile_version=1.13.1
+url="http://download.osgeo.org/gdal/3.1.0/gdal-3.1.0.tar.xz"
+file_size=12076312
+file_md5=fe29a41d5813263fc33c1f9130f73e01
+recipe_type=configure
+makefile=GNUmakefile
+
+configure_options=(
+    #--with-hdf4
+    --with-hdf5
+    --with-jasper=no # Jasper cannot decode large JP2 files. Use OpenJPEG instead.
+    --with-netcdf=${netcdf_path}
+    --with-curl
+    --with-geos=${geos_path}/bin/geos-config
+    --with-sqlite3
+    --with-libtiff=${tiff_path}
+    --with-python=${goboExecutables}/python3
+    --with-png
+    --with-threads
+    --with-expat=${expat_path}
+    --with-xerces=/usr
+    --with-openjpeg=${openjpeg_path}
+)
+
+environment=(
+    PYTHONPATH=$goboLibraries/python$(python3 --version 2>&1 | awk {'print $2'} | cut -d. -f1-2)/site-packages
+)
+
+install_variables=(
+    PY_HAVE_SETUPTOOLS=n
+    PYTHONPATH=/usr/lib/python$(python3 --version 2>&1 | awk {'print $2'} | cut -d. -f1-2)/site-packages
+)
+
+pre_install() {
+    local pythondir=python$(python3 --version 2>&1 | awk {'print $2'} | cut -d. -f1-2)/site-packages
+    mkdir -p $target/lib/$pythondir
+    echo $goboLibraries/$pythondir/osgeo > $target/lib/$pythondir/osgeo.pth
+    if [ -d $target/lib64 ]
+    then
+       cp -r $target/lib64/* $target/lib/
+       rm -rf $target/lib64
+    fi
+}
