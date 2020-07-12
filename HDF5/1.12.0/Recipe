@@ -4,21 +4,8 @@ compile_version=1.13.3
 url="https://hdf-wordpress-1.s3.amazonaws.com/wp-content/uploads/manual/HDF5/HDF5_1_12_0/source/hdf5-1.12.0.tar.bz2"
 file_size=9081988
 file_md5=1fa68c4b11b6ef7a9d72ffa55995f898
-recipe_type=configure
+recipe_type=cmake
 
-configure_options=(
-    --with-default-plugindir=$goboLibraries/hdf5/plugin
-    --enable-shared
-    --enable-optimization=high
-    --enable-build-mode=production
-    --enable-threadsafe
-    --disable-hl
-#    --enable-hl         # the high-level library is incompatible with --enable-threadsafe
-#    --enable-cxx        # incompatible with --enable-threadsafe
-#    --enable-java       # incompatible with --enable-threadsafe
-    --enable-symbols="-g -ggdb"
-#    --enable-debug=all
-#    --enable-codestack
-#    --enable-trace
-#    --enable-instrument
+cmake_options=(
+    -DHDF5_ENABLE_Z_LIB_SUPPORT=ON
 )
