@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for PCRE by Philip Pokarowski, on Wed 22 Jul 2020 02:00:29 AM CEST
+# Recipe for version 10.35 by Philip Pokarowski, on Wed 22 Jul 2020 02:00:29 AM CEST
+compile_version=017-GIT
+url="https://ftp.pcre.org/pub/pcre/pcre2-10.35.zip"
+file_size=2557406
+file_md5=50f31cd29cf1b58115183b1bb565f15e
+dir='pcre2-10.35'
+recipe_type=configure
+configure_options=(
+	--disable-static
+	--enable-pcre2-16
+	--enable-pcre2-32
+)
