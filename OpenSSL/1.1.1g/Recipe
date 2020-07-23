@@ -1,0 +1,25 @@
+# Recipe for version 1.1.1g by Philip Pokarowski, on Thu 23 Jul 2020 04:53:54 AM CEST
+compile_version=016
+url="https://www.openssl.org/source/openssl-1.1.1g.tar.gz"
+file_size=9801502
+file_md5=76766e98997660138cdaf13a187bd234
+recipe_type=configure
+configure=Configure
+build_target="all"
+
+# Use /etc/ssl to search for certs
+configure_options=(
+   --openssldir=$goboSettings/ssl
+   --libdir=lib
+   zlib-dynamic
+)
+
+make_variables=(
+   MANDIR=$target/man
+   HTMLDIR=$target/doc/html
+   INSTALLTOP=$target
+)
+
+install_variables=(
+   OPENSSLDIR=$target/Resources/Defaults/Settings/ssl
+)
