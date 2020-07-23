@@ -1,0 +1,12 @@
+# Recipe for version 1.41.0 by Philip Pokarowski, on Thu 23 Jul 2020 04:44:19 AM CEST
+# Recipe (MakeRecipe) for NGHTTP2 by Hisham Muhammad <hisham@gobolinux.org>, on Wed Jan 16 14:35:51 -02 2019
+compile_version=016.01
+url="https://github.com/nghttp2/nghttp2/releases/download/v1.41.0/nghttp2-1.41.0.tar.xz"
+file_size=1640712
+file_md5=549db3507a7637b28ca467c7f3e9e023
+dir='nghttp2-1.41.0'
+recipe_type=configure
+configure_options=(
+	--disable-static
+	--enable-lib-only
+)
