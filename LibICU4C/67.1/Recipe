@@ -1,0 +1,8 @@
+# Recipe for version 67.1 by Philip Pokarowski, on Thu 23 Jul 2020 04:31:30 AM CEST
+# Recipe (MakeRecipe) for LibICU by Daniele Maccari <daniele.maccari@gmail.com>, on Wed Feb 13 11:50:18 CET 2008
+compile_version=1.10.1
+url="http://github.com/unicode-org/icu/releases/download/release-67-1/icu4c-67_1-src.tgz"
+file_size=24518055
+file_md5=c4d62b497cbd89ab2a9ca6b543e57b30
+dir='icu/source'
+recipe_type=configure
