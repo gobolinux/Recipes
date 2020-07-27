@@ -1,0 +1,8 @@
+# Recipe for version 3.3.16 by Philip Pokarowski, on Thu 23 Jul 2020 05:06:31 AM CEST
+# Recipe (MakeRecipe) for Procps-NG by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Dec 7 17:53:19 BRST 2013
+compile_version=1.0.1
+url="$httpSourceforge/project/procps-ng/Production/procps-ng-3.3.16.tar.xz"
+file_size=859736
+file_md5=e8dc8455e573bdc40b8381d572bbb89b
+recipe_type=configure
+configure_options=(--disable-static)

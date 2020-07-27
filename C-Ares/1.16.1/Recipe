@@ -1,0 +1,10 @@
+# Recipe for version 1.16.1 by Philip Pokarowski, on Thu 23 Jul 2020 04:38:33 AM CEST
+# Recipe (MakeRecipe) for C-Ares by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jan. 14., szerda, 00.40.12 CET
+compile_version=1.11.4
+url="https://c-ares.haxx.se/download/c-ares-1.16.1.tar.gz"
+file_size=1374637
+file_md5=62dece8675590445d739b23111d93692
+recipe_type=configure
+configure_options=(
+    --enable-shared
+)
