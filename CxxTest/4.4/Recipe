@@ -6,6 +6,7 @@ file_size=330076
 file_md5=c3cc3355e2ac64e34c215f28e44cfcec
 dir=cxxtest-4.4/python
 recipe_type=python
+python_major=3
 
 pre_install() {
     mkdir -p "$target"/{bin,include,lib,share/cxxtest}
