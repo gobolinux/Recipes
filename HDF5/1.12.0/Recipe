@@ -9,3 +9,11 @@ recipe_type=cmake
 cmake_options=(
     -DHDF5_ENABLE_Z_LIB_SUPPORT=ON
 )
+
+pre_link() {
+    Quiet pushd $target/lib/pkgconfig
+    for i in *-${version}.pc; do
+        ln -sf $i ${i//-$version}
+    done
+    Quiet popd
+}
