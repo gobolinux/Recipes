@@ -13,4 +13,6 @@ pre_build() {
 pre_link() {
    cp -a libbz2.so* $target/lib
    ln -nfs $target/lib/libbz2.so.1.0.8 $target/lib/libbz2.so.1
+   # If this is not here, python-2.7.18 (needed for MozJS, which is needed for polkit) won't support bz2
+   ln -nfs $target/lib/libbz2.so.1.0.8 $target/lib/libbz2.so
 }
