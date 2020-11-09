@@ -1,0 +1,25 @@
+# Recipe for version 2.7.18 by "Rune Morling <rune.morling+github@gmail.com>", on 09 Nov 2020 01:45:17 PM CET
+compile_version=1.8.5
+url="https://www.python.org/ftp/python/2.7.18/Python-2.7.18.tar.xz"
+file_size=12854736
+file_md5=fd6cc8ec0a78c44036f825e739f36e5a
+recipe_type=configure
+needs_safe_linking=yes
+
+# Note that Python2 needs to be able to see /System/Index/lib/libbz2.so for bz2 support to be included
+
+configure_options=(
+  "--enable-shared"
+#  "--with-cxx=no"
+)
+
+pre_build() {
+   # Make sure that the /S/Aliens patch file is sane.
+   patchfile="${recipedir}/01-search-SLL.patch.in"
+   declared_minor=$(grep "+PYTHON_MINOR" "$patchfile" | awk {'print $3'})
+   recipe_minor=$(echo "$version" | cut -d. -f2)
+   if [ "$declared_minor" != "$recipe_minor" ]
+   then
+      Die "Please update PYTHON_MINOR in $patchfile"
+   fi
+}
