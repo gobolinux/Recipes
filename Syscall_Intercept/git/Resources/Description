@@ -1,0 +1,11 @@
+[Name] Syscall_Intercept
+[Summary] System call intercepting library 
+[Description]
+ The system call intercepting library provides a low-level interface
+ for hooking Linux system calls in user space. This is achieved
+ by hotpatching the machine code of the standard C library in the
+ memory of a process. The user of this library can provide the
+ functionality of almost any syscall in user space, using the very
+ simple API specified in the libsyscall_intercept_hook_point.h header file.
+[License] BSD
+[Homepage] https://github.com/pmem/syscall_intercept/
