@@ -11,7 +11,17 @@ HarfBuzz 2.6.4
 LibICE 1.0.10
 LibSM 1.2.3
 LibX11 1.6.9
+
+# Note: at least on kernel 5.6.10, overlayfs fails to merge the
+# XFConf and LibXFCE4Util directories correctly when the lower
+# directories list includes LibXFCE4Util before XFConf. Here we
+# workaround that problem by including XFConf first. Another
+# workaround is to instruct Scripts to use the unionfs-fuse backend,
+# by modifying /System/Settings/Scripts/Directories.conf. It is
+# expected that this problem does not occur on more recent versions
+# of overlayfs.
+XFConf >= 4.14.0
 LibXFCE4Util >= 4.14.0
+
 Pango 1.44.7
 Startup-Notification 0.12
-XFConf >= 4.14.0
