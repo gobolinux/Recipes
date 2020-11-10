@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for Capstone by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun 20 Sep 2020 10:42:36 PM -03
+# Recipe for version 4.0.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun 20 Sep 2020 10:42:36 PM -03
+compile_version=017-GIT
+url="https://github.com/aquynh/capstone/archive/4.0.2.tar.gz"
+file="capstone-4.0.2.tar.gz"
+file_size=3439542
+file_md5=8894344c966a948f1248e66c91b53e2c
+dir='capstone-4.0.2'
+recipe_type=cmake
+
+cmake_options=(
+    -DCMAKE_POSITION_INDEPENDENT_CODE=ON
+)
