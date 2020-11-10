@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for LibBPF by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue 10 Nov 2020 11:57:36 AM -03
+# Recipe for version 0.2 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue 10 Nov 2020 11:57:36 AM -03
+compile_version=017-GIT
+url="https://github.com/libbpf/libbpf/archive/v0.2.tar.gz"
+file="libbpf-0.2.tar.gz"
+file_size=699136
+file_md5=cd0f82d76a9830c1e66b1a249393d5a8
+dir='libbpf-0.2/src'
+recipe_type=makefile
