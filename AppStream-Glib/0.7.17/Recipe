@@ -1,0 +1,14 @@
+# Recipe for version 0.7.17 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon 03 Aug 2020 12:31:59 AM -03
+# Recipe (MakeRecipe) for AppStream-Glib by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Mar 7 13:39:52 BRT 2019
+compile_version=016
+url="https://github.com/hughsie/appstream-glib/archive/appstream_glib_0_7_15.tar.gz"
+file_size=2398000
+file_md5=60fda2d9c0f5b67a3d0eb8dd31a7211b
+file="appstream-glib-appstream_glib_0_7_15.tar.gz"
+dir='appstream-glib-appstream_glib_0_7_15'
+recipe_type=meson
+
+meson_variables=(
+    -Drpm=false
+    -Dman=false
+)
