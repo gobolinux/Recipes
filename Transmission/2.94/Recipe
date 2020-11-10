@@ -1,0 +1,15 @@
+# Recipe for version 2.94 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun 24 May 2020 02:39:05 PM -03
+# Recipe (MakeRecipe) for Transmission by Nathan Middleton, on Mon Oct 8 22:07:45 CDT 2007
+compile_version=1.9.0
+url="https://github.com/transmission/transmission-releases/raw/master/transmission-2.94.tar.xz"
+file_size=3365952
+file_md5=c92829294edfa391c046407eeb16358a
+recipe_type=configure
+dir="transmission-2.94"
+
+configure_options=(
+    --enable-cli
+    --with-gtk
+    --enable-daemon
+    --with-inotify
+)
