@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for Cgroupfs-Mount by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue 23 Jun 2020 12:42:02 AM -03
+# Recipe for version 1.4 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue 23 Jun 2020 12:42:02 AM -03
+compile_version=017-GIT
+url="https://github.com/tianon/cgroupfs-mount/archive/1.4.tar.gz"
+file="cgroupfs-mount-1.4.tar.gz"
+file_size=5820
+file_md5=863aea46a564608cce7de1930714b633
+dir='cgroupfs-mount-1.4'
+recipe_type=manifest
+
+manifest=(
+    cgroupfs-mount:bin
+    cgroupfs-umount:bin
+)
