@@ -1,0 +1,8 @@
+# Recipe for version 2.5.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon 03 Aug 2020 12:03:17 AM -03
+# Recipe (MakeRecipe) for LibSeccomp by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Mar 26 14:25:05 BRT 2017
+compile_version=016
+url="https://github.com/seccomp/libseccomp/releases/download/v2.5.0/libseccomp-2.5.0.tar.gz"
+file_size=638793
+file_md5=463b688bf7d227325b5a465b6bdc3ec4
+dir='libseccomp-2.5.0'
+recipe_type=configure
