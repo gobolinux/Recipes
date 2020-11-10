@@ -1,0 +1,33 @@
+# Recipe (MakeRecipe) for Pahole by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue 10 Nov 2020 11:40:51 AM -03
+# Recipe for version 1.18 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue 10 Nov 2020 11:40:51 AM -03
+compile_version=017-GIT
+urls=(
+    "https://git.kernel.org/pub/scm/devel/pahole/pahole.git/snapshot/pahole-1.18.tar.gz"
+    "https://github.com/libbpf/libbpf/releases/v0.2.tar.gz"
+)
+file_sizes=(
+    202919
+    699136
+)
+file_md5s=(
+    678fc87a3083a2599d2f60b52b7a677d
+    cd0f82d76a9830c1e66b1a249393d5a8
+)
+files=(
+    'pahole-1.18.tar.gz'
+    'libbpf-0.2.tar.gz'
+)
+dirs=(
+    'pahole-1.18'
+    'libbpf-0.2'
+)
+unpack_files=inside_first
+recipe_type=cmake
+
+cmake_options=(
+    -D__LIB=lib
+)
+
+pre_build() {
+    cp -a $sourcedir/libbpf-0.2/* $sourcedir/lib/bpf/
+}
