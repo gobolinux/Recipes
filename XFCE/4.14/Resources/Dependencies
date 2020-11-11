@@ -1,34 +1,34 @@
-# The packages here need to be sorted per https://docs.xfce.org/xfce/building#xfce_s_dependency_chain
+# The packages here are sorted per https://docs.xfce.org/xfce/building#xfce_s_dependency_chain
 
-GTK+ >= 3.24.0
+Glib 2.50.1
+GTK+ 3.24.0
+GTK-XFCE-Engine 3.0.0
+Hicolor-Icon-Theme 0.15
+Icon-Theme-Tango 0.8.90
+LibWNCK 2.30.7
+LibXML2 2.6.18
+DBus 1.7.10 [dbus]
+DBus-GLib 0.100.2 [dbus]
+
+#Orage >= 4.12.1
+#Startup-Notification >= 0.9 [startup_notification]
+#Tumbler >= 0.1.31
+#XFCE4-Mixer >= 4.11.0
+
+#XFCE4-Dev-Tools >= 4.14.0, 4.15.0 
 LibXFCE4Util >= 4.14.0, < 4.15.0
 XFConf >= 4.14, < 4.15.0
 LibXFCE4UI >= 4.14.0, < 4.15.0
-Garcon >= 0.6
-EXO >= 0.12
+Garcon 0.6
+EXO 0.12
 XFCE4-Panel >= 4.14.0, < 4.15.0
-Thunar >= 1.8
-Thunar-Volman >= 0.9
+Thunar 1.8
+Thunar-Volman 0.9
 XFCE4-Settings >= 4.14, < 4.15.0
 XFCE4-Session >= 4.14, < 4.15.0
 XFWM4 >= 4.14, < 4.15.0
 XFDesktop >= 4.14, < 4.15.0
-XFCE4-AppFinder >= 4.14.0
-XFCE4-Power-Manager >= 1.7.0
-XFCE4-Terminal >= 0.8.9
-XFWM4-Themes >= 4.10.0
-
-#Glib >= 2.50.1
-#GTK+ >= 2.24.22
-#GTK-XFCE-Engine >= 3.0.0
-#Hicolor-Icon-Theme >= 0.15
-#Icon-Theme-Tango >= 0.8.90
-#LibWNCK >= 2.30.7
-#LibXML2 >= 2.6.18
-#Orage >= 4.12.1
-#Startup-Notification >= 0.9 [startup_notification]
-#Tumbler >= 0.1.31
-#XFCE4-Dev-Tools >= 4.12.0
-#XFCE4-Mixer >= 4.11.0
-#DBus >= 1.7.10 [dbus]
-#DBus-GLib >= 0.100.2 [dbus]
+XFCE4-AppFinder 4.14.0
+XFCE4-Power-Manager 1.7.0
+XFCE4-Terminal 0.8.9
+XFWM4-Themes 4.10.0
