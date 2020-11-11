@@ -1,18 +1,21 @@
-EXO >= 0.12
-Garcon >= 0.6
-LibXFCE4UI >= 4.14.0, < 4.15.0
+# The packages here need to be sorted per https://docs.xfce.org/xfce/building#xfce_s_dependency_chain
+
+GTK+ >= 3.24.0
 LibXFCE4Util >= 4.14.0, < 4.15.0
+XFConf >= 4.14, < 4.15.0
+LibXFCE4UI >= 4.14.0, < 4.15.0
+Garcon >= 0.6
+EXO >= 0.12
+XFCE4-Panel >= 4.14.0, < 4.15.0
 Thunar >= 1.8
 Thunar-Volman >= 0.9
-XFCE4-AppFinder >= 4.14.0
-XFCE4-Panel >= 4.14.0, < 4.15.0
-XFCE4-Power-Manager >= 1.7.0
 XFCE4-Settings >= 4.14, < 4.15.0
 XFCE4-Session >= 4.14, < 4.15.0
-XFCE4-Terminal >= 0.8.9
-XFConf >= 4.14, < 4.15.0
-XFDesktop >= 4.14, < 4.15.0
 XFWM4 >= 4.14, < 4.15.0
+XFDesktop >= 4.14, < 4.15.0
+XFCE4-AppFinder >= 4.14.0
+XFCE4-Power-Manager >= 1.7.0
+XFCE4-Terminal >= 0.8.9
 XFWM4-Themes >= 4.10.0
 
 #Glib >= 2.50.1
