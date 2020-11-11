@@ -1,0 +1,133 @@
+#!/bin/bash
+
+# Generates the initramfs and the GRUB UEFI application
+# needed to boot GoboLinux.
+#
+# Written by Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+source GoboPath
+source ScriptFunctions
+Import Log
+
+mount_esp_partition() {
+   local esp=$(partinfo --flags | grep boot | grep esp | cut -d: -f1 | head -n 1)
+   if [ ! -d $goboBoot/efi ]
+   then mkdir -p $goboBoot/efi
+   fi
+   mountpoint -q $goboBoot/efi && return 0
+   mount -v "$esp" $goboBoot/efi && return 1
+   return 2
+}
+
+umount_esp_partition() {
+   umount $goboBoot/efi
+}
+
+copy_kernel() {
+   local kernel_img="$1"
+   local system_map="$2"
+   cp -v "$kernel_img" "$system_map" "$goboBoot/efi/BOOT/"
+}
+
+gen_initramfs() {
+   local kernel_release="$1"
+   local modules_dir="$2"
+   local new_initramfs="/System/Kernel/Boot/initramfs-${kernel_release}.img"
+   local old_initramfs=
+
+   if [ -e "$new_initramfs" ]
+   then
+      echo "$new_initramfs already exists, will rename it before regenerating"
+      local count=$(ls ${new_initramfs}* | wc -l)
+      let count=count+1
+      old_initramfs="${new_initramfs}.${count}"
+      mv -v "${new_initramfs}" "${old_initramfs}"
+   fi
+
+   # Note: we're generating an initramfs that's just enough to boot this machine.
+   # If you want to generate an image that boots on a larger number of computers,
+   # please make sure to remove --hostonly from the arguments below.
+   dracut --kver "$kernel_release" --kmoddir "$modules_dir" --hostonly --show-modules --force -L 2
+
+   if [ ! -e "$new_initramfs" -a "$old_initramfs" ]
+   then
+      echo "Failed to generate initramfs, restoring original"
+      mv -v "${old_initramfs}" "${new_initramfs}"
+   elif [ ! -e "$new_initramfs" ]
+   then
+      false
+   else
+      mv -v "$new_initramfs" "$goboBoot/efi/BOOT/initramfs-${kernel_release}.img"
+   fi
+}
+
+gen_uefi_app() {
+   local grub_cfg="$1"
+   Quiet pushd "$goboBoot"
+
+   Log_Normal "Generating a config file"
+   if [ -z "$grub_cfg" ]
+   then
+      GenGrubConf "$goboBoot" || { Log_Error "Failed to update UEFI application" && return; }
+      grub_cfg="grub.cfg"
+   fi
+
+   Log_Normal "Generating an updated UEFI application"
+   grub-mkstandalone-efi \
+       -d /Programs/GRUB-EFI/Current/lib/grub/x86_64-efi \
+       -O x86_64-efi \
+       --modules="part_gpt part_msdos iso9660 all_video efi_gop efi_uga video_bochs video_cirrus gfxterm gettext font" \
+       --fonts="unicode" \
+       --themes="" \
+       -o BOOTX64.EFI \
+       --compress=gz \
+       "boot/grub/grub.cfg=$grub_cfg"
+
+   if [ -e "$goboBoot/efi/EFI/BOOT/BOOTX64.EFI" ]
+   then
+       Log_Normal "Updating UEFI application"
+       mv -v "efi/EFI/BOOT/BOOTX64.EFI" "efi/EFI/BOOT/BOOTX64.OLD"
+       #cp -v "$grub_cfg" "efi/EFI/BOOT/grub.cfg"
+       mv -v "BOOTX64.EFI" "efi/EFI/BOOT"
+   else
+       Log_Normal "A new UEFI application has been created. You can now activate your kernel by mounting your"
+       Log_Normal "EFI System Partition and moving $goboBoot/BOOTX64.EFI into your ESP's /EFI/BOOT directory."
+   fi
+   Quiet popd
+}
+
+#################
+# Main operation
+#################
+
+if [ "$#" -lt 4 ]
+then
+    echo "Syntax: $0 <kernel_release> <modules_dir> <kernel_img> <system_map> [grub.cfg]"
+    echo "Example:"
+    echo "$0 5.9.6-Gobo /Programs/Linux/5.9.6/lib/modules/5.9.6-Gobo /boot/kernel-5.9.6-Gobo /boot/System.map-5.9.6-Gobo"
+    exit 1
+fi
+kernel_release="$1"
+modules_dir="$2"
+kernel_img="$3"
+system_map="$4"
+
+if [ "$#" = 6 ] && echo "$5" | grep -q grub.cfg
+then grub_cfg="$(readlink -f "$5")"
+else grub_cfg=
+fi
+
+if [ "$(uname -m)" = "x86_64" ]
+then
+    mount_esp_partition
+    mounted_esp=$?
+
+    retval=1
+    gen_initramfs "$kernel_release" "$modules_dir" && \
+    gen_uefi_app "$grub_cfg" && \
+    copy_kernel "$kernel_img" "$system_map" && \
+    retval=0
+
+    [ $mounted_esp = 1 ] && umount_esp_partition
+    exit $retval
+fi
