@@ -7,15 +7,12 @@ Import Log
 post_install() {
    private__check_firmware
    local fullversion=`private__calculate_full_version`
-   local modules_dir="$target/lib/modules/$version"
-   local kernel_img="$target/Resources/Unmanaged/System/Kernel/Boot/kernel-$fullversion"
-   local system_map="$target/Resources/Unmanaged/System/Kernel/Boot/System.map-$fullversion"
 
    mkdir -p $target/bin
    cp "$archsubdir"/WriteBoot64 $target/bin
 
    if Ask "Do you want to regenerate your UEFI boot application?"
-   then $target/bin/WriteBoot64 "$fullversion" "$modules_dir" "$kernel_img" "$system_map"
+   then $target/bin/WriteBoot64 "$fullversion"
    else Log_Normal "You may regenerate it later on by running $target/bin/WriteBoot64"
    fi
 }
