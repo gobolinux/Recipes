@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for Scdoc by Nuc!eoN, on Thu 12 Nov 2020 03:34:10 PM CET
+# Recipe for version 1.11.0 by Nuc!eoN, on Thu 12 Nov 2020 03:34:10 PM CET
+compile_version=017-GIT
+url="https://git.sr.ht/~sircmpwn/scdoc/archive/1.11.0.tar.gz"
+file="scdoc-1.11.0.tar.gz"
+file_size=12616
+file_md5=7f72b830fed5d756a0c6653d88aa487e
+dir='scdoc-1.11.0'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
