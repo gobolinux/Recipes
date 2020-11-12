@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for LibGUdev by Nuc!eoN, on Thu 12 Nov 2020 04:13:02 PM CET
+# Recipe for version 234 by Nuc!eoN, on Thu 12 Nov 2020 04:13:02 PM CET
+compile_version=017-GIT
+url="https://gitlab.gnome.org/GNOME/libgudev/-/archive/234/libgudev-234.tar.bz2"
+file_size=32036
+file_md5=cb9afa6568c155583ecb51b6e4ee2915
+dir='libgudev-234'
+recipe_type=configure
+autogen_before_configure=yes
+configure_options=(
+   "--disable-umockdev"
+)
