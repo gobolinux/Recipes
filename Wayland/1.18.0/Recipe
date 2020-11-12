@@ -1,0 +1,10 @@
+# Recipe for version 1.18.0 by Nuc!eoN, on Thu 12 Nov 2020 03:04:08 PM CET
+compile_version=2.0
+url="https://wayland.freedesktop.org/releases/wayland-1.18.0.tar.xz"
+file_size=453968
+file_md5=23317697b6e3ff2e1ac8c5ba3ed57b65
+recipe_type=configure
+
+configure_options=(
+    --disable-documentation
+)
