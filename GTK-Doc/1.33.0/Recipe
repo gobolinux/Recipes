@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for GTK-Doc by Nuc!eoN, on Thu 12 Nov 2020 04:20:58 PM CET
+# Recipe for version 1.33.0 by Nuc!eoN, on Thu 12 Nov 2020 04:20:58 PM CET
+compile_version=017-GIT
+url="https://gitlab.gnome.org/GNOME/gtk-doc/-/archive/1.33.0/gtk-doc-1.33.0.tar.bz2"
+file_size=649531
+file_md5=2a0d8bd3359d6c2ce4e85204655f3963
+dir='gtk-doc-1.33.0'
+recipe_type=configure
+autogen_before_configure=yes
+configure_options=(
+   "--with-xml-catalog=$goboVariable/lib/xml/catalog"
+)
