@@ -5,8 +5,8 @@ to link with BFD instead.
 
 Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
 
---- libwacom/Makefile.in.orig	2020-11-12 16:43:07.407203959 -0300
-+++ libwacom/Makefile.in	2020-11-12 17:13:13.357265239 -0300
+--- libwacom-1.6/libwacom/Makefile.in.orig	2020-11-12 16:43:07.407203959 -0300
++++ libwacom-1.6/libwacom/Makefile.in	2020-11-12 17:13:13.357265239 -0300
 @@ -359,6 +359,7 @@ libwacom_la_CFLAGS = $(AM_CPPFLAGS) $(GL
  libwacom_la_LDFLAGS = \
  		      -version-info $(LIBWACOM_LT_VERSION) \
