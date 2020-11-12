@@ -1,0 +1,8 @@
+# Recipe for version 1.6 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu 12 Nov 2020 04:37:03 PM -03
+# Recipe (MakeRecipe) for LibWacom by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Aug 8 01:10:41 GMT 2016
+compile_version=2.0
+url="$httpSourceforge/project/linuxwacom/libwacom/libwacom-1.6.tar.bz2"
+file_size=512132
+file_md5=1b0ee3f541433fc6df562cce314986da
+dir='libwacom-1.6'
+recipe_type=configure
