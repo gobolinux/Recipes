@@ -1,0 +1,14 @@
+# Recipe for version 4.8.25 by Rune Morling <rune.morling+github@gmail.com>, on Sat 14 Nov 2020 10:07:10 PM CET
+url="http://www.midnight-commander.org/downloads/mc-4.8.25.tar.xz"
+file_size=2488324
+file_md5=19f14d368001aac454c28a2ddd2e851b
+file=mc-4.8.25.tar.xz
+compile_version=1.10.2
+recipe_type=configure
+configure_options=(
+    --enable-extcharset
+    --enable-charset
+    --without-x
+    --with-search-engine=glib
+    --with-screen=slang
+)
