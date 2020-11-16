@@ -1,0 +1,18 @@
+# Recipe for version 2.3.2 by Rune Morling <rune.morling+github@gmail.com>, on Sat 14 Nov 2020 10:34:19 PM CET
+url="http://www.jedsoft.org/releases/slang/slang-2.3.2.tar.bz2"
+file_size=1586720
+file_md5=c2d5a7aa0246627da490be4e399c87cb
+compile_version=1.8.0
+recipe_type=configure
+
+install_target="install install-elf"
+
+makefile=Makefile.gobo
+build_target=all
+pre_build() {
+   # Wrapper Makefile to force single job as parallel builds break
+   cat << EOF > Makefile.gobo
+% :
+	\$(MAKE) -j1 \$@
+EOF
+}
