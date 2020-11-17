@@ -1,16 +1,7 @@
-ATK 2.34.1
-Cairo 1.17.2_f93fc72c03e
-Fontconfig 2.13.1
-FreeType 2.10.1
-GDK-Pixbuf 2.40.0
-GLib 2.63.5
-Glibc 2.30
-GTK+ 2.24.32
-GTK+ 3.24.13
-HarfBuzz 2.6.4
-LibICE 1.0.10
-LibSM 1.2.3
-LibX11 1.6.9
+Glib 2.42.0
+GTK+ 3.22.0
+LibSM
+LibX11
 
 # Note: at least on kernel 5.6.10, overlayfs fails to merge the
 # XFConf and LibXFCE4Util directories correctly when the lower
@@ -20,8 +11,7 @@ LibX11 1.6.9
 # by modifying /System/Settings/Scripts/Directories.conf. It is
 # expected that this problem does not occur on more recent versions
 # of overlayfs.
-XFConf >= 4.14.0
-LibXFCE4Util >= 4.14.0
 
-Pango 1.44.7
-Startup-Notification 0.12
+LibXFCE4Util >= 4.14.0, < 4.15
+Startup-Notification 0.4
+XFConf >= 4.14.0, < 4.15
