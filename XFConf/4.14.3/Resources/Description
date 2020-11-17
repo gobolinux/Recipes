@@ -1,0 +1,11 @@
+[Name] XFConf
+[Summary] D-Bus-based configuration storage system for Xfce
+[Description] Xfconf is a hierarchical (tree-like) configuration system where
+the immediate child nodes of the root are called channels.
+
+All settings beneath the channel nodes are called properties.
+
+See the xfconf homepage for usage and examples.
+
+[License] GPL-2.0-only
+[Homepage] https://gitlab.xfce.org/xfce/xfconf
