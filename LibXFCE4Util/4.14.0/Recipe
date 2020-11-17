@@ -6,6 +6,7 @@ file_size=516358
 file_md5=46f44e36acc3abf1a5ba814c22a773cb
 recipe_type=configure
 configure_options=(
+   --disable-perl-bindings
    --enable-debug=no
 )
 with_doc=(
