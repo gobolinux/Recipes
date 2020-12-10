@@ -1,0 +1,11 @@
+# Recipe for version 2.1.0beta3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue 10 Mar 2020 04:24:09 PM BRT
+compile_version=1.8.2
+git="https://github.com/luajit/luajit"
+recipe_type=makefile
+make_variables=(
+  INSTALL_TOP=$target
+  XCFLAGS="-DLUAJIT_ENABLE_LUA52COMPAT"
+)
+pre_link() {
+   ln -nfs $target/bin/luajit-2.1.0-beta2 $target/bin/luajit
+}
