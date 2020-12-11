@@ -1,6 +1,7 @@
 # Recipe for version 2.1.0beta3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue 10 Mar 2020 04:24:09 PM BRT
 compile_version=1.8.2
 git="https://github.com/luajit/luajit"
+branch="v2.1"
 recipe_type=makefile
 make_variables=(
   INSTALL_TOP=$target
