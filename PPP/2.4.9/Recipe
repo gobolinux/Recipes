@@ -1,0 +1,16 @@
+# Recipe for version 2.4.9 by Hisham Muhammad <hisham@gobolinux.org>, on Fri Jan 8 17:37:23 -03 2021
+# Recipe (MakeRecipe) for PPP by Andreas Koehler, on Thu Aug 11 23:57:09 CEST 2005
+compile_version=1.8.2
+url="http://www.mirrorservice.org/sites/www.ibiblio.org/gentoo/distfiles/ppp-2.4.9.tar.gz"
+file_size=719904
+file_md5=040efef7eb4ae6434cd006bc9d795838
+dir=ppp-ppp-2.4.9
+recipe_type=configure
+install_variables=(
+   DESTDIR=$target
+)
+
+pre_install() {
+   mkdir -p $settings_target/ppp/peers
+   cp etc.ppp/* $settings_target/ppp
+}
