@@ -1,0 +1,16 @@
+# Recipe for version 5.9 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue 22 Sep 2020 11:42:03 PM -03
+
+compile_version=1.8.0
+url="$httpSourceforge/net-snmp/net-snmp-5.9.tar.gz"
+file_size=6690435
+file_md5=382da80138897f294299badf9c62c699
+recipe_type=configure
+
+configure_options=(
+   "--with-perl-modules=$target"
+   "--with-defaults"
+)
+
+install_variables=(
+   INSTALL_BASE=$target
+)
