@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for Triehash by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed 18 Nov 2020 03:44:49 PM -03
+# Recipe for version 0.3_3 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed 18 Nov 2020 03:44:49 PM -03
+compile_version=017-GIT
+url="https://github.com/julian-klode/triehash/archive/debian/0.3-3.tar.gz"
+file="triehash-debian-0.3-3.tar.gz"
+file_size=15489
+file_md5=342266d80d72d4ab1cb491c25858a2c5
+dir='triehash-debian-0.3-3'
+recipe_type=manifest
+
+manifest=(
+    triehash.pl:bin/triehash
+)
