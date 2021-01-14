@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Python-Slip by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed 13 Jan 2021 03:59:39 PM -03
+# Recipe for version git by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed 13 Jan 2021 03:59:39 PM -03
+compile_version=017-GIT
+git="https://github.com/nphilipp/python-slip.git"
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=(
+    PYTHON=python3
+)
