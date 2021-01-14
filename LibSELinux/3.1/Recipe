@@ -1,0 +1,9 @@
+# Recipe for version 3.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed 13 Jan 2021 11:40:08 PM -03
+# Recipe (MakeRecipe) for LibSELinux by Demian Florentin <demianflorentin@gmail.com>, on Sat Nov 21 12:02:56 PYST 2009
+compile_version=1.12.3
+url="https://github.com/SELinuxProject/selinux/releases/download/20200710/libselinux-3.1.tar.gz"
+file_size=204703
+file_md5=693680c021feb69a4b258b0370021461
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(PREFIX="$target")
