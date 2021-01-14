@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for Nftables by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon 23 Nov 2020 11:30:19 AM -03
+# Recipe for version 0.9.7 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon 23 Nov 2020 11:30:19 AM -03
+compile_version=017-GIT
+url="https://www.netfilter.org/projects/nftables/files/nftables-0.9.7.tar.bz2"
+file_size=872759
+file_md5=72dcf97e712b337469e4d70281ba5075
+dir='nftables-0.9.7'
+recipe_type=configure
+
+configure_options=(
+    --enable-python
+    --with-python-bin=python3
+    --with-json
+)
