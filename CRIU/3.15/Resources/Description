@@ -1,0 +1,5 @@
+[Name] CRIU
+[Summary] Checkpoint/restore functionality for Linux
+[Description] CRIU can freeze a running container (or an individual application) and checkpoint its state to disk. The data saved can be used to restore the application and run it exactly as it was during the time of the freeze. Using this functionality, application or container live migration, snapshots, remote debugging, and many other things are now possible.
+[License] GNU GPL version 2
+[Homepage] https://criu.org

@@ -1,0 +1,17 @@
+# Recipe (MakeRecipe) for CRIU by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon 23 Nov 2020 11:26:04 AM -03
+# Recipe for version 3.15 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon 23 Nov 2020 11:26:04 AM -03
+compile_version=017-GIT
+url="https://github.com/checkpoint-restore/criu/archive/v3.15.tar.gz"
+file="criu-3.15.tar.gz"
+file_size=1180782
+file_md5=90dedce0730c35a04281f328b1e78d63
+dir='criu-3.15'
+recipe_type=makefile
+makefile='Makefile'
+
+pre_build()
+{
+    Quiet pushd crit
+    ln -fs crit-python3 crit-$(basename $(which python3))
+    Quiet popd
+}
