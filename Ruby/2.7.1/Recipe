@@ -1,0 +1,28 @@
+# Recipe for version 2.7.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu 18 Jun 2020 02:42:44 PM -03
+compile_version=1.8.2
+url="https://cache.ruby-lang.org/pub/ruby/2.7/ruby-2.7.1.tar.gz"
+file_size=16816471
+file_md5=debb9c325bf65021214451660f46e909
+recipe_type=configure
+makefile=GNUmakefile
+
+configure_options=(
+ "--disable-frame-address"
+ "--enable-shared"
+ "--enable-pthread"
+ "--enable-install-doc"
+)
+
+do_install() {
+   makefile_do_install "$@"
+   $sudo_exec ln -s "$goboSystem/Aliens/RubyGems" "$target"/lib/ruby/gems
+   if ! [ -e "$goboSystem/Aliens/RubyGems/2.7.1/bin" ]
+   then
+      $sudo_exec mkdir -p "$goboSystem/Aliens/RubyGems/2.7.1/bin"
+      $sudo_exec ln -s "$target/bin/ruby" "$goboSystem/Aliens/RubyGems/2.7.1/bin"
+   fi
+}
+
+unmanaged_files=(
+   "$goboSystem/Aliens/RubyGems"
+)
