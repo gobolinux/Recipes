@@ -1,0 +1,40 @@
+Disable doc processing, as we're likely to bump into xslt bugs.
+
+Signed-off-by: Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+--- apt-2.1.11/doc/CMakeLists.txt.orig	2020-11-18 17:40:05.316126229 -0300
++++ apt-2.1.11/doc/CMakeLists.txt	2020-11-18 17:40:45.406125733 -0300
+@@ -67,33 +67,3 @@ install(DIRECTORY  ${PROJECT_BINARY_DIR}
+ )
+ 
+ endif()
+-
+-add_docbook(apt-man MANPAGE ALL
+-    DOCUMENTS
+-        apt.8.xml
+-        apt_auth.conf.5.xml
+-        apt-cache.8.xml
+-        apt-cdrom.8.xml
+-        apt.conf.5.xml
+-        apt-config.8.xml
+-        apt-extracttemplates.1.xml
+-        apt-ftparchive.1.xml
+-        apt-get.8.xml
+-        apt-key.8.xml
+-        apt-mark.8.xml
+-        apt_preferences.5.xml
+-        apt-patterns.7.xml
+-        apt-secure.8.xml
+-        apt-sortpkgs.1.xml
+-        apt-transport-http.1.xml
+-        apt-transport-https.1.xml
+-        apt-transport-mirror.1.xml
+-        sources.list.5.xml
+-    DEPENDS ${ENTITIES}
+-    TRANSLATED_ENTITIES ${TRANSLATED_ENTITIES}
+-    LINGUAS ${LINGUAS}
+-)
+-
+-add_update_po4a(update-po4a po/${PROJECT_NAME}-doc.pot "po/header.pot.txt")
+-
+-add_subdirectory(examples)

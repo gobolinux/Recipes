@@ -1,0 +1,17 @@
+# Recipe (MakeRecipe) for Apt by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed 18 Nov 2020 03:43:21 PM -03
+# Recipe for version 2.1.11 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed 18 Nov 2020 03:43:21 PM -03
+compile_version=017-GIT
+url="https://github.com/Debian/apt/archive/2.1.11.tar.gz"
+file="apt-2.1.11.tar.gz"
+file_size=4276500
+file_md5=121e428a5d3c46b73ae4e1f9afe2c682
+dir='apt-2.1.11'
+recipe_type=cmake
+
+# We want the bare minimum
+cmake_options=(
+    -DWITH_DOC=off
+    -DWITH_TESTS=off
+    -DUSE_NLS=off
+    -DDPKG_DATADIR="$goboShared/dpkg"
+)
