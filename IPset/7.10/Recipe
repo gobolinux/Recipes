@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for IPset by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed 13 Jan 2021 03:52:04 PM -03
+# Recipe for version 7.10 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed 13 Jan 2021 03:52:04 PM -03
+compile_version=017-GIT
+url="http://ipset.netfilter.org/ipset-7.10.tar.bz2"
+file_size=679910
+file_md5=1f500b5300184964cbacc3cbca6e5bb1
+dir='ipset-7.10'
+recipe_type=configure
