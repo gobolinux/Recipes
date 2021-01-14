@@ -1,0 +1,22 @@
+# Recipe (MakeRecipe) for Po4a by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed 18 Nov 2020 04:43:29 PM -03
+# Recipe for version 0.61 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed 18 Nov 2020 04:43:29 PM -03
+compile_version=017-GIT
+url="https://github.com/mquinson/po4a/releases/download/v0.61/po4a-0.61.tar.gz"
+file_size=3863796
+file_md5=f9264a3e082bb660680170513885caaa
+dir='po4a-0.61'
+recipe_type=makefile
+
+# This Perl module is not on CPAN and we no longer have recipe_type=perl.
+# Thankfully it's easy enough to build Perl-based packages.
+
+pre_build() {
+    cat << EOF > Makefile
+all:
+	perl Build.PL
+	./Build
+
+install:
+	./Build install
+EOF
+}
