@@ -1,0 +1,14 @@
+# Recipe for version 1.8.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri 10 Jul 2020 01:16:02 PM -03
+# Recipe (MakeRecipe) for Flatpak by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Mar 7 04:41:07 BRT 2019
+compile_version=016
+url="https://github.com/flatpak/flatpak/releases/download/1.8.1/flatpak-1.8.1.tar.xz"
+file_size=1423484
+file_md5=e5c7c46ffb8169f0cb5a6318a5938581
+dir='flatpak-1.8.1'
+recipe_type=configure
+
+configure_options=(
+    --disable-gtk-doc-html
+    --disable-documentation
+    --disable-seccomp
+)
