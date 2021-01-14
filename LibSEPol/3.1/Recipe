@@ -1,0 +1,12 @@
+# Recipe for version 3.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed 13 Jan 2021 11:46:05 PM -03
+# Recipe (MakeRecipe) for LibSEPol by roko, <ro.ko@mcnon.com>, on Fri Apr 8 20:49:15 CEST 2005
+compile_version=1.8.0
+url="https://github.com/SELinuxProject/selinux/releases/download/20200710/libsepol-3.1.tar.gz"
+file_size=473842
+file_md5=b56dc01b76b97dcb730ab4e2fd1c9dea
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=(
+    PREFIX="$target"
+)
