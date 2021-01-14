@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for NVTOP by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue 28 Jul 2020 12:20:23 AM -03
+# Recipe for version 1.0.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue 28 Jul 2020 12:20:23 AM -03
+compile_version=017-GIT
+url="https://github.com/Syllo/nvtop/archive/1.0.0.tar.gz"
+file="nvtop-1.0.0.tar.gz"
+file_size=95427
+file_md5=f37e5142d3a0bbb909fd8d5593ca5e9c
+dir='nvtop-1.0.0'
+recipe_type=cmake
