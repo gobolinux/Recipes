@@ -1,0 +1,13 @@
+# Recipe for version 9.60 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu 17 Dec 2020 12:25:13 AM -03
+# Recipe (MakeRecipe) for Hdparm by  Ozgur Ulukir, on Fri Dec 17 22:07:37 EET 2004
+compile_version=1.8.2
+url="$httpSourceforge/hdparm/hdparm-9.60.tar.gz"
+file_size=155220
+file_md5=25a791d47236c58801f8b27074f3ef93
+recipe_type=makefile
+makefile='Makefile'
+
+install_variables=(
+    manprefix=$target
+    binprefix=$target
+)
