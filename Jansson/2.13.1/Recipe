@@ -1,0 +1,8 @@
+# Recipe for version 2.13.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon 23 Nov 2020 11:42:19 AM -03
+# Recipe (MakeRecipe) for Jansson by Demian Florentin <demianflorentin@gmail.com>, on Sat Apr 29 20:27:48 PYT 2017
+compile_version=016.01
+url="https://digip.org/jansson/releases/jansson-2.13.1.tar.gz"
+file_size=531924
+file_md5=570af45b8203e95876d71fecd56cee20
+dir='jansson-2.13.1'
+recipe_type=cmake
