@@ -1,0 +1,14 @@
+required_users=(
+	systemd-journal-remote
+	systemd-network
+	systemd-resolve
+	systemd-coredump
+)
+
+required_groups=(
+	systemd-journal
+	systemd-journal-remote
+	systemd-network
+	systemd-resolve
+	systemd-coredump
+)

@@ -1,0 +1,97 @@
+# Recipe (MakeRecipe) for Systemd by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed 13 Jan 2021 12:29:21 AM -03
+# Recipe for version 247 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed 13 Jan 2021 12:29:21 AM -03
+compile_version=017-GIT
+url="https://github.com/systemd/systemd/archive/v247.tar.gz"
+file="systemd-247.tar.gz"
+file_size=9887080
+file_md5=b0d6e603b814908acc69db29bbfb023c
+dir='systemd-247'
+recipe_type=configure
+
+unmanaged_files=(
+    $goboVariable/lib/systemd/catalog
+)
+
+configure_options=(
+        -Dmode=release
+        -Dsysvinit-path=/etc/rc.d/init.d
+        -Drc-local=/etc/rc.d/rc.local
+        -Dntp-servers=
+        -Ddns-servers="208.67.222.222 208.67.220.220"
+        -Duser-path=$goboExecutables
+        -Dservice-watchdog=
+        -Ddev-kvm-mode=0666
+        -Dkmod=true
+        -Ddbus=true
+        -Dxkbcommon=true
+        -Dblkid=true
+        -Dfdisk=true
+        -Dseccomp=false
+        -Dima=false
+        -Dselinux=false
+        -Dapparmor=false
+#        -Dpolkit=true
+        -Dpolkit=false
+        -Dxz=true
+        -Dzlib=true
+        -Dbzip2=true
+        -Dlz4=true
+        -Dzstd=true
+        -Dpam=true
+        -Dacl=true
+        -Dsmack=false
+        -Dopenssl=true
+        -Dp11kit=true
+        -Dgcrypt=true
+        -Daudit=true
+        -Delfutils=true
+        -Dlibcryptsetup=true
+#        -Dpwquality=true
+#        -Dqrencode=true
+        -Dgnutls=true
+        -Dlibidn2=true
+        -Dlibiptc=true
+        -Dlibcurl=true
+        -Defi=true
+        -Dtpm=true
+        -Dhwdb=true
+        -Dsysusers=false
+        -Dstandalone-binaries=true
+        -Ddefault-kill-user-processes=false
+        -Dtests=unsafe
+        -Dinstall-tests=false
+        -Dtty-gid=4
+        -Dusers-gid=100
+        -Dnobody-user=nobody
+        -Dnobody-group=nobody
+        -Dcompat-mutable-uid-boundaries=true
+        -Dsplit-usr=false
+        -Dsplit-bin=false
+        -Db_lto=true
+        -Db_ndebug=false
+        -Duserdb=false
+        -Dman=true
+        -Dversion-tag=v${version}
+        -Dfallback-hostname=GoboLinux
+        -Ddefault-dnssec=no
+        -Dfirstboot=false
+        # https://bugzilla.redhat.com/show_bug.cgi?id=1867830
+        -Ddefault-mdns=no
+        -Ddefault-llmnr=resolve
+        -Doomd=true
+        -Dlogind=true
+)
+
+pre_install() {
+    # Do not overwrite our pretty /etc/issue
+    rm -vf factory/etc/issue
+
+    # Hand-roll our own factory installation (as Meson will argue about a non-existing target directory otherwise)
+    Quiet pushd factory/etc
+    find . -type d | while read dname; do mkdir -p $settings_target/$dname; done
+    find . -type f | while read fname; do cp -v $fname $settings_target/$fname; done
+    Quiet popd
+
+    # Meson install fails if target directories/symlinks already exist
+    rm -f /usr/lib/systemd/catalog
+}
