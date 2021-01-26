@@ -8,7 +8,7 @@ diff -Nur lua-5.4.2.old/Makefile lua-5.4.2/Makefile
  TO_BIN= lua luac
  TO_INC= lua.h luaconf.h lualib.h lauxlib.h lua.hpp
 -TO_LIB= liblua.a
-+TO_LIB= liblua.a.5.4
++TO_LIB= liblua.a.5.4 liblua.so.5.4
  TO_MAN= lua.1 luac.1
 +FULL_LIB_SO= liblua.so.5.4
 +LIB_SO= liblua.so
