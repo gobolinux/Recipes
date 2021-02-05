@@ -1,0 +1,10 @@
+compile_version=1.12.0
+url="https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.4.15.tar.xz"
+file_size=109461584
+file_md5=39893c474f29a1f57445b9e420cd202d
+recipe_type=makefile
+do_build=no
+install_target="headers_install"
+install_variables=(
+    "INSTALL_HDR_PATH=$target"
+)
