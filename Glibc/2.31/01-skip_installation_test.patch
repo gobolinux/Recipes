@@ -1,0 +1,16 @@
+--- glibc-2.28/Makefile.orig	2018-08-23 16:22:45.193728570 -0300
++++ glibc-2.28/Makefile	2018-08-23 16:23:11.875729165 -0300
+@@ -110,13 +110,6 @@ install:
+ 	-test ! -x $(elf-objpfx)ldconfig || LC_ALL=C \
+ 	  $(elf-objpfx)ldconfig $(addprefix -r ,$(install_root)) \
+ 				$(slibdir) $(libdir)
+-ifneq (no,$(PERL))
+-ifeq (/usr,$(prefix))
+-ifeq (,$(install_root))
+-	LD_SO=$(ld.so-version) CC="$(CC)" $(PERL) scripts/test-installation.pl $(common-objpfx)
+-endif
+-endif
+-endif
+ endif
+ endif
+ 
