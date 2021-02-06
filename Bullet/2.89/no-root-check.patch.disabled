@@ -1,0 +1,15 @@
+Disable root check in autogen.sh.
+
+diff -ur bullet-2.82-r2704.old/autogen.sh bullet-2.82-r2704/autogen.sh
+--- bullet-2.82-r2704.old/autogen.sh	2008-10-03 19:45:54.000000000 -0300
++++ bullet-2.82-r2704/autogen.sh	2014-04-08 19:46:38.000000000 -0300
+@@ -1,9 +1,5 @@
+ #! /bin/sh
+ 
+-if [ "$USER" = "root" ]; then
+-	echo "*** You cannot do this as "$USER" please use a normal user account."
+-	exit 1
+-fi
+ if test ! -f configure.ac ; then
+ 	echo "*** Please invoke this script from directory containing configure.ac."
+ 	exit 1
