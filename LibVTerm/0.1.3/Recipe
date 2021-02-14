@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for LibVTerm by Nuc1eoN, on Sun 14 Feb 2021 05:45:45 PM CET
+# Recipe for version 0.1.3 by Nuc1eoN, on Sun 14 Feb 2021 05:45:45 PM CET
+compile_version=017-GIT
+url="https://github.com/neovim/libvterm/archive/nvim.zip"
+file="libvterm-nvim.zip"
+file_size=90348
+file_md5=3670783f179e3864c9b5495be407ba85
+dir='libvterm-nvim'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
