@@ -1,0 +1,17 @@
+# Recipe for version 3.19.4 by Nuc1eoN, on Sun 14 Feb 2021 03:08:27 AM CET
+compile_version=2.0
+url="https://cmake.org/files/v3.19/cmake-3.19.4.tar.gz"
+file_size=9266976
+file_md5=2a71f16c61bac5402004066d193fc14e
+recipe_type=configure
+
+configure_options=(
+   --prefix=$target
+)
+
+pre_install() {
+    if [ ! -z "$goboIndex" -a -d "$goboIndex" ]
+    then
+        GrepReplace "$goboIndex" "$target" cmake_install.cmake
+    fi
+}
