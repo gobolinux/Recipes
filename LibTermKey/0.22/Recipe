@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for LibTermKey by Nuc1eoN, on Sun 14 Feb 2021 05:56:06 PM CET
+# Recipe for version 0.22 by Nuc1eoN, on Sun 14 Feb 2021 05:56:06 PM CET
+compile_version=017-GIT
+url="http://www.leonerd.org.uk/code/libtermkey/libtermkey-0.22.tar.gz"
+file_size=46147
+file_md5=08bf514d59660391c3a21b3977a16c8c
+dir='libtermkey-0.22'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
