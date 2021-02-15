@@ -1,0 +1,12 @@
+# Recipe for version 1.16.3 by Nuc1eoN, on Sun 14 Feb 2021 03:33:55 AM CET
+url="https://ftp.gnu.org/gnu/automake/automake-1.16.3.tar.gz"
+file_size=2359513
+file_md5=c5d63ea02b6000159671a1720cc91ffe
+compile_version=git
+recipe_type=configure
+pre_install() {
+   pushd "${target}/share"
+   ln -s automake-1.11 automake
+   ln -s aclocal-1.11 aclocal
+   popd
+}
