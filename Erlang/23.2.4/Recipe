@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Erlang by Lucas C. Villa Real, on Tue Nov 7 01:46:34 BRST 2006
+compile_version=017-GIT
+url="https://github.com/erlang/otp/releases/download/OTP-23.2.4/otp_src_23.2.4.tar.gz"
+file_size=99269856
+file_md5=e28e8bfbd2e8e2359127e2e5afc81f6d
+recipe_type=configure
+configure_options=(
+   --enable-smp-support
+   --with-odbc
+)
