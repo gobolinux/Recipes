@@ -1,0 +1,11 @@
+compile_version=017-GIT
+url="https://github.com/elixir-lang/elixir/archive/v1.11.3.tar.gz"
+file="elixir-1.11.3.tar.gz"
+file_size=2394406
+file_md5=0319a8428c647cdbc373312a5c25fb5e
+dir='elixir-1.11.3'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
