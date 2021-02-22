@@ -1,0 +1,8 @@
+# Recipe for version 3.0.5 by Nuc1eoN, on Tue 16 Feb 2021 08:44:49 PM CET
+compile_version=016
+url="https://bintray.com/htop/source/download_file?file_path=htop-3.0.5.tar.gz"
+file_size=360867
+file_md5=780b79322cfc576a762c2dadb5575d04
+dir='htop-3.0.5'
+recipe_type=configure
+configure_options=(--with-proc=/proc/)
