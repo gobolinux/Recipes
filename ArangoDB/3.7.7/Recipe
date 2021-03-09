@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for ArangoDB by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed 17 Feb 2021 10:16:54 AM -03
+# Recipe for version 3.7.7 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed 17 Feb 2021 10:16:54 AM -03
+compile_version=017-GIT
+url="https://download.arangodb.com/Source/ArangoDB-3.7.7.tar.bz2"
+file_size=239630651
+file_md5=9daf9d217d452c3aec6d5d126c6610af
+dir='ArangoDB-3.7.7'
+recipe_type=cmake
