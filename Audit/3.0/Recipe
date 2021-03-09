@@ -1,0 +1,13 @@
+# Recipe for version 3.0 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed 23 Dec 2020 11:08:07 PM -03
+# Recipe (MakeRecipe) for Audit by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue May 20 00:41:36 BRT 2008
+compile_version=1.10.1
+url="https://people.redhat.com/sgrubb/audit/audit-3.0.tar.gz"
+file_size=1109442
+file_md5=46d94d176e3e8c8b5b6999ae076b99d3
+recipe_type=configure
+autogen_before_configure=yes
+configure_options=(
+   --without-python
+   --without-python3
+   --without-go
+)
