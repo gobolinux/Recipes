@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for LibSass by Hisham Muhammad <hisham@gobolinux.org>, on Fri Mar 12 17:59:38 -03 2021
+# Recipe for version 3.6.4 by Hisham Muhammad <hisham@gobolinux.org>, on Fri Mar 12 17:59:38 -03 2021
+compile_version=git
+url="https://github.com/sass/libsass/archive/3.6.4.tar.gz"
+file="libsass-3.6.4.tar.gz"
+file_size=338519
+file_md5=602f7ff300f41f9d456c60a67270e3e0
+dir='libsass-3.6.4'
+recipe_type=configure
+autogen_before_configure=yes
+autogen="autoreconf --force --install"
