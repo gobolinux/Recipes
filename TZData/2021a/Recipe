@@ -1,0 +1,10 @@
+# Recipe for version 2021a by Nuc1eoN, on Sat 13 Mar 2021 05:54:33 AM GMT
+# Recipe (MakeRecipe) for TZData by Hisham Muhammad <hisham@gobolinux.org>, on Wed Oct 30 15:16:53 -03 2019
+compile_version=016.01
+url="https://data.iana.org/time-zones/releases/tzdb-2021a.tar.lz"
+file_size=493325
+file_md5=1a5ab08f40850d9d67aca333016c3b4f
+recipe_type=makefile
+make_variables=(
+   USRDIR="$target"
+)
