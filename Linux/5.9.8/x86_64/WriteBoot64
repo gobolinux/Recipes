@@ -204,10 +204,19 @@ then
 fi
 
 kernel_release="$1"
-kernel_version="$(echo $kernel_release | cut -d- -f1)"
-modules_dir="$goboPrograms/Linux/$kernel_version/lib/modules/$kernel_release"
+kernel_version="$(echo $kernel_release | sed 's,-Gobo,,')"
+modules_dir="$(echo $goboPrograms/Linux/$kernel_version/lib/modules/${kernel_version}*)"
 kernel_img="$goboPrograms/Linux/$kernel_version/Resources/Unmanaged/System/Kernel/Boot/kernel-$kernel_release"
 system_map="$goboPrograms/Linux/$kernel_version/Resources/Unmanaged/System/Kernel/Boot/System.map-$kernel_release"
+
+for target in "$modules_dir" "$kernel_img" "$system_map"
+do
+    if [ ! -e "$target" ]
+    then
+        echo "$target does not exist"
+        exit 1
+    fi
+done
 
 if [ "$#" = 3 ] && echo "$5" | grep -q grub.cfg
 then grub_cfg="$(readlink -f "$2")"
