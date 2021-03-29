@@ -5,27 +5,29 @@ Import GoboLinux
 Import Log
 
 post_install() {
+   local kernelrelease=$(cat include/config/kernel.release)
    private__check_firmware
-   local fullversion=`private__calculate_full_version`
 
    mkdir -p $target/bin
    cp "$archsubdir"/WriteBoot64 $target/bin
 
    if Ask "Do you want to regenerate your UEFI boot application?"
-   then $target/bin/WriteBoot64 "$fullversion"
-   else Log_Normal "You may regenerate it later on by running $target/bin/WriteBoot64"
+   then $target/bin/WriteBoot64 "$version" "$kernelrelease"
+   else Log_Normal "You may regenerate it later on by running \"$target/bin/WriteBoot64 $version $kernelrelease\""
    fi
 }
 
 private__copy_kernel_image() {
-   local simpleversion=`private__calculate_version`
-   local fullversion=`private__calculate_full_version`
+   local kernelrelease="$1"
 
-   # Copy and symlink bzImage and System.map
+   # Copy and symlink kernel and System.map
    dest=$target/Resources/Unmanaged/$goboBoot
    mkdir -p $dest
-   cp arch/x86_64/boot/bzImage $dest/kernel-$fullversion
-   cp System.map $dest/System.map-$fullversion
+   cp arch/x86_64/boot/bzImage $dest/kernel-${kernelrelease}
+   cp System.map $dest/System.map-${kernelrelease}
+ 
+   ln -fs kernel-${kernelrelease} $dest/kernel
+   ln -fs System.map-${kernelrelease} $dest/System.map
 }
 
 private__check_firmware () {
