@@ -1,8 +1,8 @@
-# Recipe for version 5.9.8 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu 12 Nov 2020 06:24:03 PM -03
+# Recipe for version 5.10.26 by Nuc1eoN, on Mon 29 Mar 2021 07:12:54 PM GMT
 compile_version=1.8.5
-url="https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.9.8.tar.xz"
-file_size=115540828
-file_md5=8ff3b8f25f5234b03e15540846540594
+url="https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.10.26.tar.xz"
+file_size=116302632
+file_md5=90c64d22f4e5deb6283c76365183e17e
 recipe_type=makefile
 build_target="all"
 install_target="modules_install"
