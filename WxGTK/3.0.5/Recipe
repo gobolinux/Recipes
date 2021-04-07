@@ -1,0 +1,19 @@
+# Recipe for version 3.0.5 by Nuc1eoN, on Wed 07 Apr 2021 10:17:14 PM GMT
+# from a patched recipe for version 3.0.12 by Giambattista Bloisi <giamby@infinito.it>, on Sat Apr 25 18:05:44 CEST 2009
+# Recipe (MakeRecipe) for WxGTK by Guilherme Balestieri Bedin [gbedin], on Fri Aug 26 23:52:45 BRT 2005
+compile_version=1.8.5
+url="https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxWidgets-3.0.5.tar.bz2"
+file_size=20076030
+file_md5=b4304777652acee8358066cdce5f6f27
+recipe_type=configure
+configure_options=(
+   --enable-unicode
+)
+
+with_mesa=( --with-opengl )
+
+pre_link() {
+    Quiet pushd $target/include
+    ln -s wx-3.0/* .
+    Quiet popd
+}
