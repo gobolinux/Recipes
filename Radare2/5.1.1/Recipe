@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for Radare2 by Nuc1eoN, on Wed 07 Apr 2021 11:25:21 PM GMT
+# Recipe for version 5.1.1 by Nuc1eoN, on Wed 07 Apr 2021 11:25:21 PM GMT
+compile_version=017-GIT
+url="https://github.com/radareorg/radare2/archive/refs/tags/5.1.1.tar.gz"
+file="radare2-5.1.1.tar.gz"
+file_size=7920840
+file_md5=5fa08e088e623792515deaa652601a99
+dir='radare2-5.1.1'
+recipe_type=meson
