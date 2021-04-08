@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for ODE by Nuc1eoN, on Thu 08 Apr 2021 01:15:44 AM GMT
+# Recipe for version 0.16.2 by Nuc1eoN, on Thu 08 Apr 2021 01:15:44 AM GMT
+compile_version=017-GIT
+url="https://bitbucket.org/odedevs/ode/downloads/ode-0.16.2.tar.gz"
+file_size=2627992
+file_md5=13426ae292f4dd007a1b8483b08ecc8d
+dir='ode-0.16.2'
+recipe_type=configure
+configure_options=(
+	--enable-shared
+	--enable-double-precision
+)
