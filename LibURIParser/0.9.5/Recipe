@@ -1,0 +1,12 @@
+# Recipe for version 0.9.5 by Nuc1eoN, on Thu 08 Apr 2021 12:39:27 AM GMT
+# Recipe (MakeRecipe) for LibURIParser by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. júl. 17., péntek, 23.49.00 CEST
+compile_version=1.12.2
+url="https://github.com/uriparser/uriparser/releases/download/uriparser-0.9.5/uriparser-0.9.5.tar.bz2"
+file_size=176501
+file_md5=0206f4e4e8cbd9c45a4318020cab5293
+recipe_type=cmake
+cmake_options=(
+	-DCMAKE_BUILD_TYPE=Release
+	-DURIPARSER_BUILD_DOCS=OFF
+	-DURIPARSER_BUILD_TESTS=OFF
+)
