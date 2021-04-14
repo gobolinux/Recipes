@@ -1,0 +1,15 @@
+# Recipe for version 2.9.0_dev6 by Rune Morling <rune.morling+github@gmail.com>, on Thu 15 Apr 2021 12:16:04 AM CEST
+# Recipe for Lynx 2.9.8_rel2 by Andre Detsch
+compile_version=1.9.0
+url="https://github.com/ThomasDickey/lynx-snapshots/archive/v2-9-0dev_6.tar.gz"
+file_size=3713973
+file_md5=1d8471dae9f3d5589ecfe339920beb4b
+recipe_type=configure
+makefile=makefile
+dir='lynx-snapshots-2-9-0dev_6'
+configure_options=(
+   --enable-nls
+   --with-ssl
+   --with-screen=slang
+   --with-zlib
+)
