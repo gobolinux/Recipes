@@ -1,20 +1,20 @@
-ATK 2.34.1
-Cairo 1.17.2_f93fc72c03e
-EXO 0.12.11
-GDK-Pixbuf 2.40.0
-GLib 2.63.5
-Glibc 2.30
-GTK+ 3.24.13
-HarfBuzz 2.6.4
-LibExif 0.6.21
-LibGUdev 230
-LibICE 1.0.10
-LibNotify 0.7.9
-LibSM 1.2.3
-LibX11 1.6.9
-LibXFCE4UI 4.12.0
-LibXFCE4Util 4.12.1
-Pango 1.44.7
-PCRE 8.43
-XFCE4-Panel 4.13.3
-XFConf 4.13.6
+EXO 0.12.11                    # XDT_CHECK_PACKAGE([EXO], [exo-2], [0.12.0])
+GLib 2.42.0                    # XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [2.42.0])
+GTK+ 3.22.0                    # XDT_CHECK_PACKAGE([GTK], [gtk+-3.0], [3.22.0])
+GDK-Pixbuf 2.14.0              # XDT_CHECK_PACKAGE([GDK_PIXBUF], [gdk-pixbuf-2.0], [2.14.0])
+GObject-Introspection 1.30.0   # GOBJECT_INTROSPECTION_CHECK([1.30.0])
+LibGUdev 145                   # XDT_CHECK_OPTIONAL_PACKAGE([GUDEV], [gudev-1.0], [145]
+LibNotify 0.4.0                # XDT_CHECK_OPTIONAL_PACKAGE([LIBNOTIFY], [libnotify], [0.4.0]
+LibSM                          # XDT_CHECK_LIBSM()
+LibX11                         # XDT_CHECK_LIBX11_REQUIRE()
+LibXFCE4Util >= 4.14.0, < 4.15 # XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.12.0])
+LibXFCE4UI >= 4.14.0, < 4.15   # XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-2], [4.12.0])
+Pango 1.38.0                   # XDT_CHECK_PACKAGE([PANGO], [pango], [1.38.0])
+XFCE4-Panel >= 4.14.0, < 4.15  # XDT_CHECK_PACKAGE([LIBXFCE4KBD_PRIVATE], [libxfce4kbd-private-3], [4.12.0])
+XFConf >= 4.14.0, < 4.15       # XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0], [4.12.0])
+
+# thunar-apr
+LibExif
+# thunar-sbr
+PCRE
+# thunar-tpa, thunar-uca also depend on XFCE4-Panel
