@@ -1,0 +1,21 @@
+#Cairo
+Curl # plugin
+DBus # gdbus-codegen
+#Expat
+# Fontconfig
+FreeType # plugin
+GDK-Pixbuf 2.14 # plugin
+GLib 2.42.0  # PKG_CHECK_MODULES([GLIB], [glib-2.0 >= 2.42.0])
+GStreamer 1.0.0 # plugin
+JPEG # plugin
+#LCMS
+#LibFFI
+LibGSF 1.4.19 # plugin
+LibOpenRAW 0.0.4 # plugin
+LibPNG # plugin (xdg)
+#LibXML2
+#Pixman
+Poppler 0.12.0 # plugin
+#TIFF
+XFCE4-AppFinder 4.14.0 # Not a dependency, just a hack to make it compile XFCE in the correct order (Hugo Barrocas)
+#ZLib
