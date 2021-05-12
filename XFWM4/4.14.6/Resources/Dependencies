@@ -1,0 +1,22 @@
+Glibc 2.30                            # ?
+GTK+ 3.22                             # ok
+LibEpoxy 1.0                          # ok
+LibSM                                 # no version
+LibWNCK 3.14                          # ok
+LibX11                                # no version
+LibXcomposite 0.2                     # ok
+LibXdamage                            # no version 
+LibXext                               # no version (+xsync)
+LibXFCE4UI 4.14.1 >= 4.14.0, < 4.15.0
+LibXFCE4Util >= 4.14.0, < 4.15.0
+LibXfixes                             # no version
+LibXi                                 # no version
+LibXinerama                           # no version
+LibXpresent 1.0.0                     # ok
+LibXrender                            # no version
+LibXres                               # no version
+Startup-Notification 0.5              # ok
+XFConf >= 4.14.0, < 4.15.0
+XRandR                                # no version
+# m4_define([presentproto_minimum_version], [1.1])
+# XRes should be part of LibX11

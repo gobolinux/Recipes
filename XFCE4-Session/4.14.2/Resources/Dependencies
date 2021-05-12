@@ -1,13 +1,13 @@
-ATK 2.34.1
-Cairo 1.17.2_f93fc72c03e
-GDK-Pixbuf 2.40.0
-GLib 2.63.5
+GLib 2.42                         # GIO
 Glibc 2.30
-GTK+ 3.24.13
-LibICE 1.0.10
-LibWNCK 3.36.0
-LibX11 1.6.9
-LibXFCE4UI 4.14.1
-LibXFCE4Util 4.12.1
-Pango 1.44.7
-XFConf 4.14.3
+GTK+ 3.22                         #
+LibICE                            # 
+LibSM                             # session management support
+LibWNCK 3.10.0                    #
+LibX11                            # no version requirement
+LibXFCE4UI >= 4.14.0 < 4.15.0     #
+LibXFCE4Util >= 4.14.0, < 4.15.0  #
+Polkit 0.102                      # XDT_CHECK_OPTIONAL_PACKAGE([POLKIT], [polkit-gobject-1], [0.102],
+XFConf >= 4.14.0, < 4.15.0        #
+
+

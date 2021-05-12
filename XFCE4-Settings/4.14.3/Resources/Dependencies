@@ -1,19 +1,25 @@
-Cairo 1.17.2_f93fc72c03e
-EXO 0.12.11
-Fontconfig 2.13.1
-Garcon >= 0.6
-GDK-Pixbuf 2.40.0
-GLib 2.63.5
-Glibc 2.30
-GTK+ 3.24.13
-LibNotify 0.7.9
-LibX11 1.6.9
-LibXcursor 1.2.0
-LibXFCE4UI 4.14.1
-LibXFCE4Util >= 4.14.0, < 4.15.0
-LibXi 1.7.10
-LibXKlavier 5.3
-Pango 1.44.7
-UPower 0.99.11
-XFConf 4.14.3
-XRandR 1.5.1
+EXO 0.12.11                       # XDT_CHECK_PACKAGE([EXO], [exo-2], [0.11.0])
+Fontconfig 2.6.0                  # XDT_CHECK_PACKAGE([FONTCONFIG], [fontconfig], [2.6.0])
+Garcon 0.6.4                      # XDT_CHECK_PACKAGE([GARCON], [garcon-1], [0.1.10])
+GLib 2.45.8                       # XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [2.45.8])
+Glibc 2.30                        # BuildDependencies?
+GTK+ 3.22                         # XDT_CHECK_PACKAGE([GTK], [gtk+-3.0], [3.20.0])
+HwData                            # Optional
+InputProgo 1.4.0                  # XDT_CHECK_PACKAGE([INPUTPROTO], [inputproto], [1.4.0])
+LibCanberra                       # Optional
+LibInput 0.6.0                    # XDT_CHECK_OPTIONAL_PACKAGE([LIBINPUT], [xorg-libinput], [0.6.0],
+LibNotify 0.7.9                   # XDT_CHECK_OPTIONAL_PACKAGE([LIBNOTIFY], [libnotify], [0.1.3],
+LibX11 1.0.0                      # XDT_CHECK_PACKAGE([LIBX11], [x11], [1.0.0], [], [XDT_CHECK_LIBX11_REQUIRE])
+LibXcursor 1.1.0                  # XDT_CHECK_OPTIONAL_PACKAGE([XCURSOR], [xcursor], [1.1.0],
+LibXFCE4UI >= 4.14.0, < 4.15.0    # XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-2], [4.13.0])
+LibXFCE4Util >= 4.14.0, < 4.15.0  # XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.9.0])
+LibXi 1.7.2                       # XDT_CHECK_PACKAGE([XI], [xi], [1.2.0], [],
+LibXKlavier 5.3                   # XDT_CHECK_OPTIONAL_PACKAGE([LIBXKLAVIER5], [libxklavier], [5.0]
+UPower 0.9.8                      # XDT_CHECK_OPTIONAL_PACKAGE([UPOWERGLIB], [upower-glib], [0.9.8]
+XFConf >= 4.14.0, < 4.15.0        # XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0], [4.13.0])
+XRandR 1.2.0                      # XDT_CHECK_OPTIONAL_PACKAGE([XRANDR], [xrandr], [1.2.0],
+# XDT_CHECK_PACKAGE([LIBXFCE4KBD_PRIVATE], [libxfce4kbd-private-3], [4.12.0])
+# colord (notfound)
+# Cairo 1.17.2_f93fc72c03e        # not present
+# GDK-Pixbuf 2.40.0               # not present 
+# Pango 1.44.7                    # not present

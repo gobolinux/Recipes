@@ -1,0 +1,7 @@
+Garcon 0.3.0                     XDT_CHECK_PACKAGE([GARCON], [garcon-1], [0.3.0])
+GLib 2.42.0                      # XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [2.42.0])
+Glibc 2.30                       # ?
+GTK+ 3.22.0                      # XDT_CHECK_PACKAGE([GTK], [gtk+-3.0], [3.20.0])
+LibXFCE4UI >= 4.14.0, < 4.15.0
+LibXFCE4Util >= 4.14.0, < 4.15.0
+XFConf >= 4.14.0, < 4.15.0
