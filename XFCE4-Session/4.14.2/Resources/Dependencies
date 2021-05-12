@@ -5,9 +5,7 @@ LibICE                            #
 LibSM                             # session management support
 LibWNCK 3.10.0                    #
 LibX11                            # no version requirement
-LibXFCE4UI >= 4.14.0 < 4.15.0     #
+LibXFCE4UI >= 4.14.0, < 4.15.0    #
 LibXFCE4Util >= 4.14.0, < 4.15.0  #
 Polkit 0.102                      # XDT_CHECK_OPTIONAL_PACKAGE([POLKIT], [polkit-gobject-1], [0.102],
 XFConf >= 4.14.0, < 4.15.0        #
-
-
