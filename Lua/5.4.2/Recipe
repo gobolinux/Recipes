@@ -22,7 +22,7 @@ ln -nfs $target/include/*.* $target/include/lua/5.4
 ln -nfs $target/bin/lua $target/bin/lua54
 
 mkdir -p $target/lib/pkgconfig
-cat << EOF > $target/lib/pkgconfig/lua-5.4.pc
+cat << "EOF" > $target/lib/pkgconfig/lua-5.4.pc
 V=5.4
 R=5.4.2
 
@@ -41,7 +41,7 @@ Name: Lua
 Description: An Extensible Extension Language
 Version: ${R}
 Requires:
-Libs: {libdir}/liblua.so.${V} -lm -ldl
+Libs: ${libdir}/liblua.so.${V} -lm -ldl
 Cflags: -I${includedir}
 EOF
 ln -nfs $target/lib/pkgconfig/lua-5.4.pc $target/lib/pkgconfig/lua.pc

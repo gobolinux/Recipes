@@ -1,10 +1,10 @@
-# Recipe for version 5.3.6 by Hisham Muhammad <hisham@gobolinux.org>, on Tue Jan 26 15:50:49 -03 2021
+# Recipe for version 5.4.3 by Hisham Muhammad <hisham@gobolinux.org>, on Sat Jul 31 15:27:10 -03 2021
 compile_version=1.10.2
-url=http://www.lua.org/ftp/lua-5.3.6.tar.gz
-file_size=303770
-file_md5=83f23dbd5230140a3770d5f54076948d
+url=http://www.lua.org/ftp/lua-5.4.3.tar.gz
+file_size=358216
+file_md5=ef63ed2ecfb713646a7fcc583cf5f352
 recipe_type=makefile
-build_target=linux
+build_target=linux-readline
 
 docs=(
   "doc/*.html"
@@ -16,15 +16,15 @@ make_variables=(
 )
 
 pre_link() {
-mkdir -p $target/include/lua/5.3
-ln -nfs $target/include/*.* $target/include/lua/5.3
+mkdir -p $target/include/lua/5.4
+ln -nfs $target/include/*.* $target/include/lua/5.4
 
-ln -nfs $target/bin/lua $target/bin/lua53
+ln -nfs $target/bin/lua $target/bin/lua54
 
 mkdir -p $target/lib/pkgconfig
-cat << "EOF" > $target/lib/pkgconfig/lua-5.3.pc
-V=5.3
-R=5.3.6
+cat << "EOF" > $target/lib/pkgconfig/lua-5.4.pc
+V=5.4
+R=5.4.3
 
 prefix=/usr
 INSTALL_BIN=${prefix}/bin
@@ -44,5 +44,5 @@ Requires:
 Libs: ${libdir}/liblua.so.${V} -lm -ldl
 Cflags: -I${includedir}
 EOF
-ln -nfs $target/lib/pkgconfig/lua-5.3.pc $target/lib/pkgconfig/lua.pc
+ln -nfs $target/lib/pkgconfig/lua-5.4.pc $target/lib/pkgconfig/lua.pc
 }
