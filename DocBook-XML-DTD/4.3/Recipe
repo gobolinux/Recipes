@@ -1,0 +1,31 @@
+# Recipe (MakeRecipe) for DocBook-XML-DTD by Andreas Köhler <andi5.py@gmx.net>, on Fri Aug 15 07:54:42 CEST 2008
+# Recipe for version 4.3 by Andreas Köhler <andi5.py@gmx.net>, on Fri Aug 15 07:54:42 CEST 2008
+compile_version=1.11.2
+url="https://docbook.org/xml/4.3/docbook-xml-4.3.zip"
+file_size=98497
+file_md5=AB200202B9E136A144DB1E0864C45074
+unpack_files=files_in_root
+recipe_type=manifest
+#dir=docbook-xml-4.3
+manifest=(
+    docbook.cat:share/xml/docbook/xml-dtd-4.3/.
+    calstblx.dtd:share/xml/docbook/xml-dtd-4.3/.
+    docbookx.dtd:share/xml/docbook/xml-dtd-4.3/.
+    soextblx.dtd:share/xml/docbook/xml-dtd-4.3/.
+    dbcentx.mod:share/xml/docbook/xml-dtd-4.3/.
+    dbgenent.mod:share/xml/docbook/xml-dtd-4.3/.
+    dbhierx.mod:share/xml/docbook/xml-dtd-4.3/.
+    dbnotnx.mod:share/xml/docbook/xml-dtd-4.3/.
+    dbpoolx.mod:share/xml/docbook/xml-dtd-4.3/.
+    htmltblx.mod:share/xml/docbook/xml-dtd-4.3/.
+    ent:share/xml/docbook/xml-dtd-4.3/ent
+)
+pre_link() {
+    cp -v -af *.dtd ent/ *.mod $target/share/xml/docbook/xml-dtd-4.3/
+}
+sandbox_options=(
+    --allow-leftovers
+)
+unmanaged_files=(
+    $goboVariable/lib/xml
+)
