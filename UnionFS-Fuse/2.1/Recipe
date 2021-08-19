@@ -1,0 +1,12 @@
+# Recipe for version 2.1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu 19 Aug 2021 10:05:04 AM -03
+# Recipe (MakeRecipe) for UnionFS-Fuse by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Mar 27 22:01:11 PDT 2008
+compile_version=1.10.1
+url="https://github.com/rpodgorny/unionfs-fuse/archive/v2.1.tar.gz"
+file_size=47917
+file_md5=07f877d5b440b526fcf4532905183085
+recipe_type=makefile
+dir="unionfs-fuse-2.1"
+
+install_variables=(
+    PREFIX="${goboPrograms}/UnionFS-Fuse/2.1"
+)
