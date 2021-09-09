@@ -1,0 +1,16 @@
+# Recipe for version 5.5.10 by Nuc1eoN, on Fri 10 Sep 2021 12:14:01 AM CEST
+# Recipe (MakeRecipe) for Whois by Hisham Muhammad, on Wed Sep 1 19:10:16 BRT 2004
+compile_version=1.9.0
+url="http://ftp.debian.org/debian/pool/main/w/whois/whois_5.5.10.tar.xz"
+file_size=85168
+file_md5=4db48a482a06261ffa358d9f52c9bd7e
+dir='whois'
+recipe_type=makefile
+makefile='Makefile'
+install_variables=(
+   "BASEDIR=$target"
+   "prefix="
+)
+pre_install() {
+   mkdir -p "$target/share/man/man1"
+}
