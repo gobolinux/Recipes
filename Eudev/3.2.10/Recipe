@@ -1,0 +1,19 @@
+# Recipe for version 3.2.10 by Nuc1eoN, on Sat 11 Sep 2021 12:51:46 AM CEST
+# Recipe (MakeRecipe) for Eudev by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Sep 14 10:46:04 BRT 2016
+compile_version=2.0
+url="http://dev.gentoo.org/~blueness/eudev/eudev-3.2.10.tar.gz"
+file_size=1961960
+file_md5=60b135a189523f333cea5f71a3345c8d
+dir='eudev-3.2.10'
+recipe_type=configure
+
+configure_options=(
+    --prefix=$target
+    --bindir=$target/sbin
+    --sbindir=$target/sbin
+    --libdir=$target/lib
+    --sysconfdir=$settings_target
+    --libexecdir=$target/lib
+    --with-rootprefix=
+    --with-rootlibdir=$target/lib
+)
