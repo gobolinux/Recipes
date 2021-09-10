@@ -1,0 +1,30 @@
+# Recipe for version 2.37.2 by Nuc1eoN, on Sat 11 Sep 2021 01:00:05 AM CEST
+# Recipe (MakeRecipe) for Util-Linux-NG by Giambattista Bloisi <giamby@infinito.it>, on Thu Jan 17 09:41:27 CET 2008
+compile_version=1.12.0
+url="https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.37/util-linux-2.37.2.tar.gz"
+file_size=12232498
+file_md5=d7e517697ee4b757ae226a28bddef9e9
+recipe_type=configure
+
+configure_options=(
+   --enable-arch
+   --enable-partx
+   --enable-write
+   --disable-makeinstall-chown
+   --enable-libmount-force-mountinfo
+)
+
+pre_link() {
+    # Fix broken links
+    cd $target/lib
+    for i in \
+    libblkid.so \
+    libfdisk.so \
+    libmount.so \
+    libsmartcols.so \
+    libuuid.so
+    do
+       # Point to the same target as ${i}.1
+       ln -sf $(readlink ${i}.1) $i
+    done
+}
