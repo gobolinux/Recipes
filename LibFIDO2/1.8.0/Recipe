@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for LibFido2 by Nuc1eoN, on Sat 11 Sep 2021 04:13:04 PM CEST
+# Recipe for version 1.8.0 by Nuc1eoN, on Sat 11 Sep 2021 04:13:04 PM CEST
+compile_version=017-GIT
+url="https://github.com/Yubico/libfido2/archive/refs/tags/1.8.0.tar.gz"
+file="libfido2-1.8.0.tar.gz"
+file_size=535947
+file_md5=5fe1670cb5a397183ddadb7eb7962b15
+dir='libfido2-1.8.0'
+recipe_type=cmake
