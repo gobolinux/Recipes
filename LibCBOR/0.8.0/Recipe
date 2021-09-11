@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for LibCBOR by Nuc1eoN, on Sat 11 Sep 2021 04:16:21 PM CEST
+# Recipe for version 0.8.0 by Nuc1eoN, on Sat 11 Sep 2021 04:16:21 PM CEST
+compile_version=017-GIT
+url="https://github.com/PJK/libcbor/archive/refs/tags/v0.8.0.tar.gz"
+file="libcbor-0.8.0.tar.gz"
+file_size=267044
+file_md5=28348bcbc40c5f0d9760099f87c547a6
+dir='libcbor-0.8.0'
+recipe_type=cmake
