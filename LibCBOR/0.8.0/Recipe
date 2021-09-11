@@ -7,3 +7,6 @@ file_size=267044
 file_md5=28348bcbc40c5f0d9760099f87c547a6
 dir='libcbor-0.8.0'
 recipe_type=cmake
+cmake_options=(
+	-DBUILD_SHARED_LIBS=ON
+)
