@@ -1,0 +1,14 @@
+Adjust symbol to expose version 3 as needed by some binaries (e.g. Spotify).
+
+diff -Nur curl-7.78.0.old/lib/libcurl.vers.in curl-7.78.0/lib/libcurl.vers.in
+--- curl-7.78.0.old/lib/libcurl.vers.in	2020-11-04 09:59:52.000000000 -0300
++++ curl-7.78.0/lib/libcurl.vers.in	2021-09-13 23:17:52.025514380 -0300
+@@ -6,7 +6,7 @@
+     _save*;
+ };
+ 
+-CURL_@CURL_LT_SHLIB_VERSIONED_FLAVOUR@4
++CURL_@CURL_LT_SHLIB_VERSIONED_FLAVOUR@3
+ {
+   global: curl_*;
+   local: *;
