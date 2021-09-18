@@ -1,0 +1,9 @@
+# Recipe for version 0.6.22 by Nuc1eoN, on Sat 18 Sep 2021 08:12:12 PM CEST
+url="https://github.com/libexif/libexif/releases/download/v0.6.23/libexif-0.6.23.tar.xz"
+file_size=1327916
+file_md5=aa78b055afbd87f7580957d6a615f238
+compile_version=1.8.0
+recipe_type=configure
+pre_build() {
+    GrepReplace 'SUBDIRS = m4m po libexif test doc binary' 'SUBDIRS = m4m po libexif test binary' Makefile.in
+}
