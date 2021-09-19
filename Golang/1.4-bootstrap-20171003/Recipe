@@ -1,0 +1,40 @@
+# Recipe for version 1.4-bootstrap-20171003 by Nuc1eoN, on Mon 20 Sep 2021 12:19:36 AM CEST
+# Recipe (MakeRecipe) for Golang by Hisham Muhammad <hisham@gobolinux.org>, on Mon Sep 29 15:22:47 BRT 2014
+compile_version=2.0
+url="https://dl.google.com/go/go1.4-bootstrap-20171003.tar.gz"
+file_size=11009739
+file_md5=dbf727a4b0e365bf88d97cbfde590016
+dir='go'
+recipe_type=manifest
+create_dirs_first=yes
+manifest=(
+)
+environment=(
+	"GOARCH=386"
+	"GOOS=linux"
+	"GOBIN=$target/bin"
+	"GOROOT_FINAL=$target/lib/go"
+    "CGO_ENABLED=0"
+)
+sandbox_options=(
+    --no-sandbox
+)
+do_build()
+{
+    $sudo_exec chown -R "$(whoami)" "$target"
+    pushd src
+    #bash ./all.bash 
+    bash ./make.bash
+    popd
+    $sudo_exec chown -R "$(SuperUserName)" "$target"
+}
+do_install() {
+   $sudo_exec mkdir -p "$target/lib/go"
+   $sudo_exec cp -a pkg "$target/lib/go"
+   # The src directory is required in order to use this go version as boostrap to compile other go installations
+   $sudo_exec cp -a src "$target/lib/go"
+   # This is a little hack since the value at GOROOT_FINAL it's not picked by the ./make.bash script
+   # If you know how to correct this, you're encouraged to do so. Please, by all means.
+   $sudo_exec ln -s "$target/lib/go/src" "$target/src"
+   $sudo_exec ln -s "$target/lib/go/pkg" "$target/pkg"
+}
