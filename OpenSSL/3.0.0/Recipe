@@ -1,0 +1,25 @@
+# Recipe for version 3.0.0 by Nuc1eoN, on Wed 22 Sep 2021 07:44:42 PM CEST
+compile_version=016
+url="https://www.openssl.org/source/openssl-3.0.0.tar.gz"
+file_size=14978663
+file_md5=43c5ab628b7ab899d7cd4a4c7fe4067f
+recipe_type=configure
+configure=Configure
+build_target="all"
+
+# Use /etc/ssl to search for certs
+configure_options=(
+   --openssldir=$goboSettings/ssl
+   --libdir=lib
+   zlib-dynamic
+)
+
+make_variables=(
+   MANDIR=$target/man
+   HTMLDIR=$target/doc/html
+   INSTALLTOP=$target
+)
+
+install_variables=(
+   OPENSSLDIR=$target/Resources/Defaults/Settings/ssl
+)
