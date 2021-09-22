@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for Wireguard-Tools by Nuc1eoN, on Wed 22 Sep 2021 07:11:45 PM CEST
+# Recipe for version 1.0.20210914 by Nuc1eoN, on Wed 22 Sep 2021 07:11:45 PM CEST
+compile_version=017-GIT
+url="https://git.zx2c4.com/wireguard-tools/snapshot/wireguard-tools-1.0.20210914.tar.xz"
+file_size=99744
+file_md5=1d98fb1623817721466152365aec8c45
+dir='wireguard-tools-1.0.20210914/src'
+recipe_type=makefile
+build_variables=(
+   "WITH_BASHCOMPLETION=yes"
+   "WITH_WGQUICK=yes"
+   "WITH_SYSTEMDUNITS=no"
+)
