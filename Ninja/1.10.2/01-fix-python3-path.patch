@@ -1,0 +1,11 @@
+
+
+diff -Nur ninja-1.10.2.old/configure.py ninja-1.10.2/configure.py
+--- ninja-1.10.2.old/configure.py	2020-11-28 12:27:23.000000000 +0100
++++ ninja-1.10.2/configure.py	2021-09-25 13:37:57.726646669 +0200
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ #
+ # Copyright 2001 Google Inc. All Rights Reserved.
+ #

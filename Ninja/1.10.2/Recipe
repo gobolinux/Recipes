@@ -1,0 +1,19 @@
+# Recipe for version 1.10.2 by Nuc1eoN, on Mon 20 Sep 2021 01:04:11 AM CEST
+# Recipe (MakeRecipe) for Ninja by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Sep 26 15:02:49 BRT 2017
+compile_version=017
+url="https://github.com/ninja-build/ninja/archive/v1.10.2.tar.gz"
+file_size=213959
+file_md5=639f75bc2e3b19ab893eaf2c810d4eb4
+file="ninja-1.10.2.tar.gz"
+dir='ninja-1.10.2'
+recipe_type=manifest
+
+pre_build() {
+    if [ ! -e ninja ]
+    then ./configure.py --bootstrap
+    fi
+}
+
+manifest=(
+    ninja:bin
+)
