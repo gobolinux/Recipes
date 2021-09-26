@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for ZeroMQ by Nuc1eoN, on Sun 26 Sep 2021 02:01:38 AM CEST
+# Recipe for version 4.3.4 by Nuc1eoN, on Sun 26 Sep 2021 02:01:38 AM CEST
+compile_version=017-GIT
+url="https://github.com/zeromq/libzmq/releases/download/v4.3.4/zeromq-4.3.4.tar.gz"
+file_size=2486520
+file_md5=c897d4005a3f0b8276b00b7921412379
+dir='zeromq-4.3.4'
+recipe_type=cmake
