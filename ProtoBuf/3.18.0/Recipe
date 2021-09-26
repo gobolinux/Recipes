@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for ProtoBuf by Nuc1eoN, on Sun 26 Sep 2021 01:22:37 PM CEST
+# Recipe for version 3.18.0 by Nuc1eoN, on Sun 26 Sep 2021 01:22:37 PM CEST
+compile_version=017-GIT
+url="https://github.com/protocolbuffers/protobuf/releases/download/v3.18.0/protobuf-cpp-3.18.0.tar.gz"
+file_size=4743005
+file_md5=85c84d09d8564ba31a19a0d1750794ff
+#dir='protobuf-3.18.0/cmake'
+#recipe_type=cmake
+dir='protobuf-3.18.0'
+recipe_type=configure
