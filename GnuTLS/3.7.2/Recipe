@@ -1,0 +1,15 @@
+# Recipe for version 3.7.2 by Nuc1eoN, on Sun 26 Sep 2021 02:29:39 AM CEST
+# Recipe (MakeRecipe) for Gnutls by Jonas Karlsson <jonka750@student.liu.se>, on Thu Apr 7 23:33:28 CEST 2005
+compile_version=1.9.0
+url="https://www.gnupg.org/ftp/gcrypt/gnutls/v3.7/gnutls-3.7.2.tar.xz"
+file_size=6091508
+file_md5=95c32a1af583ecfcb280648874c0fbd9
+mirror_url="ftp://ftp.gnutls.org/pub/gnutls/attic/gnutls-3.7.2.tar.bz2"
+recipe_type=configure
+
+configure_options=(
+    --with-included-unistring
+    --disable-static
+)
+
+with_gtk_doc="--enable-gtk-doc"
