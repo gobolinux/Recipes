@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Tree by Nuc1eoN, on Sun 26 Sep 2021 07:03:48 PM CEST
+# Recipe for version 1.8.0 by Nuc1eoN, on Sun 26 Sep 2021 07:03:48 PM CEST
+compile_version=017-GIT
+url="https://deb.debian.org/debian/pool/main/t/tree/tree_1.8.0.orig.tar.gz"
+file_size=50286
+file_md5=715191c7f369be377fc7cc8ce0ccd835
+dir='tree-1.8.0'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+)
