@@ -1,0 +1,9 @@
+# Recipe for version 0.11.0 by Nuc1eoN, on Tue 28 Sep 2021 11:20:20 PM CEST
+# Recipe (MakeRecipe) for HIDAPI by Nuc1eoN, on Sat 11 Sep 2021 03:00:20 AM CEST
+compile_version=017-GIT
+url="https://github.com/libusb/hidapi/archive/refs/tags/hidapi-0.11.0.tar.gz"
+file_size=232631
+file_md5=bef8e68c132f42128d10f2f23f8a5daa
+file="hidapi-0.11.0.tar.gz"
+dir='hidapi-hidapi-0.11.0'
+recipe_type=cmake
