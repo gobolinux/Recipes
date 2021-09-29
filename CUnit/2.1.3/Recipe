@@ -1,0 +1,23 @@
+# Recipe (MakeRecipe) for CUnit by Nuc1eoN, on Sun 26 Sep 2021 07:36:43 PM CEST
+# Recipe for version 2.1.3 by Nuc1eoN, on Sun 26 Sep 2021 07:36:43 PM CEST
+compile_version=017-GIT
+url="https://sourceforge.net/projects/cunit/files/CUnit/2.1-3/CUnit-2.1-3.tar.bz2"
+file_size=514500
+file_md5=b5f1a9f6093869c070c6e4a9450cc10c
+dir='CUnit-2.1-3'
+recipe_type=configure
+#autogen_before_configure=yes
+
+do_configuration(){
+  libtoolize --force --copy
+  aclocal
+  autoheader
+  automake --add-missing --include-deps --copy
+  autoconf
+   ./configure \
+    --enable-automated \
+    --enable-basic \
+    --enable-console \
+    --enable-test \
+    --enable-shared
+}
