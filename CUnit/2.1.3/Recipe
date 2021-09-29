@@ -19,5 +19,6 @@ do_configuration(){
     --enable-basic \
     --enable-console \
     --enable-test \
-    --enable-shared
+    --enable-shared \
+    --enable_static
 }
