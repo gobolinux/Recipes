@@ -1,0 +1,13 @@
+Bug: https://github.com/neovim/neovim/issues/12675
+
+diff -Nur neovim-0.4.4.old/third-party/cmake/BuildLibvterm.cmake neovim-0.4.4/third-party/cmake/BuildLibvterm.cmake
+--- neovim-0.4.4.old/third-party/cmake/BuildLibvterm.cmake	2020-08-05 02:07:48.000000000 +0200
++++ neovim-0.4.4/third-party/cmake/BuildLibvterm.cmake	2021-02-14 04:39:03.839893493 +0100
+@@ -27,7 +27,6 @@
+       -DUSE_EXISTING_SRC_DIR=${USE_EXISTING_SRC_DIR}
+       -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/DownloadAndExtractFile.cmake
+     PATCH_COMMAND "${_libvterm_PATCH_COMMAND}"
+-    CONFIGURE_COMMAND ""
+     BUILD_IN_SOURCE 1
+     CONFIGURE_COMMAND "${_libvterm_CONFIGURE_COMMAND}"
+     BUILD_COMMAND "${_libvterm_BUILD_COMMAND}"

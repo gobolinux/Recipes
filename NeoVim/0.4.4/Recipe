@@ -1,0 +1,15 @@
+# Recipe for version 0.4.4 by Nuc1eoN, on Fri 12 Feb 2021 07:29:49 PM CET
+# Recipe (MakeRecipe) for Neovim by Aitor ATuin <atuin@tuto.io>, on Sat Jul 9 10:45:02 CEST 2016
+compile_version=2.0
+url="https://github.com/neovim/neovim/archive/v0.4.4.tar.gz"
+file_size=9558246
+file_md5=526e6a9194d6d65fd5e7faa4b506e7c8
+file="neovim-0.4.4.tar.gz"
+dir='neovim-0.4.4'
+recipe_type=makefile
+do_build() {
+    unset LUA_PATH
+    unset LUA_CPATH
+    mkdir build && cmake -DCMAKE_BUILD_TYPE=MinSizeRel -DCMAKE_INSTALL_PREFIX=$target ..
+    make
+}
