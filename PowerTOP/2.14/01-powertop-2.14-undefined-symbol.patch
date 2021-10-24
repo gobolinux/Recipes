@@ -1,0 +1,21 @@
+Taken from ArchLinux. Fixes build issue.
+
+diff -Nur powertop-2.14.old/configure.ac powertop-2.14/configure.ac
+--- powertop-2.14.old/configure.ac	2021-04-15 01:29:13.000000000 +0200
++++ powertop-2.14/configure.ac	2021-10-24 20:44:13.196616710 +0200
+@@ -3,6 +3,7 @@
+ 
+ AC_PREREQ([2.69])
+ AC_INIT([powertop], [2.14], [powertop@lists.01.org], [], [https://01.org/powertop])
++AC_CANONICAL_TARGET
+ AM_INIT_AUTOMAKE([
+ 	-Wall
+ 	1.12.2
+@@ -37,6 +38,7 @@
+ AC_PROG_INSTALL
+ AM_PROG_CC_C_O
+ PKG_PROG_PKG_CONFIG
++AX_PTHREAD
+ 
+ # Checks for libraries.
+ 

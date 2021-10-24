@@ -1,0 +1,9 @@
+# Recipe for version 2.14 by Nuc1eoN, on Sun 24 Oct 2021 08:16:52 PM CEST
+# Recipe (MakeRecipe) for PowerTOP by Hisham Muhammad, on Wed Sep 26 01:33:22 BRT 2007
+compile_version=2.14.5
+url="https://github.com/fenrus75/powertop/archive/refs/tags/v2.14.tar.gz"
+file_size=302578
+file_md5=4a5fb8a23ea9fa6b50e4ee3d158965e1
+recipe_type=configure
+dir=powertop-2.14
+autogen_before_configure=yes
