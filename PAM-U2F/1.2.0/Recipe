@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for PAM_U2F by Nuc1eoN, on Sun 24 Oct 2021 11:26:06 PM CEST
+# Recipe for version 1.2.0 by Nuc1eoN, on Sun 24 Oct 2021 11:26:06 PM CEST
+compile_version=017-GIT
+url="https://github.com/Yubico/pam-u2f/archive/refs/tags/pam_u2f-1.2.0.tar.gz"
+file="pam-u2f-pam_u2f-1.2.0.tar.gz"
+file_size=81077
+file_md5=5e6329e7f9371149182286200c8fe49b
+dir='pam-u2f-pam_u2f-1.2.0'
+recipe_type=configure
+autogen_before_configure=yes
