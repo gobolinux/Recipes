@@ -1,0 +1,31 @@
+--- shadow-4.1.4/etc/pam.d/login	2007-12-31 17:48:34.000000000 +0100
++++ shadow-4.1.4/etc/pam.d/login.new	2009-05-30 23:26:30.000000000 +0200
+@@ -4,8 +4,5 @@
+ account		required	pam_nologin.so
+ account		include		system-auth
+ password	include		system-auth
+-session		required	pam_selinux.so close
+ session		include		system-auth
+ session		required	pam_loginuid.so
+-session		optional	pam_console.so
+-session		required	pam_selinux.so open
+--- shadow-4.1.4/etc/pam.d/su	2007-12-31 17:48:34.000000000 +0100
++++ shadow-4.1.4/etc/pam.d/su.new	2009-05-30 23:19:35.000000000 +0200
+@@ -1,13 +1,11 @@
+ #%PAM-1.0
+ auth		sufficient	pam_rootok.so
+-# Uncomment the following line to implicitly trust users in the "wheel" group.
+-#auth		sufficient	pam_wheel.so trust use_uid
+-# Uncomment the following line to require a user to be in the "wheel" group.
+-auth		required	pam_wheel.so use_uid
++# Uncomment the following line to implicitly trust users in the "sys" group.
++#auth		sufficient	pam_wheel.so group=sys trust use_uid
++# Uncomment the following line to require a user to be in the "sys" group.
++auth		required	pam_wheel.so group=sys use_uid
+ auth		include		system-auth
+ account		include		system-auth
+ password	include		system-auth
+-session		required	pam_selinux.so close
+ session		include		system-auth
+-session		required	pam_selinux.so open multiple
+ session		optional	pam_xauth.so
