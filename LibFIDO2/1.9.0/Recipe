@@ -1,0 +1,12 @@
+# Recipe for version 1.9.0 by Nuc1eoN, on Fri 29 Oct 2021 04:57:21 PM CEST
+# Recipe (MakeRecipe) for LibFido2 by Nuc1eoN, on Sat 11 Sep 2021 04:13:04 PM CEST
+compile_version=017-GIT
+url="https://github.com/Yubico/libfido2/archive/refs/tags/1.9.0.tar.gz"
+file_size=576088
+file_md5=ef5bea44900665ae7893e0b5cc740277
+file="libfido2-1.9.0.tar.gz"
+dir='libfido2-1.9.0'
+recipe_type=cmake
+cmake_options=(
+	-DBUILD_STATIC_LIBS=OFF
+)
