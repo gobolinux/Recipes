@@ -1,0 +1,8 @@
+# Recipe for version 1.42.0 by Nuc1eoN, on Sun 31 Oct 2021 03:42:46 PM CET
+# Recipe (MakeRecipe) for LibUV by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun 16 Feb 2020 12:52:00 AM BRT
+compile_version=016
+url="https://github.com/libuv/libuv/archive/refs/tags/v1.42.0.tar.gz"
+file_size=1293478
+file_md5=3f8ede5f30e6cc68b4e6f7d366dc9f00
+dir='libuv-1.42.0'
+recipe_type=cmake
