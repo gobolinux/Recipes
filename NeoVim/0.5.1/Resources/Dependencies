@@ -1,0 +1,11 @@
+Glibc 2.18
+LibUv
+UTF8Proc
+LuaJIT
+
+# Currently using the bundled deps instead of the below. Unibilium, LibVTerm & LibTermKey is currently only maintained by neovim.
+#LuaRocks
+#LuaRocks:lpeg	# build dep
+#Unibilium
+#LibVTerm
+#LibTermKey
