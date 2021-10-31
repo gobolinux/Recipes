@@ -1,0 +1,7 @@
+[Name] Gengetopt
+[Summary] Gengetopt is a tool to write command line option parsing code for C programs.
+[Description]
+Gengetopt is a tool to generate C code to parse the command line arguments argc and argv that are part of every C or C++ program.
+The generated code uses the C library function getopt_long to perform the actual command line parsing.
+[License] GPLv3
+[Homepage] https://www.gnu.org/software/gengetopt/
