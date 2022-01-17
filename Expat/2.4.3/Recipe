@@ -1,0 +1,11 @@
+# Recipe for version 2.4.3 by Nuc1eoN, on Mon 17 Jan 2022 11:52:32 PM CET
+# Recipe (MakeRecipe) for Expat by Hisham Muhammad <hisham@gobolinux.org>, on Wed Jun 28 15:28:45 BRT 2017
+compile_version=git
+url="https://github.com/libexpat/libexpat/releases/download/R_2_4_3/expat-2.4.3.tar.xz"
+file_size=451012
+file_md5=b1137f030590b3f0c41c69c6cd68fa90
+dir='expat-2.4.3'
+recipe_type=configure
+configure_options=(
+	--disable-static
+)
