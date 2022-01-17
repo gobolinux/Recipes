@@ -1,0 +1,29 @@
+# Recipe for version 1.6.2 by Nuc1eoN, on Tue 18 Jan 2022 12:05:54 AM CET
+# Recipe (MakeRecipe) for Nim by Nuc1eoN, on Thu 09 Sep 2021 10:34:37 AM CEST
+compile_version=017-GIT
+url="https://nim-lang.org/download/nim-1.6.2.tar.xz"
+file_size=5181616
+file_md5=2292aea2a5aa0b8ab6f3fd13a3707eb2
+dir='nim-1.6.2'
+recipe_type=makefile
+
+# Following https://nim-lang.github.io/Nim/packaging.html
+do_build() {
+	# build from C sources and then using koch
+	make -j
+	./bin/nim c -d:release koch
+	./koch boot -d:release
+
+	# generate docs into doc/html
+	./koch docs
+
+	./koch tools
+}
+
+do_install() {
+	# extract files to be really installed
+	settings_target=$settings_target ./install.sh $target
+
+	# also include the tools
+	for fn in nimble nimsuggest nimgrep; do cp ./bin/$fn $target/bin/; done
+}

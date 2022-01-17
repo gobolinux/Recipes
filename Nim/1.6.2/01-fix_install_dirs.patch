@@ -1,0 +1,27 @@
+Fix target installation directories inside install.sh.
+
+diff -Nur nim-1.4.8.old/install.sh nim-1.4.8/install.sh
+--- nim-1.4.8.old/install.sh	2021-05-25 02:39:45.000000000 +0200
++++ nim-1.4.8/install.sh	2021-09-09 18:53:55.667575861 +0200
+@@ -52,15 +52,12 @@
+       mkdir -p $configdir
+       ;;
+     *)
+-      bindir="$1/nim/bin"
+-      configdir="$1/nim/config"
+-      libdir="$1/nim/lib"
+-      docdir="$1/nim/doc"
+-      datadir="$1/nim/data"
+-      nimbleDir="$1/nim"
+-      mkdir -p $1/nim
+-      mkdir -p $bindir
+-      mkdir -p $configdir
++      bindir="$1/bin"
++      configdir="$settings_target/nim"
++      libdir="$1/lib"
++      docdir="$1/doc"
++      datadir="$1/share/nim/data"
++      nimbleDir="$1"
+       ;;
+   esac
+
