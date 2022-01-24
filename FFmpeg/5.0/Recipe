@@ -1,4 +1,4 @@
-# Recipe for version 5.0 by Nuc1eoN, on Sat 22 Jan 2022 04:19:59 PM CET
+# Recipe for version 5.0 by Nuc1eoN, on Sat 22 Jan 2022 04:30:16 PM CET
 # Recipe (MakeRecipe) for FFmpeg by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 16:03:06 BRT 25.0
 compile_version=1.12.1
 url="http://ffmpeg.org/releases/ffmpeg-5.0.tar.bz2"
@@ -14,6 +14,7 @@ configure_options=(
     "--enable-swscale"
     "--enable-pthreads"
     "--enable-shared"
+    "--enable-gnutls"
     "--disable-debug"
     "--disable-static"
 )
