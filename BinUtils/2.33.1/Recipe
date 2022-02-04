@@ -21,4 +21,5 @@ install_variables=(
 
 pre_install() {
    cp ../include/libiberty.h $target/include
+   cp libiberty/pic/libiberty.a $target/lib
 }
