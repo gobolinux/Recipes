@@ -4,10 +4,16 @@ compile_version=1.11.0
 url="https://www.x.org/archive/individual/lib/pixman-0.40.0.tar.xz"
 file_size=634752
 file_md5=ee642c14f4f18934246c57a440da9ca2
-recipe_type=configure
+recipe_type=meson
 
-configure_options=(
-    --disable-sse2
+meson_variables=(
+    -Dloongson-mmi=disabled
+    -Dvmx=disabled
+    -Darm-simd=disabled
+    -Dneon=disabled
+    -Diwmmxt=disabled
+    -Dmips-dspr2=disabled
+    -Dgtk=disabled
 )
 
 # Adding the --enable-gtk option activates some GTK-related tests according to
