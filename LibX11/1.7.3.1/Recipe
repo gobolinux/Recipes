@@ -1,0 +1,15 @@
+# Recipe for version 1.7.3.1 by Nuc1eoN, on Sun 13 Feb 2022 06:33:25 AM CET
+# Recipe (MakeRecipe) for LibX11 by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 19:42:45 BRT 2005
+compile_version=1.11.0
+url="https://www.x.org/archive//individual/lib/libX11-1.7.3.1.tar.xz"
+file_size=1864224
+file_md5=28021759f3cf9ef64eb1465c3b6effc5
+recipe_type=configure
+part_of=Xorg-Lib
+
+make_variables=(
+    libintldir=$target/lib
+    X11dir=$target/lib/X11
+    x11datadir=$target/share/X11
+    x11localedir=$target/share/X11/locale
+)
