@@ -1,0 +1,17 @@
+# Recipe (MakeRecipe) for DirectX-Headers by Nuc1eoN, on Sun 13 Feb 2022 06:40:56 AM CET
+# Recipe for version 1.4.9 by Nuc1eoN, on Sun 13 Feb 2022 06:40:56 AM CET
+compile_version=017-GIT
+url="https://github.com/microsoft/DirectX-Headers/archive/refs/tags/v1.4.9.tar.gz"
+file="DirectX-Headers-1.4.9.tar.gz"
+file_size=268094
+file_md5=91824dfc8ed9cd3ae2f99bcc4011ed76
+dir='DirectX-Headers-1.4.9'
+recipe_type=meson
+meson_variables=(
+	-Dbuild-test=false
+)
+
+# LTO breaks mesa...
+environment=(
+	CXXFLAGS="$CXXFLAGS -fno-lto"
+)
