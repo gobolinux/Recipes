@@ -1,0 +1,10 @@
+# Recipe for version 1.20.0 by Nuc1eoN, on Sun 13 Feb 2022 04:57:09 AM CET
+compile_version=2.0
+url="https://wayland.freedesktop.org/releases/wayland-1.20.0.tar.xz"
+file_size=225188
+file_md5=5095264157bf0565b921ceaf9d698d98
+recipe_type=meson
+meson_variables=(
+    --buildtype=release
+    -Ddocumentation=false
+)
