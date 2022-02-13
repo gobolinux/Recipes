@@ -1,0 +1,16 @@
+# Recipe for version 1.2.203 by Nuc1eoN, on Sun 13 Feb 2022 05:18:41 AM CET
+url="https://github.com/KhronosGroup/vulkan-loader/archive/v1.2.203.tar.gz"
+file_size=1473313
+file_md5=dec1183c234153fff5646081de3948d1
+file="Vulkan-Loader-1.2.203.tar.gz"
+dir="Vulkan-Loader-1.2.203"
+recipe_type=cmake
+cmake_options=(
+   -DCMAKE_SKIP_RPATH=ON
+   -DBUILD_TESTS=OFF
+   -DBUILD_LOADER=ON
+   -DBUILD_WSI_WAYLAND_SUPPORT=OFF
+   -DBUILD_WSI_XCB_SUPPORT=ON
+   -DBUILD_WSI_XLIB_SUPPORT=ON
+   -DVULKAN_HEADERS_INSTALL_DIR="/usr"
+)
