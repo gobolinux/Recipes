@@ -1,0 +1,14 @@
+# Recipe for version 1.19.3 by Nuc1eoN, on Sun 13 Feb 2022 07:18:59 PM CET
+# Recipe (MakeRecipe) for LibInput by Nuc!eoN, on Thu 12 Nov 2020 04:02:20 PM CET
+compile_version=017-GIT
+url="https://www.freedesktop.org/software/libinput/libinput-1.19.3.tar.xz"
+file_size=655164
+file_md5=a9f6fe8156739b51593674183cb25399
+dir='libinput-1.19.3'
+recipe_type=meson
+meson_variables=(
+	-Db_lto=false
+	-Ddocumentation=false
+	-Dtests=false
+	
+)
