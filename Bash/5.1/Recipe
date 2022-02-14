@@ -1,0 +1,16 @@
+# Recipe for version 5.1 by Nuc1eoN, on Thu 09 Sep 2021 11:34:03 PM CEST
+url="http://ftp.gnu.org/gnu/bash/bash-5.1.tar.gz"
+file_size=10458638
+file_md5=bb91a17fd6c9032c26d0b2b78b50aff5
+
+recipe_type=configure
+compile_version=1.13.2
+
+configure_options=(
+    --with-installed-readline
+    --without-bash-malloc
+)
+
+pre_link() {
+    ln -s bash ${target}/bin/sh
+}
