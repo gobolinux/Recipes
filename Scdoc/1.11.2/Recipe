@@ -1,0 +1,14 @@
+# Recipe for version 1.11.2 by Nuc1eoN, on Mon 14 Feb 2022 12:29:40 AM CET
+# Recipe (MakeRecipe) for Scdoc by Nuc!eoN, on Thu 12 Nov 2020 03:34:10 PM CET
+compile_version=017-GIT
+url="https://git.sr.ht/~sircmpwn/scdoc/archive/1.11.2.tar.gz"
+file_size=12746
+file_md5=0f6e8b9bb741f52d975081784757078b
+file="scdoc-1.11.2.tar.gz"
+dir='scdoc-1.11.2'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+   "LDFLAGS=$LDFLAGS"
+)
