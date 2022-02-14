@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for EGLExternalPlatform by Nuc1eoN, on Sun 13 Feb 2022 08:54:13 PM CET
+# Recipe for version 1.1 by Nuc1eoN, on Sun 13 Feb 2022 08:54:13 PM CET
+compile_version=017-GIT
+url="https://github.com/NVIDIA/eglexternalplatform/archive/refs/tags/1.1.tar.gz"
+file="eglexternalplatform-1.1.tar.gz"
+file_size=10372
+file_md5=ca1c152789955332cf315a9934742be2
+dir='eglexternalplatform-1.1'
+recipe_type=manifest
+manifest=(
+	"interface/*:include/EGL/"
+	"*.pc:share/pkgconfig/"
+)
