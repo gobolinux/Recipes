@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for EGL-Wayland by Nuc1eoN, on Sun 13 Feb 2022 08:49:17 PM CET
+# Recipe for version 1.1.9 by Nuc1eoN, on Sun 13 Feb 2022 08:49:17 PM CET
+compile_version=017-GIT
+url="https://github.com/NVIDIA/egl-wayland/archive/refs/tags/1.1.9.tar.gz"
+file="egl-wayland-1.1.9.tar.gz"
+file_size=57069
+file_md5=a875c06a39891297d26ff5eea82cf0a7
+dir='egl-wayland-1.1.9'
+recipe_type=meson
+pre_link() {
+	echo "Hello fuckers!"
+	install -Dt "$target/share/egl/egl_external_platform.d" -m644 "$recipedir/10_nvidia_wayland.json"
+}
