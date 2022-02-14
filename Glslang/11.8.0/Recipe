@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for Glslang by Nuc1eoN, on Sun 13 Feb 2022 06:47:19 AM CET
+# Recipe for version 11.8.0 by Nuc1eoN, on Sun 13 Feb 2022 06:47:19 AM CET
+compile_version=017-GIT
+url="https://github.com/KhronosGroup/glslang/archive/refs/tags/11.8.0.tar.gz"
+file="glslang-11.8.0.tar.gz"
+file_size=3456737
+file_md5=14a64add780c6d7cf6b7a0d353dcb482
+dir='glslang-11.8.0'
+recipe_type=cmake
+cmake_options=(
+	-DCMAKE_BUILD_TYPE=Release
+	-DBUILD_SHARED_LIBS=ON
+)
+environment=(
+	CXXFLAGS+=" -ffat-lto-objects"
+)
