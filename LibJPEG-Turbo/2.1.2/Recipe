@@ -1,0 +1,12 @@
+# Recipe for version 2.1.2 by Nuc1eoN, on Sun 13 Feb 2022 06:02:28 PM CET
+# Recipe (MakeRecipe) for LibJPEG-Turbo by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Sep 23 14:51:21 GMT 2016
+compile_version=1.2.1
+url="https://sourceforge.net/projects/libjpeg-turbo/files/2.1.2/libjpeg-turbo-2.1.2.tar.gz"
+file_size=2257645
+file_md5=e181bd78884dd5392a869209bfa41d4a
+dir='libjpeg-turbo-2.1.2'
+recipe_type=cmake
+cmake_options=(
+	-DCMAKE_BUILD_TYPE=RELEASE
+	-DENABLE_STATIC=FALSE
+)
