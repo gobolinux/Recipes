@@ -5,3 +5,4 @@ url="http://bitmath.org/code/mtdev/mtdev-1.1.6.tar.gz"
 file_size=362376
 file_md5=add648e38e26167ecdf78f0cd527a672
 recipe_type=configure
+configure_options=(--disable-static)
