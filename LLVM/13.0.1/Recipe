@@ -1,0 +1,25 @@
+# Recipe for version 13.0.1 by Nuc1eoN, on Tue 15 Feb 2022 04:57:02 AM CET
+# Recipe (MakeRecipe) for LLVM by Ivan Florentin <ivanflorentin@gmail.com>, on Fri Dec 23 10:55:21 PYST 2016
+compile_version=017
+url="https://github.com/llvm/llvm-project/releases/download/llvmorg-13.0.1/llvm-13.0.1.src.tar.xz"
+file_size=45479112
+file_md5=4ca3266b539ccec41cb5094c510221a1
+dir='llvm-13.0.1.src'
+recipe_type=cmake
+
+cmake_options=(
+    -DCMAKE_BUILD_TYPE=Release
+    -DLLVM_TARGETS_TO_BUILD="host;AMDGPU;BPF"
+    -DCMAKE_INSTALL_PREFIX=$goboIndex
+    -DLLVM_BUILD_LLVM_DYLIB=ON
+    -DLLVM_LINK_LLVM_DYLIB=ON
+    -DLLVM_INSTALL_UTILS=ON
+    -DLLVM_ENABLE_RTTI=ON
+    -DLLVM_ENABLE_FFI=ON
+    -DLLVM_BUILD_DOCS=OFF
+    -DLLVM_ENABLE_DOXYGEN=OFF
+    -DSPHINX_WARNINGS_AS_ERRORS=OFF
+    -DFFI_INCLUDE_DIR=$(pkg-config --variable=includedir libffi)
+    -DLLVM_BINUTILS_INCDIR=$goboIndex/include
+    -DPYTHON_EXECUTABLE=$goboExecutables/python3
+)
