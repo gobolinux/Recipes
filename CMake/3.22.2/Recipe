@@ -1,0 +1,28 @@
+# Recipe for version 3.22.2 by Nuc1eoN, on Tue 15 Feb 2022 10:38:18 PM CET
+compile_version=2.0
+url="https://cmake.org/files/v3.22/cmake-3.22.2.tar.gz"
+file_size=9779456
+file_md5=f96b91224aa14b09565325b51d60af43
+recipe_type=configure
+configure=bootstrap
+
+do_configuration() {
+  ./bootstrap  \
+    --prefix=$target \
+    --parallel=$(/usr/bin/getconf _NPROCESSORS_ONLN) \
+    --docdir=$target/doc/cmake-3.22.2 \
+    --system-libs \
+    --no-system-jsoncpp \
+    --no-system-librhash \
+    --no-system-libarchive \
+    --no-system-bzip2 \
+    --no-system-curl \
+    -- -DCMake_TEST_Qt5=OFF
+}
+
+pre_install() {
+    if [ ! -z "$goboIndex" -a -d "$goboIndex" ]
+    then
+        GrepReplace "$goboIndex" "$target" cmake_install.cmake
+    fi
+}
