@@ -1,0 +1,18 @@
+Eudev 3.2.9
+Glibc 2.30
+LibGLVnd 1.2.0
+LibInput 1.16.3
+Pixman 0.38.4
+Wayland 1.18.0
+XCB-Util-Errors 1.0
+XCB-Util-WM 0.4.1
+XKBcommon 0.10.0
+Vulkan-Loader
+Udev
+#seatd
+
+# For X11 Suport
+LibXCB
+XCB-Util-Errors
+XCB-Util-WM
+XWayland # optional at runtime
