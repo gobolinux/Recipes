@@ -1,0 +1,22 @@
+# Recipe for version 13.0.1 by Nuc1eoN, on Fri 25 Feb 2022 11:50:28 AM CET
+# Recipe (MakeRecipe) for Clang by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Oct 30 01:00:53 -03 2019
+compile_version=017-GIT
+url="https://github.com/llvm/llvm-project/releases/download/llvmorg-13.0.1/clang-13.0.1.src.tar.xz"
+file_size=17847584
+file_md5=89017bafd256ac5ad766920d15d8deba
+dir='clang-13.0.1.src'
+recipe_type=cmake
+
+cmake_options=(
+   -DCMAKE_BUILD_TYPE=Release
+   -DCMAKE_INSTALL_PREFIX=$target
+   -DCLANG_VENDOR=GoboLinux
+   -DCLANG_PYTHON_BINDINGS_VERSIONS=$(python3 --version | awk {'print $2'} | cut -d. -f1-2)
+   -DLLVM_TARGETS_TO_BUILD="AMDGPU;BPF;NVPTX;X86"
+   -DLLVM_EXTERNAL_LIT=$goboExecutables/lit
+   -DLLVM_BUILD_DOCS=OFF
+   -DLLVM_ENABLE_SPHINX=OFF
+   -DLLVM_ENABLE_EH=ON
+   -DLLVM_ENABLE_RTTI=ON
+   -DLLVM_BUILD_TESTS=ON
+)
