@@ -6,11 +6,22 @@ file_size=5670692
 file_md5=69895110052f0d711c9c54fbf385f6f5
 dir='glm'
 recipe_type=manifest
-#docs=('doc/*') #for some reason this does not work, sigh -_-
-pre_install() {
-	mkdir $target/doc/glm-0.9.9.8
-}
+docs=(
+	"doc/api"
+	"doc/man.doxy"
+	"doc/manual"
+	"doc/manual.pdf"
+	"doc/theme"
+)
+
+ # For some stupid reason, glm upstream removed the CMake install target here:
+ # https://github.com/g-truc/glm/commit/5f352ecce21bb1ab37fa56fac0f383c779b351a3
+ # There is no reasoning for it. Discussion here: https://github.com/g-truc/glm/issues/947
+
 manifest=(
-	"glm:include"
-	"doc/*:doc/glm-0.9.9.8"
+	"glm:include/glm"
+	"$recipedir/glm.pc.in:lib/pkgconfig/glm.pc"
+	"$recipedir/glmConfigVersion.cmake.in:lib/cmake/glm/glmConfigVersion.cmake"
+	"$recipedir/glmConfig.cmake.in:lib/cmake/glm/glmConfig.cmake"
+	"$recipedir/glmTargets.cmake:lib/cmake/glm/glmTargets.cmake"
 )
