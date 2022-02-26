@@ -1,0 +1,12 @@
+# Recipe for version 2.9.13 by Nuc1eoN, on Sat 26 Feb 2022 12:13:11 PM CET
+# Recipe (MakeRecipe) for LibXML2 by roko, <ro.ko@mcnon.com>, on Sat Dec 25 22:27:16 BRST 2004
+compile_version=1.8.0
+url="https://gitlab.gnome.org/GNOME/libxml2/-/archive/v2.9.13/libxml2-v2.9.13.tar.bz2"
+file_size=3735853
+file_md5=81e1c1e4a5d754db729835127e6f1ac4
+recipe_type=configure
+autogen_before_configure=yes
+
+pre_link() {
+   mv $target/bin/xmlcatalog $target/bin/real_xmlcatalog
+}
