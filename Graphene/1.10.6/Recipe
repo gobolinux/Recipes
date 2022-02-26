@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for Graphene by Nuc1eoN, on Fri 25 Feb 2022 11:59:07 PM CET
+# Recipe for version 1.10.6 by Nuc1eoN, on Fri 25 Feb 2022 11:59:07 PM CET
+compile_version=017-GIT
+url="https://github.com/ebassi/graphene/releases/download/1.10.6/graphene-1.10.6.tar.xz"
+file_size=333332
+file_md5=390139e704772b915ff2b7cac56c24ae
+dir='graphene-1.10.6'
+recipe_type=meson
+meson_variables=(-Dinstalled_tests=false)
