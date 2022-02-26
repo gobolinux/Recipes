@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for LibCLC by Nuc1eoN, on Sun 13 Feb 2022 05:40:49 AM CET
+# Recipe for version 13.0.1 by Nuc1eoN, on Sun 13 Feb 2022 05:40:49 AM CET
+compile_version=017-GIT
+url="https://github.com/llvm/llvm-project/releases/download/llvmorg-13.0.1/libclc-13.0.1.src.tar.xz"
+file_size=125852
+file_md5=4f4f73e71a2941cf02687c0cb5db8430
+dir='libclc-13.0.1.src'
+recipe_type=cmake
