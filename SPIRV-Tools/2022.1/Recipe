@@ -1,11 +1,11 @@
+# Recipe for version 2022.1 by Nuc1eoN, on Sat 26 Feb 2022 12:41:41 PM CET
 # Recipe (MakeRecipe) for SPIRV-Tools by Nuc1eoN, on Sun 13 Feb 2022 05:49:41 AM CET
-# Recipe for version v2022.1 by Nuc1eoN, on Sun 13 Feb 2022 05:49:41 AM CET
 compile_version=017-GIT
-urls=("https://github.com/KhronosGroup/SPIRV-Tools/archive/refs/tags/v2021.4.tar.gz")
-file=('SPIRV-Tools-2021.4.tar.gz')
-file_size=(2887505)
-file_md5s=(bb36f699fcaca7362b983d75fa5a547b)
-dir=(SPIRV-Tools-2021.4)
+url="https://github.com/KhronosGroup/SPIRV-Tools/archive/refs/tags/v2022.1.tar.gz"
+file_size=2904582
+file_md5=0fc176339aa78ed81a1a8ba5576e1f83
+file="SPIRV-Tools-2022.1.tar.gz"
+dir='SPIRV-Tools-2022.1'
 recipe_type=cmake
 cmake_options=(
    -DCMAKE_BUILD_TYPE=Release
@@ -15,4 +15,6 @@ cmake_options=(
    -DSPIRV_TOOLS_BUILD_STATIC=OFF
    -DBUILD_SHARED_LIBS=ON
    -DSPIRV-Headers_SOURCE_DIR="/usr"
+   -DCMAKE_SKIP_RPATH=ON
+   -DCMAKE_POSITION_INDEPENDENT_CODE=ON
 )
