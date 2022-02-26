@@ -1,0 +1,20 @@
+# Recipe (MakeRecipe) for SPIRV-LLVM-Translator by Nuc1eoN, on Wed 23 Feb 2022 03:16:50 AM CET
+# Recipe for version 13.0.0 by Nuc1eoN, on Wed 23 Feb 2022 03:16:50 AM CET
+compile_version=017-GIT
+url="https://github.com/KhronosGroup/SPIRV-LLVM-Translator/archive/refs/tags/v13.0.0.tar.gz"
+file="SPIRV-LLVM-Translator-13.0.0.tar.gz"
+file_size=1436324
+file_md5=cbb2be6155fda636dd1e4db09dfb1261
+dir='SPIRV-LLVM-Translator-13.0.0'
+recipe_type=cmake
+cmake_options=(
+	-DLLVM_BUILD_TOOLS=ON
+	-DCMAKE_BUILD_TYPE=Release
+	-DBUILD_SHARED_LIBS=ON
+	-DCMAKE_INSTALL_PREFIX=$target
+	-DLLVM_INCLUDE_TESTS=OFF
+)
+
+#	-DLLVM_EXTERNAL_SPIRV_HEADERS_SOURCE_DIR=$goboHeaders/spirv/1.2/
+#       Commented out to use internal as build was failing
+#	One issue: On install step this conflicts with SPIRV-Headers installation
