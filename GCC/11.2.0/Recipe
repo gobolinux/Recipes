@@ -1,0 +1,88 @@
+# Recipe for version 11.2.0 by Nuc1eoN, on Mon 28 Feb 2022 07:37:11 PM CET
+# by Hisham Muhammad, Guilherme Bedin
+url="http://ftp.gnu.org/gnu/gcc/gcc-11.2.0/gcc-11.2.0.tar.xz"
+file_size=80888824
+file_md5=31c86f2ced76acac66992eeedce2fce2
+compile_version=1.9.0
+recipe_type=configure
+needs_build_directory=yes
+
+# Make sure we have sane compile flags
+environment=(
+   CFLAGS=
+   CXXFLAGS=
+   LDFLAGS=
+)
+
+configure_options=(
+   --libexecdir="${target}/lib"
+   --with-cpp-install-dir="lib"
+   --enable-shared
+   --enable-threads="posix"
+   --enable-__cxa_atexit
+   --enable-clocale="gnu"
+   --enable-languages="c,c++,objc,fortran"
+   --with-system-zlib
+   --disable-bootstrap
+   --enable-lto
+   --enable-plugin
+   --enable-install-libiberty
+)
+with_gcj=("--enable-languages=java")
+
+install_variables=(
+   prefix="${target}"
+   local_prefix="${target}"
+   libexecdir="${target}/lib"
+   itoolsdir="${target}/lib/install-tools"
+   itoolsdatadir="${target}/lib/install-tools"
+)
+
+private__get_libtool_data() {
+   local varname="$1"
+   local libtoolfile="$2"
+   local addprefix="$3"
+   local data=$(for i in $(grep "${varname}=" "$libtoolfile" | tail -n1 | \
+         cut -d= -f2 | sed -e 's,-L,,g' -e 's,",,g'); do \
+         echo -n "${addprefix}$(readlink -m $i) "; done)
+   echo "$data"
+}
+
+pre_build() {
+    # If building on x86_64, change the default directory name for 64-bit libraries to “lib”:
+    case $(uname -m) in
+        x86_64)
+            sed -e '/m64=/s/lib64/lib/' -i.orig $dir/gcc/config/i386/t-linux64
+            ;;
+    esac
+}
+
+pre_install() {
+   # The libtool script includes ".." elements by default, which cause
+   # problems with GoboLinux's Runner sandbox. We fix this by patching
+   # references to dot-dot by their absolute pathnames.
+   if [ ! -e "$dir/_build/libcc1/libtool.orig" ]
+   then
+      cp -v "$dir/_build/libcc1/libtool" "$dir/_build/libcc1/libtool.orig"
+
+      predep=$(private__get_libtool_data "predep_objects" "$dir/_build/libcc1/libtool.orig" "")
+      postdep=$(private__get_libtool_data "postdep_objects" "$dir/_build/libcc1/libtool.orig" "")
+      libsearch=$(private__get_libtool_data "compiler_lib_search_path" "$dir/_build/libcc1/libtool.orig" "-L")
+
+      sed -i "$dir/_build/libcc1/libtool" \
+         -e "s,predep_objects=\"/.*\",predep_objects=\"$predep\",g" \
+         -e "s,postdep_objects=\"/.*\",postdep_objects=\"$postdep\",g" \
+         -e "s,compiler_lib_search_path=\"-.*\",compiler_lib_search_path=\"$libsearch\",g"
+   fi
+}
+
+pre_link() {
+   ln -s gcc "$target/bin"/cc
+   rm -f "$target/lib"/libiberty.a
+   ln -nsf "$target/bin/cc" "$goboExecutables"/cc
+   ln -nsf "$target/lib/cpp" "$goboLibraries"/cc
+   if [ "$(type -t private__add_arch_aliases)" = "function" ]
+   then
+      private__add_arch_aliases
+   fi
+}
