@@ -1,0 +1,16 @@
+# Recipe for version 4.1.0 by Nuc1eoN, on Mon 28 Feb 2022 05:05:37 PM CET
+# Recipe (MakeRecipe) for MPFR by roko, <ro.ko@mcnon.com>, on Mon Mar 21 19:23:18 CET 2005
+compile_version=1.9.0
+url="http://www.mpfr.org/mpfr-current/mpfr-4.1.0.tar.bz2"
+file_size=1747243
+file_md5=44b892bc5a45bafb4294d134e13aad1d
+recipe_type=configure
+configure_options=(
+   --enable-thread-safe
+   --enable-shared
+)
+using_doc_pre_link() {
+   make html
+   mkdir -p ${target}/share/doc/mpfr-4.1.0
+   find . -name \*.html -type f -exec cp \{} ${target}/share/doc/mpfr-4.1.0 \;
+}
