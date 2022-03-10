@@ -1,0 +1,50 @@
+# Recipe for version 22.0.0 by Nuc1eoN, on Thu 10 Mar 2022 02:27:38 AM CET
+# Recipe (MakeRecipe) for Mesa by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Nov 23 03:32:41 BRST 2004
+compile_version=017
+url="https://mesa.freedesktop.org/archive/mesa-22.0.0.tar.xz"
+file_size=15565680
+file_md5=cbc2f80946339578e75adcefe32cbd8a
+recipe_type=meson
+
+environment=(
+    GALLIUM_DRV=
+    DRI_DRIVERS=
+    CPLUS_INCLUDE_PATH="/System/Index/include/c++/11.2.0:/System/Index/include:$CPLUS_INCLUDE_PATH"
+)
+
+meson_variables=(
+    -D buildtype=release
+    -D b_lto=true
+    -D b_ndebug=true
+    -D platforms=x11,wayland
+    -D build-tests=false
+    -D gallium-drivers=r300,r600,radeonsi,nouveau,virgl,svga,swrast,iris,crocus,zink,d3d12
+    -D vulkan-drivers=amd,intel,swrast
+    -D vulkan-layers=device-select,intel-nullhw,overlay
+    -D dri3=enabled
+    -D egl=enabled
+    -D gallium-extra-hud=true
+    -D gallium-nine=true
+    -D gallium-omx=bellagio
+    -D gallium-opencl=icd
+    -D gallium-va=enabled
+    -D gallium-vdpau=enabled
+    -D gallium-xa=enabled
+    -D gallium-xvmc=disabled
+    -D gbm=enabled
+    -D gles1=disabled
+    -D gles2=enabled
+    -D glvnd=true
+    -D glx=dri
+    -D libunwind=enabled
+    -D llvm=enabled
+    -D lmsensors=enabled
+    -D osmesa=true
+    -D shared-glapi=enabled
+    -D microsoft-clc=disabled
+    -D valgrind=disabled
+)
+
+symlink_options=(
+   --conflict=overwrite
+)
