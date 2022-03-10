@@ -1,0 +1,15 @@
+# Recipe for version 2.14.0 by Nuc1eoN, on Thu 10 Mar 2022 03:01:51 PM CET
+# Recipe (MakeRecipe) for LibVA by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Apr 30 17:24:56 BRT 2010
+compile_version=2.0
+url="https://github.com/intel/libva/releases/download/2.14.0/libva-2.14.0.tar.bz2"
+file_size=502518
+file_md5=f649ad25a82bdd0f23a4c89369afd94d
+recipe_type=configure
+
+configure_options=(
+    --with-drivers-path=$goboLibraries/dri
+)
+
+install_variables=(
+    LIBVA_DRIVERS_PATH=$target/lib/dri
+)
