@@ -1,0 +1,9 @@
+# Recipe for version 22.0.0 by Nuc1eoN, on Thu 10 Mar 2022 11:14:23 PM CET
+# Recipe (MakeRecipe) for XF86-Video-AMDGPU by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jul 30 14:38:44 BRT 2016
+compile_version=017
+url="http://xorg.freedesktop.org/releases/individual/driver/xf86-video-amdgpu-22.0.0.tar.xz"
+file_size=376956
+file_md5=6c907b44d32a0112e1a4788bab727f79
+dir='xf86-video-amdgpu-22.0.0'
+recipe_type=configure
+configure_options=(--enable-glamor)
