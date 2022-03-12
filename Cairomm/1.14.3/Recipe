@@ -1,0 +1,8 @@
+# Recipe for version 1.14.3 by Nuc1eoN, on Fri 11 Mar 2022 11:02:53 PM CET
+# Recipe (MakeRecipe) for Cairomm by Andre Detsch <detsch@gobolinux.org>, on Mon Nov 20 22:22:06 BRST 2006
+compile_version=1.14.2
+url="https://gitlab.freedesktop.org/cairo/cairomm/-/archive/1.14.3/cairomm-1.14.3.tar.bz2"
+file_size=108309
+file_md5=bbe83cefd3128bc2f8cd9431cfad9c95
+recipe_type=meson
+meson_variables=(--buildtype=release)
