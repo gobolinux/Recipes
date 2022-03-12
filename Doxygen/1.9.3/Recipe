@@ -1,0 +1,11 @@
+# Recipe for version 1.9.3 by Nuc1eoN, on Fri 11 Mar 2022 11:11:12 PM CET
+# Recipe (MakeRecipe) for Doxygen by Demian Florentin <demianflorentin@gmail.com>, on Thu Dec 22 23:51:57 PYST 2016
+compile_version=016
+url="http://doxygen.nl/files/doxygen-1.9.3.src.tar.gz"
+file_size=5152156
+file_md5=065cef54eb09cdb54614e1ed353ddbd1
+dir='doxygen-1.9.3'
+recipe_type=cmake
+cmake_options=(
+	-DCMAKE_BUILD_TYPE=Release
+)
