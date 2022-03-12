@@ -1,0 +1,26 @@
+Seatd uses /dev to determine devices. We to change that to GoboLinux paths.
+
+diff -Nur seatd-0.6.4.old/common/drm.c seatd-0.6.4/common/drm.c
+--- seatd-0.6.4.old/common/drm.c	2022-02-21 22:52:04.000000000 +0100
++++ seatd-0.6.4/common/drm.c	2022-03-11 22:19:50.700441262 +0100
+@@ -26,7 +26,7 @@
+ 
+ #if defined(__linux__)
+ int path_is_drm(const char *path) {
+-	static const char prefix[] = "/dev/dri/";
++	static const char prefix[] = "/System/Kernel/Devices/dri/";
+ 	static const int prefixlen = STRLEN(prefix);
+ 	return strncmp(prefix, path, prefixlen) == 0;
+ }
+diff -Nur seatd-0.6.4.old/common/evdev.c seatd-0.6.4/common/evdev.c
+--- seatd-0.6.4.old/common/evdev.c	2022-02-21 22:52:04.000000000 +0100
++++ seatd-0.6.4/common/evdev.c	2022-03-11 22:22:03.707112849 +0100
+@@ -18,7 +18,7 @@
+ #define STRLEN(s) ((sizeof(s) / sizeof(s[0])) - 1)
+ 
+ int path_is_evdev(const char *path) {
+-	static const char prefix[] = "/dev/input/event";
++	static const char prefix[] = "/System/Kernel/Devices/input/event";
+ 	static const size_t prefixlen = STRLEN(prefix);
+ 	return strncmp(prefix, path, prefixlen) == 0;
+ }
