@@ -1,0 +1,8 @@
+# Recipe for version 2.14 by Nuc1eoN, on Fri 11 Mar 2022 11:21:17 PM CET
+# Recipe (MakeRecipe) for LibSigsegv by Peter Eriksen <s022.148@student.dtu.dk>, on Thu Nov 4 19:49:50 CET 2004
+compile_version=1.8.5
+url="ftp://ftp.gnu.org/pub/gnu/libsigsegv/libsigsegv-2.14.tar.gz"
+file_size=464658
+file_md5=63a2b35f11b2fbccc3d82f9e6c6afd58
+recipe_type=configure
+configure_options=(--enable-shared)
