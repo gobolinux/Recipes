@@ -1,0 +1,8 @@
+# Recipe for version 2.46.2 by Nuc1eoN, on Fri 11 Mar 2022 10:55:22 PM CET
+# Recipe (MakeRecipe) for PangoMM by Giambattista Bloisi <giamby@infinito.it>, on Fri Oct 17 20:38:37 CEST 2008
+compile_version=1.11.2
+url="http://ftp.gnome.org/pub/GNOME/sources/pangomm/2.46/pangomm-2.46.2.tar.xz"
+file_size=674892
+file_md5=517b9462f0cc59287388e1e6423588bf
+recipe_type=meson
+meson_variables=(--buildtype=release)
