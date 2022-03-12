@@ -1,0 +1,17 @@
+# Recipe for version 2.71.3 by Nuc1eoN, on Sat 12 Mar 2022 12:24:38 AM CET
+# Recipe (MakeRecipe) for GLib by  Ozgur Ulukir, on Mon Dec 20 01:48:37 EET 2004
+compile_version=2.0
+url="https://gitlab.gnome.org/GNOME/glib/-/archive/2.71.3/glib-2.71.3.tar.bz2"
+file_size=5853227
+file_md5=926ce07d120c613403f4dff7611cafb6
+recipe_type=meson
+
+meson_variables=(
+    -Dselinux=disabled
+)
+
+pre_link() {
+    Quiet pushd $target/lib/pkgconfig
+    for i in *; do ln -s $i `echo $i | sed 's/-2.0//g'`; done
+    Quiet popd
+}
