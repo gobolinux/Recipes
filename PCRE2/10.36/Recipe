@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for PCRE2 by Fave Oled, on Tue 22 Mar 2022 02:08:05 PM +03
+# Recipe for version 10.36 by Fave Oled, on Tue 22 Mar 2022 02:08:05 PM +03
+compile_version=017-GIT
+url="https://github.com/PhilipHazel/pcre2/archive/refs/tags/pcre2-10.36.tar.gz"
+file="pcre2-pcre2-10.36.tar.gz"
+file_size=2353657
+file_md5=cf68730e40c3262ff009a6b16cb792e0
+dir='pcre2-pcre2-10.36'
+recipe_type=cmake
