@@ -1,0 +1,13 @@
+# Recipe for version 0.96.0_bin by Nuc1eoN, on Wed 06 Apr 2022 06:36:40 PM CEST
+# Recipe (MakeRecipe) for Hugo by Nuc1eoN, on Mon 31 Jan 2022 04:52:02 AM CET
+compile_version=017-GIT
+url="https://github.com/gohugoio/hugo/releases/download/v0.96.0/hugo_0.96.0_Linux-64bit.tar.gz"
+file_size=16070486
+file_md5=59423d28e90e0c54b1df08e7c72caad1
+recipe_type=manifest
+unpack_files=files_in_root
+
+manifest=(
+	'hugo:bin/hugo'
+	'LICENSE:Resources/COPYING'
+)
