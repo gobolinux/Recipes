@@ -1,0 +1,8 @@
+[Name] GTK-Layer-Shell
+[Summary] Library to create Wayland desktop components using the Layer Shell protocol
+[Description]
+A library to write GTK applications that use Layer Shell. Layer Shell is a Wayland protocol
+for desktop shell components, such as panels, notifications and wallpapers. You can use it
+to anchor your windows to a corner or edge of the output, or stretch them across the entire output.
+[License] GPL3, LGPL3, MIT
+[Homepage] https://github.com/wmww/gtk-layer-shell
