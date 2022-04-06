@@ -1,0 +1,24 @@
+Pkgconfig #0.9.0 error when leaving this??
+GDK-Pixbuf >= 2.42.8
+GObject-Introspection
+Cairo
+Pango
+LibEpoxy
+XKBcommon
+Graphene
+SassC
+
+# For X11 backend
+XRandR
+LibXrender
+LibXi
+LibXext
+LibXfixes
+LibXcursor
+LibXdamage
+LibXcomposite
+
+# For Wayland backend
+Wayland
+Wayland-Protocols
+EGL-Wayland

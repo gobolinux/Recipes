@@ -1,0 +1,13 @@
+# Recipe for version 3.24.33 by Nuc1eoN, on Fri 11 Mar 2022 11:33:17 PM CET
+# Recipe (MakeRecipe) for GTK+ by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 11:55:54 BRT 2005
+compile_version=1.9.0
+url="https://gitlab.gnome.org/GNOME/gtk/-/archive/3.24.33/gtk-3.24.33.tar.bz2"
+file_size=14814257
+file_md5=852fc3415dc3c39550778db0aa92f78b
+recipe_type=meson
+
+meson_variables=(
+	-Dx11_backend=true
+	-Dwayland_backend=true
+	-Dbroadway_backend=true
+)
