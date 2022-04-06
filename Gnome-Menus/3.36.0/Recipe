@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Gnome-Menus by Fave Oled, on Tue 22 Mar 2022 05:31:15 PM +03
+# Recipe for version 3.36.0 by Fave Oled, on Tue 22 Mar 2022 05:31:15 PM +03
+compile_version=017-GIT
+url="https://download.gnome.org/sources/gnome-menus/3.36/gnome-menus-3.36.0.tar.xz"
+file_size=502324
+file_md5=a8fd71fcf31a87fc799d80396a526829
+dir='gnome-menus-3.36.0'
+recipe_type=configure
+configure_options=(
+    --disable-static
+)
