@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for LibPwQuality by Fave Oled, on Thu 07 Apr 2022 04:32:17 PM +03
+# Recipe for version 1.4.4 by Fave Oled, on Thu 07 Apr 2022 04:32:17 PM +03
+compile_version=017-GIT
+url="https://github.com/libpwquality/libpwquality/archive/refs/tags/libpwquality-1.4.4.zip"
+file="libpwquality-libpwquality-1.4.4.zip"
+file_size=197765
+file_md5=ba34f827d105e41d186dd74c752a968f
+dir='libpwquality-libpwquality-1.4.4'
+recipe_type=configure
+autogen_before_configure=yes
+configure_options=(
+    "--with-python-binary=python3"
+)
