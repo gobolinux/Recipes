@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Telepathy-GLib by Fave Oled, on Fri 08 Apr 2022 05:52:31 PM +03
+# Recipe for version 0.24.2 by Fave Oled, on Fri 08 Apr 2022 05:52:31 PM +03
+compile_version=017-GIT
+url="https://telepathy.freedesktop.org/releases/telepathy-glib/telepathy-glib-0.24.2.tar.gz"
+file_size=3855853
+file_md5=a3a75657e9389381b44fee1680f770a7
+dir='telepathy-glib-0.24.2'
+recipe_type=configure
+configure_options=(
+    "--enable-vala-bindings"
+)
