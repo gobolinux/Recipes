@@ -1,0 +1,16 @@
+# Recipe for version 0.11.1 by Hisham Muhammad <hisham@gobolinux.org>, on Sat Apr 16 17:56:00 -03 2022
+# Recipe (MakeRecipe) for Speech-Dispatcher by Raphael J. Schmid <raphael.schmid@gmail.com>, on Tue Dec 16 20:27:41 CET 2008
+compile_version=1.11.4
+url="https://github.com/brailcom/speechd/releases/download/0.11.1/speech-dispatcher-0.11.1.tar.gz"
+file_size=6548489
+file_md5=769545cfe00c1250a70581ffc57027b2
+recipe_type=configure
+environment=(
+   CFLAGS="-lpthread"
+)
+#configure_options=(
+#   --without-flite
+#)
+pre_link() {
+   ln -nfs $target/include/speech-dispatcher/* $target/include
+}
