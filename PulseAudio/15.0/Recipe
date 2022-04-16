@@ -1,0 +1,11 @@
+# Recipe for version 15.0 by Hisham Muhammad <hisham@gobolinux.org>, on Fri Sep 17 04:06:00 -03 2021
+# Recipe (MakeRecipe) for PulseAudio by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Mar 2 16:47:14 PST 2008
+url="https://www.freedesktop.org/software/pulseaudio/releases/pulseaudio-15.0.tar.xz"
+file_size=1521760
+file_md5=bb888e7747b778c1c487c63b582ddf40
+recipe_type=meson
+meson_variables=(
+   "-Ddatabase=gdbm"
+   "-Dtests=false"
+   "-Ddoxygen=false"
+)
