@@ -1,0 +1,18 @@
+# Recipe for version 0.183 by Hisham Muhammad <hisham@gobolinux.org>, on Sun Apr 11 16:27:28 -03 2021
+# Recipe for ELFUtils 0.183 by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.8.0
+url="https://sourceware.org/elfutils/ftp/0.183/elfutils-0.183.tar.bz2"
+file_size=9109254
+file_md5=6f58aa1b9af1a5681b1cbf63e0da2d67
+recipe_type=configure
+
+configure_options=(
+    --enable-deterministic-archives
+    --disable-debuginfod
+)
+
+pre_build() {
+	for i in `find . -name Makefile`; do 
+		sed 's/-Werror//g' $i > $i.tmp && mv $i.tmp $i; 
+	done
+}
