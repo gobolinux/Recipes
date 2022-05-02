@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for NvCOMP by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed 02 Mar 2022 03:57:29 PM -03
+# Recipe for version git by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed 02 Mar 2022 03:57:29 PM -03
+compile_version=017-GIT
+git="https://github.com/NVIDIA/nvcomp.git"
+recipe_type=cmake
+
+environment=(
+    CUDACXX=/usr/local/cuda/bin/nvcc
+)
+
+cmake_options=(
+    -DCMAKE_BUILD_TYPE=Debug
+)
