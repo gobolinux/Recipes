@@ -1,0 +1,28 @@
+# Recipe for version 3.9.0 by Hisham Muhammad <hisham@gobolinux.org>, on Wed May 4 08:55:37 EDT 2022
+# Recipe (MakeRecipe) for Luarocks by Hisham Muhammad, on Thu Apr 24 17:43:49 BRT 2008
+compile_version=2.0
+url="http://luarocks.github.io/luarocks/releases/luarocks-3.9.0.tar.gz"
+file_size=252777
+file_md5=8b0533f5bc688b06af55fa2bb4fd0944
+recipe_type=configure
+makefile=GNUmakefile
+configure_options=(
+   "--prefix=$target"
+   "--rocks-tree=$goboSystem/Aliens/LuaRocks"
+   "--with-lua=$lua_path"
+)
+unmanaged_files=(
+   "$goboSystem/Aliens/LuaRocks"
+)
+
+pre_link() {
+   existing=$(echo $target/share/lua/*.*)
+   echo $existing
+   for v in 5.1 5.2 5.3 5.4
+   do
+      [ -e $target/share/lua/$v/luarocks ] || {
+         mkdir -p $target/share/lua/$v
+         ln -nfs $existing/* $target/share/lua/$v
+      }
+   done
+}
