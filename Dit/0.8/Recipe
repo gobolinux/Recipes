@@ -1,0 +1,9 @@
+compile_version=2.0
+recipe_type=configure
+url=https://hisham.hm/dit/releases/0.8/dit-0.8.tar.gz
+file_size=580041
+file_md5=946aa80281ad03f74710a9ab0bc0fbee
+configure_options=(
+   --enable-unicode
+   --enable-bundled-lua
+)
