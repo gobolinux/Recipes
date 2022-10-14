@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for Pantheon-Calculator by Fave Oled, on Thu 07 Apr 2022 11:01:25 AM +03
+# Recipe for version 1.5.5 by Fave Oled, on Thu 07 Apr 2022 11:01:25 AM +03
+compile_version=017-GIT
+url="https://github.com/elementary/calculator/archive/refs/tags/1.5.5.tar.gz"
+file="calculator-1.5.5.tar.gz"
+file_size=132807
+file_md5=f446431df7e8bee2a553118a3e8eff1f
+dir='calculator-1.5.5'
+recipe_type=meson
