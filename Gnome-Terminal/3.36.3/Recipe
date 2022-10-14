@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Gnome-Terminal by Fave Oled, on Thu 07 Apr 2022 05:03:03 PM +03
+# Recipe for version 3.36.3 by Fave Oled, on Thu 07 Apr 2022 05:03:03 PM +03
+compile_version=017-GIT
+url="https://download.gnome.org/sources/gnome-terminal/3.36/gnome-terminal-3.36.3.tar.xz"
+file_size=2531648
+file_md5=1a966a5b895445203070c4e0486fdee6
+dir='gnome-terminal-3.36.3'
+recipe_type=configure
+configure_options=(
+    "--disable-search-provider"
+    "--without-nautilus-extension"
+)
