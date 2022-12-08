@@ -1,0 +1,14 @@
+# Recipe for version 1.2.13 by Hisham Muhammad <hisham@gobolinux.org>, on Thu Dec 8 15:31:08 -03 2022
+# Recipe (MakeRecipe) for ZLib by roko, <ro.ko@mcnon.com>, , on Fri Oct 22 21:07:02 BRST 2004
+compile_version=1.8.2
+url="http://zlib.net/zlib-1.2.13.tar.gz"
+file_size=1497445
+file_md5=9b8aa094c4e5765dabf4da391f00d15c
+recipe_type=configure
+configure_options=(
+   --shared
+)
+
+make_variables=(
+   LIBS="libz.a libz.so.1.2.13"
+)
