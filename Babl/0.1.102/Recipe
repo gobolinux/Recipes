@@ -1,0 +1,10 @@
+# Recipe for version 0.1.102 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Mar 6 18:05:48 -03 2023
+# Recipe (MakeRecipe) for Babl by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jan. 2., péntek, 23.52.42 CET
+compile_version=1.11.4
+url="https://download.gimp.org/pub/babl/0.1/babl-0.1.102.tar.xz"
+file_size=313872
+file_md5=154c3e2d2560fcb000dc55385bcc727d
+recipe_type=meson
+meson_variables=(
+   "-Dwith-docs=false"
+)
