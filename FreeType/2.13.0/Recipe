@@ -1,0 +1,21 @@
+# Recipe for version 2.13.0 by Hisham Muhammad <hisham@gobolinux.org>, on Tue Mar 7 00:11:01 -03 2023
+# by Giusepe Casagrande, Jeremy Vernon
+url="https://downloads.sourceforge.net/freetype/freetype-2.13.0.tar.xz"
+file_size=2492440
+file_md5=fe73327ebbf0b629f3ad24be656d59de
+compile_version=2.0
+recipe_type=configure
+
+# XFree86 also has a FreeType; We want this one to be the dominant FreeType
+symlink_options=(
+   "--conflict=overwrite"
+)
+
+make_variables=(
+	C_INCLUDE_PATH=
+)
+
+pre_link() {
+	cd $target/include
+	ln -s freetype2 freetype
+}
