@@ -1,0 +1,13 @@
+Remove error caused by warning when compiling with GCC 12
+
+diff -Nur gdk-pixbuf-2.42.10.old/meson.build gdk-pixbuf-2.42.10/meson.build
+--- gdk-pixbuf-2.42.10.old/meson.build	2022-10-25 13:53:28.000000000 -0300
++++ gdk-pixbuf-2.42.10/meson.build	2023-03-06 22:24:10.436171905 -0300
+@@ -150,7 +150,6 @@
+     '-Werror=trigraphs',
+     '-Werror=array-bounds',
+     '-Werror=write-strings',
+-    '-Werror=address',
+     '-Werror=int-to-pointer-cast',
+     '-Werror=pointer-to-int-cast',
+     '-Werror=empty-body',
