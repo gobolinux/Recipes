@@ -1,0 +1,24 @@
+# Recipe for version 2.40 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Mar 6 22:45:19 -03 2023
+url=$ftpGnu/binutils/binutils-2.40.tar.bz2
+file_size=35227554
+file_md5=fe10027c8de77b643ae72bd6de3f7996
+compile_version=1.8.0
+needs_build_directory=yes
+needs_safe_linking=yes
+recipe_type=configure
+configure_options=(
+   "--enable-shared"
+   "--enable-plugins"
+)
+make_variables=(
+   "tooldir=$target"
+)
+install_variables=(
+   target_header_dir="${target}/include"
+   PATH="${binutils_path}/bin:$PATH"
+)
+
+pre_install() {
+   cp ../include/libiberty.h $target/include
+   cp libiberty/pic/libiberty.a $target/lib
+}
