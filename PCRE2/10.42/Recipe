@@ -1,0 +1,13 @@
+# Recipe for version 10.42 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Mar 6 19:15:46 -03 2023
+# Recipe (MakeRecipe) for PCRE2 by Philip Pokarowski, on Wed 22 Jul 2020 02:00:29 AM CEST
+compile_version=017-GIT
+url="https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.42/pcre2-10.42.tar.bz2"
+file_size=1799866
+file_md5=a8e9ab2935d428a4807461f183034abe
+dir='pcre2-10.42'
+recipe_type=configure
+configure_options=(
+	--disable-static
+	--enable-pcre2-16
+	--enable-pcre2-32
+)
