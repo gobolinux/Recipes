@@ -1,0 +1,77 @@
+Disable docs for good
+
+diff -Nur gimp-2.10.34.old/configure.ac gimp-2.10.34/configure.ac
+--- gimp-2.10.34.old/configure.ac	2023-02-21 16:56:16.000000000 -0300
++++ gimp-2.10.34/configure.ac	2023-03-07 04:53:25.814214148 -0300
+@@ -3041,28 +3041,6 @@
+ plug-ins/twain/Makefile
+ plug-ins/common/Makefile
+ modules/Makefile
+-devel-docs/Makefile
+-devel-docs/app/Makefile
+-devel-docs/app/version
+-devel-docs/libgimp/Makefile
+-devel-docs/libgimp/version
+-devel-docs/libgimpbase/Makefile
+-devel-docs/libgimpbase/version
+-devel-docs/libgimpconfig/Makefile
+-devel-docs/libgimpconfig/version
+-devel-docs/libgimpcolor/Makefile
+-devel-docs/libgimpcolor/version
+-devel-docs/libgimpmath/Makefile
+-devel-docs/libgimpmath/version
+-devel-docs/libgimpmodule/Makefile
+-devel-docs/libgimpmodule/version
+-devel-docs/libgimpthumb/Makefile
+-devel-docs/libgimpthumb/version
+-devel-docs/libgimpwidgets/Makefile
+-devel-docs/libgimpwidgets/version
+-devel-docs/performance-logs/Makefile
+-devel-docs/tools/Makefile
+-docs/Makefile
+ menus/Makefile
+ cursors/Makefile
+ icons/Makefile
+@@ -3136,9 +3114,6 @@
+ 
+ # Files with versions in their names
+ AC_CONFIG_FILES(
+-docs/gimp-gimp_app_version.1:docs/gimp.1.in
+-docs/gimprc-gimp_app_version.5:docs/gimprc.5.in
+-docs/gimptool-gimp_tool_version.1:docs/gimptool.1.in
+ gimp-gimp_pkgconfig_version.pc:gimp.pc.in
+ gimpthumb-gimp_pkgconfig_version.pc:gimpthumb.pc.in
+ gimpui-gimp_pkgconfig_version.pc:gimpui.pc.in
+diff -Nur gimp-2.10.34.old/Makefile.am gimp-2.10.34/Makefile.am
+--- gimp-2.10.34.old/Makefile.am	2023-02-21 16:56:15.000000000 -0300
++++ gimp-2.10.34/Makefile.am	2023-03-07 04:52:21.898216769 -0300
+@@ -36,8 +36,6 @@
+ 	$(GIMP_MODULES)		\
+ 	$(GIMP_PLUGINS)		\
+ 	etc			\
+-	devel-docs		\
+-	docs			\
+ 	build
+ 
+ pkgconfigdir = $(libdir)/pkgconfig
+diff -Nur gimp-2.10.34.old/Makefile.in gimp-2.10.34/Makefile.in
+--- gimp-2.10.34.old/Makefile.in	2023-02-21 17:03:30.000000000 -0300
++++ gimp-2.10.34/Makefile.in	2023-03-07 04:52:51.072215572 -0300
+@@ -200,7 +200,7 @@
+ 	desktop menus libgimpbase tools pdb icons libgimpcolor \
+ 	libgimpmath libgimpconfig libgimpmodule libgimpthumb \
+ 	libgimpwidgets libgimp app app-tools @GIMP_MODULES@ \
+-	@GIMP_PLUGINS@ etc devel-docs docs build
++	@GIMP_PLUGINS@ etc build
+ am__DIST_COMMON = $(srcdir)/INSTALL.in $(srcdir)/Makefile.in \
+ 	$(srcdir)/config.h.in $(srcdir)/gimp-zip.in \
+ 	$(srcdir)/gimp.pc.in $(srcdir)/gimpthumb.pc.in \
+@@ -702,8 +702,6 @@
+ 	$(GIMP_MODULES)		\
+ 	$(GIMP_PLUGINS)		\
+ 	etc			\
+-	devel-docs		\
+-	docs			\
+ 	build
+ 
+ pkgconfigdir = $(libdir)/pkgconfig

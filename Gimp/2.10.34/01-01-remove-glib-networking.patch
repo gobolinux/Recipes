@@ -1,0 +1,102 @@
+Disable test for glib-networking. Why do we need networking in a paint program anyway??
+
+diff -Nur gimp-2.10.34.old/configure gimp-2.10.34/configure
+--- gimp-2.10.34.old/configure	2023-02-21 17:03:39.000000000 -0300
++++ gimp-2.10.34/configure	2023-03-06 18:46:51.481706606 -0300
+@@ -24279,59 +24279,6 @@
+ fi
+ fi
+ 
+-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for glib-networking (GIO TLS implementation)" >&5
+-$as_echo_n "checking for glib-networking (GIO TLS implementation)... " >&6; }
+-gimp_save_CFLAGS="$CFLAGS"
+-gimp_save_LIBS="$LIBS"
+-CFLAGS="$CFLAGS $GIO_CFLAGS"
+-LIBS="$LIBS $GIO_LIBS"
+-if test "$cross_compiling" = yes; then :
+-  have_glib_networking="unknown (cross-compiling)"
+-else
+-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+-/* end confdefs.h.  */
+-#include <gio/gio.h>
+-int
+-main ()
+-{
+-return !g_tls_backend_supports_tls (g_tls_backend_get_default ());
+-  ;
+-  return 0;
+-}
+-_ACEOF
+-if ac_fn_c_try_run "$LINENO"; then :
+-  have_glib_networking="yes"
+-else
+-  have_glib_networking="no"
+-fi
+-rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+-  conftest.$ac_objext conftest.beam conftest.$ac_ext
+-fi
+-
+-CFLAGS="$gimp_save_CFLAGS"
+-LIBS="$gimp_save_LIBS"
+-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $have_glib_networking" >&5
+-$as_echo "$have_glib_networking" >&6; }
+-
+-if test "x$have_glib_networking" = "xno"; then
+-
+-  { $as_echo "$as_me:${as_lineno-$LINENO}: Eeeeeeeeeeeeeeeeeeeeek! Missing dep: glib-networking" >&5
+-$as_echo "$as_me: Eeeeeeeeeeeeeeeeeeeeek! Missing dep: glib-networking" >&6;}
+-  required_deps="$required_deps
+-  - Error: missing dependency glib-networking"
+-
+-  required_deps="$required_deps
+-      *** Test for glib-networking failed. This is required."
+-elif test "x$have_glib_networking" != "xyes"; then
+-  warning_glib_networking="
+-WARNING: Test for glib-networking cannot be performed while cross-compiling.
+-         Make sure glib-networking is installed, otherwise GIMP will not be able
+-         to display the remote help pages through the help browser, nor will it
+-         be able to open remote HTTPS (or other protocol using SSL/TLS) files.
+-         HTTPS is becoming the expected standard and should not be considered
+-         optional anymore."
+-fi
+-
+ # AM_PATH_GLIB_2_0 already fills in the variable GLIB_COMPILE_RESOURCES.
+ # Unfortunately it looks it up using $PKG_CONFIG, which search in
+ # target-installed libraries, hence it would return a tool for the
+diff -Nur gimp-2.10.34.old/configure.ac gimp-2.10.34/configure.ac
+--- gimp-2.10.34.old/configure.ac	2023-02-21 16:56:16.000000000 -0300
++++ gimp-2.10.34/configure.ac	2023-03-06 18:46:38.387707143 -0300
+@@ -740,33 +740,6 @@
+                     [add_deps_error([gio-unix-2.0])])
+ fi
+ 
+-AC_MSG_CHECKING([for glib-networking (GIO TLS implementation)])
+-gimp_save_CFLAGS="$CFLAGS"
+-gimp_save_LIBS="$LIBS"
+-CFLAGS="$CFLAGS $GIO_CFLAGS"
+-LIBS="$LIBS $GIO_LIBS"
+-AC_RUN_IFELSE([AC_LANG_PROGRAM([#include <gio/gio.h>],
+-                               [return !g_tls_backend_supports_tls (g_tls_backend_get_default ());])],
+-              [have_glib_networking="yes"],
+-              [have_glib_networking="no"],
+-              [have_glib_networking="unknown (cross-compiling)"])
+-CFLAGS="$gimp_save_CFLAGS"
+-LIBS="$gimp_save_LIBS"
+-AC_MSG_RESULT($have_glib_networking)
+-
+-if test "x$have_glib_networking" = "xno"; then
+-  add_deps_error([glib-networking],
+-      [Test for glib-networking failed. This is required.])
+-elif test "x$have_glib_networking" != "xyes"; then
+-  warning_glib_networking="
+-WARNING: Test for glib-networking cannot be performed while cross-compiling.
+-         Make sure glib-networking is installed, otherwise GIMP will not be able
+-         to display the remote help pages through the help browser, nor will it
+-         be able to open remote HTTPS (or other protocol using SSL/TLS) files.
+-         HTTPS is becoming the expected standard and should not be considered
+-         optional anymore."
+-fi
+-
+ # AM_PATH_GLIB_2_0 already fills in the variable GLIB_COMPILE_RESOURCES.
+ # Unfortunately it looks it up using $PKG_CONFIG, which search in
+ # target-installed libraries, hence it would return a tool for the

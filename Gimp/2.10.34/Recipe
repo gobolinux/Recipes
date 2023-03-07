@@ -1,0 +1,28 @@
+# Recipe for version 2.10.34 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Mar 6 18:03:47 -03 2023
+# Recipe (MakeRecipe) for Gimp by roko, <ro.ko@mcnon.com>, on Fri Dec 31 19:34:35 BRST 2004
+compile_version=1.9.0
+url="http://download.gimp.org/mirror/pub/gimp/v2.10/gimp-2.10.34.tar.bz2"
+file_size=31405329
+file_md5=0dae3a42d261621d62a336ef2aee052a
+recipe_type=configure
+
+configure_options=(
+    --without-poppler
+    --enable-gimp-console
+    --disable-check-update
+    --disable-python
+    --disable-gtk-doc
+    --disable-docs
+)  
+with_poppler="--with-poppler"
+#parallel_make=yes
+
+pre_install() {
+   # Sigh, libtool again...
+   find -name "*.la" | xargs sed -i "s,^libdir='${goboLibraries},libdir='${target}/lib,"
+
+   # Gimp ships with a libtool file that cannot be simply overriden by /bin/libtool.
+   # Thus, we tweak our local copy so that it doesn't fail when copying files to a
+   # destination other than /usr/lib
+   GrepReplace -B 'func_fatal_error "error: cannot install' 'echo "error: cannot install' libtool
+}
