@@ -1,0 +1,16 @@
+# Recipe for version 2.2 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Mar 6 22:14:01 -03 2023
+# Recipe (MakeRecipe) for Shared-Mime-Info by roko, <ro.ko@mcnon.com>, on Sat Nov 13 23:45:25 BRST 2004
+compile_version=1.8.5
+url="https://gitlab.freedesktop.org/xdg/shared-mime-info/-/archive/2.2/shared-mime-info-2.2.tar.gz"
+file_size=7064139
+file_md5=06cb9e92e4211dc53fd52b7bfd586c78
+recipe_type=meson
+
+unmanaged_files=(
+   "${goboVariable}/xdg/mime"
+)
+
+pre_link() {
+   mkdir -p ${target}/Resources/Unmanaged/${goboVariable}/xdg/mime
+   ln -s ${goboShared}/mime/packages ${target}/Resources/Unmanaged/${goboVariable}/xdg/mime
+}
