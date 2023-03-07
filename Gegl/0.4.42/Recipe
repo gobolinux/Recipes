@@ -1,0 +1,10 @@
+# Recipe for version 0.4.42 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Mar 6 18:08:08 -03 2023
+# Recipe (MakeRecipe) for Gegl by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jan. 3., szombat, 00.13.13 CET
+compile_version=1.11.4
+url="https://download.gimp.org/pub/gegl/0.4/gegl-0.4.42.tar.xz"
+file_size=5787100
+file_md5=f4532970b342d31cb6bb2b0207545b1d
+recipe_type=meson
+meson_variables=(
+   "-Ddocs=false"
+)
