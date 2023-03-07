@@ -1,0 +1,16 @@
+# Recipe for version 8.45 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Mar 6 19:06:36 -03 2023
+# by Jeremy Vernon
+compile_version=2.0
+url="https://sourceforge.net/projects/pcre/files/pcre/8.45/pcre-8.45.tar.gz"
+file_size=2096552
+file_md5=01b80f8177ab91da63e7e5c5d5dfcb83
+recipe_type=configure
+
+configure_options=(
+   #unicode and utf-8 support are needed here for at least Goffice 0.5.2 and Glib 2.50.1 (Hugo Barrocas)
+   --enable-unicode-properties
+   --enable-utf8
+   --enable-pcre16
+   --enable-pcre32
+   #--enable-jit
+)
