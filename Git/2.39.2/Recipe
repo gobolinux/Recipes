@@ -1,0 +1,23 @@
+# Recipe for version 2.39.2 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Mar 6 19:35:29 -03 2023
+# Recipe (MakeRecipe) for Git by Jonas Karlsson <jonka750@student.liu.se>, on Sat Apr 15 18:45:06 CEST 2006
+compile_version=1.9.0
+url="http://mirrors.edge.kernel.org/pub/software/scm/git/git-2.39.2.tar.xz"
+file_size=7163224
+file_md5=32d34dc65ae0955cc68c7152b5ca8b13
+recipe_type=makefile
+makefile='Makefile'
+build_target="all man"
+install_target="install install-man"
+
+environment=(
+   XML_CATALOG_FILES="$goboShared/xml/docbook/stylesheet/catalog.xml $goboVariable/lib/xml/catalog $goboVariable/lib/xml/docbook"
+)
+make_variables=(
+   prefix="$target"
+   PREFIX="$target"
+   ASCIIDOC8="YesPlease"
+)
+
+pre_link() {
+   cp -a Documentation/* $target/doc
+}
