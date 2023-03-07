@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for LibMyPaint by Hisham Muhammad <hisham@gobolinux.org>, on Mon Mar 6 23:22:39 -03 2023
+# Recipe for version 1.6.1 by Hisham Muhammad <hisham@gobolinux.org>, on Mon Mar 6 23:22:39 -03 2023
+compile_version=git
+url="https://github.com/mypaint/libmypaint/releases/download/v1.6.1/libmypaint-1.6.1.tar.xz"
+file_size=519464
+file_md5=7f1dab2d30ce8a3f494354c7c77a2977
+dir='libmypaint-1.6.1'
+recipe_type=configure
