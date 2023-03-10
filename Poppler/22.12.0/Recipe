@@ -1,0 +1,18 @@
+# Recipe for version 22.12.0 by Hisham Muhammad <hisham@gobolinux.org>, on Thu Dec 29 15:56:48 -03 2022
+# Recipe (MakeRecipe) for Poppler by Harald Klimach, on Mon Mar 6 13:01:20 CET 2006
+compile_version=1.8.2
+url="https://poppler.freedesktop.org/poppler-22.12.0.tar.xz"
+file_size=1845856
+file_md5=39b6a69eceba6adb8afbcee8d47385fd
+recipe_type=cmake
+
+cmake_options=(
+    -DCMAKE_BUILD_TYPE=Release
+    -DCMAKE_INSTALL_PREFIX:PATH=/usr
+    -DCMAKE_INSTALL_LIBDIR:PATH=/usr/lib
+    -DENABLE_XPDG_HEADERS=ON
+    -DENABLE_ZLIB=ON
+    -DENABLE_LIBCURL=ON
+    -DENABLE_LIBOPENJPEG=none
+    -DENABLE_GTK_DOC=OFF
+)
