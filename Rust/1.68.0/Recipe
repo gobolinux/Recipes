@@ -1,0 +1,11 @@
+# Recipe for version 1.68.0 by Hisham Muhammad <hisham@gobolinux.org>, on Fri Mar 10 11:04:06 -03 2023
+# Recipe (MakeRecipe) for Rust by Hisham Muhammad <hisham@gobolinux.org>, on Mon Apr 20 20:38:12 BRT 2015
+compile_version=git
+url="https://static.rust-lang.org/dist/rust-1.68.0-x86_64-unknown-linux-gnu.tar.gz"
+file_size=322042226
+file_md5=6592bfaf2560c40b804deee2e3c38257
+recipe_type=manifest
+pre_link() {
+   ./install.sh --prefix=$target
+}
+
