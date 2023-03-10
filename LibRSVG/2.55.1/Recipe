@@ -1,0 +1,19 @@
+# Recipe for version 2.55.1 by Hisham Muhammad <hisham@gobolinux.org>, on Fri Mar 10 11:03:16 -03 2023
+# Recipe (MakeRecipe) for LibRSVG by roko, <ro.ko@mcnon.com>, on Sat Jan 1 10:29:51 BRST 2005
+compile_version=1.8.0
+url="http://ftp.gnome.org/pub/GNOME/sources/librsvg/2.55/librsvg-2.55.1.tar.xz"
+file_size=5648060
+file_md5=21594bd4250ec9acaeb3353c914dfe7a
+recipe_type=configure
+
+configure_options=(
+    --disable-mozilla-plugin
+    --disable-introspection
+)
+with_libcroco="--with-croco"
+
+install_variables=(
+    LIBTOOL="$goboExecutables/libtool"
+    gdk_pixbuf_moduledir=$(pkg-config gdk-pixbuf-2.0 --variable=gdk_pixbuf_binarydir | sed "s,/usr/,$target/,g")/loaders
+    gdk_pixbuf_cache_file=$(pkg-config gdk-pixbuf-2.0 --variable=gdk_pixbuf_binarydir | sed "s,/usr/,$target/,g")/loaders.cache
+)
