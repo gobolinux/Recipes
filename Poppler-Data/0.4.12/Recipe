@@ -1,0 +1,12 @@
+# Recipe for version 0.4.12 by Hisham Muhammad <hisham@gobolinux.org>, on Tue Mar 7 01:33:40 -03 2023
+# Recipe (MakeRecipe) for Poppler-Data by Aitor Perez Iturri, on mar abr 10 20:35:22 CEST 2007
+compile_version=1.8.2
+url="https://poppler.freedesktop.org/poppler-data-0.4.12.tar.gz"
+file_size=4504754
+file_md5=67ee4a40aa830b1f6e2560ce5f6471ba
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+	"datadir=/share"
+   "DESTDIR=$target"
+)
