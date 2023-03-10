@@ -1,0 +1,8 @@
+# Recipe (MakeRecipe) for FT2Demos by Hisham Muhammad <hisham@gobolinux.org>, on Fri Mar 10 10:59:46 -03 2023
+# Recipe for version 2.13.0 by Hisham Muhammad <hisham@gobolinux.org>, on Fri Mar 10 10:59:46 -03 2023
+compile_version=git
+url="https://download.savannah.gnu.org/releases/freetype/ft2demos-2.13.0.tar.xz"
+file_size=333952
+file_md5=9a2095309fe1082afba92d636804201c
+dir='ft2demos-2.13.0'
+recipe_type=meson
