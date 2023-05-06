@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Expat by Hisham Muhammad <hisham@gobolinux.org>, on Wed Jun 28 15:28:45 BRT 2017
+compile_version=git
+url="https://github.com/libexpat/libexpat/releases/download/R_2_5_0/expat-2.5.0.tar.xz"
+file_size=460560
+file_md5=ac6677b6d1b95d209ab697ce8b688704
+dir='expat-2.5.0'
+recipe_type=configure
+configure_options=(
+	--disable-static
+)
