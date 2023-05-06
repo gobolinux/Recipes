@@ -7,7 +7,14 @@ urls=(
    "https://debian.osuosl.org/debian/pool/main/c/ca-certificates/ca-certificates_20230311.tar.xz"
 )
 
-
+file_sizes=(
+   71423531
+   257772
+)
+file_md5s=(
+   1f8cb0771f0ee64a4e891745b37f3098
+   fc1c3ec0067385f0be8ac7f6e670a0f8
+)
 
 dir='nss-3.86'
 recipe_type=makefile
@@ -60,12 +67,3 @@ pre_link() {
 }
 
 post_install_message="\n\nIMPORTANT:\nYou must run as root 'sh ${goboSystem}/Index/bin/update-ca-certificates'.\n"
-file_sizes=(
-71423531
-257772
-)
-file_md5s=(
-1f8cb0771f0ee64a4e891745b37f3098
-fc1c3ec0067385f0be8ac7f6e670a0f8
-)
-
