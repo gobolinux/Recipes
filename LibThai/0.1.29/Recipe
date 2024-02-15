@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for LibThai by Hisham Muhammad <hisham@gobolinux.org>, on Thu Feb 15 07:25:02 PM -03 2024
+# Recipe for version 0.1.29 by Hisham Muhammad <hisham@gobolinux.org>, on Thu Feb 15 07:25:02 PM -03 2024
+compile_version=git
+url="https://github.com/tlwg/libthai/releases/download/v0.1.29/libthai-0.1.29.tar.xz"
+file_size=417728
+file_md5=c1fe8255d2bdfc5ea4f68dd9aff8b7f1
+dir='libthai-0.1.29'
+recipe_type=configure
+configure_options=(
+   --disable-dict
+)
