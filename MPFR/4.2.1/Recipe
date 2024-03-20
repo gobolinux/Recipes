@@ -1,0 +1,20 @@
+# Recipe for version 4.2.1 by Sage I. Hendricks <sage.message@email.com>, on Wed 20 Mar 2024 09:15:35 AM GMT
+# Recipe (MakeRecipe) for MPFR by roko, <ro.ko@mcnon.com>, on Mon Mar 21 19:23:18 CET 2005
+compile_version=1.9.0
+#url="http://www.mpfr.org/mpfr-current/mpfr-4.2.1.tar.bz2"
+urls=(
+    "http://www.mpfr.org/mpfr-current/mpfr-4.2.1.tar.bz2"
+    "https://ftp.gnu.org/gnu/mpfr/mpfr-4.2.1.tar.bz2"
+)
+file_size=1720899
+file_md5=7765afa036e4ce7fb0e02bce0fef894b
+recipe_type=configure
+configure_options=(
+   --enable-thread-safe
+   --enable-shared
+)
+using_doc_pre_link() {
+   make html
+   mkdir -p ${target}/share/doc/mpfr-4.2.1
+   find . -name \*.html -type f -exec cp \{} ${target}/share/doc/mpfr-4.2.1 \;
+}
