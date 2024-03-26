@@ -1,0 +1,19 @@
+# Recipe for version 1.24.5 by Sage I. Hendricks <sage.message@email.com>, on Tue 26 Mar 2024 02:58:36 PM EDT
+# by Jeremy Vernon
+# 2004.01.06 16:54
+
+compile_version=17
+recipe_type=configure
+url="https://ftp.gnu.org/gnu/wget/wget-1.24.5.tar.gz"
+file_size=5182521
+file_md5=271bf949384d0858c2c3d419f6311365
+
+configure_options=(--with-ssl=openssl)
+
+# Wget needs GnuTLS >= 3.7.0 during compilation to work fine with
+# Nettle 3.7.3. But GnuTLS 3.7.0 requires Nettle >= 3.6 to build.
+# While updgrading GnuTLS, Compile's wget request would break even if
+# we Symlink the old nettle, because Runner woulde explicitly Symlink
+# new Nettle during Compile.
+# I have found this hassle can be worked around by compiling wget with
+# OpenSSL support.
