@@ -1,0 +1,8 @@
+# Recipe for version 5.9 by Sage I. Hendricks <sage.message@email.com>, on Wed 20 Mar 2024 10:25:11 AM GMT
+url="https://sourceforge.net/projects/zsh/files/zsh/5.9/zsh-5.9.tar.xz"
+file_size=3332400
+file_md5=182e37ca3fe3fa6a44f69ad462c5c30e
+compile_version=1.8.0
+recipe_type=configure
+
+post_install_message="In ZSH 5.7.4, 'promptinit' no longer autoloads 'colors' function. You may need to add a 'autoload -U colors' statement in your '${goboSettings}/zshrc' file."
