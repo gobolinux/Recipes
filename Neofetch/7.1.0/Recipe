@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for Neofetch by Sage I. Hendricks <sage.message@email.com>, on Tue 26 Mar 2024 01:41:50 PM EDT
+# Recipe for version 7.1.0 by Sage I. Hendricks <sage.message@email.com>, on Tue 26 Mar 2024 01:41:50 PM EDT
+compile_version=017-GIT
+url="https://github.com/dylanaraps/neofetch/archive/refs/tags/7.1.0.tar.gz"
+file="neofetch-7.1.0.tar.gz"
+file_size=95400
+file_md5=37ba9026fdd353f66d822fdce16420a8
+dir='neofetch-7.1.0'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
