@@ -1,0 +1,11 @@
+# Recipe for version 2.6.2 by Sage I. Hendricks <sage.message@email.com>, on Wed 20 Mar 2024 01:36:16 PM GMT
+# Recipe (MakeRecipe) for Expat by Hisham Muhammad <hisham@gobolinux.org>, on Wed Jun 28 15:28:45 BRT 2017
+compile_version=git
+url="https://github.com/libexpat/libexpat/releases/download/R_2_6_2/expat-2.6.2.tar.xz"
+file_size=485236
+file_md5=0cb75c8feb842c0794ba89666b762a2d
+dir='expat-2.6.2'
+recipe_type=configure
+configure_options=(
+	--disable-static
+)
