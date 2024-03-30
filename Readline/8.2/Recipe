@@ -1,0 +1,13 @@
+# Recipe for version 8.2 by Sage I. Hendricks <sage.message@email.com>, on Thu 28 Mar 2024 09:22:00 AM EDT
+# Recipe (MakeRecipe) for Readline by Peter Eriksen <s022018@student.dtu.dk>, on Thu Nov 4 19:52:54 CET 2004
+compile_version=1.13.2
+
+url="https://ftp.gnu.org/gnu/readline/readline-8.2.tar.gz"
+file_size=3043952
+file_md5=4aa1b31be779e6b84f9a96cb66bc50f6
+
+recipe_type=configure
+
+build_variables=(
+   "SHLIB_LIBS=-lncurses"
+)
