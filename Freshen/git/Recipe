@@ -1,5 +1,5 @@
 git="https://github.com/gobolinux/Freshen.git"
-compile_version=1.13.0
+compile_version=017
 recipe_type=manifest
 
 manifest=(
@@ -10,5 +10,5 @@ manifest=(
 pre_link() {
    python_release=$(basename $python_path)
    python_version=${python_release%.*}
-   mv $target/lib/python2.5 $target/lib/python$python_version
+   # mv $target/lib/python3.8 $target/lib/python$python_version
 }
