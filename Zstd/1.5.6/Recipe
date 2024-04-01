@@ -1,0 +1,8 @@
+# Recipe for version 1.5.6 by Sage I. Hendricks <sage.message@email.com>, on Mon 01 Apr 2024 08:48:26 AM EDT
+# Recipe (MakeRecipe) for Zstd by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Oct 7 17:34:13 BRT 2019
+compile_version=016
+url="https://github.com/facebook/zstd/archive/refs/tags/v1.5.6.tar.gz"
+file_size=2425452
+file_md5=2543d7cb3beda9ec48f965e5059dbd42
+dir='zstd-1.5.6'
+recipe_type=makefile
