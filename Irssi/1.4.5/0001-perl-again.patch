@@ -1,3 +1,9 @@
+Fix a known issue with Perl>=5.37
+Without the patch, Irssi's locale/unicode handling may break due to a
+bug in Perl. See Perl/perl5#21366 
+<https://github.com/Perl/perl5/issues/21366>
+
+
 From b6507ad5ee6a813efa1698b7383db2f5e720ca2f Mon Sep 17 00:00:00 2001
 From: ailin-nemui <ailin-nemui@users.noreply.github.com>
 Date: Sat, 27 Jan 2024 17:42:42 +0000
