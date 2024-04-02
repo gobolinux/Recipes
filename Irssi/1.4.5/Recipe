@@ -1,0 +1,10 @@
+# Recipe for version 1.4.5 by Sage I. Hendricks <sage.message@email.com>, on Tue 02 Apr 2024 10:23:41 AM EDT
+# A console-based IRC client
+# Recipe by Julio Biason <slow@cscience.org>
+
+url="https://github.com/irssi/irssi/releases/download/1.4.5/irssi-1.4.5.tar.xz"
+file_size=1215688
+file_md5=fb3ed8e05fcc6dc80d7f235e4601c292
+compile_version=1.8.2
+recipe_type=configure
+dir=irssi-1.4.5
