@@ -8,7 +8,14 @@ manifest=(
 )
 
 pre_link() {
-   python_release=$(basename $python_path)
-   python_version=${python_release%.*}
-   # mv $target/lib/python3.8 $target/lib/python$python_version
+   python_release=$(basename $python_path) # get version number "MAJOR.MINOR.PATCH"
+   python_version=${python_release%.*}     # remove ".PATCH
+
+   # check if the source/current folder differs from that expected by python
+   # if it does, rename the current folder
+   python_folder="python$python_version"          # get python expected folder
+   source_folder=$(basename $target/lib/python*)  # get source folder
+   if [[ "$source_folder" != "$python_folder" ]]; then
+      mv $target/lib/$current_folder $target/lib/$module_folder
+   fi
 }
