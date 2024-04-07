@@ -1,0 +1,237 @@
+#!/bin/bash
+
+# Generates the initramfs and the GRUB UEFI application
+# needed to boot GoboLinux. Note that kernel image and
+# modules are taken from /Programs/Linux, _not_ from
+# /boot + /lib/modules.
+#
+# Written by Lucas C. Villa Real <lucasvr@gobolinux.org>
+
+source GoboPath
+source ScriptFunctions
+Import Log
+
+ESP_MOUNTPOINT=/Mount/ESP
+
+mount_esp_partition() {
+   local esp=$(partinfo --flags | grep boot | grep esp | cut -d: -f1 | head -n 1)
+   mkdir -p $ESP_MOUNTPOINT
+   mountpoint -q $ESP_MOUNTPOINT && return 0
+   mount -o iocharset=iso8859-1 -v "$esp" $ESP_MOUNTPOINT && return 1
+   return 2
+}
+
+umount_esp_partition() {
+   umount $ESP_MOUNTPOINT
+}
+
+boot_partition_is_encrypted() {
+   for bootpart in "/boot" "/System/Kernel/Boot"  "/"
+   do
+      bootdev=$(mount | grep " $bootpart " | awk {'print $1'})
+      if [ "$bootdev" ]
+      then
+         cryptsetup status "$bootdev" &> /dev/null
+         break
+      fi
+   done
+}
+
+boot_partition_uuid() {
+   for bootpart in "/boot" "/System/Kernel/Boot"  "/"
+   do
+      local bootdev=$(mount | grep " $bootpart " | awk {'print $1'})
+      if [ "$bootdev" ]
+      then
+         backingdev=$(cryptsetup status "$bootdev" 2> /dev/null | grep "device:" | awk {'print $2'})
+         blkid -o value "$backingdev" | head -n 1
+         break
+      fi
+   done
+}
+
+boot_partition_cryptname() {
+   for bootpart in "/boot" "/System/Kernel/Boot"  "/"
+   do
+      bootdev=$(mount | grep " $bootpart " | awk {'print $1'})
+      if [ "$bootdev" ]
+      then
+         echo "$bootdev"
+         break
+      fi
+   done
+}
+
+gen_initramfs() {
+   local kernel_name="$1"
+   local modules_dir="$2"
+   local new_initramfs="/System/Kernel/Boot/initramfs-${kernel_name}.img"
+   local old_initramfs=
+
+   if [ -e "$new_initramfs" ]
+   then
+      Log_Normal "$new_initramfs already exists, will rename it before regenerating"
+      local count=$(ls ${new_initramfs}* | wc -l)
+      let count=count+1
+      old_initramfs="${new_initramfs}.${count}"
+      mv -v "${new_initramfs}" "${old_initramfs}"
+   fi
+
+   # Note: we're generating an initramfs that's just enough to boot this machine.
+   # If you want to generate an image that boots on a larger number of computers,
+   # please make sure to remove "--hostonly" from the arguments below.
+   dracut \
+      --kver "$kernel_name" \
+      --kmoddir "$modules_dir" \
+      --hostonly \
+      --show-modules \
+      --force \
+      --zstd \
+      --stdlog 2
+
+   if [ ! -e "$new_initramfs" -a "$old_initramfs" ]
+   then
+      Log_Error "Failed to generate initramfs, restoring original"
+      mv -v "${old_initramfs}" "${new_initramfs}"
+   elif [ ! -e "$new_initramfs" ]
+   then
+      # Failed to create initramfs, will keep using the one from the previous kernel release
+      false
+   elif boot_partition_is_encrypted
+   then
+      # We have to move the initramfs to the ESP's /boot directory or GRUB won't find it
+      mv -v "$new_initramfs" "$ESP_MOUNTPOINT/BOOT/initramfs-${kernel_name}.img"
+   else
+      # All is fine, the generated initramfs is already where it belongs
+      true
+   fi
+}
+
+gen_uefi_app() {
+   local grub_cfg="$1"
+
+   # If /boot is encrypted there's no chance that the GRUB UEFI application
+   # will be able to access the kernel and initramfs images: we have to copy
+   # them to the ESP partition. However, since GRUB does not let us specify
+   # where to actually look for those files we have to bind-mount the ESP's
+   # /boot directory over the original /boot.
+   if boot_partition_is_encrypted
+   then
+      local partname=$(boot_partition_cryptname)
+      export GRUB_CMDLINE_LINUX="root=$partname cryptdevice=UUID=$(boot_partition_uuid):$(basename $partname)"
+      export GRUB_ENABLE_CRYPTODISK=y
+      mount -o bind "$ESP_MOUNTPOINT/BOOT" "$goboBoot"
+   fi
+
+   Quiet pushd "$goboBoot"
+   Log_Normal "Generating a config file"
+   if [ -z "$grub_cfg" ]
+   then
+      GenGrubConf "$goboBoot" || {
+         Log_Error "Failed to update UEFI application"
+         Quiet popd
+         boot_partition_is_encrypted && umount "$goboBoot"
+         return
+      }
+      if boot_partition_is_encrypted
+      then
+         # The kernel command line cannot have both root=/dev/mapper/cryptroot (or similar)
+         # and root=UUID=<uuid>. We want to keep the former.
+         cat /dev/null > grub.cfg.new
+         cat grub.cfg | while IFS= read -r line
+         do
+            if echo "$line" | grep "Gobo" | grep "cryptdevice=" | grep -q "root=UUID="
+            then
+               echo "$line" | sed 's,\(root=UUID=[0-9a-z-]*\),,g' >> grub.cfg.new
+            else
+               echo "$line" >> grub.cfg.new
+            fi
+         done
+         mv grub.cfg.new grub.cfg
+      fi
+      grub_cfg="grub.cfg"
+   fi
+
+   Log_Normal "Generating an updated UEFI application"
+   grub-mkstandalone-efi \
+      -d /Programs/GRUB-EFI/Current/lib/grub/x86_64-efi \
+      -O x86_64-efi \
+      --modules="part_gpt part_msdos iso9660 all_video efi_gop efi_uga video_bochs video_cirrus gfxterm gettext font" \
+      --fonts="unicode" \
+      --themes="" \
+      -o BOOTX64.EFI \
+      --compress=gz \
+      "boot/grub/grub.cfg=$grub_cfg"
+
+   if [ -e "$ESP_MOUNTPOINT/EFI/BOOT/BOOTX64.EFI" ]
+   then
+      Log_Normal "Updating UEFI application"
+      mv -v "$ESP_MOUNTPOINT/EFI/BOOT/BOOTX64.EFI" "$ESP_MOUNTPOINT/EFI/BOOT/BOOTX64.OLD"
+      mv -v "BOOTX64.EFI" "$ESP_MOUNTPOINT/EFI/BOOT"
+   else
+      Log_Normal "A new UEFI application has been created. You can now activate your kernel by mounting your"
+      Log_Normal "EFI System Partition and moving $ESP_MOUNTPOINT/BOOTX64.EFI into your ESP's /EFI/BOOT directory."
+   fi
+   Quiet popd
+
+   boot_partition_is_encrypted && umount "$goboBoot"
+}
+
+copy_kernel() {
+   local kernel_img="$1"
+   local system_map="$2"
+
+   # Please note that there's no handle the case where the boot
+   # partition is not encrypted; in that case, the kernel and
+   # System.map files will be automatically copied by SymlinkProgram
+   # from Resources/Unmanaged/System/Kernel/Boot to /boot.
+   if boot_partition_is_encrypted
+   then
+      cp -v "$kernel_img" "$system_map" "$ESP_MOUNTPOINT/BOOT/"
+   fi
+}
+
+#################
+# Main operation
+#################
+
+if [ "$#" -lt 2 ]
+then
+   echo "Syntax: $0 <version> <release> [grub.cfg]"
+   echo "Example:"
+   echo "$0 5.9.6 5.9.6-Gobo"
+   exit 1
+fi
+
+version="$1"
+kernel_name="$2"
+shift 2
+
+kernel_img="$(readlink -f $goboPrograms/Linux/$version/Resources/Unmanaged/System/Kernel/Boot/kernel-*)"
+system_map="$(readlink -f $goboPrograms/Linux/$version/Resources/Unmanaged/System/Kernel/Boot/System.map-*)"
+modules_dir="$(readlink -f $goboPrograms/Linux/$version/lib/modules/$kernel_name)"
+
+for target in "$goboPrograms/Linux/$version" "$modules_dir" "$kernel_img" "$system_map"
+do
+    [ ! -e "$target" ] && Die "$target does not exist"
+done
+
+if [ "$1" ] && echo "$1" | grep -q grub.cfg
+then grub_cfg="$(readlink -f "$1")"
+else grub_cfg=
+fi
+
+if [ "$(uname -m)" = "x86_64" ]
+then
+   mount_esp_partition
+   mounted_esp=$?
+
+   retval=1
+   gen_initramfs "$kernel_name" "$modules_dir" && \
+   gen_uefi_app "$grub_cfg" && \
+   copy_kernel "$kernel_img" "$system_map" && \
+   retval=0
+
+   [ $mounted_esp = 1 ] && umount_esp_partition
+   exit $retval
+fi
