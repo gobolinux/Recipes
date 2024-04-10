@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for HexEdit by Sage I. Hendricks <sage.message@email.com>, on Tue 09 Apr 2024 09:10:15 AM EDT
+# Recipe for version 1.6 by Sage I. Hendricks <sage.message@email.com>, on Tue 09 Apr 2024 09:10:15 AM EDT
+compile_version=017-GIT
+url="https://github.com/pixel/hexedit/archive/1.6.tar.gz"
+file="hexedit-1.6.tar.gz"
+file_size=31085
+file_md5=9b5849759dbda9ab25ec22818c16e970
+dir='hexedit-1.6'
+recipe_type=configure
+autogen_before_configure=yes
