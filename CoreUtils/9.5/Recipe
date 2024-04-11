@@ -1,0 +1,24 @@
+# Recipe for version 9.5 by Sage I. Hendricks <sage.message@email.com>, on Wed 10 Apr 2024 11:35:07 AM EDT
+url="https://ftp.gnu.org/gnu/coreutils/coreutils-9.5.tar.xz"
+file_size=6007136
+file_md5=e99adfa059a63db3503cc71f3d151e31
+dir=coreutils-9.5
+recipe_type=configure
+install_target="install"
+compile_version=017
+autogen_before_configure=yes
+autogen="autoreconf -fiv"
+configure_options=(
+	--prefix=$target
+	--bindir=$target/bin
+	--libexecdir=$target/lib
+	--enable-no-install-program=kill,uptime
+)
+
+environment=(
+    FORCE_UNSAFE_CONFIGURE=1
+)
+
+pre_link() {
+    mv $target/bin/install $target/bin/real_install
+}
