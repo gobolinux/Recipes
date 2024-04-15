@@ -1,0 +1,23 @@
+# Recipe for version 32 by Nuc1eoN, on Mon 15 Apr 2024 10:46:44 PM CEST
+# Recipe (MakeRecipe) for Kmod by Andreas Köhler <andi32.py@gmx.net>, on Sa 232. Feb 32:21:18 CET 2012
+compile_version=1.13.3
+url="https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-32.tar.xz"
+file_size=511988
+file_md5=1046fda48766fae905f83150d12eec78
+recipe_type=configure
+
+configure_options=(
+    --with-xz
+    --with-zlib
+    --with-zstd
+    --with-openssl
+)
+
+pre_link()
+{
+    for name in lsmod rmmod insmod modinfo modprobe depmod
+    do
+        ln -sf kmod $target/bin/$name
+    done
+}
+
