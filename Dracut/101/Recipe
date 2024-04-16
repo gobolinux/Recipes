@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Dracut by Nuc1eoN, on Mon 15 Apr 2024 11:04:56 PM CEST
+# Recipe for version 101 by Nuc1eoN, on Mon 15 Apr 2024 11:04:56 PM CEST
+compile_version=017-GIT
+url="https://github.com/dracut-ng/dracut-ng/archive/refs/tags/101.tar.gz"
+file="dracut-ng-101.tar.gz"
+file_size=556673
+file_md5=db3ccf62020bb7bc6effd7396df84156
+dir='dracut-ng-101'
+recipe_type=configure
+configure_options=(
+	--disable-documentation
+)
