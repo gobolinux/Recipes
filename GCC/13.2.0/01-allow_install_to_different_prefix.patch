@@ -1,0 +1,13 @@
+Fix installing to non-standard prefix.
+
+--- a/ltmain.sh	2021-06-01 09:53:07.048503814 +0200
++++ b/ltmain.sh	2021-08-11 16:04:19.468048681 +0200
+@@ -2251,7 +2251,7 @@
+ 	  # are installed into $libdir/../bin (currently, that works fine)
+ 	  # but it's something to keep an eye on.
+ 	  test "$inst_prefix_dir" = "$destdir" && \
+-	    func_fatal_error "error: cannot install \`$file' to a directory not ending in $libdir"
++	    func_echo "GoboLinux: installing '$file' to $destdir"
+ 
+ 	  if test -n "$inst_prefix_dir"; then
+ 	    # Stick the inst_prefix_dir data into the link command.
