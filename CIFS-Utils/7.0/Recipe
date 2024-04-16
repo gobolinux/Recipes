@@ -1,0 +1,10 @@
+# Recipe for version 7.0 by Sage I. Hendricks <sage.message@email.com>, on Tue 16 April 2024 10:20:21 AM GMT
+# Recipe (MakeRecipe) for CIFS-Utils by Michael Homer <michael@gobolinux.org>, on Sat Nov 12 15:27:25 NZDT 2011
+compile_version=1.13.3
+url="https://download.samba.org/pub/linux-cifs/cifs-utils/cifs-utils-7.0.tar.bz2"
+file_size=418638
+file_md5=518431bf43f23e6aacd97e80e2060df7
+recipe_type=configure
+make_variables=(
+   root_sbindir="$target/sbin"
+)
