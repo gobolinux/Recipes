@@ -1,0 +1,11 @@
+compile_version=017-GIT
+url="https://github.com/baskerville/bspwm/archive/refs/tags/0.9.10.tar.gz"
+file="bspwm-0.9.10.tar.gz"
+file_size=114099
+file_md5=452d6854c9146de5eb4c3e1f035a5981
+dir='bspwm-0.9.10'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
