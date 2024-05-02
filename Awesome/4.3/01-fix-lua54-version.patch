@@ -1,0 +1,19 @@
+As of Lua54, 'require' now pushes 2 values onto the stack. While all prior 
+versions only pushed 1 value. 
+
+Due to this, when using Lua 5.4 the `--version` flag would return bad version
+information. This patch fixes that.
+
+
+--- ../common/version.c.orig	2024-05-02 18:29:54.116685697 -0400
++++ ../common/version.c	2024-05-02 18:59:59.483356091 -0400
+@@ -48,7 +48,9 @@
+         lua_pop(L, 1);
+ 
+     /* Either push version number or error message onto stack */
++    int top = lua_gettop(L);
+     (void) luaL_dostring(L, "return require('lgi.version')");
++    lua_pop(L, lua_gettop(L) - top - 1);
+ 
+ #ifdef WITH_DBUS
+     const char *has_dbus = "yes";
