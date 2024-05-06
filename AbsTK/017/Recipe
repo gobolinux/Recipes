@@ -1,0 +1,13 @@
+# Recipe for version 017 by Nuc1eoN, on Mon 06 May 2024 07:46:30 PM CEST
+# Recipe (MakeRecipe) for AbsTK by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Nov 26 23:40:25 BRST 2017
+compile_version=017
+url="https://github.com/gobolinux/AbsTK/releases/download/017/AbsTK-017.tar.gz"
+file_size=13239
+file_md5=26904993243e198165da4094aa420343
+dir='AbsTK-017'
+recipe_type=makefile
+do_install=no
+
+pre_link() {
+    cp -r lib src $target
+}
