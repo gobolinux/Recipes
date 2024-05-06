@@ -11,7 +11,7 @@ as though it only returned 1 value.
      /* Either push version number or error message onto stack */
 +    int top = lua_gettop(L);
      (void) luaL_dostring(L, "return require('lgi.version')");
-+    lua_pop(L, lua_gettop(L) - top - 1);
++    lua_settop(L, top+1);
  
  #ifdef WITH_DBUS
      const char *has_dbus = "yes";
