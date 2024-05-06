@@ -1,0 +1,10 @@
+# Recipe (MakeRecipe) for Compile by Hisham Muhammad
+compile_version=017
+git=https://github.com/gobolinux/Compile
+tag=017
+recipe_type=makefile
+
+make_variables=(
+   VERSION=$version
+   DESTDIR=$target
+)
