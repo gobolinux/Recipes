@@ -1,0 +1,17 @@
+As of Lua5.4 'require' returns both the version number and a path to the 
+version file. Awesome's version function expects the builtin to only return 
+the version number. This patch chops off all extra returns and presents it
+as though it only returned 1 value. 
+
+--- ../common/version.c.orig	2024-05-02 18:29:54.116685697 -0400
++++ ../common/version.c	2024-05-02 18:59:59.483356091 -0400
+@@ -48,7 +48,9 @@
+         lua_pop(L, 1);
+ 
+     /* Either push version number or error message onto stack */
++    int top = lua_gettop(L);
+     (void) luaL_dostring(L, "return require('lgi.version')");
++    lua_pop(L, lua_gettop(L) - top - 1);
+ 
+ #ifdef WITH_DBUS
+     const char *has_dbus = "yes";
