@@ -1,0 +1,21 @@
+# Recipe for version 2.9.9 by Nuc1eoN, on Tue 07 May 2024 01:12:20 AM CEST
+# Recipe (MakeRecipe) for Fuse by roko, <ro.ko@mcnon.com>, on Wed Mar 23 22:07:09 CET 2005
+compile_version=1.8.2
+url="https://github.com/libfuse/libfuse/releases/download/fuse-2.9.9/fuse-2.9.9.tar.gz"
+file_size=1813177
+file_md5=8000410aadc9231fd48495f7642f3312
+recipe_type=configure
+
+install_variables=(
+    prefix="${goboPrograms}/Fuse/2.9.9"
+    mandir="${goboPrograms}/Fuse/2.9.9/share/man"
+    INIT_D_PATH="$settings_target/init.d"
+    MOUNT_FUSE_PATH="${target}/sbin"
+)
+
+configure_options=(
+    MOUNT_FUSE_PATH=${target}/sbin
+    UDEV_RULES_PATH=$settings_target/udev/rules.d
+    --enable-lib
+    --enable-util
+)
