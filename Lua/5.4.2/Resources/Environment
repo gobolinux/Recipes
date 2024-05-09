@@ -7,10 +7,12 @@ $goboShared/lua/5.4/?.lua;\
 $goboShared/lua/5.4/?/init.lua;\
 $goboLibraries/lua/5.4/?.lua;\
 $goboLibraries/lua/5.4/?/init.lua;\
+$LUA_PATH_5_4\
 "
 
 export LUA_CPATH_5_4="\
 ./?.so;\
 $goboLibraries/lua/5.4/?.so;\
-$goboLibraries/lua/5.4/loadall.so\
+$goboLibraries/lua/5.4/loadall.so;\
+$LUA_CPATH_5_4\
 "
