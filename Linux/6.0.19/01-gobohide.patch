@@ -1,7 +1,7 @@
-diff -Nur linux-5.18.19.old/fs/gobohide.c linux-5.18.19/fs/gobohide.c
---- linux-5.18.19.old/fs/gobohide.c	1970-01-01 01:00:00.000000000 +0100
-+++ linux-5.18.19/fs/gobohide.c	2022-04-06 17:06:13.510241293 +0200
-@@ -0,0 +1,652 @@
+diff -Nur linux-6.0.19.old/fs/gobohide.c linux-6.0.19/fs/gobohide.c
+--- linux-6.0.19.old/fs/gobohide.c	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.0.19/fs/gobohide.c	2024-07-24 13:46:24.566711290 +0200
+@@ -0,0 +1,640 @@
 +/*
 + * Copyright (C) 2002-2020 GoboLinux.org
 + *
@@ -81,7 +81,6 @@ diff -Nur linux-5.18.19.old/fs/gobohide.c linux-5.18.19/fs/gobohide.c
 +#include <linux/magic.h>
 +#include <net/genetlink.h>
 +#include <asm/uaccess.h>
-+#include "overlayfs/ovl_entry.h"
 +#include "mount.h"
 +
 +static int gobohide_inode_list_count;
@@ -388,13 +387,6 @@ diff -Nur linux-5.18.19.old/fs/gobohide.c linux-5.18.19/fs/gobohide.c
 +	return hiddenlist;
 +}
 +
-+/* From overlayfs/util.c */
-+struct dentry *overlay_dentry_lower(struct dentry *dentry)
-+{
-+	struct ovl_entry *oe = dentry->d_fsdata;
-+	return oe->numlower ? oe->lowerstack[0].dentry : NULL;
-+}
-+
 +/**
 + * gobohide_add - Add the inode to the "must hide" list
 + * @ino: inode to be added
@@ -435,11 +427,7 @@ diff -Nur linux-5.18.19.old/fs/gobohide.c linux-5.18.19/fs/gobohide.c
 +		ret = -ENOENT;
 +		goto out_free_page;
 +	}
-+	if (dentry->d_sb->s_magic == OVERLAYFS_SUPER_MAGIC) {
-+		lower = overlay_dentry_lower(dentry);
-+		entry->i_ino = d_inode(lower)->i_ino;
-+	} else
-+		entry->i_ino = d_inode(dentry)->i_ino;
++	entry->i_ino = d_inode(dentry)->i_ino;
 +
 +	pr_debug("gobohide_add(%ld): real_ino=%ld lower=%ld\n",
 +			ino, entry->i_ino, lower ? d_inode(lower)->i_ino : 0);
@@ -654,9 +642,9 @@ diff -Nur linux-5.18.19.old/fs/gobohide.c linux-5.18.19/fs/gobohide.c
 +EXPORT_SYMBOL(gobohide_get);
 +EXPORT_SYMBOL(gobohide_put);
 +EXPORT_SYMBOL(gobohide_remove);
-diff -Nur linux-5.18.19.old/fs/Kconfig linux-5.18.19/fs/Kconfig
---- linux-5.18.19.old/fs/Kconfig	2022-03-28 10:03:22.000000000 +0200
-+++ linux-5.18.19/fs/Kconfig	2022-04-06 17:06:13.510241293 +0200
+diff -Nur linux-6.0.19.old/fs/Kconfig linux-6.0.19/fs/Kconfig
+--- linux-6.0.19.old/fs/Kconfig	2023-01-12 12:00:49.000000000 +0100
++++ linux-6.0.19/fs/Kconfig	2024-07-24 13:46:24.566711290 +0200
 @@ -145,6 +145,16 @@
  endmenu
  endif # BLOCK
@@ -673,10 +661,10 @@ diff -Nur linux-5.18.19.old/fs/Kconfig linux-5.18.19/fs/Kconfig
 +
  if BLOCK
  menu "DOS/FAT/EXFAT/NT Filesystems"
-
-diff -Nur linux-5.18.19.old/fs/Makefile linux-5.18.19/fs/Makefile
---- linux-5.18.19.old/fs/Makefile	2022-08-21 15:18:56.000000000 +0200
-+++ linux-5.18.19/fs/Makefile	2024-04-06 15:34:56.836719041 +0200
+ 
+diff -Nur linux-6.0.19.old/fs/Makefile linux-6.0.19/fs/Makefile
+--- linux-6.0.19.old/fs/Makefile	2023-01-12 12:00:49.000000000 +0100
++++ linux-6.0.19/fs/Makefile	2024-07-24 13:46:24.566711290 +0200
 @@ -51,6 +51,7 @@
  obj-$(CONFIG_NFS_COMMON)	+= nfs_common/
  obj-$(CONFIG_COREDUMP)		+= coredump.o
@@ -685,10 +673,10 @@ diff -Nur linux-5.18.19.old/fs/Makefile linux-5.18.19/fs/Makefile
  
  obj-$(CONFIG_FHANDLE)		+= fhandle.o
  obj-y				+= iomap/
-diff -Nur linux-5.18.19.old/fs/namei.c linux-5.18.19/fs/namei.c
---- linux-5.18.19.old/fs/namei.c	2022-03-28 10:03:22.000000000 +0200
-+++ linux-5.18.19/fs/namei.c	2022-04-06 17:24:05.986951998 +0200
-@@ -36,6 +36,7 @@
+diff -Nur linux-6.0.19.old/fs/namei.c linux-6.0.19/fs/namei.c
+--- linux-6.0.19.old/fs/namei.c	2023-01-12 12:00:49.000000000 +0100
++++ linux-6.0.19/fs/namei.c	2024-07-24 13:46:24.566711290 +0200
+@@ -37,6 +37,7 @@
  #include <linux/fs_struct.h>
  #include <linux/posix_acl.h>
  #include <linux/hash.h>
@@ -696,7 +684,7 @@ diff -Nur linux-5.18.19.old/fs/namei.c linux-5.18.19/fs/namei.c
  #include <linux/bitops.h>
  #include <linux/init_task.h>
  #include <linux/uaccess.h>
-@@ -3996,6 +3997,8 @@
+@@ -4075,6 +4076,8 @@
  int vfs_rmdir(struct user_namespace *mnt_userns, struct inode *dir,
  		     struct dentry *dentry)
  {
@@ -705,7 +693,7 @@ diff -Nur linux-5.18.19.old/fs/namei.c linux-5.18.19/fs/namei.c
  	int error = may_delete(mnt_userns, dir, dentry, 1);
  
  	if (error)
-@@ -4020,6 +4023,10 @@
+@@ -4099,6 +4102,10 @@
  	if (error)
  		goto out;
  
@@ -716,7 +704,7 @@ diff -Nur linux-5.18.19.old/fs/namei.c linux-5.18.19/fs/namei.c
  	shrink_dcache_parent(dentry);
  	dentry->d_inode->i_flags |= S_DEAD;
  	dont_mount(dentry);
-@@ -4028,8 +4035,13 @@
+@@ -4107,8 +4114,13 @@
  out:
  	inode_unlock(dentry->d_inode);
  	dput(dentry);
@@ -731,7 +719,7 @@ diff -Nur linux-5.18.19.old/fs/namei.c linux-5.18.19/fs/namei.c
  	return error;
  }
  EXPORT_SYMBOL(vfs_rmdir);
-@@ -4127,6 +4139,7 @@
+@@ -4206,6 +4218,7 @@
  int vfs_unlink(struct user_namespace *mnt_userns, struct inode *dir,
  	       struct dentry *dentry, struct inode **delegated_inode)
  {
@@ -739,7 +727,7 @@ diff -Nur linux-5.18.19.old/fs/namei.c linux-5.18.19/fs/namei.c
  	struct inode *target = dentry->d_inode;
  	int error = may_delete(mnt_userns, dir, dentry, 0);
  
-@@ -4136,6 +4149,13 @@
+@@ -4215,6 +4228,13 @@
  	if (!dir->i_op->unlink)
  		return -EPERM;
  
@@ -753,7 +741,7 @@ diff -Nur linux-5.18.19.old/fs/namei.c linux-5.18.19/fs/namei.c
  	inode_lock(target);
  	if (IS_SWAPFILE(target))
  		error = -EPERM;
-@@ -4161,9 +4181,13 @@
+@@ -4240,9 +4260,13 @@
  	if (!error && dentry->d_flags & DCACHE_NFSFS_RENAMED) {
  		fsnotify_unlink(dir, dentry);
  	} else if (!error) {
@@ -767,7 +755,7 @@ diff -Nur linux-5.18.19.old/fs/namei.c linux-5.18.19/fs/namei.c
  
  	return error;
  }
-@@ -4284,6 +4308,7 @@
+@@ -4363,6 +4387,7 @@
  int vfs_symlink(struct user_namespace *mnt_userns, struct inode *dir,
  		struct dentry *dentry, const char *oldname)
  {
@@ -775,7 +763,7 @@ diff -Nur linux-5.18.19.old/fs/namei.c linux-5.18.19/fs/namei.c
  	int error = may_create(mnt_userns, dir, dentry);
  
  	if (error)
-@@ -4292,6 +4317,13 @@
+@@ -4371,6 +4396,13 @@
  	if (!dir->i_op->symlink)
  		return -EPERM;
  
@@ -789,9 +777,9 @@ diff -Nur linux-5.18.19.old/fs/namei.c linux-5.18.19/fs/namei.c
  	error = security_inode_symlink(dir, dentry, oldname);
  	if (error)
  		return error;
-diff -Nur linux-5.18.19.old/fs/readdir.c linux-5.18.19/fs/readdir.c
---- linux-5.18.19.old/fs/readdir.c	2022-08-21 15:18:56.000000000 +0200
-+++ linux-5.18.19/fs/readdir.c	2024-04-06 15:35:21.153386631 +0200
+diff -Nur linux-6.0.19.old/fs/readdir.c linux-6.0.19/fs/readdir.c
+--- linux-6.0.19.old/fs/readdir.c	2023-01-12 12:00:49.000000000 +0100
++++ linux-6.0.19/fs/readdir.c	2024-07-24 13:46:24.566711290 +0200
 @@ -21,6 +21,7 @@
  #include <linux/unistd.h>
  #include <linux/compat.h>
@@ -939,9 +927,9 @@ diff -Nur linux-5.18.19.old/fs/readdir.c linux-5.18.19/fs/readdir.c
  	error = iterate_dir(f.file, &buf.ctx);
  	if (error >= 0)
  		error = buf.error;
-diff -Nur linux-5.18.19.old/include/uapi/linux/gobohide.h linux-5.18.19/include/uapi/linux/gobohide.h
---- linux-5.18.19.old/include/uapi/linux/gobohide.h	1970-01-01 01:00:00.000000000 +0100
-+++ linux-5.18.19/include/uapi/linux/gobohide.h	2022-04-06 17:06:13.510241293 +0200
+diff -Nur linux-6.0.19.old/include/uapi/linux/gobohide.h linux-6.0.19/include/uapi/linux/gobohide.h
+--- linux-6.0.19.old/include/uapi/linux/gobohide.h	1970-01-01 01:00:00.000000000 +0100
++++ linux-6.0.19/include/uapi/linux/gobohide.h	2024-07-24 13:46:24.566711290 +0200
 @@ -0,0 +1,67 @@
 +#ifndef _LINUX_GOBOHIDE_H
 +#define _LINUX_GOBOHIDE_H
