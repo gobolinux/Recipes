@@ -4,7 +4,7 @@ compile_version=1.8.5
 url="http://xorg.freedesktop.org/archive/individual/proto/xproto-7.0.26.tar.bz2"
 file_size=305321
 file_md5=4dc2464bfeade23dab5de38da0f6b1b5
-part_of=Xorg-Proto
+part_of=XorgProto
 recipe_type=configure
 configure_options=(
 	--without-fop

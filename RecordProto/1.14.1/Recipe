@@ -4,7 +4,7 @@ compile_version=1.7.1
 url="http://xorg.freedesktop.org/archive/individual/proto/recordproto-1.14.1.tar.bz2"
 file_size=112238
 file_md5=24541a30b399213def35f48efd926c63
-part_of=Xorg-Proto
+part_of=XorgProto
 recipe_type=configure
 configure_options=(
 	--without-fop

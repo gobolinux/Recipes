@@ -4,7 +4,7 @@ compile_version=1.7.1
 url="http://xorg.freedesktop.org/archive/individual/proto/xextproto-7.3.0.tar.bz2"
 file_size=229310
 file_md5=70c90f313b4b0851758ef77b95019584
-part_of=Xorg-Proto
+part_of=XorgProto
 recipe_type=configure
 configure_options=(
 	--without-fop

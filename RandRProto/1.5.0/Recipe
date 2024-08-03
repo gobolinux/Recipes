@@ -4,7 +4,7 @@ compile_version=1.8.2
 url="http://xorg.freedesktop.org/archive/individual/proto/randrproto-1.5.0.tar.bz2"
 file_size=142168
 file_md5=a46765c8dcacb7114c821baf0df1e797
-part_of=Xorg-Proto
+part_of=XorgProto
 recipe_type=configure
 configure_options=(
 	--without-fop

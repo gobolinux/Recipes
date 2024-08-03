@@ -4,7 +4,7 @@ compile_version=1.7.1
 url="http://xorg.freedesktop.org/archive/individual/proto/bigreqsproto-1.1.1.tar.bz2"
 file_size=102069
 file_md5=6f6c24436c2b3ab235eb14a85b9aaacf
-part_of=Xorg-Proto
+part_of=XorgProto
 recipe_type=configure
 configure_options=(
 	--without-fop

@@ -4,7 +4,7 @@ compile_version=1.8.2
 url="http://xorg.freedesktop.org/archive/individual/proto/kbproto-1.0.7.tar.bz2"
 file_size=250178
 file_md5=94afc90c1f7bef4a27fdd59ece39c878
-part_of=Xorg-Proto
+part_of=XorgProto
 recipe_type=configure
 configure_options=(
 	--without-fop

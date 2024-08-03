@@ -4,7 +4,7 @@ compile_version=1.8.5
 url="http://xorg.freedesktop.org/releases/individual/proto/inputproto-2.0.1.tar.bz2"
 file_size=152547
 file_md5=da9bf9e5d174163f597d2d72757d9038
-part_of=Xorg-Proto
+part_of=XorgProto
 recipe_type=configure
 configure_options=(
 	--without-fop

@@ -4,7 +4,7 @@ compile_version=1.7.1
 url="http://xorg.freedesktop.org/archive/individual/proto/xcmiscproto-1.2.2.tar.bz2"
 file_size=112486
 file_md5=5f4847c78e41b801982c8a5e06365b24
-part_of=Xorg-Proto
+part_of=XorgProto
 recipe_type=configure
 configure_options=(
 	--without-fop

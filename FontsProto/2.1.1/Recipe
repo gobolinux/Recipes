@@ -4,7 +4,7 @@ compile_version=1.7.1
 url="http://xorg.freedesktop.org/archive/individual/proto/fontsproto-2.1.1.tar.bz2"
 file_size=131040
 file_md5=37102ffcaa73f77d700acd6f7a25d8f0
-part_of=Xorg-Proto
+part_of=XorgProto
 recipe_type=configure
 configure_options=(
 	--without-fop

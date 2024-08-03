@@ -4,7 +4,7 @@ compile_version=1.8.5
 url="http://xorg.freedesktop.org/archive/individual/proto/renderproto-0.11.1.tar.bz2"
 file_size=105741
 file_md5=a914ccc1de66ddeb4b611c6b0686e274
-part_of=Xorg-Proto
+part_of=XorgProto
 recipe_type=configure
 configure_options=(
 	--without-fop

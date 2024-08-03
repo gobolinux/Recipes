@@ -4,7 +4,7 @@ compile_version=1.7.1
 url="http://xorg.freedesktop.org/archive/individual/proto/videoproto-2.3.1.tar.bz2"
 file_size=100391
 file_md5=c3b348c6e2031b72b11ae63fc7f805c2
-part_of=Xorg-Proto
+part_of=XorgProto
 recipe_type=configure
 configure_options=(
 	--without-fop
