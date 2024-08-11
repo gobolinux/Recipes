@@ -1,0 +1,21 @@
+Do not produce a bad output if system() sets errno.
+
+For some reason this seems necessary on my machine,
+otherwise `os.execute()` is triggering the wrong results,
+caused by `system()` setting `errno`. This might have
+to do with my updated build of Glibc. In any case this
+patch should be harmless.
+
+diff -Nur lua-5.4.7.old/src/loslib.c lua-5.4.7/src/loslib.c
+--- lua-5.4.7.old/src/loslib.c	2024-06-13 19:15:09.000000000 -0300
++++ lua-5.4.7/src/loslib.c	2024-08-10 22:14:04.164723189 -0300
+@@ -142,8 +142,8 @@
+ static int os_execute (lua_State *L) {
+   const char *cmd = luaL_optstring(L, 1, NULL);
+   int stat;
+-  errno = 0;
+   stat = l_system(cmd);
++  errno = 0;
+   if (cmd != NULL)
+     return luaL_execresult(L, stat);
+   else {
