@@ -1,0 +1,14 @@
+Add -fPIC and -lpthread (see http://lua-users.org/lists/lua-l/2015-04/msg00010.html)
+
+diff -Nur lua-5.4.2.old/src/Makefile lua-5.4.2/src/Makefile
+--- lua-5.4.2.old/src/Makefile	2015-01-05 14:04:52.000000000 -0200
++++ lua-5.4.2/src/Makefile	2015-04-04 15:21:07.841376633 -0300
+@@ -121,7 +121,7 @@
+ 	$(MAKE) $(ALL) SYSCFLAGS="-DLUA_USE_LINUX" SYSLIBS="-Wl,-E -ldl"
+ 
+ linux-readline:
+-	$(MAKE) $(ALL) SYSCFLAGS="-DLUA_USE_LINUX -DLUA_USE_READLINE" SYSLIBS="-Wl,-E -ldl -lreadline"
++	$(MAKE) $(ALL) SYSCFLAGS="-DLUA_USE_LINUX -DLUA_USE_READLINE -fPIC" SYSLIBS="-Wl,-E -ldl -lreadline -lpthread"
+ 
+ Darwin macos macosx:
+ 	$(MAKE) $(ALL) SYSCFLAGS="-DLUA_USE_MACOSX -DLUA_USE_READLINE" SYSLIBS="-lreadline"
