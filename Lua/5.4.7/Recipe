@@ -1,0 +1,48 @@
+# Recipe for version 5.4.7 by Hisham Muhammad <hisham@gobolinux.org>, on Sat Aug 10 08:57:56 PM -03 2024
+compile_version=1.10.2
+url=http://www.lua.org/ftp/lua-5.4.7.tar.gz
+file_size=374097
+file_md5=fc3f3291353bbe6ee6dec85ee61331e8
+recipe_type=makefile
+build_target=linux-readline
+
+docs=(
+  "doc/*.html"
+)
+
+make_variables=(
+  INSTALL_TOP=$target
+  INSTALL_MAN=$target/share/man/man1
+)
+
+pre_link() {
+mkdir -p $target/include/lua/5.4
+ln -nfs $target/include/*.* $target/include/lua/5.4
+
+ln -nfs $target/bin/lua $target/bin/lua54
+
+mkdir -p $target/lib/pkgconfig
+cat << "EOF" > $target/lib/pkgconfig/lua-5.4.pc
+V=5.4
+R=5.4.7
+
+prefix=/usr
+INSTALL_BIN=${prefix}/bin
+INSTALL_INC=${prefix}/include
+INSTALL_LIB=${prefix}/lib
+INSTALL_MAN=${prefix}/share/man/man1
+INSTALL_LMOD=${prefix}/share/lua/${V}
+INSTALL_CMOD=${prefix}/lib/lua/${V}
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: Lua
+Description: An Extensible Extension Language
+Version: ${R}
+Requires:
+Libs: ${libdir}/liblua.so.${V} -lm -ldl
+Cflags: -I${includedir}
+EOF
+ln -nfs $target/lib/pkgconfig/lua-5.4.pc $target/lib/pkgconfig/lua.pc
+}
