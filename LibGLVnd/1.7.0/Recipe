@@ -1,0 +1,11 @@
+# Recipe for version 1.7.0 by Nuc1eoN, on Sun 04 Aug 2024 04:21:28 AM CEST
+# Recipe (MakeRecipe) for LibGLVnd by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun 09 Feb 2020 07:44:32 PM BRST
+compile_version=016
+url="https://gitlab.freedesktop.org/glvnd/libglvnd/-/archive/v1.7.0/libglvnd-v1.7.0.tar.bz2"
+file_size=572931
+file_md5=319a57895d308e0e923ae5340a4e786a
+dir='libglvnd-v1.7.0'
+recipe_type=meson
+meson_variables=(
+	-Dgles1=false
+)
