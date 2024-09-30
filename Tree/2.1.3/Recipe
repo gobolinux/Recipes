@@ -1,0 +1,12 @@
+# Recipe for version 2.1.3 by Nuc1eoN, on Tue 01 Oct 2024 12:48:49 AM CEST
+# Recipe (MakeRecipe) for Tree by Nuc1eoN, on Sun 26 Sep 2021 07:03:48 PM CEST
+compile_version=017-GIT
+url="https://gitlab.com/OldManProgrammer/unix-tree/-/archive/2.1.3/unix-tree-2.1.3.tar.bz2"
+file_size=53418
+file_md5=9be227932ab457c29f33196544cd1e13
+dir='unix-tree-2.1.3'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+)
