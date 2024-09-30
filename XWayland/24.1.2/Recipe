@@ -1,0 +1,12 @@
+# Recipe for version 24.1.2 by Nuc1eoN, on Tue 01 Oct 2024 01:16:00 AM CEST
+# Recipe (MakeRecipe) for XWayland by Nuc1eoN, on Sun 13 Feb 2022 08:33:36 PM CET
+compile_version=017-GIT
+url="https://xorg.freedesktop.org/archive/individual/xserver/xwayland-24.1.2.tar.xz"
+file_size=1302068
+file_md5=312c5cf17d1b147df1b787fd170958e1
+dir='xwayland-24.1.2'
+recipe_type=meson
+meson_variables=(
+	-Ddri3=true
+	-Dglamor=true
+)
