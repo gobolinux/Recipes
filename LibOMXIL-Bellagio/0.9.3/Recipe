@@ -8,11 +8,18 @@ file="libomxil-bellagio-0.9.3.tar.gz"
 dir='libomxil-bellagio-0.9.3'
 recipe_type=configure
 
+configure_options=(
+    --disable-static
+)
+
 make_variables=(
     CFLAGS=-Wno-error=array-bounds
+    CFLAGS+=' -fcommon' # https://wiki.gentoo.org/wiki/Gcc_10_porting_notes/fno_common
 )
 
 pre_build()
 {
+    # Fix from fedora repo
+    sed -e 's/-Werror//' -i configure.ac
     autoreconf -i
 }
