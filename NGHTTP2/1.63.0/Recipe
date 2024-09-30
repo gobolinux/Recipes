@@ -1,0 +1,13 @@
+# Recipe for version 1.63.0 by Nuc1eoN, on Tue 01 Oct 2024 01:09:28 AM CEST
+# Recipe (MakeRecipe) for NGHTTP2 by Hisham Muhammad <hisham@gobolinux.org>, on Wed Jan 16 14:35:51 -02 2019
+compile_version=016.01
+url="https://github.com/nghttp2/nghttp2/releases/download/v1.63.0/nghttp2-1.63.0.tar.xz"
+file_size=1606480
+file_md5=15dd1a9e72fc1cd6000a88bced26552c
+dir='nghttp2-1.63.0'
+recipe_type=configure
+configure_options=(
+	--disable-static
+	--enable-lib-only
+	--disable-examples
+)
