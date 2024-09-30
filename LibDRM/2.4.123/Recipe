@@ -1,0 +1,16 @@
+# Recipe for version 2.4.123 by Nuc1eoN, on Tue 01 Oct 2024 01:04:11 AM CEST
+# Recipe (MakeRecipe) for LibDRM by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Jan 9 17:56:36 BRST 2.4.1236
+compile_version=2.0
+url="https://dri.freedesktop.org/libdrm/libdrm-2.4.123.tar.xz"
+file_size=481112
+file_md5=322f5ffe2d3adc2f6ecaab52ae64ba4a
+recipe_type=meson
+symlink_options=(--conflict=overwrite)
+meson_variables=(
+	--buildtype=release
+	-Dudev=true
+	-Dvalgrind=disabled
+)
+#with_udev=(
+#	-Dudev=true
+#)
