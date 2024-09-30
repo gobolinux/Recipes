@@ -1,0 +1,37 @@
+# Recipe for version 19.1.0 by Nuc1eoN, on Sat 28 Sep 2024 02:07:18 AM CEST
+# Recipe (MakeRecipe) for Clang by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Oct 30 01:00:53 -03 2019
+compile_version=017-GIT
+urls=(
+	"https://github.com/llvm/llvm-project/releases/download/llvmorg-19.1.0/clang-19.1.0.src.tar.xz"
+	"https://github.com/llvm/llvm-project/releases/download/llvmorg-19.1.0/clang-tools-extra-19.1.0.src.tar.xz"
+	"https://github.com/llvm/llvm-project/releases/download/llvmorg-19.1.0/llvm-19.1.0.src.tar.xz"
+	"https://github.com/llvm/llvm-project/releases/download/llvmorg-19.1.0/cmake-19.1.0.src.tar.xz"
+	"https://github.com/llvm/llvm-project/releases/download/llvmorg-19.1.0/third-party-19.1.0.src.tar.xz"
+)
+#unpack_files=inside_first
+file_size=23507412
+file_md5=46d7125d9660a4d891ebb268dec183b6
+dir='clang-19.1.0.src'
+recipe_type=cmake
+
+pre_build() {
+	rm -rf $compileSourcesDir/{cmake,third-party}
+	rename -v -- "-19.1.0.src" '' $compileSourcesDir/{cmake,third-party}-19.1.0.src
+	mv "$compileSourcesDir/clang-tools-extra-19.1.0.src" ../tools/extra
+}
+
+cmake_options=(
+   -DLLVM_MAIN_SRC_DIR="$compileSourcesDir/llvm-19.1.0.src"
+   -DCMAKE_BUILD_TYPE=Release
+   -DCMAKE_INSTALL_PREFIX=$target
+   -DCLANG_VENDOR=GoboLinux
+   -DCLANG_PYTHON_BINDINGS_VERSIONS=$(python3 --version | awk {'print $2'} | cut -d. -f1-2)
+   -DLLVM_TARGETS_TO_BUILD="AMDGPU;BPF;NVPTX;X86"
+   -DLLVM_EXTERNAL_LIT=$goboExecutables/lit
+   -DLLVM_BUILD_DOCS=OFF
+   -DLLVM_ENABLE_SPHINX=OFF
+   -DLLVM_ENABLE_EH=ON
+   -DLLVM_ENABLE_RTTI=ON
+   -DLLVM_BUILD_TESTS=ON
+   -DLLVM_INCLUDE_TESTS=OFF
+)
