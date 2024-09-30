@@ -1,0 +1,36 @@
+# Recipe for version 19.1.0 by Nuc1eoN, on Sat 28 Sep 2024 12:23:58 AM CEST
+# Recipe (MakeRecipe) for LLVM by Ivan Florentin <ivanflorentin@gmail.com>, on Fri Dec 23 10:55:21 PYST 2016
+compile_version=017
+urls=(
+	https://github.com/llvm/llvm-project/releases/download/llvmorg-19.1.0/llvm-19.1.0.src.tar.xz
+	https://anduin.linuxfromscratch.org/BLFS/llvm/llvm-cmake-19.src.tar.xz
+	https://anduin.linuxfromscratch.org/BLFS/llvm/llvm-third-party-19.src.tar.xz
+)
+dir="llvm-19.1.0.src"
+file_size=67815252
+file_md5=6ceb42e02d8db10a8a97464f34912e22
+recipe_type=cmake
+
+pre_build() {
+	sed '/LLVM_COMMON_CMAKE_UTILS/s@../cmake@../llvm-cmake-19.src@' -i ../CMakeLists.txt
+	sed '/LLVM_THIRD_PARTY_DIR/s@../third-party@../llvm-third-party-19.src@' -i ../cmake/modules/HandleLLVMOptions.cmake
+}
+
+cmake_options=(
+    -DCMAKE_BUILD_TYPE=Release
+    -DLLVM_TARGETS_TO_BUILD="host;AMDGPU;BPF"
+    -DCMAKE_INSTALL_PREFIX=$goboIndex
+    -DLLVM_BUILD_LLVM_DYLIB=ON
+    -DLLVM_LINK_LLVM_DYLIB=ON
+    -DLLVM_INSTALL_UTILS=ON
+    -DLLVM_ENABLE_RTTI=ON
+    -DLLVM_ENABLE_FFI=ON
+    -DLLVM_INCLUDE_BENCHMARKS=OFF
+    -DLLVM_INCLUDE_TESTS=OFF
+    -DLLVM_BUILD_DOCS=OFF
+    -DLLVM_ENABLE_DOXYGEN=OFF
+    -DSPHINX_WARNINGS_AS_ERRORS=OFF
+    -DFFI_INCLUDE_DIR=$(pkg-config --variable=includedir libffi)
+    -DLLVM_BINUTILS_INCDIR=$goboIndex/include
+    -DPYTHON_EXECUTABLE=$goboExecutables/python3
+)
