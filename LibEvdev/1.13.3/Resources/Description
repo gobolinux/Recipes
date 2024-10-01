@@ -1,0 +1,5 @@
+[Name] LibEvdev
+[Summary] Wrapper library for evdev devices
+[Description] libevdev is a wrapper library for evdev devices. it moves the common tasks when dealing with evdev devices into a library and provides a library interface to the callers, thus avoiding erroneous ioctls, etc.
+[License] MIT
+[Homepage] https://www.freedesktop.org/wiki/Software/libevdev/

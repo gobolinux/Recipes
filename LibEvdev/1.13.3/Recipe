@@ -1,0 +1,12 @@
+# Recipe for version 1.13.3 by Nuc1eoN, on Tue 01 Oct 2024 01:46:51 PM CEST
+# Recipe (MakeRecipe) for LibEvdev by Nuc1eoN, on Sun 13 Feb 2022 04:41:59 AM CET
+compile_version=017-GIT
+url="https://www.freedesktop.org/software/libevdev/libevdev-1.13.3.tar.xz"
+file_size=460660
+file_md5=57ee77b7d4c480747e693779bb92fb84
+dir='libevdev-1.13.3'
+recipe_type=meson
+meson_variables=(
+	-Ddocumentation=disabled
+	-Dtests=disabled
+)
