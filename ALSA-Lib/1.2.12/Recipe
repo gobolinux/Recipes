@@ -1,0 +1,10 @@
+# Recipe for version 1.2.12 by Nuc1eoN, on Tue 01 Oct 2024 01:47:49 AM CEST
+# Recipe (MakeRecipe) for ALSA-Lib by Peter Eriksen <s022018@student.dtu.dk>, on Sat Jan 15 15:28:29 CET 2005
+compile_version=2.0
+url="ftp://ftp.alsa-project.org/pub/lib/alsa-lib-1.2.12.tar.bz2"
+file_size=1108712
+file_md5=97bbf3cca911c1701fe9fe115c32b03d
+recipe_type=configure
+configure_options=(
+    --enable-symbolic-functions
+)
