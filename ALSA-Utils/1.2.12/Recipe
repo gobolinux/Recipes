@@ -1,0 +1,18 @@
+# Recipe for version 1.2.122 by Nuc1eoN, on Tue 01 Oct 2024 01:53:13 AM CEST
+# Recipe (MakeRecipe) for ALSA-Utils by Peter Eriksen <s022018@student.dtu.dk>, on Sat Jan 15 15:34:38 CET 2005
+compile_version=2.0
+url="ftp://ftp.alsa-project.org/pub/utils/alsa-utils-1.2.12.tar.bz2"
+file_size=1631895
+file_md5=80b71081f0bd2bb688e2f04311f142c5
+recipe_type=configure
+
+configure_options=(
+    --disable-xmlto
+    --with-udev-rules-dir="$target/lib/udev/rules.d"
+    --with-asound-state-dir="$goboVariable/lib/alsa"
+    --with-alsactl-pidfile-dir="$goboVariable/run"
+)
+
+unmanaged_files=(
+   $goboVariable/lib/alsa
+)
