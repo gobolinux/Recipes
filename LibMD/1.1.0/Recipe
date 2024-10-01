@@ -1,0 +1,10 @@
+# Recipe for version 1.1.0 by nuc1eon
+# Recipe (MakeRecipe) for LibMD by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Feb 24 22:15:10 BRT 2016
+compile_version=2.0
+url="https://libbsd.freedesktop.org/releases/libmd-1.1.0.tar.xz"
+file_size=271228
+file_md5=b2a0650c78d92c7a9632a2a3cdd4f6a6
+recipe_type=configure
+dir=libmd-1.1.0
+autogen_before_configure=yes
+autogen=autogen
