@@ -1,0 +1,11 @@
+# Recipe for version 6.0.19 by Nuc1eoN, on Wed 02 Oct 2024 07:12:32 PM CEST
+compile_version=1.12.0
+url="https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.0.19.tar.xz"
+file_size=133963104
+file_md5=fb8f9f396e6415cfcd81c69eba3c42be
+recipe_type=makefile
+do_build=no
+install_target="headers_install"
+install_variables=(
+    "INSTALL_HDR_PATH=$target"
+)
