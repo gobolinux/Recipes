@@ -1,0 +1,14 @@
+# Recipe for version 10.0.1 by Nuc1eoN, on Wed 02 Oct 2024 04:12:11 PM CEST
+# Recipe (MakeRecipe) for HarfBuzz by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri Oct 26 23:44:47 BRST 2012
+compile_version=2.0
+url="https://github.com/harfbuzz/harfbuzz/releases/download/10.0.1/harfbuzz-10.0.1.tar.xz"
+file_size=17914712
+file_md5=295b211a0c6c0e5a07278ceee894ef68
+recipe_type=meson
+
+meson_variables=(
+	--buildtype=release
+	-D cpp_std=c++17
+	-D graphite2=enabled
+	-D docs=disabled
+)
