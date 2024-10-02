@@ -1,0 +1,19 @@
+# Recipe for version 8.2 by Nuc1eoN, on Wed 02 Oct 2024 09:36:18 PM CEST
+# Recipe (MakeRecipe) for Nano by Laurent Pelecq (laurent.pelecq at soleil.org), on dim mar 26 15:32:24 CEST 2006
+compile_version=1.8.2
+url="http://mirror.ibcp.fr/pub/gnu/nano/nano-8.2.tar.gz"
+file_size=3499959
+file_md5=bef78efef71f7a0902084cc23c75579c
+recipe_type=configure
+
+docs=(
+  "doc/nanorc.sample"
+)
+
+configure_options=(
+#  "--with-slang"
+   "--enable-color"
+   "--enable-multibuffer"
+   "--enable-nanorc"
+   "--enable-utf8"
+)
