@@ -1,0 +1,19 @@
+# Recipe for version 2.13.4 by Nuc1eoN, on Wed 02 Oct 2024 08:27:36 PM CEST
+# Recipe (MakeRecipe) for LibXML2 by roko, <ro.ko@mcnon.com>, on Sat Dec 25 22:27:16 BRST 2004
+compile_version=1.8.0
+url="https://gitlab.gnome.org/GNOME/libxml2/-/archive/v2.13.4/libxml2-v2.13.4.tar.bz2"
+file_size=2840670
+file_md5=74994175005215d92b9fa026162048d8
+recipe_type=configure
+autogen_before_configure=yes
+configure_options=(
+	--disable-static
+	--with-history
+	--with-icu
+	--with-legacy
+	--with-threads
+)
+
+pre_link() {
+   mv $target/bin/xmlcatalog $target/bin/real_xmlcatalog
+}
