@@ -1,0 +1,14 @@
+# Recipe for version 0.22.5 by Nuc1eoN, on Wed 02 Oct 2024 04:45:49 PM CEST
+compile_version=1.12.4
+url="https://ftp.gnu.org/pub/gnu/gettext/gettext-0.22.5.tar.gz"
+file_size=26861674
+file_md5=1245c87cfa0b123f55540681af396880
+recipe_type=configure
+configure_options=(
+   --disable-static
+   --with-xz
+   --without-included-gettext
+   --disable-java
+   --with-included-glib
+   --with-included-libcroco
+)
