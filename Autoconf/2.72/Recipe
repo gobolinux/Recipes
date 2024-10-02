@@ -1,0 +1,9 @@
+# Recipe for version 2.72 by Nuc1eoN, on Tue 01 Oct 2024 12:53:53 PM CEST
+compile_version=1.10.2
+url="https://ftp.gnu.org/gnu/autoconf/autoconf-2.72.tar.gz"
+recipe_type=configure
+#########      README       ####################
+# Install barfs on existing files enter this as root and try again
+#    rm -v /usr/share/autoconf
+# you may need to allow Compile to remove a file in Programs too
+###################################################
