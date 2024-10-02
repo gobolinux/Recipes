@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for LibPtytty by Nuc1eoN, on Tue 01 Oct 2024 01:21:18 PM CEST
+# Recipe for version 2.0 by Nuc1eoN, on Tue 01 Oct 2024 01:21:18 PM CEST
+compile_version=017-GIT
+url="http://dist.schmorp.de/libptytty/libptytty-2.0.tar.gz"
+file_size=45673
+file_md5=2a7f3f3c0d3ef71902da745dc7959529
+dir='libptytty-2.0'
+recipe_type=cmake
+cmake_options=(
+	-DBUILD_SHARED_LIBS=ON
+)
