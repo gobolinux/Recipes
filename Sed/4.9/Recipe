@@ -1,0 +1,13 @@
+# Recipe for version 4.9 by Nuc1eoN, on Wed 02 Oct 2024 06:35:42 PM CEST
+# by Michael Homer
+# 2004.01.28 04:31
+
+url="https://ftp.gnu.org/gnu/sed/sed-4.9.tar.xz"
+file_size=1397092
+file_md5=6aac9b2dbafcd5b7a67a8a9bcb8036c3
+compile_version=1.12.0
+recipe_type=configure
+with_doc=(
+   --enable-html
+)
+
