@@ -1,0 +1,17 @@
+# Recipe for version 1.17 by Nuc1eoN, on Wed 02 Oct 2024 06:33:01 PM CEST
+url="https://ftp.gnu.org/gnu/automake/automake-1.17.tar.gz"
+file_size=2451070
+file_md5=f908133b080073f3907389f0f73d76f4
+compile_version=git
+recipe_type=configure
+
+#configure_options=(
+#  --prefix=$target
+#)
+
+#pre_install() {
+#   pushd "${target}/share"
+#   ln -s automake-1.16 automake
+#   ln -s aclocal-1.16 aclocal
+#   popd
+#}
