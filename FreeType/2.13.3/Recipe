@@ -1,0 +1,21 @@
+# Recipe for version 2.13.3 by Nuc1eoN, on Wed 02 Oct 2024 04:34:07 PM CEST
+# by Giusepe Casagrande, Jeremy Vernon
+url="https://downloads.sourceforge.net/freetype/freetype-2.13.3.tar.xz"
+file_size=2617564
+file_md5=f3b4432c4212064c00500e1ad63fbc64
+compile_version=2.0
+recipe_type=configure
+
+# XFree86 also has a FreeType; We want this one to be the dominant FreeType
+symlink_options=(
+   "--conflict=overwrite"
+)
+
+make_variables=(
+	C_INCLUDE_PATH=
+)
+
+pre_link() {
+	cd $target/include
+	ln -s freetype2 freetype
+}
