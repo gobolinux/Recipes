@@ -1,0 +1,15 @@
+# Recipe for version 1.0.27 by Nuc1eoN, on Fri 04 Oct 2024 07:53:20 PM CEST
+url="https://github.com/libusb/libusb/releases/download/v1.0.27/libusb-1.0.27.tar.bz2"
+file_size=643680
+file_md5=1fb61afe370e94f902a67e03eb39c51f
+compile_version=1.8.0
+recipe_type=configure
+
+pre_build=(
+	# prevent excessive overlinking due to libtool (taken from Arch repo)
+	sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+)
+
+configure_options=(
+	--disable-static
+)
