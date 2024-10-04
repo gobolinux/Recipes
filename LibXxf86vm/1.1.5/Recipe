@@ -1,0 +1,12 @@
+# Recipe for version 1.1.5 by Nuc1eoN, on Fri 04 Oct 2024 11:13:51 PM CEST
+# Recipe (MakeRecipe) for LibXxf86vm by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 19:45:17 BRT 2005
+compile_version=1.8.5
+url="http://xorg.freedesktop.org/releases/individual/lib/libXxf86vm-1.1.5.tar.xz"
+file_size=265384
+file_md5=5b913dac587f2de17a02e17f9a44a75f
+recipe_type=configure
+part_of=Xorg-Lib
+
+configure_options=(
+	--disable-static
+)
