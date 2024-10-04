@@ -1,0 +1,10 @@
+# Recipe for version 1.8.1 by Nuc1eoN, on Fri 04 Oct 2024 06:04:43 AM CEST
+compile_version=1.8.20.0
+url="https://github.com/libunwind/libunwind/releases/download/v1.8.1/libunwind-1.8.1.tar.gz"
+file_size=958468
+file_md5=10c96118ff30b88c9eeb6eac8e75599d
+recipe_type=configure
+
+environment=(
+    CFLAGS="-fPIC"
+)
