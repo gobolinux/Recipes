@@ -1,0 +1,16 @@
+Fix destination of terminfo entries to avoid files at /Users/root/.terminfo
+
+diff -Nur rxvt-unicode-9.31.old/doc/Makefile.in rxvt-unicode-9.31/doc/Makefile.in
+--- rxvt-unicode-9.31.old/doc/Makefile.in	2022-12-29 02:31:09.000000000 +0100
++++ rxvt-unicode-9.31/doc/Makefile.in	2024-10-01 13:12:59.069967651 +0200
+@@ -100,8 +100,8 @@
+ 	$(INSTALL_DATA) rxvtd.1.man   $(DESTDIR)$(man1dir)/$(RXVTNAME)d.$(man1ext)
+ 	$(INSTALL_DATA) rxvt.7.man    $(DESTDIR)$(man7dir)/$(RXVTNAME).$(man7ext)
+ 	$(INSTALL_DATA) rclock.1.man  $(DESTDIR)$(man1dir)/urclock.$(man1ext)
+-	@TIC@ -x $(srcdir)/etc/rxvt-unicode.terminfo || \
+-           @TIC@ $(srcdir)/etc/rxvt-unicode.terminfo
++	@TIC@ -x -o $(DESTDIR)$(prefix)/share/terminfo $(srcdir)/etc/rxvt-unicode.terminfo || \
++           @TIC@ -o $(DESTDIR)$(prefix)/share/terminfo $(srcdir)/etc/rxvt-unicode.terminfo
+ 
+ distdepend: alldoc
+ 

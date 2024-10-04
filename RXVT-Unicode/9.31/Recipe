@@ -1,0 +1,24 @@
+# Recipe for version 9.31 by Nuc1eoN, on Tue 01 Oct 2024 12:56:02 PM CEST
+# Recipe (MakeRecipe) for RXVT-Unicode by Isaac Dupree <id@isaac.cedarswampstudios.org>, on Sun Jul 22 19.31:17 BRT 2007
+compile_version=1.9.0
+url="http://dist.schmorp.de/rxvt-unicode/rxvt-unicode-9.31.tar.bz2"
+file_size=880148
+file_md5=3d0ec83705c9b9ff301a4b9965b3cd9f
+mirror_url="http://dist.schmorp.de/rxvt-unicode/Attic/rxvt-unicode-9.31.tar.bz2"
+autogen_before_configure=yes
+recipe_type=configure
+configure_options=(
+   --enable-frills
+   --enable-unicode3
+   --enable-xft
+   --enable-fading
+   --enable-256-color
+   --enable-pixel-resize
+   --with-terminfo="$target/share/terminfo"
+)
+pre_build () {
+   mkdir -p "$target/lib/urxvt"
+}
+with_perl=(
+   --enable-perl
+)
