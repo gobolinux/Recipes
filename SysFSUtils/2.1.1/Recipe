@@ -1,0 +1,15 @@
+# Recipe for version 2.1.1 by Nuc1eoN, on Fri 04 Oct 2024 07:39:09 PM CEST
+# Recipe (MakeRecipe) for SysFSUtils by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Mon Nov 22 19:57:37 BRST 2004
+compile_version=1.8.2
+url="https://github.com/linux-ras/sysfsutils/archive/refs/tags/v2.1.1.tar.gz"
+dir='sysfsutils-2.1.1'
+file_size=78823
+file_md5=537c110be7244905997262854505c30f
+autogen_before_configure=yes
+autogen='autogen'
+recipe_type=configure
+
+make_variables=(
+    includedir=$target/include/sysfs
+    oldincludedir=$target/include
+)
