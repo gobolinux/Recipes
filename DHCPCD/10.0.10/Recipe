@@ -1,0 +1,22 @@
+# Recipe for version 10.0.10 by Nuc1eoN, on Fri 04 Oct 2024 07:08:13 AM CEST
+compile_version=2.0
+url="https://github.com/NetworkConfiguration/dhcpcd/releases/download/v10.0.10/dhcpcd-10.0.10.tar.xz"
+file_size=272732
+file_md5=0a1a9a9f84892af923ec7b273f9af227
+recipe_type=configure
+configure_options=(
+   --dbdir="${goboVariable}/lib/dhcpcd"
+   --rundir="${goboVariable}/run"
+   --mandir="${target}/share/man"
+)
+install_variables=(
+   SYSCONFDIR="${settings_target}"
+   SBINDIR="${target}/sbin"
+   LIBDIR="${target}/lib"
+   MANDIR="${target}/share/man"
+   LIBEXECDIR="${target}/lib/dhcpcd"
+)
+unmanaged_files=(
+   "${goboVariable}/lib/dhcpcd"
+   "${goboVariable}/run"
+)
