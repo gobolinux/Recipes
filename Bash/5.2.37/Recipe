@@ -1,0 +1,16 @@
+# Recipe for version 5.2.37 by Nuc1eoN, on Fri 04 Oct 2024 06:14:08 PM CEST
+url="http://ftp.gnu.org/gnu/bash/bash-5.2.37.tar.gz"
+file_size=11128314
+file_md5=9c28f21ff65de72ca329c1779684a972
+
+recipe_type=configure
+compile_version=1.13.2
+
+configure_options=(
+    --with-installed-readline
+    --without-bash-malloc
+)
+
+pre_link() {
+    ln -s bash ${target}/bin/sh
+}
