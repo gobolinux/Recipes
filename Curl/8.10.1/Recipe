@@ -1,0 +1,15 @@
+# Recipe for version 8.10.1 by Nuc1eoN, on Fri 04 Oct 2024 05:11:37 AM CEST
+# Recipe (MakeRecipe) for Curl by Hisham Muhammad <hisham@gobolinux.org>, on Tue Feb 27 09:47:54 BRT 2018
+compile_version=016.01
+url="https://curl.haxx.se/download/curl-8.10.1.tar.bz2"
+file_size=3184844
+file_md5=434f0dc1c5cc7a0486fa2461a1f1928f
+dir='curl-8.10.1'
+recipe_type=configure
+configure_options=(
+	--disable-static
+	--with-openssl
+	--enable-threaded-resolver
+	--with-libssh2
+	--with-ca-path=$goboSettings/ssl/certs
+)
