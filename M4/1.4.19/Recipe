@@ -1,0 +1,9 @@
+# Recipe for version 1.4.19 by Nuc1eoN, on Thu 03 Oct 2024 02:24:08 PM CEST
+compile_version=1.10.2
+url="http://ftp.gnu.org/gnu/m4/m4-1.4.19.tar.xz"
+file_size=1654908
+file_md5=0d90823e1426f1da2fd872df0311298d
+recipe_type=configure
+configure_options=(
+   "--enable-changeword"
+)
