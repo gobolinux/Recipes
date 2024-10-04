@@ -1,0 +1,23 @@
+# Recipe for version 2.03.27 by Nuc1eoN, on Fri 04 Oct 2024 05:38:32 AM CEST
+# Recipe (MakeRecipe) for LVM2 by Aitor P�rez Iturri, on dom mar 4 14:05:20 CET 2007
+compile_version=1.8.5
+url="https://gitlab.com/lvmteam/lvm2/-/archive/v2_03_27/lvm2-v2_03_27.tar.bz2"
+file_size=2262427
+file_md5=78d26a35971e18181095c90eaf719d22
+recipe_type=configure
+dir=lvm2-v2_03_27
+
+environment=(
+	# build system requires bash:
+	# https://www.redhat.com/archives/linux-lvm/2020-January/msg00004.html
+	# https://www.gnu.org/software/autoconf/manual/autoconf-2.69/html_node/Defining-Variables.html
+	CONFIG_SHELL=/bin/bash
+
+	# Workaround for build errors with the gold linker
+	LDFLAGS+="-fuse-ld=bfd"
+)
+
+configure_options=(
+	--enable-udev_rules
+	--enable-pkgconfig
+)
