@@ -1,0 +1,8 @@
+# Recipe for version 2.12.1 by Nuc1eoN, on Fri 04 Oct 2024 07:34:59 PM CEST
+# Recipe (MakeRecipe) for LibSigc++ by Peter Eriksen <s022018@student.dtu.dk>, on Thu Dec 2 19:28:36 CET 2004
+compile_version=1.8.0
+url="https://github.com/libsigcplusplus/libsigcplusplus/releases/download/2.12.1/libsigc++-2.12.1.tar.xz"
+file_size=5041732
+file_md5=891f1b2dbaebd8007eda8c639bbe1149
+recipe_type=meson
+meson_variables=(--buildtype=release)
