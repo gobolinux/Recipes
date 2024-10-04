@@ -1,0 +1,17 @@
+# Recipe for version 4.6.1 by Nuc1eoN, on Fri 04 Oct 2024 05:23:12 AM CEST
+# Recipe for Squashfs-Tools by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.8.2
+url="http://downloads.sourceforge.net/squashfs/squashfs4.6.1.tar.gz"
+file_size=286848
+file_md5=db23a40fa0dc54b4d6d225fb20ee6555
+recipe_type=makefile
+dir="squashfs-tools-4.6.1/squashfs-tools"
+do_install=no
+
+environment=(
+    PREFIX="$target"
+)
+
+pre_link() {
+    cp mksquashfs unsquashfs $target/bin/
+}
