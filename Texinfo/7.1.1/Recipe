@@ -1,0 +1,11 @@
+# Recipe for version 7.1.1 by Nuc1eoN, on Thu 03 Oct 2024 02:21:13 PM CEST
+compile_version=1.11.0
+url="https://ftp.gnu.org/gnu/texinfo/texinfo-7.1.1.tar.xz"
+file_size=5572864
+file_md5=e5fc595794a7980f98ce446a5f8aa273
+recipe_type=configure
+dir='texinfo-7.1.1'
+install_variables=(
+   "TEXMF=$target/share/texmf"
+)
+install_target="install install-tex"
