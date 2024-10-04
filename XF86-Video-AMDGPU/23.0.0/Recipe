@@ -1,0 +1,9 @@
+# Recipe for version 23.0.0 by Nuc1eoN, on Fri 04 Oct 2024 07:31:22 PM CEST
+# Recipe (MakeRecipe) for XF86-Video-AMDGPU by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Jul 30 14:38:44 BRT 2016
+compile_version=017
+url="http://xorg.freedesktop.org/releases/individual/driver/xf86-video-amdgpu-23.0.0.tar.xz"
+file_size=381268
+file_md5=8a58421b3215769f0bfce855301f7964
+dir='xf86-video-amdgpu-23.0.0'
+recipe_type=configure
+configure_options=(--enable-glamor)
