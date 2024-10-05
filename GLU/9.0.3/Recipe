@@ -1,0 +1,9 @@
+# Recipe for version 9.0.3 by Nuc1eoN, on Sat 05 Oct 2024 11:10:38 PM CEST
+# Recipe (MakeRecipe) for GLU by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri May 23 01:00:22 UTC 2014
+compile_version=2.0
+url="ftp://ftp.freedesktop.org/pub/mesa/glu/glu-9.0.3.tar.xz"
+file_size=218968
+file_md5=06a4fff9179a98ea32ef41b6d83f6b19
+recipe_type=meson
+
+meson_variables=(-D default_library=shared)
