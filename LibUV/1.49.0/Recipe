@@ -1,0 +1,8 @@
+# Recipe for version 1.49.0 by Nuc1eoN, on Sat 05 Oct 2024 11:20:37 PM CEST
+# Recipe (MakeRecipe) for LibUV by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun 16 Feb 2020 12:52:00 AM BRT
+compile_version=016
+url="https://github.com/libuv/libuv/archive/refs/tags/v1.49.0.tar.gz"
+file_size=1339314
+file_md5=676c67c25df7b06cee947eb636c00897
+dir='libuv-1.49.0'
+recipe_type=cmake
