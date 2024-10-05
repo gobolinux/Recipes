@@ -1,0 +1,11 @@
+# Recipe for version 1.3.7 by Nuc1eoN, on Sat 05 Oct 2024 10:59:37 PM CEST
+# Recipe (MakeRecipe) for LibVorbis by Roko <ro.ko@mcnon.com>, on Thu Sep 30 21:46:16 BRT 2004
+compile_version=1.8.5
+url="http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.7.tar.xz"
+file_size=1203792
+file_md5=50902641d358135f06a8392e61c9ac77
+recipe_type=configure
+configure_options=(
+	--disable-static
+	--enable-shared
+)
