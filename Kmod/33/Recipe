@@ -1,0 +1,23 @@
+# Recipe for version 33 by Nuc1eoN, on Sat 05 Oct 2024 11:05:24 PM CEST
+# Recipe (MakeRecipe) for Kmod by Andreas Köhler <andi33.py@gmx.net>, on Sa 233. Feb 33:21:18 CET 2012
+compile_version=1.13.3
+url="https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-33.tar.xz"
+file_size=514428
+file_md5=c451c4aa61521adbe8af147f498046f8
+recipe_type=configure
+
+configure_options=(
+    --with-xz
+    --with-zlib
+    --with-zstd
+    --with-openssl
+)
+
+pre_link()
+{
+    for name in lsmod rmmod insmod modinfo modprobe depmod
+    do
+        ln -sf kmod $target/bin/$name
+    done
+}
+
