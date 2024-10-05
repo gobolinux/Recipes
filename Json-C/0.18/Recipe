@@ -1,0 +1,15 @@
+# Recipe for version 0.18 by Nuc1eoN, on Sat 05 Oct 2024 11:43:04 PM CEST
+# Recipe (MakeRecipe) for Json-C by Nuc!eoN, on Thu 12 Nov 2020 03:19:17 PM CET
+compile_version=017-GIT
+url="https://github.com/json-c/json-c/archive/refs/tags/json-c-0.18-20240915.tar.gz"
+file_size=401874
+file_md5=97f1a79151cae859983afbc46b40b92c
+file="json-c-json-c-0.18-20240915.tar.gz"
+dir='json-c-json-c-0.18-20240915'
+recipe_type=cmake
+cmake_options=(
+    -DCMAKE_BUILD_TYPE=None
+    -DBUILD_STATIC_LIBS=OFF
+    -DENABLE_THREADING=ON
+    -DENABLE_RDRAND=OFF
+)
