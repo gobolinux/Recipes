@@ -5,7 +5,6 @@ url="https://xorg.freedesktop.org/releases/individual/xcb/libxcb-1.17.0.tar.xz"
 file_size=455208
 file_md5=96565523e9f9b701fcb35d31f1d4086e
 recipe_type=configure
-part_of=Xorg-Lib
 
 configure_options=(
   --disable-static

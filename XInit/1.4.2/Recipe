@@ -5,7 +5,6 @@ url="https://xorg.freedesktop.org/releases/individual/app/xinit-1.4.2.tar.xz"
 file_size=156728
 file_md5=0e9a1b9a82b84ab229c709c0f939c113
 recipe_type=configure
-part_of=Xorg-App
 
 configure_options=(
     --with-xserver=$goboExecutables/X
