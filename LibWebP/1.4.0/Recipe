@@ -1,0 +1,9 @@
+# Recipe for version 1.4.0 by Nuc1eoN, on Mon 07 Oct 2024 03:51:58 AM CEST
+# Recipe (MakeRecipe) for LibWebP by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Apr 17 16:13:43 GMT 2014
+compile_version=1.13.1
+url="http://downloads.webmproject.org/releases/webp/libwebp-1.4.0.tar.gz"
+file_size=4281370
+file_md5=07daaa13bef03b7be07f11977b159cb8
+recipe_type=configure
+dir="libwebp-1.4.0"
+autogen_before_configure=yes
