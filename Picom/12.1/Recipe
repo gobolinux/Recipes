@@ -1,0 +1,14 @@
+# Recipe for version 12.1 by Nuc1eoN, on Mon 07 Oct 2024 05:47:52 PM CEST
+# Recipe (MakeRecipe) for Picom by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat 16 May 2020 01:31:24 AM -03
+compile_version=017-GIT
+url="https://github.com/yshui/picom/archive/v8.tar.gz"
+file_size=242059
+file_md5=8de58ec15b0dd1692b8eaa24adae5607
+file="picom-8.tar.gz"
+dir='picom-8'
+recipe_type=meson
+
+meson_variables=(
+    --buildtype=release
+    -D config_file=false
+)
