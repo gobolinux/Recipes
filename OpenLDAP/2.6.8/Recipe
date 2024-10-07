@@ -1,0 +1,31 @@
+# Recipe for version 2.6.8 by Nuc1eoN, on Mon 07 Oct 2024 04:23:14 AM CEST
+# Recipe for OpenLdap by Maglan C. Diemer, maglan@univates.br
+compile_version=1.8.4
+url="ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/openldap-2.6.8.tgz"
+file_size=6512544
+file_md5=a7ca5f245340e478ea18b8f972c89bb1
+recipe_type=configure
+configure_options=(
+   --libexecdir=$target/lib
+   --localstatedir="${goboVariable}/lib/openldap"
+   --with-cyrus-sasl=no
+   --with-tls=no
+   --enable-slapd=no
+)
+with_cyrus_sasl="--with-cyrus-sasl=yes"
+with_openssl="--with-tls=openssl"
+
+make_variables=(
+   LIBTOOL="${goboExecutables}/libtool --tag=CC"
+)
+
+pre_install() {
+   mkdir -p "${goboVariable}/lib/openldap"
+}
+
+sandbox_options=(
+    "--allow-leftovers"
+)
+unmanaged_files=(
+    "${goboVariable}/lib/openldap"
+)
