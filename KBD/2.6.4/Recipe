@@ -1,0 +1,18 @@
+# Recipe for version 2.6.4 by Nuc1eoN, on Mon 07 Oct 2024 03:05:36 AM CEST
+compile_version=1.8.0
+url="https://mirrors.edge.kernel.org/pub/linux/utils/kbd/kbd-2.6.4.tar.xz"
+file_size=1504584
+file_md5=e2fd7adccf6b1e98eb1ae8d5a1ce5762
+recipe_type=configure
+
+pre_build(){
+	# rename keymap files with the same names
+	# this is needed because when only name of keymap is specified
+	# loadkeys loads the first keymap it can find, which is bad (see ArchLinux FS#13837)
+	# this should be removed when upstream adopts the change
+	mv -v data/keymaps/i386/qwertz/cz{,-qwertz}.map
+	mv -v data/keymaps/i386/olpc/es{,-olpc}.map
+	mv -v data/keymaps/i386/olpc/pt{,-olpc}.map
+	mv -v data/keymaps/i386/fgGIod/trf{,-fgGIod}.map
+	mv -v data/keymaps/i386/colemak/{en-latin9,colemak}.map
+}
