@@ -1,0 +1,28 @@
+# Recipe for version 9.9p1 by Nuc1eoN, on Mon 07 Oct 2024 03:56:23 AM CEST
+# Recipe for OpenSSH by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.10.2
+url="https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-9.9p1.tar.gz"
+file_size=1964864
+file_md5=1893c9b712eb8c55ec2d5146e7323b92
+recipe_type=configure
+install_target=install-nokeys
+
+configure_options=(
+"--sysconfdir=$goboSettings/ssh"
+)
+
+install_variables=(
+   sysconfdir="${settings_target}/ssh"
+)
+
+unmanaged_files=(
+   "${goboVariable}/empty"
+)
+
+with_pam="--with-pam"
+
+pre_link() {
+   mkdir -p "${target}/Resources/Unmanaged/${goboVariable}/empty"
+   chmod 755 "${target}/Resources/Unmanaged/${goboVariable}/empty"
+   chown 0:sys "${target}/Resources/Unmanaged/${goboVariable}/empty"
+}
