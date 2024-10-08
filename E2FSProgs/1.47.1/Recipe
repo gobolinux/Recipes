@@ -1,0 +1,19 @@
+# Recipe for version 1.47.1 by Nuc1eoN, on Tue 08 Oct 2024 02:27:23 AM CEST
+url=$httpSourceforge/e2fsprogs/e2fsprogs-1.47.1.tar.gz
+file_size=9952468
+file_md5=75e6d1353cbe6d5728a98fb0267206cb
+recipe_type=configure
+compile_version=1.9.0
+configure_options=(
+   "--enable-elf-shlibs"
+   "--disable-libblkid"
+   "--disable-libuuid"
+   "--disable-uuidd"
+   "--disable-fsck"
+)
+install_target="install install-libs"
+
+pre_link() {
+   # Remove static libraries with a shared counterpart
+   rm -fv $target/lib/{libcom_err,libe2p,libext2fs,libss}.a   
+}
