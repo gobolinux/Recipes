@@ -1,0 +1,15 @@
+# Recipe for version 3.7.6 by Nuc1eoN, on Tue 08 Oct 2024 02:31:13 AM CEST
+# Recipe (MakeRecipe) for LibArchive by Giambattista Bloisi <giamby@infinito.it>, on Tue Jan 15 23:31:17 CET 2008
+compile_version=1.10.0
+url="https://www.libarchive.org/downloads/libarchive-3.7.6.tar.xz"
+file_size=5458552
+file_md5=bb53692eefc96a73ca5322a54ab52b48
+recipe_type=configure
+configure_options=(
+   --prefix=$target
+   --disable-static
+   --without-expat
+   --with-xml2
+   --with-nettle
+   --with-lzo2
+)
