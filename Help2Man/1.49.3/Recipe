@@ -1,0 +1,10 @@
+# Recipe for version 1.49.3 by Nuc1eoN, on Thu 10 Oct 2024 05:34:36 PM CEST
+url="https://ftp.gnu.org/gnu/help2man/help2man-1.49.3.tar.xz"
+file_size=228472
+file_md5=2a0ffaa1822df5b6971f486a4fe1a4d1
+dir='help2man-1.49.3'
+compile_version=1.13.0
+recipe_type=configure
+make_variables=(
+   "LINGUAS="
+)
