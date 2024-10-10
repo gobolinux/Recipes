@@ -1,0 +1,17 @@
+# Recipe for version 39 by Nuc1eoN, on Thu 10 Oct 2024 03:24:03 AM CEST
+# Recipe (MakeRecipe) for EFIVar by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Oct 23 18:24:17 BRST 2016
+compile_version=2.0
+url="https://github.com/rhboot/efivar/archive/refs/tags/39.tar.gz"
+file_size=463349
+file_md5=a8fc3e79336cd6e738ab44f9bc96a5aa
+dir='efivar-39'
+recipe_type=makefile
+makefile='Makefile'
+
+make_variables=(
+	ENABLE_DOCS=0
+)
+environment=(
+    # Workaround for build errors with the gold linker
+#    LDFLAGS="-fuse-ld=bfd"
+)
