@@ -1,0 +1,13 @@
+# Recipe for version 0.3.4 by Nuc1eoN, on Thu 10 Oct 2024 04:32:29 PM CEST
+# Recipe (MakeRecipe) for Lensfun by Leandro Motta Barros <lmb@stackedboxes.org>, on Tue Nov 15 14:21:41 BRST 2011
+compile_version=1.13.3
+url="https://github.com/lensfun/lensfun/archive/v0.3.4.tar.gz"
+file_size=1058791
+file_md5=b2d70a6cd2d1b2922b26cd37fee0de7f
+recipe_type=cmake
+dir="lensfun-0.3.4"
+
+cmake_options=(
+    -DCMAKE_BUILD_TYPE=None
+    -DINSTALL_PYTHON_MODULE=OFF
+)
