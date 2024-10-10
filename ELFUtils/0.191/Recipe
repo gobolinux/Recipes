@@ -1,0 +1,23 @@
+# Recipe for version 0.191 by Nuc1eoN, on Thu 10 Oct 2024 03:45:17 AM CEST
+# Recipe for ELFUtils 0.191 by Lucas Correia Villa Real <lucasvr@gobolinux.org>
+compile_version=1.8.0
+url="https://sourceware.org/elfutils/ftp/0.191/elfutils-0.191.tar.bz2"
+file_size=9310088
+file_md5=636547248fb3fae58ec48030298d3ef7
+recipe_type=configure
+
+environment=(
+    # fat-lto-objects is required for non-mangled .a files in libelf (taken from ArchLinux)
+    CFLAGS+=" -ffat-lto-objects"
+)
+
+configure_options=(
+    --enable-deterministic-archives
+    --disable-debuginfod
+)
+
+pre_build() {
+	for i in `find . -name Makefile`; do 
+		sed 's/-Werror//g' $i > $i.tmp && mv $i.tmp $i; 
+	done
+}
