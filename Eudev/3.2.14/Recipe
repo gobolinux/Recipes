@@ -1,0 +1,20 @@
+# Recipe for version 3.2.14 by Nuc1eoN, on Thu 10 Oct 2024 04:02:22 AM CEST
+# Recipe (MakeRecipe) for Eudev by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Sep 14 10:46:04 BRT 2016
+compile_version=2.0
+url="https://github.com/eudev-project/eudev/archive/refs/tags/v3.2.14.tar.gz"
+file_size=2323748
+file_md5=3c68a62f736bf833ff86ea7e667054d4
+dir='eudev-3.2.14'
+recipe_type=configure
+autogen_before_configure=yes
+
+configure_options=(
+    --prefix=$target
+    --bindir=$target/sbin
+    --sbindir=$target/sbin
+    --libdir=$target/lib
+    --sysconfdir=$settings_target
+    --libexecdir=$target/lib
+    --with-rootprefix=
+    --with-rootlibdir=$target/lib
+)
