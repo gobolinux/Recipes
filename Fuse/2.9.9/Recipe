@@ -16,7 +16,6 @@ install_variables=(
 configure_options=(
     MOUNT_FUSE_PATH=${target}/sbin
     UDEV_RULES_PATH=$settings_target/udev/rules.d
-    --disable-example
     --enable-lib
     --enable-util
 )
