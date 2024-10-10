@@ -1,0 +1,12 @@
+# Recipe for version 7.8.2 by Nuc1eoN, on Thu 10 Oct 2024 04:19:43 PM CEST
+# Recipe (MakeRecipe) for LibAtomic_Ops by Hisham Muhammad <hisham@gobolinux.org>, on Thu Apr 17 23:05:12 BRT 2014
+compile_version=2.0
+url="https://github.com/ivmai/libatomic_ops/releases/download/v7.8.2/libatomic_ops-7.8.2.tar.gz"
+file_size=524637
+file_md5=d07b3d8369d7f9efdca59f7501dd1117
+recipe_type=configure
+
+configure_options=(
+	--disable-static
+	--enable-shared
+)
