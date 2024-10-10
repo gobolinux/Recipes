@@ -1,0 +1,12 @@
+# Recipe for version 1.3.7 by Nuc1eoN, on Thu 10 Oct 2024 05:12:33 PM CEST
+# Recipe (MakeRecipe) for NCPAMixer by Hisham Muhammad <hisham@gobolinux.org>, on Sun Apr 26 03:07:55 -03 2020
+compile_version=git
+url="https://github.com/fulhax/ncpamixer/archive/1.3.7.tar.gz"
+file_size=24614
+file_md5=4679fe42ddaa4916a90cb8837d256cfc
+file="ncpamixer-1.3.7.tar.gz"
+dir='ncpamixer-1.3.7'
+recipe_type=makefile
+make_variables=(
+   USE_WIDE=1
+)
