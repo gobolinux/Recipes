@@ -1,0 +1,11 @@
+# Recipe for version 0.4.1 by Nuc1eoN, on Thu 10 Oct 2024 04:59:19 AM CEST
+# Recipe (MakeRecipe) for XCB-Util-Image by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 2 14:41:46 GMT 2014
+compile_version=2.0
+url="https://xorg.freedesktop.org/releases/individual/xcb/xcb-util-image-0.4.1.tar.xz"
+file_size=289016
+file_md5=a67bfac2eff696170259ef1f5ce1b611
+recipe_type=configure
+
+configure_options=(
+	--disable-static
+)
