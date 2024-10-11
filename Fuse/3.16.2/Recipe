@@ -1,0 +1,11 @@
+# Recipe for version 3.16.2 by Nuc1eoN, on Thu 10 Oct 2024 08:06:15 PM CEST
+# Recipe (MakeRecipe) for Fuse by roko, <ro.ko@mcnon.com>, on Wed Mar 23 22:07:09 CET 2005
+compile_version=1.8.2
+url="https://github.com/libfuse/libfuse/releases/download/fuse-3.16.2/fuse-3.16.2.tar.gz"
+file_size=14165836
+file_md5=b00bf08b27ead4a9411578777e94a1cc
+recipe_type=meson
+
+meson_variables=(
+	-D examples=false
+)
