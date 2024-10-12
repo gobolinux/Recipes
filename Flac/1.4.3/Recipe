@@ -1,0 +1,11 @@
+# Recipe for version 1.4.3 by Nuc1eoN, on Fri 11 Oct 2024 08:01:13 PM CEST
+# Recipe for Flac 1.4.3 by Maglan C. Diemer, maglan@univates.br
+compile_version=1.8.2
+url="https://ftp.osuosl.org/pub/xiph/releases/flac/flac-1.4.3.tar.xz"
+file_size=1006728
+file_md5=7cab20b46e0bc859234bf5ba7da81625
+recipe_type=configure
+
+configure_options=(
+    --enable-ogg
+)
