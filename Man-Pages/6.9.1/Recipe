@@ -1,0 +1,15 @@
+# Recipe for version 6.9.1 by Nuc1eoN, on Sat 12 Oct 2024 12:09:01 AM CEST
+compile_version=1.9.0
+url="https://mirrors.edge.kernel.org/pub/linux/docs/man-pages/man-pages-6.9.1.tar.xz"
+file_size=1864500
+file_md5=4d56775b6cce4edf1e496249e7c01c1a
+recipe_type=makefile
+makefile=GNUmakefile
+do_build=no
+install_variables=(
+   "mandir=$target/man"
+)
+pre_link() {
+   # we have our own hier man page.
+   $sudo_exec rm -v -f $target/share/man/man7/hier.7
+}
