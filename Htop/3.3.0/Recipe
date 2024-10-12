@@ -1,0 +1,7 @@
+# Recipe for version 3.3.0 by Nuc1eoN, on Sat 12 Oct 2024 10:10:04 PM CEST
+compile_version=016
+url="https://github.com/htop-dev/htop/releases/download/3.3.0/htop-3.3.0.tar.xz"
+file_size=337956
+file_md5=9b59f24212cb93bd1877fe8e837a4f19
+recipe_type=configure
+configure_options=(--with-proc=/proc/)
