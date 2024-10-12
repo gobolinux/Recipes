@@ -1,0 +1,15 @@
+# Recipe for version 2.5 by Nuc1eoN, on Fri 11 Oct 2024 10:03:29 PM CEST
+url=$ftpGnu/inetutils/inetutils-2.5.tar.gz
+file_size=2839289
+file_md5=96526671eca6c2c531352d28dd6246fd
+compile_version=1.8.0
+recipe_type=configure
+configure_options=(
+	--disable-syslogd
+	--disable-logger
+	--disable-whois
+	--disable-servers
+	--disable-ping
+	--disable-ping6
+	--disable-traceroute
+)

@@ -1,0 +1,44 @@
+xxx
+
+diff -Nur inetutils-2.5.old/am/libcurses.m4 inetutils-2.5/am/libcurses.m4
+--- inetutils-2.5.old/am/libcurses.m4	2023-01-01 01:35:18.000000000 +0100
++++ inetutils-2.5/am/libcurses.m4	2024-10-11 23:18:54.460408307 +0200
+@@ -134,6 +134,10 @@
+ 	  && test "$ac_cv_have_decl_tgetent" = yes; then
+ 	AC_DEFINE([HAVE_CURSES_TGETENT], 1)
+       fi
++      if test "$ac_cv_lib_curses_tgetent" = yes \
++      && test "$ac_cv_have_decl_tgetent" = no; then
++    AC_DEFINE([HAVE_CURSES_NO_PROTOTYPE_BUT_YES_TGETENT], 1, [curses defined but no prototype])
++      fi
+     fi
+     if test "$ac_cv_lib_curses_tgetent" = no \
+ 	&& test "$ac_cv_lib_termcap_tgetent" = no; then
+diff -Nur inetutils-2.5.old/telnet/telnet.c inetutils-2.5/telnet/telnet.c
+--- inetutils-2.5.old/telnet/telnet.c	2023-12-29 18:34:46.000000000 +0100
++++ inetutils-2.5/telnet/telnet.c	2024-10-11 23:11:51.653728535 +0200
+@@ -758,6 +758,10 @@
+  */
+ char termbuf[2048] = { 0 };
+ 
++#ifdef HAVE_CURSES_NO_PROTOTYPE_BUT_YES_TGETENT
++#include <term.h>
++#endif
++
+ static int
+ init_term (char *tname, int *errp)
+ {
+diff -Nur inetutils-2.5.old/telnetd/utility.c inetutils-2.5/telnetd/utility.c
+--- inetutils-2.5.old/telnetd/utility.c	2023-12-29 18:34:46.000000000 +0100
++++ inetutils-2.5/telnetd/utility.c	2024-10-11 23:14:01.883732573 +0200
+@@ -44,6 +44,10 @@
+ # endif
+ #endif
+ 
++#ifdef HAVE_CURSES_NO_PROTOTYPE_BUT_YES_TGETENT
++#include <term.h>
++#endif
++
+ #if defined HAVE_STREAMSPTY && defined HAVE_GETMSG	\
+   && defined HAVE_STROPTS_H
+ # include <stropts.h>
