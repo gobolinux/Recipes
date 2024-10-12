@@ -1,0 +1,11 @@
+# Recipe for version 2.1.6 by Nuc1eoN, on Fri 11 Oct 2024 10:50:25 PM CEST
+# Recipe (MakeRecipe) for TraceRoute by Andre Detsch <detsch@gobolinux.org>, on Sun Jul 23 16:33:37 BRT 2006
+compile_version=1.8.0
+url="https://deac-riga.dl.sourceforge.net/project/traceroute/traceroute/traceroute-2.1.6/traceroute-2.1.6.tar.gz"
+file_size=75537
+file_md5=94b41044978f4f57c373adc5a32c42d7
+recipe_type=makefile
+
+pre_link() {
+   chmod a+s $target/bin/traceroute
+}
