@@ -1,0 +1,11 @@
+# Recipe for version 2.0.7 by Nuc1eoN, on Sat 12 Oct 2024 09:24:21 PM CEST
+# Recipe (MakeRecipe) for ITSTool by Hisham Muhammad <hisham@gobolinux.org>, on Mon Jul 13 17:22:16 BRT 2015
+compile_version=git
+url="http://files.itstool.org/itstool/itstool-2.0.7.tar.bz2"
+file_size=104648
+file_md5=267a3bdc72a2d8abb1b824f2ea32ee9b
+recipe_type=configure
+
+environment=(
+    PYTHON=python3
+)
