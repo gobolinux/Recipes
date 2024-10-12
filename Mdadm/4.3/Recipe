@@ -1,0 +1,12 @@
+# Recipe for version 4.3 by Nuc1eoN, on Sat 12 Oct 2024 10:15:02 PM CEST
+# Recipe (MakeRecipe) for Mdadm by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Jun 21 16:34:18 BRT 2005
+compile_version=1.8.2
+url="https://mirrors.edge.kernel.org/pub/linux/utils/raid/mdadm/mdadm-4.3.tar.xz"
+file_size=465820
+file_md5=a42def84e31734a529111394f2289e0e
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   DESTDIR="$target"
+   CHECK_RUN_DIR=0
+)
