@@ -1,0 +1,13 @@
+# Recipe for version 9.65 by Nuc1eoN, on Sat 12 Oct 2024 10:07:15 PM CEST
+# Recipe (MakeRecipe) for Hdparm by  Ozgur Ulukir, on Fri Dec 17 22:07:37 EET 2004
+compile_version=1.8.2
+url="$httpSourceforge/hdparm/hdparm-9.65.tar.gz"
+file_size=140425
+file_md5=6d6d039d61ec995b1ec72ddce0b1853b
+recipe_type=makefile
+makefile='Makefile'
+
+install_variables=(
+    manprefix=$target
+    binprefix=$target
+)
