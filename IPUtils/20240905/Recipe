@@ -1,0 +1,11 @@
+# Recipe for version 20240905 by Nuc1eoN, on Fri 11 Oct 2024 10:16:25 PM CEST
+# Recipe (MakeRecipe) for IPUtils by Michael Homer <michael@gobolinux.org>, on Wed Jan 14 14:56:52 NZDT 2009
+compile_version=1.11.4
+url="https://github.com/iputils/iputils/releases/download/20240905/iputils-20240905.tar.xz"
+file_size=459008
+file_md5=3e18bf41b01f91ff3d5d47fa722155a5
+recipe_type=meson
+
+pre_link() {
+   chmod a+s $target/bin/{ping,tracepath*}
+}
