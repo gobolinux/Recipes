@@ -1,0 +1,14 @@
+# Recipe for version 1.8.10 by Nuc1eoN, on Sat 12 Oct 2024 10:01:43 PM CEST
+# Recipe (MakeRecipe) for Iptables by  Ozgur Ulukir, on Mon Dec 20 23:37:07 EET 2004
+compile_version=1.8.0
+url="https://www.netfilter.org/pub/iptables/iptables-1.8.10.tar.xz"
+file_size=641168
+file_md5=5eaa3bb424dd3a13c98c0cb026314029
+recipe_type=configure
+
+configure_options=(
+    --disable-nftables
+    --enable-libipq
+    --enable-bpf-compiler
+    --enable-shared
+)
