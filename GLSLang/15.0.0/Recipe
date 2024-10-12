@@ -1,0 +1,17 @@
+# Recipe for version 15.0.0 by Nuc1eoN, on Fri 11 Oct 2024 09:50:28 PM CEST
+# Recipe (MakeRecipe) for Glslang by Nuc1eoN, on Sun 13 Feb 2022 06:47:19 AM CET
+compile_version=017-GIT
+url="https://github.com/KhronosGroup/glslang/archive/refs/tags/15.0.0.tar.gz"
+file_size=3864508
+file_md5=732b6d4f6ae0bad942ffa820d12b1f4b
+file="glslang-15.0.0.tar.gz"
+dir='glslang-15.0.0'
+recipe_type=cmake
+cmake_options=(
+	-D CMAKE_BUILD_TYPE=Release
+	-D BUILD_SHARED_LIBS=ON
+	-D ALLOW_EXTERNAL_SPIRV_TOOLS=ON
+)
+environment=(
+	CXXFLAGS+=" -ffat-lto-objects"
+)
