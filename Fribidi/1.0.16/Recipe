@@ -1,0 +1,14 @@
+# Recipe for version 1.0.16 by Nuc1eoN, on Fri 11 Oct 2024 07:46:05 PM CEST
+# Recipe (MakeRecipe) for Fribidi by Rafael Guterres Jeffman (rafasgj), on Thu Sep 8 10:06:14 BRT 2005
+compile_version=1.13.3
+url="https://github.com/fribidi/fribidi/releases/download/v1.0.16/fribidi-1.0.16.tar.xz"
+file_size=1098260
+file_md5=333ad150991097a627755b752b87f9ff
+recipe_type=meson
+
+meson_variables=(
+	--buildtype=release
+)
+#configure_options=(
+#    --enable-charsets
+#)
