@@ -1,0 +1,11 @@
+# Recipe for version 4.10.0 by Nuc1eoN, on Fri 11 Oct 2024 07:58:56 PM CEST
+# Recipe (MakeRecipe) for FindUtils by roko, <ro.ko@mcnon.com>, , on Fri Oct 22 20:28:10 BRST 2004
+compile_version=1.8.2
+url="https://ftp.gnu.org/pub/gnu/findutils/findutils-4.10.0.tar.xz"
+file_size=2240712
+file_md5=870cfd71c07d37ebe56f9f4aaf4ad872
+recipe_type=configure
+
+pre_link() {
+    mkdir -p $variable_target
+}
