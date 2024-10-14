@@ -1,0 +1,10 @@
+# Recipe for version 3.10 by Nuc1eoN, on Mon 14 Oct 2024 02:43:20 AM CEST
+# Recipe (MakeRecipe) for Nettle by AitorATuin, on Thu Jul 14 01:03:17 CEST 2016
+compile_version=17
+url="https://ftp.gnu.org/gnu/nettle/nettle-3.10.tar.gz"
+file_size=2640485
+file_md5=c61453139d5fb44e9cdcc5b684b26e55
+recipe_type=configure
+configure_options=(
+	--disable-static
+)
