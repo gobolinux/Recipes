@@ -1,0 +1,20 @@
+# Recipe for version 2.4 by Nuc1eoN, on Mon 14 Oct 2024 09:40:22 PM CEST
+# Recipe (MakeRecipe) for Shared-Mime-Info by roko, <ro.ko@mcnon.com>, on Sat Nov 13 23:45:25 BRST 2004
+compile_version=1.8.5
+url="https://gitlab.freedesktop.org/xdg/shared-mime-info/-/archive/2.4/shared-mime-info-2.4.tar.gz"
+file_size=7852841
+file_md5=aac56db912b7b12a04fb0018e28f2f36
+recipe_type=meson
+
+meson_variables=(
+	-D update-mimedb=true
+)
+
+unmanaged_files=(
+	"${goboVariable}/xdg/mime"
+)
+
+pre_link() {
+	mkdir -p ${target}/Resources/Unmanaged/${goboVariable}/xdg/mime
+	ln -s ${goboShared}/mime/packages ${target}/Resources/Unmanaged/${goboVariable}/xdg/mime
+}
