@@ -1,0 +1,15 @@
+# Recipe for version 0.0.29 by Nuc1eoN, on Mon 14 Oct 2024 02:36:31 AM CEST
+# Recipe (MakeRecipe) for XMLTO by Kosh <kosh.linux at gmail.com, on Thu Nov 23 20:14:10 BRST 2006
+compile_version=1.8.0
+url="https://pagure.io/xmlto/archive/0.0.29/xmlto-0.0.29.tar.gz"
+file_size=64619
+file_md5=556f2642cdcd005749bd4c08bc621c37
+recipe_type=configure
+
+pre_build() {
+	autoreconf -i
+}
+
+configure_options=(
+	--with-webbrowser=lynx
+)
