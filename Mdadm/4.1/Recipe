@@ -7,6 +7,5 @@ file_md5=51bf3651bd73a06c413a2f964f299598
 recipe_type=makefile
 makefile='Makefile'
 make_variables=(
-   DESTDIR="$target"
    CHECK_RUN_DIR=0
 )

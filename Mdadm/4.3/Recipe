@@ -5,8 +5,7 @@ url="https://mirrors.edge.kernel.org/pub/linux/utils/raid/mdadm/mdadm-4.3.tar.xz
 file_size=465820
 file_md5=a42def84e31734a529111394f2289e0e
 recipe_type=makefile
-makefile='Makefile'
+
 make_variables=(
-   DESTDIR="$target"
    CHECK_RUN_DIR=0
 )
