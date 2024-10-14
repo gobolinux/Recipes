@@ -5,7 +5,7 @@ compile_version=1.16.1
 recipe_type=configure
 pre_install() {
    pushd "${target}/share"
-   ln -s automake-1.11 automake
-   ln -s aclocal-1.11 aclocal
+   ln -s automake-1.16 automake
+   ln -s aclocal-1.16 aclocal
    popd
 }
