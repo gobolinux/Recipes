@@ -1,0 +1,25 @@
+# Recipe for version 2.46.2 by Nuc1eoN, on Wed 02 Oct 2024 06:46:32 PM CEST
+# Recipe (MakeRecipe) for Git by Jonas Karlsson <jonka750@student.liu.se>, on Sat Apr 15 18:45:06 CEST 2006
+compile_version=1.9.0
+url="http://mirrors.edge.kernel.org/pub/software/scm/git/git-2.46.2.tar.xz"
+file_size=7581344
+file_md5=c32e8d924104dafe909765801c110f32
+recipe_type=makefile
+makefile='Makefile'
+build_target="all man"
+install_target="install install-man"
+
+environment=(
+   XML_CATALOG_FILES="$goboShared/xml/docbook/stylesheet/catalog.xml $goboVariable/lib/xml/catalog $goboVariable/lib/xml/docbook"
+)
+make_variables=(
+   prefix="$target"
+   PREFIX="$target"
+   ASCIIDOC8="YesPlease"
+   USE_LIBPCRE2=1
+   sysconfdir=$settings_target
+)
+
+pre_link() {
+   cp -a Documentation/* $target/doc
+}
