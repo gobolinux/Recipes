@@ -1,0 +1,16 @@
+# Recipe (MakeRecipe) for Brave by Nuc1eoN, on Tue 15 Oct 2024 07:56:57 PM CEST
+# Recipe for version 1.70.126_bin by Nuc1eoN, on Tue 15 Oct 2024 07:56:57 PM CEST
+compile_version=017-GIT
+url="https://github.com/brave/brave-browser/releases/download/v1.70.126/brave-browser-1.70.126-linux-amd64.zip"
+file_size=167005936
+file_md5=2330003056573b34123da50261710440
+dir='Brave-1.70.126_bin'
+unpack_files=files_in_root
+recipe_type=manifest
+
+manifest=(
+	".:package"
+	"product_logo_48.png:share/icons/brave-browser.png"
+	"$recipedir/brave-browser.desktop:share/applications/brave-browser.desktop"
+	"$recipedir/brave-bin.sh:bin/brave"
+)
