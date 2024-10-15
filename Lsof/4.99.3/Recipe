@@ -1,0 +1,11 @@
+# Recipe for version 4.99.3 by Nuc1eoN, on Sat 05 Oct 2024 10:57:12 PM CEST
+# Recipe (MakeRecipe) for Lsof by David Smith <dsmith@algonet.se>, on Sat Sep 25 22:15:08 CEST 2004
+compile_version=1.8.2
+url="https://github.com/lsof-org/lsof/releases/download/4.99.3/lsof-4.99.3.tar.gz"
+file_size=1131470
+file_md5=0fa5cfcaaca77a2fb3579c17de016353
+recipe_type=configure
+
+configure_options=(
+	--disable-static
+)
