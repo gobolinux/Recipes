@@ -1,0 +1,12 @@
+# Recipe for version 0.56.17 by Nuc1eoN, on Tue 15 Oct 2024 02:27:43 AM CEST
+# Recipe (MakeRecipe) for Vala by Hisham Muhammad <hisham@gobolinux.org>, on Fri May 29 15:48:54 BRT 2009
+compile_version=2.0
+url="https://download.gnome.org/sources/vala/0.56/vala-0.56.17.tar.xz"
+file_size=4016576
+file_md5=134075855867fdd9c51ca7555c4951bb
+recipe_type=configure
+
+# Overwrite conflict /Programs/Automake/1.17/share/aclocal-1.17/vala.m4
+# We probably want the vala.m4 from the Vala package.
+# Maybe there is a better way..
+symlink_options=(--conflict overwrite)
