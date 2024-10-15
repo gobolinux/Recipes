@@ -1,0 +1,13 @@
+# Recipe for version 1.6.0 by Nuc1eoN, on Tue 15 Oct 2024 03:14:50 AM CEST
+# Recipe (MakeRecipe) for GParted by Andre Detsch <detsch@gobolinux.org>, on Mon Nov 20 21:56:41 BRST 2006
+compile_version=1.8.2
+url="https://sourceforge.net/projects/gparted/files/gparted/gparted-1.6.0/gparted-1.6.0.tar.gz"
+file_size=5404754
+file_md5=b2006a0a3f35853e7d7dc34c87db11f2
+recipe_type=configure
+configure_options=(
+    --disable-doc
+    --enable-libparted-dmraid
+    --enable-xhost-root
+)
+with_doc=( --enable-doc )
