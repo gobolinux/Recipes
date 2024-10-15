@@ -1,0 +1,29 @@
+# Recipe for version 2.82.1 by Nuc1eoN, on Tue 15 Oct 2024 12:18:01 AM CEST
+# Recipe (MakeRecipe) for GLib by  Ozgur Ulukir, on Mon Dec 20 01:48:37 EET 2004
+compile_version=2.0
+url="https://download.gnome.org/sources/glib/2.82/glib-2.82.0.tar.xz"
+file_size=18752204
+file_md5=b390feef233022114950317f10c4fa97
+recipe_type=meson
+
+meson_variables=(
+    -D selinux=disabled
+    -D glib_debug=disabled
+    -D tests=false
+#    -D introspection=disabled
+)
+
+# NOTE: From time to time it may be required to build with
+# `-D introspection=disabled`, Compile a more recent version
+# of GObject-Introspection and then finally recompile Glib with
+# introspection=enabled (or commented out).
+
+pre_build() {
+    rmdir ../subprojects/gvdb
+}
+
+pre_link() {
+    Quiet pushd $target/lib/pkgconfig
+    for i in *; do ln -s $i `echo $i | sed 's/-2.0//g'`; done
+    Quiet popd
+}
