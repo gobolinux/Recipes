@@ -1,0 +1,13 @@
+# Recipe for version 10.44 by Nuc1eoN, on Tue 15 Oct 2024 01:37:15 AM CEST
+# Recipe (MakeRecipe) for PCRE2 by Philip Pokarowski, on Wed 22 Jul 2020 02:00:29 AM CEST
+compile_version=017-GIT
+url="https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.44/pcre2-10.44.tar.bz2"
+file_size=1928086
+file_md5=9d1fe11e2e919c7b395e3e8f0a5c3eec
+dir='pcre2-10.44'
+recipe_type=configure
+configure_options=(
+	--disable-static
+	--enable-pcre2-16
+	--enable-pcre2-32
+)
