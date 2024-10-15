@@ -1,0 +1,14 @@
+# Recipe for version 0.5.9 by Nuc1eoN, on Tue 15 Oct 2024 01:57:51 AM CEST
+# Recipe (MakeRecipe) for LibProxy by Leandro Motta Barros <lmb@stackedboxes.org>, on Wed Sep 21 22:28:36 BRT 2011
+compile_version=1.13.3
+url="https://github.com/libproxy/libproxy/archive/refs/tags/0.5.9.tar.gz"
+dir='libproxy-0.5.9'
+file_size=58165
+file_md5=11fd35c17e0ae017bae764fae1651973
+recipe_type=meson
+
+meson_variables=(
+	-D release=true
+	-D docs=false
+	-D pacrunner-duktape=false
+)
