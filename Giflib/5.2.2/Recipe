@@ -1,0 +1,19 @@
+# Recipe for version 5.2.2 by Nuc1eoN, on Fri 04 Oct 2024 07:48:27 PM CEST
+# Recipe (MakeRecipe) for Giflib by Jonas Karlsson <jonka750@student.liu.se>, on Tue Feb 19 18:03:48 GMT 2008
+compile_version=017
+url="http://downloads.sourceforge.net/project/giflib/giflib-5.2.2.tar.gz"
+file_size=447175
+file_md5=913dd251492134e235ee3c9a91987a4d
+recipe_type=makefile
+
+pre_build() {
+	# Remove an unnecessary dependency on ImageMagick by moving a file into an expected location (from LFS)
+	cp -v pic/gifgrid.gif doc/giflib-logo.gif
+	# Install the actual man pages instead of the sources (from ArchLinux)
+	sed -e 's|giflib.xml|giflib.7|' -re 's|doc/(.*).xml|doc/\1.1|g' -i Makefile
+}
+
+pre_link() {
+	# Remove a static library
+	rm -fv $target/lib/libgif.a
+}
