@@ -1,0 +1,9 @@
+# Recipe for version 017 by Nuc1eoN, on Tue 22 Oct 2024 04:57:28 AM CEST
+# Recipe (MakeRecipe) for USBUtils by Demian Florentin <demianflorentin@gmail.com>, on Fri Feb 17 15:29:06 PYST 2017
+compile_version=016
+url="https://mirrors.edge.kernel.org/pub/linux/utils/usb/usbutils/usbutils-017.tar.xz"
+file_size=168820
+file_md5=8ff21441faf2e8128e4810b3d6e49059
+dir='usbutils-017'
+recipe_type=configure
+autogen_before_configure=yes
