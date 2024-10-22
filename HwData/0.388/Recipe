@@ -1,0 +1,11 @@
+# Recipe for version 0.388 by Nuc1eoN, on Tue 22 Oct 2024 05:01:03 AM CEST
+# Recipe (MakeRecipe) for HwData by Lucas C. Villa Real, on Mon Feb 26 00:39:49 BRT 2007
+compile_version=016
+url="https://github.com/vcrhonek/hwdata/archive/v0.388.tar.gz"
+file_size=2459396
+file_md5=d8f4cbdbe9e16e7717b398edffd1a989
+dir='hwdata-0.388'
+recipe_type=configure
+configure_options=(
+	--disable-blacklist
+)
