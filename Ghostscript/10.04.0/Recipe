@@ -1,0 +1,36 @@
+# Recipe for version 10.04.0 by Nuc1eoN, on Tue 01 Oct 2024 02:20:34 AM CEST
+# Recipe (MakeRecipe) for GhostScript by Jonas Karlsson <jonka750@student.liu.se>, on Tue Jan 24 11:36:14 CET 2006
+compile_version=016
+url="https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10040/ghostscript-10.04.0.tar.xz"
+file_size=68070680
+file_md5=a86a78cac91b6e1fc674c7961e760c3f
+recipe_type=configure
+build_target="all so"
+install_target="install soinstall"
+
+configure_options=(
+   --enable-cups
+   --with-drivers=ALL
+   --with-fontpath="${target}/share/fonts/Ghostscript"
+   --disable-compile-inits
+#   --with-system-libtiff # for whatever reason this setting throws an error but it shouldn't
+)
+
+make_variables=(
+   CUPSLIBDIRS="$target/lib"
+   CUPSSERVERBIN="$target/lib/cups"
+   CUPSSERVERROOT="$settings_target/cups"
+   CUPSDATA="$target/share/cups"
+)
+
+pre_link() {
+   # Linking fonts dir so ghostscript can find it.
+   if [ -d ${goboPrefix}/Files/Fonts ]
+   then
+      ln -sf ${goboPrefix}/Files/Fonts/Ghostscript ${target}/share/ghostscript/fonts
+   fi
+   # Making headers dir and copying headers
+   install -v -d -m755 ${target}/include/ps
+   install -v -m644 src/*.h ${target}/include/ps
+   ln -s ${target}/include/ps ${target}/include/ghostscript
+}
