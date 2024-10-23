@@ -1,0 +1,19 @@
+# Recipe for version 2.42.12 by Nuc1eoN, on Tue 22 Oct 2024 08:41:00 PM CEST
+url="https://download.gnome.org/sources/gdk-pixbuf/2.42/gdk-pixbuf-2.42.12.tar.xz"
+file_size=6525072
+file_md5=f986fdbba5ec6233c96f8b6535811780
+compile_version=017
+recipe_type=meson
+meson_variables=(
+	--buildtype=release
+	-D builtin_loaders=all
+	-D installed_tests=false
+	-D introspection=enabled
+	-D others=enabled
+	-D man=false
+#	--wrap-mode=nofallback
+)
+
+environment=(
+	GDK_PIXBUF_MODULEDIR=
+)
