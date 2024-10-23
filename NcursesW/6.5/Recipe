@@ -1,0 +1,78 @@
+# Recipe for version 6.5 by Nuc1eoN, on Mon 07 Oct 2024 11:24:51 PM CEST
+compile_version=017
+url="$ftpGnu/ncurses/ncurses-6.5.tar.gz"
+file_size=3688489
+file_md5=ac2d2629296f04c8537ca706b6977687
+
+recipe_type=configure
+
+configure_options=(
+   "--with-shared"
+   "--with-normal"
+#   "--with-termlib"
+   "--with-gpm"
+   "--without-debug"
+   "--without-ada"
+   "--enable-rpath"
+   "--enable-termcap"
+   "--enable-symlinks"
+   "--enable-overwrite"
+   "--enable-widec"
+   "--enable-pc-files"
+   "--with-cxx-binding"
+   "--with-cxx-shared"
+   "--with-versioned-syms"
+   "--enable-ext-colors"
+   "--enable-ext-mouse"
+   #"--with-extra-suffix"
+   #"--with-abi-version=6"
+)
+
+# configure_options is in platform subdirectories
+
+make_variables=(
+   TEST_LIBS="-lutil -ldl"
+)
+
+install_variables=(
+   ticdir="${target}/share/terminfo"
+)
+
+pre_link() {
+   local pkgmajor=6
+   local pkgminor=5
+
+   ## From ArchLinux
+   # Fool packages looking to link to non-wide-character ncurses libraries
+   for lib in ncurses ncurses++ form panel menu; do
+     printf "INPUT(-l%sw)\n" "${lib}" > "$target/lib/lib${lib}.so"
+     ln -sv ${lib}w.pc "$target/lib/pkgconfig/${lib}.pc"
+   done
+
+   # some packages look for -lcurses during build
+   printf 'INPUT(-lncursesw)' > "$target/lib/libcursesw.so"
+   ln -sv libncurses.so "$target/lib/libcurses.so"
+
+   # tic and ticinfo functionality is built in by default
+   # make sure that anything linking against it links against libncursesw.so instead
+   for lib in tic tinfo; do
+     printf "INPUT(libncursesw.so.%s)\n" "${pkgmajor}" > "$target/lib/lib${lib}.so"
+     ln -sv libncursesw.so.${pkgmajor} "$target/lib/lib${lib}.so.${pkgmajor}"
+     ln -sv ncursesw.pc "$target/lib/pkgconfig/${lib}.pc"
+   done
+
+   ## GoboLinux specific:
+   # Adding compatibility symlinks which used to be there in the NcursesW 6.2 package.
+   # If those symlinks are not available stuff will break (eg rxvt).
+   # Maybe https://invisible-island.net/ncurses/INSTALL.html#option:with-extra-suffix could help
+   ln -sv libncursesw.so.${pkgmajor}.${pkgminor} "$target/lib/libncurses.so.${pkgmajor}"
+   ln -sv libmenuw.so.${pkgmajor}.${pkgminor}    "$target/lib/libmenu.so.${pkgmajor}"
+
+   # This should not be necessairy and I have no idea why libncursesw.so.6 links to libtinfo.so.6
+   # which in turn links back to libncursesw.so.6.
+   # It is it is correctly linking to libncursesw.so.6.5 in the compiled sources.
+   # So looks like a GoboLinux specific bug that is introduced right after the install step...
+   ln -svf "libncursesw.so.${pkgmajor}.${pkgminor}" "$target/lib/libncursesw.so.${pkgmajor}"
+
+   # PS: RescueSymlink is your best friend :))
+}
