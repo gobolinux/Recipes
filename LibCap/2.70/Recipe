@@ -1,0 +1,13 @@
+# Recipe for version 2.70 by Nuc1eoN, on Fri 25 Oct 2024 08:02:14 PM CEST
+# Recipe (MakeRecipe) for LibCap by Andy Feldman <nereusren@gmail.com>, on Sat Jan 17 21:39:49 CST 2009
+compile_version=1.11.3
+url="https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-2.70.tar.xz"
+file_size=191388
+file_md5=df0e20c6eeca849347b87d5d6a8870c0
+recipe_type=makefile
+dir="libcap-2.70"
+makefile='Makefile'
+make_variables=(
+   "prefix=$target"
+   "RAISE_SETFCAP=no"
+)
