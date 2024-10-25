@@ -12,5 +12,5 @@ manifest=(
 	".:package"
 	"browser/chrome/icons/default/default48.png:share/icons/firefox.png"
 	"$recipedir/firefox.desktop:share/applications/firefox.desktop"
-	"$recipedir/firefox-bin.sh:bin/firefox"
+	"$recipedir/Resources/Wrappers/firefox-bin.sh:bin/firefox"
 )
