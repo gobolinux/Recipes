@@ -1,0 +1,25 @@
+GDK-Pixbuf >= 2.42.8
+GObject-Introspection >= 1.62.0
+ATK >= 2.35.1
+GLib >= 2.63.5
+Pango >= 1.44.7
+Cairo
+Adwaita-Icon-Theme
+FreeType
+HarfBuzz
+LibEpoxy
+XKBcommon
+ISO-Codes
+
+# For X11 backend
+XRandR
+LibXrender
+LibXi
+LibXext
+LibXfixes
+LibXcursor
+LibXdamage
+LibXcomposite
+
+# For Wayland backend
+Wayland
