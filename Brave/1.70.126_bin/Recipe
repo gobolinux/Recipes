@@ -12,5 +12,5 @@ manifest=(
 	".:package"
 	"product_logo_48.png:share/icons/brave-browser.png"
 	"$recipedir/brave-browser.desktop:share/applications/brave-browser.desktop"
-	"$recipedir/brave-bin.sh:bin/brave"
+	"$recipedir/Resources/Wrappers/brave-bin.sh:bin/brave"
 )
