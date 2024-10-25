@@ -1,0 +1,10 @@
+# Recipe for version 1.42 by Nuc1eoN, on Fri 25 Oct 2024 08:11:52 PM CEST
+# by Maglan C. Diemer
+compile_version=1.8.2
+url="$ftpGnu/libidn/libidn-1.42.tar.gz"
+file_size=2653078
+file_md5=fe061a95ae23979150a692d102dce4ad
+recipe_type=configure
+configure_options=(
+   "--mandir=${target}/man"
+)
