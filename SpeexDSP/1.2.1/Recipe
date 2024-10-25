@@ -1,0 +1,12 @@
+# Recipe for version 1.2.1 by Nuc1eoN, on Fri 25 Oct 2024 08:16:33 PM CEST
+# Recipe (MakeRecipe) for SpeexDSP by Hisham Muhammad <hisham@gobolinux.org>, on Wed Jun 14 11:37:03 BRT 2017
+compile_version=git
+url="http://downloads.xiph.org/releases/speex/speexdsp-1.2.1.tar.gz"
+file_size=922584
+file_md5=e6eb5ddef743a362c8018f260b91dca5
+dir='speexdsp-1.2.1'
+recipe_type=configure
+
+configure_options=(
+	--disable-static
+)
