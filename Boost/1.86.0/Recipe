@@ -1,0 +1,29 @@
+# Recipe for version 1.86.0 by Nuc1eoN, on Fri 25 Oct 2024 08:45:16 PM CEST
+compile_version=1.8.2
+url="https://archives.boost.io/release/1.86.0/source/boost_1_86_0.tar.bz2"
+file_size=126220652
+file_md5=2d098ba2e1457708a02de996857c2b10
+recipe_type=makefile
+
+# Sadly, Boost 1.45 no longer provides a configure script, so we need to
+# resort to a very procedural recipe using Boost's completely nonstandard
+# build system.
+
+do_configuration() {
+   ./bootstrap.sh --prefix=$target
+}
+
+do_build() {
+   ./b2 variant=release threading=multi stage
+}
+
+do_install() {
+   $sudo_exec ./b2 install
+
+   # Manually install docs
+   $sudo_exec mkdir -p $target/doc
+   $sudo_exec cp -R doc/html $target/doc
+
+   # Install bjam for use by e.g. BGL-Python
+   $sudo_exec cp b2 $target/bin
+}
