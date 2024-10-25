@@ -1,0 +1,14 @@
+# Recipe for version 1.3.20240619 by Nuc1eoN, on Fri 25 Oct 2024 08:59:18 PM CEST
+url="https://invisible-island.net/archives/dialog/dialog-1.3-20240619.tgz"
+file_size=571167
+file_md5=24f6d9bfc42f4c4d38cd0dcd5798e0f1
+compile_version=1.8.2
+recipe_type=configure
+makefile=makefile
+dir=dialog-1.3-20240619
+
+configure_options=(
+   --enable-nls
+   --with-libtool
+   --with-ncursesw
+)
