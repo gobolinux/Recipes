@@ -1,0 +1,13 @@
+# Recipe for version 1.70 by Nuc1eoN, on Sat 26 Oct 2024 10:42:38 AM CEST
+# Recipe (MakeRecipe) for PulseAudio-Ctl by Hisham Muhammad <hisham@gobolinux.org>, on Sun Apr 26 03:41:30 -03 2020
+compile_version=git
+url="https://github.com/graysky2/pulseaudio-ctl/archive/v1.70.tar.gz"
+file_size=6513
+file_md5=fe19ca83d9a6a8fc63bd608b3c903ee1
+file="pulseaudio-ctl-1.70.tar.gz"
+dir='pulseaudio-ctl-1.70'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "PREFIX=$target"
+)
