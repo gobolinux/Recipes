@@ -1,0 +1,12 @@
+# Recipe for version 1.11.0 by Nuc1eoN, on Sat 26 Oct 2024 11:40:36 AM CEST
+compile_version=1.11.2
+url="https://www.gnupg.org/ftp/gcrypt/libgcrypt/libgcrypt-1.11.0.tar.bz2"
+file_size=4180345
+file_md5=321c4975cfd6a496f0530b65a673f9a4
+mirror_url='http://ftp.gnupg.zone-h.org/libgcrypt/libgcrypt-1.11.0.tar.bz2'
+recipe_type=configure
+
+configure_options=(
+	--disable-static
+	--disable-padlock-support
+)
