@@ -1,0 +1,13 @@
+# Recipe for version 17.0 by Nuc1eoN, on Sat 26 Oct 2024 10:09:18 AM CEST
+# Recipe (MakeRecipe) for PulseAudio by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Mar 2 16:47:14 PST 2008
+url="https://www.freedesktop.org/software/pulseaudio/releases/pulseaudio-17.0.tar.xz"
+file_size=1566556
+file_md5=c4a3596a26ff4b9dcd0c394dd1d4f8ee
+recipe_type=meson
+meson_variables=(
+	-D database=gdbm
+	-D tests=false
+	-D doxygen=false
+	#-D elogind=enabled
+	#-D consolekit=enabled
+)
