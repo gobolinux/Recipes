@@ -1,0 +1,11 @@
+# Recipe for version 2.0 by Nuc1eoN, on Sat Oct 26 11:04:36 AM CEST 2024
+compile_version=017
+url="https://www.kernel.org/pub/linux/bluetooth/sbc-2.0.tar.xz"
+file_size=270888
+file_md5=5613357181daeffd71e971c6f8470f8d
+recipe_type=configure
+
+configure_options=(
+	--disable-static
+	--disable-tester
+)
