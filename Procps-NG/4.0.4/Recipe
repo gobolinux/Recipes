@@ -1,0 +1,13 @@
+# Recipe for version 4.0.4 by Nuc1eoN, on Sat 26 Oct 2024 11:33:23 AM CEST
+# Recipe (MakeRecipe) for Procps-NG by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Dec 7 17:53:19 BRST 2013
+compile_version=1.0.1
+url="$httpSourceforge/project/procps-ng/Production/procps-ng-4.0.4.tar.xz"
+file_size=1401540
+file_md5=2f747fc7df8ccf402d03e375c565cf96
+recipe_type=configure
+
+configure_options=(
+	--disable-static
+	# Kill is provided by Util-linux
+	--disable-kill
+)
