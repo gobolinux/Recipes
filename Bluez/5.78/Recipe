@@ -1,0 +1,16 @@
+# Recipe for version 5.78 by Nuc1eoN, on Sat 26 Oct 2024 10:22:17 AM CEST
+compile_version=1.13.2
+url="http://www.kernel.org/pub/linux/bluetooth/bluez-5.78.tar.xz"
+file_size=2441672
+file_md5=baba09f84a22be1e1b6a0d9b94530788
+mirror_url="ftp://linux-kernel.uio.no/pub/linux/bluetooth/bluez-5.78-r1.tar.bz2"
+recipe_type=configure
+
+configure_options=(
+   --disable-systemd
+   --disable-manpages
+   --enable-library
+)
+make_variables=(
+   rulesdir="$target/lib/udev/rules.d"
+)
