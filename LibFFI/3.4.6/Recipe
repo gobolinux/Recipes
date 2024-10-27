@@ -1,0 +1,15 @@
+# Recipe for version 3.4.6 by Nuc1eoN, on Sun 27 Oct 2024 11:40:20 AM CET
+# Recipe (MakeRecipe) for LibFFI by Samuel A. Falvo II, on Sat Feb 23 11:30:25 PST 2008
+compile_version=1.10.0
+url="https://github.com/libffi/libffi/releases/download/v3.4.6/libffi-3.4.6.tar.gz"
+file_size=1391684
+file_md5=b9cac6c5997dca2b3787a59ede34e0eb
+recipe_type=configure
+
+configure_options=(
+    --enable-portable-binary
+    # remove --disable-exec-static-tramp once ghc and gobject-introspection
+    # work fine with it enabled (https://github.com/libffi/libffi/pull/647)
+    --disable-exec-static-tramp
+    --disable-static
+)
