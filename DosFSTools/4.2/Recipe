@@ -1,0 +1,15 @@
+# Recipe for version 4.2 by Nuc1eoN, on Sun 27 Oct 2024 09:34:01 AM CET
+url="https://github.com/dosfstools/dosfstools/releases/download/v4.2/dosfstools-4.2.tar.gz"
+file_size=320917
+file_md5=49c8e457327dc61efab5b115a27b087a
+dir=dosfstools-4.2
+compile_version=1.8.0
+recipe_type=configure
+make_variables=(
+   "PREFIX=$target"
+   "DOCDIR=$target/doc"
+   "MANDIR=$target/man"
+)
+configure_options=(
+   --enable-compat-symlinks
+)
