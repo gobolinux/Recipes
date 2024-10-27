@@ -1,0 +1,15 @@
+# Recipe for version 2.3.0 by Nuc1eoN, on Sun 27 Oct 2024 10:51:53 AM CET
+# Recipe (MakeRecipe) for PCSC-Lite by Kosh <kosh.linux at gmail.com>, on Fri Nov 4 14:14:11 BRST 2005
+compile_version=2.3.0
+url="https://pcsclite.apdu.fr/files/pcsc-lite-2.2.3.tar.xz"
+file_size=207892
+file_md5=1a5f60ade943393f9e609e0e55bb1417
+recipe_type=meson
+
+meson_variables=(
+	-D libsystemd=false
+	-D libudev=true
+	-D polkit=false
+	-D serial=true
+	-D serialconfdir="$settings_target"
+)
