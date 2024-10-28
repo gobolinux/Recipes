@@ -1,0 +1,15 @@
+# Recipe for version 2.5.1 by Nuc1eoN, on Mon 28 Oct 2024 08:33:19 AM CET
+# Recipe (MakeRecipe) for PPP by Andreas Koehler, on Thu Aug 11 23:57:09 CEST 2005
+compile_version=1.8.2
+url="https://download.samba.org/pub/ppp/ppp-2.5.1.tar.gz"
+file_size=991639
+file_md5=c2d96ac7eb2020d3ed0e6e05fe996afe
+recipe_type=configure
+install_variables=(
+   DESTDIR=$target
+)
+
+pre_install() {
+   mkdir -p $settings_target/ppp/peers
+   cp etc.ppp/* $settings_target/ppp
+}
