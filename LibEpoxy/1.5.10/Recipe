@@ -1,0 +1,8 @@
+# Recipe for version 1.5.10 by Nuc1eoN, on Mon 28 Oct 2024 08:39:33 AM CET
+# Recipe (MakeRecipe) for LibEpoxy by Hisham Muhammad <hisham@gobolinux.org>, on Sun Apr 5 23:43:45 BRT 2015
+compile_version=git
+url="https://github.com/anholt/libepoxy/archive/refs/tags/1.5.10.tar.gz"
+dir="libepoxy-1.5.10"
+file_size=332078
+file_md5=f0730aad115c952e77591fcc805b1dc1
+recipe_type=meson
