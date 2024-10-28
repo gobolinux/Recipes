@@ -1,0 +1,15 @@
+# Recipe for version 3.0.18 by Nuc1eoN, on Mon 28 Oct 2024 09:23:28 AM CET
+# Recipe (MakeRecipe) for LibiCal by Jonas Karlsson <jonka750@student.liu.se>, on Fri Sep 5 23:49:20 CEST 2008
+compile_version=1.8.0
+url="https://github.com/libical/libical/releases/download/v3.0.18/libical-3.0.18.tar.gz"
+file_size=908948
+file_md5=cc790ea49701df0335d42b89d57c04bc
+recipe_type=cmake
+
+cmake_options=(
+    -D CMAKE_INSTALL_LIBDIR=lib
+    -D ENABLE_GTK_DOC=OFF
+    -D GOBJECT_INTROSPECTION=true
+    -D ICAL_GLIB_VAPI=true
+    -D SHARED_ONLY=true
+)
