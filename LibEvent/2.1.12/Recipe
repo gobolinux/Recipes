@@ -1,0 +1,14 @@
+# Recipe for version 2.1.12 by Nuc1eoN, on Mon 28 Oct 2024 08:42:01 AM CET
+# LibEvent 2.1.12 Recipe by Peter Eriksen <s022018@student.dtu.dk>
+compile_version=1.8.5
+url="https://github.com/libevent/libevent/releases/download/release-2.1.12-stable/libevent-2.1.12-stable.tar.gz"
+file_size=1100847
+file_md5=b5333f021f880fe76490d8a799cd79f4
+recipe_type=configure
+configure_options=(
+	--disable-static
+)
+
+pre_link() {
+	cp -r include/event2 $target/include
+}
