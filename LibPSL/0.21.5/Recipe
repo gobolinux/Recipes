@@ -1,0 +1,13 @@
+# Recipe for version 0.21.5 by Nuc1eoN, on Tue 29 Oct 2024 11:21:06 AM CET
+# Recipe (MakeRecipe) for LibPSL by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed 26 Feb 2020 03:44:04 PM BRT
+compile_version=016
+url="https://github.com/rockdaboot/libpsl/releases/download/0.21.5/libpsl-0.21.5.tar.gz"
+file_size=7624251
+file_md5=870a798ee9860b6e77896548428dba7b
+recipe_type=meson
+
+meson_variables=(
+	--buildtype=release
+	-D runtime=libicu
+	-D builtin=true
+)
