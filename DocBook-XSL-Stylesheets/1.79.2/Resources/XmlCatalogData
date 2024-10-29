@@ -1,0 +1,5 @@
+delegateURI;http://cdn.docbook.org/release/xsl/;file://${target}/share/xml/docbook/stylesheet/docbook-xsl/;${goboVariable}/lib/xml/catalog
+rewriteSystem;http://cdn.docbook.org/release/xsl/current/;file://${target}/share/xml/docbook/stylesheet/docbook-xsl/;${goboVariable}/lib/xml/catalog
+rewriteURI;http://cdn.docbook.org/release/xsl/current/;file://${target}/share/xml/docbook/stylesheet/docbook-xsl/;${goboVariable}/lib/xml/catalog
+rewriteSystem;http://cdn.docbook.org/release/xsl/1.79.2/;file://${target}/share/xml/docbook/stylesheet/docbook-xsl/;${goboVariable}/lib/xml/catalog
+rewriteURI;http://cdn.docbook.org/release/xsl/1.79.2/;file://${target}/share/xml/docbook/stylesheet/docbook-xsl/;${goboVariable}/lib/xml/catalog
