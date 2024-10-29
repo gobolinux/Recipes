@@ -1,0 +1,12 @@
+# Recipe for version 2.2.5 by Nuc1eoN, on Tue 22 Oct 2024 02:02:34 AM CEST
+## 20040623 Dave Dodge
+url="https://github.com/rrthomas/libpaper/releases/download/v2.2.5/libpaper-2.2.5.tar.gz"
+file_size=1215652
+file_md5=4b914c3ca6d8277260fce418e12bae6b
+dir=libpaper-2.2.5
+compile_version=1.8.2
+recipe_type=configure
+
+configure_options=(
+	--disable-static
+)
