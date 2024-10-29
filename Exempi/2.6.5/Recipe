@@ -1,0 +1,10 @@
+# Recipe for version 2.6.5 by Nuc1eoN, on Tue 29 Oct 2024 01:32:56 PM GMT
+# Recipe (MakeRecipe) for Exempi by Jonas Karlsson <jonka750@student.liu.se>, on Sun Aug 10 17:08:20 CEST 2008
+compile_version=1.10.0
+url="https://libopenraw.freedesktop.org/download/exempi-2.6.5.tar.bz2"
+file_size=3719598
+file_md5=1a895eb6baf09290c33b2c0a3174bb54
+recipe_type=configure
+configure_options=(
+   --enable-unittest=no
+)
