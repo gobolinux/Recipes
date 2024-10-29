@@ -1,0 +1,22 @@
+# Recipe for version 2.7.5 by Nuc1eoN, on Tue 29 Oct 2024 12:21:55 PM CET
+# Recipe (MakeRecipe) for CryptSetup by Isaac Dupree <id@isaac.cedarswampstudios.org>, on Sun Jul 1 17:35:24 BRT 2007
+compile_version=1.8.5
+url="https://mirrors.edge.kernel.org/pub/linux/utils/cryptsetup/v2.7/cryptsetup-2.7.5.tar.xz"
+file_size=11697476
+file_md5=f663f37dd478484f61ace54902c17274
+recipe_type=configure
+
+configure_options=(
+  --disable-ssh-token
+  --disable-static
+  --disable-asciidoc
+#  --enable-libargon2 # we do not have an Argon2 recipe yet 
+)
+
+with_openssl=(
+  --with-crypto_backend=openssl
+)
+
+with_passwdqc=(
+  --enable-passwdqc
+)
