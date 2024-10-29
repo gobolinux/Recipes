@@ -1,0 +1,13 @@
+# Recipe for version 3.3.0 by Nuc1eoN, on Tue 29 Oct 2024 01:29:55 PM GMT
+# Recipe (MakeRecipe) for DoubleConversion by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed 26 Feb 2020 03:57:47 PM BRT
+compile_version=016
+url="https://github.com/google/double-conversion/archive/v3.3.0.tar.gz"
+file_size=7033266
+file_md5=b344abb64084a4a1d98a43e67752989b
+file="double-conversion-3.3.0.tar.gz"
+dir='double-conversion-3.3.0'
+recipe_type=cmake
+
+cmake_options=(
+	-DBUILD_SHARED_LIBS=ON
+)
