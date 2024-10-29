@@ -1,0 +1,32 @@
+Avoid installation under /usr
+
+diff -Nur passwdqc-2.0.3.old/Makefile passwdqc-2.0.3/Makefile
+--- passwdqc-2.0.3.old/Makefile	2023-06-23 10:36:17.000000000 +0000
++++ passwdqc-2.0.3/Makefile	2024-10-29 17:24:48.167410289 +0000
+@@ -34,21 +34,21 @@
+ MAN5 = passwdqc.conf.5
+ MAN8 = $(TITLE).8
+ MANMODE = 644
+-BINDIR = /usr/bin
++BINDIR = /bin
+ BINMODE = 755
+ CONFDIR = /etc
+ CONFMODE = 644
+ SHARED_LIBDIR = /lib
+ SHARED_LIBDIR_CYGWIN = /usr/bin
+ SHARED_LIBDIR_SUN = /usr/lib
+-SHARED_LIBDIR_REL = ../..$(SHARED_LIBDIR)
+-DEVEL_LIBDIR = /usr/lib
++SHARED_LIBDIR_REL = .
++DEVEL_LIBDIR = /lib
+ SECUREDIR = /lib/security
+ SECUREDIR_SUN = /usr/lib/security
+ SECUREDIR_DARWIN = /usr/lib/pam
+-INCLUDEDIR = /usr/include
++INCLUDEDIR = /include
+ PKGCONFIGDIR = $(DEVEL_LIBDIR)/pkgconfig
+-MANDIR = /usr/share/man
++MANDIR = /share/man
+ DESTDIR =
+ LOCALEDIR = /usr/share/locale
+ LOCALEMODE = 644

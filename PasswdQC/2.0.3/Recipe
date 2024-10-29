@@ -1,0 +1,13 @@
+# Recipe for version 2.0.3 by Nuc1eoN, on Tue 29 Oct 2024 05:11:25 PM GMT
+# Recipe (MakeRecipe) for PasswdQC by Aitor ATuin <atuin@tuta.io>, on Fri Dec 30 19:28:50 CET 2016
+compile_version=016
+url="http://www.openwall.com/passwdqc/passwdqc-2.0.3.tar.gz"
+file_size=89608
+file_md5=fd4d6fff2951256c3c0d013becef1298
+dir='passwdqc-2.0.3'
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   "CONFDIR=/Resources/Defaults/Settings"
+   "DESTDIR=$target"
+)
