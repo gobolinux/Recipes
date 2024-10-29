@@ -1,0 +1,12 @@
+# Recipe for version 3.3.10 by Nuc1eoN, on Tue 29 Oct 2024 02:25:38 PM GMT
+# Recipe (MakeRecipe) for FFTW by Roko <ro.ko@mcnon.com>, on Thu Sep 30 21:46:16 BRT 2004
+compile_version=1.8.2
+url="http://www.fftw.org/fftw-3.3.10.tar.gz"
+file_size=4144100
+file_md5=8ccbf6a5ea78a16dbc3e1306e234cc5c
+recipe_type=configure
+configure_options=(
+   --enable-float
+   --enable-sse3
+   --with-pic
+)
