@@ -1,0 +1,15 @@
+# Recipe for version 1.5.2 by Nuc1eoN, on Tue 29 Oct 2024 12:50:27 PM CET
+# Recipe (MakeRecipe) for Opus by Ivan Florentin <ivanflorentin@gmail.com>, on Thu Jun 15 20:56:56 PYT 2017
+compile_version=016.01
+url="https://downloads.xiph.org/releases/opus/opus-1.5.2.tar.gz"
+file_size=7839412
+file_md5=c40b3a1fbdbb9a7aa178600b88200c76
+recipe_type=meson
+
+meson_variables=(
+    -D asm=disabled
+    -D custom-modes=true
+    -D deep-plc=enabled
+    -D dred=enabled
+    -D osce=enabled
+)
