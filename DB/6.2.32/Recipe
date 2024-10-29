@@ -1,0 +1,29 @@
+# Recipe for version 6.2.32 by Nuc1eoN, on Tue 29 Oct 2024 01:37:13 PM CET
+# Recipe (MakeRecipe) for DB by roko, <ro.ko@mcnon.com>, on Wed Feb 2 15:29:24 CET 2005
+compile_version=1.12.4
+url="http://download.oracle.com/berkeley-db/db-6.2.32.tar.gz"
+file_size=45342417
+file_md5=33491b4756cb44b91c3318b727e71023
+recipe_type=configure
+dir=db-6.2.32/build_unix
+configure=../dist/configure
+environment=(
+   CC=gcc
+)
+configure_options=(
+   "--with-tcl=$tcl_path/lib"
+   --enable-compat185
+   --enable-cxx       #     Build C++ API.
+   --enable-dbm       #     Legacy interface support needed by some older packages.
+   --enable-tcl       #     Build Tcl API.
+   --enable-static    #     Just following ArchLinux packaging
+   --enable-shared
+#  --enable-java      #     Build Java API.
+#  --enable-rpc       #     Build RPC client/server.
+#  --enable-test      #     Configure to run the test suite.
+
+)
+
+pre_link() {
+   rm -r "$target/docs"
+}
