@@ -1,9 +1,19 @@
-ATK >= 2.34.1
+At-Spi2-Core >= 2.54.0 # ATK
 GLib >= 2.63.5
 GDK-Pixbuf >= 2.40.0
 Pango >= 1.44.7
 HiColor-Icons
-Adwaita-Icon-Theme
 Mesa >= 19.3.3
-LibFFI >= 3.3
-GObject-Introspection >= 1.62.0
+Adwaita-Icon-Theme # optional
+
+CUPS
+Fontconfig
+Shared-MIME-info
+LibRSVG
+LibX11
+LibXrender
+LibXRandR
+LibXi
+LibXext
+LibXdamage
+LibXcomposite
