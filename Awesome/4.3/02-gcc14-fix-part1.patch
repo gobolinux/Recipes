@@ -1,0 +1,39 @@
+From c5202a48708585cc33528065af8d1b1d28b1a6e0 Mon Sep 17 00:00:00 2001
+From: Emmanuel Lepage Vallee <elv1313@gmail.com>
+Date: Sat, 30 Nov 2019 23:57:47 -0500
+Subject: [PATCH] tag: Add a context to request::select.
+
+---
+ ewmh.c        | 3 ++-
+ objects/tag.c | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/ewmh.c b/ewmh.c
+index 429b96ee43..8a1dfcf1ce 100644
+--- a/ewmh.c
++++ b/ewmh.c
+@@ -462,7 +462,8 @@ ewmh_process_client_message(xcb_client_message_event_t *ev)
+         {
+             lua_State *L = globalconf_get_lua_State();
+             luaA_object_push(L, globalconf.tags.tab[idx]);
+-            luaA_object_emit_signal(L, -1, "request::select", 0);
++            lua_pushstring(L, "ewmh");
++            luaA_object_emit_signal(L, -1, "request::select", 1);
+             lua_pop(L, 1);
+         }
+     }
+diff --git a/objects/tag.c b/objects/tag.c
+index e0dbc6ff16..0bc37c7060 100644
+--- a/objects/tag.c
++++ b/objects/tag.c
+@@ -203,8 +203,9 @@
+ #include "ewmh.h"
+ #include "luaa.h"
+ 
+-/**
++/** When a tag requests to be selected.
+  * @signal request::select
++ * @tparam string context The reason why it was called.
+  */
+ 
+ /**

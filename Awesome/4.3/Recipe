@@ -6,6 +6,7 @@ file_size=1037816
 file_md5=4d75cce54a86b6bbaa6e88a926cab5a7
 recipe_type=cmake
 cmake_options=(
+   -DCMAKE_BUILD_TYPE=RELEASE
    -DSYSCONFDIR="$settings_target"
    -DGENERATE_MANPAGES=OFF
 )
