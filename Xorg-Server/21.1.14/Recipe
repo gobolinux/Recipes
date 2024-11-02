@@ -1,0 +1,49 @@
+# Recipe for version 21.1.14 by Nuc1eoN, on Sat 02 Nov 2024 10:15:09 PM GMT
+# Recipe (MakeRecipe) for Xorg-Server by Hisham Muhammad <lode@gobolinux.org>, on Fri Aug 19 18:49:06 BRT 2005
+compile_version=017
+url="https://www.x.org/releases/individual/xserver/xorg-server-21.1.14.tar.xz"
+file_size=5016608
+file_md5=79c7a0058e247fe7b94b8159d4a6f4f5
+
+recipe_type=meson
+symlink_options=(--conflict=overwrite)
+
+meson_variables=(
+	-D xvfb=true
+	-D xnest=true
+	-D xcsecurity=true
+	-D xorg=true
+	-D xephyr=true
+	-D glamor=true
+	-D udev=true
+	-D dtrace=false
+	-D sha1=libmd
+	-D libunwind=true
+
+	-D systemd_logind=false
+	-D suid_wrapper=false
+
+	-D vendor_name=GoboLinux
+	-D default_font_path="${goboShared}/fonts"
+	-D module_dir="${goboLibraries}/xorg/modules"
+	-D xkb_bin_dir="${goboExecutables}"
+	-D xkb_output_dir="${goboVariable}/lib/xkb"
+)
+
+environment=(
+   appdefaultdir="${target}/share/X11/app-defaults"
+   module_dir="${target}/lib/xorg/modules"
+   miscconfigdir="${target}/lib/xorg"
+)
+
+unmanaged_files=(
+   "$goboVariable/lib/xkb"
+)
+
+pre_install() {
+   mkdir -p "$goboVariable/lib/xkb"
+}
+
+post_install() {
+   chmod u+s "${target}/bin/Xorg"
+}
