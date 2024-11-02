@@ -1,0 +1,12 @@
+# Recipe for version 1.26.2 by Nuc1eoN, on Fri 04 Oct 2024 11:36:53 PM CEST
+# Recipe (MakeRecipe) for LibInput by Nuc!eoN, on Thu 12 Nov 2020 04:02:20 PM CET
+compile_version=017-GIT
+url="https://gitlab.freedesktop.org/libinput/libinput/-/archive/1.26.2/libinput-1.26.2.tar.gz"
+file_size=1032914
+file_md5=65bfce1b15c7b2375d4df4f390a9233f
+recipe_type=meson
+meson_variables=(
+	-Db_lto=false
+	-Ddocumentation=false
+	-Dtests=false
+)
