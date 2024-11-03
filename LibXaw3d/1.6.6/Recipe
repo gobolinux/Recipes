@@ -1,0 +1,8 @@
+# Recipe for version 1.6.6 by Nuc1eoN, on Sun 03 Nov 2024 10:56:10 AM GMT
+# Recipe (MakeRecipe) for LibXaw3d by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed Mar 14 16:14:18 NZDT 2012
+compile_version=1.13.3
+url="https://www.x.org/releases/individual/lib/libXaw3d-1.6.6.tar.xz"
+file_size=482040
+file_md5=411e44d066d8b2ca07619211124d7d02
+recipe_type=configure
+configure_options=(--disable-static)
