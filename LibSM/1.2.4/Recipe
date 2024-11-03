@@ -1,0 +1,10 @@
+# Recipe for version 1.2.4 by Nuc1eoN, on Sun 03 Nov 2024 09:58:23 AM GMT
+# Recipe (MakeRecipe) for LibSM by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 19:42:41 BRT 2005
+compile_version=1.8.5
+url="https://www.x.org/releases/individual/lib/libSM-1.2.4.tar.xz"
+file_size=306944
+file_md5=ffa434ed96ccae45533b3d653300730e
+recipe_type=configure
+pre_build(){
+	env
+}
