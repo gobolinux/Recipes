@@ -1,0 +1,8 @@
+# Recipe for version 1.2.2 by Nuc1eoN, on Sun 03 Nov 2024 01:08:51 PM GMT
+# Recipe (MakeRecipe) for LibXcursor by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 19:43:19 BRT 2005
+compile_version=1.8.5
+url="https://www.x.org/releases/individual/lib/libXcursor-1.2.2.tar.xz"
+file_size=289536
+file_md5=bf3a43ad8cb91a258b48f19c83af8790
+recipe_type=configure
+configure_options=(--disable-static)
