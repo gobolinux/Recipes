@@ -1,0 +1,10 @@
+# Recipe for version 1.0.14 by Nuc1eoN, on Mon 04 Nov 2024 02:00:32 PM GMT
+# Recipe (MakeRecipe) for LibXvMC by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 19:45:02 BRT 2005
+compile_version=017-GIT
+url="https://www.x.org/releases/individual/lib/libXvMC-1.0.14.tar.xz"
+file_size=278492
+file_md5=a90a5f01102dc445c7decbbd9ef77608
+recipe_type=configure
+configure_options=(
+	--disable-static	
+)
