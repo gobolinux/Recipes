@@ -1,0 +1,9 @@
+# Recipe for version 1.3 by Nuc1eoN, on Mon 04 Nov 2024 02:33:56 PM GMT
+# Recipe (MakeRecipe) for XCB-Util-XRM by Hisham Muhammad <hisham@gobolinux.org>, on Fri Nov 18 18:40:36 BRST 2016
+compile_version=017-GIT
+url="https://github.com/Airblader/xcb-util-xrm/releases/download/v1.3/xcb-util-xrm-1.3.tar.gz"
+file_size=408075
+file_md5=fb5e5bf24c7288e652cf4a254bcf994a
+dir='xcb-util-xrm-1.3'
+recipe_type=configure
+configure_options=(--disable-static)
