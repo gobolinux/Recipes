@@ -5,6 +5,4 @@ url="https://www.x.org/releases/individual/lib/libSM-1.2.4.tar.xz"
 file_size=306944
 file_md5=ffa434ed96ccae45533b3d653300730e
 recipe_type=configure
-pre_build(){
-	env
-}
+configure_options=(--disable-static)
