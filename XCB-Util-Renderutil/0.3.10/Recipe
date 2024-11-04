@@ -1,0 +1,8 @@
+# Recipe for version 0.3.10 by Nuc1eoN, on Mon 04 Nov 2024 02:25:30 PM GMT
+# Recipe (MakeRecipe) for XCB-Util-Renderutil by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Mar 20 14:26:17 NZDT 2012
+compile_version=017-GIT
+url="https://www.x.org/releases/individual/xcb/xcb-util-renderutil-0.3.10.tar.xz"
+file_size=262028
+file_md5=193b890e2a89a53c31e2ece3afcbd55f
+recipe_type=configure
+configure_options=(--disable-static)
