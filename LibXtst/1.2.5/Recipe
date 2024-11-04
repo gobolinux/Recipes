@@ -1,0 +1,10 @@
+# Recipe for version 1.2.5 by Nuc1eoN, on Mon 04 Nov 2024 01:53:43 PM GMT
+# Recipe (MakeRecipe) for LibXtst by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 19:44:54 BRT 2005
+compile_version=017-GIT
+url="https://www.x.org/releases/individual/lib/libXtst-1.2.5.tar.xz"
+file_size=291748
+file_md5=b62dc44d8e63a67bb10230d54c44dcb7
+recipe_type=configure
+configure_options=(
+	--disable-static
+)
