@@ -1,0 +1,8 @@
+# Recipe for version 1.1.6 by Nuc1eoN, on Sun 03 Nov 2024 10:21:30 PM GMT
+# Recipe (MakeRecipe) for LibXdamage by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 19:43:23 BRT 2005
+compile_version=017
+url="https://www.x.org/releases/individual/lib/libXdamage-1.1.6.tar.xz"
+file_size=257532
+file_md5=ca55d29fa0a8b5c4a89f609a7952ebf8
+recipe_type=configure
+configure_options=(--disable-static)
