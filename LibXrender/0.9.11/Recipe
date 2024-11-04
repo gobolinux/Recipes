@@ -1,0 +1,10 @@
+# Recipe for version 0.9.11 by Nuc1eoN, on Mon 04 Nov 2024 01:36:18 PM GMT
+# Recipe (MakeRecipe) for LibXrender by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 19:44:36 BRT 2005
+compile_version=017-GIT
+url="https://www.x.org/releases/individual/lib/libXrender-0.9.11.tar.xz"
+file_size=302900
+file_md5=ebf7fb3241ec03e8a3b2af72f03b4631
+recipe_type=configure
+configure_options=(
+	--disable-static
+)
