@@ -1,0 +1,11 @@
+# Recipe for version 1.2.5 by Nuc1eoN, on Tue 05 Nov 2024 09:26:14 PM GMT
+# Recipe (MakeRecipe) for XSet by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 19:21:36 BRT 2005
+compile_version=017-GIT
+url="https://www.x.org/releases/individual/app/xset-1.2.5.tar.xz"
+file_size=138776
+file_md5=18ff5cdff59015722431d568a5c0bad2
+recipe_type=configure
+configure_options=(
+	# flag used by Gentoo and ArchLinux
+	--without-fontcache
+)
