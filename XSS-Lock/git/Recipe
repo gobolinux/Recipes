@@ -1,0 +1,7 @@
+# Recipe for version git by Nuc1eoN, on Tue 05 Nov 2024 09:22:36 PM GMT
+# Recipe (MakeRecipe) for XSS-Lock by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon 09 Mar 2020 12:49:50 PM BRT
+compile_version=017-GIT
+git="https://github.com/wavexx/xss-lock.git"
+file="raymonad-xss-lock-94aec045ffd6.tar.xz"
+dir='raymonad-xss-lock-94aec045ffd6'
+recipe_type=cmake
