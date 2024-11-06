@@ -1,0 +1,28 @@
+# Recipe for version 3.11.1 by Nuc1eoN, on Wed 30 Oct 2024 12:35:43 PM GMT
+# Recipe (MakeRecipe) for Luarocks by Hisham Muhammad, on Thu Apr 24 17:43:49 BRT 2008
+compile_version=017-GIT
+url="http://luarocks.github.io/luarocks/releases/luarocks-3.11.1.tar.gz"
+file_size=277760
+file_md5=db2988ee6424337571701f3ec7c8e221
+recipe_type=configure
+makefile=GNUmakefile
+configure_options=(
+   "--prefix=$target"
+   "--rocks-tree=$goboSystem/Aliens/LuaRocks"
+   "--with-lua=$lua_path"
+)
+unmanaged_files=(
+   "$goboSystem/Aliens/LuaRocks"
+)
+
+pre_link() {
+   existing=$(echo $target/share/lua/*.*)
+   echo $existing
+   for v in 5.1 5.2 5.3 5.4
+   do
+      [ -e $target/share/lua/$v/luarocks ] || {
+         mkdir -p $target/share/lua/$v
+         ln -nfs $existing/* $target/share/lua/$v
+      }
+   done
+}
