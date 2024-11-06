@@ -1,0 +1,20 @@
+# Recipe (MakeRecipe) for Pkgconf by Nuc1eoN, on Thu 31 Oct 2024 12:05:36 AM GMT
+# Recipe for version 2.3.0 by Nuc1eoN, on Thu 31 Oct 2024 12:05:36 AM GMT
+compile_version=017-GIT
+url="https://gitea.treehouse.systems/ariadne/pkgconf/archive/pkgconf-2.3.0.tar.gz"
+file="pkgconf-pkgconf-2.3.0.tar.gz"
+file_size=121618
+file_md5=c0ebb879d153f1e70e1b8a3653a0662a
+dir='pkgconf'
+recipe_type=meson
+meson_variables=(-D tests=disabled)
+
+# To maintain compatibility with the original Pkg-config create two symlinks
+pre_link() {
+  ln -sv pkgconf $target/bin/pkg-config
+  ln -sv pkgconf.1 $target/share/man/man1/pkg-config.1
+}
+
+symlink_options=(
+  "--conflict overwrite"
+)
