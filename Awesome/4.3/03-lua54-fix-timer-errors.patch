@@ -1,0 +1,23 @@
+From e64446082bbd6ee975f9db887bb7e29cd10ab597 Mon Sep 17 00:00:00 2001
+From: Anton Bulakh <self@necauqua.dev>
+Date: Mon, 22 Nov 2021 12:24:20 +0200
+Subject: [PATCH] Fix timer errors
+
+---
+ lib/gears/timer.lua | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/lib/gears/timer.lua b/lib/gears/timer.lua
+index 20653a4bb5..bf06e8bbd2 100644
+--- a/lib/gears/timer.lua
++++ b/lib/gears/timer.lua
+@@ -91,7 +91,8 @@ function timer:start()
+         gdebug.print_error(traceback("timer already started"))
+         return
+     end
+-    self.data.source_id = glib.timeout_add(glib.PRIORITY_DEFAULT, self.data.timeout * 1000, function()
++    local timeout_ms = math.floor(self.data.timeout * 1000 + 0.5)
++    self.data.source_id = glib.timeout_add(glib.PRIORITY_DEFAULT, timeout_ms, function()
+         protected_call(self.emit_signal, self, "timeout")
+         return true
+     end)
