@@ -1,0 +1,12 @@
+# Recipe for version 2.13.0 by Nuc1eoN, on Thu 31 Oct 2024 01:10:59 AM GMT
+# Recipe (MakeRecipe) for LibWacom by Rune Morling <rune.morling+github@gmail.com>, on Wed 12 May 2021 08:10:56 PM CEST
+compile_version=017-GIT
+url="https://github.com/linuxwacom/libwacom/releases/download/libwacom-2.13.0/libwacom-2.13.0.tar.xz"
+file_size=
+file_md5=
+dir='libwacom-2.13.0'
+recipe_type=meson
+meson_variables=(
+	--buildtype=release
+	-Dtests=disabled
+)
