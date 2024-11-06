@@ -1,19 +1,39 @@
 # LuaRocks Environment
+#####################
+gen_luarocks_path ()
+{
+   local version="$1"
 
-for vk in  5.1=  5.2=_5_2  5.3=_5_3 5.4=_5_4
-do
-  v="${vk%=*}"
-  k="${vk#*=}"
+   local luarocks_path="\
+${goboSystem}/Aliens/LuaRocks/share/lua/${version}/?.lua;\
+${goboSystem}/Aliens/LuaRocks/share/lua/${version}/?/init.lua;\
+${goboSystem}/Aliens/LuaRocks/lib/lua/${version}/?.lua;\
+${goboSystem}/Aliens/LuaRocks/lib/lua/${version}/?/init.lua"
 
-export LUA_PATH$k+="\
-;$goboSystem/Aliens/LuaRocks/share/lua/$v/?.lua;\
-$goboSystem/Aliens/LuaRocks/share/lua/$v/?/init.lua;\
-$goboSystem/Aliens/LuaRocks/lib/lua/$v/?.lua;\
-$goboSystem/Aliens/LuaRocks/lib/lua/$v/?/init.lua"
+  echo "${luarocks_path}"
+}
 
-export LUA_CPATH$k+="\
-;$goboSystem/Aliens/LuaRocks/lib/lua/$v/?.so;\
-$goboSystem/Aliens/LuaRocks/lib/lua/$v/loadall.so"
+gen_luarocks_cpath ()
+{
+   local version="$1"
 
-done
-unset v k vk
+   local luarocks_cpath="\
+${goboSystem}/Aliens/LuaRocks/lib/lua/${version}/?.so;\
+${goboSystem}/Aliens/LuaRocks/lib/lua/${version}/loadall.so"
+
+  echo "${luarocks_cpath}"
+}
+
+
+export LUA_PATH="${LUA_PATH};$(gen_luarocks_path 5.1)"
+export LUA_PATH_5_2="${LUA_PATH_5_2};$(gen_luarocks_path 5.2)"
+export LUA_PATH_5_3="${LUA_PATH_5_3};$(gen_luarocks_path 5.3)"
+export LUA_PATH_5_4="${LUA_PATH_5_4};$(gen_luarocks_path 5.4)"
+
+export LUA_CPATH="${LUA_CPATH};$(gen_luarocks_cpath 5.1)"
+export LUA_CPATH_5_2="${LUA_CPATH_5_2};$(gen_luarocks_cpath 5.2)"
+export LUA_CPATH_5_3="${LUA_CPATH_5_3};$(gen_luarocks_cpath 5.3)"
+export LUA_CPATH_5_4="${LUA_CPATH_5_4};$(gen_luarocks_cpath 5.4)"
+
+
+
