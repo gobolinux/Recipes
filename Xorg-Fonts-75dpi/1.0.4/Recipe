@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for Xorg-Fonts-75dpi by Nuc1eoN, on Wed 06 Nov 2024 06:41:39 PM GMT
+compile_version=017-GIT
+recipe_type=meta
+
+include=(
+#################################################
+# Xorg-Fonts-75dpi
+#################################################
+    Xorg-Fonts-Alias-75dpi--1.0.5
+    Font-Adobe-75dpi--1.0.4
+    Font-Adobe-Utopia-75dpi--1.0.5
+    Font-BH-75dpi--1.0.4
+    Font-BH-LucidaTypeWriter-75dpi--1.0.4
+    Font-Bitstream-75dpi--1.0.4
+)
