@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for Xorg-Fonts-Type1 by Nuc1eoN, on Wed 06 Nov 2024 06:41:39 PM GMT
+compile_version=017-GIT
+recipe_type=meta
+
+include=(
+#################################################
+# Xorg-Fonts-Type1
+#################################################
+    Font-Adobe-Utopia-Type1--1.0.5
+    Font-BH-Type1--1.0.4
+    Font-Bitstream-Type1--1.0.4
+    Font-IBM-Type1--1.0.4
+    Font-XFree86-Type1--1.0.5
+)
