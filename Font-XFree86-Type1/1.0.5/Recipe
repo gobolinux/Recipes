@@ -1,0 +1,14 @@
+# Recipe for version 1.0.5 by Nuc1eoN, on Thu 07 Nov 2024 04:17:09 PM GMT
+# Recipe (MakeRecipe) for Font-XFree86-Type1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jun 4 15:33:12 BRT 2006
+compile_version=017-GIT
+url="https://www.x.org/releases/individual/font/font-xfree86-type1-1.0.5.tar.xz"
+file_size=120500
+file_md5=3b47fed2c032af3a32aad9acc1d25150
+recipe_type=configure
+part_of=Xorg-Fonts-Type1
+configure_options=(
+   --with-fontrootdir="${target}/share/fonts"
+)
+install_variables=(
+   FCCACHE=true
+)
