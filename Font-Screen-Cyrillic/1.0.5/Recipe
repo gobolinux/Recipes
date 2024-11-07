@@ -1,0 +1,14 @@
+# Recipe for version 1.0.5 by Nuc1eoN, on Thu 07 Nov 2024 02:34:26 PM GMT
+# Recipe (MakeRecipe) for Font-Screen-Cyrillic by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jun 4 15:30:37 BRT 2006
+compile_version=017-GIT
+url="https://www.x.org/releases/individual/font/font-screen-cyrillic-1.0.5.tar.xz"
+file_size=98788
+file_md5=9e0f38698bf999376f3be3674e8cfd86
+recipe_type=configure
+part_of=Xorg-Fonts-Cyrillic
+configure_options=(
+   --with-fontrootdir="${target}/share/fonts"
+)
+install_variables=(
+   FCCACHE=true
+)
