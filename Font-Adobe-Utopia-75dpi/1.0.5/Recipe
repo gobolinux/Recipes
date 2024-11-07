@@ -1,0 +1,14 @@
+# Recipe for version 1.0.5 by Nuc1eoN, on Thu 07 Nov 2024 01:59:36 PM GMT
+# Recipe (MakeRecipe) for Font-Adobe-Utopia-75dpi by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jun 4 15:02:50 BRT 2006
+compile_version=017-GIT
+url="https://www.x.org/releases/individual/font/font-adobe-utopia-75dpi-1.0.5.tar.xz"
+file_size=247312
+file_md5=bad2e773e167ea4c61f543aea630b0b1
+recipe_type=configure
+part_of=Xorg-Fonts-75dpi
+configure_options=(
+   --with-fontrootdir="${target}/share/fonts"
+)
+install_variables=(
+   FCCACHE=true
+)
