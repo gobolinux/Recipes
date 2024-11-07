@@ -1,0 +1,14 @@
+# Recipe for version 1.0.4 by Nuc1eoN, on Thu 07 Nov 2024 04:16:49 PM GMT
+# Recipe (MakeRecipe) for Font-Bitstream-Type1 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jun 4 15:19:38 BRT 2006
+compile_version=017-GIT
+url="https://www.x.org/releases/individual/font/font-bitstream-type1-1.0.4.tar.xz"
+file_size=393644
+file_md5=3974a3e7f15ed7de19e45b4139d1468c
+recipe_type=configure
+part_of=Xorg-Fonts-Type1
+configure_options=(
+   --with-fontrootdir="${target}/share/fonts"
+)
+install_variables=(
+   FCCACHE=true
+)
