@@ -1,0 +1,8 @@
+# Recipe for version 1.0.10 by Nuc1eoN, on Sat 02 Nov 2024 11:22:55 PM GMT
+# Recipe (MakeRecipe) for LibFS by Hisham Muhammad <lode@gobolinux.org>, on Thu Aug 18 19:52:28 BRT 2005
+compile_version=017-GIT
+url="https://www.x.org/releases/individual/lib/libFS-1.0.10.tar.xz"
+file_size=293016
+file_md5=c5cc0942ed39c49b8fcd47a427bd4305
+recipe_type=configure
+configure_options=(--disable-static)
