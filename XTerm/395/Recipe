@@ -1,0 +1,26 @@
+# Recipe for version 395 by Nuc1eoN, on Thu 07 Nov 2024 06:20:45 PM GMT
+# Recipe (MakeRecipe) for XTerm by Hisham Muhammad, on Thu Feb 23 14:45:58 BRT 2006
+compile_version=017-GIT
+url="https://invisible-mirror.net/archives/xterm/xterm-395.tgz"
+file_size=1580365
+file_md5=1c88446c61d0e64c241e451fba95fe27
+recipe_type=configure
+dir="xterm-395"
+
+configure_options=(
+   # otherwise uxterm is broken!
+   --enable-wide-chars
+
+   # paths for icons and app defaults
+   --with-icondir=$target/share/pixmaps
+   --with-app-defaults=$target/lib/X11/app-defaults
+)
+
+install_variables=(
+   bindir=$target/bin
+   libdir=$target/lib
+   mandir=$target/share/man/man1
+   appsdir=$target/lib/X11/app-defaults
+   icondir=$target/share/pixmaps
+   pixmapdir=$target/share/pixmaps
+)
