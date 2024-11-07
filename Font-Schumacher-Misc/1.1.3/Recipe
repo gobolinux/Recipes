@@ -1,0 +1,14 @@
+# Recipe for version 1.1.3 by Nuc1eoN, on Thu 07 Nov 2024 03:39:11 PM GMT
+# Recipe (MakeRecipe) for Font-Schumacher-Misc by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jun 4 15:30:03 BRT 2006
+compile_version=017-GIT
+url="https://www.x.org/releases/individual/font/font-schumacher-misc-1.1.3.tar.xz"
+file_size=128680
+file_md5=660e0449cebc1296d28ce58174fe0a71
+recipe_type=configure
+part_of=Xorg-Fonts-Misc
+configure_options=(
+   --with-fontrootdir="${target}/share/fonts"
+)
+install_variables=(
+   FCCACHE=true
+)
