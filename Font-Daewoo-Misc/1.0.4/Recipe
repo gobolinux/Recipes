@@ -1,0 +1,14 @@
+# Recipe for version 1.0.4 by Nuc1eoN, on Thu 07 Nov 2024 03:37:18 PM GMT
+# Recipe (MakeRecipe) for Font-Daewoo-Misc by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jun 4 15:21:09 BRT 2006
+compile_version=017-GIT
+url="https://www.x.org/releases/individual/font/font-daewoo-misc-1.0.4.tar.xz"
+file_size=493896
+file_md5=6300bc99a1e45fbbe6075b3de728c27f
+recipe_type=configure
+part_of=Xorg-Fonts-Misc
+configure_options=(
+   --with-fontrootdir="${target}/share/fonts"
+)
+install_variables=(
+   FCCACHE=true
+)
