@@ -1,0 +1,21 @@
+# Recipe for version 1.4.1 by Nuc1eoN, on Wed 06 Nov 2024 07:02:27 PM GMT
+# Recipe (MakeRecipe) for Font-Util by Jonas Karlsson <jonka750@student.liu.se>, on Sun Jun 1 18:19:42 GMT 2008
+compile_version=017-GIT
+url="https://x.org/releases/individual/font/font-util-1.4.1.tar.xz"
+file_size=144320
+file_md5=a6541d12ceba004c0c1e3df900324642
+recipe_type=configure
+
+configure_options=(
+    --with-mapdir="$target/share/fonts/util"
+    --with-fontrootdir="$target/share/fonts"
+)
+
+install_variables=(
+    mapfilesdir="$target/share/fonts/util"
+)
+
+# This package used to be part of the Xorg-Font meta package.
+# So if Xorg-Font is installed it will conflict this package.
+# Keep this only temporarily for the time of transition:
+symlink_options=(--conflict=overwrite)
