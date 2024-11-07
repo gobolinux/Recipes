@@ -1,0 +1,14 @@
+# Recipe (MakeRecipe) for Xorg-Fonts-Cyrillic by Nuc1eoN, on Wed 06 Nov 2024 06:41:39 PM GMT
+compile_version=017-GIT
+recipe_type=meta
+
+include=(
+#################################################
+# Xorg-Fonts-Cyrillic
+#################################################
+    Xorg-Fonts-Alias-Cyrillic--1.0.5
+    Font-Cronyx-Cyrillic--1.0.4
+    Font-Misc-Cyrillic--1.0.4
+    Font-Screen-Cyrillic--1.0.5
+    Font-Winitzki-Cyrillic--1.0.4
+)
