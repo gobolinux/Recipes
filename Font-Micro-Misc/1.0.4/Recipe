@@ -1,0 +1,14 @@
+# Recipe for version 1.0.4 by Nuc1eoN, on Thu 07 Nov 2024 03:37:55 PM GMT
+# Recipe (MakeRecipe) for Font-Micro-Misc by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jun 4 15:27:28 BRT 2006
+compile_version=017-GIT
+url="https://www.x.org/releases/individual/font/font-micro-misc-1.0.4.tar.xz"
+file_size=94544
+file_md5=ee3af8a93abc1695aeebb55bcd953a16
+recipe_type=configure
+part_of=Xorg-Fonts-Misc
+configure_options=(
+   --with-fontrootdir="${target}/share/fonts"
+)
+install_variables=(
+   FCCACHE=true
+)
