@@ -1,0 +1,15 @@
+# Recipe (MakeRecipe) for Xorg-Fonts-100dpi by Nuc1eoN, on Wed 06 Nov 2024 06:41:39 PM GMT
+compile_version=017-GIT
+recipe_type=meta
+
+include=(
+#################################################
+# Xorg-Fonts-100dpi
+#################################################
+    Xorg-Fonts-Alias-100dpi--1.0.5
+    Font-Adobe-100dpi--1.0.4
+    Font-Adobe-Utopia-100dpi--1.0.5
+    Font-BH-100dpi--1.0.4
+    Font-BH-LucidaTypeWriter-100dpi--1.0.4
+    Font-Bitstream-100dpi--1.0.4
+)
