@@ -1,0 +1,9 @@
+# Recipe for version 3.7 by Nuc1eoN, on Fri 08 Nov 2024 08:13:36 PM GMT
+# Recipe (MakeRecipe) for LibSELinux by Demian Florentin <demianflorentin@gmail.com>, on Sat Nov 21 12:02:56 PYST 2009
+compile_version=017-GIT
+url="https://github.com/SELinuxProject/selinux/releases/download/3.7/libselinux-3.7.tar.gz"
+file_size=194834
+file_md5=ac0c812124d83faa7721928d0c01adc0
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(PREFIX="$target")
