@@ -1,0 +1,13 @@
+# Recipe for version 1.24.9 by Nuc1eoN, on Fri 08 Nov 2024 07:38:23 PM GMT
+# Recipe (MakeRecipe) for GStreamer-Plugins-Base by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Jan 13 01:00:15 BRST 2019
+compile_version=017-GIT
+url="https://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-1.24.9.tar.xz"
+file_size=2446392
+file_md5=c2e4b0d379b65f034954515edc8ddb60
+dir='gst-plugins-base-1.24.9'
+recipe_type=meson
+
+meson_variables=(
+	-D examples=disabled
+	-D gobject-cast-checks=disabled
+)
