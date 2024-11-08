@@ -1,8 +1,16 @@
 # Recipe (MakeRecipe) for XF86-Video-Intel by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Mar 11 04:50:24 PDT 2008
 # Recipe for version git by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Tue Mar 11 04:50:24 PDT 2008
-compile_version=1.11.0
+compile_version=017-GIT
 git="git://anongit.freedesktop.org/git/xorg/driver/xf86-video-intel"
-recipe_type=configure
 dir='XF86-Video-Intel-git'
+recipe_type=configure
 autogen_before_configure=yes
-part_of=Xorg-Driver
+
+#pre_build(){
+#	NOCONFIGURE=1 ./autogen.sh
+#}
+
+configure_options=(
+	--disable-static
+	--with-default-dri=3
+)
