@@ -1,0 +1,8 @@
+# Recipe for version 1.0.18 by Nuc1eoN, on Fri 08 Nov 2024 08:59:31 PM GMT
+# Recipe (MakeRecipe) for XF86-Video-Nouveau by Diogo Lima <diogo.urb@gmail.com>, on Mon Jan 31 14:02:48 BRST 2011
+compile_version=017-GIT
+url="https://www.x.org/releases/individual/driver/xf86-video-nouveau-1.0.18.tar.xz"
+file_size=548956
+file_md5=2fae526acdbda52f109c810cd0af46e7
+recipe_type=configure
+configure_options=(--disable-static)
