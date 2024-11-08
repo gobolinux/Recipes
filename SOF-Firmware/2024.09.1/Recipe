@@ -1,0 +1,12 @@
+# Recipe for version 2024.09.1.1 by Nuc1eoN, on Fri 08 Nov 2024 08:35:53 PM GMT
+# Recipe (MakeRecipe) for SOF-Firmware by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Fri 21 Feb 2020 11:40:57 PM BRT
+compile_version=017-GIT
+url="https://github.com/thesofproject/sof-bin/releases/download/v2024.09.1/sof-bin-2024.09.1.tar.gz"
+file_size=10208804
+file_md5=a41dd0ad3dce67cc259afe81f64b7cf0
+dir="sof-bin-2024.09.1"
+recipe_type=manifest
+
+manifest=(
+    "sof*:lib/firmware/intel/"
+)
