@@ -1,6 +1,14 @@
 # Recipe for version 46.2 by Nuc1eoN, on Sat 26 Oct 2024 10:48:16 AM CEST
-compile_version=017
+compile_version=017-GIT
 url="https://download.gnome.org/sources/adwaita-icon-theme-legacy/46/adwaita-icon-theme-legacy-46.2.tar.xz"
-file_size=
-file_md5=
+file_size=2056840
+file_md5=9195eaeac4197d68a9271f1d5dd53452
 recipe_type=meson
+
+# Binary patch for missing icons
+# https://gitlab.gnome.org/GNOME/adwaita-icon-theme-legacy/-/merge_requests/2
+pre_patch(){
+	pushd "${basedir}" &> /dev/null
+	git apply -v $recipedir/02-add-missing-icons.patch.bin
+	popd &> /dev/null
+}
