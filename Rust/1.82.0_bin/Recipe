@@ -1,0 +1,10 @@
+# Recipe for version 1.82.0 by Nuc1eoN, on Tue 29 Oct 2024 11:52:45 AM CET
+# Recipe (MakeRecipe) for Rust by Hisham Muhammad <hisham@gobolinux.org>, on Mon Apr 20 20:38:12 BRT 2015
+compile_version=017-GIT
+url="https://static.rust-lang.org/dist/rust-1.82.0-x86_64-unknown-linux-gnu.tar.xz"
+file_size=178075016
+file_md5=a3307813972cc573f2ff0e387a229239
+recipe_type=manifest
+pre_link() {
+   ./install.sh --prefix=$target --sysconfdir=$settings_target
+}
