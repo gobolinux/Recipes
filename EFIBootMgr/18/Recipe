@@ -1,0 +1,16 @@
+# Recipe for version 18 by Nuc1eoN, on Fri 08 Nov 2024 10:08:42 PM GMT
+# Recipe (MakeRecipe) for EFIBootMgr by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Mar 15 19:18:53 NZDT 2012
+compile_version=017-GIT
+url="https://github.com/rhinstaller/efibootmgr/releases/download/18/efibootmgr-18.tar.bz2"
+file_size=40439
+file_md5=a92ce8fd2b282fa30f066797b14095ef
+recipe_type=makefile
+#makefile='Makefile'
+
+make_variables=(
+	EFIDIR=boot
+)
+
+install_variables=(
+	BINDIR=$target/bin
+)
