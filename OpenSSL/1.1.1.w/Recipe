@@ -1,0 +1,25 @@
+# Recipe for version 1.1.1.w by Nuc1eoN, on Sat 09 Nov 2024 05:51:05 AM GMT
+compile_version=017-GIT
+url="https://github.com/openssl/openssl/releases/download/OpenSSL_1_1_1w/openssl-1.1.1w.tar.gz"
+file_size=9893384
+file_md5=3f76825f195e52d4b10c70040681a275
+recipe_type=configure
+configure=Configure
+build_target="all"
+
+# Use /etc/ssl to search for certs
+configure_options=(
+   --openssldir=$goboSettings/ssl
+   --libdir=lib
+   zlib-dynamic
+)
+
+make_variables=(
+   MANDIR=$target/man
+   HTMLDIR=$target/doc/html
+   INSTALLTOP=$target
+)
+
+install_variables=(
+   OPENSSLDIR=$target/Resources/Defaults/Settings/ssl
+)
