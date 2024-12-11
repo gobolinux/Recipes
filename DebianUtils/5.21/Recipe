@@ -1,0 +1,21 @@
+# Recipe for version 5.21 by ElevatedSteve, on Tue 9 Dec 2024 12:39:44 PM GMT
+# Recipe for version 5.20 by Nuc1eoN, on Sat 09 Nov 2024 09:44:08 PM GMT
+# Recipe (MakeRecipe) for DebianUtils by Jean-Michel T.Dydak <jm.dev@gmx.com>, on Sun 30 Jan 2022 10:39:21 PM GMT
+compile_version=017-GIT
+url="https://debian.osuosl.org/debian/pool/main/d/debianutils/debianutils_5.21.tar.xz"
+file_size=81916
+file_md5=bffec80fbc1f0e92563d63018bba0015
+dir='debianutils-5.21'
+recipe_type=configure
+
+pre_build() {
+   # Avoid adding po4a dependency, upstream refreshes manpages.
+   sed -i -e '/SUBDIRS/s|po4a||' Makefile.am || Die
+   autoreconf -fiv
+}
+
+pre_link() {
+   rm $target/bin/{add-shell,installkernel,remove-shell,tempfile,update-shells,which.debianutils}
+   rm $target/share/man/man1/{tempfile.1,which.debianutils.1}
+   rm $target/share/man/man8/{add-shell.8,installkernel.8,remove-shell.8,update-shells.8}
+}
