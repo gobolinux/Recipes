@@ -1,0 +1,135 @@
+# Recipe for version 6.12.7 by Nuc1eoN, on Thu 02 Jan 2025 02:41:07 AM GMT
+compile_version=017-GIT
+url="https://mirrors.edge.kernel.org/pub/linux/kernel/v6.x/linux-6.12.7.tar.xz"
+file_size=147968308
+file_md5=267a2cec0d794454a9f92a726280b56d
+recipe_type=makefile
+build_target="all"
+install_target="modules_install"
+
+make_variables=(
+    LD=ld.bfd
+)
+
+install_variables=(
+   INSTALL_FW_PATH="$target/lib/firmware"
+)
+
+unmanaged_files=(
+   $goboBoot/
+)
+
+do_configuration() {
+   if [ ! -f .config ]
+   then
+      if [ ! -f $goboStatus/config.gz ]
+      then
+         cp "$archsubdir"/dot-config .config
+      else
+         if Ask "Do you want to use a configuration based on the one from the running kernel?"
+         then
+            zcat $goboStatus/config.gz > .config
+            yes "" | make LD=ld.bfd oldconfig
+         else
+            Log_Normal "Using the kernel configuration shipped with the recipe"
+            cp "$archsubdir"/dot-config .config
+         fi
+      fi
+   fi
+
+   # Sanity check to make sure patches are not trying to mess with the version id.
+   local v=`grep "^VERSION =" Makefile | awk '{print $3}'`
+   local p=`grep "^PATCHLEVEL" Makefile | awk '{print $3}'`
+   local s=`grep "^SUBLEVEL" Makefile | awk '{print $3}'`
+   local e=`grep "^EXTRAVERSION" Makefile | awk '{print $3}'`
+   local reported="$v.$p.$s$e"
+   if [ "$reported" != "$version" ]
+   then Die "Reported version ($reported) does not match version ($version). Please fix recipe."
+   fi
+
+   make LD=ld.bfd menuconfig || Die "'menuconfig' failed."
+   [ -z "${SUDO_USER}" ] || chown ${SUDO_USER} .config
+
+   # Build tools/objtool. Third-party modules may rely on it.
+   if [ ! -e tools/objtool/objtool ]
+   then make LD=ld.bfd -C tools/objtool
+   fi
+}
+
+do_install() {
+   $sudo_exec mkdir -p "$target"/lib/firmware
+   makefile_do_install "$@"
+}
+
+pre_link() {
+   local kernelrelease=$(cat include/config/kernel.release)
+
+   # Copy arch-dependent results and sanitized sources to the destination
+   private__copy_kernel_image ${kernelrelease}
+   private__copy_kernel_source ${kernelrelease}
+   Log_Normal "Calculating kernel module dependencies..."
+   depmod -b $target ${kernelrelease}
+}
+
+private__copy_kernel_source() {
+   local kernelrelease="$1"
+   local moddir="${target}/lib/modules/${kernelrelease}"
+   mkdir -p "$moddir"
+   rm -f "${moddir}/build"
+   rm -f "${moddir}/source"
+   # Copy modules.order and modules.builtin
+   cp $dir/modules.order $dir/modules.builtin $moddir/
+   # Copy sanitized sources to Resources/Unmanaged/Files/Compile/Sources/linux-<version>
+   local dest="${target}/lib/modules/${kernelrelease}/build"
+   mkdir -p $dest
+   ln -fs build "${target}/lib/modules/${kernelrelease}/source"
+
+   Log_Normal "Creating a working copy of the kernel sources tree..."
+   Quiet pushd $dir
+   mkdir -p $dest/tools
+   mkdir -p $dest/arch/x86/boot
+   cp -r tools/{objtool,build,lib} $dest/tools/
+   cp -r arch/x86/{lib,tools,purgatory} $dest/arch/x86/
+   cp arch/x86/boot/string.c $dest/arch/x86/boot/
+   cp .version .config System.map Module.symvers Makefile Kbuild Kconfig $dest/
+   ls | while read i
+   do
+      if [ -d "$i" -a "$i" = "scripts" ]
+      then
+         cp -an "$i" $dest/
+      elif [ -d "$i" ]
+      then
+         dirlist=`find "$i" -type d`
+         filelist=`find "$i" \( \
+            -name "*.h" -or \
+            -name "*.bc" -or \
+            -name "*.sh" -or \
+            -name "*.mak" -or \
+            -name "*.tbl" -or \
+            -name "*.conf" -or \
+            -name "*.include" -or \
+            -name "Makefile*" -or \
+            -name "Kconfig*" -or \
+            -name "Kbuild*" -or \
+            -name "asm-offsets.c" -or \
+            -name "asm-offsets_32.c" -or \
+            -name "asm-offsets_64.c" -or \
+            -name "bounds.c" \
+         \)`
+         for dir in $dirlist
+         do mkdir -p "$dest/$dir"
+         done
+         for file in $filelist
+         do cp -n "$file" "$dest/$file"
+         done
+         for dir in $dirlist
+         do find "$dest/$dir" -type d 2> /dev/null | sort -r | xargs rmdir 2> /dev/null
+         done
+      fi
+   done
+   Quiet popd
+   
+   #Quiet pushd $dest
+   #make LD=ld.bfd prepare
+   #Quiet popd
+}

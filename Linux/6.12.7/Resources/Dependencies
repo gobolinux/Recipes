@@ -1,0 +1,4 @@
+ConfigTools
+Dracut
+Pahole 1.18
+Elogind # optional but recommended due to CONFIG_HAVE_UACCESS_VALIDATION=y (else we get a warning on boot)
