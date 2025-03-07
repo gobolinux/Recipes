@@ -1,0 +1,48 @@
+# Recipe for version 2.12 by Nuc1eoN, on Sun 13 Oct 2024 11:56:20 PM CEST
+# Recipe (MakeRecipe) for GRUB by Lucas C. Villa Real, on Fri Dec 4 16:02:55 BRST 2009
+compile_version=017
+url="$ftpGnu/grub/grub-2.12.tar.xz"
+file_size=6675608
+file_md5=60c564b1bdc39d8e43b3aab4bc0fb140
+recipe_type=configure
+
+environment=(
+	CFLAGS="-DDEVDIR=\\\"$goboDevices\\\""
+	# Grub is not compatble with gold linker (https://bugs.gentoo.org/439082)
+	TARGET_LDFLAGS+="-fuse-ld=bfd"
+)
+
+configure_options=(
+	--enable-device-mapper
+	--disable-werror
+	--disable-efiemu
+)
+
+pre_build() {
+	# Avoid error in GRUB 2.12 build due to extra_deps.lst missing from source tarball:
+	#       make[3]: *** No rule to make target 'grub-core/extra_deps.lst', needed by 'syminfo.lst'.  Stop.
+	# Taken from: https://gitweb.gentoo.org/repo/gentoo.git/tree/sys-boot/grub/grub-2.12-r5.ebuild#n183
+	echo "depends bli part_gpt" > grub-core/extra_deps.lst || die
+	echo "Fix DejaVuSans.ttf location so that grub-mkfont can create *.pf2 files for starfield theme..."
+	sed 's|/usr/share/fonts/dejavu|/usr/share/fonts/dejavu /usr/share/fonts/TTF|g' -i "configure.ac"
+}
+
+pre_install() {
+	if grep -q "Apple Internal Keyboard / Trackpad" /sys/class/input/*/name 2> /dev/null
+	then
+		mkdir -p "$target/Resources/Unmanaged/$goboBoot"
+		dd if=/dev/mem of="$target/Resources/Unmanaged/$goboBoot/vbios.bin" bs=65536 skip=12 count=1
+		dd if=/dev/mem of="$target/Resources/Unmanaged/$goboBoot/int10.bin" bs=4     skip=16 count=1
+
+		#Quiet pushd grub-core
+		#../grub-mkimage -d . -o bootx64.efi -O x86_64-efi -p /efi/boot `find *.mod | xargs | sed -e 's/.mod//g'`
+		#../grub-mkimage -d . -o boot-i386.efi -O -i386-efi -p /efi/boot `find *.mod | xargs | sed -e 's/.mod//g'`
+		#Quiet popd
+	fi
+}
+
+pre_link() {
+	case $(uname -m) in
+		x86_64) ln -sv lib $target/lib64 ;;
+	esac
+}

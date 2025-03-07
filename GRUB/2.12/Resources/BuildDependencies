@@ -1,0 +1,3 @@
+Dmidecode 2.11
+Automake = 1.15 # needed only if we have to modify the build
+Pkgconfig # why is this not pulled in by Automake Dependencies?
