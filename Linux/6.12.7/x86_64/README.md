@@ -10,6 +10,13 @@ a few minor changes:
    - `CONFIG_ENCRYPTED_KEYS=y` (as opposed to `=m`)
    - `BLK_DEV_DM=y` (as opposed to `=m`)
    - `TRUSTED_KEYS=y` (as opposed to `=m`)
+5. In order to reduce bloat, we disable debug symbols. We do so by deleting the following entries:
+   - `CONFIG_DEBUG_INFO=y`
+   - `CONFIG_DEBUG_INFO_DWARF5=y`
+   - `CONFIG_DEBUG_INFO_BTF=y`
+   - `CONFIG_DEBUG_INFO_BTF_MODULES=y`
+
+Note: ArchLinux also ships without debug symbols, but strips them out via their build tools.
 
 `CONFIG_DM_CRYPT=y` is needed so that Dracut can load the `dm-crypt` module and
 switch root to an encrypted rootfs partition.
@@ -22,7 +29,11 @@ sed -i dot-config \
     -e 's,CONFIG_DM_CRYPT=m,CONFIG_DM_CRYPT=y,g' \
     -e 's,CONFIG_ENCRYPTED_KEYS=m,CONFIG_ENCRYPTED_KEYS=y,g' \
     -e 's,BLK_DEV_DM=m,BLK_DEV_DM=y,g' \
-    -e 's,TRUSTED_KEYS=m,TRUSTED_KEYS=y,g'
+    -e 's,TRUSTED_KEYS=m,TRUSTED_KEYS=y,g' \
+    -e '/CONFIG_DEBUG_INFO=y/d' \
+    -e '/CONFIG_DEBUG_INFO_DWARF5=y/d' \
+    -e '/CONFIG_DEBUG_INFO_BTF=y/d' \
+    -e '/CONFIG_DEBUG_INFO_BTF_MODULES=y/d'
 echo CONFIG_GOBOHIDE_FS=y >> dot-config
 ```
 
