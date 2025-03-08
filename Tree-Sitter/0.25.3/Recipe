@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for Tree-Sitter by Hisham Muhammad <hisham@gobolinux.org>, on Sat Mar 8 03:32:02 PM -03 2025
+# Recipe for version 0.25.3 by Hisham Muhammad <hisham@gobolinux.org>, on Sat Mar 8 03:32:02 PM -03 2025
+compile_version=git
+url="https://github.com/tree-sitter/tree-sitter/archive/refs/tags/v0.25.3.tar.gz"
+file="tree-sitter-0.25.3.tar.gz"
+file_size=856455
+file_md5=88c4de229d7d171d6a6556b0598c2929
+dir='tree-sitter-0.25.3'
+recipe_type=makefile
+make_variables=(
+   PREFIX="$target"
+)
