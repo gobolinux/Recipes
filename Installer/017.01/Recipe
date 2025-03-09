@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for Installer by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sun Nov 27 00:09:42 BRST 2016
+# Recipe for version 017.01 by Nuc1eoN
+compile_version=017
+git="https://github.com/gobolinux/Installer"
+tag=017.01
+recipe_type=makefile
+do_install=no
+
+pre_link() {
+    cp -r bin lib share src $target
+}
