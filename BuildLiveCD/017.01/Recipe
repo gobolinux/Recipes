@@ -1,0 +1,11 @@
+# Recipe (MakeRecipe) for BuildLiveCD by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Mon Mar 31 14:51:29 BRT 2008
+# Recipe for version 017.01 by Nuc1eoN
+compile_version=017
+git="https://github.com/gobolinux/BuildLiveCD"
+tag=017.01
+recipe_type=makefile
+makefile='Makefile'
+make_variables=(
+   VERSION="$version"
+   PREFIX="$target"
+)
