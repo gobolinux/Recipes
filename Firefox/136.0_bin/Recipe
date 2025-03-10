@@ -1,0 +1,16 @@
+# Recipe for version 136.0_bin by Nuc1eoN, on Mon 10 Mar 2025 08:02:42 PM CET
+# Recipe (MakeRecipe) for Firefox by Nuc1eoN, on Tue 15 Oct 2024 10:23:05 PM CEST
+compile_version=017-GIT
+url="https://archive.mozilla.org/pub/firefox/releases/136.0/linux-x86_64/en-US/firefox-136.0.tar.xz"
+file_size=72804596
+file_md5=427973f6a10f926bf0bd515956bd1aca
+dir='Firefox-136.0_bin/firefox'
+unpack_files=files_in_root
+recipe_type=manifest
+
+manifest=(
+	".:package"
+	"browser/chrome/icons/default/default48.png:share/icons/firefox.png"
+	"$recipedir/firefox.desktop:share/applications/firefox.desktop"
+	"$recipedir/Resources/Wrappers/firefox-bin.sh:bin/firefox"
+)
