@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for LiveCD by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat Nov 26 13:42:19 BRST 2016
+# Recipe for version 017.01 by Nuc1eoN
+compile_version=017-GIT
+git="https://github.com/gobolinux/LiveCD"
+tag=017.01
+recipe_type=makefile
+makefile='Makefile'
+do_install=no
+
+pre_link() {
+    cp -r * $target
+    rm -f $target/pre_link.sh $target/Makefile
+}
