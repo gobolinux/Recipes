@@ -4,6 +4,7 @@ compile_version=017
 url="$ftpGnu/grub/grub-2.12.tar.xz"
 file_size=6675608
 file_md5=60c564b1bdc39d8e43b3aab4bc0fb140
+autogen_before_configure=yes
 recipe_type=configure
 
 environment=(
