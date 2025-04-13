@@ -14,6 +14,7 @@ file_md5s=(
     60c564b1bdc39d8e43b3aab4bc0fb140
     91dc370f8115ddeef75e770c9023c498
 )
+autogen_before_configure=yes
 recipe_type=configure
 
 environment=(
