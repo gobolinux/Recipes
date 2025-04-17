@@ -1,0 +1,69 @@
+# Recipe for version 2.12 by Nuc1eoN, on Sun 13 Oct 2024 11:56:20 PM CEST
+# Recipe (MakeRecipe) for GRUB by Lucas C. Villa Real, on Fri Dec 4 16:02:55 BRST 2009
+compile_version=017
+
+urls=(
+    "$ftpGnu/grub/grub-2.12.tar.xz"
+    "https://unifoundry.com/pub/unifont/unifont-16.0.02/font-builds/unifont-16.0.02.pcf.gz"
+)
+file_sizes=(
+    6675608
+    1356741
+)
+file_md5s=(
+    60c564b1bdc39d8e43b3aab4bc0fb140
+    91dc370f8115ddeef75e770c9023c498
+)
+autogen_before_configure=yes
+recipe_type=configure
+
+environment=(
+    CFLAGS=
+    CXXFLAGS=
+    CPPFLAGS=
+    LDFLAGS=
+    MAKEFLAGS=
+    # Grub is not compatble with gold linker (https://bugs.gentoo.org/439082)
+    TARGET_LDFLAGS+="-fuse-ld=bfd"
+)
+
+configure_options=(
+    --enable-device-mapper
+    --enable-nls
+    --enable-grub-mount
+    --enable-grub-mkfont
+    --disable-silent-rules
+    --disable-werror
+    --with-platform="efi"
+    --program-suffix="-efi"
+)
+
+pre_build() {
+    # Avoid error in GRUB 2.12 build due to extra_deps.lst missing from source tarball:
+    #       make[3]: *** No rule to make target 'grub-core/extra_deps.lst', needed by 'syminfo.lst'.  Stop.
+    # Taken from: https://gitweb.gentoo.org/repo/gentoo.git/tree/sys-boot/grub/grub-2.12-r5.ebuild#n183
+    echo "depends bli part_gpt" > grub-core/extra_deps.lst || die
+    echo "Fix DejaVuSans.ttf location so that grub-mkfont can create *.pf2 files for starfield theme..."
+    sed 's|/usr/share/fonts/dejavu|/usr/share/fonts/dejavu /usr/share/fonts/TTF|g' -i "configure.ac"
+
+}
+
+pre_link() {
+    ./grub-mkfont -o unicode.pf2 $compileArchivesDir/unifont-16.0.02.pcf.gz
+    mkdir -p $target/share/grub
+    cp -v unicode.pf2 $target/share/grub
+    rm -f $settings_target/grub.d/*_*efi
+    
+    # install gobo grub background to `/usr/share/images/gobo`, the background 
+    # is then loaded automatically if and only if the user/installer copys the 
+    # image into:
+    #     /System/Kernel/Boot/grub 
+    #     /System/Kernel/Boot/grub/images
+    #     /System/Kernel/Boot/efi/grub
+    #     /System/Kernel/Boot/efi/grub/images
+    #     /System/Kernel/ESP/grub
+    #     /System/Kernel/ESP/grub/images
+    mkdir -pv $target/share/images/gobo/
+    cp -v $recipedir/Assets/gobo_splash.png $target/share/images/gobo/gobo_splash.png
+}
+
