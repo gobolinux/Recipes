@@ -1,4 +1,4 @@
-# Recipe for version 2.12 by Nuc1eoN, on Sun 13 Oct 2024 11:56:20 PM CEST
+# Recipe for version 2.12 by Nuc1eoN, on Sun 17 Apr 2025 11:56:20 PM CEST
 # Recipe (MakeRecipe) for GRUB by Lucas C. Villa Real, on Fri Dec 4 16:02:55 BRST 2009
 compile_version=017
 
@@ -28,24 +28,21 @@ environment=(
 )
 
 configure_options=(
-    --enable-device-mapper
     --enable-nls
-    --enable-grub-mount
+    --enable-device-mapper
     --enable-grub-mkfont
+    --enable-grub-mount
     --disable-silent-rules
+    --disable-efiemu
     --disable-werror
     --with-platform="efi"
     --program-suffix="-efi"
 )
 
 pre_build() {
-    # Avoid error in GRUB 2.12 build due to extra_deps.lst missing from source tarball:
-    #       make[3]: *** No rule to make target 'grub-core/extra_deps.lst', needed by 'syminfo.lst'.  Stop.
-    # Taken from: https://gitweb.gentoo.org/repo/gentoo.git/tree/sys-boot/grub/grub-2.12-r5.ebuild#n183
+    # Avoid build error in GRUB 2.12, due to extra_deps.lst missing from source tarball
+    # Taken from: https://gitweb.gentoo.org/repo/gentoo.git/tree/sys-boot/grub/grub-2.12-r6.ebuild#n183
     echo "depends bli part_gpt" > grub-core/extra_deps.lst || die
-    echo "Fix DejaVuSans.ttf location so that grub-mkfont can create *.pf2 files for starfield theme..."
-    sed 's|/usr/share/fonts/dejavu|/usr/share/fonts/dejavu /usr/share/fonts/TTF|g' -i "configure.ac"
-
 }
 
 pre_link() {
