@@ -63,7 +63,7 @@ pre_link() {
     #     /System/Kernel/Boot/efi/grub/images
     #     /System/Kernel/ESP/grub
     #     /System/Kernel/ESP/grub/images
-    mkdir -pv $target/share/images/gobo/
-    cp -v $recipedir/Assets/gobo_splash.png $target/share/images/gobo/gobo_splash.png
+    mkdir -pv $target/share/grub/images
+    cp -v $recipedir/Assets/gobo_splash.png $target/share/grub/images/gobo_splash.png
 }
 
