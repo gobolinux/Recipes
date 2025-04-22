@@ -35,7 +35,7 @@ fi
 
 set_mono_theme()
 {
-	cat << EOF
+    cat << EOF
 set menu_color_normal=white/black
 set menu_color_highlight=black/light-gray
 EOF
@@ -47,18 +47,18 @@ use_bg=false
 if [ "$GRUB_TERMINAL_OUTPUT" = "gfxterm" ] ; then
   for i in $grubdir/`basename ${WALLPAPER}` ${WALLPAPER} ; do
     if is_path_readable_by_grub $i ; then
-	  bg=$i
-	  case ${bg} in
-	    *.png)        	reader=png ;;
-		*.tga)			reader=tga ;;
-		*.jpg|*.jpeg)	reader=jpeg ;;
-	  esac
-	  if test -e $grubmoddir/${reader}.mod ; then
-	    echo "Found background image: `basename ${bg}`" >&2
-		use_bg=true
-		break
-	  fi
-	fi
+      bg=$i
+      case ${bg} in
+        *.png)          reader=png ;;
+        *.tga)          reader=tga ;;
+        *.jpg|*.jpeg)   reader=jpeg ;;
+      esac
+      if test -e $grubmoddir/${reader}.mod ; then
+        echo "Found background image: `basename ${bg}`" >&2
+        use_bg=true
+        break
+      fi
+    fi
   done
 fi
 
