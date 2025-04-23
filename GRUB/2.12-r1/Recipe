@@ -1,5 +1,5 @@
 # Recipe for version 2.12 by Nuc1eoN, on Sun 17 Apr 2025 11:56:20 PM CEST
-# Recipe (MakeRecipe) for GRUB-EFI by Lucas C. Villa Real, on Fri Dec 4 16:02:55 BRST 2009
+# Recipe (MakeRecipe) for GRUB by Lucas C. Villa Real, on Fri Dec 4 16:02:55 BRST 2009
 compile_version=017
 
 urls=(
@@ -35,8 +35,6 @@ configure_options=(
     --disable-silent-rules
     --disable-efiemu
     --disable-werror
-    --with-platform="efi"
-    --program-suffix="-efi"
 )
 
 pre_build() {

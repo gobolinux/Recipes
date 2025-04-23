@@ -1,0 +1,161 @@
+Grub really wants to have the realpaths to Devices/Block Devices and the like, 
+but it expects standard unix-like directories: /sys, /dev, ect.
+
+override the default xrealpath convert gobolinux's realpaths to unix-like 
+prefixes.
+
+maintainers note: replace all calls to `realpath` with `xrealpath` (our custom 
+function)
+
+srcs:   GRUB/2.02_beta3 01-grub-realpath.patch merge 
+        GRUB/2.00 01-grub-realpath.patch rewrite for 2.12 and merge
+
+--- grub-2.02~beta3/grub-core/osdep/linux/getroot.c.orig	2016-10-07 16:51:05.781203692 +0000
++++ grub-2.02~beta3/grub-core/osdep/linux/getroot.c	2016-10-07 17:19:23.581170401 +0000
+@@ -370,6 +370,19 @@ get_btrfs_fs_prefix (const char *mount_p
+   return NULL;
+ }
+ 
++void
++translate_from_gobolinux (char *device)
++{
++  const char *gobodev = "/System/Kernel/Devices";
++  char *sep = strstr(device, gobodev);
++  if (sep == device)
++  {
++    char copy[strlen(device)+1];
++    int n = sprintf(copy, "/dev%s", &device[strlen(gobodev)]);
++    copy[n] = '\0';
++    strcpy(device, copy);
++  }
++}
+ 
+ char **
+ grub_find_root_devices_from_mountinfo (const char *dir, char **relroot)
+@@ -426,6 +439,7 @@ grub_find_root_devices_from_mountinfo (c
+       if (sscanf (sep, "%s %s", entry.fstype, entry.device) != 2)
+ 	continue;
+ 
++      translate_from_gobolinux (entry.device);
+       unescape (entry.device);
+ 
+       /* Using the mount IDs, find out where this fits in the list of
+diff -ur grub-2.12.orig/grub-core/kern/emu/misc.c grub-2.12/grub-core/kern/emu/misc.c
+--- grub-2.12.orig/grub-core/kern/emu/misc.c	2025-04-04 13:31:55.999999710 +0000
++++ grub-2.12/grub-core/kern/emu/misc.c	2025-04-04 13:46:46.999999611 +0000
+@@ -98,6 +98,50 @@
+   return p;
+ }
+ 
++
++char *
++xrealpath (const char *in)
++{
++  char *out, *gobo_out;
++#ifdef PATH_MAX
++  out = xmalloc (PATH_MAX);
++  out = realpath (in, out);
++#else
++  out = realpath (in, NULL);
++#endif
++  if (!out)
++    grub_util_error (_("failed to get canonical path of %s"), in);
++
++  if (!strncmp ("/System/Kernel/Devices/", out, 23))
++    {
++      gobo_out = xmalloc (strlen (out));
++      if (!gobo_out)
++        {
++          free (out);
++          grub_util_error (_("not enough memory"));
++        }
++      sprintf (gobo_out, "/dev/%s", &out[23]);
++      free (out);
++      out = gobo_out;
++    }
++  else if (!strncmp ("/System/Kernel/Objects/", out, 23))
++    {
++      gobo_out = xmalloc (strlen (out));
++      if (!gobo_out)
++        {
++          free (out);
++          grub_util_error (_("not enough memory"));
++        }
++      sprintf (gobo_out, "/sys/%s", &out[23]);
++      free (out);
++      out = gobo_out;
++    }
++  
++  return out;
++}
++
++
++
+ void *
+ xmalloc (grub_size_t size)
+ {
+diff -ur grub-2.12.orig/grub-core/osdep/linux/getroot.c grub-2.12/grub-core/osdep/linux/getroot.c
+--- grub-2.12.orig/grub-core/osdep/linux/getroot.c	2025-04-04 13:31:55.999999710 +0000
++++ grub-2.12/grub-core/osdep/linux/getroot.c	2025-04-04 13:46:46.999999611 +0000
+@@ -730,7 +730,7 @@
+ 
+   path = xmalloc (PATH_MAX);
+ 
+-  if (! realpath (os_dev, path))
++  if (! (path = xrealpath (os_dev)))
+     return NULL;
+ 
+   if (strncmp ("/dev/", path, 5) == 0)
+diff -ur grub-2.12.orig/grub-core/osdep/linux/ofpath.c grub-2.12/grub-core/osdep/linux/ofpath.c
+--- grub-2.12.orig/grub-core/osdep/linux/ofpath.c	2025-04-04 13:31:55.999999710 +0000
++++ grub-2.12/grub-core/osdep/linux/ofpath.c	2025-04-04 13:46:46.999999611 +0000
+@@ -209,21 +209,6 @@
+ }
+ 
+ static char *
+-xrealpath (const char *in)
+-{
+-  char *out;
+-#ifdef PATH_MAX
+-  out = xmalloc (PATH_MAX);
+-  out = realpath (in, out);
+-#else
+-  out = realpath (in, NULL);
+-#endif
+-  if (!out)
+-    grub_util_error (_("failed to get canonical path of `%s'"), in);
+-  return out;
+-}
+-
+-static char *
+ block_device_get_sysfs_path_and_link(const char *devicenode)
+ {
+   char *rpath;
+diff -ur grub-2.12.orig/grub-core/osdep/unix/hostdisk.c grub-2.12/grub-core/osdep/unix/hostdisk.c
+--- grub-2.12.orig/grub-core/osdep/unix/hostdisk.c	2025-04-04 13:31:55.999999710 +0000
++++ grub-2.12/grub-core/osdep/unix/hostdisk.c	2025-04-04 13:46:47.003332944 +0000
+@@ -217,11 +217,11 @@
+   char *ret;
+ 
+   ret = xmalloc (PATH_MAX);
+-  if (!realpath (path, ret))
++  if (!(ret = xrealpath (path)))
+     return NULL;
+   return ret;
+ #else
+-  return realpath (path, NULL);
++  return xrealpath (path);
+ #endif
+ }
+ 
+diff -ur grub-2.12.orig/include/grub/emu/misc.h grub-2.12/include/grub/emu/misc.h
+--- grub-2.12.orig/include/grub/emu/misc.h	2025-04-04 13:31:56.039999711 +0000
++++ grub-2.12/include/grub/emu/misc.h	2025-04-04 13:48:03.129999599 +0000
+@@ -52,6 +52,7 @@
+ void * EXPORT_FUNC(xrealloc) (void *ptr, grub_size_t size) WARN_UNUSED_RESULT;
+ char * EXPORT_FUNC(xstrdup) (const char *str) WARN_UNUSED_RESULT;
+ char * EXPORT_FUNC(xasprintf) (const char *fmt, ...) __attribute__ ((format (GNU_PRINTF, 1, 2))) WARN_UNUSED_RESULT;
++char * EXPORT_FUNC(xrealpath) (const char *in) WARN_UNUSED_RESULT;
+ 
+ void EXPORT_FUNC(grub_util_warn) (const char *fmt, ...) __attribute__ ((format (GNU_PRINTF, 1, 2)));
+ void EXPORT_FUNC(grub_util_info) (const char *fmt, ...) __attribute__ ((format (GNU_PRINTF, 1, 2)));
