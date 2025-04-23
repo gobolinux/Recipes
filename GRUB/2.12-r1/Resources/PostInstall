@@ -1,13 +1,12 @@
-#!/usr/bin/env bash
 cat << EOF
 Warning! This revision introduces breaking changes from Gobo 017.01 to 
 Gobo 017.01-r1.
 
-The ESP's mount point has been moved from `/System/Kernel/Boot/efi` to
-`/System/Kernel/ESP`. 
+The ESP's mount point has been moved from /System/Kernel/Boot/efi to
+/System/Kernel/ESP. 
 
-The grub boot-directory too has been moved from `/System/Kernel/Boot/grub`
-into the ESP partition at `/System/Kernel/ESP/grub`. This includes grub.cfg,
+The grub boot-directory too has been moved from /System/Kernel/Boot/grub
+into the ESP partition at /System/Kernel/ESP/grub. This includes grub.cfg,
 themes, fonts, locales etc.
 
 Legacy BIOS booting is unaffected.
