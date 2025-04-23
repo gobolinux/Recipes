@@ -36,8 +36,8 @@ fi
 set_mono_theme()
 {
     cat << EOF
-set menu_color_normal=white/black
-set menu_color_highlight=black/light-gray
+  set menu_color_normal=white/black
+  set menu_color_highlight=black/light-gray
 EOF
 }
 
@@ -67,7 +67,7 @@ if ${use_bg} ; then
   prepare_grub_to_access_device `${grub_probe} --target=device ${bg}`
   cat << EOF
 insmod ${reader}
-if background_image `make_system_path_relative_to_its_root ${bg}` ; then
+if background_image -m stretch `make_system_path_relative_to_its_root ${bg}` ; then
   set color_normal=${COLOR_NORMAL}
   set color_hightlight=${COLOR_HIGHLIGHT}
 else
