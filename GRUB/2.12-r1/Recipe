@@ -54,10 +54,10 @@ pre_link() {
     # image into:
     #     /System/Kernel/Boot/grub 
     #     /System/Kernel/Boot/grub/images
-    #     /System/Kernel/Boot/efi/grub
-    #     /System/Kernel/Boot/efi/grub/images
     #     /System/Kernel/ESP/grub
     #     /System/Kernel/ESP/grub/images
+    #     /System/Kernel/Boot/efi/grub (backwards compatibility)
+    #     /System/Kernel/Boot/efi/grub/images (backwards compatibility)
     mkdir -pv $target/share/grub/images
     cp -v $recipedir/Data/gobo_splash.png $target/share/grub/images/gobo_splash.png
 }
