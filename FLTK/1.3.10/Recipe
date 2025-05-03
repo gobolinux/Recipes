@@ -8,5 +8,4 @@ dir=fltk-1.3.10
 recipe_type=configure
 configure_options=(
     --enable-shared
-    --enable-xshm
 )
