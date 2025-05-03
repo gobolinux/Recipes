@@ -1,0 +1,65 @@
+# Recipe for version 2.12 by Nuc1eoN, on Sun 17 Apr 2025 11:56:20 PM CEST
+# Recipe (MakeRecipe) for GRUB-EFI by Lucas C. Villa Real, on Fri Dec 4 16:02:55 BRST 2009
+compile_version=017
+
+urls=(
+    "$ftpGnu/grub/grub-2.12.tar.xz"
+    "https://unifoundry.com/pub/unifont/unifont-16.0.02/font-builds/unifont-16.0.02.pcf.gz"
+)
+file_sizes=(
+    6675608
+    1356741
+)
+file_md5s=(
+    60c564b1bdc39d8e43b3aab4bc0fb140
+    91dc370f8115ddeef75e770c9023c498
+)
+autogen_before_configure=yes
+recipe_type=configure
+
+environment=(
+    CFLAGS=
+    CXXFLAGS=
+    CPPFLAGS=
+    LDFLAGS=
+    MAKEFLAGS=
+    # Grub is not compatible with gold linker (https://bugs.gentoo.org/439082)
+    TARGET_LDFLAGS+="-fuse-ld=bfd"
+)
+
+configure_options=(
+    --enable-nls
+    --enable-device-mapper
+    --enable-grub-mkfont
+    --enable-grub-mount
+    --disable-silent-rules
+    --disable-efiemu
+    --disable-werror
+    --with-platform="efi"
+    --program-suffix="-efi"
+)
+
+pre_build() {
+    # Avoid build error in GRUB 2.12, due to extra_deps.lst missing from source tarball
+    # Taken from: https://gitweb.gentoo.org/repo/gentoo.git/tree/sys-boot/grub/grub-2.12-r6.ebuild#n183
+    echo "depends bli part_gpt" > grub-core/extra_deps.lst || die
+}
+
+pre_link() {
+    ./grub-mkfont -o unicode.pf2 $compileArchivesDir/unifont-16.0.02.pcf.gz
+    mkdir -p $target/share/grub
+    cp -v unicode.pf2 $target/share/grub
+    rm -f $settings_target/grub.d/*_*efi
+
+    # install gobo grub background to `/System/Index/share/images/gobo`, the background 
+    # is then loaded automatically if and only if the user/installer copys the 
+    # image into:
+    #     /System/Kernel/Boot/grub 
+    #     /System/Kernel/Boot/grub/images
+    #     /System/Kernel/ESP/grub
+    #     /System/Kernel/ESP/grub/images
+    #     /System/Kernel/Boot/efi/grub (backwards compatibility)
+    #     /System/Kernel/Boot/efi/grub/images (backwards compatibility)
+    mkdir -pv $target/share/grub/images
+    cp -v $recipedir/Data/gobo_splash.png $target/share/grub/images/gobo_splash.png
+}
