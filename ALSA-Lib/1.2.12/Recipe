@@ -6,5 +6,6 @@ file_size=1108712
 file_md5=97bbf3cca911c1701fe9fe115c32b03d
 recipe_type=configure
 configure_options=(
-    --enable-symbolic-functions
+	--disable-static
+	--enable-symbolic-functions
 )
