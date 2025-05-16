@@ -1,0 +1,17 @@
+# Recipe for version 1.4.313.0 by Nuc1eoN, on Fri 16 May 2025 11:38:17 PM CEST
+url="https://github.com/KhronosGroup/Vulkan-Loader/archive/refs/tags/vulkan-sdk-1.4.313.0.tar.gz"
+file_size=1757076
+file_md5=2e107cbf5113aa20fea792af2311fecb
+file="Vulkan-Loader-vulkan-sdk-1.4.313.0.tar.gz"
+dir="Vulkan-Loader-vulkan-sdk-1.4.313.0"
+recipe_type=cmake
+cmake_options=(
+   -DCMAKE_BUILD_TYPE=Release
+   -DCMAKE_SKIP_RPATH=True
+   -DBUILD_TESTS=OFF
+   -DBUILD_LOADER=ON
+   -DBUILD_WSI_WAYLAND_SUPPORT=ON
+   -DBUILD_WSI_XCB_SUPPORT=ON
+   -DBUILD_WSI_XLIB_SUPPORT=ON
+   -DVULKAN_HEADERS_INSTALL_DIR="/usr"
+)
