@@ -19,4 +19,4 @@ pre_link() {
     Quiet popd
 }
 
-post_install_message="\n==================================================\n\nCAUTION: There is a dependency cycle between GLib and GObject-Introspection.\n This can be broken by building GLib first with -Dintrospection=disabled,\n then building GObject-Introspection against this copy of GLib, then re-building\n GLib against the new Object-Introspection with -Dintrospection=disabled commented out.\n\n=================================================="
+post_install_message="\n==================================================\n\nCAUTION: There is a dependency cycle between GLib and GObject-Introspection.\n This can be broken by building GLib first with -Dintrospection=disabled,\n then building GObject-Introspection against this copy of GLib, then re-building\n GLib against the new GObject-Introspection with -Dintrospection=disabled commented out.\n\n=================================================="
