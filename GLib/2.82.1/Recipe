@@ -10,20 +10,13 @@ meson_variables=(
     -D selinux=disabled
     -D glib_debug=disabled
     -D tests=false
-#    -D introspection=disabled
+    -D introspection=disabled
 )
-
-# NOTE: From time to time it may be required to build with
-# `-D introspection=disabled`, Compile a more recent version
-# of GObject-Introspection and then finally recompile Glib with
-# introspection=enabled (or commented out).
-
-pre_build() {
-    rmdir ../subprojects/gvdb
-}
 
 pre_link() {
     Quiet pushd $target/lib/pkgconfig
     for i in *; do ln -s $i `echo $i | sed 's/-2.0//g'`; done
     Quiet popd
 }
+
+post_install_message="\n==================================================\n\nCAUTION: There is a dependency cycle between GLib and GObject-Introspection.\n This can be broken by building GLib first with -Dintrospection=disabled,\n then building GObject-Introspection against this copy of GLib, then re-building\n GLib against the new Object-Introspection with -Dintrospection=disabled commented out.\n\n=================================================="
