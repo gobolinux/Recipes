@@ -4,7 +4,7 @@ LibInput 1.16.3
 Wayland-Protocols
 Vulkan-Headers
 GLSLang
-XWayland # Optional
 SeatD
-LibGLVnd
+LibGLVnd >= 1.7.0
 FFmpeg < 5.0 # NOTE: next wlroots release should be fine with ffmpeg v5
+XWayland # Optional
