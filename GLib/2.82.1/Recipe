@@ -19,4 +19,9 @@ pre_link() {
     Quiet popd
 }
 
+# Overwrite GObject-Introspection symlinks on second build
+symlink_options=(
+    "--conflict overwrite"
+)
+
 post_install_message="\n==================================================\n\nCAUTION: There is a dependency cycle between GLib and GObject-Introspection.\n This can be broken by building GLib first with -Dintrospection=disabled,\n then building GObject-Introspection against this copy of GLib, then re-building\n GLib against the new GObject-Introspection with -Dintrospection=disabled commented out.\n\n=================================================="
