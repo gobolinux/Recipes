@@ -1,0 +1,77 @@
+Fixes "error: ‘calloc’ sizes specified with ‘sizeof’ in the earlier argument and not in the later argument".
+
+diff -Nur wlroots-0.15.1.old/backend/libinput/tablet_pad.c wlroots-0.15.1/backend/libinput/tablet_pad.c
+--- wlroots-0.15.1.old/backend/libinput/tablet_pad.c	2022-02-03 22:19:54.000000000 +0100
++++ wlroots-0.15.1/backend/libinput/tablet_pad.c	2025-05-22 16:24:56.013448787 +0200
+@@ -28,7 +28,7 @@
+ 			++group->ring_count;
+ 		}
+ 	}
+-	group->rings = calloc(sizeof(unsigned int), group->ring_count);
++	group->rings = calloc(group->ring_count, sizeof(unsigned int));
+ 	size_t ring = 0;
+ 	for (size_t i = 0; i < pad->ring_count; ++i) {
+ 		if (libinput_tablet_pad_mode_group_has_ring(li_group, i)) {
+@@ -41,7 +41,7 @@
+ 			++group->strip_count;
+ 		}
+ 	}
+-	group->strips = calloc(sizeof(unsigned int), group->strip_count);
++	group->strips = calloc(group->strip_count, sizeof(unsigned int));
+ 	size_t strip = 0;
+ 	for (size_t i = 0; i < pad->strip_count; ++i) {
+ 		if (libinput_tablet_pad_mode_group_has_strip(li_group, i)) {
+@@ -54,7 +54,7 @@
+ 			++group->button_count;
+ 		}
+ 	}
+-	group->buttons = calloc(sizeof(unsigned int), group->button_count);
++	group->buttons = calloc(group->button_count, sizeof(unsigned int));
+ 	size_t button = 0;
+ 	for (size_t i = 0; i < pad->button_count; ++i) {
+ 		if (libinput_tablet_pad_mode_group_has_button(li_group, i)) {
+diff -Nur wlroots-0.15.1.old/backend/wayland/output.c wlroots-0.15.1/backend/wayland/output.c
+--- wlroots-0.15.1.old/backend/wayland/output.c	2022-02-03 22:19:54.000000000 +0100
++++ wlroots-0.15.1/backend/wayland/output.c	2025-05-22 16:23:37.710113197 +0200
+@@ -509,7 +509,7 @@
+ 	}
+ 
+ 	struct wlr_wl_output *output;
+-	if (!(output = calloc(sizeof(struct wlr_wl_output), 1))) {
++	if (!(output = calloc(1, sizeof(struct wlr_wl_output)))) {
+ 		wlr_log(WLR_ERROR, "Failed to allocate wlr_wl_output");
+ 		return NULL;
+ 	}
+diff -Nur wlroots-0.15.1.old/examples/tablet.c wlroots-0.15.1/examples/tablet.c
+--- wlroots-0.15.1.old/examples/tablet.c	2022-02-03 22:19:54.000000000 +0100
++++ wlroots-0.15.1/examples/tablet.c	2025-05-22 16:26:48.790118702 +0200
+@@ -309,7 +309,7 @@
+ 		xkb_context_unref(context);
+ 		break;
+ 	case WLR_INPUT_DEVICE_TABLET_PAD:;
+-		struct tablet_pad_state *pstate = calloc(sizeof(struct tablet_pad_state), 1);
++		struct tablet_pad_state *pstate = calloc(1, sizeof(struct tablet_pad_state));
+ 		pstate->device = device;
+ 		pstate->sample = sample;
+ 		pstate->destroy.notify = tablet_pad_destroy_notify;
+@@ -326,7 +326,7 @@
+ 		sample->height_mm = device->height_mm == 0 ?
+ 			10 : device->height_mm;
+ 
+-		struct tablet_tool_state *tstate = calloc(sizeof(struct tablet_tool_state), 1);
++		struct tablet_tool_state *tstate = calloc(1, sizeof(struct tablet_tool_state));
+ 		tstate->device = device;
+ 		tstate->sample = sample;
+ 		tstate->destroy.notify = tablet_tool_destroy_notify;
+diff -Nur wlroots-0.15.1.old/examples/touch.c wlroots-0.15.1/examples/touch.c
+--- wlroots-0.15.1.old/examples/touch.c	2022-02-03 22:19:54.000000000 +0100
++++ wlroots-0.15.1/examples/touch.c	2025-05-22 16:22:16.853444242 +0200
+@@ -220,7 +220,7 @@
+ 		xkb_context_unref(context);
+ 		break;
+ 	case WLR_INPUT_DEVICE_TOUCH:;
+-		struct touch_state *tstate = calloc(sizeof(struct touch_state), 1);
++		struct touch_state *tstate = calloc(1, sizeof(struct touch_state));
+ 		tstate->device = device;
+ 		tstate->sample = sample;
+ 		tstate->destroy.notify = touch_destroy_notify;
