@@ -1,0 +1,36 @@
+From 2cd73a33c26ea6510a2f50359b1c550cd9b4fead Mon Sep 17 00:00:00 2001
+From: Sergei Trofimovich <slyich@gmail.com>
+Date: Tue, 28 Nov 2023 22:17:21 +0000
+Subject: [PATCH] sway/config.c: use `memcpy()` for known buffer size
+
+`gcc-14` added a new warning around dangerous use of `strncpy()` withi
+known overflow:
+
+    ../sway/config.c: In function 'do_var_replacement':
+    ../sway/config.c:983:33: error: '__builtin___strncpy_chk' specified bound depends on the length of the source argument [-Werror=stringop-truncation]
+      983 |                                 strncpy(newptr, var->value, vvlen);
+          |                                 ^
+    ../sway/config.c:971:45: note: length computed here
+      971 |                                 int vvlen = strlen(var->value);
+          |                                             ^~~~~~~~~~~~~~~~~~
+
+It's a bit fishy to rely on truncating behaviour of `strncpy()`. The
+change uses `memcpy()` as more explicit way to express copy of `vvlen`
+bytes.
+---
+ sway/config.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sway/config.c b/sway/config.c
+index 8c8c148d9b..4b51dc73f6 100644
+--- a/sway/config.c
++++ b/sway/config.c
+@@ -975,7 +975,7 @@ char *do_var_replacement(char *str) {
+ 				int offset = find - str;
+ 				strncpy(newptr, str, offset);
+ 				newptr += offset;
+-				strncpy(newptr, var->value, vvlen);
++				memcpy(newptr, var->value, vvlen);
+ 				newptr += vvlen;
+ 				strcpy(newptr, find + vnlen);
+ 				free(str);

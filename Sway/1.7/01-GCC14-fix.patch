@@ -1,0 +1,50 @@
+From 1e9be019b2af7ad4aca66ba6460f56453829485d Mon Sep 17 00:00:00 2001
+From: Simon Ser <contact@emersion.fr>
+Date: Wed, 11 May 2022 17:18:39 +0200
+Subject: [PATCH] Replace strncpy with memcpy
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+strncpy is useless here, is dangerous because it doesn't guarantee
+that the string is NUL-terminated and causes the following warning:
+
+    ../sway/criteria.c: In function ‘criteria_parse’:
+    ../sway/criteria.c:712:25: error: ‘strncpy’ destination unchanged after copying no bytes [-Werror=stringop-truncation]
+      712 |                         strncpy(value, valuestart, head - valuestart);
+          |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---
+ sway/criteria.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/sway/criteria.c b/sway/criteria.c
+index 94751c5fe1..97cf667e77 100644
+--- a/sway/criteria.c
++++ b/sway/criteria.c
+@@ -682,7 +682,7 @@ struct criteria *criteria_parse(char *raw, char **error_arg) {
+ 		}
+ 		name = calloc(head - namestart + 1, 1);
+ 		if (head != namestart) {
+-			strncpy(name, namestart, head - namestart);
++			memcpy(name, namestart, head - namestart);
+ 		}
+ 		// Parse token value
+ 		skip_spaces(&head);
+@@ -709,7 +709,7 @@ struct criteria *criteria_parse(char *raw, char **error_arg) {
+ 				}
+ 			}
+ 			value = calloc(head - valuestart + 1, 1);
+-			strncpy(value, valuestart, head - valuestart);
++			memcpy(value, valuestart, head - valuestart);
+ 			if (in_quotes) {
+ 				++head;
+ 				in_quotes = false;
+@@ -740,7 +740,7 @@ struct criteria *criteria_parse(char *raw, char **error_arg) {
+ 	++head;
+ 	int len = head - raw;
+ 	criteria->raw = calloc(len + 1, 1);
+-	strncpy(criteria->raw, raw, len);
++	memcpy(criteria->raw, raw, len);
+ 	return criteria;
+ 
+ cleanup:
