@@ -6,3 +6,8 @@ file_size=9648
 file_md5=b553fdb6024c5a137ff925bf4c337724
 dir='libxcvt-0.1.2'
 recipe_type=meson
+
+# Overwrite Xorg-Server symlinks (manpages and /bin/cvt)
+symlink_options=(
+    "--conflict overwrite"
+)
