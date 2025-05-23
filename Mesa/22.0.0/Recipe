@@ -1,7 +1,7 @@
 # Recipe for version 22.0.0 by Nuc1eoN, on Thu 10 Mar 2022 02:27:38 AM CET
 # Recipe (MakeRecipe) for Mesa by Lucas Correia Villa Real <lucasvr@gobolinux.org>, on Tue Nov 23 03:32:41 BRST 2004
 compile_version=017
-url="https://mesa.freedesktop.org/archive/mesa-22.0.0.tar.xz"
+url="https://archive.mesa3d.org/older-versions/22.x/mesa-22.0.0.tar.xz"
 file_size=15565680
 file_md5=cbc2f80946339578e75adcefe32cbd8a
 recipe_type=meson
@@ -9,7 +9,7 @@ recipe_type=meson
 environment=(
     GALLIUM_DRV=
     DRI_DRIVERS=
-    CPLUS_INCLUDE_PATH="/System/Index/include/c++/11.2.0:/System/Index/include:$CPLUS_INCLUDE_PATH"
+    CPLUS_INCLUDE_PATH="/System/Index/include/c++/14.2.0:/System/Index/include:$CPLUS_INCLUDE_PATH"
 )
 
 meson_variables=(
@@ -25,7 +25,6 @@ meson_variables=(
     -D egl=enabled
     -D gallium-extra-hud=true
     -D gallium-nine=true
-    -D gallium-omx=bellagio
     -D gallium-opencl=icd
     -D gallium-va=enabled
     -D gallium-vdpau=enabled
