@@ -1,0 +1,13 @@
+# Recipe for version 0.3.1 by Nuc1eoN, on Thu 29 May 2025 06:15:42 PM CEST
+# Recipe (MakeRecipe) for Keybinder by LeviathanOne <leviathanone@protonmail.ch>, on Mon Jan 16 16:05:27 GMT 2017
+compile_version=017-GIT
+url="https://github.com/kupferlauncher/keybinder/releases/download/v0.3.1/keybinder-0.3.1.tar.gz"
+file_size=391730
+file_md5=a6d7caae0dcb040b08692b008a68a507
+dir='keybinder-0.3.1'
+recipe_type=configure
+
+configure_options=(
+	--disable-lua
+	--disable-python
+)
