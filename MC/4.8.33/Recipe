@@ -1,0 +1,14 @@
+# Recipe for version 4.8.33 by Nuc1eoN, on Thu 29 May 2025 07:08:46 PM CEST
+compile_version=017-GIT
+url="https://ftp.osuosl.org/pub/midnightcommander/mc-4.8.33.tar.xz"
+file_size=2424476
+file_md5=b3596c1f092b9822a6cd9c9a1aef8dde
+file=mc-4.8.33.tar.xz
+recipe_type=configure
+configure_options=(
+    --enable-extcharset
+    --enable-charset
+    --without-x
+    --with-search-engine=glib
+    --with-screen=slang
+)
