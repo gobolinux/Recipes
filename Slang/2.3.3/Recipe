@@ -1,0 +1,17 @@
+# Recipe for version 2.3.3 by Nuc1eoN, on Thu 29 May 2025 07:10:36 PM CEST
+compile_version=017-GIT
+url="http://www.jedsoft.org/releases/slang/slang-2.3.3.tar.bz2"
+file_size=1646311
+file_md5=69015c8300088373eb65ffcc6ed4db8c
+recipe_type=configure
+
+makefile=Makefile.gobo
+build_target=all
+
+pre_build() {
+   # Wrapper Makefile to force single job as parallel builds break
+   cat << EOF > Makefile.gobo
+% :
+	\$(MAKE) -j1 \$@
+EOF
+}
