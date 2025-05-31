@@ -1,0 +1,11 @@
+# Recipe for version 1.5.0 by Nuc1eoN, on Sat 31 May 2025 01:03:42 AM CEST
+compile_version=017-GIT
+# Recipe for Flac 1.5.0 by Maglan C. Diemer, maglan@univates.br
+url="https://ftp.osuosl.org/pub/xiph/releases/flac/flac-1.5.0.tar.xz"
+file_size=1078872
+file_md5=0bb45bcf74338b00efeec121fff27367
+recipe_type=configure
+
+configure_options=(
+    --disable-thorough-tests
+)
