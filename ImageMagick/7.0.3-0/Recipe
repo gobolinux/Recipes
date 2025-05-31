@@ -4,7 +4,6 @@ compile_version=1.10.2
 url="http://www.imagemagick.org/download/ImageMagick-7.0.3-0.tar.xz"
 file_size=8289784
 file_md5=fa113d51761fd93c5ab24c963eac39b9
-mirror_url="http://ftp.lfs-matrix.net/pub/blfs/conglomeration/ImageMagick/ImageMagick-7.0.9-7.tar.xz"
 recipe_type=configure
 make_variables=(
     INSTALLPRIVLIB=$target/lib/perl5/5.10.0

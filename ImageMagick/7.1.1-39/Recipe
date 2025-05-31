@@ -1,10 +1,9 @@
 # Recipe for version 7.1.1.39 by Nuc1eoN, on Mon 14 Oct 2024 03:55:44 AM CEST
 # Recipe (MakeRecipe) for ImageMagick by Seb Haezebrouck, on Wed Mar 19 14:19:20 CET 2008
 compile_version=1.10.2
-url="https://imagemagick.org/archive/ImageMagick-7.1.1-39.tar.xz"
+url="https://imagemagick.org/archive/releases/ImageMagick-7.1.1-39.tar.xz"
 file_size=10764672
 file_md5=400bc5ae080be72031368f37201c6d23
-mirror_url="http://ftp.lfs-matrix.net/pub/blfs/conglomeration/ImageMagick/ImageMagick-7.0.9-7.tar.xz"
 recipe_type=configure
 
 configure_options=(
