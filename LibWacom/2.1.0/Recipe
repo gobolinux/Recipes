@@ -6,7 +6,7 @@ file_size=106080
 file_md5=f726510196dfaec9c92d195bc6cc7f2b
 dir='libwacom-2.1.0'
 recipe_type=meson
-meson_variables=(
+meson_options=(
 	--buildtype=release
 	-Dtests=disabled
 )

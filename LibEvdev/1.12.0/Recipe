@@ -6,6 +6,6 @@ file_size=443716
 file_md5=2186bc6b92c2c9573d8915b0a43acb43
 dir='libevdev-1.12.0'
 recipe_type=meson
-meson_variables=(
+meson_options=(
 	-Ddocumentation=disabled
 )

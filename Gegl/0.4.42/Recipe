@@ -5,6 +5,6 @@ url="https://download.gimp.org/pub/gegl/0.4/gegl-0.4.42.tar.xz"
 file_size=5787100
 file_md5=f4532970b342d31cb6bb2b0207545b1d
 recipe_type=meson
-meson_variables=(
+meson_options=(
    "-Ddocs=false"
 )

@@ -6,7 +6,7 @@ file_size=7839412
 file_md5=c40b3a1fbdbb9a7aa178600b88200c76
 recipe_type=meson
 
-meson_variables=(
+meson_options=(
     -D asm=disabled
     -D custom-modes=true
     -D deep-plc=enabled

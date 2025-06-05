@@ -6,7 +6,7 @@ file_size=13227856
 file_md5=226e372664a7fae749a50a04983ecd8d
 recipe_type=meson
 
-meson_variables=(
+meson_options=(
 	-D x11_backend=true
 	-D wayland_backend=true
 	-D broadway_backend=true

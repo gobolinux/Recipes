@@ -6,4 +6,4 @@ file_size=333332
 file_md5=390139e704772b915ff2b7cac56c24ae
 dir='graphene-1.10.6'
 recipe_type=meson
-meson_variables=(-Dinstalled_tests=false)
+meson_options=(-Dinstalled_tests=false)

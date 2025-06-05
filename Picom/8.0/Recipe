@@ -8,6 +8,6 @@ file_md5=8de58ec15b0dd1692b8eaa24adae5607
 dir='picom-8'
 recipe_type=meson
 
-meson_variables=(
+meson_options=(
     -Dconfig_file=false
 )

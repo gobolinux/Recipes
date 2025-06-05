@@ -6,7 +6,7 @@ file_size=7852841
 file_md5=aac56db912b7b12a04fb0018e28f2f36
 recipe_type=meson
 
-meson_variables=(
+meson_options=(
 	-D update-mimedb=true
 )
 

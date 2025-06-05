@@ -6,4 +6,4 @@ file_size=594948
 file_md5=562614e91c10c75ab1c2b71e5d27f076
 dir='libinput-1.16.3'
 recipe_type=meson
-meson_variables=("-Ddocumentation=false")
+meson_options=("-Ddocumentation=false")

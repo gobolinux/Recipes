@@ -6,4 +6,4 @@ file_size=218968
 file_md5=06a4fff9179a98ea32ef41b6d83f6b19
 recipe_type=meson
 
-meson_variables=(-D default_library=shared)
+meson_options=(-D default_library=shared)

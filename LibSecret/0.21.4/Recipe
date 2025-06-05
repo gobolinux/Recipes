@@ -4,6 +4,6 @@ url="http://ftp.gnome.org/pub/gnome/sources/libsecret/0.21/libsecret-0.21.4.tar.
 file_size=206636
 file_md5=85f0534c673ccf10daf6fa419728e0d8
 recipe_type=meson
-meson_variables=(
+meson_options=(
 	-D gtk_doc=false
 )

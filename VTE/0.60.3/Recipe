@@ -6,7 +6,7 @@ file_size=535504
 file_md5=4214712ecab2d50e2a3a07897c3ada49
 dir='vte-0.60.3'
 recipe_type=meson
-meson_variables=(
+meson_options=(
         "-D_systemd=false"
         "-Dvapi=false"
       )

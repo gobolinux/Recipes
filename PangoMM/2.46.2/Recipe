@@ -5,4 +5,4 @@ url="http://ftp.gnome.org/pub/GNOME/sources/pangomm/2.46/pangomm-2.46.2.tar.xz"
 file_size=674892
 file_md5=517b9462f0cc59287388e1e6423588bf
 recipe_type=meson
-meson_variables=(--buildtype=release)
+meson_options=(--buildtype=release)

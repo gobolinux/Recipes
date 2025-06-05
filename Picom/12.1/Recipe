@@ -8,7 +8,7 @@ file="picom-8.tar.gz"
 dir='picom-8'
 recipe_type=meson
 
-meson_variables=(
+meson_options=(
     --buildtype=release
     -D config_file=false
 )

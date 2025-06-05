@@ -6,7 +6,7 @@ file_size=1098260
 file_md5=333ad150991097a627755b752b87f9ff
 recipe_type=meson
 
-meson_variables=(
+meson_options=(
 	--buildtype=release
 )
 #configure_options=(

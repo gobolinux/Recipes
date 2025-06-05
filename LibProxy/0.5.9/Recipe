@@ -7,7 +7,7 @@ file_size=58165
 file_md5=11fd35c17e0ae017bae764fae1651973
 recipe_type=meson
 
-meson_variables=(
+meson_options=(
 	-D release=true
 	-D docs=false
 	-D pacrunner-duktape=false

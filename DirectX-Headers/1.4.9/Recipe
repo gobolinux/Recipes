@@ -7,7 +7,7 @@ file_size=268094
 file_md5=91824dfc8ed9cd3ae2f99bcc4011ed76
 dir='DirectX-Headers-1.4.9'
 recipe_type=meson
-meson_variables=(
+meson_options=(
 	-Dbuild-test=false
 )
 

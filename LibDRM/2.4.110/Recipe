@@ -6,7 +6,7 @@ file_size=436372
 file_md5=ef6449de30a41ecdf69dc7ae78e676a9
 recipe_type=meson
 symlink_options=(--conflict=overwrite)
-meson_variables=(
+meson_options=(
 	--buildtype=release
 	-Dudev=true
 	-Dvalgrind=false

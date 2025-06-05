@@ -8,7 +8,7 @@ file="appstream-glib-appstream_glib_0_7_15.tar.gz"
 dir='appstream-glib-appstream_glib_0_7_15'
 recipe_type=meson
 
-meson_variables=(
+meson_options=(
     -Drpm=false
     -Dman=false
 )

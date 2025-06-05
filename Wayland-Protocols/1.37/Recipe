@@ -6,6 +6,6 @@ file_size=100356
 file_md5=f36a21504ed762c928265bf081604e04
 dir='wayland-protocols-1.37'
 recipe_type=meson
-meson_variables=(
+meson_options=(
 	--buildtype=release
 )

@@ -7,7 +7,7 @@ file_md5=c2e4b0d379b65f034954515edc8ddb60
 dir='gst-plugins-base-1.24.9'
 recipe_type=meson
 
-meson_variables=(
+meson_options=(
 	-D examples=disabled
 	-D gobject-cast-checks=disabled
 )

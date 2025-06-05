@@ -5,4 +5,4 @@ url="https://gitlab.freedesktop.org/cairo/cairomm/-/archive/1.14.3/cairomm-1.14.
 file_size=108309
 file_md5=bbe83cefd3128bc2f8cd9431cfad9c95
 recipe_type=meson
-meson_variables=(--buildtype=release)
+meson_options=(--buildtype=release)

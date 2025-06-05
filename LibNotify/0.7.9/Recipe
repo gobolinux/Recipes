@@ -6,7 +6,7 @@ file_size=98148
 file_md5=ccd9c53364174cc8d13e18a1988faa76
 recipe_type=meson
 
-meson_variables=(
+meson_options=(
     -Dman=false
     -Dgtk_doc=false
 )

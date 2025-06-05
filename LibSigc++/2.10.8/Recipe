@@ -5,4 +5,4 @@ url="http://ftp.gnome.org/pub/GNOME/sources/libsigc++/2.10/libsigc++-2.10.8.tar.
 file_size=4998876
 file_md5=fbfb0bbda62c4894493e89520de400c9
 recipe_type=meson
-meson_variables=(--buildtype=release)
+meson_options=(--buildtype=release)

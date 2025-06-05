@@ -5,4 +5,4 @@ url="http://ftp.gnome.org/pub/GNOME/sources/gtkmm/3.24/gtkmm-3.24.5.tar.xz"
 file_size=13540488
 file_md5=27af20542aaeb8a31a2ebaa267244bdb
 recipe_type=meson
-meson_variables=(--buildtype=release)
+meson_options=(--buildtype=release)

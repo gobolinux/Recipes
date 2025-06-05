@@ -6,7 +6,7 @@ file_size=3924664
 file_md5=41dde92930710c75cdb49169c5cc6dfc
 recipe_type=meson
 
-meson_variables=(
+meson_options=(
   "-Dbuildtype=release"
   "-Dgtk_doc=disabled"
 )

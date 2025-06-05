@@ -5,6 +5,6 @@ url="https://download.gimp.org/pub/babl/0.1/babl-0.1.110.tar.xz"
 file_size=319256
 file_md5=647708858d0c217579dec462b5f202a2
 recipe_type=meson
-meson_variables=(
+meson_options=(
    "-Dwith-docs=false"
 )

@@ -6,7 +6,7 @@ file_size=
 file_md5=
 dir='libwacom-2.13.0'
 recipe_type=meson
-meson_variables=(
+meson_options=(
 	--buildtype=release
 	-Dtests=disabled
 )

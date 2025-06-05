@@ -4,7 +4,7 @@ url="https://wayland.freedesktop.org/releases/wayland-1.20.0.tar.xz"
 file_size=225188
 file_md5=5095264157bf0565b921ceaf9d698d98
 recipe_type=meson
-meson_variables=(
+meson_options=(
     --buildtype=release
     -Ddocumentation=false
 )

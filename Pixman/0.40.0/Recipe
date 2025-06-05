@@ -6,7 +6,7 @@ file_size=634752
 file_md5=ee642c14f4f18934246c57a440da9ca2
 recipe_type=meson
 
-meson_variables=(
+meson_options=(
     -Dloongson-mmi=disabled
     -Dvmx=disabled
     -Darm-simd=disabled

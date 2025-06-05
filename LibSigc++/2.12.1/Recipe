@@ -5,4 +5,4 @@ url="https://github.com/libsigcplusplus/libsigcplusplus/releases/download/2.12.1
 file_size=5041732
 file_md5=891f1b2dbaebd8007eda8c639bbe1149
 recipe_type=meson
-meson_variables=(--buildtype=release)
+meson_options=(--buildtype=release)

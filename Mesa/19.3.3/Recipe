@@ -11,7 +11,7 @@ environment=(
     DRI_DRIVERS=
 )
 
-meson_variables=(
+meson_options=(
     -Dbuildtype=release
     -Db_lto=false
     -Db_ndebug=true

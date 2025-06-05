@@ -7,7 +7,7 @@ file_size=121618
 file_md5=c0ebb879d153f1e70e1b8a3653a0662a
 dir='pkgconf'
 recipe_type=meson
-meson_variables=(-D tests=disabled)
+meson_options=(-D tests=disabled)
 
 # To maintain compatibility with the original Pkg-config create two symlinks
 pre_link() {

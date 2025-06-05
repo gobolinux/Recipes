@@ -7,7 +7,7 @@ file_md5=8c49be2744eab0e15657742562556c7f
 recipe_type=meson
 dir=orc-0.4.40
 
-meson_variables=(
+meson_options=(
 	-D examples=disabled
 	-D tests=disabled
 )

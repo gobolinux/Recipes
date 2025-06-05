@@ -6,7 +6,7 @@ file_size=207892
 file_md5=1a5f60ade943393f9e609e0e55bb1417
 recipe_type=meson
 
-meson_variables=(
+meson_options=(
 	-D libsystemd=false
 	-D libudev=true
 	-D polkit=false

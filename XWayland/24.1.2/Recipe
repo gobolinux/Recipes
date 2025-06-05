@@ -6,7 +6,7 @@ file_size=1302068
 file_md5=312c5cf17d1b147df1b787fd170958e1
 dir='xwayland-24.1.2'
 recipe_type=meson
-meson_variables=(
+meson_options=(
 	-Ddri3=true
 	-Dglamor=true
 )

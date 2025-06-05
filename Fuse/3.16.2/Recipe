@@ -6,6 +6,6 @@ file_size=14165836
 file_md5=b00bf08b27ead4a9411578777e94a1cc
 recipe_type=meson
 
-meson_variables=(
+meson_options=(
 	-D examples=false
 )

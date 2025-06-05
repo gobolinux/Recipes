@@ -12,7 +12,7 @@ environment=(
     CPLUS_INCLUDE_PATH="/System/Index/include/c++/14.2.0:/System/Index/include:$CPLUS_INCLUDE_PATH"
 )
 
-meson_variables=(
+meson_options=(
     -D buildtype=release
     -D b_lto=true
     -D b_ndebug=true

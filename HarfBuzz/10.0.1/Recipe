@@ -6,7 +6,7 @@ file_size=17914712
 file_md5=295b211a0c6c0e5a07278ceee894ef68
 recipe_type=meson
 
-meson_variables=(
+meson_options=(
 	--buildtype=release
 	-D cpp_std=c++17
 	-D graphite2=enabled

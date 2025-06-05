@@ -6,7 +6,7 @@ file_size=5554132
 file_md5=d101f1acab6805d4d6d3104e9634b8e3
 recipe_type=meson
 
-meson_variables=(
+meson_options=(
     -D selinux=disabled
     -D glib_debug=disabled
     -D tests=false

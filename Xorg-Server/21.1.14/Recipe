@@ -8,7 +8,7 @@ file_md5=79c7a0058e247fe7b94b8159d4a6f4f5
 recipe_type=meson
 symlink_options=(--conflict=overwrite)
 
-meson_variables=(
+meson_options=(
 	-D xvfb=true
 	-D xnest=true
 	-D xcsecurity=true

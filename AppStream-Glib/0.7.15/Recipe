@@ -8,6 +8,6 @@ file_md5=60fda2d9c0f5b67a3d0eb8dd31a7211b
 dir='appstream-glib-appstream_glib_0_7_15'
 recipe_type=meson
 
-meson_variables=(
+meson_options=(
     -Drpm=false
 )

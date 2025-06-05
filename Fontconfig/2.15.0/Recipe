@@ -9,7 +9,7 @@ recipe_type=configure
 # Meson build is broken, because prefix=/usr is being used for configs files. Not sure how to fix.
 # Moreover, -Dadditional-fonts-dirs appears to be broken in meson build (fonts.conf does not include the dirs).
 #recipe_type=meson
-#meson_variables=(
+#meson_options=(
 #	-D default-fonts-dirs="${target}/share/fonts"
 #	-D additional-fonts-dirs="$goboPrefix/Files/Fonts/OpenType,$goboPrefix/Files/Fonts/TrueType"
 #	-D cache-dir="$goboVariable/cache/fontconfig"

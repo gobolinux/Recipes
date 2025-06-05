@@ -5,7 +5,7 @@ url="https://xkbcommon.org/download/libxkbcommon-1.7.0.tar.xz"
 file_size=534312
 file_md5=b05b1a0d473189efb2dd995dd944f152
 recipe_type=meson
-meson_variables=(
+meson_options=(
 	--buildtype=release
 	-Denable-docs=false
 )

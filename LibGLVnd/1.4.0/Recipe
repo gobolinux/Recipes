@@ -6,6 +6,6 @@ file_size=563441
 file_md5=42613c6b5ce5c2cc232bf97039ed1e77
 dir='libglvnd-v1.4.0'
 recipe_type=meson
-meson_variables=(
+meson_options=(
 	-Dgles1=false
 )

@@ -6,7 +6,7 @@ file_size=7624251
 file_md5=870a798ee9860b6e77896548428dba7b
 recipe_type=meson
 
-meson_variables=(
+meson_options=(
 	--buildtype=release
 	-D runtime=libicu
 	-D builtin=true
