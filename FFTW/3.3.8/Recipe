@@ -5,3 +5,8 @@ url="http://www.fftw.org/fftw-3.3.8.tar.gz"
 file_size=4110137
 file_md5=8aac833c943d8e90d51b697b27d4384d
 recipe_type=configure
+configure_options=(
+   --enable-float
+   --enable-sse3
+   --with-pic
+)
