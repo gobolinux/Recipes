@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for SIMDe by eMorph <charlie+github@zoned.net>, on Sun 15 Jun 2025 12:56:37 PM EDT
+# Recipe for version 0.8.2 by eMorph <charlie+github@zoned.net>, on Sun 15 Jun 2025 12:56:37 PM EDT
+compile_version=017-GIT
+url="https://github.com/simd-everywhere/simde/archive/refs/tags/v0.8.2.tar.gz"
+file="simde-0.8.2.tar.gz"
+file_size=7468969
+file_md5=14323994d1f791e985c59ddf0b559e35
+dir='simde-0.8.2'
+recipe_type=meson
