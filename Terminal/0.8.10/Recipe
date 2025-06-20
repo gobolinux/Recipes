@@ -1,0 +1,10 @@
+# Recipe for version 0.8.10 by eMorph <charlie+github@zoned.net>, on Fri 20 Jun 2025 04:20:44 PM EDT
+# Recipe (MakeRecipe) for Terminal by Jonas Karlsson <jonka750@student.liu.se>, on Fri Jun 2 23:15:19 CEST 2006
+compile_version=017-GIT
+url="https://archive.xfce.org/src/apps/xfce4-terminal/0.8/xfce4-terminal-0.8.10.tar.bz2"
+file_size=978071
+file_md5=6e18bad7109c33486cd26ef59a319f0d
+recipe_type=configure
+configure_options=(
+   --enable-debug=no
+)
