@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for NerdFontSymbols by eMorph <charlie+github@zoned.net>, on Sun 15 Jun 2025 11:42:01 AM EDT
+# Recipe for version 3.4.0 by eMorph <charlie+github@zoned.net>, on Sun 15 Jun 2025 11:42:01 AM EDT
+compile_version=017-GIT
+url="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/NerdFontsSymbolsOnly.tar.xz"
+file_size=2260092
+file_md5=a918a452b854c1eaff1b22bd599aa5a3
+unpack_files=files_in_root
+dir='NerdFontSymbols'
+recipe_type=manifest
+manifest=(
+    "SymbolsNerdFontMono-Regular.ttf:share/fonts/NerdFonts/SymbolsNerdFont-Mono-Regular.ttf"
+    "SymbolsNerdFont-Regular.ttf:share/fonts/NerdFonts/SymbolsNerdFont-Regular.ttf"
+)
