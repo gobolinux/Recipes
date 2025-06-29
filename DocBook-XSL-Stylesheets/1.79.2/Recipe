@@ -1,27 +1,15 @@
-# Recipe for version 1.79.2 by Nuc1eoN, on Tue 29 Oct 2024 02:34:34 PM GMT
-# Recipe (MakeRecipe) for DocBook-XSL-Stylesheets by Michael Homer <michael@gobolinux.org>, on Tue Nov 25 19:46:40 NZDT 2008
-compile_version=1.11.4
-url="https://github.com/docbook/xslt10-stylesheets/releases/download/release%2F1.79.2/docbook-xsl-1.79.2.tar.bz2"
-file_size=23404486
-file_md5=4a400f0264a19329c7f95f69e098744a
-recipe_type=manifest
-#dir=docbook-xsl-1.79.2
-manifest=(
-   "fo:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/fo"
-   "lib:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/lib"
-   "VERSION:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/VERSION.xsl"
-   "html:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/html"
-   "xhtml:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/xhtml"
-   "xhtml-1_1:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/xhtml-1_1"
-   "epub:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/epub"
-   "htmlhelp:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/htmlhelp"
-   "javahelp:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/javahelp"
-   "eclipse:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/eclipse"
-   "manpages:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/manpages"
-   "common:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/common"
-   "highlighting:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/highlighting"
-   "catalog.xml:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl/catalog.xml"
+# Recipe (MakeRecipe) for DocBook-XSL-Stylesheets by Nuc1eoN, on Sun 29 Jun 2025 06:41:39 PM GMT
+compile_version=017-GIT
+recipe_type=meta
+
+include=(
+#################################################
+# DocBook-XSL-Stylesheets
+#################################################
+    DocBook-XSL-Stylesheets-NoNS--1.79.2
+    DocBook-XSL-Stylesheets-NS--1.79.2
 )
+
 unmanaged_files=(
    "$goboVariable/lib/xml"
 )

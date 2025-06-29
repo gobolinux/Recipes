@@ -1,0 +1,10 @@
+rewriteSystem;http://cdn.docbook.org/release/xsl/1.79.2;file://${target}/share/xml/docbook/stylesheet/docbook-xsl/;${goboVariable}/lib/xml/catalog
+rewriteSystem;https://cdn.docbook.org/release/xsl/1.79.2;file://${target}/share/xml/docbook/stylesheet/docbook-xsl/;${goboVariable}/lib/xml/catalog
+rewriteURI;http://cdn.docbook.org/release/xsl/1.79.2;file://${target}/share/xml/docbook/stylesheet/docbook-xsl/;${goboVariable}/lib/xml/catalog
+rewriteURI;https://cdn.docbook.org/release/xsl/1.79.2;file://${target}/share/xml/docbook/stylesheet/docbook-xsl/;${goboVariable}/lib/xml/catalog
+rewriteSystem;http://cdn.docbook.org/release/xsl/current;file://${target}/share/xml/docbook/stylesheet/docbook-xsl/;${goboVariable}/lib/xml/catalog
+rewriteSystem;https://cdn.docbook.org/release/xsl/current;file://${target}/share/xml/docbook/stylesheet/docbook-xsl/;${goboVariable}/lib/xml/catalog
+rewriteURI;http://cdn.docbook.org/release/xsl/current;file://${target}/share/xml/docbook/stylesheet/docbook-xsl/;${goboVariable}/lib/xml/catalog
+rewriteURI;https://cdn.docbook.org/release/xsl/current;file://${target}/share/xml/docbook/stylesheet/docbook-xsl/;${goboVariable}/lib/xml/catalog
+rewriteSystem;http://docbook.sourceforge.net/release/xsl-ns/current;file://${target}/share/xml/docbook/stylesheet/docbook-xsl/;${goboVariable}/lib/xml/catalog
+rewriteURI;http://docbook.sourceforge.net/release/xsl-ns/current;file://${target}/share/xml/docbook/stylesheet/docbook-xsl/;${goboVariable}/lib/xml/catalog

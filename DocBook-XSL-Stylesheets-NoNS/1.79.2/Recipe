@@ -1,0 +1,35 @@
+# Recipe for version 1.79.2 by Nuc1eoN, on Tue 29 Oct 2024 02:34:34 PM GMT
+# Recipe (MakeRecipe) for DocBook-XSL-Stylesheets by Michael Homer <michael@gobolinux.org>, on Tue Nov 25 19:46:40 NZDT 2008
+compile_version=017
+url="https://github.com/docbook/xslt10-stylesheets/releases/download/release%2F1.79.2/docbook-xsl-nons-1.79.2.tar.bz2"
+file_size=23400667
+file_md5=2666d1488d6ced1551d15f31d7ed8c38
+recipe_type=manifest
+
+manifest=(
+   "catalog.xml:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl-nons/catalog.xml"
+   "common:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl-nons/common"
+   "eclipse:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl-nons/eclipse"
+   "epub:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl-nons/epub"
+   "epub3:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl-nons/epub3"
+   "fo:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl-nons/fo"
+   "highlighting:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl-nons/highlighting"
+   "html:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl-nons/html"
+   "htmlhelp:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl-nons/htmlhelp"
+   "javahelp:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl-nons/javahelp"
+   "lib:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl-nons/lib"
+   "manpages:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl-nons/manpages"
+   "params:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl-nons/params"
+   "profiling:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl-nons/profiling"
+   "roundtrip:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl-nons/roundtrip"
+   "template:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl-nons/template"
+   "website:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl-nons/website"
+   "VERSION:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl-nons/VERSION.xsl"
+   "xhtml:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl-nons/xhtml"
+   "xhtml-1_1:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl-nons/xhtml-1_1"
+   "xhtml5:$(basename $goboShared)/xml/docbook/stylesheet/docbook-xsl-nons/xhtml5"
+)
+
+unmanaged_files=(
+   "$goboVariable/lib/xml"
+)
