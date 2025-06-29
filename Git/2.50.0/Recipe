@@ -1,0 +1,21 @@
+# Recipe for version 2.50.0 by Nuc1eoN, on Sat 28 Jun 2025 03:05:46 PM CEST
+# Recipe (MakeRecipe) for Git by Jonas Karlsson <jonka750@student.liu.se>, on Sat Apr 15 18:45:06 CEST 2006
+compile_version=017-GIT
+url="http://mirrors.edge.kernel.org/pub/software/scm/git/git-2.50.0.tar.xz"
+file_size=7878256
+file_md5=6e43781d11b99031e18593f44d39313a
+recipe_type=makefile
+makefile='Makefile'
+build_target="all man"
+install_target="install install-man"
+
+make_variables=(
+   prefix="$target"
+   PREFIX="$target"
+   USE_LIBPCRE2=1
+   sysconfdir=$settings_target
+)
+
+pre_link() {
+   cp -a Documentation/* $target/doc
+}
