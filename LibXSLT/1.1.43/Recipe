@@ -1,0 +1,8 @@
+# Recipe for version 1.1.43 by Nuc1eoN, on Sat 28 Jun 2025 11:21:07 PM CEST
+# Recipe (MakeRecipe) for LibXSLT by roko, <ro.ko@mcnon.com>, on Sat Dec 25 22:27:33 BRST 2004
+compile_version=017-GIT
+url="https://download.gnome.org/sources/libxslt/1.1/libxslt-1.1.43.tar.xz"
+file_size=1518364
+file_md5=5dc0179c81be7a3082b43030ecfdebd4
+recipe_type=configure
+configure_options=(--disable-static)
