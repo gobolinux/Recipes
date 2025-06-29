@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash -u
 
 # source GoboPath, just in case somebody wants to launch this script from the shell
 source GoboPath
