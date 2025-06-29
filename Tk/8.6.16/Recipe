@@ -1,0 +1,25 @@
+# Recipe for version 8.6.16 by Nuc1eoN, on Sun 29 Jun 2025 04:17:56 PM CEST
+compile_version=017-GIT
+url="$httpSourceforge/tcl/tk8.6.16-src.tar.gz"
+file_size=4591625
+file_md5=a7aad6cf52aa4687506a377a9a885a83
+dir='tk8.6.16/unix'
+recipe_type=configure
+install_target="install install-private-headers"
+
+configure_options=(
+  --with-tcl=$tcl_path/lib
+  --enable-xft
+  --enable-threads
+  --enable-64bit
+)
+
+pre_install() {
+    sed -e "s@^\(TK_SRC_DIR='\).*@\1/usr/include'@" \
+	-e "/TK_B/s@='\(-L\)\?.*unix@='\1/usr/lib@" \
+        -i tkConfig.sh
+}
+
+pre_link() {
+   $sudo_exec ln -nfs ${target}/bin/wish8.6 ${target}/bin/wish
+}
