@@ -1,6 +1,6 @@
 # Recipe for version 1.24 by Nuc1eoN, on Tue 15 Oct 2024 03:03:58 AM CEST
 # Recipe (MakeRecipe) for GDBM by Laurent Pelecq (laurent.pelecq at soleil.org), on dim avr 16 00:27:12 CEST 2006
-compile_version=1.8.0
+compile_version=017
 url="ftp://ftp.gnu.org/pub/gnu/gdbm/gdbm-1.24.tar.gz"
 file_size=1195931
 file_md5=c780815649e52317be48331c1773e987
@@ -10,9 +10,3 @@ configure_options=(
     --disable-static                                                                                                  
     --enable-libgdbm-compat 
 )
-
-make_variables=(
-	"BINOWN=0"
-	"BINGRP=0"
-)
-
