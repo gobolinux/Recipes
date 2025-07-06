@@ -1,0 +1,37 @@
+Generate aboslute symlinks under conf.d/
+This used to be the case, but due to request https://gitlab.freedesktop.org/fontconfig/fontconfig/-/issues/378
+relative linking was introduced in Fontconfig 2.15.
+
+Therefore revert commit: https://gitlab.freedesktop.org/fontconfig/fontconfig/-/commit/5d954398d1ebe04778a945d5c1546d9dbfb8e031
+
+diff -Nur fontconfig-2.16.2.old/conf.d/link_confs.py fontconfig-2.16.2/conf.d/link_confs.py
+--- fontconfig-2.16.2.old/conf.d/link_confs.py	2025-04-11 08:47:01.000000000 +0200
++++ fontconfig-2.16.2/conf.d/link_confs.py	2025-06-04 23:46:38.106470842 +0200
+@@ -34,7 +34,7 @@
+         except FileNotFoundError:
+             pass
+         try:
+-            os.symlink(os.path.relpath(src, start=args.confpath), dst)
++            os.symlink(src, dst)
+         except NotImplementedError:
+             # Not supported on this version of Windows
+             break
+diff -Nur fontconfig-2.16.2.old/conf.d/Makefile.am fontconfig-2.16.2/conf.d/Makefile.am
+--- fontconfig-2.16.2.old/conf.d/Makefile.am	2025-04-11 08:47:01.000000000 +0200
++++ fontconfig-2.16.2/conf.d/Makefile.am	2025-06-04 23:45:54.249804456 +0200
+@@ -111,7 +111,14 @@
+ 	cd ../fc-lang && $(MAKE) $(AM_MAKEFLAGS) $(top_builddir)/conf.d/35-lang-normalize.conf
+ 
+ install-data-hook:
+-	$(PYTHON) $(srcdir)/link_confs.py $(templatedir) $(configdir) $(CONF_LINKS)
++	mkdir -p $(DESTDIR)$(configdir)
++	@(echo cd $(DESTDIR)$(configdir);			\
++	  cd $(DESTDIR)$(configdir);				\
++	  for i in $(CONF_LINKS); do				\
++	    echo $(RM) $$i";" ln -s $(templatedir)/$$i .;	\
++	    $(RM) $$i;						\
++	    ln -s $(templatedir)/$$i .;				\
++	  done)
+ uninstall-local:
+ 	@(echo cd $(DESTDIR)$(configdir);			\
+ 	  cd $(DESTDIR)$(configdir);				\

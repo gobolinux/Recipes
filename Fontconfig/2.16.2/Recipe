@@ -1,0 +1,27 @@
+# Recipe for version 2.16.2 by Nuc1eoN, on Wed 04 Jun 2025 03:12:29 PM CEST
+# Recipe (MakeRecipe) for Fontconfig by Michael Farrell <michael@xinomorph.org>, on Sat Oct 23 14:31:12 BRST 2004
+compile_version=017-GIT
+url="https://gitlab.freedesktop.org/api/v4/projects/890/packages/generic/fontconfig/2.16.2/fontconfig-2.16.2.tar.xz"
+file_size=1298436
+file_md5=02e32c1b5e4b53b20dce65b3c38014ed
+recipe_type=configure
+
+recipe_type=meson
+meson_variables=(
+	-D default-fonts-dirs="$goboShared/fonts"
+	-D cache-dir="$goboVariable/cache/fontconfig"
+	-D baseconfig-dir="$settings_target/fonts"
+	-D doc=disabled
+	-D default-sub-pixel-rendering=rgb
+	# do not run fc-cache (that's done in PostInstall):
+	-D cache-build=disabled
+)
+
+pre_link() {
+   mkdir -p "$settings_target/fonts"
+   cp fonts.conf "$settings_target/fonts/"
+}
+
+unmanaged_files=(
+   "$goboVariable/cache/fontconfig"
+)
