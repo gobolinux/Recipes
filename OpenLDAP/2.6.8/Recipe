@@ -6,6 +6,7 @@ file_size=6512544
 file_md5=a7ca5f245340e478ea18b8f972c89bb1
 recipe_type=configure
 configure_options=(
+   --sysconfdir=$settings_target
    --libexecdir=$target/lib
    --localstatedir="${goboVariable}/lib/openldap"
    --with-cyrus-sasl=no
@@ -23,9 +24,6 @@ pre_install() {
    mkdir -p "${goboVariable}/lib/openldap"
 }
 
-sandbox_options=(
-    "--allow-leftovers"
-)
 unmanaged_files=(
     "${goboVariable}/lib/openldap"
 )
