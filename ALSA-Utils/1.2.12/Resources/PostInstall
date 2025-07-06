@@ -1,0 +1,3 @@
+#!/bin/bash -u
+
+[ ! -f $goboVariable/lib/alsa/asound.state ] && alsactl -L store
