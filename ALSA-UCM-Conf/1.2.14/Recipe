@@ -1,0 +1,18 @@
+# Recipe for version 1.2.14 by Nuc1eoN, on Sun 01 Jun 2025 11:08:21 PM CEST
+# Recipe (MakeRecipe) for ALSA-UCM-Conf by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Sat 22 Feb 2020 12:56:26 AM BRT
+compile_version=017-GIT
+url="https://www.alsa-project.org/files/pub/lib/alsa-ucm-conf-1.2.14.tar.bz2"
+file_size=72126
+file_md5=72c8bf33f1e0befd80e5e467e74f6b33
+dir='alsa-ucm-conf-1.2.14'
+recipe_type=manifest
+
+pre_install() {
+  # Adapted from ArchLinux
+  install -vdm 755 "$target/share/alsa/"
+  cp -av ucm2 "$target/share/alsa/"
+  install -vDm 644 LICENSE -t "$target/doc/ALSA-UCM-Conf"
+}
+
+manifest=(
+)
