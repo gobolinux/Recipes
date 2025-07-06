@@ -9,14 +9,15 @@ recipe_type=configure
 configure_options=(
     # Enabling this makes the package not redistributable
     "--enable-gpl"
-    "--enable-shared"
     "--enable-postproc"
     "--enable-swscale"
     "--enable-pthreads"
     "--enable-shared"
     "--enable-gnutls"
     "--disable-debug"
+    "--enable-shared"
     "--disable-static"
+    "--disable-doc"
 )
 
 make_variables=(
