@@ -1,6 +1,6 @@
 # Recipe for version 4.35 by Nuc1eoN, on Thu 10 Oct 2024 04:54:50 PM CEST
 # Recipe (MakeRecipe) for NSPR by Jonas Karlsson <jonka750@student.liu.se>, on Sun Sep 24 11:30:09 CEST 2006
-compile_version=1.8.2
+compile_version=017
 url="https://ftp.mozilla.org/pub/mozilla.org/nspr/releases/v4.35/src/nspr-4.35.tar.gz"
 file_size=1096974
 file_md5=5e0acf9fbdde85181bddd510f4624841
@@ -16,16 +16,8 @@ configure_options=(
 )
 
 pre_build() {
+   # disable two installing two unneeded scripts.
    sed -ri 's#^(RELEASE_BINS =).*#\1#' pr/src/misc/Makefile.in
+   # disable installing static libraries
    sed -i 's#$(LIBRARY) ##' config/rules.mk
-}
-
-pre_link() {
-   pushd ${target}/lib &&
-   for lib in *.so
-   do
-      mv ${lib} ${lib}.7
-      ln -s ${lib}.7 ${lib}
-   done &&
-   popd
 }
