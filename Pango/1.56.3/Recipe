@@ -1,0 +1,10 @@
+# Recipe for version 1.56.3 by Nuc1eoN, on Sun 04 May 2025 11:42:41 PM CEST
+compile_version=017-GIT
+# Recipe for Pango by Guilherme B. Bedin
+url="https://download.gnome.org/sources/pango/1.56/pango-1.56.3.tar.xz"
+file_size=1883584
+file_md5=71615b3aaca41195d4aca28052495832
+recipe_type=meson
+meson_variables=(
+	-D introspection=enabled
+)
