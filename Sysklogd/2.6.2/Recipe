@@ -4,3 +4,4 @@ file_size=462950
 file_md5=9f64535a9a791f20504841b94d194391
 compile_version=017
 recipe_type=configure
+configure_options=(--disable-static)

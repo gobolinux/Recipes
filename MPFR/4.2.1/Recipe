@@ -8,7 +8,7 @@ file_md5=7765afa036e4ce7fb0e02bce0fef894b
 recipe_type=configure
 configure_options=(
    --enable-thread-safe
-   --enable-shared
+   --disable-static
 )
 using_doc_pre_link() {
    make html

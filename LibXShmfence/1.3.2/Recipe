@@ -5,3 +5,4 @@ url="https://www.x.org/releases/individual/lib/libxshmfence-1.3.2.tar.xz"
 file_size=259024
 file_md5=faa74f7483074ce7d4349e6bdc237497
 recipe_type=configure
+configure_options=(--disable-static)

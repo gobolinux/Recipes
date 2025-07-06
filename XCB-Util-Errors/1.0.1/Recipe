@@ -6,3 +6,4 @@ file_size=268052
 file_md5=322cf9df283625223933ffcecb4a1cca
 dir='xcb-util-errors-1.0.1'
 recipe_type=configure
+configure_options=(--disable-static)

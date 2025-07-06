@@ -4,8 +4,4 @@ url="http://downloads.sourceforge.net/project/libpng/libpng16/1.6.44/libpng-1.6.
 file_size=1045640
 file_md5=e40b61660dcc807e1bcc4df9de8389ce
 recipe_type=configure
-
-pre_link() {
-    ln -sf libpng16 $target/include/libpng
-    ln -sf libpng.so $target/lib/libpng.so.0
-}
+configure_options=(--disable-static)

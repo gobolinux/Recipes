@@ -6,6 +6,12 @@ file_size=49980
 file_md5=7d5be185f20eeaae15e267419950aaf7
 recipe_type=makefile
 makefile='Makefile'
+
 make_variables=(
    "prefix=$target"
 )
+
+pre_install(){
+    # disable installation of static library
+    sed -i '/install.*libaio.a/s/^/#/' src/Makefile
+}

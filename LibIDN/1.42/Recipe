@@ -6,5 +6,6 @@ file_size=2653078
 file_md5=fe061a95ae23979150a692d102dce4ad
 recipe_type=configure
 configure_options=(
+   "--disable-static"
    "--mandir=${target}/man"
 )

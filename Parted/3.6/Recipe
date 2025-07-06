@@ -6,6 +6,7 @@ file_size=1896164
 file_md5=93d2d8f22baebc5eb65b85da05a79e4e
 recipe_type=configure
 configure_options=(
+   --disable-static
    --disable-device-mapper
 )
 with_device_mapper=(

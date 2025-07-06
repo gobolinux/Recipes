@@ -5,3 +5,4 @@ url="https://ftp.gnu.org/gnu/libtasn1/libtasn1-4.19.0.tar.gz"
 file_size=1786576
 file_md5=f701ab57eb8e7d9c105b2cd5d809b29a
 recipe_type=configure
+configure_options=(--disable-static)

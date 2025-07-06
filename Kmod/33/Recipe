@@ -7,6 +7,7 @@ file_md5=c451c4aa61521adbe8af147f498046f8
 recipe_type=configure
 
 configure_options=(
+    --disable-static
     --with-xz
     --with-zlib
     --with-zstd

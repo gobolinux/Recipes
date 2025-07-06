@@ -5,3 +5,4 @@ url="http://www.wavpack.com/wavpack-5.7.0.tar.bz2"
 file_size=946431
 file_md5=212468991e051a35638cf94f485ca393
 recipe_type=configure
+configure_options=(--disable-static)

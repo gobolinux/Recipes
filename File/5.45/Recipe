@@ -1,8 +1,9 @@
 # Recipe for version 5.45 by Sage I. Hendricks <sage.message@email.com>, on Thu 28 Mar 2024 09:59:22 AM EDT
 # by Michael Homer
 # 2004.01.28 04:31
-compile_version=1.9.0
+compile_version=017
 url="https://astron.com/pub/file/file-5.45.tar.gz"
 file_size=1246503
 file_md5=26b2a96d4e3a8938827a1e572afd527a
 recipe_type=configure
+configure_options=(--disable-static)

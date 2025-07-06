@@ -7,5 +7,6 @@ file_md5=0bb45bcf74338b00efeec121fff27367
 recipe_type=configure
 
 configure_options=(
+    --disable-static
     --disable-thorough-tests
 )

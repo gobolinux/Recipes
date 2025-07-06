@@ -5,3 +5,4 @@ url="https://xorg.freedesktop.org/releases/individual/lib/libXdmcp-1.1.5.tar.xz"
 file_size=297596
 file_md5=ce0af51de211e4c99a111e64ae1df290
 recipe_type=configure
+configure_options=(--disable-static)

@@ -1,10 +1,12 @@
 # Recipe for version 1.2.3 by Nuc1eoN, on Thu 10 Oct 2024 03:37:33 AM CEST
 # Recipe (MakeRecipe) for LibXDG-BaseDir by Hisham Muhammad <hisham@gobolinux.org>, on Tue Aug 2 19:54:04 BRT 2016
-compile_version=git
+compile_version=017
 url="https://github.com/devnev/libxdg-basedir/archive/libxdg-basedir-1.2.3.tar.gz"
 file_size=30971
 file_md5=6fee7e4ce612f79dacfc8867687737ac
 file="libxdg-basedir-libxdg-basedir-1.2.3.tar.gz"
 dir='libxdg-basedir-libxdg-basedir-1.2.3'
-recipe_type=configure
+
 autogen_before_configure=yes
+recipe_type=configure
+configure_options=(--disable-static)

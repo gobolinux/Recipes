@@ -4,3 +4,4 @@ url="https://tukaani.org/xz/xz-5.6.3.tar.gz"
 file_size=2279396
 file_md5=e7f2caec3e4951673942f45cbf706797
 recipe_type=configure
+configure_options=(--disable-static)

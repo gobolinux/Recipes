@@ -5,3 +5,4 @@ url="http://downloads.sourceforge.net/lcms/lcms2-2.16.tar.gz"
 file_size=7632822
 file_md5=f219d87c247957c97020a3859d8d6fa8
 recipe_type=configure
+configure_options=(--disable-static)

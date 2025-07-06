@@ -5,3 +5,4 @@ url="https://www.x.org/releases/individual/lib/libXScrnSaver-1.2.4.tar.xz"
 file_size=264384
 file_md5=e613751d38e13aa0d0fd8e0149cec057
 recipe_type=configure
+configure_options=(--disable-static)

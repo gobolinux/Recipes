@@ -5,6 +5,7 @@ url="https://download.samba.org/pub/ppp/ppp-2.5.1.tar.gz"
 file_size=991639
 file_md5=c2d96ac7eb2020d3ed0e6e05fe996afe
 recipe_type=configure
+configure_options=(--disable-static)
 
 pre_install() {
    mkdir -p $settings_target/ppp/peers

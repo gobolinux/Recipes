@@ -7,3 +7,4 @@ file_md5=dead9f5f1966d9ae56e1e32761e4e675
 file="lz4-1.10.0.tar.gz"
 dir='lz4-1.10.0'
 recipe_type=makefile
+make_variables=(BUILD_STATIC=no)

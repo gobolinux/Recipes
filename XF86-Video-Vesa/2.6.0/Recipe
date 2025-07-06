@@ -5,3 +5,4 @@ url="https://xorg.freedesktop.org/releases/individual/driver/xf86-video-vesa-2.6
 file_size=275572
 file_md5=4ffff75cbee98022baa78616d03e60a1
 recipe_type=configure
+configure_options=(--disable-static)

@@ -1,14 +1,18 @@
 # Recipe for version 3.46.1 by Nuc1eoN, on Wed 02 Oct 2024 03:53:28 PM CEST
 compile_version=1.9.0
 url="https://sqlite.org/2024/sqlite-autoconf-3460100.tar.gz"
+file_size=3265571
+file_md5=bde7df8c2a4bce82dbf42f7e4dda0e21
 recipe_type=configure
 
 environment=(
     CFLAGS="-DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_SECURE_DELETE=1 -DSQLITE_ENABLE_UNLOCK_NOTIFY=1"
-    TCLLIBDIR="$target/lib/tcl8.5"
+    TCLLIBDIR="$target/lib/tcl8.6"
 )
 
 configure_options=(
+    --disable-static
+    --enable-fts{4,5}
     --enable-dynamic-extensions
     --disable-readline
 )

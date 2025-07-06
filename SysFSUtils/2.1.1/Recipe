@@ -8,6 +8,7 @@ file_md5=537c110be7244905997262854505c30f
 autogen_before_configure=yes
 autogen='autogen'
 recipe_type=configure
+configure_options=(--disable-static)
 
 make_variables=(
     includedir=$target/include/sysfs

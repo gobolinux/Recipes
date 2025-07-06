@@ -6,3 +6,4 @@ file_size=313213
 file_md5=286274d0106ec408efebe4a399975b11
 dir='npth-1.7'
 recipe_type=configure
+configure_options=(--disable-static)

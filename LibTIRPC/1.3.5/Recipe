@@ -5,3 +5,4 @@ url=http://downloads.sourceforge.net/project/libtirpc/libtirpc/1.3.5/libtirpc-1.
 file_size=565188
 file_md5=59a5aba60d99621963d0109f95b622f2
 recipe_type=configure
+configure_options=(--disable-static)

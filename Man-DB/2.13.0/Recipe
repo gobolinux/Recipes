@@ -5,3 +5,4 @@ url="http://download.savannah.nongnu.org/releases/man-db/man-db-2.13.0.tar.xz"
 file_size=2071032
 file_md5=97ab5f9f32914eef2062d867381d8cee
 recipe_type=configure
+configure_options=(--disable-static)

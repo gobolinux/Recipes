@@ -4,3 +4,4 @@ url="http://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.112.tar.gz"
 file_size=715340
 file_md5=021e6c8a288df02c227e4aafbf7e7527
 recipe_type=configure
+configure_options=(--disable-static)

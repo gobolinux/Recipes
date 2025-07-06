@@ -1,7 +1,8 @@
 # Recipe for version 1.0.5 by Nuc1eoN, on Mon 28 Oct 2024 09:50:06 AM CET
 # Recipe (MakeRecipe) for LibIptcdata by Leandro Motta Barros <lmb@stackedboxes.org>, on Sat Jan 16 21:51:06 BRST 2010
-compile_version=1.12.3
+compile_version=017
 url="https://github.com/ianw/libiptcdata/releases/download/release_1_0_5/libiptcdata-1.0.5.tar.gz"
 file_size=593779
 file_md5=c04bc1375c280d41c0106255d1df711a
 recipe_type=configure
+configure_options=(--disable-static)

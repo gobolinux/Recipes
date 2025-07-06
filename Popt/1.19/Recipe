@@ -5,3 +5,4 @@ file_size=596676
 file_md5=eaa2135fddb6eb03f2c87ee1823e5a78
 dir=popt-1.19
 recipe_type=configure
+configure_options=(--disable-static)

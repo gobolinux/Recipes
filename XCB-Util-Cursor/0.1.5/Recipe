@@ -4,5 +4,5 @@ compile_version=2.0
 url="https://xorg.freedesktop.org/releases/individual/xcb/xcb-util-cursor-0.1.5.tar.xz"
 file_size=266788
 file_md5=bc30cd267b11ac5803fe19929cabd230
-
 recipe_type=configure
+configure_options=(--disable-static)

@@ -9,6 +9,7 @@ recipe_type=configure
 autogen_before_configure=yes
 
 configure_options=(
+    --disable-static
     --prefix=$target
     --bindir=$target/sbin
     --sbindir=$target/sbin

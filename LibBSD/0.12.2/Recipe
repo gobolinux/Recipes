@@ -5,3 +5,4 @@ url="https://libbsd.freedesktop.org/releases/libbsd-0.12.2.tar.xz"
 file_size=446032
 file_md5=1aa07d44ee00e2cc1ae3ac10baae7a68
 recipe_type=configure
+configure_options=(--disable-static)

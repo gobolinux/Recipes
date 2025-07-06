@@ -5,3 +5,4 @@ url="http://download.savannah.gnu.org/releases/libpipeline/libpipeline-1.5.8.tar
 file_size=1070254
 file_md5=17ac6969b2015386bcb5d278a08a40b5
 recipe_type=configure
+configure_options=(--disable-static)
