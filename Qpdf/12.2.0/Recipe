@@ -1,0 +1,14 @@
+# Recipe for version 12.2.0 by Nuc1eoN, on Mon 07 Jul 2025 03:16:37 PM CEST
+# Recipe (MakeRecipe) for Qpdf by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 9 14:03:41 GMT 2014
+compile_version=017-GIT
+url="https://github.com/qpdf/qpdf/releases/download/v12.2.0/qpdf-12.2.0.tar.gz"
+file_size=19537905
+file_md5=f10f5b3a0635e9fd2f305880c5cd8534
+recipe_type=cmake
+cmake_options=(
+    -D BUILD_STATIC_LIBS:BOOL=OFF
+    -D REQUIRE_CRYPTO_GNUTLS:BOOL=ON
+    -D REQUIRE_CRYPTO_OPENSSL:BOOL=OFF
+    -D ENABLE_QTC:BOOL=ON
+#    -D BUILD_DOC:BOOL=ON
+)
