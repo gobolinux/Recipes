@@ -1,0 +1,13 @@
+# Recipe for version 0.6.13 by Nuc1eoN, on Mon 07 Jul 2025 03:24:40 PM CEST
+compile_version=017-GIT
+# Recipe for Pinfo 0.6.13 by Andre Destch
+url="https://github.com/baszoetekouw/pinfo/archive/refs/tags/v0.6.13.tar.gz"
+file='pinfo-0.6.13.tar.gz'
+file_size=157103
+file_md5=b2671c8f6ef0aa5d7c6460c3111e2f50
+#dir='pinfo'
+recipe_type=configure
+autogen_before_configure=yes
+pre_build(){
+	sed -i -e 's| -Werror||g' configure.ac || die
+}

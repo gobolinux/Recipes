@@ -1,0 +1,11 @@
+#!/bin/sh
+case "$1" in
+-*)
+   exec man "$@" ;;
+*)
+   # finally, backspace works in search!
+   # (tested in xterm and konsole)
+   export TERM=linux
+   exec pinfo -m "$@" 2> /dev/null ;;
+esac # esac is ridiculous.
+
