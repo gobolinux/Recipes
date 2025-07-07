@@ -1,0 +1,18 @@
+# Recipe for version 1.31.1 by Nuc1eoN, on Mon 07 Jul 2025 02:48:06 PM CEST
+# Recipe (MakeRecipe) for Faac by roko, <ro.ko@mcnon.com>, on Fri Dec 24 23:40:28 BRST 2004
+compile_version=017-GIT
+url="https://github.com/knik0/faac/archive/refs/tags/faac-1.31.1.tar.gz"
+file_size=244025
+file_md5=a3f8194516769cfc3f8743364cc57824
+dir='faac-faac-1.31.1'
+recipe_type=configure
+
+#environment=(
+#   CXXFLAGS="-std=c++98"
+#)
+
+pre_build () {
+   sh bootstrap
+}
+
+configure_options=(--disable-static)
