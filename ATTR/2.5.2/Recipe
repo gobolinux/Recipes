@@ -1,0 +1,9 @@
+# Recipe for version 2.5.2 by Nuc1eoN, on Mon 07 Jul 2025 02:29:38 PM CEST
+# Recipe (MakeRecipe) for ATTR by ro.ko@mcnon.com, on Tue Oct 12 00:31:42 BRST 2004
+compile_version=017-GIT
+url="https://download-mirror.savannah.gnu.org/releases/attr/attr-2.5.2.tar.gz"
+file_size=492539
+file_md5=227043ec2f6ca03c0948df5517f9c927
+dir="attr-2.5.2"
+recipe_type=configure
+configure_options=(--disable-static)
