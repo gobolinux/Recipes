@@ -1,0 +1,11 @@
+# Recipe for version 2025b by Nuc1eoN, on Mon 07 Jul 2025 03:06:49 PM CEST
+# Recipe (MakeRecipe) for TZData by Hisham Muhammad <hisham@gobolinux.org>, on Wed Oct 30 15:16:53 -03 2019
+compile_version=017-GIT
+url="https://data.iana.org/time-zones/releases/tzdb-2025b.tar.lz"
+file_size=549879
+file_md5=d5103e1beba20e07c3b01e6fca3c4aab
+recipe_type=makefile
+pre_link(){
+	# This interferes with localtime from Glibc package
+	rm $settings_target/localtime
+}
