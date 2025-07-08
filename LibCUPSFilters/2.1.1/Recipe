@@ -1,0 +1,9 @@
+# Recipe (MakeRecipe) for LibCUPSFilters by Nuc1eoN, on Tue 08 Jul 2025 03:00:26 PM CEST
+# Recipe for version 2.1.1 by Nuc1eoN, on Tue 08 Jul 2025 03:00:26 PM CEST
+compile_version=017-GIT
+url="https://github.com/OpenPrinting/libcupsfilters/releases/download/2.1.1/libcupsfilters-2.1.1.tar.xz"
+file_size=1446192
+file_md5=1e3144c242e7ddcee112d41c79266885
+dir='libcupsfilters-2.1.1'
+recipe_type=configure
+configure_options=(--disable-static)
