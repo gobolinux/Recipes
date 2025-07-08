@@ -1,0 +1,40 @@
+# Recipe for version 1.17.13-bootstrap by eMorph <charlie+github@zoned.net>, on Thu 19 Jun 2025 06:18:53 PM EDT
+# Recipe (MakeRecipe) for Golang by Hisham Muhammad <hisham@gobolinux.org>, on Mon Sep 29 15:22:47 BRT 2014
+compile_version=017-GIT
+url="https://go.dev/dl/go1.17.13.src.tar.gz"
+file_size=22206518
+file_md5=4476707f05cf6915ec1173038dc357a9
+dir='go'
+recipe_type=manifest
+create_dirs_first=yes
+manifest=(
+)
+
+environment=(
+	"GOOS=linux"
+	"GOBIN=$target/bin"
+	"GOROOT_FINAL=$target/lib/go"
+    "CGO_ENABLED=0"
+    "GOROOT_BOOTSTRAP=$golang_path"
+)
+
+do_build()
+{
+    $sudo_exec chown -R "$(whoami)" "$target"
+    pushd src
+    bash ./make.bash
+    popd
+    $sudo_exec chown -R "$(SuperUserName)" "$target"
+}
+
+do_install() {
+   $sudo_exec mkdir -p "$target/lib/go"
+   $sudo_exec cp -a pkg "$target/lib/go"
+   # Because Golang 1.17 is needed to compile Golang 1.20, Golang 1.20 is needed to compile Golang 1.22, Golang 1.22 is needed for Golang 1.24, etc., there has to be a 1.17 version with bootstrapping, so src must also be copied.
+   $sudo_exec cp -a src "$target/lib/go"
+   $sudo_exec cp -a bin "$target"
+   # This is a little hack since the value at GOROOT_FINAL is not picked by the ./make.bash script
+   # If you know how to correct this, you're encouraged to do so. Please, by all means.
+   $sudo_exec ln -s "$target/lib/go/pkg" "$target/pkg"
+   $sudo_exec ln -s "$target/lib/go/src" "$target/src"
+}
