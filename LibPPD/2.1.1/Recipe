@@ -1,0 +1,12 @@
+# Recipe (MakeRecipe) for LibPPD by Nuc1eoN, on Tue 08 Jul 2025 02:55:09 PM CEST
+# Recipe for version 2.1.1 by Nuc1eoN, on Tue 08 Jul 2025 02:55:09 PM CEST
+compile_version=017-GIT
+url="https://github.com/OpenPrinting/libppd/releases/download/2.1.1/libppd-2.1.1.tar.xz"
+file_size=585776
+file_md5=65accc86f9956a1160937b14e0f516a6
+dir='libppd-2.1.1'
+recipe_type=configure
+configure_options=(
+	--disable-static
+	--enable-ppdc-utils
+)
