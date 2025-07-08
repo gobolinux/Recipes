@@ -1,0 +1,17 @@
+# Recipe for version 2.1.1 by Nuc1eoN, on Tue 08 Jul 2025 04:15:43 PM CEST
+# Recipe (MakeRecipe) for TagLib by Leandro Motta Barros <lmb@stackedboxes.org>, on Wed Sep 21 23:20:55 BRT 2011
+compile_version=017-GIT
+url="http://taglib.org/releases/taglib-2.1.1.tar.gz"
+file_size=1522929
+file_md5=9feffe76b4643eb724185310879c3123
+recipe_type=cmake
+
+cmake_options=(
+	-D CMAKE_BUILD_TYPE=Release
+	-D BUILD_SHARED_LIBS=ON
+)
+
+#environment=(
+#   CXXFLAGS="-fPIC $CXXFLAGS" 
+#   CFLAGS="-fPIC -D_GNU_SOURCE $CFLAGS"
+#)
