@@ -1,0 +1,23 @@
+# Recipe for version 2.1.28 by Nuc1eoN, on Tue 08 Jul 2025 04:24:51 PM CEST
+# Recipe (MakeRecipe) for Cyrus-Sasl by roko, <ro.ko@mcnon.com>, on Wed Dec 8 15:56:58 BRST 2004
+compile_version=017-GIT
+url="https://github.com/cyrusimap/cyrus-sasl/releases/download/cyrus-sasl-2.1.28/cyrus-sasl-2.1.28.tar.gz"
+file_size=4034803
+file_md5=6f228a692516f5318a64505b46966cfa
+recipe_type=configure
+configure_options=(
+	--disable-macos-framework  # Not necessary for Mac OS X since we are building inside Rootless
+	--with-sphinx-build=no
+	# The following is recommended by LFS, but I did not test it:
+#	--sysconfdir=$settings_target
+#	--enable-auth-sasldb
+#	--with-dblib=lmdb
+#	--with-dbpath=/var/lib/sasl/sasldb2
+#	--with-saslauthd=/var/run/saslauthd
+)
+
+pre_build(){
+	# fix a problem revealed by gcc-14 and later
+	sed '/saslint/a #include <time.h>'       -i lib/saslutil.c
+	sed '/plugin_common/a #include <time.h>' -i plugins/cram.c
+}
