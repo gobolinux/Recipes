@@ -1,0 +1,24 @@
+# Recipe for version 2.0.1 by Nuc1eoN, on Tue 08 Jul 2025 03:03:36 PM CEST
+# Recipe (MakeRecipe) for CUPS-Filters by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Thu Jan 9 02:04:33 GMT 2014
+compile_version=017-GIT
+url="https://github.com/OpenPrinting/cups-filters/releases/download/2.0.1/cups-filters-2.0.1.tar.xz"
+file_size=447288
+file_md5=b40d0f135af414666e1c3917983a1bb3
+recipe_type=configure
+
+configure_options=(
+    --disable-static
+)
+
+install_variables=(
+    CUPS_SERVERROOT=$settings_target
+    CUPS_SERVERBIN=$target/lib/cups
+    CUPS_DATADIR=$target/share/cups
+)
+
+pre_link(){
+	# Fix linking under bin/
+	ln -sf ../lib/cups/driver/driverless $target/bin/driverless
+	ln -sf ../lib/cups/driver/driverless-fax $target/bin/driverless-fax
+	ln -sf ../lib/cups/filter/foomatic-rip $target/bin/foomatic-rip
+}
