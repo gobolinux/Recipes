@@ -6,7 +6,4 @@ file_size=585776
 file_md5=65accc86f9956a1160937b14e0f516a6
 dir='libppd-2.1.1'
 recipe_type=configure
-configure_options=(
-	--disable-static
-	--enable-ppdc-utils
-)
+configure_options=(--disable-static)
