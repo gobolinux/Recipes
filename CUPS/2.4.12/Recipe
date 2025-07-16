@@ -1,0 +1,69 @@
+# Recipe for version 2.4.12 by Nuc1eoN, on Mon 07 Jul 2025 03:37:47 PM CEST
+compile_version=017-GIT
+url="https://github.com/OpenPrinting/cups/releases/download/v2.4.12/cups-2.4.12-source.tar.gz"
+file_size=8157433
+file_md5=1f9281c661b95acc7925a220919210e2
+dir='cups-2.4.12'
+recipe_type=configure
+
+pre_build() {
+   # In case xdg-utils is not installed, then we set Firefox as the default browser to access
+   # the Cups web interface
+   Quiet which xdg-open || sed -i 's#@CUPS_HTMLVIEW@#firefox#' desktop/cups.desktop.in
+
+   # Fix issue with Glibc 2.30
+   sed -i '/stat.h/a #include <sys/ioctl.h>' tools/ipptool.c
+}
+
+configure_options=(
+   --libdir="$target/lib"
+   --with-docdir="$target/doc"
+   --with-icondir="$target/share/icons"
+   --with-menudir="$target/share/applications"
+   --with-dbusdir="$settings_target/dbus-1"
+   --with-cups-user=lp
+   --with-cups-group=lp
+   --with-system-groups=lpadmin
+   --enable-libpaper
+)
+
+# The Makefiles are a mess... clean them up to work properly with our install_variables
+pre_install() {
+   GrepReplace '(BUILDROOT)/usr'       '(BUILDROOT)' Makedefs 
+   GrepReplace '(BUILDROOT)/Data'      '/Data' Makedefs 
+   GrepReplace '(BUILDROOT)$(DBUSDIR)' '(DBUSDIR)' desktop/Makefile
+   GrepReplace '(BUILDROOT)$(PAMDIR)'  '(PAMDIR)' conf/Makefile
+   GrepReplace '(BUILDROOT)$(INITDIR)' '(INITDIR)' scheduler/Makefile
+}
+
+install_variables=(
+   BUILDROOT="$target"
+   libdir="/lib"
+   includedir="/include"
+   MENUDIR="/share/applications"
+   ICONDIR="/share/icons"
+   SERVERROOT="$settings_target/cups"
+   DBUSDIR="$settings_target/dbus-1"
+   PAMDIR="$settings_target/pam.d"
+   INITDIR="$settings_target/cupsinit"
+)
+
+pre_link() {
+   if [ ! -e "$settings_target/cups/client.conf" ]
+   then
+      mkdir -p "$settings_target/cups"
+      echo "ServerName $goboVariable/run/cups/cups.sock" > $settings_target/cups/client.conf
+   fi
+}
+
+post_install() {
+   GrepReplace -B 'user="root"' 'user="0"' "$settings_target/dbus-1/system.d/cups.conf"
+   GrepReplace "#DocumentRoot /usr/doc" "DocumentRoot $goboPrograms/CUPS/Current/doc" "$settings_target/cups/cups-files.conf"
+}
+
+unmanaged_files=(
+   ${goboVariable}/log/cups
+   ${goboVariable}/run/cups/certs
+   ${goboVariable}/cache/cups
+   ${goboVariable}/spool/cups/tmp
+)
