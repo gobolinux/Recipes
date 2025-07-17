@@ -1,0 +1,20 @@
+# Recipe (MakeRecipe) for LibXCrypt by Nuc1eoN, on Wed 16 Jul 2025 02:31:59 PM CEST
+# Recipe for version 4.4.38 by Nuc1eoN, on Wed 16 Jul 2025 02:31:59 PM CEST
+compile_version=017-GIT
+url="https://github.com/besser82/libxcrypt/releases/download/v4.4.38/libxcrypt-4.4.38.tar.xz"
+file_size=625756
+file_md5=1796a5d20098e9dd9e3f576803c83000
+dir='libxcrypt-4.4.38'
+recipe_type=configure
+
+configure_options=(
+	--disable-static
+	--enable-hashes=strong,glibc
+	--enable-obsolete-api=no
+	--disable-failure-tokens
+)
+
+# LibXCrypt superseeds Glibc's libcrypt.so
+symlink_options=(
+	--conflict=overwrite
+)
