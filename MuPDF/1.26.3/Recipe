@@ -1,0 +1,40 @@
+# Recipe for version 1.26.3 by Nuc1eoN, on Tue 08 Jul 2025 04:55:32 PM CEST
+# Recipe (MakeRecipe) for MuPDF by Hisham Muhammad <hisham@gobolinux.org>, on Sun Jul 20 17:16:03 BRT 2014
+compile_version=017-GIT
+url="https://www.mupdf.com/downloads/archive/mupdf-1.26.3-source.tar.gz"
+file_size=64525703
+file_md5=8b9e1f2729eeeb27e47dba340201190b
+recipe_type=makefile
+
+make_variables=(
+	prefix=$target
+	build=release
+	shared=yes
+	verbose=yes
+	SO_INSTALL_MODE=755
+)
+
+# Recommended by LFS
+environment=(XCFLAGS="-fPIC")
+
+pre_build(){
+	{
+	  echo "USE_SYSTEM_CURL := yes"
+	  echo "USE_SYSTEM_FREETYPE := yes"
+	  echo "USE_SYSTEM_GLUT := no"     # need freeglut2-art fork
+	  echo "USE_SYSTEM_GUMBO := no"
+	  echo "USE_SYSTEM_HARFBUZZ := yes"
+	  echo "USE_SYSTEM_JBIG2DEC := no"
+	  echo "USE_SYSTEM_JPEGXR := no"   # not used without HAVE_JPEGXR
+	  echo "USE_SYSTEM_LCMS2 := no"    # need lcms2-art fork
+	  echo "USE_SYSTEM_LIBJPEG := yes"
+	  echo "USE_SYSTEM_MUJS := no"     # build needs source anyway
+	  #echo "USE_SYSTEM_OPENJPEG := yes"
+	  echo "USE_SYSTEM_ZLIB := yes"
+	} > user.make
+}
+
+pre_link(){
+	# This symbolic link chooses between mupdf-gl and mupdf-x11 when running mupdf
+	ln -sfv mupdf-x11 $target/bin/mupdf
+}
