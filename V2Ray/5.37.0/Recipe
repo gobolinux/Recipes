@@ -1,0 +1,10 @@
+compile_version=017-GIT
+url="https://github.com/v2fly/v2ray-core/releases/download/v5.37.0/v2ray-linux-64.zip"
+file_size=17724512
+file_md5=2903546200bec5d06a927c432931f911
+unpack_files=files_in_root
+recipe_type=manifest
+manifest=(
+	".:package"
+	"$recipedir/Resources/v2ray.sh:bin/v2ray"
+)
