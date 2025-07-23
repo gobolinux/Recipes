@@ -1,0 +1,10 @@
+# Recipe for version 0.4.62 by Nuc1eoN, on Wed 23 Jul 2025 08:15:41 PM CEST
+# Recipe (MakeRecipe) for Gegl by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jan. 3., szombat, 00.13.13 CET
+compile_version=017-GIT
+url="https://download.gimp.org/pub/gegl/0.4/gegl-0.4.62.tar.xz"
+file_size=6025372
+file_md5=0077654104c84fd54b4b48b92271131c
+recipe_type=meson
+meson_options=(
+   "-D docs=false"
+)
