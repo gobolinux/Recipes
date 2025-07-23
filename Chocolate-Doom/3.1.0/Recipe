@@ -1,0 +1,9 @@
+# Recipe for version 3.1.0 by Nuc1eoN, on Wed 23 Jul 2025 03:42:20 PM CEST
+# Recipe (MakeRecipe) for Chocolate-Doom by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed 14 Oct 2020 07:11:37 PM -03
+compile_version=017-GIT
+url="https://github.com/chocolate-doom/chocolate-doom/archive/refs/tags/chocolate-doom-3.1.0.tar.gz"
+file_size=2256537
+file_md5=1c9840eb0085a5f4af5e5e0074e35616
+dir='chocolate-doom-chocolate-doom-3.1.0'
+recipe_type=configure
+autogen_before_configure=yes
