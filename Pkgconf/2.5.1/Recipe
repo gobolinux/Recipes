@@ -1,0 +1,19 @@
+# Recipe for version 2.5.1 by Nuc1eoN, on Wed 23 Jul 2025 02:51:37 AM CEST
+# Recipe (MakeRecipe) for Pkgconf by Nuc1eoN, on Thu 31 Oct 2024 12:05:36 AM GMT
+compile_version=017-GIT
+url="https://github.com/pkgconf/pkgconf/archive/refs/tags/pkgconf-2.5.1.tar.gz"
+file_size=133113
+file_md5=7745ca9bd6d05af8af0afd209375e209
+dir='pkgconf-pkgconf-2.5.1'
+recipe_type=meson
+meson_options=(-D tests=disabled)
+
+# To maintain compatibility with the original Pkg-config create two symlinks
+pre_link() {
+  ln -sv pkgconf $target/bin/pkg-config
+  ln -sv pkgconf.1 $target/share/man/man1/pkg-config.1
+}
+
+symlink_options=(
+  "--conflict overwrite"
+)
