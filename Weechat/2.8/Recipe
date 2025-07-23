@@ -6,6 +6,7 @@ file_size=2248868
 file_md5=9e776d6c19ec1ae261ab822601f78719
 dir='weechat-2.8'
 recipe_type=configure
+autogen_before_configure=yes
 
 configure_options=(
     --disable-javascript
