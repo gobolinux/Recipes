@@ -1,0 +1,10 @@
+# Recipe for version 0.1.114 by Nuc1eoN, on Wed 23 Jul 2025 08:14:33 PM CEST
+# Recipe (MakeRecipe) for Babl by Ősi Róbert <7szunyu@nordtelekom.hu>, on 2009. jan. 2., péntek, 23.52.42 CET
+compile_version=017-GIT
+url="https://download.gimp.org/pub/babl/0.1/babl-0.1.114.tar.xz"
+file_size=321456
+file_md5=be5ed13a156e0a666695b44892422129
+recipe_type=meson
+meson_options=(
+   "-Dwith-docs=false"
+)
