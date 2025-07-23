@@ -1,0 +1,11 @@
+--- chocolate-doom-3.0.1/src/hexen/mn_menu_old.c	2025-07-23 14:08:56.949309313 +0300
++++ chocolate-doom-3.0.1/src/hexen/mn_menu.c	2025-07-23 14:09:07.395975368 +0300
+@@ -131,7 +131,7 @@
+ int InfoType;
+ int messageson = true;
+ boolean mn_SuicideConsole;
+-boolean demoextend; // from h2def.h
++//boolean demoextend; // from h2def.h
+ 
+ // PRIVATE DATA DEFINITIONS ------------------------------------------------
+ 
