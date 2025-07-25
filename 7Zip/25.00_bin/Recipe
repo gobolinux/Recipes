@@ -1,0 +1,10 @@
+compile_version=017-GIT
+url="https://7-zip.org/a/7z2500-linux-x64.tar.xz"
+file_size=1568496
+file_md5=e4e1a995b8e668eec1fec27e2fda5b52
+unpack_files=files_in_root
+recipe_type=manifest
+manifest=(
+	"7zz:bin"
+	"7zzs:bin"
+)
