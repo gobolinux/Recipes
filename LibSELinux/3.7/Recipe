@@ -6,4 +6,10 @@ file_size=194834
 file_md5=ac0c812124d83faa7721928d0c01adc0
 recipe_type=makefile
 makefile='Makefile'
+
 make_variables=(PREFIX="$target")
+
+pre_link(){
+	# fix a relative symlink
+	ln -sfv libselinux.so.1 $target/lib/libselinux.so
+}
