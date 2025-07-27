@@ -10,3 +10,8 @@ makefile='Makefile'
 make_variables=(
     PREFIX="$target"
 )
+
+pre_link(){
+	# fix a relative symlink
+	ln -sfv libsepol.so.2 $target/lib/libsepol.so
+}
