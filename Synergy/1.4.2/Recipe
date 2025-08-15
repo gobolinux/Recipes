@@ -1,6 +1,6 @@
 # Recipe for version 1.4.2 by Lucas C. Villa Real, on Fri May 13 11:09:49 BRT 2011
 compile_version=1.8.0
-url="http://synergy.googlecode.com/files/synergy-1.4.2-Source.tar.gz"
+url="https://synergy.googlecode.com/files/synergy-1.4.2-Source.tar.gz"
 file_size=868390
 file_md5=cd4e18a206d4c326de7b728256350d87
 recipe_type=cmake
@@ -23,7 +23,7 @@ post_install() {
   Log_Normal "The default configuration provided in this recipe will not"
   Log_Normal "work unless your hostname is 'THISHOST.' To act as a server,"
   Log_Normal "edit $goboSettings/synergy.conf according to the instructions at"
-  Log_Normal "http://synergy2.sourceforge.net/running.html before using"
+  Log_Normal "https://synergy2.sourceforge.net/running.html before using"
   Log_Normal "the synergys executable."
   Log_Normal "========================================================="
 }

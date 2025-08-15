@@ -8,4 +8,4 @@ QPDF includes support for merging and splitting PDFs through the ability to copy
 
 QPDF is not a PDF content creation library, a PDF viewer, or a program capable of converting PDF into other formats. In particular, QPDF knows nothing about the semantics of PDF content streams. If you are looking for something that can do that, you should look elsewhere. However, once you have a valid PDF file, QPDF can be used to transform that file in ways perhaps your original PDF creation can't handle. For example, programs generate simple PDF files but can't password-protect them, web-optimize them, or perform other transformations of that type.
 [License] Artistic License version 2
-[Homepage] http://qpdf.sourceforge.net/
+[Homepage] https://qpdf.sourceforge.net/
