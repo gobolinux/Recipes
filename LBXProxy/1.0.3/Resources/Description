@@ -4,4 +4,4 @@
 
 With regard to authentication/authorization, lbxproxy simply passes along to the server the credentials presented by the client. Since X clients will connect to lbxproxy, it is important that the user's .Xauthority file contain entries with valid keys associated with the network ID of the proxy. lbxproxy does not get involved with how these entries are added to the .Xauthority file. The user is responsible for setting it up. 
 [License] MIT
-[Homepage] http://cgit.freedesktop.org/xorg/app/lbxproxy
+[Homepage] https://cgit.freedesktop.org/xorg/app/lbxproxy

@@ -9,7 +9,7 @@ find bugs in a program you compiled, those are *upstream* issues; please
 report them to the original project's team).
 
 For other kinds of issues, please find the appropriate repository at
-http://github.com/gobolinux at file an issue there.
+https://github.com/gobolinux at file an issue there.
 
 * For general problems getting the Live CD to run: [LiveCD](https://github.com/gobolinux/LiveCD/issues)
 * For issues with the installer: [Installer](https://github.com/gobolinux/Installer/issues)

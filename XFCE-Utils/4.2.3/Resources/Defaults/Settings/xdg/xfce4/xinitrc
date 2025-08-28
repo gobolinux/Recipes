@@ -130,13 +130,13 @@ case "x$panel" in
 			xmessage -center -file - -timeout 20 -title Error <<EOF
 A crash occured in the panel
 Please report this to the xfce4-dev@xfce.org list
-or on http://bugs.xfce.org
+or on https://bugs.xfce.org
 Meanwhile the panel will be restarted
 EOF
 			cat >&2 <<EOF
 A crash occured in the panel
 Please report this to the xfce4-dev@xfce.org list
-or on http://bugs.xfce.org
+or on https://bugs.xfce.org
 Meanwhile the panel will be restarted
 EOF
 			$panel

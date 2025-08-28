@@ -540,7 +540,7 @@ diff -Nurp linux-2.6.15.2-orig/fs/Kconfig.orig linux-2.6.15.2/fs/Kconfig.orig
 +	  This is a Linux-specific extension to RockRidge which lets you store
 +	  data in compressed form on a CD-ROM and have it transparently
 +	  decompressed when the CD-ROM is accessed.  See
-+	  <http://www.kernel.org/pub/linux/utils/fs/zisofs/> for the tools
++	  <https://kernel.org/pub/linux/utils/fs/zisofs/> for the tools
 +	  necessary to create such a filesystem.  Say Y here if you want to be
 +	  able to read such compressed CD-ROMs.
 +

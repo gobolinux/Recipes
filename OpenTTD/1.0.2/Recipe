@@ -31,4 +31,4 @@ pre_link() {
    done
 }
 
-post_install_message="If this is your first OpenTTD install, you will need to copy the data files from your TTD CD into $target/Shared/openttd/data before the game will function.\nNeeded files are: trg1r.grf, trgcr.grf, trghr.grf, trgir.grf, trgtr.grf, sample.cat from Windows TTD, or trg1.grf, trgc.grf, trgh.grf, trgi.grf, trgt.grf, sample.cat from DOS TTD.\nYou can also use the Open[GSM]FX distributions from openttd.sf.net."
+post_install_message="If this is your first OpenTTD install, you will need to copy the data files from your TTD CD into $target/Shared/openttd/data before the game will function.\nNeeded files are: trg1r.grf, trgcr.grf, trghr.grf, trgir.grf, trgtr.grf, sample.cat from Windows TTD, or trg1.grf, trgc.grf, trgh.grf, trgi.grf, trgt.grf, sample.cat from DOS TTD.\nYou can also use the Open[GSM]FX distributions from openttd.sourceforge.net."
