@@ -1,0 +1,15 @@
+# Recipe for version 2.40.4 by Nuc1eoN, on Mon Sep 29 08:57:49 PM CEST 2025
+# Recipe (MakeRecipe) for Mold by Nuc1eoN, on Thu 10 Jul 2025 11:25:20 AM CEST
+compile_version=017-GIT
+url="https://github.com/rui314/mold/archive/refs/tags/v2.40.4.tar.gz"
+file_size=11039370
+file_md5=a7e9856dd8fab0d48617dfff06a8cddd
+file="mold-2.40.4.tar.gz"
+dir='mold-2.40.4'
+recipe_type=cmake
+cmake_options=(
+	-D CMAKE_INSTALL_PREFIX="$target"
+	-D CMAKE_INSTALL_LIBEXECDIR="lib"
+	-D MOLD_LTO=ON
+#	-D MOLD_USE_MOLD=ON
+)
