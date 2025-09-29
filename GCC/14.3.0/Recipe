@@ -1,7 +1,8 @@
 # Recipe for version 14.3.0 by Nuc1eoN, on Mon 07 Jul 2025 04:54:15 PM CEST
 compile_version=017-GIT
 # by Hisham Muhammad, Guilherme Bedin
-url="https://ftp.gnu.org/gnu/gcc/gcc-14.3.0/gcc-14.3.0.tar.xz"
+url="https://sourceware.org/pub/gcc/releases/gcc-14.3.0/gcc-14.3.0.tar.xz"
+mirror_url="https://ftp.gnu.org/gnu/gcc/gcc-14.3.0/gcc-14.3.0.tar.xz"
 file_size=95212220
 file_md5=2e2f25966bbb5321bf6a3beafcd241b5
 recipe_type=configure
@@ -21,12 +22,15 @@ configure_options=(
    --enable-threads="posix"
    --enable-__cxa_atexit
    --enable-clocale="gnu"
-   --enable-languages="c,c++,objc,fortran"
+   --enable-default-pie
+   --enable-default-ssp
    --with-system-zlib
    --disable-bootstrap
    --enable-lto
    --enable-plugin
    --enable-install-libiberty
+   --disable-fixincludes
+   --enable-languages="c,c++,fortran,objc"
 )
 with_gcj=("--enable-languages=java")
 
