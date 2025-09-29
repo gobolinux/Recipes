@@ -1,0 +1,34 @@
+# Recipe for version 2.45 by Nuc1eoN, on Mon Sep 29 09:29:10 PM CEST 2025
+compile_version=017-GIT
+url="https://sourceware.org/pub/binutils/releases/binutils-2.45.tar.xz"
+mirror_url="https://ftp.gnu.org/gnu/binutils/binutils-2.45.tar.xz"
+file_size=27868232
+file_md5=dee5b4267e0305a99a3c9d6131f45759
+needs_build_directory=yes
+recipe_type=configure
+
+configure_options=(
+   "--enable-shared"
+   "--enable-plugins"
+   "--enable-colored-disassembly"
+)
+
+make_variables=(
+   "tooldir=$target"
+)
+
+install_variables=(
+   target_header_dir="${target}/include"
+   PATH="${binutils_path}/bin:$PATH"
+)
+
+pre_install() {
+   cp ../include/libiberty.h $target/include
+   cp libiberty/pic/libiberty.a $target/lib
+
+   # The libtool script includes ".." elements by default, which cause
+   # problems with GoboLinux's Runner sandbox. We fix this by patching
+   # references to dot-dot by their absolute pathnames.
+   find . -type f -exec sed -E -i 's|/System/Index/bin/../lib/gcc/x86_64-pc-linux-gnu/[^/]+/../../../../lib/crti.o|/System/Index/lib/crti.o|g' {} +
+   find . -type f -exec sed -E -i 's|/System/Index/bin/../lib/gcc/x86_64-pc-linux-gnu/[^/]+/../../../../lib/crtn.o|/System/Index/lib/crtn.o|g' {} +
+}
