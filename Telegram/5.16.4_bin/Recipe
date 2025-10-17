@@ -1,0 +1,10 @@
+compile_version=017-GIT
+url="https://github.com/telegramdesktop/tdesktop/releases/download/v5.16.4/tsetup.5.16.4.tar.xz"
+file_size=61708796
+file_md5=971a10d4bc6e02c0e2aa1c421f63b5b0
+unpack_files=files_in_root
+recipe_type=manifest
+manifest=(
+	"Telegram:package"
+	"$recipedir/Resources/Wrappers/Telegram-bin.sh:bin/Telegram"
+)
