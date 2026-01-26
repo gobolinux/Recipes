@@ -1,10 +1,13 @@
 # Recipe for version 1.2.11 by Lucas C. Villa Real <lucasvr@gobolinux.org>, on Wed May 2 21:30:59 BRT 2012
-url="http://www.xmms.org/files/1.2.x/xmms-1.2.11.tar.gz"
+
+# Edited by cy-x.net, on Mon 26 Jan 2026 10:45:00 AM CST
+url="https://web.archive.org/web/20100615201542/http://www.xmms.org/files/1.2.x/xmms-1.2.11.tar.gz"
 file_size=4299286
 file_md5=a5d7e825c4605554b79f8acf986c4cb2
 compile_version=1.8.0
 recipe_type=configure
 pre_install() {
+   export CFLAGS="-O2 -fomit-frame-pointer -pipe -std=gnu89 -Wl,--allow-multiple-definition -fno-tree-vectorize"
    mkdir -p $target/lib/xmms-default
    ln -nfs $target/lib/xmms-default $target/lib/xmms
 }
