@@ -1,0 +1,13 @@
+# Recipe (MakeRecipe) for UGet by rave <love@cy-x.net>, on Mon 26 Jan 2026 12:36:14 PM CST
+# Recipe for version 1.8.1 by rave <love@cy-x.net>, on Mon 26 Jan 2026 12:36:14 PM CST
+compile_version=017-GIT
+url="https://downloads.sourceforge.net/urlget/uget-1.8.1.tar.gz"
+file_size=441628
+file_md5=e3fc14042820f0496f12c85c3847c6f8
+dir='uget-1.8.1'
+recipe_type=configure
+
+# DISABLE GStreamer to avoid ancient dependency hell
+configure_options=(
+    --disable-gstreamer
+)
