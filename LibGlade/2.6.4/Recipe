@@ -11,3 +11,7 @@ unmanaged_files=(
 configure_options=(
    "--with-xml-catalog=$goboVariable/lib/xml/catalog"
 )
+pre_install() {
+# Fix linker errors for g_module functions
+export LIBS="-lgmodule-2.0"
+}
