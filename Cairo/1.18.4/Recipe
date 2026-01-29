@@ -1,0 +1,14 @@
+# Recipe for version 1.18.4 by Nuc1eoN, on Sun 04 May 2025 11:29:01 PM CEST
+# Recipe (MakeRecipe) for Cairo by Maglan C. Diemer, maglan@univates.br, on Qui Ago 25 10:58:19 BRT 2005
+compile_version=017-GIT
+url="https://gitlab.freedesktop.org/cairo/cairo/-/archive/1.18.4/cairo-1.18.4.tar.bz2"
+file_size=42897394
+file_md5=bfe8e342fc263858c58a9c83f9ae3e58
+recipe_type=meson
+meson_variables=(
+	--buildtype=release
+	-D dwrite=disabled
+	-D spectre=disabled
+	-D symbol-lookup=disabled
+	-D tests=disabled
+)
