@@ -1,0 +1,13 @@
+# Recipe for version 5.0.2 by Parodper <parodper@disroot.org>, on Dom Ago 2 08:30:00 GMT 2026
+# Recipe (MakeRecipe) for Screen by Volker Wieban <buckoven@gobolinux.de>, on Son Sep 12 12:54:04 BRT 2004
+compile_version=017-GIT
+url="https://ftp.gnu.org/gnu/screen/screen-5.0.2.tar.gz"
+file_size=892441
+file_md5=76c4f967284c1879f0a1423d318471b3
+recipe_type=configure
+
+install_variables=(
+   "TERMINFO=$target/Shared/terminfo"
+)
+
+with_pam="--enable-pam"
